@@ -17,6 +17,19 @@ export default defineConfig({
 			editLink: {
 				baseUrl: 'https://github.com/ElmsPark-Studio/documentation/edit/main/',
 			},
+			head: [
+				{
+					tag: 'link',
+					attrs: { rel: 'preconnect', href: 'https://fonts.bunny.net', crossorigin: true },
+				},
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'stylesheet',
+						href: 'https://fonts.bunny.net/css?family=fraunces:600,700|outfit:300,400,500,600|jetbrains-mono:400&display=swap',
+					},
+				},
+			],
 			sidebar: [
 				{
 					label: 'Start here',
