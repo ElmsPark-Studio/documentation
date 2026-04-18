@@ -15,7 +15,8 @@ This section of the documentation is where each plugin lives, one guide per plug
 
 Plugin guides are published as each one is finalised. If the plugin you need is not listed yet, check the [EP Suite downloads](https://github.com/ElmsPark-Studio/ep-suite-downloads) or [open an issue](https://github.com/ElmsPark-Studio/documentation/issues) requesting priority.
 
-- **Coming soon:** EP Email, EP Newsletter, EP Newsletter SendGrid, EP Booking, EP Booking Zoom, EP GDPR, EP Support, EP Diagnostics, EP Password Reset, EP Passkeys, EP Email File Uploads, EP Gallery, EP Testimonials, EP Reviews.
+- **[EP Email](/plugins/ep-email/)**. SMTP delivery, JSON-defined contact forms, delivery logging, and a developer extension API.
+- **Coming soon:** EP Newsletter, EP Newsletter SendGrid, EP Booking, EP Booking Zoom, EP GDPR, EP Support, EP Diagnostics, EP Password Reset, EP Passkeys, EP Email File Uploads, EP Gallery, EP Testimonials, EP Reviews.
 
 Each guide follows the same shape: what the plugin does, how to install it, how to configure it, common issues, and answers to support questions we see repeatedly.
 
