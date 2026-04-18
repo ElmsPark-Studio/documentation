@@ -1,0 +1,34 @@
+---
+title: ElmsPark Documentation
+description: Practical guides for PageMotor hosting and EP Suite plugins.
+template: splash
+hero:
+  tagline: Practical guides for PageMotor hosting and EP Suite plugins. Plain language, real commands, nothing padded.
+  actions:
+    - text: Vultr Hosting Guide
+      link: /hosting/vultr/
+      icon: right-arrow
+    - text: EP Suite plugins
+      link: /plugins/
+      icon: right-arrow
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## What is here
+
+<CardGrid>
+	<Card title="Hosting" icon="rocket">
+		Where to run PageMotor and how to set it up fast. Benchmarked VPS picks, plan sizing by use case, and the exact bootstrap we use.
+	</Card>
+	<Card title="EP Suite plugins" icon="puzzle">
+		User guides for every EP plugin. Setup, configuration, troubleshooting, and real-world examples.
+	</Card>
+	<Card title="Written with Claude Code" icon="pencil">
+		Every guide is written by people who actually run this stack, then reviewed for accuracy before publishing.
+	</Card>
+	<Card title="British English, no fluff" icon="document">
+		Short paragraphs, concrete commands, honest trade-offs. If something is hard, we say so.
+	</Card>
+</CardGrid>

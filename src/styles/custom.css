@@ -1,0 +1,188 @@
+/*
+ * ElmsPark Documentation — custom Starlight theme
+ * Design tokens ported from epemail.elmspark.com (blank-slate theme + ep-cards plugin).
+ * Matches the visual language of the ElmsPark product family.
+ */
+
+:root {
+	/* Warm neutrals */
+	--ep-charcoal: #1e1e1e;
+	--ep-warm-black: #2a2725;
+	--ep-cream: #faf7f2;
+	--ep-warm-white: #fefcf9;
+
+	/* Accent colours */
+	--ep-gold: #b8963e;
+	--ep-gold-light: #d4b968;
+	--ep-gold-bg: #fdf8ed;
+	--ep-blue: #3a6b94;
+	--ep-blue-light: #e8f0f8;
+	--ep-green: #4a8a5c;
+	--ep-green-light: #eef6f0;
+	--ep-red: #b85454;
+	--ep-red-light: #fdf0f0;
+
+	/* Text */
+	--ep-text: #3a3632;
+	--ep-text-light: #7a736c;
+	--ep-text-faint: #b0a89e;
+
+	/* Structural */
+	--ep-border: #e8e2d8;
+	--ep-border-light: #f0ebe4;
+	--ep-card: #ffffff;
+	--ep-radius: 10px;
+	--ep-radius-s: 6px;
+
+	--ep-shadow-s: 0 1px 4px rgba(42, 39, 37, 0.06);
+	--ep-shadow-m: 0 4px 16px rgba(42, 39, 37, 0.08);
+	--ep-shadow-l: 0 12px 40px rgba(42, 39, 37, 0.1);
+}
+
+/* Map ElmsPark palette onto Starlight's theme variables (light mode) */
+:root {
+	--sl-color-accent-low: var(--ep-gold-bg);
+	--sl-color-accent: var(--ep-gold);
+	--sl-color-accent-high: #8f7530;
+
+	--sl-color-white: var(--ep-warm-black);
+	--sl-color-gray-1: var(--ep-text);
+	--sl-color-gray-2: var(--ep-text-light);
+	--sl-color-gray-3: var(--ep-text-faint);
+	--sl-color-gray-4: var(--ep-border);
+	--sl-color-gray-5: var(--ep-border-light);
+	--sl-color-gray-6: var(--ep-cream);
+	--sl-color-gray-7: var(--ep-warm-white);
+	--sl-color-black: var(--ep-warm-white);
+
+	--sl-color-text: var(--ep-text);
+	--sl-color-text-accent: var(--ep-gold);
+	--sl-color-text-invert: var(--ep-warm-white);
+
+	--sl-color-bg: var(--ep-warm-white);
+	--sl-color-bg-nav: rgba(254, 252, 249, 0.92);
+	--sl-color-bg-sidebar: var(--ep-cream);
+	--sl-color-bg-inline-code: var(--ep-border-light);
+	--sl-color-bg-accent: var(--ep-gold);
+
+	--sl-color-hairline-light: var(--ep-border);
+	--sl-color-hairline: var(--ep-border);
+	--sl-color-hairline-shade: var(--ep-border-light);
+
+	/* Typography */
+	--sl-font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--sl-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+
+	/* Content width matches epemail aesthetic */
+	--sl-content-width: 52rem;
+}
+
+/* Dark mode: keep warm tones, invert lightness */
+:root[data-theme='dark'] {
+	--sl-color-white: var(--ep-warm-white);
+	--sl-color-gray-1: #e8e2d8;
+	--sl-color-gray-2: #c5bdb0;
+	--sl-color-gray-3: #9a9085;
+	--sl-color-gray-4: #4a4540;
+	--sl-color-gray-5: #3a3632;
+	--sl-color-gray-6: #2a2725;
+	--sl-color-gray-7: #1e1e1e;
+	--sl-color-black: #1a1816;
+
+	--sl-color-text: #e8e2d8;
+	--sl-color-text-accent: var(--ep-gold-light);
+	--sl-color-text-invert: var(--ep-warm-black);
+
+	--sl-color-bg: #1a1816;
+	--sl-color-bg-nav: rgba(26, 24, 22, 0.92);
+	--sl-color-bg-sidebar: #2a2725;
+	--sl-color-bg-inline-code: #3a3632;
+
+	--sl-color-accent: var(--ep-gold-light);
+	--sl-color-accent-high: var(--ep-gold);
+	--sl-color-accent-low: rgba(212, 185, 104, 0.12);
+
+	--sl-color-hairline-light: #3a3632;
+	--sl-color-hairline: #4a4540;
+	--sl-color-hairline-shade: #2a2725;
+}
+
+/* Headings use tighter letter-spacing and weight hierarchy per epemail design */
+h1, h2, h3, h4 {
+	font-family: "Fraunces", Georgia, serif;
+	letter-spacing: -0.01em;
+}
+
+h1 {
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+h2 {
+	font-weight: 600;
+}
+
+h3, h4 {
+	font-weight: 600;
+}
+
+/* Inline code: warm pill background, mono font */
+code:not(pre code) {
+	font-size: 0.88em;
+	padding: 2px 7px;
+	border-radius: 4px;
+	background: var(--sl-color-bg-inline-code);
+}
+
+/* Code blocks: slightly rounder corners */
+.expressive-code,
+.expressive-code pre {
+	border-radius: var(--ep-radius);
+}
+
+/* Tables: warm header per epemail settings-table style */
+.sl-markdown-content table {
+	font-size: 0.94em;
+}
+
+.sl-markdown-content table thead {
+	background: var(--ep-warm-black);
+}
+
+.sl-markdown-content table thead th {
+	color: var(--ep-warm-white);
+	font-weight: 600;
+}
+
+:root[data-theme='dark'] .sl-markdown-content table thead {
+	background: var(--ep-cream);
+}
+
+:root[data-theme='dark'] .sl-markdown-content table thead th {
+	color: var(--ep-warm-black);
+}
+
+/* Buttons in hero (splash page) use the gold primary colour */
+.sl-splash .action.primary {
+	background: var(--ep-gold);
+	color: var(--ep-warm-white);
+	border-color: var(--ep-gold);
+}
+
+.sl-splash .action.primary:hover {
+	background: #a8862e;
+	border-color: #a8862e;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(184, 150, 62, 0.3);
+}
+
+/* Section headings have a subtle gold accent bar */
+.sl-markdown-content > h2 {
+	padding-top: 0.4em;
+	border-top: 2px solid var(--ep-gold-bg);
+	margin-top: 2.4em;
+}
+
+:root[data-theme='dark'] .sl-markdown-content > h2 {
+	border-top-color: rgba(212, 185, 104, 0.15);
+}
