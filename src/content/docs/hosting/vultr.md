@@ -168,7 +168,7 @@ ssh-keygen -t ed25519
 
 Press Enter three times to accept the defaults. Your public key is now at `~/.ssh/id_ed25519.pub`. If you already did this years ago, skip to step 4.
 
-**4. Sign up for Vultr and provision the VPS.** Go to [vultr.com](https://www.vultr.com/), sign up, then provision a VPS using the choices in "What to tick on the Vultr signup screen" above. Paste your SSH public key from step 3 into the SSH Keys field during signup. This is the most important security click on the page.
+**4. Sign up for Vultr and provision the VPS.** Sign up through our referral link: [vultr.com/?ref=9892518-9J](https://www.vultr.com/?ref=9892518-9J). That gives you **$300 of free Vultr credit** to test the platform, at no extra cost to you. Then provision a VPS using the choices in "What to tick on the Vultr signup screen" above. Paste your SSH public key from step 3 into the SSH Keys field during signup. This is the most important security click on the page.
 
 To copy your public key to the clipboard:
 
@@ -177,6 +177,14 @@ cat ~/.ssh/id_ed25519.pub | pbcopy
 ```
 
 Then paste into Vultr's SSH Keys field.
+
+:::note[What the $300 credit covers]
+On the $12 solo plan that is roughly 25 months of hosting. On the $24 SME plan, about 12 months. On the $55 agency box, about 5 months. You need to link a valid card or PayPal to activate the credit, and the unused portion expires 30 days after signup, so pick the plan you actually intend to run.
+:::
+
+:::tip[Full disclosure]
+If you stay on Vultr past 30 days and spend at least $100, we earn a $100 referral credit from Vultr. It costs you nothing and does not change the price you pay. You still get the same $300 credit whether you click our link or Vultr's generic signup, so we would rather you use the link and help fund the next round of PageMotor hosting tests.
+:::
 
 **5. Note the VPS IP address.** Once the VPS finishes provisioning (30 to 60 seconds), Vultr's dashboard shows the public IP. Copy it. You need it for step 6 and for the prompt.
 
