@@ -1,131 +1,161 @@
 ---
 title: "EP Helpdesk"
-description: "Support ticket system for PageMotor with AI-drafted replies, one-click approval, customer portal, and full conversation threading."
+description: "AI-first support ticket system for EP Suite plugins. Structured intake, two-pass auto-send pipeline, Pushover admin alerts, 48-hour retract window."
 sidebar:
   order: 34
 ---
 
-EP Helpdesk is a support ticket system for PageMotor. Customers raise tickets, conversations thread by ticket, staff reply, everything is searchable. The AI-drafted reply feature generates a proposed response so staff only need to review and approve, not write from scratch.
+EP Helpdesk is a support desk that accepts structured tickets from your customers, asks Claude to draft a reply grounded in your docs, safety-checks the draft with a second model pass, then either sends the reply automatically or flags it for a human. Live demo at [help.elmspark.com](https://help.elmspark.com/).
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Overview
 
-Core features:
-
-- **Ticket submission** via a form on your site, or forwarded email.
-- **Thread view** with the full conversation between customer and staff.
-- **Status lifecycle**: New → Open → Waiting on customer → Resolved → Closed.
-- **Staff assignment** and routing.
-- **AI-drafted replies** — click a button, an LLM reads the ticket history and proposes a response.
-- **One-click approval** — staff reviews the draft, edits if needed, clicks Send.
-- **Customer portal** — customers see their own tickets, reply, close their own when resolved.
-- **Email notifications** at every status change via EP Email.
+- **Structured intake form** with four primary categories (installing, something broken, a question, billing), each revealing a short subcategory list and category-specific context fields (plugin, version, site URL, hosting, error text).
+- **Auto-generated subject line** from category + plugin + site, editable before submit.
+- **Two-pass AI pipeline.** A first model drafts the reply from the customer's question and your knowledge base. A second pass checks the draft for accuracy. A clean pass auto-sends; a failed pass regenerates once; two failures flag for a human.
+- **Safety net keyword blocklist.** Tickets mentioning billing, refund, cancel, invoice, chargeback, legal, GDPR, complaint, lawyer, or threat never auto-send. They always wait for a human.
+- **Rate cap.** Max 20 auto-sends per hour across all tickets. Overflow queues for human review.
+- **48-hour retract window.** Admin can one-click retract an auto-sent reply and send an apology within 48 hours. After that, the ticket settles to a normal replied state.
+- **Resubmission detection.** Tickets from the same email within four days that match a prior ticket by content flag for human review, so a customer never gets two different AI replies to the same question.
+- **Pushover mobile notifications.** Admin gets a push on every flagged ticket, QA failure, resubmission, or auto-send. Deep-links to the specific ticket in admin.
+- **Tracking page.** Customers look up their ticket with a reference code, no login.
+- **Mobile responsive submission form.** Works one-handed on iPhone and Android.
 
 ## Requirements
 
 - **PageMotor 0.8.2b or later**
-- **EP Email** (required for notifications)
-- **EP Suite base class**
-
-For AI-drafted replies:
-
-- An API key from any of the supported LLM providers.
+- **EP Email** for confirmation and reply delivery
+- **EP Agent** for the AI proxy and CSRF handling
 
 ## Installation
 
-1. Install **EP Email** first.
+1. Install **EP Email** and **EP Agent** first.
 2. Download `ep-helpdesk.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
 3. Upload via **Plugins → Manage Plugins**. Activate.
-4. Create pages for the submission form and portal:
-   - `[helpdesk-submit]` on a page at `/support/submit/`.
-   - `[helpdesk-portal]` on a page at `/my-tickets/`.
+4. Place the intake form on a page with the `[helpdesk-form]` shortcode.
+5. Create a tracking page at `/track/` using the `[helpdesk-status]` shortcode.
 
 ## Shortcodes
 
 | Shortcode | Purpose |
 |---|---|
-| `[helpdesk-submit]` | Ticket submission form. Collects name, email, subject, body, and category. |
-| `[helpdesk-portal]` | Customer's ticket history. Shows their own tickets, lets them reply and mark resolved. |
+| `[helpdesk-form]` | Structured intake form with category chips, subcategory chips, contextual fields, and auto-subject. |
+| `[helpdesk-status]` | Ticket tracking page. Takes a reference code and an email. |
 
-## Categories and routing
+## The intake form
 
-From settings:
+The form has four primary categories, each revealing its own subcategory set:
 
-- **Categories.** Name, description, assigned staff. Common examples: "Billing", "Technical", "General enquiry".
-- **Default assignee.** Fallback staff member if no category-specific assignment.
+| Primary | Subcategories |
+|---|---|
+| Installing or upgrading | New install / Upgrading existing / Activating a licence / Removing a plugin |
+| Something isn't working | Site fully down / A feature is broken / Cosmetic / Intermittent |
+| I have a question | Plugin configuration / PageMotor core / Hosting / Design / Email / Payment / Other |
+| Billing, licence, account | Invoice / Licence key / Subscription / Refund / Change plan / Cancel / Other |
 
-When a ticket is submitted, it's routed to the assignee for that category.
+The form collects name, email, subject (auto-filled), and a message. Depending on category, it also asks for plugin slug, plugin version, site URL, hosting, or error text.
 
-## Status lifecycle
+## The auto-send pipeline
 
-- **New.** Just submitted, not yet acknowledged.
-- **Open.** Staff has seen it, actively working.
-- **Waiting on customer.** Staff replied, ball is in the customer's court.
-- **Resolved.** Staff marked it done. Customer gets asked to confirm.
-- **Closed.** Ticket is over, no further action.
+When a ticket is submitted, the plugin runs these checks in order:
 
-Status changes send emails: ticket received, reply posted, status updated.
+1. **Resubmission check.** Same email, within four days, similar content -> flag for human.
+2. **Keyword blocklist.** Sensitive terms -> flag for human.
+3. **Hourly rate cap.** Over 20 auto-sends this hour -> flag for human.
+4. **Draft generation.** First model drafts a reply grounded in the knowledge base.
+5. **QA pass.** Second model checks the draft against the customer's question.
+6. **If QA passes:** reply is sent automatically by email. Status is `auto_sent`.
+7. **If QA fails:** the draft is regenerated once with the QA feedback appended. If the second pass still fails, the ticket is flagged for a human.
 
-## AI-drafted replies
+The whole pipeline typically completes within 15 seconds for auto-sent replies.
 
-From the staff ticket view, click **Draft reply with AI**. The plugin:
+## Admin notifications via Pushover
 
-1. Reads the entire ticket history.
-2. Reads your help centre content (if connected) and recent tickets on similar topics.
-3. Asks the LLM to propose a reply.
-4. Renders the draft in the reply editor.
+The plugin can push a notification to your phone whenever something interesting happens: a ticket is flagged, an auto-send fires, the rate cap is hit, or a resubmission is detected. Setup takes about five minutes.
 
-Staff reviews, edits, and clicks **Send**. Or clicks **Discard** and writes their own.
+### 1. Create a Pushover account
 
-### Tuning the AI drafts
+Go to [pushover.net](https://pushover.net) and sign up. Install the Pushover app on your phone (iOS, Android) or desktop (macOS, Windows, Linux) and log in. There is a small one-off fee per device type after a seven-day trial.
 
-- **System prompt** in settings — tone, greeting, sign-off, what kinds of answers are OK to auto-draft (refunds no, password resets yes).
-- **Confidence threshold** — if the AI's self-rated confidence is below this, no draft is offered (forces human reply).
-- **Category-specific prompts** — override the system prompt per category. Billing questions can use one tone, technical another.
+### 2. Find your user key
 
-## Customer portal
+On the Pushover dashboard, your **User Key** is at the top right. It is a 30-character string. Copy it.
 
-At `[helpdesk-portal]`, authenticated customers (via EP Passkeys, EP Membership, or just email verification token) see:
+### 3. Create an application token
 
-- List of their tickets with status.
-- Click to see full thread.
-- Reply in the thread.
-- Mark as resolved.
+On pushover.net, go to **Create an Application / API Token**. Name it something like "EP Helpdesk". You can leave the description, URL, and icon empty. Submit. Copy the resulting **API Token**, another 30-character string.
 
-## Search
+### 4. Add the credentials to your site config
 
-Full-text search across tickets. Search customer email, subject, body, or staff replies. Use for:
+Edit the PHP config file that PageMotor loads early (often `config.php` at the site root) and add:
 
-- Finding the last ticket this customer raised.
-- Seeing how a similar issue was resolved previously.
-- Auditing staff responses.
+```php
+define('EP_HELPDESK_PUSHOVER_TOKEN', 'your-application-api-token');
+define('EP_HELPDESK_PUSHOVER_USER', 'your-user-key');
+```
+
+Save. The plugin reads these constants on every event, so no reload is needed.
+
+### 5. Test
+
+Submit a ticket with the word `refund` in the subject. The safety-net will catch it and fire a push to your phone. You should see it within a couple of seconds. Tap the notification to jump straight to the ticket in admin.
+
+### What triggers a notification
+
+| Event | Priority | Notes |
+|---|---|---|
+| Ticket flagged by safety net | Normal | Deep-link opens the ticket in admin |
+| Ticket flagged by QA double-fail | High | Needs human review, AI was not confident enough to send |
+| Resubmission detected | High | Same email, similar content, within four days |
+| Auto-send successful | Low | Silent unless you are watching |
+| Hourly cap hit | Normal | Investigate if this is sustained |
+
+### Turning it off
+
+Remove the two constants from config.php. The plugin silently skips Pushover when credentials are absent; nothing else is affected.
+
+## Retract window
+
+Every auto-sent reply is retractable for 48 hours. From the admin ticket view, click **Retract and apologise**. The plugin:
+
+1. Sends a short apology email to the customer ("Our automatic reply may have missed the mark, a human is taking another look").
+2. Sets the ticket status back to `review` and generates a fresh draft for your approval.
+
+After 48 hours, auto-sent tickets transition to `replied` and can no longer be retracted.
+
+## Resubmission detection
+
+The plugin prevents the same customer from getting two different AI replies to the same question. If a customer submits a ticket, then submits another within four days with a similar subject or body, the second is flagged for human review with a reference to the prior ticket.
+
+Matching uses a word-overlap score (Jaccard on tokens) with a threshold. Near-duplicates flag; genuinely different questions do not.
 
 ## Troubleshooting
 
-### "AI drafts aren't offered"
+### "Nothing happens after I click Submit"
 
-Check LLM API key in settings. Check confidence threshold isn't set so high that no ticket qualifies. Check the category's system prompt allows AI drafts (some categories might be configured to always require human).
+Check the browser console for JavaScript errors. The chip-based progressive disclosure requires JS. Without JS, the form still submits a ticket, but the category metadata is less complete.
+
+### "The AI draft was wrong"
+
+That is what the 48-hour retract window is for. From admin, open the ticket and hit **Retract and apologise**. Then regenerate the draft or write the reply yourself.
+
+If the same kind of wrongness keeps happening, tune the system prompt in EP Agent to give clearer grounding on the topic that is drifting.
+
+### "I am not getting Pushover notifications"
+
+1. Check `EP_HELPDESK_PUSHOVER_TOKEN` and `EP_HELPDESK_PUSHOVER_USER` are both defined.
+2. Check the Pushover app is installed and logged in on your phone.
+3. Submit a test ticket with the word `refund` in the subject. It should fire a safety-net ping.
+4. Check PHP error log for any Pushover failures.
 
 ### "Customer submitted a ticket but didn't get a confirmation email"
 
-EP Email is responsible for delivery. Check EP Email's log. Usually SMTP config issue.
+EP Email handles delivery. Check EP Email's log. Usually an SMTP credentials or from-address issue.
 
-### "Staff replies go to spam in customer inboxes"
+### "Auto-reply went to spam"
 
-Your site's from-address needs SPF/DKIM/DMARC set up. Check EP Email configuration and the domain's DNS. Consider routing through [EP Email ElmsPark](/plugins/ep-email-elmspark/) for better deliverability.
-
-### "Assignee isn't receiving their ticket notifications"
-
-Check the assignee has a valid email saved in their PageMotor user profile. Check EP Email isn't filtering internal emails.
-
-### "Portal shows no tickets but the customer insists they submitted one"
-
-Auth mismatch. The portal matches tickets by email address of the authenticated user. If they submitted with `alice@example.com` but logged into the portal as `alice.smith@work.com`, no tickets show.
-
-### "AI draft is factually wrong"
-
-Tune the system prompt. Add more context ("This is a SaaS for X. Refunds are allowed within 30 days."). Also use the category-specific prompt to limit what the AI can confidently answer.
+The site's from-address needs SPF, DKIM, and DMARC set up. Ask your hosting provider how to configure DKIM for outgoing mail.
 
 ## Feedback and corrections
 
