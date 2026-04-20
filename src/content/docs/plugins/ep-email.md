@@ -7,7 +7,7 @@ sidebar:
 
 EP Email routes your PageMotor site's outgoing mail through a proper SMTP server, provides JSON-defined contact forms with conditional logic and file uploads, logs every message, and exposes an extension API for building premium add-ons.
 
-Published by [ElmsPark Studio](https://elmspark.com). The canonical user guide lives at [epemail.elmspark.com](https://epemail.elmspark.com/). This page mirrors it in the documentation site.
+Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Overview
 
