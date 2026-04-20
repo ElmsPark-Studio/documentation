@@ -21,6 +21,8 @@ Published by [ElmsPark Studio](https://elmspark.com).
 - **Pushover mobile notifications.** Admin gets a push on every flagged ticket, QA failure, resubmission, or auto-send. Deep-links to the specific ticket in admin.
 - **Tracking page.** Customers look up their ticket with a reference code, no login.
 - **Mobile responsive submission form.** Works one-handed on iPhone and Android.
+- **Light / dark mode toggle.** Sun / moon button in the topbar. Follows the visitor's OS preference on first visit, manual override persists in `localStorage`.
+- **Docs-link hint.** Once a customer picks a known EP plugin in the intake form, a gold callout offers a direct link to that plugin's docs page. Deflects tickets whose answer is one click away.
 
 ## Requirements
 
@@ -55,6 +57,8 @@ The form has four primary categories, each revealing its own subcategory set:
 | Billing, licence, account | Invoice / Licence key / Subscription / Refund / Change plan / Cancel / Other |
 
 The form collects name, email, subject (auto-filled), and a message. Depending on category, it also asks for plugin slug, plugin version, site URL, hosting, or error text.
+
+When a customer picks a known EP plugin in the plugin-slug field, a gold callout appears below it with a one-click link to that plugin's docs page (`https://documentation.elmspark.com/plugins/<slug>/`). The matcher tolerates variants: `ep-email`, `ep email`, `EP_Email`, `EPEMAIL`, and `email` all resolve to `ep-email`. Free-typed plugin names that do not resolve show no hint (no broken links).
 
 ## The auto-send pipeline
 
@@ -108,12 +112,22 @@ Submit a ticket with the word `refund` in the subject. The safety-net will catch
 | Ticket flagged by safety net | Normal | Deep-link opens the ticket in admin |
 | Ticket flagged by QA double-fail | High | Needs human review, AI was not confident enough to send |
 | Resubmission detected | High | Same email, similar content, within four days |
-| Auto-send successful | Low | Silent unless you are watching |
+| Auto-send successful | Normal (warm-up) | Ambient confirmation that auto-sends are firing. Revert to Low in the code once weekly ticket volume makes Normal too noisy. |
 | Hourly cap hit | Normal | Investigate if this is sustained |
 
 ### Turning it off
 
 Remove the two constants from config.php. The plugin silently skips Pushover when credentials are absent; nothing else is affected.
+
+## Light / dark mode
+
+The helpdesk form and admin both support a theme toggle. A small sun / moon button sits in the topbar.
+
+- **On first visit**, the form follows the visitor's operating-system preference (`prefers-color-scheme`).
+- **Clicking the toggle** cycles through auto -> light -> dark -> auto. The choice persists in `localStorage` as `ep-helpdesk-theme` and is applied before the first paint, so dark-mode visitors do not see a flash of light.
+- **No server side setting.** Each visitor controls their own theme; no admin configuration needed.
+
+Colours come from a single token set (`--ep-*` variables) with a dark override block, so a future skin change needs one file touched rather than one per surface.
 
 ## Retract window
 
