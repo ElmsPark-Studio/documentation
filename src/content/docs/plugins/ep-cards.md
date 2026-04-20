@@ -80,13 +80,15 @@ If you are migrating a Thesis Focus Cards site, use the EP Cards Importer add-on
 
 ## Image upload
 
-From v1.0.5 onwards, the Image field in the card edit form uses PageMotor's native upload widget.
+From v1.0.6 onwards, the Image field in the card edit form uses PageMotor's native upload widget.
 
 - **Drag and drop** an image onto the drop zone, or click to browse.
 - **Paste a URL** directly into the URL input if your image is already hosted elsewhere.
 - **Alt text** has its own input and should be filled in for anything meaningful to screen readers.
 
 Supported types: JPG, JPEG, PNG, GIF, WebP, SVG. Files land in `user-content/uploads/ep-cards/` on your server. Server-side filtering rejects anything that is not in the allowed list, including server-executable extensions regardless of client-side claims.
+
+> **Note:** v1.0.5 shipped the same feature but with a version-compatibility bug that could crash sites running PageMotor earlier than 0.8. v1.0.5 has been withdrawn from the update channel. If you have v1.0.5 installed, upgrade to v1.0.6.
 
 ## Shortcodes
 
