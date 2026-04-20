@@ -1,6 +1,6 @@
 ---
 title: "EP Assistant"
-description: Browser-based AI website management for PageMotor. Your customers manage their site in plain English through a chat interface powered by Claude, GPT, or any of nine LLM providers.
+description: "Browser-based AI website management for PageMotor. Your customers manage their site in plain English through a chat interface powered by Claude, GPT, or any of nine LLM providers."
 sidebar:
   order: 7
 ---

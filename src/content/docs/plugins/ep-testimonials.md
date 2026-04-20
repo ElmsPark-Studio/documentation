@@ -1,6 +1,6 @@
 ---
 title: "EP Testimonials"
-description: Collect and display customer testimonials on PageMotor. Star ratings, moderation, Schema.org Review markup, carousel or grid display.
+description: "Collect and display customer testimonials on PageMotor. Star ratings, moderation, Schema.org Review markup, carousel or grid display."
 sidebar:
   order: 55
 ---

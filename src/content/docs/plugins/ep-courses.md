@@ -1,6 +1,6 @@
 ---
 title: "EP Courses"
-description: Course and lesson management for PageMotor with enrolment, progress tracking, and 24-language multilingual content support. Work in progress.
+description: "Course and lesson management for PageMotor with enrolment, progress tracking, and 24-language multilingual content support. Work in progress."
 sidebar:
   order: 16
 ---

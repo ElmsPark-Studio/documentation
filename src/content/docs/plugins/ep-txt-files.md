@@ -1,6 +1,6 @@
 ---
 title: "EP Txt Files"
-description: Dynamically serve robots.txt and llms.txt from the PageMotor admin. Edit through a UI instead of FTP. Version history included.
+description: "Dynamically serve robots.txt and llms.txt from the PageMotor admin. Edit through a UI instead of FTP. Version history included."
 sidebar:
   order: 57
 ---

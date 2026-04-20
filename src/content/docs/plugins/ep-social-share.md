@@ -1,6 +1,6 @@
 ---
 title: "EP Social Share"
-description: Privacy-friendly share buttons for X/Twitter, Facebook, LinkedIn, and email. No tracking scripts, no cookies, just URL-based share links.
+description: "Privacy-friendly share buttons for X/Twitter, Facebook, LinkedIn, and email. No tracking scripts, no cookies, just URL-based share links."
 sidebar:
   order: 53
 ---

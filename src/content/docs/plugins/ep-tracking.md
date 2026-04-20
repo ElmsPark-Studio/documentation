@@ -1,6 +1,6 @@
 ---
 title: "EP Tracking"
-description: Tracked redirect links with click analytics and conversion attribution. A built-in link shortener for campaigns and affiliate tracking across EP Suite.
+description: "Tracked redirect links with click analytics and conversion attribution. A built-in link shortener for campaigns and affiliate tracking across EP Suite."
 sidebar:
   order: 56
 ---

@@ -1,6 +1,6 @@
 ---
 title: "EP Email Advanced Forms"
-description: Adds compound and layout field types to EP Email contact forms: name, address, section, HTML, email confirmation, and rating fields.
+description: "Adds compound and layout field types to EP Email contact forms: name, address, section, HTML, email confirmation, and rating fields."
 sidebar:
   order: 24
 ---

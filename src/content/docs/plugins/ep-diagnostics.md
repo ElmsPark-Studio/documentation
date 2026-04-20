@@ -1,6 +1,6 @@
 ---
 title: "EP Diagnostics"
-description: System diagnostics and environment report for PageMotor. One-click copy of your PHP/MySQL/server details plus active plugins, for sharing in support requests.
+description: "System diagnostics and environment report for PageMotor. One-click copy of your PHP/MySQL/server details plus active plugins, for sharing in support requests."
 sidebar:
   order: 17
 ---

@@ -1,6 +1,6 @@
 ---
 title: "EP Redirects"
-description: URL redirect manager for PageMotor. 301s and 302s, wildcard patterns, bulk import for migrations, 404 log to spot missing redirects.
+description: "URL redirect manager for PageMotor. 301s and 302s, wildcard patterns, bulk import for migrations, 404 log to spot missing redirects."
 sidebar:
   order: 44
 ---

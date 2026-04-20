@@ -1,6 +1,6 @@
 ---
 title: "EP Email File Uploads"
-description: Adds drag-and-drop file upload fields to EP Email contact forms. Multi-file, MIME filtering, size caps, admin-side download of received files.
+description: "Adds drag-and-drop file upload fields to EP Email contact forms. Multi-file, MIME filtering, size caps, admin-side download of received files."
 sidebar:
   order: 27
 ---

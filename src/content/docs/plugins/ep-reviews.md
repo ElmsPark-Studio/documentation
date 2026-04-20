@@ -1,6 +1,6 @@
 ---
 title: "EP Reviews"
-description: Product reviews for EP Ecommerce. Star ratings, verified-purchase badges, moderation, Schema.org Product + Review markup for rich search results.
+description: "Product reviews for EP Ecommerce. Star ratings, verified-purchase badges, moderation, Schema.org Product + Review markup for rich search results."
 sidebar:
   order: 45
 ---

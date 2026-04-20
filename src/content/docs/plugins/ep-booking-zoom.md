@@ -1,6 +1,6 @@
 ---
 title: "EP Booking Zoom"
-description: Zoom meeting add-on for EP Booking. Creates a Zoom meeting automatically when a booking is confirmed, deletes it on cancellation. Server-to-Server OAuth.
+description: "Zoom meeting add-on for EP Booking. Creates a Zoom meeting automatically when a booking is confirmed, deletes it on cancellation. Server-to-Server OAuth."
 sidebar:
   order: 10
 ---

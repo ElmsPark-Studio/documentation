@@ -1,6 +1,6 @@
 ---
 title: "EP Voice Messages"
-description: Voice message recording widget for PageMotor. Visitors record audio in the browser, submission is transcribed, admin gets email notification with audio and transcript.
+description: "Voice message recording widget for PageMotor. Visitors record audio in the browser, submission is transcribed, admin gets email notification with audio and transcript."
 sidebar:
   order: 58
 ---

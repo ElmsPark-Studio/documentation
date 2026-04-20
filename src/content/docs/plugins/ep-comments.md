@@ -1,6 +1,6 @@
 ---
 title: "EP Comments"
-description: Comment system for PageMotor with moderation, threaded replies, spam protection, Gravatar avatars, and WordPress comment import.
+description: "Comment system for PageMotor with moderation, threaded replies, spam protection, Gravatar avatars, and WordPress comment import."
 sidebar:
   order: 14
 ---

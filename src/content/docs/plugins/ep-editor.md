@@ -1,6 +1,6 @@
 ---
 title: "EP Editor"
-description: Visual inline page editor for PageMotor. Admins click text on the live site and edit in place with a floating toolbar. No admin panel trip required. Work in progress.
+description: "Visual inline page editor for PageMotor. Admins click text on the live site and edit in place with a floating toolbar. No admin panel trip required. Work in progress."
 sidebar:
   order: 23
 ---

@@ -1,6 +1,6 @@
 ---
 title: "EP Holiday Bookings"
-description: Holiday package management for independent travel agents. Package listings, enquiry-driven booking flow, deposit and balance payments via Stripe, traveller management with encrypted passport storage.
+description: "Holiday package management for independent travel agents. Package listings, enquiry-driven booking flow, deposit and balance payments via Stripe, traveller management with encrypted passport storage."
 sidebar:
   order: 35
 ---

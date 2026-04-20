@@ -1,6 +1,6 @@
 ---
 title: "EP Agent"
-description: Claude Code CLI embedded in the PageMotor admin panel. Chat with a full AI coding agent that can read files, edit code, run shell commands, and debug your site, all server-side.
+description: "Claude Code CLI embedded in the PageMotor admin panel. Chat with a full AI coding agent that can read files, edit code, run shell commands, and debug your site, all server-side."
 sidebar:
   order: 5
 ---

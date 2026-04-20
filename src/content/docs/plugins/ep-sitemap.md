@@ -1,6 +1,6 @@
 ---
 title: "EP Sitemap"
-description: Dynamic XML sitemap generation for PageMotor. Auto-updated, valid sitemaps.org schema, supports image and priority hints.
+description: "Dynamic XML sitemap generation for PageMotor. Auto-updated, valid sitemaps.org schema, supports image and priority hints."
 sidebar:
   order: 52
 ---

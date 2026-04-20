@@ -1,6 +1,6 @@
 ---
 title: "EP Ecommerce Products"
-description: Styled checkout UI for EP Ecommerce. Three layout options (card, inline, modal), configurable price placement, purchase confirmation emails tailored to each product type.
+description: "Styled checkout UI for EP Ecommerce. Three layout options (card, inline, modal), configurable price placement, purchase confirmation emails tailored to each product type."
 sidebar:
   order: 19
 ---

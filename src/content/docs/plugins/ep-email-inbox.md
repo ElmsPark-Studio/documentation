@@ -1,6 +1,6 @@
 ---
 title: "EP Email Inbox"
-description: AI-powered incoming email handler for EP Email. Polls an IMAP mailbox, classifies messages, and auto-replies using your LLM provider. Useful for first-line support triage.
+description: "AI-powered incoming email handler for EP Email. Polls an IMAP mailbox, classifies messages, and auto-replies using your LLM provider. Useful for first-line support triage."
 sidebar:
   order: 28
 ---

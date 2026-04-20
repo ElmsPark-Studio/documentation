@@ -1,6 +1,6 @@
 ---
 title: "EP Email Quiz"
-description: Adds quiz field types with automatic scoring and grading to EP Email contact forms. Multiple choice, true/false, rating, and configurable grade bands.
+description: "Adds quiz field types with automatic scoring and grading to EP Email contact forms. Multiple choice, true/false, rating, and configurable grade bands."
 sidebar:
   order: 29
 ---

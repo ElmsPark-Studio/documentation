@@ -1,6 +1,6 @@
 ---
 title: "EP Ecommerce Subscriptions"
-description: Recurring billing for EP Ecommerce. Provider-agnostic subscription lifecycle, automatic membership grants, UK/EU compliance, dunning and grace periods, self-service portal.
+description: "Recurring billing for EP Ecommerce. Provider-agnostic subscription lifecycle, automatic membership grants, UK/EU compliance, dunning and grace periods, self-service portal."
 sidebar:
   order: 22
 ---

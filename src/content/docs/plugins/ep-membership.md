@@ -1,6 +1,6 @@
 ---
 title: "EP Membership"
-description: Public membership for PageMotor. Registration, login, profiles, password management, and access control for gated content and courses.
+description: "Public membership for PageMotor. Registration, login, profiles, password management, and access control for gated content and courses."
 sidebar:
   order: 38
 ---

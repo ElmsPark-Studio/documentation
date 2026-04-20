@@ -1,6 +1,6 @@
 ---
 title: "EP Gallery Presentation"
-description: Master crop, gallery frame aspect ratios, focal point picker, and per-image display settings for EP Gallery. Photographer-grade presentation controls.
+description: "Master crop, gallery frame aspect ratios, focal point picker, and per-image display settings for EP Gallery. Photographer-grade presentation controls."
 sidebar:
   order: 32
 ---

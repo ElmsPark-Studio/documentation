@@ -1,6 +1,6 @@
 ---
 title: "EP Cards Importer"
-description: WordPress-to-PageMotor migration add-on for EP Cards. Reads JSON exports from EP WP Exporter, rehosts images locally, commits groups and cards as a single rollbackable batch.
+description: "WordPress-to-PageMotor migration add-on for EP Cards. Reads JSON exports from EP WP Exporter, rehosts images locally, commits groups and cards as a single rollbackable batch."
 sidebar:
   order: 13
 ---

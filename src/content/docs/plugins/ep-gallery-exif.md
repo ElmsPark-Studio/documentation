@@ -1,6 +1,6 @@
 ---
 title: "EP Gallery EXIF"
-description: Enhanced EXIF extraction and display for EP Gallery. Lens ID, shooting mode, white balance, GPS, copyright fields, and camera-specific metadata.
+description: "Enhanced EXIF extraction and display for EP Gallery. Lens ID, shooting mode, white balance, GPS, copyright fields, and camera-specific metadata."
 sidebar:
   order: 31
 ---

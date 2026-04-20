@@ -1,6 +1,6 @@
 ---
 title: "EP FAQ"
-description: FAQ management for PageMotor with accordion display, search, Schema.org FAQPage structured data, voting, and analytics. Import from Markdown or JSON.
+description: "FAQ management for PageMotor with accordion display, search, Schema.org FAQPage structured data, voting, and analytics. Import from Markdown or JSON."
 sidebar:
   order: 30
 ---

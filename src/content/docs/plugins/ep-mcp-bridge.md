@@ -1,6 +1,6 @@
 ---
 title: "EP MCP Bridge"
-description: JSON-RPC API for remote PageMotor content and plugin management. Lets Claude Desktop, Claude Code, or any MCP-aware client drive your site from outside.
+description: "JSON-RPC API for remote PageMotor content and plugin management. Lets Claude Desktop, Claude Code, or any MCP-aware client drive your site from outside."
 sidebar:
   order: 37
 ---

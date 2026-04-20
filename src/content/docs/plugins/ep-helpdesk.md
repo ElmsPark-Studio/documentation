@@ -1,6 +1,6 @@
 ---
 title: "EP Helpdesk"
-description: Support ticket system for PageMotor with AI-drafted replies, one-click approval, customer portal, and full conversation threading.
+description: "Support ticket system for PageMotor with AI-drafted replies, one-click approval, customer portal, and full conversation threading."
 sidebar:
   order: 34
 ---

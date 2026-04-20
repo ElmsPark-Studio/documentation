@@ -1,6 +1,6 @@
 ---
 title: "EP Audit Log"
-description: Activity log for PageMotor. Tracks content changes, user registrations, and logins via passive database observation, with a public log API for other plugins.
+description: "Activity log for PageMotor. Tracks content changes, user registrations, and logins via passive database observation, with a public log API for other plugins."
 sidebar:
   order: 8
 ---

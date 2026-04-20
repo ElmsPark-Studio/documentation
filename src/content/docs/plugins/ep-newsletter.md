@@ -1,6 +1,6 @@
 ---
 title: "EP Newsletter"
-description: Newsletter management for PageMotor. Subscribers, lists, campaigns with batch sending, open and click tracking, autoresponder sequences, content digests. Delivery via EP Email.
+description: "Newsletter management for PageMotor. Subscribers, lists, campaigns with batch sending, open and click tracking, autoresponder sequences, content digests. Delivery via EP Email."
 sidebar:
   order: 39
 ---

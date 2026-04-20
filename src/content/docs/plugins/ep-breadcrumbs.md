@@ -1,6 +1,6 @@
 ---
 title: "EP Breadcrumbs"
-description: Breadcrumb navigation for PageMotor with Schema.org structured data and Focus/Thesis-compatible CSS classes for migration-friendly styling.
+description: "Breadcrumb navigation for PageMotor with Schema.org structured data and Focus/Thesis-compatible CSS classes for migration-friendly styling."
 sidebar:
   order: 11
 ---

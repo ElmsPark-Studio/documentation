@@ -1,6 +1,6 @@
 ---
 title: "EP Password Reset"
-description: Email-based password reset for PageMotor admin accounts. Tokenised reset links, single-use, time-limited. Integrates with EP Email.
+description: "Email-based password reset for PageMotor admin accounts. Tokenised reset links, single-use, time-limited. Integrates with EP Email."
 sidebar:
   order: 42
 ---

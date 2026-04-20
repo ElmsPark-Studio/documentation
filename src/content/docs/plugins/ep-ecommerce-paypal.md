@@ -1,6 +1,6 @@
 ---
 title: "EP Ecommerce PayPal"
-description: PayPal payment provider for EP Ecommerce. Orders API v2, client-side approve via PayPal Buttons, webhook verification, sandbox and live modes.
+description: "PayPal payment provider for EP Ecommerce. Orders API v2, client-side approve via PayPal Buttons, webhook verification, sandbox and live modes."
 sidebar:
   order: 21
 ---

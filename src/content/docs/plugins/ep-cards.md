@@ -1,6 +1,6 @@
 ---
 title: "EP Cards"
-description: Native card groups and grids for PageMotor with LLM-driven import, per-card style overrides, image upload, and a public API.
+description: "Native card groups and grids for PageMotor with LLM-driven import, per-card style overrides, image upload, and a public API."
 sidebar:
   order: 2
 ---

@@ -1,6 +1,6 @@
 ---
 title: "EP Affiliate"
-description: Affiliate management for PageMotor — partner recruitment, referral tracking, commission tiers, payouts, coupons, creatives, and a self-service affiliate portal.
+description: "Affiliate management for PageMotor — partner recruitment, referral tracking, commission tiers, payouts, coupons, creatives, and a self-service affiliate portal."
 sidebar:
   order: 4
 ---

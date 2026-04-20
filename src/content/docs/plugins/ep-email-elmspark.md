@@ -1,6 +1,6 @@
 ---
 title: "EP Email ElmsPark"
-description: ElmsPark Email managed delivery service for EP Email. One API key, proper SMTP via AWS SES, no server config. Drop-in alternative to configuring SMTP yourself.
+description: "ElmsPark Email managed delivery service for EP Email. One API key, proper SMTP via AWS SES, no server config. Drop-in alternative to configuring SMTP yourself."
 sidebar:
   order: 26
 ---

@@ -1,6 +1,6 @@
 ---
 title: "EP RSS"
-description: RSS 2.0 and Atom 1.0 feed generation for PageMotor. Auto-publishes feeds at conventional URLs with configurable content filters.
+description: "RSS 2.0 and Atom 1.0 feed generation for PageMotor. Auto-publishes feeds at conventional URLs with configurable content filters."
 sidebar:
   order: 46
 ---

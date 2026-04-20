@@ -1,6 +1,6 @@
 ---
 title: "EP SEO"
-description: SEO essentials for PageMotor. Open Graph, Twitter Card, favicon, Schema.org structured data. Per-page overrides and site-wide defaults.
+description: "SEO essentials for PageMotor. Open Graph, Twitter Card, favicon, Schema.org structured data. Per-page overrides and site-wide defaults."
 sidebar:
   order: 50
 ---

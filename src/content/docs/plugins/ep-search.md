@@ -1,6 +1,6 @@
 ---
 title: "EP Search"
-description: Site search for PageMotor. Search form shortcode, results page, title and body matching, basic filtering, optional search analytics.
+description: "Site search for PageMotor. Search form shortcode, results page, title and body matching, basic filtering, optional search analytics."
 sidebar:
   order: 48
 ---

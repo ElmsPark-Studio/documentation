@@ -1,6 +1,6 @@
 ---
 title: "EP Analytics"
-description: Privacy-respecting page view analytics for PageMotor. Server-side tracking with no cookies, no JavaScript pixel, no external services, no GDPR consent required.
+description: "Privacy-respecting page view analytics for PageMotor. Server-side tracking with no cookies, no JavaScript pixel, no external services, no GDPR consent required."
 sidebar:
   order: 6
 ---

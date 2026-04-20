@@ -1,6 +1,6 @@
 ---
 title: "EP Bunny Fonts"
-description: GDPR-compliant font delivery for PageMotor. Redirects Google Fonts requests to Bunny Fonts at the server level so visitor data never reaches Google.
+description: "GDPR-compliant font delivery for PageMotor. Redirects Google Fonts requests to Bunny Fonts at the server level so visitor data never reaches Google."
 sidebar:
   order: 12
 ---

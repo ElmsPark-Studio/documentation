@@ -1,6 +1,6 @@
 ---
 title: "EP Ecommerce"
-description: Information product ecommerce for PageMotor. Memberships, digital downloads, license keys, and subscriptions, with Stripe and PayPal via separate extensions.
+description: "Information product ecommerce for PageMotor. Memberships, digital downloads, license keys, and subscriptions, with Stripe and PayPal via separate extensions."
 sidebar:
   order: 18
 ---

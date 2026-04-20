@@ -1,6 +1,6 @@
 ---
 title: "EP Passkeys"
-description: Passwordless login for PageMotor using WebAuthn passkeys. Face ID, Touch ID, Windows Hello, or hardware keys instead of passwords.
+description: "Passwordless login for PageMotor using WebAuthn passkeys. Face ID, Touch ID, Windows Hello, or hardware keys instead of passwords."
 sidebar:
   order: 41
 ---

@@ -1,6 +1,6 @@
 ---
 title: "EP Booking"
-description: Online appointment scheduling for PageMotor. Services, staff, availability, payments via Stripe, automated notifications via EP Email, Zoom integration.
+description: "Online appointment scheduling for PageMotor. Services, staff, availability, payments via Stripe, automated notifications via EP Email, Zoom integration."
 sidebar:
   order: 9
 ---

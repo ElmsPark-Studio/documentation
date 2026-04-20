@@ -1,6 +1,6 @@
 ---
 title: "EP Maintenance"
-description: Coming-soon and maintenance-mode overlays for your PageMotor site. Whitelisted admin access, configurable page, email capture for launches.
+description: "Coming-soon and maintenance-mode overlays for your PageMotor site. Whitelisted admin access, configurable page, email capture for launches."
 sidebar:
   order: 36
 ---

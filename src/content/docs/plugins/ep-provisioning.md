@@ -1,6 +1,6 @@
 ---
 title: "EP Provisioning"
-description: Remote provisioning receiver for PageMotor sites. Accepts setup requests from a Discovery AI central server and auto-configures the fresh site.
+description: "Remote provisioning receiver for PageMotor sites. Accepts setup requests from a Discovery AI central server and auto-configures the fresh site."
 sidebar:
   order: 43
 ---

@@ -1,6 +1,6 @@
 ---
 title: "EP Ecommerce Stripe"
-description: Stripe payment provider for EP Ecommerce. Full PaymentIntent lifecycle, webhook verification, admin refunds, test/live mode switching.
+description: "Stripe payment provider for EP Ecommerce. Full PaymentIntent lifecycle, webhook verification, admin refunds, test/live mode switching."
 sidebar:
   order: 20
 ---

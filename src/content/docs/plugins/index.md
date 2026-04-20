@@ -1,6 +1,6 @@
 ---
 title: EP Suite plugins
-description: User guides for every ElmsPark plugin in the EP Suite. Setup, configuration, troubleshooting, real-world examples.
+description: "User guides for every ElmsPark plugin in the EP Suite. Setup, configuration, troubleshooting, real-world examples."
 sidebar:
   order: 0
 ---

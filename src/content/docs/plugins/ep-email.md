@@ -1,6 +1,6 @@
 ---
 title: "EP Email"
-description: Reliable SMTP delivery, JSON-defined contact forms, delivery logging, and a developer extension API for PageMotor.
+description: "Reliable SMTP delivery, JSON-defined contact forms, delivery logging, and a developer extension API for PageMotor."
 sidebar:
   order: 1
 ---

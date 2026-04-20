@@ -1,6 +1,6 @@
 ---
 title: "EP Email AI Reply"
-description: AI-powered draft replies for EP Email contact form submissions. Generates a professional draft response you can review, edit, and send.
+description: "AI-powered draft replies for EP Email contact form submissions. Generates a professional draft response you can review, edit, and send."
 sidebar:
   order: 25
 ---

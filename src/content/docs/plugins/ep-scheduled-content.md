@@ -1,6 +1,6 @@
 ---
 title: "EP Scheduled Content"
-description: Schedule draft pages and posts for automatic publication at a future date and time. No manual intervention needed.
+description: "Schedule draft pages and posts for automatic publication at a future date and time. No manual intervention needed."
 sidebar:
   order: 47
 ---

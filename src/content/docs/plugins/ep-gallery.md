@@ -1,6 +1,6 @@
 ---
 title: "EP Gallery"
-description: Album-based image gallery for PageMotor with drag-and-drop upload, client-side compression, lightbox, EXIF display, slideshow, and responsive grid layout.
+description: "Album-based image gallery for PageMotor with drag-and-drop upload, client-side compression, lightbox, EXIF display, slideshow, and responsive grid layout."
 sidebar:
   order: 3
 ---

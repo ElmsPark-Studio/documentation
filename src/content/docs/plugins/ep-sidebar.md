@@ -1,6 +1,6 @@
 ---
 title: "EP Sidebar"
-description: Activates PageMotor's sidebar layout with manageable widget blocks. Pick which pages get sidebars and which widgets they contain.
+description: "Activates PageMotor's sidebar layout with manageable widget blocks. Pick which pages get sidebars and which widgets they contain."
 sidebar:
   order: 51
 ---

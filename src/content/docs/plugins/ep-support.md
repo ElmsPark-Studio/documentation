@@ -1,6 +1,6 @@
 ---
 title: "EP Support"
-description: AI-powered support chatbot for PageMotor administrators. Full knowledge base of every EP Suite plugin, answers how-to questions in context.
+description: "AI-powered support chatbot for PageMotor administrators. Full knowledge base of every EP Suite plugin, answers how-to questions in context."
 sidebar:
   order: 54
 ---

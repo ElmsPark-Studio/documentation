@@ -1,6 +1,6 @@
 ---
 title: "EP Newsletter SendGrid"
-description: SendGrid delivery driver for EP Newsletter. High-volume sending with automatic bounce and complaint handling via SendGrid webhooks.
+description: "SendGrid delivery driver for EP Newsletter. High-volume sending with automatic bounce and complaint handling via SendGrid webhooks."
 sidebar:
   order: 40
 ---

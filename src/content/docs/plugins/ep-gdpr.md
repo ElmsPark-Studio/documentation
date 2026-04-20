@@ -1,6 +1,6 @@
 ---
 title: "EP GDPR"
-description: GDPR compliance toolkit for PageMotor. Cookie consent banner, data subject request handling, consent logging, and cross-plugin integration with EP Email, EP Newsletter, and EP Booking.
+description: "GDPR compliance toolkit for PageMotor. Cookie consent banner, data subject request handling, consent logging, and cross-plugin integration with EP Email, EP Newsletter, and EP Booking."
 sidebar:
   order: 33
 ---

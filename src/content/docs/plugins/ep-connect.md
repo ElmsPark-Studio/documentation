@@ -1,6 +1,6 @@
 ---
 title: "EP Connect"
-description: Outbound webhooks for PageMotor. Send JSON payloads to Zapier, Make, Slack, or any URL when events happen on your site. HMAC-signed, sensitive-field-stripped.
+description: "Outbound webhooks for PageMotor. Send JSON payloads to Zapier, Make, Slack, or any URL when events happen on your site. HMAC-signed, sensitive-field-stripped."
 sidebar:
   order: 15
 ---

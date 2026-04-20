@@ -1,6 +1,6 @@
 ---
 title: "EP SendIt"
-description: ElmsPark Email (send.elmspark.com) transport driver for EP Email. Managed delivery powered by AWS SES. Single-API-key setup.
+description: "ElmsPark Email (send.elmspark.com) transport driver for EP Email. Managed delivery powered by AWS SES. Single-API-key setup."
 sidebar:
   order: 49
 ---
