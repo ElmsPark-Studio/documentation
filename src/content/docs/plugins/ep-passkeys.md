@@ -24,7 +24,7 @@ Why passkeys:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 - **HTTPS** required — WebAuthn does not work over plain HTTP.
 - **Modern browser** — Chrome, Firefox, Safari, Edge (recent versions).

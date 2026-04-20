@@ -38,7 +38,7 @@ If any of those matter to you, EP Analytics is not enough. If none of them matte
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 
 That's it. No external service accounts, no JavaScript SDK, no Google tag manager.
 

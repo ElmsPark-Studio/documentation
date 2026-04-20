@@ -24,7 +24,7 @@ Each field type plugs into EP Email's form-definition JSON and renders automatic
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Email** (required; this is an extension of EP Email)
 - **EP Suite base class**
 

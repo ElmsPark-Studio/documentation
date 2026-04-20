@@ -24,7 +24,7 @@ If you send fewer than 1,000 emails a month and your SMTP provider is happy, you
 
 ## Requirements
 
-- **PageMotor 0.6 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Newsletter** (required)
 - **EP Suite base class**
 - **A SendGrid account** with an API key

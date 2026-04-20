@@ -28,7 +28,7 @@ EP SEO is about making sure the technical SEO metadata is right. The content qua
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 
 ## Installation

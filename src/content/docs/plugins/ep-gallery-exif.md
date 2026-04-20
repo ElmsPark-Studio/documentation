@@ -26,7 +26,7 @@ On top of EP Gallery's default EXIF:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Gallery** (required; this is an extension)
 - **EP Suite base class**
 - **PHP exif extension** installed on your server (usually standard)

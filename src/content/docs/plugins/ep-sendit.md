@@ -25,7 +25,7 @@ Configuring SMTP well is fiddly. Getting into inboxes reliably requires SPF, DKI
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Email** (required)
 - **EP Suite base class**
 - **A send.elmspark.com account**

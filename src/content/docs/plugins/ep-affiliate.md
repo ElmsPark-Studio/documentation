@@ -29,7 +29,7 @@ What you get:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite 1.9 or later**
 - **EP Email** (required for notifications)
 

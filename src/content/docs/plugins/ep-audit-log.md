@@ -21,7 +21,7 @@ The plugin works by observing the database every 30 seconds rather than hooking 
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class** (bundled)
 
 ## Installation

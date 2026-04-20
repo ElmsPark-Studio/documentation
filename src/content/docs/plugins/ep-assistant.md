@@ -54,7 +54,7 @@ Every provider is configured with API key, model, and max tokens. Swap providers
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **VPS hosting** (not shared). The assistant runs long-polling AJAX and benefits from persistent connections.
 - **An API key** from one of the nine providers above.
 - **EP Email** (required for the `send_email` tool).

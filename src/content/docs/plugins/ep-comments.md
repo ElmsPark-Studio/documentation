@@ -28,7 +28,7 @@ Features:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class** (bundled)
 - **EP Email** (optional but recommended for styled notification emails; without it, the plugin falls back to PHP's `mail()`)
 

@@ -35,7 +35,7 @@ Standard PageMotor plugin install, under a minute.
 
 **How to verify:** after activation, go to **Plugins then Plugin Settings** and open **EP Cards**. You should see five sections: Generate Cards with AI, Groups & Cards, Global Defaults, Import History, and Usage. If those appear, you are installed and ready.
 
-Requires **PageMotor 0.7+**.
+Requires **PageMotor 0.8.2b or later**.
 
 ## Creating cards
 

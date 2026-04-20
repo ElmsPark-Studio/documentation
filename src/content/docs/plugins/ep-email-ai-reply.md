@@ -22,7 +22,7 @@ The reply goes out through EP Email's normal SMTP config, so it's signed, tracke
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Email** (required)
 - **EP Suite base class**
 - **An API key** from a supported LLM provider (Anthropic, OpenAI, etc. — same options as [EP Assistant](/plugins/ep-assistant/))

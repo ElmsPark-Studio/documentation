@@ -34,7 +34,7 @@ Every form submission, newsletter signup, and booking that happens while EP GDPR
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 
 Coordinates with (optional):

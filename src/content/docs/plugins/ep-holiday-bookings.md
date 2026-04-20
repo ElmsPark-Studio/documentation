@@ -67,7 +67,7 @@ Encrypted sensitive fields, consent logging via EP GDPR, full-record deletion on
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Email** (required for notifications)
 - **EP Suite base class**
 - **Stripe account** (for deposit / balance collection)

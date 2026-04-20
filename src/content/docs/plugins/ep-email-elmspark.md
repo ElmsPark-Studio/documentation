@@ -24,7 +24,7 @@ ElmsPark Email bundles all of that behind a single API key. Sign up at [send.elm
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Email** (required; this is a transport driver for EP Email)
 - **EP Suite base class**
 - **An ElmsPark Email account** from [send.elmspark.com](https://send.elmspark.com)

@@ -21,7 +21,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Email** (for admin alerts on new submissions)
 - **EP Suite base class**
 

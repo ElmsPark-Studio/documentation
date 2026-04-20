@@ -67,7 +67,7 @@ For Download products, the customer gets a time-limited tokenised URL in their c
 
 ## Requirements
 
-- **PageMotor 0.7b or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 - **EP Ecommerce Products** for the checkout UI.
 - **At least one payment extension**: EP Ecommerce Stripe or EP Ecommerce PayPal (or both).

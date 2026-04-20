@@ -21,7 +21,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Ecommerce** (required — reviews attach to ecommerce products)
 - **EP Suite base class**
 - **EP Email** (for review notifications and reply alerts)

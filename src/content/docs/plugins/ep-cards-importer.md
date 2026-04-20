@@ -22,7 +22,7 @@ Everything in one import shares a batch UUID. If it goes wrong, the **Delete** b
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Cards core** (must be active before the importer will commit)
 - PHP limits: **50M** `upload_max_filesize`, **50M** `post_max_size`, **256M** `memory_limit`. The settings page shows a preflight panel that flags any of these as red if they are too low.
 - **EP WP Exporter** or its legacy `pm-exporter` predecessor running on the source WordPress site to produce the JSON.

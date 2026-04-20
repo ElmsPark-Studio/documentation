@@ -23,7 +23,7 @@ What EP Search doesn't do: AI-powered semantic search, fuzzy matching, spelling 
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 
 ## Installation

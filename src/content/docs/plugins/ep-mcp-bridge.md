@@ -47,7 +47,7 @@ Remote access is a real attack surface. EP MCP Bridge gates it carefully:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 - **PHP 8.0+** (the JSON-RPC library uses modern PHP features)
 

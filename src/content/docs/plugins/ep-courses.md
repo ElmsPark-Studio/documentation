@@ -34,7 +34,7 @@ For a full learning management system, combine EP Courses with EP Membership (fo
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 
 Optional but commonly paired:

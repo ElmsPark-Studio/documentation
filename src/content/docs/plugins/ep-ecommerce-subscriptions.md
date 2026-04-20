@@ -39,7 +39,7 @@ Features at a glance:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Ecommerce** (base plugin)
 - **EP Suite base class**
 - **EP Ecommerce Stripe** (for Stripe subscription processing)

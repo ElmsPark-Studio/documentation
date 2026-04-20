@@ -28,7 +28,7 @@ What you get:
 
 ## Requirements
 
-- PageMotor **0.8b or later**
+- PageMotor **0.8.2b or later**
 - EP Suite (bundled)
 - PHP **GD extension** (standard on almost all hosting, used for thumbnails and dimension extraction)
 

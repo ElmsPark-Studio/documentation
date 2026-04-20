@@ -26,7 +26,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 - **A functional PageMotor scheduler** (this plugin piggybacks on PM's built-in cron).
 

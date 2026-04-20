@@ -36,7 +36,7 @@ Five events (Email, Booking, Newsletter, Comments, Ecommerce) fire in **real tim
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class** (bundled)
 
 ## Installation

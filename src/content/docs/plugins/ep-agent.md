@@ -22,7 +22,7 @@ Drop a prompt into the admin chat panel, hit send, and the agent runs on the ser
 
 ## Requirements
 
-- **PageMotor 0.8 or later**
+- **PageMotor 0.8.2b or later**
 - **VPS or dedicated server.** EP Agent detects shared hosting automatically and refuses to run because shared hosting cannot execute long-running CLI processes.
 - **Node.js 18 or later** on the server.
 - **Claude Code CLI** installed globally: `npm install -g @anthropic-ai/claude-code`

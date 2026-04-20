@@ -43,7 +43,7 @@ Any image can override:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Gallery** (required; this is an extension)
 - **EP Suite base class**
 - **PHP GD** extension (for server-side crop)

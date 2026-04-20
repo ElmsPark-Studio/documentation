@@ -21,7 +21,7 @@ Think of it as: "the documentation you're reading now, but talk-to-able."
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 - **An LLM provider API key** (Anthropic, OpenAI, or supported alternatives)
 

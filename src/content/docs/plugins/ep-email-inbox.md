@@ -38,7 +38,7 @@ Every message, auto-replied or flagged, is logged with full transcript so you ca
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Email** (required)
 - **EP Suite base class**
 - **An IMAP mailbox** (your support email account)

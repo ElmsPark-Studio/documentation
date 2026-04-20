@@ -30,7 +30,7 @@ Use cases:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Email** (for admin notification)
 - **EP Suite base class**
 - **A transcription API key** (OpenAI Whisper, AssemblyAI, or configured alternative)

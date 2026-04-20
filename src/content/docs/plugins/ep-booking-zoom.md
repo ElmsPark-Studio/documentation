@@ -26,7 +26,7 @@ And on the other side:
 
 ## Requirements
 
-- **PageMotor 0.6 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 - **EP Booking** (this plugin is driven by EP Booking's confirmation and cancellation events)
 - **A Zoom account** with a Server-to-Server OAuth app configured in the Zoom App Marketplace

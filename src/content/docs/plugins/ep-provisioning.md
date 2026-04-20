@@ -34,7 +34,7 @@ Receives a signed JSON payload and applies the contents:
 
 ## Requirements
 
-- **PageMotor 0.7 or later**
+- **PageMotor 0.8.2b or later**
 - **EP Suite base class**
 - **EP Email, EP Assistant** and other plugins mentioned in the payload must also be installed on the target site for their sections to apply.
 
