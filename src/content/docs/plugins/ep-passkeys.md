@@ -20,7 +20,7 @@ Why passkeys:
 
 ## Status
 
-**Version 0.3** — core flows work. Some device-management UX is still being polished.
+**Version 0.3.** Core flows work in development. Public install is blocked on a PageMotor core change that has not yet shipped.
 
 ## Requirements
 

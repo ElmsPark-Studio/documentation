@@ -76,8 +76,8 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 
 - **[EP GDPR](/plugins/ep-gdpr/)**. Cookie consent, data subject requests, consent logging across EP Suite.
 - **[EP Bunny Fonts](/plugins/ep-bunny-fonts/)**. GDPR-compliant font delivery. Replaces Google Fonts with Bunny Fonts.
-- **[EP Passkeys](/plugins/ep-passkeys/)**. Passwordless login via WebAuthn.
-- **[EP Password Reset](/plugins/ep-password-reset/)**. Email-based password reset for admin accounts.
+- **[EP Passkeys](/plugins/ep-passkeys/)**. Passwordless login via WebAuthn. *Not yet available, awaiting a PageMotor core change.*
+- **[EP Password Reset](/plugins/ep-password-reset/)**. Email-based password reset for admin accounts. *Not yet available, awaiting a PageMotor core change.*
 
 ### Operations, AI, admin
 
