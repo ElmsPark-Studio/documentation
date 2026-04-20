@@ -31,9 +31,7 @@ Why passkeys:
 
 ## Installation
 
-1. Download `ep-passkeys.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
-2. Upload via **Plugins → Manage Plugins**. Activate.
-3. Users can now register passkeys from their account pages.
+Not currently available for install. EP Passkeys depends on a PageMotor core change that has not yet shipped. Installation steps will be published here once the core change lands.
 
 ## User flow
 

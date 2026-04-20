@@ -30,10 +30,7 @@ Flow:
 
 ## Installation
 
-1. Install EP Email.
-2. Download `ep-password-reset.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
-3. Upload via **Plugins → Manage Plugins**. Activate.
-4. The "Forgot your password?" link now appears on the admin login page.
+Not currently available for install. EP Password Reset depends on a PageMotor core change that has not yet shipped. Installation steps will be published here once the core change lands.
 
 ## Settings
 
