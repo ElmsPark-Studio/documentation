@@ -175,8 +175,6 @@ The workflow:
 4. The importer rehosts every featured and inline image locally (idempotent, so re-running does not duplicate), then writes groups, cards, and style settings through the EP Cards public API as a single batch.
 5. Review, and if anything is wrong, one-click rollback.
 
-The full migration walkthrough lives at [the WordPress to PageMotor Migration guide](https://epemail.elmspark.com/migration-guide.html).
-
 ## Public API
 
 For plugin authors and bespoke integrations.
