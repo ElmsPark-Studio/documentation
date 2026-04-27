@@ -17,6 +17,10 @@ Three pillars of GDPR that the plugin handles:
 
 A customisable banner that asks visitors to accept or reject cookies. Supports granular categories (necessary, analytics, marketing) so visitors can accept some and reject others. Remembers the choice across sessions. Provides a "Revisit consent" link visitors can click at any time to change their mind.
 
+### Form consent
+
+Adds an opt-in consent checkbox above the submit button on every EP Email contact form. The checkbox text and required-or-optional behaviour are configurable. Independent of the cookie banner: a site that has no third-party tracking and therefore needs no banner can still enable form consent for the personal data captured by enquiry forms.
+
 ### Data subject requests
 
 Four rights, handled through a single admin dashboard:
