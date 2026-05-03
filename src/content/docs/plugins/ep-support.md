@@ -95,4 +95,4 @@ Add context in the **Extra system prompt** setting: "This site sells made-to-mea
 
 ## Feedback and corrections
 
-Open an issue at [the documentation repo](https://github.com/ElmsPark-Studio/documentation/issues).
+For anything bigger than a quick chat question — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.

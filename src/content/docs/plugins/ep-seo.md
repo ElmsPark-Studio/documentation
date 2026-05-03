@@ -5,7 +5,7 @@ sidebar:
   order: 50
 ---
 
-EP SEO adds the SEO essentials PageMotor core doesn't: Open Graph tags so links preview nicely on social media, Twitter Card tags for Twitter/X, favicon configuration, and Schema.org structured data. All with site-wide defaults and per-page overrides.
+EP SEO adds the SEO essentials PageMotor core doesn't: Open Graph tags so links preview nicely on social media, Twitter Card tags for Twitter/X, favicon configuration, and Schema.org structured data. All with site-wide defaults and per-page overrides. v1.5 adds full six-EU-language admin UI and a coexistence handshake with EP Local Business / EP Locations so the Schema.org graph stays clean when one of those is also installed.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
@@ -86,6 +86,18 @@ Per page type, EP SEO emits:
 
 Validate your emitted schema in [Google's Rich Results Test](https://search.google.com/test/rich-results).
 
+## Coexistence with EP Local Business and EP Locations
+
+If you install [EP Local Business](/plugins/ep-local-business/) (single-location) or [EP Locations](/plugins/ep-locations/) (multi-location) alongside EP SEO, the three coordinate automatically. EP SEO yields its `Organization` Schema.org branch when either sibling plugin is in **merged** coexistence mode and owns the `#organization` node. You don't configure anything in EP SEO for this — the handshake is automatic via static `owns_organization_node()` checks.
+
+In **additive** coexistence mode, EP SEO emits its Organization normally and the sibling plugin emits a separate LocalBusiness referencing it via `parentOrganization`.
+
+## Languages
+
+EP SEO 1.5 added full admin UI translations for German (de), Spanish (es), French (fr), Italian (it), Dutch (nl), and Portuguese (pt). Schema.org code identifiers (the literal `Organization` value, `@type` literals, JSON-LD property names) stay English in every language because they're code, not prose.
+
+Switch UI language from the EP Suite language dropdown in the admin nav.
+
 ## Troubleshooting
 
 ### "Link preview on Facebook shows old image"
@@ -110,4 +122,6 @@ Set **Noindex** on the page's content options. Most plugins (including EP SEO) w
 
 ## Feedback and corrections
 
-Open an issue at [the documentation repo](https://github.com/ElmsPark-Studio/documentation/issues).
+For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
+
+For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.

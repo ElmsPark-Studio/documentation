@@ -243,4 +243,6 @@ Yes. The `grid` attribute on the shortcode overrides the global default. Use `[e
 
 ## Feedback and corrections
 
-Found a bug or a missing detail in this guide? Open an issue at [the documentation repo](https://github.com/ElmsPark-Studio/documentation/issues) or send feedback to the forum. Corrections land quickly; we treat the guide as living documentation.
+For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
+
+For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
