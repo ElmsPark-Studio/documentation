@@ -57,7 +57,7 @@ Coordinates with (optional):
 
 ## Cookie consent configuration
 
-- **Banner text.** Shown when the visitor first arrives. British English default.
+- **Banner text.** Shown when the visitor first arrives. The default placeholder ("This website uses cookies to ensure you get the best experience...") is neutral English; replace with your own wording in any language or variant you prefer.
 - **Categories.** Necessary (always on, informational), Analytics (EP Analytics doesn't set cookies, but listed for completeness), Marketing. Add custom categories if a plugin needs them.
 - **Position.** Bottom banner, top banner, or centre modal.
 - **Colours.** Match your site styling.
