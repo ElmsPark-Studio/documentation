@@ -129,7 +129,7 @@ Slash commands load a specific skill prompt that primes the assistant for that t
 
 The prompt sent to the LLM is built from five layers:
 
-1. **Core rules** (hardcoded): British English, no jargon, backup before modify, plain text over corporate language.
+1. **Core rules**: no jargon, backup before modify, plain text over corporate language. The English variant the assistant uses is configurable per-install under **AI Connection → Assistant → English variant** (Auto, British, American, International). Default is Auto, which instructs the assistant to match the client's existing site variant rather than force one.
 2. **Operations guide** (hardcoded): How to use each tool correctly.
 3. **Plugin knowledge** (from EP Support): Full knowledge base for all 18 EP Suite plugins.
 4. **Memory files** (per-site): The five markdown files described above.

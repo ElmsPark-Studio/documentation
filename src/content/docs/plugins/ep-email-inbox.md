@@ -79,7 +79,7 @@ Every message, auto-replied or flagged, is logged with full transcript so you ca
 - **Site description.** A paragraph about what your site does.
 - **Product/service list.** What you sell, with prices if relevant.
 - **FAQ context.** Paste your FAQs. The AI uses this to answer routine questions.
-- **Brand voice.** Tone guidance. "British English, friendly but professional. No emojis. Sign off with 'Best, the team.'"
+- **Brand voice.** Tone guidance, e.g. "Friendly but professional. No emojis. Sign off with 'Best, the team.'" The plugin's default system prompt instructs the AI to match the customer's English variant (preserves British, American, Australian, etc. — does not force a regional spelling). Override that default in this field if you want to force one variant.
 
 ## Inbox dashboard
 

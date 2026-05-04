@@ -41,7 +41,7 @@ EP SEO is about making sure the technical SEO metadata is right. The content qua
 
 ### Open Graph
 
-- **Site name.** Used as `og:site_name`. Usually your brand.
+- **Site name.** Used as `og:site_name` when nothing else takes precedence. Usually your brand. **Coordination**: when EP Locations or EP Local Business is active, EP SEO defers to those plugins for `og:site_name` (4-step resolution: EP Locations org name → EP Local Business name → this field → PageMotor's site title). So you can leave this set to a tagline, phone number, or anything you prefer for the browser tab — social-share previews will still carry the actual brand name from the location plugins.
 - **Default OG image.** Used for every page unless overridden. 1200x630 is the standard recommendation. Upload via the drag-and-drop widget.
 - **Default OG description.** Fallback if a page doesn't define its own.
 

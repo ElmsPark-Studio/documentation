@@ -28,7 +28,7 @@ Receives a signed JSON payload and applies the contents:
 - **Plugin activation.** Activates listed plugins in the correct order.
 - **Content seeds.** Creates default pages (home, about, contact).
 - **Default contact form.** Creates a "main" form in EP Email.
-- **Assistant memory files.** Writes 6 markdown files to `ep-assistant/src/memory/` (brand voice, audiences, services, site inventory, discovery context).
+- **Assistant memory files.** Writes 6 markdown files to `ep-assistant/src/memory/` (brand voice, audiences, services, site inventory, discovery context). The brand-voice file's writing rules can be customised via an optional `writing_rules` array in the `brand_voice` payload (e.g. `["British English always", "Sentence case headings"]`). Without one, a neutral default applies — no regional spelling is forced on the provisioned site.
 - **Plugin API keys.** Configures EP Assistant with its own Anthropic key.
 - **Webmaster user.** Creates or updates the admin account with a magic-link login token.
 
