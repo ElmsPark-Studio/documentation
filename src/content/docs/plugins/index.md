@@ -20,6 +20,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Email](/plugins/ep-email/)**. SMTP delivery, JSON-defined contact forms, delivery logging, and a developer extension API.
 - **[EP Email Advanced Forms](/plugins/ep-email-advanced-forms/)**. Adds name, address, section, HTML, email confirmation, and rating field types to EP Email forms.
 - **[EP Email AI Reply](/plugins/ep-email-ai-reply/)**. AI-drafted replies to form submissions — review and send.
+- **[EP Email AI Triage](/plugins/ep-email-ai-triage/)**. AI-powered spam triage. Classifies every submission, blocks confirmed spam silently, holds it in quarantine for review.
 - **[EP Email ElmsPark](/plugins/ep-email-elmspark/)** / **[EP SendIt](/plugins/ep-sendit/)**. Managed delivery transport drivers for EP Email via send.elmspark.com.
 - **[EP Email File Uploads](/plugins/ep-email-file-uploads/)**. Drag-and-drop file upload fields for EP Email forms.
 - **[EP Email Inbox](/plugins/ep-email-inbox/)**. AI-powered IMAP inbox handler with auto-reply.

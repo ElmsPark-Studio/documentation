@@ -188,6 +188,49 @@ Override default UI messages on a per-form basis:
 
 **Subject placeholders:** use `{field_name}` in the `subject` property to insert submitted values. "Contact from {name}" becomes "Contact from John Smith". Placeholder names are case-sensitive and must match a field `name` exactly.
 
+## Spam Protection
+
+Contact forms attract spam. EP Email ships with a layered defence so most of the noise never reaches your inbox without you having to think about it.
+
+The defence runs in this order on every submission:
+
+1. **CSRF check.** Confirms the submission came from a real page load on your site, not a script POSTing directly to your form endpoint.
+2. **Honeypot.** A hidden field invisible to humans but tempting to naive bots. Anything that fills it gets a fake success response and is silently dropped.
+3. **Time trap.** A signed timestamp embedded when the form is rendered. Submissions arriving faster than a real human could fill the form are treated as bots and silently dropped.
+4. **URL-count filter.** Submissions whose combined fields contain too many `http://` or `https://` links are silently dropped. SEO and link-building spam is structurally URL-heavy.
+5. **Keyword blocklist.** Plain text phrases you list, one per line. Any submission containing one is silently dropped.
+6. **Rate limit.** Repeat submissions from the same IP within a configurable window are rejected with a "please wait" message.
+
+**Silent drops are deliberate.** Every spam-class block returns the same friendly success message ("Thank you for your submission") and quietly bins the message. Spammers cannot tell whether their submission landed in your inbox or hit a filter, so they cannot probe thresholds or tune around the rules.
+
+### Settings reference
+
+All spam-protection settings live under **EP Email Settings then Contact Forms**.
+
+| Setting | Default | What it does |
+|---|---|---|
+| Enable Honeypot | On | Adds a hidden field naive bots fill in. |
+| Enable Time Trap | On | Rejects forms submitted faster than a human could fill them. |
+| Minimum Fill Time (seconds) | 3 | Floor on how fast a human can plausibly submit. Raise to 5 for short forms, lower to 2 only if you see legitimate complaints. |
+| Maximum Links per Message | 2 | Reject submissions with more than this many `http(s)://` URLs across all fields. Set to `-1` to disable. |
+| Spam Keyword Blocklist | (empty) | One phrase per line. Case-insensitive substring match. Suggested starters: `bitcoin`, `crypto`, `casino`, `seo services`, `guest post`, `backlink`, `link building`, `rank higher`, `viagra`, `cialis`. |
+| Enable Rate Limiting | On | Limit repeat submissions from the same IP. |
+| Rate Limit (minutes) | 5 | Minimum minutes between submissions from the same IP. |
+
+### Tuning the keyword blocklist
+
+Tune the blocklist to the spam your site is actually receiving. A faith community site needs different terms from a B2B SaaS site. Open the spam folder for the address that receives form submissions, look for repeated phrases, paste them in.
+
+**Hard rule:** keep blocklist entries **specific**. "click" or "free" will eat real submissions. "click here to claim your" or "free SEO audit" will not.
+
+### Beyond the heuristics: AI Triage
+
+Heuristics catch the obvious. They cannot read intent. For sites under sustained spam pressure, the **[EP Email AI Triage](/plugins/ep-email-ai-triage/)** add-on classifies every submission that survives the heuristics with an LLM call — distinguishing a real customer enquiry from a spam pitch by reading the words. See its guide for setup.
+
+### Developer note: should_send hook
+
+Extension developers can intercept submissions silently with the `should_send($form_def, $field_data)` method on `EP_Email_Extension`. Returning anything other than `true` short-circuits delivery: the user sees the form's normal success message but no email is sent. AI Triage uses this hook. Useful for any extension that needs to filter without surfacing rejections to the submitter.
+
 ## File Uploads
 
 The EP Email File Uploads extension adds drag-and-drop file upload fields to any contact form. Files are attached directly to the notification email as MIME attachments. They are not stored on your server.
