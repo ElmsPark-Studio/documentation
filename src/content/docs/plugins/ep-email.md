@@ -192,14 +192,17 @@ Override default UI messages on a per-form basis:
 
 Contact forms attract spam. EP Email ships with a layered defence so most of the noise never reaches your inbox without you having to think about it.
 
-The defence runs in this order on every submission:
+The defence runs in this order on every submission. Cheap layers first; expensive layers only on what survives.
 
-1. **CSRF check.** Confirms the submission came from a real page load on your site, not a script POSTing directly to your form endpoint.
-2. **Honeypot.** A hidden field invisible to humans but tempting to naive bots. Anything that fills it gets a fake success response and is silently dropped.
-3. **Time trap.** A signed timestamp embedded when the form is rendered. Submissions arriving faster than a real human could fill the form are treated as bots and silently dropped.
-4. **URL-count filter.** Submissions whose combined fields contain too many `http://` or `https://` links are silently dropped. SEO and link-building spam is structurally URL-heavy.
-5. **Keyword blocklist.** Plain text phrases you list, one per line. Any submission containing one is silently dropped.
-6. **Rate limit.** Repeat submissions from the same IP within a configurable window are rejected with a "please wait" message.
+1. **IP blocklist.** Submissions from listed IPs are silently dropped before any parsing or filtering. Banned IPs consume zero classifier or DB resources.
+2. **Central blocklist** (optional, opt-in). Same as above but the list is shared across every EP Email install that opts in. Network-effect threat intelligence.
+3. **CSRF check.** Confirms the submission came from a real page load on your site, not a script POSTing directly to your form endpoint.
+4. **Honeypot.** A hidden field invisible to humans but tempting to naive bots. Anything that fills it gets a fake success response and is silently dropped.
+5. **Time trap.** A signed timestamp embedded when the form is rendered. Submissions arriving faster than a real human could fill the form are treated as bots and silently dropped.
+6. **URL-count filter.** Submissions whose combined fields contain too many `http://` or `https://` links are silently dropped. SEO and link-building spam is structurally URL-heavy.
+7. **Keyword blocklist.** Plain text phrases you list, one per line. Any submission containing one is silently dropped.
+8. **Gibberish-name filter.** Detects bot-generated random alphanumeric strings (`WwmDtQvvtgDtOaUwucR`-style names) in name-shaped fields. Real names score 0 on the heuristic; bot strings score 5-7.
+9. **Rate limit.** Repeat submissions from the same IP within a configurable window are rejected with a "please wait" message.
 
 **Silent drops are deliberate.** Every spam-class block returns the same friendly success message ("Thank you for your submission") and quietly bins the message. Spammers cannot tell whether their submission landed in your inbox or hit a filter, so they cannot probe thresholds or tune around the rules.
 
@@ -214,6 +217,15 @@ All spam-protection settings live under **EP Email Settings then Contact Forms**
 | Minimum Fill Time (seconds) | 3 | Floor on how fast a human can plausibly submit. Raise to 5 for short forms, lower to 2 only if you see legitimate complaints. |
 | Maximum Links per Message | 2 | Reject submissions with more than this many `http(s)://` URLs across all fields. Set to `-1` to disable. |
 | Spam Keyword Blocklist | (empty) | One phrase per line. Case-insensitive substring match. Suggested starters: `bitcoin`, `crypto`, `casino`, `seo services`, `guest post`, `backlink`, `link building`, `rank higher`, `viagra`, `cialis`. |
+| Enable Gibberish-Name Filter | On | Reject submissions with random bot-generated names. |
+| Gibberish-Filter Fields | (defaults) | Field names to scan. Defaults cover `name`, `first_name`, `last_name`, `full_name`, `your_name`, `fullname`, `firstname`, `lastname`, `fname`, `lname`. Add custom names if your forms use them. |
+| Enable IP Blocklist | On | Drop submissions from any IP on the list below. |
+| Auto-Ban Gibberish IPs | On | Auto-append the submitter IP to the blocklist when the gibberish filter triggers. Self-improving against persistent bots. |
+| IP Blocklist | (empty) | One IP per line. Edit freely to add or remove entries. |
+| Enable Central Blocklist | Off | Pull from and contribute to the shared ElmsPark blocklist. See Central Blocklist below. |
+| Central Blocklist Token | — | Per-site auth token. Request one from ElmsPark for each site. |
+| Central Blocklist URL | `https://blocklist.elmspark.com/` | API base URL. Advanced users can self-host. |
+| Minimum Severity to Block | 2 | 1-5. Raise for conservative, lower for aggressive. See severity model below. |
 | Enable Rate Limiting | On | Limit repeat submissions from the same IP. |
 | Rate Limit (minutes) | 5 | Minimum minutes between submissions from the same IP. |
 
@@ -223,9 +235,80 @@ Tune the blocklist to the spam your site is actually receiving. A faith communit
 
 **Hard rule:** keep blocklist entries **specific**. "click" or "free" will eat real submissions. "click here to claim your" or "free SEO audit" will not.
 
+### Gibberish-name filter
+
+Bot submissions almost always carry random alphanumeric strings in the name field. The filter detects four hard signatures no real human name has:
+
+- Long consonant clusters (5+ in a row).
+- Vowel ratio under 20%.
+- Single-token length over 15 with no space.
+- 4+ random case transitions (`QjDNLLnk`-style camel-mixing).
+
+A submission scoring 3 or more on these signals is silently dropped. The thresholds are calibrated so real names score 0 and bot strings score 5-7. Unusual real names (Zulu surnames like `Mkhwanazi`, hyphenated names, all-caps initialisms) sit at 0-2 and pass cleanly.
+
+The filter scans the fields listed in **Gibberish-Filter Fields** (defaults to the common name-field naming conventions). It does not scan message bodies, where legitimate technical text or code snippets might trip the heuristic.
+
+When the filter triggers, the submitter IP is automatically appended to the **IP Blocklist** if **Auto-Ban Gibberish IPs** is on. Same bot, second attempt, gets a free O(1) drop with no further analysis.
+
+### IP blocklist
+
+Manual list of banned IPs, one per line. Submissions from any listed IP are silently dropped at the very start of the pipeline — before CSRF, honeypot, anything. Banned IPs cost nothing.
+
+The auto-ban feature populates this list automatically as the gibberish filter catches bots. You can also paste in IPs you want to ban from server logs, abuse reports, or other sources.
+
+To unblock an IP (false positive, or a real visitor caught by accident), just delete the line.
+
+### Central blocklist
+
+The IP blocklist on a single site only learns from attacks that site has already absorbed. The central blocklist fixes that. Every install that opts in reports IPs its filters catch, and pulls IPs other installs have caught. Network-effect threat intelligence, scoped to the EP Email community.
+
+Server lives at `https://blocklist.elmspark.com/`. Each site needs a per-site bearer token, issued by ElmsPark.
+
+#### What gets shared
+
+Only IP addresses, the reason they were caught (`gibberish`, `ai_triage_spam`, etc.), and the plugin version. **Site identity is SHA-256 hashed with random per-client salt before storage.** The central database never holds plain site identifiers, so a leak doesn't reveal "which site reported X". Submission content is never sent to the central server — that is between your site and your form recipients.
+
+#### Severity model
+
+Reports are aggregated server-side into a severity score from 1 to 5:
+
+```
+severity = min(5, ceil(distinct_sources * 0.5 + report_count * 0.1))
+```
+
+| Severity | Roughly means |
+|---|---|
+| 1 | Watched. Single source, single report. Your site won't block on this at the default threshold. |
+| 2 | Default block threshold. 3+ distinct sources OR 10+ reports. The IP has been flagged independently by enough sites to be confident. |
+| 3 | Broadly bad. Many reports across many sources. |
+| 4 | Aggressive. Persistently catching bots across the network. |
+| 5 | Top-shelf. Effectively a global ban. |
+
+Each install picks its own **Minimum Severity to Block**:
+
+- **1 — aggressive.** Block on a single report. Fastest to react to new bots; highest false-positive risk if a single bad-actor install reports legitimate IPs.
+- **2 — default.** Requires corroboration. A single bad-actor install cannot poison the well — it takes at least one other source to corroborate before any IP gets blocked.
+- **3-5 — conservative to paranoid.** Only block when many sources agree. Useful for sites with high cost of false positives.
+
+#### How it behaves at runtime
+
+- The central list is fetched into a local cache at most **once per 23 hours**. Submissions add zero per-request latency.
+- Local IP blocklist is checked first. Central is the second layer.
+- When your local gibberish filter triggers an auto-ban, the IP is also reported to central (fire-and-forget, 3-second timeout, never blocks the user-visible response).
+- Fail-open on central API errors. If `blocklist.elmspark.com` is unreachable, your form keeps working.
+
+#### Getting a token
+
+For now, tokens are issued by ElmsPark on request. Future versions may offer self-service. To request a token, open a ticket at [help.elmspark.com](https://help.elmspark.com) with:
+
+- The site's primary domain.
+- Confirmation you've read this guide and accept the privacy posture above.
+
+You'll receive the token via the same support thread. Paste it into **Central Blocklist Token** in EP Email settings, tick **Enable Central Blocklist**, save.
+
 ### Beyond the heuristics: AI Triage
 
-Heuristics catch the obvious. They cannot read intent. For sites under sustained spam pressure, the **[EP Email AI Triage](/plugins/ep-email-ai-triage/)** add-on classifies every submission that survives the heuristics with an LLM call — distinguishing a real customer enquiry from a spam pitch by reading the words. See its guide for setup.
+Heuristics catch the obvious. They cannot read intent. For sites under sustained spam pressure, the **[EP Email AI Triage](/plugins/ep-email-ai-triage/)** add-on classifies every submission that survives the heuristics with an LLM call — distinguishing a real customer enquiry from a spam pitch by reading the words. AI Triage's blocks also feed the central blocklist when both are enabled. See its guide for setup.
 
 ### Developer note: should_send hook
 
