@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ElmsPark CC Toolkit — interactive guide</title>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=outfit:400,500,600,700|inter:400,500,600|jetbrains-mono:400,500&display=swap">
+<style>
+  :root{
+    --bg:#f6f5f1; --surface:#ffffff; --surface-2:#fbfaf7;
+    --ink:#1b1c1e; --muted:#6c6c75; --line:#e7e5df;
+    --accent:#0e7c6b; --accent-ink:#0a5a4d; --accent-soft:#e3f3ef;
+    --solid:#16a34a; --fix:#d97706; --dup:#64748b; --broken:#dc2626; --new:#2563eb; --spec:#7c3aed;
+    --shadow:0 1px 2px rgba(20,20,30,.05), 0 8px 24px rgba(20,20,30,.06);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Outfit',sans-serif; line-height:1.15; margin:0;}
+  code,kbd,.mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:var(--accent-ink);}
+
+  header.top{
+    position:sticky; top:0; z-index:50; background:rgba(246,245,241,.86);
+    backdrop-filter:saturate(140%) blur(10px); border-bottom:1px solid var(--line);
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 22px;}
+  .hero{padding:26px 22px 14px;}
+  .hero .wrap{padding:0;}
+  .eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); font-weight:600;}
+  .hero h1{font-size:30px; font-weight:700; margin:6px 0 4px; letter-spacing:-.01em;}
+  .hero p{margin:0; color:var(--muted); max-width:62ch;}
+
+  .controls{padding:12px 0 14px;}
+  .searchbar{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+  .search{
+    flex:1 1 320px; display:flex; align-items:center; gap:9px; background:var(--surface);
+    border:1px solid var(--line); border-radius:11px; padding:10px 13px; box-shadow:var(--shadow);
+  }
+  .search input{border:0; outline:0; font:inherit; width:100%; background:transparent; color:var(--ink);}
+  .search .hint{font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:1px 6px;}
+  .count{font-size:13px; color:var(--muted); white-space:nowrap;}
+
+  .chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+  .chip{
+    border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    border-radius:999px; padding:7px 14px; font-size:13.5px; font-weight:500; cursor:pointer;
+    transition:all .14s ease;
+  }
+  .chip:hover{border-color:var(--accent); color:var(--accent-ink);}
+  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff;}
+
+  .task{padding:20px 0 6px;}
+  .task h2{font-size:15px; color:var(--muted); font-weight:600; margin-bottom:10px;}
+  .task-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px;}
+  .task-btn{
+    text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:13px 15px; cursor:pointer; box-shadow:var(--shadow); transition:transform .12s ease, border-color .12s;
+  }
+  .task-btn:hover{transform:translateY(-2px); border-color:var(--accent);}
+  .task-btn .t-em{font-size:20px; display:block; margin-bottom:5px;}
+  .task-btn .t-lbl{font-weight:600; font-family:'Outfit',sans-serif; font-size:14.5px;}
+  .task-btn .t-sub{font-size:12.5px; color:var(--muted);}
+
+  main{padding:18px 0 70px;}
+  .section-h{display:flex; align-items:baseline; gap:12px; margin:26px 0 12px;}
+  .section-h h2{font-size:20px; font-weight:600;}
+  .section-h .s-sub{font-size:13px; color:var(--muted);}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:16px;}
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:16px 16px 14px; display:flex; flex-direction:column; gap:9px;
+    transition:border-color .14s, transform .14s;
+  }
+  .card:hover{border-color:#d8d5cc;}
+  .card.hidden{display:none;}
+  .card-top{display:flex; align-items:flex-start; gap:10px;}
+  .name{font-family:'JetBrains Mono',monospace; font-size:15.5px; font-weight:500; color:var(--accent-ink); word-break:break-word;}
+  .star{margin-left:auto; cursor:pointer; font-size:18px; line-height:1; color:#cfcdc4; background:none; border:0; padding:2px;}
+  .star.on{color:#e0a93b;}
+  .kind{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; font-weight:600; padding:2px 7px; border-radius:6px; background:var(--accent-soft); color:var(--accent-ink);}
+  .kind.skill{background:#eef1fb; color:#3742a8;}
+  .what{font-size:14.5px; color:var(--ink);}
+  .when{font-size:13px; color:var(--muted);}
+  .when b{color:#4a4a52; font-weight:600;}
+
+  .badges{display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+  .badge{font-size:11px; font-weight:600; padding:2px 8px; border-radius:999px; border:1px solid;}
+  .b-solid{color:var(--solid); border-color:#bfe6c8; background:#effaf1;}
+  .b-fix{color:var(--fix); border-color:#f3dcae; background:#fdf6e9;}
+  .b-dup{color:var(--dup); border-color:#d6dbe2; background:#f1f3f6;}
+  .b-broken{color:var(--broken); border-color:#f3c4c4; background:#fdeeee;}
+  .b-new{color:var(--new); border-color:#c2d4f7; background:#eef3fd;}
+  .b-spec{color:var(--spec); border-color:#dbcaf4; background:#f4eefd;}
+  .tier{font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:2px 8px;}
+
+  .ex{display:flex; align-items:center; gap:8px; background:var(--surface-2); border:1px solid var(--line); border-radius:9px; padding:8px 10px;}
+  .ex code{font-size:12.5px; color:#3a3a42; flex:1; word-break:break-all;}
+  .copy{cursor:pointer; border:1px solid var(--line); background:#fff; border-radius:7px; font-size:11.5px; padding:4px 9px; color:var(--muted); white-space:nowrap;}
+  .copy:hover{border-color:var(--accent); color:var(--accent-ink);}
+  .copy.done{color:var(--solid); border-color:#bfe6c8;}
+
+  .more{font-size:12.5px; color:var(--accent-ink); cursor:pointer; user-select:none; font-weight:500; align-self:flex-start;}
+  .detail{display:none; font-size:13.5px; color:#4a4a52; border-top:1px dashed var(--line); padding-top:9px; margin-top:2px;}
+  .detail.open{display:block;}
+  .detail .note{margin:0 0 6px;}
+  .detail .note b{color:var(--ink);}
+
+  .builtin .card{background:var(--surface-2);}
+  .legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin-top:10px;}
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+
+  .empty{padding:40px; text-align:center; color:var(--muted); display:none;}
+  footer{border-top:1px solid var(--line); padding:22px; text-align:center; color:var(--muted); font-size:12.5px;}
+  .toggle-starred{margin-left:auto;}
+  @media(max-width:560px){ .hero h1{font-size:24px} .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="hero"><div class="wrap">
+    <div class="eyebrow">ElmsPark · Claude Code</div>
+    <h1>Your toolkit, all in one place</h1>
+    <p>Every custom command and skill you have built, what each one is for, when to reach for it, and how to fire it. Search it, filter it, or pick a task below. Star the ones you want to keep handy.</p>
+  </div></div>
+  <div class="wrap controls">
+    <div class="searchbar">
+      <label class="search">
+        <span>🔍</span>
+        <input id="q" type="search" placeholder="Search tools (name, what it does, tags)…" autocomplete="off">
+        <span class="hint">/</span>
+      </label>
+      <button class="chip toggle-starred" id="starredOnly">★ Starred only</button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--solid)"></i>Solid</span>
+      <span><i class="dot" style="background:var(--fix)"></i>Works, upgrade queued</span>
+      <span><i class="dot" style="background:var(--new)"></i>New</span>
+      <span><i class="dot" style="background:var(--dup)"></i>Duplicate</span>
+      <span><i class="dot" style="background:var(--broken)"></i>Broken right now</span>
+      <span><i class="dot" style="background:var(--spec)"></i>Spec only</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap task">
+  <h2>What do you want to do?</h2>
+  <div class="task-grid" id="tasks"></div>
+</div>
+
+<main class="wrap">
+  <div class="section-h"><h2 id="yoursH">Your tools</h2><span class="s-sub" id="yoursSub"></span></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty">No tools match that. Clear the search or filters.</div>
+
+  <div class="section-h"><h2>Also available (Anthropic built-ins)</h2><span class="s-sub">Not yours, but powerful and worth remembering</span></div>
+  <div class="grid builtin" id="builtinGrid"></div>
+</main>
+
+<footer>
+  Generated 1 June 2026 from a live audit of your <span class="mono">cc-commands/</span> and <span class="mono">cc-skills/</span>.
+  Statuses reflect <span class="mono">toolkit-audit-2026-06-01.md</span>. Re-open any time — it is a plain file, no build step.
+</footer>
+
+<script>
+const CATS = [
+  {id:"review", label:"Review & QA"},
+  {id:"plugin", label:"Plugin dev & shipping"},
+  {id:"site", label:"Sites & migration"},
+  {id:"verify", label:"Verify before done"},
+  {id:"session", label:"Sessions & meta"},
+  {id:"comms", label:"Comms & media"},
+];
+
+const TASKS = [
+  {em:"✍️", lbl:"Review a draft or reply", sub:"Forum post, email, support reply", cat:"review"},
+  {em:"🚀", lbl:"Ship a plugin", sub:"Release, sample data, security", cat:"plugin"},
+  {em:"🌐", lbl:"Build or migrate a site", sub:"Theme, showcase, WP→PM", cat:"site"},
+  {em:"✅", lbl:"Verify before I say done", sub:"Catch the broken thing first", cat:"verify"},
+  {em:"📓", lbl:"Close a session", sub:"Handoff, cheat sheet", cat:"session"},
+  {em:"🎨", lbl:"Make media or email", sub:"Images, video prompts, Mailgun", cat:"comms"},
+];
+
+const TOOLS = [
+  // ---------- Review & QA ----------
+  {name:"/RP", kind:"command", cat:"review", status:"solid", tier:"Sonnet",
+   what:"Rigorous review of a piece of writing for clarity, structure and persuasiveness. Flags the failure points before you publish.",
+   when:"A Kenn-voice or customer-facing draft: forum post, email, announcement, docs.",
+   ex:"/RP [paste your draft]",
+   tags:["review","writing","forum","email","content","prompt 1"],
+   detail:"<p class='note'>The canonical content reviewer (= ep-review-prompts.md Prompt 1).</p><p class='note'><b>Upgraded 2026-06-01:</b> add a house-rules pass — voice-conditional em-dash check, docs-link-on-first-mention, British English, PM 0.9 NDA, and flag shipped/fixed/done/live unless a probe is pasted.</p>"},
+  {name:"/RC", kind:"command", cat:"review", status:"solid", tier:"Opus",
+   what:"Senior technical and architectural review of anything that will be implemented, with implementation-risk analysis.",
+   when:"Plugin specs, API docs, system design, code, handoff docs.",
+   ex:"/RC [paste code or spec]",
+   tags:["review","code","technical","architecture","spec","prompt 2"],
+   detail:"<p class='note'>A superset of /RP (adds Implementation Risk). Use /RC for code and specs, /RP for prose.</p><p class='note'><b>Upgraded 2026-06-01:</b> verification gate (strip 'production-ready with no hidden weaknesses'), a tool mandate (Grep/Read the source before judging a claim), and EP/PM footgun vocabulary.</p>"},
+  {name:"/c", kind:"command", cat:"review", status:"dup",
+   what:"Older local copy of /RP. Same content reviewer.",
+   when:"Don't. Use /RP instead.",
+   ex:"/RP [paste your draft]",
+   tags:["review","duplicate","content"],
+   detail:"<p class='note'><b>Duplicate of /RP</b>, and already drifted (ASCII vs Unicode glyphs). It is a local-only file, so it never reaches your other Macs. Being merged into a symlink of /RP so there is one source.</p>"},
+  {name:"/cx", kind:"command", cat:"review", status:"dup",
+   what:"Older local copy of /RC. Same code reviewer.",
+   when:"Don't. Use /RC instead.",
+   ex:"/RC [paste code or spec]",
+   tags:["review","duplicate","code"],
+   detail:"<p class='note'><b>Duplicate of /RC</b>. Local-only and drifting. Being merged into a symlink of /RC.</p>"},
+  {name:"/rs", kind:"command", cat:"review", status:"solid", tier:"Sonnet",
+   what:"QA-checks a customer support response before it goes out in your voice.",
+   when:"Right before you send a support reply to a customer.",
+   ex:"/rs [paste response]",
+   tags:["review","support","customer","reply"],
+   detail:"<p class='note'>Its output goes to customers as you, yet it has no hook into the verification gate, voice rules or docs-link rule — and it has a US-spelling slip ('patronizing') inside a tool meant to police English.</p><p class='note'><b>Upgraded 2026-06-01:</b> de-fork to canonical, add the gate + voice block, fix the spelling.</p>"},
+  {name:"/Ultra", kind:"command", cat:"review", status:"solid", tier:"Opus",
+   what:"A senior peer who would rather flag a problem than ship a half-baked answer. Tool-first, uses parallel sub-agents, checks reversibility.",
+   when:"You want an honest, adversarial gut-check on a plan or an answer before you commit.",
+   ex:"/Ultra [the plan or answer to pressure-test]",
+   tags:["review","second opinion","adversarial","gut-check"],
+   detail:"<p class='note'>The least-broken of the older commands — already well aligned to 4.8. Only soft verification language and no model-tier note (its name implies Opus).</p>"},
+
+  // ---------- Plugin dev & shipping ----------
+  {name:"ship-ep-plugin", kind:"skill", cat:"plugin", status:"solid", tier:"Sonnet",
+   what:"Ships an EP plugin update end to end with a five-boolean gate: upload zip → ingest.php → POST probe → download the customer copy and SHA256-match it. Refuses to say 'shipped' until all five pass.",
+   when:"Every single plugin release, every time.",
+   ex:"Use it for any EP plugin release (say: ship ep-faq)",
+   tags:["ship","release","plugin","ingest","gate","update"],
+   detail:"<p class='note'>Strong bones, but <b>broken as written:</b> all three calls use the dead <span class='mono'>ssh ionos</span> alias (port 22 closed since 27 May; <span class='mono'>ionos-ts</span> is the only path). <b>Upgraded 2026-06-01:</b> alias sweep + a feature-probe gate (the artefact gate proves customers can download, not that the feature works).</p>"},
+  {name:"/qa-plugin", kind:"command", cat:"plugin", status:"new", tier:"Opus",
+   what:"Turns CC into a deep QA Manager for one EP plugin: reconstructs it from source, posts a readiness report, then triages tickets and never claims fixed without a probe.",
+   when:"A customer reports an issue with a specific plugin and you want an expert on just that plugin.",
+   ex:"/qa-plugin ep-gdpr",
+   tags:["qa","plugin","support","triage","bug","gold standard"],
+   detail:"<p class='note'>Built today to the 4.8 standard. A thin command that loads <span class='mono'>ep-plugin-qa-prompt.md</span> for the slug you pass. This is the gold standard the older tools are being brought up to.</p>"},
+  {name:"/sj", kind:"command", cat:"plugin", status:"solid", tier:"Sonnet",
+   what:"Generates a sample JSON import file for a plugin that doubles as an LLM prompt.",
+   when:"You need seed data or a sample import for a plugin.",
+   ex:"/sj EP Testimonials",
+   tags:["json","sample","import","seed","plugin"],
+   detail:"<p class='note'>Sound idea matching a real shipped pattern, but it tells the model to invent the import schema from priors when the authoritative shape exists in source (<span class='mono'>generate_sample_json</span>). <b>Upgraded 2026-06-01:</b> read the real schema + a jq validity gate.</p>"},
+  {name:"/EPS", kind:"command", cat:"plugin", status:"solid", tier:"Opus",
+   what:"Loads the EP Security expert persona for threat-modelling and security review of an EP plugin.",
+   when:"Security-reviewing an EP plugin, especially the auth-adjacent ones.",
+   ex:"/EPS then describe the plugin/target",
+   tags:["security","review","threat model","auth","persona"],
+   detail:"<p class='note'>Good threat model, but three dead startup paths (ep-pagemotor, HANDOFF.md) and no verification gate — risky for a security persona. <b>Upgraded 2026-06-01:</b> fix paths + add gate.</p>"},
+
+  // ---------- Sites & migration ----------
+  {name:"design-conversion", kind:"skill", cat:"site", status:"solid", tier:"Opus",
+   what:"Converts an HTML/CSS design (Tailwind, Bootstrap, etc.) into a PageMotor Theme import file, with GRT typography, Design Options and full template support.",
+   when:"You have a design and want it as a working PM theme.",
+   ex:"Point it at a design (say: convert this design to a PM theme)",
+   tags:["design","theme","convert","css","tailwind","pagemotor"],
+   detail:"<p class='note'><b>Needs your eyes:</b> 29 references to Google Fonts across its docs — could be a real GDPR breach in what it emits, or just family-name mapping for Bunny. I will read it before touching it. Also its 'Pass 6' verification never actually compiles or renders, so it can ship a silently-broken theme. <b>Upgraded 2026-06-01:</b> confirm/kill the Google path (EP Bunny Fonts prerequisite) + a real live compile+import+probe pass.</p>"},
+  {name:"/DS", kind:"command", cat:"site", status:"new", tier:"Opus",
+   what:"Designs a distinctive, gallery-grade site for a domain (the MakeClear method): proposes 3-4 genuinely different directions, builds the one you pick, then auto-graduates it to a live PageMotor site in /layouts/ (publish-on-green).",
+   when:"A great domain deserves a bespoke site 'worthy of /layouts/', or you want design directions to choose from.",
+   ex:"/DS voidarchitect.site",
+   tags:["design","distinctive","pagemotor","layouts","brand","site","DS"],
+   detail:"<p class='note'>Applies the <span class='mono'>distinctive-pm-site</span> skill (built 2026-06-05). <b>Combined 2026-06-06 (publish-on-green):</b> once you pick a direction it auto-flows into /DA — convert to PageMotor (fonts via the EP Bunny Fonts plugin), stand up a <span class='mono'>pm-*</span> preview, verify (render-match, 0 broken images, 0 console errors), and only then cut the domain over and add the /layouts/ card. If verification fails it pauses for you rather than publishing to the public gallery. The pick is the only human gate.</p>"},
+  {name:"/DA", kind:"command", cat:"site", status:"new", tier:"Opus",
+   what:"Converts one or more static/HTML designs into LIVE PageMotor sites and publishes each to /layouts/, by firing off parallel agents ('CC instances') — one per design.",
+   when:"You have existing static designs to graduate to PageMotor (e.g. the six brand-site prototypes), or as the engine /DS chains into after a pick.",
+   ex:"/DA   (or  /DA aboxforyourbusiness.com)",
+   tags:["convert","pagemotor","layouts","batch","parallel","design","DA"],
+   detail:"<p class='note'>Applies the <span class='mono'>design-to-pm-batch</span> skill (built 2026-06-06). Canary-first, then fans out. <b>Concurrency-safe by design:</b> conversions run in parallel, but the shared-resource steps (certbot, nginx reload, the single /layouts/ publish) are serialized because the VPS is shared. Fonts via the EP Bunny Fonts plugin — never the conversion skill's own font plugin.</p>"},
+  {name:"pagemotor-plugin-showcase-site", kind:"skill", cat:"site", status:"solid", tier:"Opus",
+   what:"Builds a fully branded showcase site that demonstrates one EP plugin in real editorial use: bespoke theme, matched imagery, real content, working forms, legal pages, Stripe test checkout.",
+   when:"A new plugin release wants a demo/marketing site (the thinkprofessionally pattern).",
+   ex:"Build a showcase site for ep-events",
+   tags:["showcase","demo","site","marketing","stripe","theme"],
+   detail:"<p class='note'>Deep, irreplaceable gotcha knowledge, but operationally dead: 15+ <span class='mono'>ssh ionos</span> calls fail, and its class-ep-suite 'cp fix' is now a data-loss footgun against the new symlinks. <b>Upgraded 2026-06-01:</b> alias sweep + symlink-safe rewrite + ship gate.</p>"},
+  {name:"layouts-add-site", kind:"skill", cat:"site", status:"new", tier:"Opus",
+   what:"Adds (or refreshes) a PageMotor showcase site on the public elmspark.com/layouts/ gallery the proper way: author a manifest, capture canonical screenshots, host both on the site, append the registry entry, regenerate via the Python generator, verify the live card.",
+   when:"Right after building a showcase site (the publish-to-gallery follow-on), or any time you add/refresh a site on /layouts/.",
+   ex:"/add-layout picsbay.com",
+   tags:["layouts","gallery","showcase","manifest","generator","elmspark","add-layout"],
+   detail:"<p class='note'>Built 2026-06-03 after the PicsBay add was done the hard way. <b>Never hand-edit /layouts/</b> — it is generated from per-site manifests. Encodes the gotchas: the dead <span class='mono'>ionos</span> alias (use <span class='mono'>ionos-ts</span>), <span class='mono'>LOAD_FILE</span> blanking the live row, the <span class='mono'>CANONICAL_ROUTES</span> tile whitelist, per-site manifest hosting, and a placeholder-content check. Shortcut: <span class='mono'>/add-layout &lt;site&gt;</span>.</p>"},
+  {name:"wp-to-pm-migration", kind:"skill", cat:"site", status:"solid", tier:"Opus",
+   what:"Migrates a live WordPress site to PageMotor on a VPS — Thesis/Focus, Divi, Gutenberg, recipe blogs — with DNS cutover, LE certs, a coherent design pass and exhaustive link verification.",
+   when:"Moving or converting a WordPress site to PageMotor.",
+   ex:"Migrate example.com to PageMotor",
+   tags:["migration","wordpress","wp","convert","dns","vps"],
+   detail:"<p class='note'><b>Live data bug:</b> its provision default rsyncs from the now-contaminated dev3 (18 plugins) instead of <span class='mono'>/var/www/holiday/</span>, dragging junk into every new site. Plus the dead alias and a phantom 'EP WP Exporter' plugin. <b>Upgraded 2026-06-01:</b> fix the contaminating default first.</p>"},
+  {name:"/qa-site", kind:"command", cat:"site", status:"new", tier:"Opus",
+   what:"EP Site QA Manager mode for one PageMotor site you built. Triages a user-reported issue against the live site and the build.",
+   when:"Someone reports a problem on a site you built and shipped.",
+   ex:"/qa-site thinkprofessionally.com",
+   tags:["qa","site","triage","pagemotor","issue"],
+   detail:"<p class='note'>Added 1 June (a sibling of /qa-plugin for whole sites). Not yet in the audit set — likely overlaps pm-verify-before-done; a clean lane will be drawn between them.</p>"},
+  {name:"/qa", kind:"command", cat:"site", status:"solid",
+   what:"Bootstraps a local PageMotor dev server at localhost:8001 to test EP plugins.",
+   when:"You want a throwaway local PM to poke at plugins.",
+   ex:"/qa test the EP Booking calendar",
+   tags:["qa","local","dev server","testing","localhost"],
+   detail:"<p class='note'><b>Fixed 2026-06-01:</b> now self-checks whether the local <span class='mono'>ep-pagemotor</span> rig is present (often absent, e.g. on this Mac) and falls back to dev.elmspark.com instead of failing on dead paths. For deep single-plugin QA prefer /qa-plugin.</p>"},
+
+  // ---------- Verify before done ----------
+  {name:"pm-verify-before-done", kind:"skill", cat:"verify", status:"solid",
+   what:"Runs an end-to-end visual, structural and accessibility check of a PageMotor site change BEFORE you claim done. Opens the page, checks the layout, clicks the form, spots the broken thing — the human pass you do, done first.",
+   when:"Before any 'done / shipped / live' message about a PM-site change.",
+   ex:"verify this change before I say done",
+   tags:["verify","qa","accessibility","screenshot","before done","gate"],
+   detail:"<p class='note'>Your most evidence-driven tool. One dead <span class='mono'>ssh ionos</span> silently breaks its server-side checks, and it has no reachability pre-flight (a degraded run can still say 'safe to claim done'). <b>Upgraded 2026-06-01:</b> alias fix + a Step 0 reachability gate + 4.8 parallel screenshots.</p>"},
+
+  // ---------- Sessions & meta ----------
+  {name:"/Handoff", kind:"command", cat:"session", status:"solid",
+   what:"Writes the end-of-session handoff artefact before you /compact, so the next session resumes cleanly.",
+   when:"Closing a session where meaningful progress was made.",
+   ex:"/Handoff",
+   tags:["handoff","session","resume","compact","memory"],
+   detail:"<p class='note'>High usage, two real defects: STEP 1 fires git in a non-git workspace, and STEP 3 contradicts the 3-bullet + handoff-index protocol in CLAUDE.md. <b>Upgraded 2026-06-01:</b> fold in Handoff-portable's git guard + dir resolution, fix the index protocol, remove the phantom 'resume via SendMessage'.</p>"},
+  {name:"/Handoff-portable", kind:"command", cat:"session", status:"spec",
+   what:"A generic, repo-agnostic version of /Handoff with better engineering (dir resolution, git guard, index auto-detect).",
+   when:"Not installed — inert today.",
+   ex:"(folded into /Handoff)",
+   tags:["handoff","portable","session","generic"],
+   detail:"<p class='note'>No symlink, so it cannot fire. Its best engineering is being folded into /Handoff; then it is retired or kept as a labelled generic export.</p>"},
+  {name:"/h", kind:"command", cat:"session", status:"solid",
+   what:"Prints a cheat sheet of your custom commands.",
+   when:"You want a quick in-terminal list of commands.",
+   ex:"/h",
+   tags:["help","cheat sheet","index","commands"],
+   detail:"<p class='note'>Its one job is to be an accurate index, and it still misses the synced commands (/RP, /RC, /EPS, /Ultra, /Handoff, /log-build). <b>Upgraded 2026-06-01:</b> make it self-generate from the commands directory so it can never go stale. This HTML guide is the richer companion.</p>"},
+  {name:"/log-build", kind:"command", cat:"session", status:"spec",
+   what:"A plan-mode spec for a Chronicle-style session-history index. Never actually built.",
+   when:"Not a working command yet — a design waiting on your green light.",
+   ex:"(spec only)",
+   tags:["log","history","chronicle","spec","build"],
+   detail:"<p class='note'>A specification, not a shipped command. Has stale model pins (Sonnet 4.6 / Opus 4.7) that get fixed at build time. Refresh and build only if you want it.</p>"},
+
+  // ---------- Comms & media ----------
+  {name:"imessage-send", kind:"skill", cat:"comms", status:"solid",
+   what:"Sends an iMessage from your Mac via Messages.app to a contact resolved by name from Contacts.app.",
+   when:"You ask to text/iMessage someone, or you confirm a draft with 'send it'.",
+   ex:"text Tony the show graphic is ready",
+   tags:["imessage","text","message","contacts","send"],
+   detail:"<p class='note'>Tight and well-scoped, every fact clean. Minor: it trusts the send succeeded (step-success) on an irreversible action. <b>Upgraded 2026-06-01:</b> a delivery-state check after sending.</p>"},
+  {name:"mailgun-setup", kind:"skill", cat:"comms", status:"solid",
+   what:"Walks you through Mailgun email delivery end to end: EU region, mg. sending subdomain, DNS at any provider, DMARC, sending key, and an inbox-placement check.",
+   when:"Setting up email for a site, or fixing mail landing in spam.",
+   ex:"set up Mailgun for worlebury.co.uk",
+   tags:["email","mailgun","dns","deliverability","spam","dmarc"],
+   detail:"<p class='note'>Recently maintained, every fact verifies clean. Pure uplift available: it could drive the whole DNS+verify loop itself (the cloudflare/mailgun env files exist) rather than coaching you through clicks, and add a hard inbox-placement done-gate.</p>"},
+  {name:"ai-prompt-builder", kind:"skill", cat:"comms", status:"solid",
+   what:"Generates high-quality prompts for AI image and video tools (Midjourney, Flux, Veo, Kling, Sora, and others): shot lists, multi-shot sequences, timestamp prompting.",
+   when:"You need a generation-ready prompt to paste into an image/video tool.",
+   ex:"write me a video prompt for a 3-shot product reveal",
+   tags:["prompt","image","video","midjourney","veo","media"],
+   detail:"<p class='note'>Ownership to confirm (installed in your skills dir). Minor issues: two dangling references to a non-existent 'video-prompt-builder' (this skill is it), a drifting model roster, and a trigger that overlaps the higgsfield-* skills. <b>Upgraded 2026-06-01:</b> delete dead refs + add a hand-off boundary (defer to higgsfield-* when generation is wanted in-session).</p>"},
+];
+
+const BUILTINS = [
+  {name:"/code-review", what:"Reviews the current diff for bugs and cleanups at a chosen effort level; ultra runs a deep multi-agent cloud review. --comment posts inline; --fix applies.", ex:"/code-review high"},
+  {name:"/verify", what:"Verifies a code change actually works by running the app and observing behaviour. Generic sibling of pm-verify-before-done.", ex:"/verify"},
+  {name:"/deep-research", what:"Fan-out web research with adversarial fact-checking and a cited report. Ask 2-3 scoping questions first if the topic is broad.", ex:"/deep-research [your question]"},
+  {name:"/security-review", what:"Full security review of the pending changes on the current branch.", ex:"/security-review"},
+  {name:"/simplify", what:"Reviews changed code for reuse, simplification and efficiency, then applies the fixes. Quality only, not bug-hunting.", ex:"/simplify"},
+  {name:"/run", what:"Launches and drives the project's app so you can see a change actually working.", ex:"/run"},
+  {name:"/schedule", what:"Creates or manages scheduled remote agents (cron routines), or a one-time future run.", ex:"/schedule [task] at 3pm"},
+  {name:"/loop", what:"Runs a prompt or command on a recurring interval, or self-paced. Good for polling a deploy.", ex:"/loop 5m /code-review"},
+  {name:"/update-config", what:"Configures the CC harness via settings.json: hooks, permissions, env vars. Use for any 'from now on, whenever X' automation.", ex:"/update-config allow npm commands"},
+  {name:"claude-api", what:"Build, debug and optimise Claude API / SDK apps, with prompt caching, and migrate code between model versions.", ex:"(triggers on anthropic SDK work)"},
+  {name:"find-skills", what:"Helps you discover and install new agent skills when you want functionality you don't have yet.", ex:"is there a skill for X?"},
+  {name:"/fewer-permission-prompts", what:"Scans your transcripts and adds a sensible allowlist to settings.json so you get fewer permission prompts.", ex:"/fewer-permission-prompts"},
+];
+
+const STAR_KEY = "ep-toolkit-stars-v1";
+let stars = new Set(JSON.parse(localStorage.getItem(STAR_KEY) || "[]"));
+let activeCat = null;
+let starredOnly = false;
+
+const badgeClass = {solid:"b-solid", fix:"b-fix", dup:"b-dup", broken:"b-broken", new:"b-new", spec:"b-spec"};
+const badgeText  = {solid:"Solid", fix:"Upgrade queued", dup:"Duplicate", broken:"Broken now", new:"New", spec:"Spec only"};
+
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
+
+function cardNode(t){
+  const c = el("div","card"); c.dataset.cat=t.cat;
+  c.dataset.hay = (t.name+" "+t.what+" "+t.when+" "+(t.tags||[]).join(" ")+" "+t.cat).toLowerCase();
+  c.dataset.name = t.name;
+
+  const top = el("div","card-top");
+  top.append(el("span","name",t.name));
+  top.append(el("span","kind"+(t.kind==="skill"?" skill":""), t.kind));
+  const star = el("button","star"+(stars.has(t.name)?" on":""), stars.has(t.name)?"★":"☆");
+  star.title="Star for quick reference";
+  star.onclick=()=>{ if(stars.has(t.name)){stars.delete(t.name); star.textContent="☆"; star.classList.remove("on");} else {stars.add(t.name); star.textContent="★"; star.classList.add("on");} localStorage.setItem(STAR_KEY, JSON.stringify([...stars])); apply(); };
+  top.append(star);
+  c.append(top);
+
+  const badges = el("div","badges");
+  badges.append(el("span","badge "+badgeClass[t.status], badgeText[t.status]));
+  if(t.tier) badges.append(el("span","tier", t.tier));
+  c.append(badges);
+
+  c.append(el("div","what", t.what));
+  c.append(el("div","when", "<b>Use when:</b> "+t.when));
+
+  const ex = el("div","ex");
+  ex.append(el("code",null, t.ex));
+  const cp = el("button","copy","Copy");
+  cp.onclick=()=>{ navigator.clipboard && navigator.clipboard.writeText(t.ex); cp.textContent="Copied"; cp.classList.add("done"); setTimeout(()=>{cp.textContent="Copy"; cp.classList.remove("done");},1200); };
+  ex.append(cp);
+  c.append(ex);
+
+  if(t.detail){
+    const more = el("span","more","Details & status ▾");
+    const det = el("div","detail", t.detail);
+    more.onclick=()=>{ det.classList.toggle("open"); more.textContent = det.classList.contains("open")?"Hide details ▴":"Details & status ▾"; };
+    c.append(more); c.append(det);
+  }
+  return c;
+}
+
+function buildtinNode(t){
+  const c = el("div","card");
+  c.dataset.hay=(t.name+" "+t.what).toLowerCase(); c.dataset.cat="builtin"; c.dataset.name=t.name;
+  const top=el("div","card-top"); top.append(el("span","name",t.name)); top.append(el("span","kind","built-in")); c.append(top);
+  c.append(el("div","what",t.what));
+  const ex=el("div","ex"); ex.append(el("code",null,t.ex));
+  const cp=el("button","copy","Copy"); cp.onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(t.ex); cp.textContent="Copied"; cp.classList.add("done"); setTimeout(()=>{cp.textContent="Copy";cp.classList.remove("done");},1200);};
+  ex.append(cp); c.append(ex);
+  return c;
+}
+
+// chips
+const chipsBox=document.getElementById("chips");
+const allChip=el("button","chip active","All");
+allChip.onclick=()=>{activeCat=null; document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active")); allChip.classList.add("active"); apply();};
+chipsBox.append(allChip);
+CATS.forEach(cat=>{
+  const ch=el("button","chip",cat.label);
+  ch.dataset.cat=cat.id;
+  ch.onclick=()=>{ activeCat=cat.id; document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active")); ch.classList.add("active"); apply(); };
+  chipsBox.append(ch);
+});
+
+// tasks
+const tasksBox=document.getElementById("tasks");
+TASKS.forEach(tk=>{
+  const b=el("button","task-btn");
+  b.innerHTML="<span class='t-em'>"+tk.em+"</span><span class='t-lbl'>"+tk.lbl+"</span><br><span class='t-sub'>"+tk.sub+"</span>";
+  b.onclick=()=>{ activeCat=tk.cat; document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active", x.dataset.cat===tk.cat)); allChip.classList.remove("active"); document.getElementById("q").value=""; apply(); document.getElementById("yoursH").scrollIntoView({behavior:"smooth", block:"start"}); };
+  tasksBox.append(b);
+});
+
+// grids
+const grid=document.getElementById("grid");
+TOOLS.forEach(t=>grid.append(cardNode(t)));
+const bgrid=document.getElementById("builtinGrid");
+BUILTINS.forEach(t=>bgrid.append(buildtinNode(t)));
+
+const q=document.getElementById("q");
+const countEl=document.getElementById("count");
+const emptyEl=document.getElementById("empty");
+const starBtn=document.getElementById("starredOnly");
+starBtn.onclick=()=>{ starredOnly=!starredOnly; starBtn.classList.toggle("active", starredOnly); apply(); };
+
+function apply(){
+  const term=q.value.trim().toLowerCase();
+  let shown=0;
+  document.querySelectorAll("#grid .card").forEach(c=>{
+    const okCat = !activeCat || c.dataset.cat===activeCat;
+    const okTerm = !term || c.dataset.hay.includes(term);
+    const okStar = !starredOnly || stars.has(c.dataset.name);
+    const vis = okCat && okTerm && okStar;
+    c.classList.toggle("hidden", !vis);
+    if(vis) shown++;
+  });
+  emptyEl.style.display = shown? "none":"block";
+  countEl.textContent = shown + " of " + TOOLS.length + " tools";
+  document.getElementById("yoursSub").textContent = (activeCat? (CATS.find(c=>c.id===activeCat)||{}).label : "All categories") + (starredOnly? " · starred":"");
+}
+
+q.addEventListener("input", ()=>{
+  // typing searches across everything: clear any active category so results are never trapped
+  if(q.value.trim()){ activeCat=null; document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active")); allChip.classList.add("active"); }
+  apply();
+});
+document.addEventListener("keydown", e=>{ if(e.key==="/" && document.activeElement!==q){ e.preventDefault(); q.focus(); } if(e.key==="Escape"){ q.value=""; apply(); } });
+apply();
+</script>
+</body>
+</html>

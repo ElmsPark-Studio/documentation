@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ElmsPark HQ — Master Asset Atlas</title>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600,9..144&display=swap">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=inter-tight:400,500,600&display=swap">
+<style>
+:root{
+  --paper:#F6F2EA; --ink:#181411; --moss:#3A5140; --moss-soft:#3a514014;
+  --line:#e3dccd; --muted:#6b6258; --card:#fffdf9;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--moss);text-decoration:none;border-bottom:1px solid #3a514033}
+a:hover{border-bottom-color:var(--moss)}
+code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.85em;
+  background:var(--moss-soft);padding:.1em .35em;border-radius:4px;word-break:break-word}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header.hero{padding:48px 0 18px}
+.kicker{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--moss);font-weight:600;margin:0 0 10px}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(2.2rem,5vw,3.4rem);
+  line-height:1.02;margin:0 0 12px;letter-spacing:-.01em}
+.lede{font-size:1.1rem;color:#2c2620;max-width:62ch;margin:0 0 6px}
+.doors{font-size:.95rem;color:var(--muted);max-width:70ch;margin:14px 0 0}
+.doors b{color:var(--ink)}
+.toolbar{position:sticky;top:0;z-index:20;background:var(--paper);
+  border-bottom:1px solid var(--line);padding:14px 0;margin-top:22px}
+.search{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+#q{flex:1;min-width:240px;font:inherit;font-size:1.02rem;padding:12px 16px;
+  border:1.5px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink)}
+#q:focus{outline:none;border-color:var(--moss);box-shadow:0 0 0 3px var(--moss-soft)}
+.meta{font-size:.85rem;color:var(--muted);white-space:nowrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{font:inherit;font-size:.82rem;font-weight:500;cursor:pointer;
+  border:1px solid var(--line);background:var(--card);color:#3c352c;
+  padding:6px 12px;border-radius:999px;transition:.12s}
+.chip:hover{border-color:var(--moss);color:var(--moss)}
+.chip.active{background:var(--moss);color:#fff;border-color:var(--moss)}
+.chip .n{opacity:.6;font-variant-numeric:tabular-nums}
+.chip.active .n{opacity:.85}
+main{padding:28px 0 80px}
+.cat{margin:0 0 40px;scroll-margin-top:120px}
+.cat h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.55rem;
+  margin:0 0 16px;padding-bottom:8px;border-bottom:2px solid var(--moss);display:inline-block}
+.cat h2 .count{font-family:'Inter Tight';font-size:.85rem;font-weight:500;color:var(--muted);
+  border:1px solid var(--line);border-radius:999px;padding:1px 9px;margin-left:8px;vertical-align:middle}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:16px 18px;display:flex;flex-direction:column;gap:7px}
+.card h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.05rem;margin:0;line-height:1.25}
+.card p{margin:0;font-size:.9rem}
+.card .what{color:#322c25}
+.card .where,.card .access{color:var(--muted);font-size:.83rem;line-height:1.5}
+.card .where{word-break:break-word}
+.lbl{display:inline-block;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:600;color:var(--moss);background:var(--moss-soft);
+  padding:1px 6px;border-radius:4px;margin-right:5px;vertical-align:1px}
+.empty{display:none;color:var(--muted);font-style:italic;padding:40px 0}
+.empty.show{display:block}
+footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);font-size:.82rem}
+.hidden{display:none!important}
+@media(max-width:560px){.grid{grid-template-columns:1fr}header.hero{padding:32px 0 8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="kicker">ElmsPark · Master Asset Atlas</p>
+    <h1>ElmsPark HQ</h1>
+    <p class="lede">One front door for everything Kenn builds: every guide, doc, tool, site, dashboard, repo, secret and memory across the estate, with what it is, where it lives and how to reach it.</p>
+    <p class="doors"><b>One source, two doors.</b> This page is generated from <code>ELMSPARK-HQ.md</code> in the Claude Workspace. Door 1 is Claude Code itself (just ask it where something is); door 2 is this page. Edit the markdown, regenerate, and the two stay in step.</p>
+  </header>
+</div>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="search">
+      <input id="q" type="search" placeholder="Search 179 assets… (name, what, where, access)" autocomplete="off" autofocus>
+      <span class="meta" id="meta">179 assets · 6 categories</span>
+    </div>
+    <div class="chips">
+      <button class="chip active" data-cat="__all">All <span class="n">179</span></button>
+<button class="chip" data-cat="sites-dashboards">Sites &amp; Dashboards <span class="n">27</span></button>
+<button class="chip" data-cat="docs-guides">Docs &amp; Guides <span class="n">38</span></button>
+<button class="chip" data-cat="tools-commands-skills">Tools (commands &amp; skills) <span class="n">43</span></button>
+<button class="chip" data-cat="credentials-access">Credentials &amp; Access <span class="n">13</span></button>
+<button class="chip" data-cat="code-infra">Code &amp; Infra <span class="n">37</span></button>
+<button class="chip" data-cat="working-memory-process">Working Memory &amp; Process <span class="n">21</span></button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+      <section class="cat" id="cat-sites-dashboards" data-cat="sites-dashboards">
+        <h2>Sites &amp; Dashboards <span class="count">27</span></h2>
+        <div class="grid">
+        <article class="card" data-search="plugins in the wild (dashboard) live install + version telemetry across every site: how many run each plugin, who is behind, activity over time, free vs licensed. private, noindex. https://updates.elmspark.com/docs/pages/plugins-dashboard.php passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>Plugins in the Wild (dashboard)</h3>
+          <p class="what">Live install + version telemetry across every site: how many run each plugin, who is behind, activity over time, free vs licensed. Private, noindex.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/plugins-dashboard.php" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/plugins-dashboard.php</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="server dashboard live server state: domain audit, subscription overview, licensing status, server health at a glance. https://updates.elmspark.com/docs/pages/dashboard.php passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>Server Dashboard</h3>
+          <p class="what">Live server state: domain audit, subscription overview, licensing status, server health at a glance.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/dashboard.php" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/dashboard.php</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="plugin registry all ~38 plugins with version, tier, checksum, and requirements. sortable, served live from config.php. https://updates.elmspark.com/docs/pages/plugins.php passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>Plugin Registry</h3>
+          <p class="what">All ~38 plugins with version, tier, checksum, and requirements. Sortable, served live from config.php.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/plugins.php" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/plugins.php</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="elmspark.com main elmspark company site (pagemotor). public flagship; carries www-&gt;apex + http-&gt;https 301s and several legacy-path redirects (/services/, /lets-talk/, /client-login/ etc.) root /var/www/elmspark.com; vhost /etc/nginx/sites-enabled/elmspark.com · roots /var/www/&lt;sub&gt;.elmspark.com; vhosts same names · https://elmspark.com/ . vps vhost /etc/nginx/sites-enabled/elmspark.com, docroot /var/www/elmspark.com (ssh ionos-ts). verified 200 on 2026-06-06. public; edit via ssh ionos-ts">
+          <h3>elmspark.com</h3>
+          <p class="what">Main Elmspark company site (PageMotor). Public flagship; carries www-&gt;apex + http-&gt;https 301s and several legacy-path redirects (/services/, /lets-talk/, /client-login/ etc.)</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/elmspark.com; vhost /etc/nginx/sites-enabled/elmspark.com · roots /var/www/&lt;sub&gt;.elmspark.com; vhosts same names · <a href="https://elmspark.com/" target="_blank" rel="noopener">https://elmspark.com/</a> . VPS vhost /etc/nginx/sites-enabled/elmspark.com, docroot /var/www/elmspark.com (ssh ionos-ts). Verified 200 on 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> public; edit via ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="updates.elmspark.com live ep plugin update channel / manifest endpoint that all ep plugin installs check against; records per-install telemetry (ep_installs). customer-shape is post (get=405, malformed post=400 = working). also hosts the private &#x27;plugins in the wild&#x27; install-telemetry dashboard root /var/www/updates.elmspark.com; vhost /etc/nginx/sites-enabled/updates.elmspark.com; dashboard /docs/plugins-dashboard.php · https://updates.elmspark.com/ (update endpoint). dashboard: https://updates.elmspark.com/docs/plugins-dashboard.php (passkey gate, returns 302 to login; noindex). docroot /var/www/updates.elmspark.com. verified 2026-06-06. update endpoint public; dashboard behind docs passkey gate + noindex; edit via ssh ionos-ts · update endpoint public (post); dashboard behind docs passkey gate">
+          <h3>updates.elmspark.com</h3>
+          <p class="what">Live EP plugin update channel / manifest endpoint that all EP plugin installs check against; records per-install telemetry (ep_installs). Customer-shape is POST (GET=405, malformed POST=400 = working). Also hosts the private &#x27;Plugins in the Wild&#x27; install-telemetry dashboard</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/updates.elmspark.com; vhost /etc/nginx/sites-enabled/updates.elmspark.com; dashboard /docs/plugins-dashboard.php · <a href="https://updates.elmspark.com/" target="_blank" rel="noopener">https://updates.elmspark.com/</a> (update endpoint). Dashboard: <a href="https://updates.elmspark.com/docs/plugins-dashboard.php" target="_blank" rel="noopener">https://updates.elmspark.com/docs/plugins-dashboard.php</a> (passkey gate, returns 302 to login; noindex). Docroot /var/www/updates.elmspark.com. Verified 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> update endpoint public; dashboard behind docs passkey gate + noindex; edit via ssh ionos-ts · update endpoint public (POST); dashboard behind docs passkey gate</p>
+        </article>
+        <article class="card" data-search="documentation.elmspark.com elmspark documentation site (astro, auto-redeployed ~hourly). root is public; the hosting guides and toolkit guide are gated. also hosts the chris-facing pm 0.9 review under /pm09t2/ (basic auth, served from the sibling /var/www/pm09t2-private, not the docroot which gets wiped on redeploy) root /var/www/documentation.elmspark.com; vhost /etc/nginx/sites-enabled/documentation.elmspark.com · https://documentation.elmspark.com/ (root 200). gated paths: /hosting/ (403), /toolkit/ (basic auth 401, user &#x27;kenn&#x27;, pwd ~/.config/elmspark/toolkit-guide-auth.txt), /pm09t2/ (basic auth, .htpasswd-pm09t2). docroot /var/www/documentation.elmspark.com. verified 2026-06-06. basic auth on /toolkit/ (user kenn); edit source ~/developer/elmspark/documentation, deploy via ionos-ts; ssh ionos-ts · public root; /toolkit/ + /pm09t2/ basic-auth; /hosting/ 403">
+          <h3>documentation.elmspark.com</h3>
+          <p class="what">Elmspark documentation site (Astro, auto-redeployed ~hourly). Root is public; the hosting guides and toolkit guide are gated. Also hosts the Chris-facing PM 0.9 review under /pm09t2/ (Basic Auth, served from the sibling /var/www/pm09t2-private, NOT the docroot which gets wiped on redeploy)</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/documentation.elmspark.com; vhost /etc/nginx/sites-enabled/documentation.elmspark.com · <a href="https://documentation.elmspark.com/" target="_blank" rel="noopener">https://documentation.elmspark.com/</a> (root 200). Gated paths: /hosting/ (403), /toolkit/ (Basic Auth 401, user &#x27;kenn&#x27;, pwd ~/.config/elmspark/toolkit-guide-auth.txt), /pm09t2/ (Basic Auth, .htpasswd-pm09t2). Docroot /var/www/documentation.elmspark.com. Verified 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> Basic Auth on /toolkit/ (user kenn); edit source ~/Developer/elmspark/documentation, deploy via ionos-ts; ssh ionos-ts · public root; /toolkit/ + /pm09t2/ Basic-Auth; /hosting/ 403</p>
+        </article>
+        <article class="card" data-search="help.elmspark.com elmspark help/support site. root /var/www/help; vhost /etc/nginx/sites-enabled/help (server_name help.elmspark.com) ssh ionos-ts">
+          <h3>help.elmspark.com</h3>
+          <p class="what">ElmsPark help/support site.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/help; vhost /etc/nginx/sites-enabled/help (server_name help.elmspark.com)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="catalogue.elmspark.com ep plugin catalogue site. root /var/www/catalogue; vhost /etc/nginx/sites-enabled/catalogue (server_name catalogue.elmspark.com) ssh ionos-ts">
+          <h3>catalogue.elmspark.com</h3>
+          <p class="what">EP plugin catalogue site.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/catalogue; vhost /etc/nginx/sites-enabled/catalogue (server_name catalogue.elmspark.com)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="holiday.elmspark.com pagemotor &#x27;holiday&#x27;/demo site (core tarball backup holiday-core-backup-*.tar.gz sits in /var/www/). root /var/www/holiday; vhost /etc/nginx/sites-enabled/holiday (server_name holiday.elmspark.com) ssh ionos-ts">
+          <h3>holiday.elmspark.com</h3>
+          <p class="what">PageMotor &#x27;holiday&#x27;/demo site (core tarball backup holiday-core-backup-*.tar.gz sits in /var/www/).</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/holiday; vhost /etc/nginx/sites-enabled/holiday (server_name holiday.elmspark.com)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="layouts-a/b/c/d.elmspark.com four pagemotor layout/showcase staging subdomains feeding the elmspark.com/layouts/ gallery. roots /var/www/layouts-{a,b,c,d}.elmspark.com; vhosts same names ssh ionos-ts">
+          <h3>layouts-a/b/c/d.elmspark.com</h3>
+          <p class="what">Four PageMotor layout/showcase staging subdomains feeding the elmspark.com/layouts/ gallery.</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/layouts-{a,b,c,d}.elmspark.com; vhosts same names</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="makeclear /layouts/ trio (lens / focus / distil / strike subdomains) pagemotor 0.9.2b showcase candidates for the makeclear.co.uk rebuild and elmspark.com/layouts/: lens.makeclear.co.uk (the lens), distil.makeclear.co.uk (distil), strike.makeclear.co.uk (strikethrough). makeclear.co.uk itself is the apex &#x27;resolve&#x27; site. roots /var/www/{lens,distil,strike}.makeclear.co.uk and /var/www/makeclear.co.uk; vhosts in sites-enabled (makeclear vhost = makeclear.co.uk) ssh ionos-ts; build artefacts in workspace makeclear-build/">
+          <h3>MakeClear /layouts/ trio (lens / focus / distil / strike subdomains)</h3>
+          <p class="what">PageMotor 0.9.2b showcase candidates for the makeclear.co.uk rebuild and elmspark.com/layouts/: lens.makeclear.co.uk (The Lens), distil.makeclear.co.uk (Distil), strike.makeclear.co.uk (Strikethrough). makeclear.co.uk itself is the apex &#x27;Resolve&#x27; site.</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/{lens,distil,strike}.makeclear.co.uk and /var/www/makeclear.co.uk; vhosts in sites-enabled (makeclear vhost = makeclear.co.uk)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts; build artefacts in workspace makeclear-build/</p>
+        </article>
+        <article class="card" data-search="conversationswithtonymobley.com + cwtm.elmspark.com conversations with tony mobley podcast site (pagemotor, vps + let&#x27;s encrypt). www and http both 301 to the apex https. served from the shared cwtm pm install roots /var/www/conversationswithtonymobley.com, /var/www/cwtm.elmspark.com; vhosts same names · https://conversationswithtonymobley.com/ . vhost conversationswithtonymobley.com, docroot /var/www/cwtm.elmspark.com (also reachable at the internal cwtm.elmspark.com subdomain). verified 200 on 2026-06-06. public; edit via ssh ionos-ts">
+          <h3>conversationswithtonymobley.com + cwtm.elmspark.com</h3>
+          <p class="what">Conversations with Tony Mobley podcast site (PageMotor, VPS + Let&#x27;s Encrypt). www and http both 301 to the apex https. Served from the shared cwtm PM install</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/conversationswithtonymobley.com, /var/www/cwtm.elmspark.com; vhosts same names · <a href="https://conversationswithtonymobley.com/" target="_blank" rel="noopener">https://conversationswithtonymobley.com/</a> . Vhost conversationswithtonymobley.com, docroot /var/www/cwtm.elmspark.com (also reachable at the internal cwtm.elmspark.com subdomain). Verified 200 on 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> public; edit via ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="ownyourbooking.com + booking demo subdomains ownyourbooking product site plus persona booking demos (coach./dogwalker./lawyer./tutor.ownyourbooking.com) showcasing ep-booking. roots /var/www/ownyourbooking.com and /var/www/{coach,dogwalker,lawyer,tutor}.ownyourbooking.com; vhosts same names ssh ionos-ts">
+          <h3>ownyourbooking.com + booking demo subdomains</h3>
+          <p class="what">OwnYourBooking product site plus persona booking demos (coach./dogwalker./lawyer./tutor.ownyourbooking.com) showcasing ep-booking.</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/ownyourbooking.com and /var/www/{coach,dogwalker,lawyer,tutor}.ownyourbooking.com; vhosts same names</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="picsbay.com / picsbay.co.uk picsbay project site (pm 0.9 migration estate, was part of the legacy fetch() public-form fix). root /var/www/picsbay.com; vhosts picsbay (picsbay.com) + picsbay.co.uk ssh ionos-ts">
+          <h3>picsbay.com / picsbay.co.uk</h3>
+          <p class="what">PicsBay project site (PM 0.9 migration estate, was part of the legacy fetch() public-form fix).</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/picsbay.com; vhosts picsbay (picsbay.com) + picsbay.co.uk</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="thinkprofessionally.com ep plugin showcase / demo site (the canonical &#x27;pagemotor-plugin-showcase-site&#x27; build pattern, ep-events as featured plugin). public marketing site root /var/www/thinkprofessionally.com; vhost same name · https://thinkprofessionally.com/ . vhost thinkprofessionally.com. verified 200 on 2026-06-06. ssh ionos-ts · public">
+          <h3>thinkprofessionally.com</h3>
+          <p class="what">EP plugin showcase / demo site (the canonical &#x27;pagemotor-plugin-showcase-site&#x27; build pattern, ep-events as featured plugin). Public marketing site</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/thinkprofessionally.com; vhost same name · <a href="https://thinkprofessionally.com/" target="_blank" rel="noopener">https://thinkprofessionally.com/</a> . Vhost thinkprofessionally.com. Verified 200 on 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts · public</p>
+        </article>
+        <article class="card" data-search="ourecojourney.com pagemotor site (the white-screen full-opcache incident site, 2026-06-04). root /var/www/ourecojourney.com; vhost same name ssh ionos-ts">
+          <h3>ourecojourney.com</h3>
+          <p class="what">PageMotor site (the white-screen full-opcache incident site, 2026-06-04).</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/ourecojourney.com; vhost same name</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="bringcolourtolife.com + spectrum.bringcolourtolife.com bring colour to life brand site + spectrum subdomain (nb: flagged as the next ionos-ssl-under-cloudflare domino, cert expiring 2026-06-22). roots /var/www/bringcolourtolife.com, /var/www/spectrum.bringcolourtolife.com; vhosts same names ssh ionos-ts">
+          <h3>bringcolourtolife.com + spectrum.bringcolourtolife.com</h3>
+          <p class="what">Bring Colour To Life brand site + spectrum subdomain (NB: flagged as the next IONOS-SSL-under-Cloudflare domino, cert expiring 2026-06-22).</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/bringcolourtolife.com, /var/www/spectrum.bringcolourtolife.com; vhosts same names</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="makeclear.co.uk apex (resolve) makeclear brand domain (pagemotor). www + http redirect to apex https. being rebuilt into a /layouts/-worthy showcase; the three subdomains below are the distinctive candidate designs root /var/www/makeclear.co.uk; vhost /etc/nginx/sites-enabled/makeclear · https://makeclear.co.uk/ . vhost &#x27;makeclear&#x27;, docroot /var/www/makeclear.co.uk. verified 200 on 2026-06-06. ssh ionos-ts · public">
+          <h3>makeclear.co.uk apex (Resolve)</h3>
+          <p class="what">MakeClear brand domain (PageMotor). www + http redirect to apex https. Being rebuilt into a /layouts/-worthy showcase; the three subdomains below are the distinctive candidate designs</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/makeclear.co.uk; vhost /etc/nginx/sites-enabled/makeclear · <a href="https://makeclear.co.uk/" target="_blank" rel="noopener">https://makeclear.co.uk/</a> . Vhost &#x27;makeclear&#x27;, docroot /var/www/makeclear.co.uk. Verified 200 on 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts · public</p>
+        </article>
+        <article class="card" data-search="kennjordanphotography.com kenn&#x27;s personal photography site. root /var/www/kennjordanphotography.com; vhost same name; related /var/www/kennjordanatmedotcom ssh ionos-ts">
+          <h3>kennjordanphotography.com</h3>
+          <p class="what">Kenn&#x27;s personal photography site.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/kennjordanphotography.com; vhost same name; related /var/www/kennjordanatmedotcom</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="kenn personal / experimental brand sites a cluster of kenn-owned brand, experiment and demo sites on the box: buildtheweb.site, onedayoneproject.com (odop), nosampling.com, voidculture.uk + voidarchitect.site, saxjams.com, expandyourmemory.com, everytandoesdamage.com, lastweekonofficehours.com, theconsciouscook.online, wewillmissyou.net, birdsofbannowbay.com, aboxforyour.business/.website/aboxforyourbusiness.com, vfc (virtualfaithconnections.com) + vfc-dev, tibaai.org, revenuehire-dashboard. roots /var/www/&lt;each&gt;; vhosts in /etc/nginx/sites-enabled/ (server_names verified, e.g. odop=onedayoneproject.com, vfc=virtualfaithconnections.com, tibaai=tibaai.org, voidculture=voidculture.uk) ssh ionos-ts">
+          <h3>Kenn personal / experimental brand sites</h3>
+          <p class="what">A cluster of Kenn-owned brand, experiment and demo sites on the box: buildtheweb.site, onedayoneproject.com (odop), nosampling.com, voidculture.uk + voidarchitect.site, saxjams.com, expandyourmemory.com, everytandoesdamage.com, lastweekonofficehours.com, theconsciouscook.online, wewillmissyou.net, birdsofbannowbay.com, aboxforyour.business/.website/aboxforyourbusiness.com, vfc (virtualfaithconnections.com) + vfc-dev, tibaai.org, revenuehire-dashboard.</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/&lt;each&gt;; vhosts in /etc/nginx/sites-enabled/ (server_names verified, e.g. odop=onedayoneproject.com, vfc=virtualfaithconnections.com, tibaai=tibaai.org, voidculture=voidculture.uk)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="helen millar client estate helen millar&#x27;s site cluster (clients-helenmillar, helenmillar, virtual-helenmillar, prompting.helenmillar.com, toolkit-helenmillar, workspace-helenmillar, shared-helenmillar + pagemotor-backup dirs). roots /var/www/*helenmillar*; vhosts in sites-enabled (e.g. prompting.helenmillar.com) ssh ionos-ts">
+          <h3>Helen Millar client estate</h3>
+          <p class="what">Helen Millar&#x27;s site cluster (clients-helenmillar, helenmillar, virtual-helenmillar, prompting.helenmillar.com, toolkit-helenmillar, workspace-helenmillar, shared-helenmillar + pagemotor-backup dirs).</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/*helenmillar*; vhosts in sites-enabled (e.g. prompting.helenmillar.com)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="client / third-party pagemotor sites (grouped) other client and customer-facing sites hosted on the box, e.g. kennjordanatmedotcom and the broader hosted estate. treated as one group rather than enumerated; client work is distinct from kenn&#x27;s own elmspark infrastructure above. /var/www/&lt;client-site&gt;; vhosts in /etc/nginx/sites-enabled/ ssh ionos-ts">
+          <h3>Client / third-party PageMotor sites (grouped)</h3>
+          <p class="what">Other client and customer-facing sites hosted on the box, e.g. kennjordanatmedotcom and the broader hosted estate. Treated as one group rather than enumerated; client work is distinct from Kenn&#x27;s own elmspark infrastructure above.</p>
+          <p class="where"><span class="lbl">Where</span> /var/www/&lt;client-site&gt;; vhosts in /etc/nginx/sites-enabled/</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="elmspark.com/layouts/ (the layouts gallery) public gallery of working, interactive pagemotor showcase sites. title: &#x27;layouts. working pagemotor sites you can interact with&#x27;. generated page (never hand-edit) curated by the layouts-add-site / add-layout skill https://elmspark.com/layouts/ . lives under the elmspark.com docroot. verified 200 on 2026-06-06. public">
+          <h3>elmspark.com/layouts/ (the Layouts gallery)</h3>
+          <p class="what">Public gallery of working, interactive PageMotor showcase sites. Title: &#x27;Layouts. Working PageMotor sites you can interact with&#x27;. Generated page (never hand-edit) curated by the layouts-add-site / add-layout skill</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://elmspark.com/layouts/" target="_blank" rel="noopener">https://elmspark.com/layouts/</a> . Lives under the elmspark.com docroot. Verified 200 on 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> public</p>
+        </article>
+        <article class="card" data-search="layouts-a / -b / -c / -d.elmspark.com four live interactive pagemotor demo subdomains that back the /layouts/ gallery cards (the actual clickable sample sites visitors interact with) https://layouts-a.elmspark.com/ (and -b/-c/-d). vhosts /etc/nginx/sites-available/layouts-{a,b,c,d}.elmspark.com, docroots /var/www/layouts-{a,b,c,d}.elmspark.com. layouts-a verified 200 on 2026-06-06. public">
+          <h3>layouts-a / -b / -c / -d.elmspark.com</h3>
+          <p class="what">Four live interactive PageMotor demo subdomains that back the /layouts/ gallery cards (the actual clickable sample sites visitors interact with)</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://layouts-a.elmspark.com/" target="_blank" rel="noopener">https://layouts-a.elmspark.com/</a> (and -b/-c/-d). Vhosts /etc/nginx/sites-available/layouts-{a,b,c,d}.elmspark.com, docroots /var/www/layouts-{a,b,c,d}.elmspark.com. layouts-a verified 200 on 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> public</p>
+        </article>
+        <article class="card" data-search="makeclear candidate subdomains: lens / strike / distil.makeclear.co.uk three distinctive one-page pm 0.9.x candidate designs for the makeclear rebuild (the lens, strikethrough, distil). kenn is picking the keeper to promote and replace focus pull https://lens.makeclear.co.uk/ , https://strike.makeclear.co.uk/ , https://distil.makeclear.co.uk/ . vhosts of same name, docroots /var/www/{lens,strike,distil}.makeclear.co.uk. all three verified 200 on 2026-06-06. public">
+          <h3>MakeClear candidate subdomains: lens / strike / distil.makeclear.co.uk</h3>
+          <p class="what">Three distinctive one-page PM 0.9.x candidate designs for the MakeClear rebuild (The Lens, Strikethrough, Distil). Kenn is picking the keeper to promote and replace Focus Pull</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://lens.makeclear.co.uk/" target="_blank" rel="noopener">https://lens.makeclear.co.uk/</a> , <a href="https://strike.makeclear.co.uk/" target="_blank" rel="noopener">https://strike.makeclear.co.uk/</a> , <a href="https://distil.makeclear.co.uk/" target="_blank" rel="noopener">https://distil.makeclear.co.uk/</a> . Vhosts of same name, docroots /var/www/{lens,strike,distil}.makeclear.co.uk. All three verified 200 on 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> public</p>
+        </article>
+        <article class="card" data-search="client &amp; brand pagemotor sites (live public) cluster of live public client/brand pm sites hosted on the same vps. includes ownyourbooking.com (+ coach/dogwalker/lawyer/tutor.ownyourbooking.com booking-vertical subdomains), saxjams.com, kennjordanphotography.com, ourecojourney.com, theconsciouscook.online, lastweekonofficehours.com, wewillmissyou.net, bringcolourtolife.com (+ spectrum.), aboxforyourbusiness.com (+ aboxforyour.business/.website), voidarchitect.site all resolve 200 (verified sample 2026-06-06). vhosts in /etc/nginx/sites-available/ on ssh ionos-ts (e.g. ownyourbooking.com, saxjams.com, kennjordanphotography.com, ourecojourney.com, theconsciouscook.online, bringcolourtolife.com). docroots under /var/www/&lt;domain&gt;. public">
+          <h3>Client &amp; brand PageMotor sites (live public)</h3>
+          <p class="what">Cluster of live public client/brand PM sites hosted on the same VPS. Includes ownyourbooking.com (+ coach/dogwalker/lawyer/tutor.ownyourbooking.com booking-vertical subdomains), saxjams.com, kennjordanphotography.com, ourecojourney.com, theconsciouscook.online, lastweekonofficehours.com, wewillmissyou.net, bringcolourtolife.com (+ spectrum.), aboxforyourbusiness.com (+ aboxforyour.business/.website), voidarchitect.site</p>
+          <p class="where"><span class="lbl">Where</span> All resolve 200 (verified sample 2026-06-06). Vhosts in /etc/nginx/sites-available/ on ssh ionos-ts (e.g. ownyourbooking.com, saxjams.com, kennjordanphotography.com, ourecojourney.com, theconsciouscook.online, bringcolourtolife.com). docroots under /var/www/&lt;domain&gt;.</p>
+          <p class="access"><span class="lbl">Access</span> public</p>
+        </article>
+        <article class="card" data-search="picsbay.co.uk picsbay domain — currently 301-redirects to elmspark.com (parked/forwarding, not a standalone live site). the active picsbay pm build is the internal &#x27;picsbay&#x27; vhost https://picsbay.co.uk/ -&gt; 301 https://elmspark.com/ . vhost picsbay.co.uk (forward) + picsbay (app). verified 2026-06-06. public (redirect)">
+          <h3>picsbay.co.uk</h3>
+          <p class="what">PicsBay domain — currently 301-redirects to elmspark.com (parked/forwarding, not a standalone live site). The active PicsBay PM build is the internal &#x27;picsbay&#x27; vhost</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://picsbay.co.uk/" target="_blank" rel="noopener">https://picsbay.co.uk/</a> -&gt; 301 <a href="https://elmspark.com/" target="_blank" rel="noopener">https://elmspark.com/</a> . Vhost picsbay.co.uk (forward) + picsbay (app). Verified 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> public (redirect)</p>
+        </article>
+        </div>
+      </section>
+      <section class="cat" id="cat-docs-guides" data-cat="docs-guides">
+        <h2>Docs &amp; Guides <span class="count">38</span></h2>
+        <div class="grid">
+        <article class="card" data-search="elmspark-toolkit-guide.html interactive searchable guide to every custom cc command and skill (what each does, when to use, examples, status); start here for tooling. also hosted at documentation.elmspark.com/toolkit/ /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/elmspark-toolkit-guide.html local (open in browser)">
+          <h3>elmspark-toolkit-guide.html</h3>
+          <p class="what">Interactive searchable guide to every custom CC command and skill (what each does, when to use, examples, status); START HERE for tooling. Also hosted at documentation.elmspark.com/toolkit/</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/elmspark-toolkit-guide.html</p>
+          <p class="access"><span class="lbl">Access</span> local (open in browser)</p>
+        </article>
+        <article class="card" data-search="toolkit-audit-2026-06-01.md deep audit + upgrade plan for kenn&#x27;s hand-built cc commands/skills against an opus 4.8 standard (21 artefacts) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/toolkit-audit-2026-06-01.md local">
+          <h3>toolkit-audit-2026-06-01.md</h3>
+          <p class="what">Deep audit + upgrade plan for Kenn&#x27;s hand-built CC commands/skills against an Opus 4.8 standard (21 artefacts)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/toolkit-audit-2026-06-01.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="elmspark-docs-search.html cmd+k search widget for the elmspark docs /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/elmspark-docs-search.html local (open in browser)">
+          <h3>elmspark-docs-search.html</h3>
+          <p class="what">Cmd+K search widget for the ElmsPark docs</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/elmspark-docs-search.html</p>
+          <p class="access"><span class="lbl">Access</span> local (open in browser)</p>
+        </article>
+        <article class="card" data-search="docs-reconcile-phase1-triage-2026-06-05.md + decisions html updates.elmspark.com/docs reconcile work: phase-1 triage (42 pages, 43-agent read-only workflow) + decisions &amp; why html report /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/docs-reconcile-phase1-triage-2026-06-05.md local">
+          <h3>docs-reconcile-phase1-triage-2026-06-05.md + decisions HTML</h3>
+          <p class="what">updates.elmspark.com/docs reconcile work: Phase-1 triage (42 pages, 43-agent read-only workflow) + Decisions &amp; Why HTML report</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/docs-reconcile-phase1-triage-2026-06-05.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="incident-report-ep-email-1.10.25-2026-06-05.html incident report: ep email 1.10.25 site-down event (2026-06-05) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/incident-report-ep-email-1.10.25-2026-06-05.html local (open in browser)">
+          <h3>incident-report-ep-email-1.10.25-2026-06-05.html</h3>
+          <p class="what">Incident report: EP Email 1.10.25 site-down event (2026-06-05)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/incident-report-ep-email-1.10.25-2026-06-05.html</p>
+          <p class="access"><span class="lbl">Access</span> local (open in browser)</p>
+        </article>
+        <article class="card" data-search="pm-native-cron-research.html research report: should pagemotor get a native scheduler? (feeds the init()-valet/cron decisions) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pm-native-cron-research.html local (open in browser)">
+          <h3>pm-native-cron-research.html</h3>
+          <p class="what">Research report: should PageMotor get a native scheduler? (feeds the init()-valet/cron decisions)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/pm-native-cron-research.html</p>
+          <p class="access"><span class="lbl">Access</span> local (open in browser)</p>
+        </article>
+        <article class="card" data-search="ionos-cloudflare-ssl-fleet-sweep-2026-06-04.md fleet sweep of ionos managed-ssl-breaks-under-cloudflare domains (next-domino tracking, e.g. bringcolourtolife.com) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/ionos-cloudflare-ssl-fleet-sweep-2026-06-04.md local">
+          <h3>ionos-cloudflare-ssl-fleet-sweep-2026-06-04.md</h3>
+          <p class="what">Fleet sweep of IONOS managed-SSL-breaks-under-Cloudflare domains (next-domino tracking, e.g. bringcolourtolife.com)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/ionos-cloudflare-ssl-fleet-sweep-2026-06-04.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="worlebury-migration-reference.md reference notes from packaging the worlebury pm site (theme export vs content installer learnings) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/worlebury-migration-reference.md local">
+          <h3>worlebury-migration-reference.md</h3>
+          <p class="what">Reference notes from packaging the Worlebury PM site (theme export vs content installer learnings)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/worlebury-migration-reference.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="opus-4.8-vs-4.7-cold-replay-mailgun.md comparison note: opus 4.8 vs 4.7 cold-replay on the mailgun setup task /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/opus-4.8-vs-4.7-cold-replay-mailgun.md local">
+          <h3>Opus-4.8-vs-4.7-cold-replay-mailgun.md</h3>
+          <p class="what">Comparison note: Opus 4.8 vs 4.7 cold-replay on the Mailgun setup task</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/Opus-4.8-vs-4.7-cold-replay-mailgun.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="pagemotor 0.9 analysis/ analysis materials for the pm 0.9 release / fleet migration program /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pagemotor 0.9 analysis/ local">
+          <h3>PageMotor 0.9 Analysis/</h3>
+          <p class="what">Analysis materials for the PM 0.9 release / fleet migration program</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/PageMotor 0.9 Analysis/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="ai image prompts/ + designs zone maps library of reusable ai image-generation prompts (per project), backing the ai-prompt-builder skill /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/ai image prompts/ local">
+          <h3>AI Image Prompts/ + Designs zone maps</h3>
+          <p class="what">Library of reusable AI image-generation prompts (per project), backing the ai-prompt-builder skill</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/AI Image Prompts/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="github-and-plugins.md notes on github repos and plugin release plumbing /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/github-and-plugins.md local (chmod 600)">
+          <h3>github-and-plugins.md</h3>
+          <p class="what">Notes on GitHub repos and plugin release plumbing</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/github-and-plugins.md</p>
+          <p class="access"><span class="lbl">Access</span> local (chmod 600)</p>
+        </article>
+        <article class="card" data-search="ep updates — internal docs home index/toc for the private docs site: 28 pages across 7 sections, with search and a live-tools featured band. source of this inventory. https://updates.elmspark.com/docs/pages/index.html (source: /users/kennjordan/developer/elmspark/ep-updates/docs/pages/index.html) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>EP Updates — Internal Docs home</h3>
+          <p class="what">Index/TOC for the private docs site: 28 pages across 7 sections, with search and a live-tools featured band. Source of this inventory.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/index.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/index.html</a> (source: /Users/kennjordan/Developer/elmspark/ep-updates/docs/pages/index.html)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="update server guide architecture, protocol, files, registry, tiers, entitlement logic, the licensing kill switch, every endpoint explained. https://updates.elmspark.com/docs/pages/update-server.html passkey gate (webauthn/touch id)">
+          <h3>Update Server Guide</h3>
+          <p class="what">Architecture, protocol, files, registry, tiers, entitlement logic, the licensing kill switch, every endpoint explained.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/update-server.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/update-server.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="licensing reference tiers, subscriptions, add-ons, trials, grace periods, licence keys, and the full entitlement decision tree. https://updates.elmspark.com/docs/pages/licensing.html passkey gate (webauthn/touch id)">
+          <h3>Licensing Reference</h3>
+          <p class="what">Tiers, subscriptions, add-ons, trials, grace periods, licence keys, and the full entitlement decision tree.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/licensing.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/licensing.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="stripe integration guide step-by-step stripe: products, prices, checkout, webhooks, metadata, going live, troubleshooting. https://updates.elmspark.com/docs/pages/stripe-setup.html passkey gate (webauthn/touch id)">
+          <h3>Stripe Integration Guide</h3>
+          <p class="what">Step-by-step Stripe: products, prices, checkout, webhooks, metadata, going live, troubleshooting.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/stripe-setup.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/stripe-setup.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="stripe licence webhook — test runbook how to drive a test purchase through the stripe webhook end-to-end and verify the subscription record lands in the licensing db. https://updates.elmspark.com/docs/pages/stripe-licence-test.html passkey gate (webauthn/touch id)">
+          <h3>Stripe Licence Webhook — Test Runbook</h3>
+          <p class="what">How to drive a test purchase through the Stripe webhook end-to-end and verify the subscription record lands in the licensing DB.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/stripe-licence-test.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/stripe-licence-test.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="operations runbook releasing plugins, running ingest, deploying config, test overrides, database queries, emergency procedures. https://updates.elmspark.com/docs/pages/operations.html passkey gate (webauthn/touch id)">
+          <h3>Operations Runbook</h3>
+          <p class="what">Releasing plugins, running ingest, deploying config, test overrides, database queries, emergency procedures.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/operations.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/operations.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="ionos infrastructure main vps at 88.208.226.236 (elmspark, docs, updates, testrig, ep agent demos, client pm sites) + ionos shared hosting. ssh/sftp access, site inventory, per-site system-user model, client-isolation rule. load at session start for ionos work. https://updates.elmspark.com/docs/pages/ionos-vps.html passkey gate (webauthn/touch id)">
+          <h3>IONOS Infrastructure</h3>
+          <p class="what">Main VPS at 88.208.226.236 (elmspark, docs, updates, testrig, EP Agent demos, client PM sites) + IONOS shared hosting. SSH/SFTP access, site inventory, per-site system-user model, client-isolation rule. Load at session start for IONOS work.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ionos-vps.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ionos-vps.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="sa vps (johannesburg) second production box at 154.66.198.194 (domains.co.za). hosts s2l.online + tiba ai multi-tenant reference install provisioning *.s2lonline.africa. provisioning flow, pins, smtp, logs, differences from ionos. https://updates.elmspark.com/docs/pages/sa-vps.html passkey gate (webauthn/touch id)">
+          <h3>SA VPS (Johannesburg)</h3>
+          <p class="what">Second production box at 154.66.198.194 (domains.co.za). Hosts s2l.online + Tiba AI multi-tenant reference install provisioning *.s2lonline.africa. Provisioning flow, pins, SMTP, logs, differences from IONOS.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/sa-vps.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/sa-vps.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="vultr hosting guide why pagemotor runs on vultr, benchmarks vs digitalocean/linode, plan picker by scale, region picker, full 9-step bootstrap for a fresh pm install. https://updates.elmspark.com/docs/pages/vultr-hosting.html passkey gate (webauthn/touch id)">
+          <h3>Vultr Hosting Guide</h3>
+          <p class="what">Why PageMotor runs on Vultr, benchmarks vs DigitalOcean/Linode, plan picker by scale, region picker, full 9-step bootstrap for a fresh PM install.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/vultr-hosting.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/vultr-hosting.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="pm core vps upgrade operator guide for the pagemotor-core-vps-rollout tooling: upgrade every pm install across the test rigs in one pass, verify, roll back. https://updates.elmspark.com/docs/pages/pm-core-vps-upgrade.html passkey gate (webauthn/touch id)">
+          <h3>PM Core VPS Upgrade</h3>
+          <p class="what">Operator guide for the pagemotor-core-vps-rollout tooling: upgrade every PM install across the test rigs in one pass, verify, roll back.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/pm-core-vps-upgrade.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/pm-core-vps-upgrade.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="pm managed server hosts comparison of vps + mailbox hosts for a resellable pagemotor managed server bundle: shortlists, api depth, port 25 gotcha, whitelabel/affiliate, blended pricing. https://updates.elmspark.com/docs/pages/pm-managed-server-hosts.html passkey gate (webauthn/touch id)">
+          <h3>PM Managed Server Hosts</h3>
+          <p class="what">Comparison of VPS + mailbox hosts for a resellable PageMotor Managed Server bundle: shortlists, API depth, port 25 gotcha, whitelabel/affiliate, blended pricing.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/pm-managed-server-hosts.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/pm-managed-server-hosts.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="tailscale mesh private wireguard vpn linking kenn&#x27;s macs, vpses, and (when active) cowork&#x27;s cloud sandbox. tailnet owner, joined nodes, auth-key flow. set up 2026-05-13. https://updates.elmspark.com/docs/pages/tailscale.html passkey gate (webauthn/touch id)">
+          <h3>Tailscale Mesh</h3>
+          <p class="what">Private WireGuard VPN linking Kenn&#x27;s Macs, VPSes, and (when active) Cowork&#x27;s cloud sandbox. Tailnet owner, joined nodes, auth-key flow. Set up 2026-05-13.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/tailscale.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/tailscale.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="cloudflare dns migration consolidating dns off ionos and namecheap onto cloudflare. credentials, phased batch workflows, per-domain transfer-eligibility table, gotchas, account-closure checklist. https://updates.elmspark.com/docs/pages/cloudflare-migration.html passkey gate (webauthn/touch id)">
+          <h3>Cloudflare DNS Migration</h3>
+          <p class="what">Consolidating DNS off IONOS and Namecheap onto Cloudflare. Credentials, phased batch workflows, per-domain transfer-eligibility table, gotchas, account-closure checklist.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/cloudflare-migration.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/cloudflare-migration.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="ionos domains api registrar-level reference at api.hosting.ionos.com/domains, incl. the undocumented put on /nameservers used to delegate ionos domains to cloudflare. contacts, dnssec, privacy, transfer-in/out, auth codes, renewal data. https://updates.elmspark.com/docs/pages/ionos-domains-api.html passkey gate (webauthn/touch id)">
+          <h3>IONOS Domains API</h3>
+          <p class="what">Registrar-level reference at api.hosting.ionos.com/domains, incl. the undocumented PUT on /nameservers used to delegate IONOS domains to Cloudflare. Contacts, DNSSEC, privacy, transfer-in/out, auth codes, renewal data.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ionos-domains-api.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ionos-domains-api.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="pagemotor developer guide complete llm-oriented reference for building pm plugins and themes: poaf, every valet method, field types, pm_theme_data backups, update protocol, $motor services cheat sheet, recipes. point any fresh agent here. https://updates.elmspark.com/docs/pages/pagemotor-developer-guide.html passkey gate (webauthn/touch id)">
+          <h3>PageMotor Developer Guide</h3>
+          <p class="what">Complete LLM-oriented reference for building PM plugins and themes: POAF, every valet method, field types, PM_Theme_Data backups, update protocol, $motor services cheat sheet, recipes. Point any fresh agent here.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/pagemotor-developer-guide.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/pagemotor-developer-guide.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="ep suite tooling permanent home for sweep scripts and one-off tools in ~/developer/elmspark/tools/. git-tracked, documented; indexes the three-layer defensive-load sweep. https://updates.elmspark.com/docs/pages/ep-suite-tooling.html passkey gate (webauthn/touch id)">
+          <h3>EP Suite Tooling</h3>
+          <p class="what">Permanent home for sweep scripts and one-off tools in ~/Developer/elmspark/tools/. Git-tracked, documented; indexes the three-layer defensive-load sweep.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ep-suite-tooling.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ep-suite-tooling.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="ep suite unregistered plugins 17 plugins built/defended locally but absent from the ep-updates registry. status and reason per plugin, plus the steps to promote each. https://updates.elmspark.com/docs/pages/ep-suite-unregistered-plugins.html passkey gate (webauthn/touch id)">
+          <h3>EP Suite Unregistered Plugins</h3>
+          <p class="what">17 plugins built/defended locally but absent from the ep-updates registry. Status and reason per plugin, plus the steps to promote each.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ep-suite-unregistered-plugins.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ep-suite-unregistered-plugins.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="elmspark theme native pagemotor theme for elmspark.com: end-to-end build/deploy/verification guide, repo elmspark-studio/elmspark-theme, install sequence, bridge-compile gotcha, lib-vs-user-content split, asset-path quirks, verification checklist, migration roadmap. https://updates.elmspark.com/docs/pages/elmspark-theme.html passkey gate (webauthn/touch id)">
+          <h3>ElmsPark Theme</h3>
+          <p class="what">Native PageMotor theme for elmspark.com: end-to-end build/deploy/verification guide, repo ElmsPark-Studio/elmspark-theme, install sequence, bridge-compile gotcha, lib-vs-user-content split, asset-path quirks, verification checklist, migration roadmap.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/elmspark-theme.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/elmspark-theme.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="docs site reference how the internal docs site works: authentication (passkey gate), nginx routing, the mcp server, adding new pages, and the design system. https://updates.elmspark.com/docs/pages/docs-site.html passkey gate (webauthn/touch id)">
+          <h3>Docs Site Reference</h3>
+          <p class="what">How the internal docs site works: authentication (passkey gate), Nginx routing, the MCP server, adding new pages, and the design system.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/docs-site.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/docs-site.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="help.elmspark.com — user guide customer-facing guide: submitting tickets, reference codes, tracking, statuses, writing a good ticket, response times, faq. https://updates.elmspark.com/docs/pages/ep-helpdesk.html passkey gate (webauthn/touch id)">
+          <h3>help.elmspark.com — User Guide</h3>
+          <p class="what">Customer-facing guide: submitting tickets, reference codes, tracking, statuses, writing a good ticket, response times, FAQ.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ep-helpdesk.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ep-helpdesk.html</a></p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID)</p>
+        </article>
+        <article class="card" data-search="documentation.elmspark.com (public docs site) the public elmspark starlight docs site: hosting guides + ep suite plugin guides. astro starlight, british english, bunny fonts (no google fonts). live, http 200. live: https://documentation.elmspark.com/ / source: /users/kennjordan/developer/elmspark/documentation (astro starlight, astro.config.mjs) public">
+          <h3>documentation.elmspark.com (public docs site)</h3>
+          <p class="what">The public ElmsPark Starlight docs site: hosting guides + EP Suite plugin guides. Astro Starlight, British English, Bunny Fonts (no Google Fonts). Live, HTTP 200.</p>
+          <p class="where"><span class="lbl">Where</span> Live: <a href="https://documentation.elmspark.com/" target="_blank" rel="noopener">https://documentation.elmspark.com/</a> / Source: /Users/kennjordan/Developer/elmspark/documentation (Astro Starlight, astro.config.mjs)</p>
+          <p class="access"><span class="lbl">Access</span> public</p>
+        </article>
+        <article class="card" data-search="hosting guides section audience-routed pagemotor hosting docs: a chooser plus solo/sme/agency x managed/diy pages, and the deep vultr + cloudflare provider guides. 9 markdown pages. live index: https://documentation.elmspark.com/hosting/hosting-options/ / vultr: /hosting/vultr/ / cloudflare: /hosting/cloudflare/ / source: /users/kennjordan/developer/elmspark/documentation/src/content/docs/hosting/ (vultr, cloudflare, hosting-options, solo-/sme-/agency- managed+diy) public">
+          <h3>Hosting guides section</h3>
+          <p class="what">Audience-routed PageMotor hosting docs: a chooser plus solo/SME/agency x managed/DIY pages, and the deep Vultr + Cloudflare provider guides. 9 markdown pages.</p>
+          <p class="where"><span class="lbl">Where</span> Live index: <a href="https://documentation.elmspark.com/hosting/hosting-options/" target="_blank" rel="noopener">https://documentation.elmspark.com/hosting/hosting-options/</a> / Vultr: /hosting/vultr/ / Cloudflare: /hosting/cloudflare/ / Source: /Users/kennjordan/Developer/elmspark/documentation/src/content/docs/hosting/ (vultr, cloudflare, hosting-options, solo-/sme-/agency- managed+diy)</p>
+          <p class="access"><span class="lbl">Access</span> public</p>
+        </article>
+        <article class="card" data-search="ep suite plugin guides user guide per ep plugin (setup, config, shortcodes, troubleshooting, faq). 75 plugin pages plus an index, autogenerated into the sidebar. covers email/newsletter, ecommerce/pod, bookings, gdpr, passkeys, etc. live index: https://documentation.elmspark.com/plugins/ (e.g. /plugins/ep-email/) / source: /users/kennjordan/developer/elmspark/documentation/src/content/docs/plugins/*.md (75 files + index.md) public">
+          <h3>EP Suite plugin guides</h3>
+          <p class="what">User guide per EP plugin (setup, config, shortcodes, troubleshooting, FAQ). 75 plugin pages plus an index, autogenerated into the sidebar. Covers email/newsletter, ecommerce/POD, bookings, GDPR, passkeys, etc.</p>
+          <p class="where"><span class="lbl">Where</span> Live index: <a href="https://documentation.elmspark.com/plugins/" target="_blank" rel="noopener">https://documentation.elmspark.com/plugins/</a> (e.g. /plugins/ep-email/) / Source: /Users/kennjordan/Developer/elmspark/documentation/src/content/docs/plugins/*.md (75 files + index.md)</p>
+          <p class="access"><span class="lbl">Access</span> public</p>
+        </article>
+        <article class="card" data-search="elmspark cc toolkit interactive guide (gated) searchable interactive guide to every custom claude code command and skill (what each does, when to use, examples, status). static html in public/, survives every rebuild. mirrored from workspace elmspark-toolkit-guide.html. live: https://documentation.elmspark.com/toolkit/ (confirmed http 401 basic-auth gate, realm &quot;restricted&quot;) / source: /users/kennjordan/developer/elmspark/documentation/public/toolkit/index.html basic-auth — user &#x27;kenn&#x27;, password in ~/.config/elmspark/toolkit-guide-auth.txt (chmod 600, present)">
+          <h3>ElmsPark CC Toolkit interactive guide (gated)</h3>
+          <p class="what">Searchable interactive guide to every custom Claude Code command and skill (what each does, when to use, examples, status). Static HTML in public/, survives every rebuild. Mirrored from workspace elmspark-toolkit-guide.html.</p>
+          <p class="where"><span class="lbl">Where</span> Live: <a href="https://documentation.elmspark.com/toolkit/" target="_blank" rel="noopener">https://documentation.elmspark.com/toolkit/</a> (confirmed HTTP 401 Basic-Auth gate, realm &quot;Restricted&quot;) / Source: /Users/kennjordan/Developer/elmspark/documentation/public/toolkit/index.html</p>
+          <p class="access"><span class="lbl">Access</span> Basic-Auth — user &#x27;kenn&#x27;, password in ~/.config/elmspark/toolkit-guide-auth.txt (chmod 600, present)</p>
+        </article>
+        <article class="card" data-search="pm 0.9 review for chris (pm09t2, gated) private pagemotor 0.9 review page served to chris pearson. lives outside the docs docroot (served via nginx alias from /var/www/pm09t2-private) because the docroot is auto-redeployed and wipes anything inside it. live: https://documentation.elmspark.com/pm09t2/ (confirmed http 401 basic-auth gate, realm &quot;restricted&quot;) / update by writing to /var/www/pm09t2-private on ionos-ts, never the docs docroot basic-auth (ssh ionos-ts to manage)">
+          <h3>PM 0.9 review for Chris (pm09t2, gated)</h3>
+          <p class="what">Private PageMotor 0.9 review page served to Chris Pearson. Lives OUTSIDE the docs docroot (served via nginx alias from /var/www/pm09t2-private) because the docroot is auto-redeployed and wipes anything inside it.</p>
+          <p class="where"><span class="lbl">Where</span> Live: <a href="https://documentation.elmspark.com/pm09t2/" target="_blank" rel="noopener">https://documentation.elmspark.com/pm09t2/</a> (confirmed HTTP 401 Basic-Auth gate, realm &quot;Restricted&quot;) / Update by writing to /var/www/pm09t2-private on ionos-ts, never the docs docroot</p>
+          <p class="access"><span class="lbl">Access</span> Basic-Auth (ssh ionos-ts to manage)</p>
+        </article>
+        <article class="card" data-search="native cron research page (public, unlisted) standalone 54kb research html on native cron/scheduling, with an obfuscated hard-to-guess filename. lives in public/ so it survives every rebuild; not in the sidebar. live: https://documentation.elmspark.com/native-cron-research-bfb992806703d4e2.html (http 200) / source: /users/kennjordan/developer/elmspark/documentation/public/native-cron-research-bfb992806703d4e2.html public (unlisted url)">
+          <h3>Native cron research page (public, unlisted)</h3>
+          <p class="what">Standalone 54KB research HTML on native cron/scheduling, with an obfuscated hard-to-guess filename. Lives in public/ so it survives every rebuild; not in the sidebar.</p>
+          <p class="where"><span class="lbl">Where</span> Live: <a href="https://documentation.elmspark.com/native-cron-research-bfb992806703d4e2.html" target="_blank" rel="noopener">https://documentation.elmspark.com/native-cron-research-bfb992806703d4e2.html</a> (HTTP 200) / Source: /Users/kennjordan/Developer/elmspark/documentation/public/native-cron-research-bfb992806703d4e2.html</p>
+          <p class="access"><span class="lbl">Access</span> public (unlisted URL)</p>
+        </article>
+        </div>
+      </section>
+      <section class="cat" id="cat-tools-commands-skills" data-cat="tools-commands-skills">
+        <h2>Tools (commands &amp; skills) <span class="count">43</span></h2>
+        <div class="grid">
+        <article class="card" data-search="ep-review-prompts.md two reusable ep review prompts (1 = content &amp; communication reviewer, 2 = technical &amp; architectural reviewer), invoked via /rp and /rc /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/ep-review-prompts.md local (chmod 400)">
+          <h3>ep-review-prompts.md</h3>
+          <p class="what">Two reusable EP review prompts (1 = Content &amp; Communication Reviewer, 2 = Technical &amp; Architectural Reviewer), invoked via /RP and /RC</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/ep-review-prompts.md</p>
+          <p class="access"><span class="lbl">Access</span> local (chmod 400)</p>
+        </article>
+        <article class="card" data-search="ep-security-expert-prompt.md drop-in system prompt to make a fresh cc/cw the dedicated ep security expert (loaded via /eps) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/ep-security-expert-prompt.md local">
+          <h3>ep-security-expert-prompt.md</h3>
+          <p class="what">Drop-in system prompt to make a fresh CC/CW the dedicated EP Security expert (loaded via /EPS)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/ep-security-expert-prompt.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="ep-plugin-qa-prompt.md reusable cc prompt placing a session in ep plugin qa manager mode for one plugin slug (red-teamed for opus 4.8) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/ep-plugin-qa-prompt.md local">
+          <h3>ep-plugin-qa-prompt.md</h3>
+          <p class="what">Reusable CC prompt placing a session in EP Plugin QA Manager mode for one plugin slug (red-teamed for Opus 4.8)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/ep-plugin-qa-prompt.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="ep-site-qa-prompt.md reusable cc prompt placing a session in ep site qa manager mode for one pm site/domain /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/ep-site-qa-prompt.md local">
+          <h3>ep-site-qa-prompt.md</h3>
+          <p class="what">Reusable CC prompt placing a session in EP Site QA Manager mode for one PM site/domain</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/ep-site-qa-prompt.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="pm9s/pm-validate.sh version-agnostic wrapper that validates a plugin dir against the current pm core resolved via current.txt (success:true = installs cleanly) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pm9s/pm-validate.sh local (bash pm9s/pm-validate.sh &lt;plugin-dir&gt;)">
+          <h3>PM9s/pm-validate.sh</h3>
+          <p class="what">Version-agnostic wrapper that validates a plugin dir against the current PM core resolved via CURRENT.txt (success:true = installs cleanly)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/PM9s/pm-validate.sh</p>
+          <p class="access"><span class="lbl">Access</span> local (bash PM9s/pm-validate.sh &lt;plugin-dir&gt;)</p>
+        </article>
+        <article class="card" data-search="cc-commands/ (slash command sources) canonical source for cc slash commands (da, ds, eps, handoff, rc, rp, ultra, add-layout, log-build, qa-plugin, qa-site, rs, sj); symlinked into ~/.claude/commands/ /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/cc-commands/ local (icloud, symlinked per-mac)">
+          <h3>cc-commands/ (slash command sources)</h3>
+          <p class="what">Canonical source for CC slash commands (DA, DS, EPS, Handoff, RC, RP, Ultra, add-layout, log-build, qa-plugin, qa-site, rs, sj); symlinked into ~/.claude/commands/</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/cc-commands/</p>
+          <p class="access"><span class="lbl">Access</span> local (iCloud, symlinked per-Mac)</p>
+        </article>
+        <article class="card" data-search="cc-skills/ (skill sources) canonical source for cc skills (ai-prompt-builder, cwtm-weekly-show, design-conversion, design-to-pm-batch, distinctive-pm-site, imessage-send, layouts-add-site, mailgun-setup, pagemotor-plugin-showcase-site, pm-verify-before-done, ship-ep-plugin, wp-to-pm-migration); symlinked into ~/.claude/skills/ /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/cc-skills/ local (icloud, symlinked per-mac)">
+          <h3>cc-skills/ (skill sources)</h3>
+          <p class="what">Canonical source for CC skills (ai-prompt-builder, cwtm-weekly-show, design-conversion, design-to-pm-batch, distinctive-pm-site, imessage-send, layouts-add-site, mailgun-setup, pagemotor-plugin-showcase-site, pm-verify-before-done, ship-ep-plugin, wp-to-pm-migration); symlinked into ~/.claude/skills/</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/cc-skills/</p>
+          <p class="access"><span class="lbl">Access</span> local (iCloud, symlinked per-Mac)</p>
+        </article>
+        <article class="card" data-search="docs deploy script builds the astro site (npm run build), backs up the live site, rsyncs dist/ to the vps, fixes ownership, reloads nginx, then curl-verifies http 200. deploys to /var/www/documentation.elmspark.com. /users/kennjordan/developer/elmspark/documentation/deploy.sh / remote docroot /var/www/documentation.elmspark.com on ionos-ts a command: bash deploy.sh (ssh ionos-ts = key-only root)">
+          <h3>Docs deploy script</h3>
+          <p class="what">Builds the Astro site (npm run build), backs up the live site, rsyncs dist/ to the VPS, fixes ownership, reloads nginx, then curl-verifies HTTP 200. Deploys to /var/www/documentation.elmspark.com.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/documentation/deploy.sh / remote docroot /var/www/documentation.elmspark.com on ionos-ts</p>
+          <p class="access"><span class="lbl">Access</span> a command: bash deploy.sh (ssh ionos-ts = key-only root)</p>
+        </article>
+        <article class="card" data-search="/h (command cheat sheet) prints a live-from-disk markdown table of all of kenn&#x27;s custom slash commands with one-line descriptions; the fastest in-session index local-only file ~/.claude/commands/h.md (not symlinked to icloud, this mac only) type /h in claude code">
+          <h3>/h (command cheat sheet)</h3>
+          <p class="what">Prints a live-from-disk markdown table of all of Kenn&#x27;s custom slash commands with one-line descriptions; the fastest in-session index</p>
+          <p class="where"><span class="lbl">Where</span> Local-only file ~/.claude/commands/h.md (NOT symlinked to iCloud, this Mac only)</p>
+          <p class="access"><span class="lbl">Access</span> Type /h in Claude Code</p>
+        </article>
+        <article class="card" data-search="/rp (alias /c) rigorous technical reviewer — finds failure points in content before use (forum posts, emails, docs); content/communication review prompt cc-commands/rp.md, symlinked ~/.claude/commands/rp.md and ~/.claude/commands/c.md type /rp or /c in claude code">
+          <h3>/RP (alias /c)</h3>
+          <p class="what">Rigorous technical reviewer — finds failure points in content BEFORE use (forum posts, emails, docs); content/communication review prompt</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/RP.md, symlinked ~/.claude/commands/RP.md and ~/.claude/commands/c.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /RP or /c in Claude Code</p>
+        </article>
+        <article class="card" data-search="/rc (alias /cx) senior technical reviewer for content to be implemented/deployed — finds real-world failure points; opus-tier for dense specs/api contracts cc-commands/rc.md, symlinked ~/.claude/commands/rc.md and ~/.claude/commands/cx.md type /rc or /cx in claude code">
+          <h3>/RC (alias /cx)</h3>
+          <p class="what">Senior technical reviewer for content to be implemented/deployed — finds real-world failure points; Opus-tier for dense specs/API contracts</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/RC.md, symlinked ~/.claude/commands/RC.md and ~/.claude/commands/cx.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /RC or /cx in Claude Code</p>
+        </article>
+        <article class="card" data-search="/rs (review support response) qa-manager review of a support response before it reaches the customer; sonnet-tier cc-commands/rs.md, symlinked ~/.claude/commands/rs.md type /rs in claude code">
+          <h3>/rs (review support response)</h3>
+          <p class="what">QA-manager review of a support response before it reaches the customer; Sonnet-tier</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/rs.md, symlinked ~/.claude/commands/rs.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /rs in Claude Code</p>
+        </article>
+        <article class="card" data-search="/ultra opus-tier adversarial ultrathink review — senior peer who flags problems over shipping half-baked answers; security-grade scepticism cc-commands/ultra.md, symlinked ~/.claude/commands/ultra.md type /ultra in claude code">
+          <h3>/Ultra</h3>
+          <p class="what">Opus-tier adversarial ultrathink review — senior peer who flags problems over shipping half-baked answers; security-grade scepticism</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/Ultra.md, symlinked ~/.claude/commands/Ultra.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /Ultra in Claude Code</p>
+        </article>
+        <article class="card" data-search="/eps (ep security persona) loads the ep security expert system prompt — senior app-security engineer persona for ai-era web attack vectors, dedicated sme for the forthcoming ep security plugin cc-commands/eps.md (14.9kb), symlinked ~/.claude/commands/eps.md type /eps in claude code">
+          <h3>/EPS (EP Security persona)</h3>
+          <p class="what">Loads the EP Security expert system prompt — senior app-security engineer persona for AI-era web attack vectors, dedicated SME for the forthcoming EP Security plugin</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/EPS.md (14.9KB), symlinked ~/.claude/commands/EPS.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /EPS in Claude Code</p>
+        </article>
+        <article class="card" data-search="/handoff writes a zero-context-loss session handoff artefact before /compact; the canonical workspace handoff command cc-commands/handoff.md, symlinked ~/.claude/commands/handoff.md type /handoff in claude code">
+          <h3>/Handoff</h3>
+          <p class="what">Writes a zero-context-loss session handoff artefact before /compact; the canonical workspace handoff command</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/Handoff.md, symlinked ~/.claude/commands/Handoff.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /Handoff in Claude Code</p>
+        </article>
+        <article class="card" data-search="handoff-portable (generic export) repo-agnostic version of /handoff for other repos; superseded in this workspace by /handoff, kept only as a generic export — do not edit for the icloud workspace cc-commands/handoff-portable.md (not symlinked into ~/.claude/commands here) source file only; copy into another repo&#x27;s commands dir to use">
+          <h3>Handoff-portable (generic export)</h3>
+          <p class="what">Repo-agnostic version of /Handoff for OTHER repos; SUPERSEDED in this workspace by /Handoff, kept only as a generic export — do not edit for the iCloud workspace</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/Handoff-portable.md (NOT symlinked into ~/.claude/commands here)</p>
+          <p class="access"><span class="lbl">Access</span> Source file only; copy into another repo&#x27;s commands dir to use</p>
+        </article>
+        <article class="card" data-search="/qa (local pm rig qa) establishes a reachable pagemotor dev rig (local :8001 if the ep-pagemotor checkout exists, else dev.elmspark.com) then qas an ep plugin; refuses to fabricate a missing local rig local-only file ~/.claude/commands/qa.md (this mac only, not icloud) type /qa in claude code">
+          <h3>/qa (local PM rig QA)</h3>
+          <p class="what">Establishes a reachable PageMotor dev rig (local :8001 if the ep-pagemotor checkout exists, else dev.elmspark.com) then QAs an EP plugin; refuses to fabricate a missing local rig</p>
+          <p class="where"><span class="lbl">Where</span> Local-only file ~/.claude/commands/qa.md (this Mac only, not iCloud)</p>
+          <p class="access"><span class="lbl">Access</span> Type /qa in Claude Code</p>
+        </article>
+        <article class="card" data-search="/qa-plugin &lt;slug&gt; ep plugin qa manager mode for a single plugin — full readiness report + ticket triage from source cc-commands/qa-plugin.md, symlinked ~/.claude/commands/qa-plugin.md type /qa-plugin &lt;plugin-slug&gt; in claude code">
+          <h3>/qa-plugin &lt;slug&gt;</h3>
+          <p class="what">EP Plugin QA Manager mode for a single plugin — full readiness report + ticket triage from source</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/qa-plugin.md, symlinked ~/.claude/commands/qa-plugin.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /qa-plugin &lt;plugin-slug&gt; in Claude Code</p>
+        </article>
+        <article class="card" data-search="/qa-site &lt;domain&gt; ep site qa manager mode for a single pagemotor website (domain or subdomain) cc-commands/qa-site.md, symlinked ~/.claude/commands/qa-site.md type /qa-site &lt;domain&gt; in claude code">
+          <h3>/qa-site &lt;domain&gt;</h3>
+          <p class="what">EP Site QA Manager mode for a single PageMotor website (domain or subdomain)</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/qa-site.md, symlinked ~/.claude/commands/qa-site.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /qa-site &lt;domain&gt; in Claude Code</p>
+        </article>
+        <article class="card" data-search="/sj (sample json) generates a sample json file for a plugin that doubles as an llm prompt (with _instructions/_prompt/_format + realistic examples) for content import cc-commands/sj.md, symlinked ~/.claude/commands/sj.md type /sj &lt;plugin&gt; in claude code">
+          <h3>/sj (sample JSON)</h3>
+          <p class="what">Generates a sample JSON file for a plugin that doubles as an LLM prompt (with _instructions/_prompt/_format + realistic examples) for content import</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/sj.md, symlinked ~/.claude/commands/sj.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /sj &lt;plugin&gt; in Claude Code</p>
+        </article>
+        <article class="card" data-search="/ds (distinctive pm site) wrapper that applies the distinctive-pm-site skill — gallery-grade pagemotor design directions for a domain, then live samples (makeclear method) cc-commands/ds.md, symlinked ~/.claude/commands/ds.md (wraps cc-skills/distinctive-pm-site) type /ds &lt;domain&gt; in claude code">
+          <h3>/DS (distinctive PM site)</h3>
+          <p class="what">Wrapper that applies the distinctive-pm-site skill — gallery-grade PageMotor design directions for a domain, then live samples (MakeClear method)</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/DS.md, symlinked ~/.claude/commands/DS.md (wraps cc-skills/distinctive-pm-site)</p>
+          <p class="access"><span class="lbl">Access</span> Type /DS &lt;domain&gt; in Claude Code</p>
+        </article>
+        <article class="card" data-search="/da (design-to-pm batch) wrapper that applies the design-to-pm-batch skill — fires parallel agents to graduate static designs into live pm sites and publish each to elmspark.com/layouts/ cc-commands/da.md, symlinked ~/.claude/commands/da.md (wraps cc-skills/design-to-pm-batch) type /da [designs] in claude code">
+          <h3>/DA (design-to-PM batch)</h3>
+          <p class="what">Wrapper that applies the design-to-pm-batch skill — fires parallel agents to graduate static designs into LIVE PM sites and publish each to elmspark.com/layouts/</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/DA.md, symlinked ~/.claude/commands/DA.md (wraps cc-skills/design-to-pm-batch)</p>
+          <p class="access"><span class="lbl">Access</span> Type /DA [designs] in Claude Code</p>
+        </article>
+        <article class="card" data-search="/add-layout &lt;site&gt; wrapper invoking the layouts-add-site skill — adds/refreshes a showcase site on elmspark.com/layouts/ the proper (generated, never hand-edited) way cc-commands/add-layout.md, symlinked ~/.claude/commands/add-layout.md (wraps cc-skills/layouts-add-site) type /add-layout &lt;site&gt; in claude code">
+          <h3>/add-layout &lt;site&gt;</h3>
+          <p class="what">Wrapper invoking the layouts-add-site skill — adds/refreshes a showcase site on elmspark.com/layouts/ the proper (generated, never hand-edited) way</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/add-layout.md, symlinked ~/.claude/commands/add-layout.md (wraps cc-skills/layouts-add-site)</p>
+          <p class="access"><span class="lbl">Access</span> Type /add-layout &lt;site&gt; in Claude Code</p>
+        </article>
+        <article class="card" data-search="/log-build build brief for a chronicle-style session-history index for claude code (the /log: namespace); a planning/spec prompt, not yet a running tool cc-commands/log-build.md, symlinked ~/.claude/commands/log-build.md type /log-build in claude code">
+          <h3>/log-build</h3>
+          <p class="what">Build brief for a Chronicle-style session-history index for Claude Code (the /log: namespace); a planning/spec prompt, not yet a running tool</p>
+          <p class="where"><span class="lbl">Where</span> cc-commands/log-build.md, symlinked ~/.claude/commands/log-build.md</p>
+          <p class="access"><span class="lbl">Access</span> Type /log-build in Claude Code</p>
+        </article>
+        <article class="card" data-search="ship-ep-plugin (skill) ships an ep plugin update end-to-end with a five-boolean verification gate (upload zip, ingest.php, customer-shape post probe, customer-path download + sha256 match); refuses &#x27;shipped&#x27; until all pass cc-skills/ship-ep-plugin/, symlinked ~/.claude/skills/ship-ep-plugin skill tool &#x27;ship-ep-plugin&#x27; or say &#x27;ship &lt;plugin&gt; update&#x27;">
+          <h3>ship-ep-plugin (skill)</h3>
+          <p class="what">Ships an EP plugin update end-to-end with a five-boolean verification gate (upload zip, ingest.php, customer-shape POST probe, customer-path download + SHA256 match); refuses &#x27;shipped&#x27; until all pass</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/ship-ep-plugin/, symlinked ~/.claude/skills/ship-ep-plugin</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;ship-ep-plugin&#x27; or say &#x27;ship &lt;plugin&gt; update&#x27;</p>
+        </article>
+        <article class="card" data-search="pm-verify-before-done (skill) end-to-end visual + structural + accessibility verification of a pm-site change before claiming done/shipped/live; encodes the verification gate cc-skills/pm-verify-before-done/, symlinked ~/.claude/skills/pm-verify-before-done skill tool &#x27;pm-verify-before-done&#x27;; triggers on verify/double-check/before-done for a pm url">
+          <h3>pm-verify-before-done (skill)</h3>
+          <p class="what">End-to-end visual + structural + accessibility verification of a PM-site change BEFORE claiming done/shipped/live; encodes the verification gate</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/pm-verify-before-done/, symlinked ~/.claude/skills/pm-verify-before-done</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;pm-verify-before-done&#x27;; triggers on verify/double-check/before-done for a PM URL</p>
+        </article>
+        <article class="card" data-search="design-conversion (skill) converts html/css web designs (tailwind, bootstrap, etc.) into pagemotor theme import files with grt typography, design options, full template support cc-skills/design-conversion/, symlinked ~/.claude/skills/design-conversion skill tool &#x27;design-conversion&#x27;">
+          <h3>design-conversion (skill)</h3>
+          <p class="what">Converts HTML/CSS web designs (Tailwind, Bootstrap, etc.) into PageMotor Theme import files with GRT typography, Design Options, full template support</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/design-conversion/, symlinked ~/.claude/skills/design-conversion</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;design-conversion&#x27;</p>
+        </article>
+        <article class="card" data-search="distinctive-pm-site (skill) designs distinctive, gallery-grade pagemotor sites fast as static first-cuts (the makeclear method); graduation step is /da cc-skills/distinctive-pm-site/, symlinked ~/.claude/skills/distinctive-pm-site skill tool &#x27;distinctive-pm-site&#x27; or /ds">
+          <h3>distinctive-pm-site (skill)</h3>
+          <p class="what">Designs distinctive, gallery-grade PageMotor sites fast as static first-cuts (the MakeClear method); graduation step is /DA</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/distinctive-pm-site/, symlinked ~/.claude/skills/distinctive-pm-site</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;distinctive-pm-site&#x27; or /DS</p>
+        </article>
+        <article class="card" data-search="design-to-pm-batch (skill) converts one or more static designs into live pagemotor sites via parallel cc agents and gallery-lists each on /layouts/ cc-skills/design-to-pm-batch/, symlinked ~/.claude/skills/design-to-pm-batch skill tool &#x27;design-to-pm-batch&#x27; or /da">
+          <h3>design-to-pm-batch (skill)</h3>
+          <p class="what">Converts one or more static designs into LIVE PageMotor sites via parallel CC agents and gallery-lists each on /layouts/</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/design-to-pm-batch/, symlinked ~/.claude/skills/design-to-pm-batch</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;design-to-pm-batch&#x27; or /DA</p>
+        </article>
+        <article class="card" data-search="layouts-add-site (skill) adds/refreshes a pm showcase site on elmspark.com/layouts/ the proper way (manifest, screenshots, registry, python regen, live-card verify); encodes the gallery gotchas cc-skills/layouts-add-site/, symlinked ~/.claude/skills/layouts-add-site skill tool &#x27;layouts-add-site&#x27; or /add-layout">
+          <h3>layouts-add-site (skill)</h3>
+          <p class="what">Adds/refreshes a PM showcase site on elmspark.com/layouts/ the proper way (manifest, screenshots, registry, Python regen, live-card verify); encodes the gallery gotchas</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/layouts-add-site/, symlinked ~/.claude/skills/layouts-add-site</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;layouts-add-site&#x27; or /add-layout</p>
+        </article>
+        <article class="card" data-search="pagemotor-plugin-showcase-site (skill) builds a fully branded vps showcase site demonstrating one featured ep plugin (thinkprofessionally.com pattern) with bespoke theme, imagery, forms, legal pages, stripe test checkout cc-skills/pagemotor-plugin-showcase-site/, symlinked ~/.claude/skills/pagemotor-plugin-showcase-site skill tool &#x27;pagemotor-plugin-showcase-site&#x27; or &#x27;build a showcase site for &lt;plugin&gt;&#x27;">
+          <h3>pagemotor-plugin-showcase-site (skill)</h3>
+          <p class="what">Builds a fully branded VPS showcase site demonstrating one featured EP plugin (thinkprofessionally.com pattern) with bespoke theme, imagery, forms, legal pages, Stripe test checkout</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/pagemotor-plugin-showcase-site/, symlinked ~/.claude/skills/pagemotor-plugin-showcase-site</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;pagemotor-plugin-showcase-site&#x27; or &#x27;build a showcase site for &lt;plugin&gt;&#x27;</p>
+        </article>
+        <article class="card" data-search="wp-to-pm-migration (skill) migrates a live wordpress site (thesis/focus, divi, gutenberg, recipe-blog) to pagemotor on a vps end-to-end; idempotent importers + playwright link verification + dns/le cutover cc-skills/wp-to-pm-migration/, symlinked ~/.claude/skills/wp-to-pm-migration skill tool &#x27;wp-to-pm-migration&#x27; or &#x27;migrate &lt;site&gt; to pagemotor&#x27;">
+          <h3>wp-to-pm-migration (skill)</h3>
+          <p class="what">Migrates a live WordPress site (Thesis/Focus, Divi, Gutenberg, recipe-blog) to PageMotor on a VPS end-to-end; idempotent importers + Playwright link verification + DNS/LE cutover</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/wp-to-pm-migration/, symlinked ~/.claude/skills/wp-to-pm-migration</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;wp-to-pm-migration&#x27; or &#x27;migrate &lt;site&gt; to PageMotor&#x27;</p>
+        </article>
+        <article class="card" data-search="mailgun-setup (skill) walks through mailgun email delivery setup end-to-end (eu region, mg. subdomain, dns at any provider, dmarc, sending key, platform integration, inbox-placement verify) cc-skills/mailgun-setup/, symlinked ~/.claude/skills/mailgun-setup skill tool &#x27;mailgun-setup&#x27; or &#x27;set up mailgun / fix emails going to spam&#x27;">
+          <h3>mailgun-setup (skill)</h3>
+          <p class="what">Walks through Mailgun email delivery setup end-to-end (EU region, mg. subdomain, DNS at any provider, DMARC, sending key, platform integration, inbox-placement verify)</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/mailgun-setup/, symlinked ~/.claude/skills/mailgun-setup</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;mailgun-setup&#x27; or &#x27;set up Mailgun / fix emails going to spam&#x27;</p>
+        </article>
+        <article class="card" data-search="imessage-send (skill) sends an imessage from kenn&#x27;s mac via messages.app to a contact resolved by name from contacts.app (per-host identity) cc-skills/imessage-send/, symlinked ~/.claude/skills/imessage-send skill tool &#x27;imessage-send&#x27; or &#x27;text/imessage &lt;name&gt;&#x27;">
+          <h3>imessage-send (skill)</h3>
+          <p class="what">Sends an iMessage from Kenn&#x27;s Mac via Messages.app to a contact resolved by name from Contacts.app (per-host identity)</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/imessage-send/, symlinked ~/.claude/skills/imessage-send</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;imessage-send&#x27; or &#x27;text/iMessage &lt;name&gt;&#x27;</p>
+        </article>
+        <article class="card" data-search="ai-prompt-builder (skill) writes high-quality ai prompt text for the user to paste into external image/video generators (midjourney, flux, veo, sora, etc.) — produces words, not the asset cc-skills/ai-prompt-builder/, symlinked ~/.claude/skills/ai-prompt-builder skill tool &#x27;ai-prompt-builder&#x27; or &#x27;write me an image/video prompt&#x27;">
+          <h3>ai-prompt-builder (skill)</h3>
+          <p class="what">Writes high-quality AI prompt TEXT for the user to paste into external image/video generators (Midjourney, Flux, Veo, Sora, etc.) — produces words, not the asset</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/ai-prompt-builder/, symlinked ~/.claude/skills/ai-prompt-builder</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;ai-prompt-builder&#x27; or &#x27;write me an image/video prompt&#x27;</p>
+        </article>
+        <article class="card" data-search="cwtm-weekly-show (skill) publishes the weekly conversations with tony mobley show on conversationswithtonymobley.com end to end (homepage feature, rotate prior shows, og card, episode page); root via ssh ionos-ts cc-skills/cwtm-weekly-show/ (source exists but not symlinked into ~/.claude/skills on this mac — needs the install ln -sf to activate) not currently active on this mac; symlink it in to use, then &#x27;new cwtm show&#x27; + youtube link/guest/topic">
+          <h3>cwtm-weekly-show (skill)</h3>
+          <p class="what">Publishes the weekly Conversations with Tony Mobley show on conversationswithtonymobley.com end to end (homepage feature, rotate prior shows, OG card, episode page); root via ssh ionos-ts</p>
+          <p class="where"><span class="lbl">Where</span> cc-skills/cwtm-weekly-show/ (SOURCE EXISTS but NOT symlinked into ~/.claude/skills on this Mac — needs the install ln -sf to activate)</p>
+          <p class="access"><span class="lbl">Access</span> Not currently active on this Mac; symlink it in to use, then &#x27;new CWTM show&#x27; + YouTube link/guest/topic</p>
+        </article>
+        <article class="card" data-search="higgsfield-generate (bundled skill) generates images/videos via higgsfield ai in-session (gpt image 2, seedance, nano banana, marketing studio ads, kling, virality predictor) ~/.claude/skills/higgsfield-generate -&gt; ~/.agents/skills/higgsfield-generate (bundled, not icloud) skill tool &#x27;higgsfield-generate&#x27; or &#x27;generate an image / make a video&#x27;">
+          <h3>higgsfield-generate (bundled skill)</h3>
+          <p class="what">Generates images/videos via Higgsfield AI in-session (GPT Image 2, Seedance, Nano Banana, Marketing Studio ads, Kling, virality predictor)</p>
+          <p class="where"><span class="lbl">Where</span> ~/.claude/skills/higgsfield-generate -&gt; ~/.agents/skills/higgsfield-generate (bundled, not iCloud)</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;higgsfield-generate&#x27; or &#x27;generate an image / make a video&#x27;</p>
+        </article>
+        <article class="card" data-search="higgsfield-product-photoshoot (bundled skill) generates brand-quality product images via higgsfield product-photoshoot enhancement (studio/lifestyle/hero/ad-creative modes) on gpt image 2 ~/.claude/skills/higgsfield-product-photoshoot -&gt; ~/.agents/skills/ (bundled) skill tool &#x27;higgsfield-product-photoshoot&#x27; or &#x27;product photo / studio shot&#x27;">
+          <h3>higgsfield-product-photoshoot (bundled skill)</h3>
+          <p class="what">Generates brand-quality product images via Higgsfield product-photoshoot enhancement (studio/lifestyle/hero/ad-creative modes) on GPT Image 2</p>
+          <p class="where"><span class="lbl">Where</span> ~/.claude/skills/higgsfield-product-photoshoot -&gt; ~/.agents/skills/ (bundled)</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;higgsfield-product-photoshoot&#x27; or &#x27;product photo / studio shot&#x27;</p>
+        </article>
+        <article class="card" data-search="higgsfield-marketplace-cards (bundled skill) generates marketplace product image cards via higgsfield (compliant main image, secondary images, a+ content modules) ~/.claude/skills/higgsfield-marketplace-cards -&gt; ~/.agents/skills/ (bundled) skill tool &#x27;higgsfield-marketplace-cards&#x27; or &#x27;marketplace listing images&#x27;">
+          <h3>higgsfield-marketplace-cards (bundled skill)</h3>
+          <p class="what">Generates marketplace product image cards via Higgsfield (compliant main image, secondary images, A+ content modules)</p>
+          <p class="where"><span class="lbl">Where</span> ~/.claude/skills/higgsfield-marketplace-cards -&gt; ~/.agents/skills/ (bundled)</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;higgsfield-marketplace-cards&#x27; or &#x27;marketplace listing images&#x27;</p>
+        </article>
+        <article class="card" data-search="find-skills (bundled skill) helps discover and install agent skills when asking &#x27;how do i do x / find a skill for x&#x27; ~/.claude/skills/find-skills -&gt; ~/.agents/skills/find-skills (bundled) skill tool &#x27;find-skills&#x27; or &#x27;is there a skill that can...&#x27;">
+          <h3>find-skills (bundled skill)</h3>
+          <p class="what">Helps discover and install agent skills when asking &#x27;how do I do X / find a skill for X&#x27;</p>
+          <p class="where"><span class="lbl">Where</span> ~/.claude/skills/find-skills -&gt; ~/.agents/skills/find-skills (bundled)</p>
+          <p class="access"><span class="lbl">Access</span> Skill tool &#x27;find-skills&#x27; or &#x27;is there a skill that can...&#x27;</p>
+        </article>
+        <article class="card" data-search="elmspark toolkit guide (interactive catalogue) interactive, searchable html guide to every custom command and skill (what each does, when to use it, copy-paste examples, status) — the canonical human-facing index elmspark-toolkit-guide.html at workspace root; also hosted https://documentation.elmspark.com/toolkit/ open the html file locally, or the url (basic auth user &#x27;kenn&#x27;, password at ~/.config/elmspark/toolkit-guide-auth.txt)">
+          <h3>Elmspark toolkit guide (interactive catalogue)</h3>
+          <p class="what">Interactive, searchable HTML guide to every custom command and skill (what each does, when to use it, copy-paste examples, status) — the canonical human-facing index</p>
+          <p class="where"><span class="lbl">Where</span> elmspark-toolkit-guide.html at workspace root; also hosted <a href="https://documentation.elmspark.com/toolkit/" target="_blank" rel="noopener">https://documentation.elmspark.com/toolkit/</a></p>
+          <p class="access"><span class="lbl">Access</span> Open the HTML file locally, or the URL (Basic Auth user &#x27;kenn&#x27;, password at ~/.config/elmspark/toolkit-guide-auth.txt)</p>
+        </article>
+        <article class="card" data-search="toolkit audit + upgrade plan full audit of the command/skill toolkit with the upgrade plan behind the interactive guide toolkit-audit-2026-06-01.md at workspace root read the file (local path)">
+          <h3>Toolkit audit + upgrade plan</h3>
+          <p class="what">Full audit of the command/skill toolkit with the upgrade plan behind the interactive guide</p>
+          <p class="where"><span class="lbl">Where</span> toolkit-audit-2026-06-01.md at workspace root</p>
+          <p class="access"><span class="lbl">Access</span> Read the file (local path)</p>
+        </article>
+        <article class="card" data-search="command/skill cross-mac install pattern how the toolkit propagates: source lives in icloud cc-commands/ and cc-skills/, each mac ln -sf symlinks into ~/.claude/commands and ~/.claude/skills so updates auto-sync and a single canonical source can&#x27;t drift documented in workspace claude.md (skills + ep review prompts sections); install cmd: ln -sf &quot;&lt;workspace&gt;/cc-skills/&lt;name&gt;&quot; ~/.claude/skills/&lt;name&gt; read workspace claude.md">
+          <h3>Command/skill cross-Mac install pattern</h3>
+          <p class="what">How the toolkit propagates: source lives in iCloud cc-commands/ and cc-skills/, each Mac ln -sf symlinks into ~/.claude/commands and ~/.claude/skills so updates auto-sync and a single canonical source can&#x27;t drift</p>
+          <p class="where"><span class="lbl">Where</span> Documented in workspace CLAUDE.md (Skills + EP Review Prompts sections); install cmd: ln -sf &quot;&lt;workspace&gt;/cc-skills/&lt;name&gt;&quot; ~/.claude/skills/&lt;name&gt;</p>
+          <p class="access"><span class="lbl">Access</span> Read workspace CLAUDE.md</p>
+        </article>
+        </div>
+      </section>
+      <section class="cat" id="cat-credentials-access" data-cat="credentials-access">
+        <h2>Credentials &amp; Access <span class="count">13</span></h2>
+        <div class="grid">
+        <article class="card" data-search="credentials &amp; handoff bundle hosted human-facing index titled &#x27;credentials &amp; handoff bundle&#x27;. as of 2026-06-06 regen it holds no plaintext secrets — explicitly states the live secrets live in ~/.config/elmspark/. a passkey-gated, noindex pointer/map only. old plaintext copy retired off-docroot at /root/docs-retired-baks/credentials.html.pre-regen-20260606. live: https://updates.elmspark.com/docs/pages/credentials.html (vps /var/www/updates.elmspark.com/docs/pages/credentials.html); source /users/kennjordan/developer/elmspark/ep-updates/docs/pages/credentials.html passkey gate (webauthn/touch id); live values are not here (per-mac local store) · passkey-gate (webauthn/touch id) on the docs site, noindex; source editable locally + via ssh ionos-ts">
+          <h3>Credentials &amp; Handoff Bundle</h3>
+          <p class="what">Hosted human-facing index titled &#x27;Credentials &amp; Handoff Bundle&#x27;. As of 2026-06-06 regen it holds NO plaintext secrets — explicitly states the live secrets live in ~/.config/elmspark/. A passkey-gated, noindex pointer/map only. Old plaintext copy retired off-docroot at /root/docs-retired-baks/credentials.html.pre-regen-20260606.</p>
+          <p class="where"><span class="lbl">Where</span> Live: <a href="https://updates.elmspark.com/docs/pages/credentials.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/credentials.html</a> (VPS /var/www/updates.elmspark.com/docs/pages/credentials.html); source /Users/kennjordan/Developer/elmspark/ep-updates/docs/pages/credentials.html</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); live values are NOT here (per-Mac local store) · passkey-gate (WebAuthn/Touch ID) on the docs site, noindex; source editable locally + via ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="credential access &amp; shortcuts hosted guide titled &#x27;credential access &amp; shortcuts&#x27; explaining the whole model: docs is passkey-gated so cc cannot curl secrets; the real secrets are the per-mac ~/.config/elmspark/ store (chmod 600, gitignored); maps each file to its purpose; instructs &#x27;point a cc session once at the dir, it reads what it needs, never paste&#x27;. live: https://updates.elmspark.com/docs/pages/credential-access.html (vps same dir); source /users/kennjordan/developer/elmspark/ep-updates/docs/pages/credential-access.html passkey gate (webauthn/touch id) · passkey-gate (webauthn/touch id), noindex; source editable locally + via ssh ionos-ts">
+          <h3>Credential Access &amp; Shortcuts</h3>
+          <p class="what">Hosted guide titled &#x27;Credential Access &amp; Shortcuts&#x27; explaining the WHOLE model: docs is passkey-gated so CC cannot curl secrets; the real secrets are the per-Mac ~/.config/elmspark/ store (chmod 600, gitignored); maps each file to its purpose; instructs &#x27;point a CC session once at the dir, it reads what it needs, never paste&#x27;.</p>
+          <p class="where"><span class="lbl">Where</span> Live: <a href="https://updates.elmspark.com/docs/pages/credential-access.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/credential-access.html</a> (VPS same dir); source /Users/kennjordan/Developer/elmspark/ep-updates/docs/pages/credential-access.html</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID) · passkey-gate (WebAuthn/Touch ID), noindex; source editable locally + via ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="elmspark local credential store (dir) the credential/secret access layer: per-mac local directory holding every live secret cc reads directly. 23 entries, every file chmod 600, owner-only (drwx------), gitignored, not in icloud. /users/kennjordan/.config/elmspark/ local path, owner-only (chmod 600 / dir 700); cc reads files directly, no copy-paste; per-mac (copy across to a new mac + chmod 600)">
+          <h3>ElmsPark local credential store (dir)</h3>
+          <p class="what">The credential/secret ACCESS layer: per-Mac local directory holding every live secret CC reads directly. 23 entries, every file chmod 600, owner-only (drwx------), gitignored, NOT in iCloud.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/</p>
+          <p class="access"><span class="lbl">Access</span> local path, owner-only (chmod 600 / dir 700); CC reads files directly, no copy-paste; per-Mac (copy across to a new Mac + chmod 600)</p>
+        </article>
+        <article class="card" data-search="credentials.md (master index) master consolidated secret store and the canonical &#x27;read this directly&#x27; file. covers: ionos vps + sa vps + retired test rigs (ssh), ionos shared-hosting sftp accounts 1-2 (3-5 outstanding), dns/registrar apis (cloudflare, ionos, namecheap), and site admin logins (theadultadhdcoach wp, dead vultr rig). regenerated 2026-06-06. /users/kennjordan/.config/elmspark/credentials.md local path, chmod 600; cc reads directly — never ask kenn to paste">
+          <h3>credentials.md (master index)</h3>
+          <p class="what">Master consolidated secret store and the canonical &#x27;read this directly&#x27; file. Covers: IONOS VPS + SA VPS + retired test rigs (SSH), IONOS shared-hosting SFTP accounts 1-2 (3-5 outstanding), DNS/registrar APIs (Cloudflare, IONOS, Namecheap), and site admin logins (theadultadhdcoach WP, dead Vultr rig). Regenerated 2026-06-06.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/credentials.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600; CC reads directly — never ask Kenn to paste</p>
+        </article>
+        <article class="card" data-search="b2-credentials.env (backblaze b2) backblaze b2 off-site archive credentials for bucket kenn-elmspark-archive (eu-central-003, object lock). keys: master + nas app-key pairs, bucket id, s3 endpoint/region. /users/kennjordan/.config/elmspark/b2-credentials.env local path, chmod 600; not in icloud (per-mac; each managing mac needs its own copy)">
+          <h3>b2-credentials.env (Backblaze B2)</h3>
+          <p class="what">Backblaze B2 off-site archive credentials for bucket kenn-elmspark-archive (eu-central-003, Object Lock). Keys: master + NAS app-key pairs, bucket id, S3 endpoint/region.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/b2-credentials.env</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600; NOT in iCloud (per-Mac; each managing Mac needs its own copy)</p>
+        </article>
+        <article class="card" data-search="cloudflare.env (cloudflare api) per-tool cloudflare api env. single key cf_api_token (scoped zone:dns token). note: the global api key lives in the mac keychain, not here. /users/kennjordan/.config/elmspark/cloudflare.env local path, chmod 600">
+          <h3>cloudflare.env (Cloudflare API)</h3>
+          <p class="what">Per-tool Cloudflare API env. Single key CF_API_TOKEN (scoped Zone:DNS token). Note: the Global API Key lives in the Mac Keychain, not here.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/cloudflare.env</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600</p>
+        </article>
+        <article class="card" data-search="vultr.env (vultr api) vultr account api env. single key vultr_api_key. /users/kennjordan/.config/elmspark/vultr.env local path, chmod 600">
+          <h3>vultr.env (Vultr API)</h3>
+          <p class="what">Vultr account API env. Single key VULTR_API_KEY.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/vultr.env</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600</p>
+        </article>
+        <article class="card" data-search="mailgun.env (mailgun email) mailgun sending env (eu region). keys: mailgun_sending_key, mailgun_domain, mailgun_region, mailgun_base_url, mailgun_authorised_recipients, mailgun_webhook_signing_key. /users/kennjordan/.config/elmspark/mailgun.env local path, chmod 600">
+          <h3>mailgun.env (Mailgun email)</h3>
+          <p class="what">Mailgun sending env (EU region). Keys: MAILGUN_SENDING_KEY, MAILGUN_DOMAIN, MAILGUN_REGION, MAILGUN_BASE_URL, MAILGUN_AUTHORISED_RECIPIENTS, MAILGUN_WEBHOOK_SIGNING_KEY.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/mailgun.env</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600</p>
+        </article>
+        <article class="card" data-search="brevo.env (brevo email api) brevo (sendinblue) transactional email env. keys: brevo_api_key, brevo_sender_email, brevo_sender_name. /users/kennjordan/.config/elmspark/brevo.env local path, chmod 600">
+          <h3>brevo.env (Brevo email API)</h3>
+          <p class="what">Brevo (Sendinblue) transactional email env. Keys: BREVO_API_KEY, BREVO_SENDER_EMAIL, BREVO_SENDER_NAME.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/brevo.env</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600</p>
+        </article>
+        <article class="card" data-search="ionos-shared-u105946716.env (ionos shared sftp) per-account ionos shared-hosting sftp credentials for theconsciouscook.online. keys: sftp_host/port/user/pass, site_domain. (rssh blocks shell — use sftp put.) /users/kennjordan/.config/elmspark/ionos-shared-u105946716.env local path, chmod 600">
+          <h3>ionos-shared-u105946716.env (IONOS shared SFTP)</h3>
+          <p class="what">Per-account IONOS shared-hosting SFTP credentials for theconsciouscook.online. Keys: SFTP_HOST/PORT/USER/PASS, SITE_DOMAIN. (rssh blocks shell — use sftp put.)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/ionos-shared-u105946716.env</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600</p>
+        </article>
+        <article class="card" data-search="per-site pm/wp admin .env files (x14) per-site admin logins + db creds + webroot/system-user for playwright ui tests and ops. pattern keys: site_url, admin_url, admin_user/email/password, db_name/user/password, system_user, webroot (some + db_prefix/fpm_socket/theme_target). files: thinkprofessionally-, picsbay-, makeclear-, makeclear-focus-, makeclear-lens-, ownyourbooking-, coach-oyb-, dogwalker-oyb-, lawyer-oyb-, tutor-oyb-, lastweekonofficehours-, gresham-admin.env. dev-admin.env + gresham-admin.env use dev_admin_user/password shape. /users/kennjordan/.config/elmspark/&lt;site&gt;-admin.env local path, chmod 600 (each file)">
+          <h3>Per-site PM/WP admin .env files (x14)</h3>
+          <p class="what">Per-site admin logins + DB creds + webroot/system-user for Playwright UI tests and ops. Pattern keys: SITE_URL, ADMIN_URL, ADMIN_USER/EMAIL/PASSWORD, DB_NAME/USER/PASSWORD, SYSTEM_USER, WEBROOT (some + DB_PREFIX/FPM_SOCKET/THEME_TARGET). Files: thinkprofessionally-, picsbay-, makeclear-, makeclear-focus-, makeclear-lens-, ownyourbooking-, coach-oyb-, dogwalker-oyb-, lawyer-oyb-, tutor-oyb-, lastweekonofficehours-, gresham-admin.env. dev-admin.env + gresham-admin.env use DEV_ADMIN_USER/PASSWORD shape.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/&lt;site&gt;-admin.env</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600 (each file)</p>
+        </article>
+        <article class="card" data-search="dev-admin.env (dev.elmspark.com pm admin) pm admin login for dev.elmspark.com playwright gates. keys: dev_admin_user, dev_admin_password. nb: per memory, do not source this for a local mac rig run (it&#x27;s the dev password, local login differs). /users/kennjordan/.config/elmspark/dev-admin.env local path, chmod 600">
+          <h3>dev-admin.env (dev.elmspark.com PM admin)</h3>
+          <p class="what">PM admin login for dev.elmspark.com Playwright gates. Keys: DEV_ADMIN_USER, DEV_ADMIN_PASSWORD. NB: per MEMORY, do NOT source this for a LOCAL Mac rig run (it&#x27;s the dev password, local login differs).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/dev-admin.env</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600</p>
+        </article>
+        <article class="card" data-search="toolkit-guide-auth.txt (docs basic auth) basic-auth creds for the public documentation.elmspark.com/toolkit interactive tool guide. plain text: url / user (kenn) / pass / set-date. referenced by workspace claude.md. /users/kennjordan/.config/elmspark/toolkit-guide-auth.txt local path, chmod 600">
+          <h3>toolkit-guide-auth.txt (docs Basic Auth)</h3>
+          <p class="what">Basic-Auth creds for the public documentation.elmspark.com/toolkit interactive tool guide. Plain text: URL / user (kenn) / pass / set-date. Referenced by workspace CLAUDE.md.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/toolkit-guide-auth.txt</p>
+          <p class="access"><span class="lbl">Access</span> local path, chmod 600</p>
+        </article>
+        </div>
+      </section>
+      <section class="cat" id="cat-code-infra" data-cat="code-infra">
+        <h2>Code &amp; Infra <span class="count">37</span></h2>
+        <div class="grid">
+        <article class="card" data-search="pm9s/current.txt authoritative pointer: line 1 names the canonical pagemotor core folder (now pagemotor v0.9.3b). single source of truth for all pm-core work; resolve via head -n1, never hardcode /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pm9s/current.txt local">
+          <h3>PM9s/CURRENT.txt</h3>
+          <p class="what">AUTHORITATIVE pointer: line 1 names the canonical PageMotor core folder (now pagemotor v0.9.3b). Single source of truth for all PM-core work; resolve via head -n1, never hardcode</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/PM9s/CURRENT.txt</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="pm9s core folders on-disk pagemotor core builds; current = pagemotor v0.9.3b. stale folders (v0.9b, v0.9.1b, v0.9.2b, rc1-rc4) must not be used /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pm9s/pagemotor v0.9.3b/ local">
+          <h3>PM9s core folders</h3>
+          <p class="what">On-disk PageMotor core builds; current = pagemotor v0.9.3b. Stale folders (v0.9b, v0.9.1b, v0.9.2b, rc1-rc4) MUST NOT be used</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/PM9s/pagemotor v0.9.3b/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search=".claude/artifacts/ durable build artefacts: plugins-dashboard-2026-06-05.php (install-telemetry dashboard source), docs-home-index, docs-triage-report.json, docs-backups/ /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/artifacts/ local">
+          <h3>.claude/artifacts/</h3>
+          <p class="what">Durable build artefacts: plugins-dashboard-2026-06-05.php (install-telemetry dashboard source), docs-home-index, docs-triage-report.json, docs-backups/</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/artifacts/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="makeclear-build/ build workspace for the three makeclear.co.uk one-page pm layouts (resolve/lens/distil/signal/focus pull): src dirs, vhosts, pool configs, screenshots, recipe artefacts /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/makeclear-build/ local">
+          <h3>makeclear-build/</h3>
+          <p class="what">Build workspace for the three makeclear.co.uk one-page PM layouts (Resolve/Lens/Distil/Signal/Focus Pull): src dirs, vhosts, pool configs, screenshots, recipe artefacts</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/makeclear-build/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="designs/ master design source library: per-brand html/css design folders (ardglass, gresham-arms, bannow-bay, etc.), design-generation-skill, palette/drawing zone maps, preferences.md, failures.md, _source-assets, _theme-backups /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/designs/ local">
+          <h3>Designs/</h3>
+          <p class="what">Master design source library: per-brand HTML/CSS design folders (ardglass, gresham-arms, bannow-bay, etc.), design-generation-skill, palette/drawing zone maps, preferences.md, failures.md, _source-assets, _theme-backups</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/Designs/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="showcases/ (layouts gallery manifests) 31 showcase manifests (per-site json) + layouts gallery body html + briefing for elmspark.com/layouts/; feeds the layouts-add-site skill /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/showcases/ local">
+          <h3>showcases/ (layouts gallery manifests)</h3>
+          <p class="what">31 showcase manifests (per-site JSON) + layouts gallery body HTML + BRIEFING for elmspark.com/layouts/; feeds the layouts-add-site skill</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/showcases/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="brand-sites-build/ brand-site build pipeline outputs: brand-prototypes, layouts-mockups, pm-conversions /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/brand-sites-build/ local">
+          <h3>brand-sites-build/</h3>
+          <p class="what">Brand-site build pipeline outputs: brand-prototypes, layouts-mockups, pm-conversions</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/brand-sites-build/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="pagemotor plugins/ plugin development working folder: ep email, ep events, ep security, mobilearn course plugin, pod research, ep-courses-vimeo-build /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pagemotor plugins/ local (chmod 700)">
+          <h3>PageMotor Plugins/</h3>
+          <p class="what">Plugin development working folder: EP Email, EP Events, EP Security, MobiLearn Course Plugin, POD Research, ep-courses-vimeo-build</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/PageMotor Plugins/</p>
+          <p class="access"><span class="lbl">Access</span> local (chmod 700)</p>
+        </article>
+        <article class="card" data-search="system/ per-mac system management: launchd jobs, claude-config, scripts, memory-backup, cleanup-backups, nas raid6 migration prompt, tailscale activation notes /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/system/ local">
+          <h3>system/</h3>
+          <p class="what">Per-Mac system management: launchd jobs, claude-config, scripts, memory-backup, cleanup-backups, NAS RAID6 migration prompt, tailscale activation notes</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/system/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="hasmukh/ working folder for the hasmukh apps / one-file build-safety brief work /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/hasmukh/ local">
+          <h3>Hasmukh/</h3>
+          <p class="what">Working folder for the Hasmukh apps / one-file build-safety brief work</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/Hasmukh/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="pagemotor-update-server/ + pagemotor-design-skill/ working copies: the ep-updates server build and the pagemotor design-conversion skill packaging /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pagemotor-update-server/ local">
+          <h3>pagemotor-update-server/ + pagemotor-design-skill/</h3>
+          <p class="what">Working copies: the ep-updates server build and the PageMotor design-conversion skill packaging</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/pagemotor-update-server/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="docs source repo (astro starlight) source for the whole docs site. content in src/content/docs/, config astro.config.mjs, builds to dist/, deploys via deploy.sh. github: elmspark-studio/documentation. /users/kennjordan/developer/elmspark/documentation (local clone); remote https://github.com/elmspark-studio/documentation local path / git">
+          <h3>Docs source repo (Astro Starlight)</h3>
+          <p class="what">Source for the whole docs site. Content in src/content/docs/, config astro.config.mjs, builds to dist/, deploys via deploy.sh. GitHub: ElmsPark-Studio/documentation.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/documentation (local clone); remote <a href="https://github.com/ElmsPark-Studio/documentation" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/documentation</a></p>
+          <p class="access"><span class="lbl">Access</span> local path / git</p>
+        </article>
+        <article class="card" data-search="public/ rebuild-survival directory anything dropped in the astro public/ dir is copied verbatim into dist/ and survives every rebuild/deploy (starlight does not manage it). current contents: toolkit/index.html, native-cron-research html, favicon.svg. this is the place for gated/static add-ons. /users/kennjordan/developer/elmspark/documentation/public/ -&gt; served at site root after deploy local path">
+          <h3>public/ rebuild-survival directory</h3>
+          <p class="what">Anything dropped in the Astro public/ dir is copied verbatim into dist/ and survives every rebuild/deploy (Starlight does not manage it). Current contents: toolkit/index.html, native-cron-research HTML, favicon.svg. This is the place for gated/static add-ons.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/documentation/public/ -&gt; served at site root after deploy</p>
+          <p class="access"><span class="lbl">Access</span> local path</p>
+        </article>
+        <article class="card" data-search="elmspark vps (ionos) the host itself: ubuntu vps running nginx + php-fpm + mariadb, ~85 vhosts in /etc/nginx/sites-enabled/, all docroots under /var/www/. tls ip 88.208.226.236 (unspoofable, used in the probe.elmspark.test forensics). 88.208.226.236; nginx vhosts /etc/nginx/sites-enabled/, docroots /var/www/&lt;site&gt; ssh ionos-ts (key-only root, password auth disabled via 00-elmspark-hardening.conf)">
+          <h3>ElmsPark VPS (IONOS)</h3>
+          <p class="what">The host itself: Ubuntu VPS running nginx + PHP-FPM + MariaDB, ~85 vhosts in /etc/nginx/sites-enabled/, all docroots under /var/www/. TLS IP 88.208.226.236 (unspoofable, used in the probe.elmspark.test forensics).</p>
+          <p class="where"><span class="lbl">Where</span> 88.208.226.236; nginx vhosts /etc/nginx/sites-enabled/, docroots /var/www/&lt;site&gt;</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts (key-only root, password auth disabled via 00-elmspark-hardening.conf)</p>
+        </article>
+        <article class="card" data-search="dev.elmspark.com primary pagemotor dev/test site for ep plugin playwright gates and ui verification before shipping. root /var/www/dev.elmspark.com; vhost /etc/nginx/sites-enabled/dev.elmspark.com ssh ionos-ts; playwright tools at ~/developer/elmspark/tools/playwright-tests/">
+          <h3>dev.elmspark.com</h3>
+          <p class="what">Primary PageMotor dev/test site for EP plugin Playwright gates and UI verification before shipping.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/dev.elmspark.com; vhost /etc/nginx/sites-enabled/dev.elmspark.com</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts; Playwright tools at ~/Developer/elmspark/tools/playwright-tests/</p>
+        </article>
+        <article class="card" data-search="staging.elmspark.com pagemotor staging site. root /var/www/staging.elmspark.com; vhost /etc/nginx/sites-enabled/staging.elmspark.com ssh ionos-ts">
+          <h3>staging.elmspark.com</h3>
+          <p class="what">PageMotor staging site.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/staging.elmspark.com; vhost /etc/nginx/sites-enabled/staging.elmspark.com</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="dev3 / dev9.elmspark.com additional pagemotor dev rigs (dev9 pinned to a specific core line; a dev9.*.backup-20260528 dir exists alongside). roots /var/www/dev3.elmspark.com, /var/www/dev9.elmspark.com; vhosts same names ssh ionos-ts">
+          <h3>dev3 / dev9.elmspark.com</h3>
+          <p class="what">Additional PageMotor dev rigs (dev9 pinned to a specific core line; a dev9.*.backup-20260528 dir exists alongside).</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/dev3.elmspark.com, /var/www/dev9.elmspark.com; vhosts same names</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="test.elmspark.com (testrig) pagemotor test rig vhost (also the catch-all default server, server_name &#x27;test.elmspark.com _&#x27;). root /var/www/testrig; vhost /etc/nginx/sites-enabled/testrig ssh ionos-ts">
+          <h3>test.elmspark.com (testrig)</h3>
+          <p class="what">PageMotor test rig vhost (also the catch-all default server, server_name &#x27;test.elmspark.com _&#x27;).</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/testrig; vhost /etc/nginx/sites-enabled/testrig</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="pmdev.elmspark.com pagemotor core dev vhost (the &#x27;elmspark&#x27; vhost file maps to pmdev.elmspark.com). root /var/www/elmspark; vhost /etc/nginx/sites-enabled/elmspark (server_name pmdev.elmspark.com) ssh ionos-ts">
+          <h3>pmdev.elmspark.com</h3>
+          <p class="what">PageMotor core dev vhost (the &#x27;elmspark&#x27; vhost file maps to pmdev.elmspark.com).</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/elmspark; vhost /etc/nginx/sites-enabled/elmspark (server_name pmdev.elmspark.com)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="reviewer.elmspark.com reviewer/preview site (related to the pm09t2 chris-review served from /var/www/pm09t2-private via alias, not the docs docroot). root /var/www/reviewer.elmspark.com; pm09t2 source /var/www/pm09t2-private; vhost /etc/nginx/sites-enabled/reviewer.elmspark.com ssh ionos-ts">
+          <h3>reviewer.elmspark.com</h3>
+          <p class="what">Reviewer/preview site (related to the pm09t2 Chris-review served from /var/www/pm09t2-private via alias, NOT the docs docroot).</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/reviewer.elmspark.com; pm09t2 source /var/www/pm09t2-private; vhost /etc/nginx/sites-enabled/reviewer.elmspark.com</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="blocklist.elmspark.com elmspark blocklist service vhost. root /var/www/blocklist.elmspark.com; vhost same name ssh ionos-ts">
+          <h3>blocklist.elmspark.com</h3>
+          <p class="what">ElmsPark blocklist service vhost.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/blocklist.elmspark.com; vhost same name</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="prototypes.elmspark.com prototypes/experiments vhost. root /var/www/prototypes.elmspark.com; vhost same name ssh ionos-ts">
+          <h3>prototypes.elmspark.com</h3>
+          <p class="what">Prototypes/experiments vhost.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/prototypes.elmspark.com; vhost same name</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="rebrand.elmspark.com rebrand experiment vhost. root /var/www/rebrand; vhost /etc/nginx/sites-enabled/rebrand (server_name rebrand.elmspark.com) ssh ionos-ts">
+          <h3>rebrand.elmspark.com</h3>
+          <p class="what">Rebrand experiment vhost.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/rebrand; vhost /etc/nginx/sites-enabled/rebrand (server_name rebrand.elmspark.com)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="s2l.elmspark.com s2l project vhost (a s2l-static-backup dir also exists in /var/www/). root /var/www/s2l; vhost /etc/nginx/sites-enabled/s2l (server_name s2l.elmspark.com) ssh ionos-ts">
+          <h3>s2l.elmspark.com</h3>
+          <p class="what">S2L project vhost (a s2l-static-backup dir also exists in /var/www/).</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/s2l; vhost /etc/nginx/sites-enabled/s2l (server_name s2l.elmspark.com)</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="pm-thebox.elmspark.com pagemotor &#x27;the box&#x27; demo/test subdomain. root /var/www/pm-thebox.elmspark.com; vhost same name ssh ionos-ts">
+          <h3>pm-thebox.elmspark.com</h3>
+          <p class="what">PageMotor &#x27;the box&#x27; demo/test subdomain.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/pm-thebox.elmspark.com; vhost same name</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="ep agent demo fleet (epagent-*) 11 epagent-* demo installs (biz-01..03, blank-01..03, shop-01..03, olga, volker) under /var/www/. nb ep-agent is deprecated on pm 0.9 and de-registered from the update channel; these are legacy demo boxes. roots /var/www/epagent-{biz,blank,shop}-0n, /var/www/epagent-{olga,volker}; vhosts same names ssh ionos-ts">
+          <h3>EP Agent demo fleet (epagent-*)</h3>
+          <p class="what">11 epagent-* demo installs (biz-01..03, blank-01..03, shop-01..03, olga, volker) under /var/www/. NB ep-agent is DEPRECATED on PM 0.9 and de-registered from the update channel; these are legacy demo boxes.</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/epagent-{biz,blank,shop}-0N, /var/www/epagent-{olga,volker}; vhosts same names</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="hasmukh app + review subdomains hasmukh-related sites/apps: interview-hasmukh.elmspark.com, prompting-hasmukh.elmspark.com, and /var/www/hasmukh (the apps with the parked .env relocation action for anthropic_api_key / pp_admin_token). roots /var/www/{interview-hasmukh,prompting-hasmukh}.elmspark.com and /var/www/hasmukh; vhosts same names ssh ionos-ts">
+          <h3>Hasmukh app + review subdomains</h3>
+          <p class="what">Hasmukh-related sites/apps: interview-hasmukh.elmspark.com, prompting-hasmukh.elmspark.com, and /var/www/hasmukh (the apps with the parked .env relocation action for ANTHROPIC_API_KEY / PP_ADMIN_TOKEN).</p>
+          <p class="where"><span class="lbl">Where</span> roots /var/www/{interview-hasmukh,prompting-hasmukh}.elmspark.com and /var/www/hasmukh; vhosts same names</p>
+          <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="elmspark (workspace umbrella repo) source for the ep plugin update/telemetry server (updates.elmspark.com): update.php, ingest.php, download.php, webhook.php, config.php, db.php, blocklist, docs/, scripts/. this is the code behind the customer update endpoint + the &#x27;plugins in the wild&#x27; install-telemetry dashboard. it is a tracked subdirectory of the top-level elmspark.git repo, not a standalone repo. deployed to the vps. /users/kennjordan/developer/elmspark (remote: https://github.com/elmspark-studio/elmspark.git) · /users/kennjordan/developer/elmspark/ep-updates (part of remote https://github.com/elmspark-studio/elmspark.git); live copy at /var/www/updates.elmspark.com on the vps · /users/kennjordan/developer/elmspark/tools/ (tracked in https://github.com/elmspark-studio/elmspark.git except playwright-tests) git clone over https; gh cli; org elmspark-studio · git over https (via parent elmspark repo); live server via ssh ionos-ts (key-only root) · git over https via parent repo">
+          <h3>elmspark (workspace umbrella repo)</h3>
+          <p class="what">Source for the EP plugin update/telemetry server (updates.elmspark.com): update.php, ingest.php, download.php, webhook.php, config.php, db.php, blocklist, docs/, scripts/. This is the code behind the customer update endpoint + the &#x27;Plugins in the Wild&#x27; install-telemetry dashboard. It is a TRACKED SUBDIRECTORY of the top-level elmspark.git repo, not a standalone repo. Deployed to the VPS.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark (remote: <a href="https://github.com/ElmsPark-Studio/elmspark.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/elmspark.git</a>) · /Users/kennjordan/Developer/elmspark/ep-updates (part of remote <a href="https://github.com/ElmsPark-Studio/elmspark.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/elmspark.git</a>); live copy at /var/www/updates.elmspark.com on the VPS · /Users/kennjordan/Developer/elmspark/tools/ (tracked in <a href="https://github.com/ElmsPark-Studio/elmspark.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/elmspark.git</a> except playwright-tests)</p>
+          <p class="access"><span class="lbl">Access</span> git clone over HTTPS; gh CLI; org ElmsPark-Studio · git over HTTPS (via parent elmspark repo); live server via ssh ionos-ts (key-only root) · git over HTTPS via parent repo</p>
+        </article>
+        <article class="card" data-search="ep-suite (plugins monorepo) the ep suite plugins monorepo - 78 ep-* plugin folders (plus a few non-ep like hm-seo). each plugin keeps its manifest at &lt;plugin&gt;/src/plugin.php and builds a dist/ zip. this is the primary plugin development surface. currently on branch feature/ep-locations-i18n-2026-05-03 (head 2026-06-05). edits frequently uncommitted amid concurrent sessions. /users/kennjordan/developer/elmspark/plugins (remote: https://github.com/elmspark/ep-suite.git) git clone over https; gh cli; org elmspark (note: not elmspark-studio)">
+          <h3>ep-suite (plugins monorepo)</h3>
+          <p class="what">The EP Suite plugins monorepo - 78 ep-* plugin folders (plus a few non-ep like hm-seo). Each plugin keeps its manifest at &lt;plugin&gt;/src/plugin.php and builds a dist/ zip. This is the primary plugin development surface. Currently on branch feature/ep-locations-i18n-2026-05-03 (HEAD 2026-06-05). Edits frequently UNCOMMITTED amid concurrent sessions.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/plugins (remote: <a href="https://github.com/ElmsPark/ep-suite.git" target="_blank" rel="noopener">https://github.com/ElmsPark/ep-suite.git</a>)</p>
+          <p class="access"><span class="lbl">Access</span> git clone over HTTPS; gh CLI; org ElmsPark (note: NOT ElmsPark-Studio)</p>
+        </article>
+        <article class="card" data-search="ep-suite submodules (4) four plugin folders inside the plugins monorepo are registered as git submodules (gitlinks, type 160000) rather than plain directories: ep-agent, ep-documents, ep-holiday-bookings, ep-sitemap. defined in plugins/.gitmodules. plugins/{ep-agent,ep-documents,ep-holiday-bookings,ep-sitemap}; remotes: ep-agent+ep-documents+ep-holiday-bookings on org elmspark, ep-sitemap on elmspark-studio git submodule update --init; https; gh cli">
+          <h3>ep-suite submodules (4)</h3>
+          <p class="what">Four plugin folders inside the plugins monorepo are registered as git submodules (gitlinks, type 160000) rather than plain directories: ep-agent, ep-documents, ep-holiday-bookings, ep-sitemap. Defined in plugins/.gitmodules.</p>
+          <p class="where"><span class="lbl">Where</span> plugins/{ep-agent,ep-documents,ep-holiday-bookings,ep-sitemap}; remotes: ep-agent+ep-documents+ep-holiday-bookings on org ElmsPark, ep-sitemap on ElmsPark-Studio</p>
+          <p class="access"><span class="lbl">Access</span> git submodule update --init; HTTPS; gh CLI</p>
+        </article>
+        <article class="card" data-search="ep-suite independent plugin clones (5) five plugin folders inside plugins/ have their own .git but are not submodules of the monorepo (independent standalone clones living in the tree): discovery-ai, ep-assistant, ep-business-planner, ep-mcp-bridge, ep-passkeys. remotes: ep-assistant on org elmspark; discovery-ai/ep-business-planner/ep-mcp-bridge/ep-passkeys on elmspark-studio. plugins/{discovery-ai,ep-assistant,ep-business-planner,ep-mcp-bridge,ep-passkeys}/.git git over https; gh cli; orgs elmspark and elmspark-studio">
+          <h3>ep-suite independent plugin clones (5)</h3>
+          <p class="what">Five plugin folders inside plugins/ have their own .git but are NOT submodules of the monorepo (independent standalone clones living in the tree): discovery-ai, ep-assistant, ep-business-planner, ep-mcp-bridge, ep-passkeys. Remotes: ep-assistant on org ElmsPark; discovery-ai/ep-business-planner/ep-mcp-bridge/ep-passkeys on ElmsPark-Studio.</p>
+          <p class="where"><span class="lbl">Where</span> plugins/{discovery-ai,ep-assistant,ep-business-planner,ep-mcp-bridge,ep-passkeys}/.git</p>
+          <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; orgs ElmsPark and ElmsPark-Studio</p>
+        </article>
+        <article class="card" data-search="documentation (astro docs site) astro static-site repo that builds documentation.elmspark.com (hosting guides, toolkit guide, etc). package.json name &#x27;documentation&#x27;, astro dev/build. deployed via deploy.sh to the vps over ionos-ts. branch main (head 2026-05-22). /users/kennjordan/developer/elmspark/documentation (remote: https://github.com/elmspark-studio/documentation.git) git over https; gh cli; deploy.sh pushes to vps via ssh ionos-ts">
+          <h3>documentation (Astro docs site)</h3>
+          <p class="what">Astro static-site repo that builds documentation.elmspark.com (hosting guides, toolkit guide, etc). package.json name &#x27;documentation&#x27;, astro dev/build. Deployed via deploy.sh to the VPS over ionos-ts. Branch main (HEAD 2026-05-22).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/documentation (remote: <a href="https://github.com/ElmsPark-Studio/documentation.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/documentation.git</a>)</p>
+          <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; deploy.sh pushes to VPS via ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="pagemotor (pm core checkout) a pagemotor core checkout used as a local pm install / test rig (config.php + user-content gitignored). contains lib/, pagemotor.php, router.php, index.php. note: this is a working checkout, not the canonical core for validation - canonical core is whatever pm9s/current.txt names (currently pagemotor v0.9.2b in the claude workspace). branch main (head 2026-05-02, stale relative to 0.9.2b). /users/kennjordan/developer/elmspark/pagemotor (remote: https://github.com/elmspark-studio/pagemotor.git) git over https; gh cli; org elmspark-studio (this is the elmspark mirror/checkout of chris pearson&#x27;s pm core)">
+          <h3>pagemotor (PM core checkout)</h3>
+          <p class="what">A PageMotor core checkout used as a local PM install / test rig (config.php + user-content gitignored). Contains lib/, pagemotor.php, router.php, index.php. NOTE: this is a working checkout, NOT the canonical core for validation - canonical core is whatever PM9s/CURRENT.txt names (currently pagemotor v0.9.2b in the Claude Workspace). Branch main (HEAD 2026-05-02, stale relative to 0.9.2b).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/pagemotor (remote: <a href="https://github.com/ElmsPark-Studio/pagemotor.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/pagemotor.git</a>)</p>
+          <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; org ElmsPark-Studio (this is the ElmsPark mirror/checkout of Chris Pearson&#x27;s PM core)</p>
+        </article>
+        <article class="card" data-search="playwright-tests (ui verification tools) playwright test harness for verifying pagemotor plugin admin ui / js / ajax against dev.elmspark.com (run with ./run-tests.sh). the mandatory pre-reply gate for any ui/js/form change. its own git repo (remote elmspark-tools.git), sitting under the parent&#x27;s tools/ directory. branch main (head 2026-05-05). active (tree touched 2026-06-06). /users/kennjordan/developer/elmspark/tools/playwright-tests (remote: https://github.com/elmspark-studio/elmspark-tools.git) git over https; gh cli; org elmspark-studio; ./run-tests.sh">
+          <h3>playwright-tests (UI verification tools)</h3>
+          <p class="what">Playwright test harness for verifying PageMotor plugin admin UI / JS / AJAX against dev.elmspark.com (run with ./run-tests.sh). The mandatory pre-reply gate for any UI/JS/form change. Its own git repo (remote elmspark-tools.git), sitting under the parent&#x27;s tools/ directory. Branch main (HEAD 2026-05-05). Active (tree touched 2026-06-06).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/tools/playwright-tests (remote: <a href="https://github.com/ElmsPark-Studio/elmspark-tools.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/elmspark-tools.git</a>)</p>
+          <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; org ElmsPark-Studio; ./run-tests.sh</p>
+        </article>
+        <article class="card" data-search="discovery-design-pipeline standalone repo for the discovery/design pipeline (adhd-coach / discovery-ai design generation work). branch main (head 2026-05-08). /users/kennjordan/developer/elmspark/discovery-design-pipeline (remote: https://github.com/elmspark-studio/discovery-design-pipeline.git) git over https; gh cli; org elmspark-studio">
+          <h3>discovery-design-pipeline</h3>
+          <p class="what">Standalone repo for the discovery/design pipeline (ADHD-coach / discovery-AI design generation work). Branch main (HEAD 2026-05-08).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/discovery-design-pipeline (remote: <a href="https://github.com/ElmsPark-Studio/discovery-design-pipeline.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/discovery-design-pipeline.git</a>)</p>
+          <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; org ElmsPark-Studio</p>
+        </article>
+        <article class="card" data-search="theconsciouscook-migration standalone repo for the the conscious cook wordpress-to-pagemotor migration. branch main (head 2026-05-12). /users/kennjordan/developer/elmspark/theconsciouscook-migration (remote: https://github.com/elmspark-studio/theconsciouscook-migration.git) git over https; gh cli; org elmspark-studio">
+          <h3>theconsciouscook-migration</h3>
+          <p class="what">Standalone repo for the The Conscious Cook WordPress-to-PageMotor migration. Branch main (HEAD 2026-05-12).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/theconsciouscook-migration (remote: <a href="https://github.com/ElmsPark-Studio/theconsciouscook-migration.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/theconsciouscook-migration.git</a>)</p>
+          <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; org ElmsPark-Studio</p>
+        </article>
+        <article class="card" data-search="vtracer-fork elmspark fork of the vtracer raster-to-svg tracer (rust), used in the png-to-svg / logo-vectorisation tooling. branch master (head 2026-05-08). /users/kennjordan/developer/elmspark/vtracer-fork (remote: https://github.com/elmspark/vtracer.git) git over https; gh cli; org elmspark">
+          <h3>vtracer-fork</h3>
+          <p class="what">ElmsPark fork of the vtracer raster-to-SVG tracer (Rust), used in the png-to-svg / logo-vectorisation tooling. Branch master (HEAD 2026-05-08).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/vtracer-fork (remote: <a href="https://github.com/ElmsPark/vtracer.git" target="_blank" rel="noopener">https://github.com/ElmsPark/vtracer.git</a>)</p>
+          <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; org ElmsPark</p>
+        </article>
+        </div>
+      </section>
+      <section class="cat" id="cat-working-memory-process" data-cat="working-memory-process">
+        <h2>Working Memory &amp; Process <span class="count">21</span></h2>
+        <div class="grid">
+        <article class="card" data-search="workspace claude.md master project instructions: session-resume protocol, pm core source-of-truth rule, people/terms/projects, cross-session protocol, devices, workspace structure /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/claude.md local (chmod 600)">
+          <h3>Workspace CLAUDE.md</h3>
+          <p class="what">Master project instructions: session-resume protocol, PM core source-of-truth rule, people/terms/projects, cross-session protocol, devices, workspace structure</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/CLAUDE.md</p>
+          <p class="access"><span class="lbl">Access</span> local (chmod 600)</p>
+        </article>
+        <article class="card" data-search="agents.md agent-facing mirror of workspace memory/instructions (codex/agent variant of claude.md) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/agents.md local">
+          <h3>AGENTS.md</h3>
+          <p class="what">Agent-facing mirror of workspace memory/instructions (Codex/agent variant of CLAUDE.md)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/AGENTS.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="tasks.md the cc/cw coordination board read at the start of every session: what&#x27;s claimed (tagged [cc]/[cw]), queued, waiting, and done. pair with the latest handoff for resume context. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/tasks.md local (chmod 600) · local path, read">
+          <h3>TASKS.md</h3>
+          <p class="what">The CC/CW coordination board read at the start of every session: what&#x27;s claimed (tagged [CC]/[CW]), queued, waiting, and done. Pair with the latest handoff for resume context.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/TASKS.md</p>
+          <p class="access"><span class="lbl">Access</span> local (chmod 600) · local path, Read</p>
+        </article>
+        <article class="card" data-search="memory/ (curated memory files) hand-curated reference memory: glossary.md, people/, network-and-systems-setup.md, backblaze-b2-archive.md, elmspark-editorial-architecture-pattern.md, feedback_playwright_required_for_ui_changes.md /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/memory/ local">
+          <h3>memory/ (curated memory files)</h3>
+          <p class="what">Hand-curated reference memory: glossary.md, people/, network-and-systems-setup.md, backblaze-b2-archive.md, elmspark-editorial-architecture-pattern.md, feedback_playwright_required_for_ui_changes.md</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/memory/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search=".claude/handoff-*.md + handoff-index.md session-resume handoffs (64 files); newest three summarised in claude.md, older indexed in handoff-index.md. read latest before any work /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/ local (chmod 600 some)">
+          <h3>.claude/handoff-*.md + handoff-index.md</h3>
+          <p class="what">Session-resume handoffs (64 files); newest three summarised in CLAUDE.md, older indexed in handoff-index.md. Read latest before any work</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/</p>
+          <p class="access"><span class="lbl">Access</span> local (chmod 600 some)</p>
+        </article>
+        <article class="card" data-search=".claude/drafts/ 70 working drafts (forum posts, dms, emails, announcements in progress) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/drafts/ local">
+          <h3>.claude/drafts/</h3>
+          <p class="what">70 working drafts (forum posts, DMs, emails, announcements in progress)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/drafts/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="failures.md design conversion failure log — verification failures + corrections to prevent repeat conversion mistakes /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/failures.md local">
+          <h3>failures.md</h3>
+          <p class="what">Design Conversion Failure Log — verification failures + corrections to prevent repeat conversion mistakes</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/failures.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="workspace-audit-2026-05-23.md + workspace-cleanup-2026-05-23.md workspace structure audit and cleanup plan/record /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/workspace-audit-2026-05-23.md local">
+          <h3>WORKSPACE-AUDIT-2026-05-23.md + WORKSPACE-CLEANUP-2026-05-23.md</h3>
+          <p class="what">Workspace structure audit and cleanup plan/record</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/WORKSPACE-AUDIT-2026-05-23.md</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="cwtm podcast/ conversations with tony mobley podcast assets and rig setup briefing /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/cwtm podcast/ local">
+          <h3>CWTM Podcast/</h3>
+          <p class="what">Conversations with Tony Mobley podcast assets and rig setup briefing</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/CWTM Podcast/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="forum posts/ pagemotor developers discourse drafts + discord handovers + launch announcements (dated .md files, e.g. ep-suite-09-ready, pod-family announcement) /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/forum posts/ local (chmod 700)">
+          <h3>Forum Posts/</h3>
+          <p class="what">PageMotor Developers Discourse drafts + Discord handovers + launch announcements (dated .md files, e.g. ep-suite-09-ready, pod-family announcement)</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/Forum Posts/</p>
+          <p class="access"><span class="lbl">Access</span> local (chmod 700)</p>
+        </article>
+        <article class="card" data-search="session-logs/ + session-archives/ auto-captured raw cc session logs (per mac, hostname-tagged) and older archives /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/session-logs/ local">
+          <h3>session-logs/ + session-archives/</h3>
+          <p class="what">Auto-captured raw CC session logs (per Mac, hostname-tagged) and older archives</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/session-logs/</p>
+          <p class="access"><span class="lbl">Access</span> local</p>
+        </article>
+        <article class="card" data-search="auto-memory index (memory.md) the persistent auto-memory index: one-line entries each linking to a topic file, loaded into every session. 117kb / 258+ lines (over the ~200-line soft cap warned in-file). /users/kennjordan/.claude/projects/-users-kennjordan-library-mobile-documents-com-apple-clouddocs-claude-workspace/memory/memory.md local path, read">
+          <h3>Auto-memory index (MEMORY.md)</h3>
+          <p class="what">The persistent auto-memory index: one-line entries each linking to a topic file, loaded into every session. 117KB / 258+ lines (over the ~200-line soft cap warned in-file).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.claude/projects/-Users-kennjordan-Library-Mobile-Documents-com-apple-CloudDocs-Claude-Workspace/memory/MEMORY.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read</p>
+        </article>
+        <article class="card" data-search="auto-memory topic files (project memory/) 261 .md topic files backing the memory.md index. includes 106 feedback_*.md hard-rule/preference files plus reference/project notes (pm_*, ep_*, project_*, cloudflare_*, etc.). one canonical file per topic, wiki-linked by [[name]]. /users/kennjordan/.claude/projects/-users-kennjordan-library-mobile-documents-com-apple-clouddocs-claude-workspace/memory/*.md local path, read; resolve a [[link]] to &lt;name&gt;.md in this dir">
+          <h3>Auto-memory topic files (project memory/)</h3>
+          <p class="what">261 .md topic files backing the MEMORY.md index. Includes 106 feedback_*.md hard-rule/preference files plus reference/project notes (pm_*, ep_*, project_*, cloudflare_*, etc.). One canonical file per topic, wiki-linked by [[name]].</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.claude/projects/-Users-kennjordan-Library-Mobile-Documents-com-apple-CloudDocs-Claude-Workspace/memory/*.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read; resolve a [[link]] to &lt;name&gt;.md in this dir</p>
+        </article>
+        <article class="card" data-search="verification-gate rule files (the five) the five feedback files the global claude.md cites for the &#x27;never claim done without a real probe&#x27; gate: feedback_completion_bias_is_a_known_industry_issue, feedback_re_verify_live_state_before_customer_drafts, feedback_silent_update_channel_for_ep_plugins, feedback_ep_plugin_ship_has_two_steps, feedback_time_estimates_are_systematically_inflated. /users/kennjordan/.claude/projects/-users-kennjordan-library-mobile-documents-com-apple-clouddocs-claude-workspace/memory/feedback_&lt;name&gt;.md (5 files) local path, read">
+          <h3>Verification-gate rule files (the five)</h3>
+          <p class="what">The five feedback files the global CLAUDE.md cites for the &#x27;never claim done without a real probe&#x27; gate: feedback_completion_bias_is_a_known_industry_issue, feedback_re_verify_live_state_before_customer_drafts, feedback_silent_update_channel_for_ep_plugins, feedback_ep_plugin_ship_has_two_steps, feedback_time_estimates_are_systematically_inflated.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.claude/projects/-Users-kennjordan-Library-Mobile-Documents-com-apple-CloudDocs-Claude-Workspace/memory/feedback_&lt;name&gt;.md (5 files)</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read</p>
+        </article>
+        <article class="card" data-search="workspace-root memory/ (glossary, people, systems) a second, separate memory dir referenced by the workspace claude.md (distinct from the project auto-memory). holds glossary.md, people/ (chris-pearson.md, hasmukh-gajjar.md), network-and-systems-setup.md, backblaze-b2-archive.md, elmspark-editorial-architecture-pattern.md, and feedback_playwright_required_for_ui_changes.md (the playwright-is-the-rule canonical copy). /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/memory/ local path, read; passwords redacted (in apple passwords)">
+          <h3>Workspace-root memory/ (glossary, people, systems)</h3>
+          <p class="what">A SECOND, separate memory dir referenced by the workspace CLAUDE.md (distinct from the project auto-memory). Holds glossary.md, people/ (chris-pearson.md, hasmukh-gajjar.md), network-and-systems-setup.md, backblaze-b2-archive.md, elmspark-editorial-architecture-pattern.md, and feedback_playwright_required_for_ui_changes.md (the Playwright-is-the-rule canonical copy).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/memory/</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read; passwords redacted (in Apple Passwords)</p>
+        </article>
+        <article class="card" data-search="session handoffs (handoff-*.md) per-session handoff notes (did/know/next). 64 files spanning 2026-05-13 to 2026-06-05; newest by filename is the session resume target. includes a few named variants (e.g. handoff-2026-05-30-correction-phpwn-ownership.md). /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-*.md local path, read; pick newest by filename">
+          <h3>Session handoffs (handoff-*.md)</h3>
+          <p class="what">Per-session handoff notes (Did/Know/Next). 64 files spanning 2026-05-13 to 2026-06-05; newest by filename is the session resume target. Includes a few named variants (e.g. handoff-2026-05-30-CORRECTION-phpwn-ownership.md).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/handoff-*.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read; pick newest by filename</p>
+        </article>
+        <article class="card" data-search="handoff index (handoff-index.md) reverse-chronological one-line index of every handoff (54 link entries), plus an &#x27;older mechanisms&#x27; section pointing at the archived handoff.md and resume-prompt files. the map for anything older than the three most-recent listed in claude.md. 64kb. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-index.md local path, read">
+          <h3>Handoff index (handoff-index.md)</h3>
+          <p class="what">Reverse-chronological one-line index of every handoff (54 link entries), plus an &#x27;Older mechanisms&#x27; section pointing at the archived HANDOFF.md and RESUME-PROMPT files. The map for anything older than the three most-recent listed in CLAUDE.md. 64KB.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/handoff-index.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read</p>
+        </article>
+        <article class="card" data-search="latest handoff (session-resume target) the most recent handoff — the first thing a new session reads. currently the six-brand-sites + /layouts/ redesign + distinctive-pm-site skill session; flags the original /layouts/ port as still not done. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-2026-06-05-2130.md local path, read (resolve newest at session start, do not hardcode)">
+          <h3>Latest handoff (session-resume target)</h3>
+          <p class="what">The most recent handoff — the first thing a new session reads. Currently the six-brand-sites + /layouts/ redesign + distinctive-pm-site skill session; flags the original /layouts/ port as still NOT done.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/handoff-2026-06-05-2130.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read (resolve newest at session start, do not hardcode)</p>
+        </article>
+        <article class="card" data-search="handoff archive (frozen) archived earlier mechanisms: handoff.md (the original append-only running log, 27 entries 2026-04-29 to 2026-05-13, 124kb, frozen) and seven resume-prompt-*.md resume prompts (2026-05-03 to 2026-05-13), plus an old preferences.md. superseded by per-session handoffs + the index. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/archive/ local path, read">
+          <h3>Handoff archive (frozen)</h3>
+          <p class="what">Archived earlier mechanisms: HANDOFF.md (the original append-only running log, 27 entries 2026-04-29 to 2026-05-13, 124KB, frozen) and seven RESUME-PROMPT-*.md resume prompts (2026-05-03 to 2026-05-13), plus an old preferences.md. Superseded by per-session handoffs + the index.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/archive/</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read</p>
+        </article>
+        <article class="card" data-search="workspace claude.md (project instructions) checked-in workspace memory/instructions: session-resume protocol, three most-recent handoff links, pagemotor core source-of-truth rule, people/terms/projects, preferences, cross-session (cc/cw) protocol, devices, network/backup pointers. 25kb. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/claude.md local path, read; auto-loaded into sessions in this workspace">
+          <h3>Workspace CLAUDE.md (project instructions)</h3>
+          <p class="what">Checked-in workspace memory/instructions: session-resume protocol, three most-recent handoff links, PageMotor core source-of-truth rule, people/terms/projects, preferences, cross-session (CC/CW) protocol, devices, network/backup pointers. 25KB.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/CLAUDE.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read; auto-loaded into sessions in this workspace</p>
+        </article>
+        <article class="card" data-search="global claude.md (per-mac, all projects) user&#x27;s private global rules for every cc session: pagemotor core source-of-truth, bunny-fonts-not-google mandate (+ blocking hook), and the verification gate (&#x27;never claim done without a real probe&#x27;, with the academic citations). 7kb. /users/kennjordan/.claude/claude.md local path, read; auto-loaded for every session on this mac (not in icloud, per-machine)">
+          <h3>Global CLAUDE.md (per-Mac, all projects)</h3>
+          <p class="what">User&#x27;s private global rules for every CC session: PageMotor core source-of-truth, Bunny-Fonts-not-Google mandate (+ blocking hook), and the verification gate (&#x27;never claim done without a real probe&#x27;, with the academic citations). 7KB.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.claude/CLAUDE.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read; auto-loaded for every session on this Mac (not in iCloud, per-machine)</p>
+        </article>
+        </div>
+      </section>
+    <p class="empty" id="empty">No assets match that search.</p>
+  </div>
+</main>
+
+<div class="wrap">
+  <footer>
+    Generated 2026-06-06 from <code>ELMSPARK-HQ.md</code> · 179 assets · private, noindex, Basic-Auth gated · Bunny Fonts, no Google Fonts.
+  </footer>
+</div>
+
+<script>
+(function(){
+  var q=document.getElementById('q'), meta=document.getElementById('meta'),
+      empty=document.getElementById('empty'),
+      cards=[].slice.call(document.querySelectorAll('.card')),
+      cats=[].slice.call(document.querySelectorAll('.cat')),
+      chips=[].slice.call(document.querySelectorAll('.chip')),
+      total=179, activeCat='__all';
+  function apply(){
+    var term=q.value.trim().toLowerCase(), shown=0;
+    cards.forEach(function(c){
+      var okCat=activeCat==='__all'||c.closest('.cat').dataset.cat===activeCat;
+      var okTerm=!term||c.dataset.search.indexOf(term)>-1;
+      var vis=okCat&&okTerm;
+      c.classList.toggle('hidden',!vis);
+      if(vis)shown++;
+    });
+    cats.forEach(function(s){
+      var any=s.querySelector('.card:not(.hidden)');
+      s.classList.toggle('hidden',!any);
+    });
+    empty.classList.toggle('show',shown===0);
+    meta.textContent=shown+(shown===1?' asset':' assets')+(term||activeCat!=='__all'?' shown':' · '+document.querySelectorAll('.cat:not(.hidden)').length+' categories');
+  }
+  q.addEventListener('input',apply);
+  chips.forEach(function(ch){
+    ch.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.remove('active')});
+      ch.classList.add('active');
+      activeCat=ch.dataset.cat;
+      apply();
+      if(activeCat!=='__all'){var el=document.getElementById('cat-'+activeCat);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+  });
+  // keyboard: '/' focuses search
+  document.addEventListener('keydown',function(e){
+    if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus();}
+    if(e.key==='Escape'){q.value='';apply();q.blur();}
+  });
+})();
+</script>
+</body>
+</html>
