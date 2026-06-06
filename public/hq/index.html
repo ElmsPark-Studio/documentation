@@ -82,16 +82,16 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
 <div class="toolbar">
   <div class="wrap">
     <div class="search">
-      <input id="q" type="search" placeholder="Search 179 assets… (name, what, where, access)" autocomplete="off" autofocus>
-      <span class="meta" id="meta">179 assets · 6 categories</span>
+      <input id="q" type="search" placeholder="Search 201 assets… (name, what, where, access)" autocomplete="off" autofocus>
+      <span class="meta" id="meta">201 assets · 6 categories</span>
     </div>
     <div class="chips">
-      <button class="chip active" data-cat="__all">All <span class="n">179</span></button>
-<button class="chip" data-cat="sites-dashboards">Sites &amp; Dashboards <span class="n">27</span></button>
-<button class="chip" data-cat="docs-guides">Docs &amp; Guides <span class="n">38</span></button>
-<button class="chip" data-cat="tools-commands-skills">Tools (commands &amp; skills) <span class="n">43</span></button>
+      <button class="chip active" data-cat="__all">All <span class="n">201</span></button>
+<button class="chip" data-cat="sites-dashboards">Sites &amp; Dashboards <span class="n">31</span></button>
+<button class="chip" data-cat="docs-guides">Docs &amp; Guides <span class="n">53</span></button>
+<button class="chip" data-cat="tools-commands-skills">Tools (commands &amp; skills) <span class="n">45</span></button>
 <button class="chip" data-cat="credentials-access">Credentials &amp; Access <span class="n">13</span></button>
-<button class="chip" data-cat="code-infra">Code &amp; Infra <span class="n">37</span></button>
+<button class="chip" data-cat="code-infra">Code &amp; Infra <span class="n">38</span></button>
 <button class="chip" data-cat="working-memory-process">Working Memory &amp; Process <span class="n">21</span></button>
     </div>
   </div>
@@ -100,7 +100,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
 <main>
   <div class="wrap">
       <section class="cat" id="cat-sites-dashboards" data-cat="sites-dashboards">
-        <h2>Sites &amp; Dashboards <span class="count">27</span></h2>
+        <h2>Sites &amp; Dashboards <span class="count">31</span></h2>
         <div class="grid">
         <article class="card" data-search="plugins in the wild (dashboard) live install + version telemetry across every site: how many run each plugin, who is behind, activity over time, free vs licensed. private, noindex. https://updates.elmspark.com/docs/pages/plugins-dashboard.php passkey gate (webauthn/touch id); anonymous gets http 403">
           <h3>Plugins in the Wild (dashboard)</h3>
@@ -126,10 +126,10 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> root /var/www/elmspark.com; vhost /etc/nginx/sites-enabled/elmspark.com · roots /var/www/&lt;sub&gt;.elmspark.com; vhosts same names · <a href="https://elmspark.com/" target="_blank" rel="noopener">https://elmspark.com/</a> . VPS vhost /etc/nginx/sites-enabled/elmspark.com, docroot /var/www/elmspark.com (ssh ionos-ts). Verified 200 on 2026-06-06.</p>
           <p class="access"><span class="lbl">Access</span> public; edit via ssh ionos-ts</p>
         </article>
-        <article class="card" data-search="updates.elmspark.com live ep plugin update channel / manifest endpoint that all ep plugin installs check against; records per-install telemetry (ep_installs). customer-shape is post (get=405, malformed post=400 = working). also hosts the private &#x27;plugins in the wild&#x27; install-telemetry dashboard root /var/www/updates.elmspark.com; vhost /etc/nginx/sites-enabled/updates.elmspark.com; dashboard /docs/plugins-dashboard.php · https://updates.elmspark.com/ (update endpoint). dashboard: https://updates.elmspark.com/docs/plugins-dashboard.php (passkey gate, returns 302 to login; noindex). docroot /var/www/updates.elmspark.com. verified 2026-06-06. update endpoint public; dashboard behind docs passkey gate + noindex; edit via ssh ionos-ts · update endpoint public (post); dashboard behind docs passkey gate">
+        <article class="card" data-search="updates.elmspark.com live ep plugin update channel / manifest endpoint that all ep plugin installs check against; records per-install telemetry (ep_installs). customer-shape is post (get=405, malformed post=400 = working). also hosts the private &#x27;plugins in the wild&#x27; install-telemetry dashboard root /var/www/updates.elmspark.com; vhost /etc/nginx/sites-enabled/updates.elmspark.com; dashboard file at /docs/pages/plugins-dashboard.php (the url /docs/plugins-dashboard.php also serves it, 302 to login when unauth) and https://updates.elmspark.com/ is the update endpoint (get = 405). update endpoint public; dashboard behind docs passkey gate + noindex; edit via ssh ionos-ts · update endpoint public (post); dashboard behind docs passkey gate">
           <h3>updates.elmspark.com</h3>
           <p class="what">Live EP plugin update channel / manifest endpoint that all EP plugin installs check against; records per-install telemetry (ep_installs). Customer-shape is POST (GET=405, malformed POST=400 = working). Also hosts the private &#x27;Plugins in the Wild&#x27; install-telemetry dashboard</p>
-          <p class="where"><span class="lbl">Where</span> root /var/www/updates.elmspark.com; vhost /etc/nginx/sites-enabled/updates.elmspark.com; dashboard /docs/plugins-dashboard.php · <a href="https://updates.elmspark.com/" target="_blank" rel="noopener">https://updates.elmspark.com/</a> (update endpoint). Dashboard: <a href="https://updates.elmspark.com/docs/plugins-dashboard.php" target="_blank" rel="noopener">https://updates.elmspark.com/docs/plugins-dashboard.php</a> (passkey gate, returns 302 to login; noindex). Docroot /var/www/updates.elmspark.com. Verified 2026-06-06.</p>
+          <p class="where"><span class="lbl">Where</span> root /var/www/updates.elmspark.com; vhost /etc/nginx/sites-enabled/updates.elmspark.com; dashboard file at /docs/pages/plugins-dashboard.php (the URL /docs/plugins-dashboard.php also serves it, 302 to login when unauth) and <a href="https://updates.elmspark.com/" target="_blank" rel="noopener">https://updates.elmspark.com/</a> is the update endpoint (GET = 405).</p>
           <p class="access"><span class="lbl">Access</span> update endpoint public; dashboard behind docs passkey gate + noindex; edit via ssh ionos-ts · update endpoint public (POST); dashboard behind docs passkey gate</p>
         </article>
         <article class="card" data-search="documentation.elmspark.com elmspark documentation site (astro, auto-redeployed ~hourly). root is public; the hosting guides and toolkit guide are gated. also hosts the chris-facing pm 0.9 review under /pm09t2/ (basic auth, served from the sibling /var/www/pm09t2-private, not the docroot which gets wiped on redeploy) root /var/www/documentation.elmspark.com; vhost /etc/nginx/sites-enabled/documentation.elmspark.com · https://documentation.elmspark.com/ (root 200). gated paths: /hosting/ (403), /toolkit/ (basic auth 401, user &#x27;kenn&#x27;, pwd ~/.config/elmspark/toolkit-guide-auth.txt), /pm09t2/ (basic auth, .htpasswd-pm09t2). docroot /var/www/documentation.elmspark.com. verified 2026-06-06. basic auth on /toolkit/ (user kenn); edit source ~/developer/elmspark/documentation, deploy via ionos-ts; ssh ionos-ts · public root; /toolkit/ + /pm09t2/ basic-auth; /hosting/ 403">
@@ -162,16 +162,16 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> roots /var/www/layouts-{a,b,c,d}.elmspark.com; vhosts same names</p>
           <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
         </article>
-        <article class="card" data-search="makeclear /layouts/ trio (lens / focus / distil / strike subdomains) pagemotor 0.9.2b showcase candidates for the makeclear.co.uk rebuild and elmspark.com/layouts/: lens.makeclear.co.uk (the lens), distil.makeclear.co.uk (distil), strike.makeclear.co.uk (strikethrough). makeclear.co.uk itself is the apex &#x27;resolve&#x27; site. roots /var/www/{lens,distil,strike}.makeclear.co.uk and /var/www/makeclear.co.uk; vhosts in sites-enabled (makeclear vhost = makeclear.co.uk) ssh ionos-ts; build artefacts in workspace makeclear-build/">
+        <article class="card" data-search="makeclear /layouts/ trio (lens / focus / distil / strike subdomains) pagemotor 0.9.2b showcase candidates for the makeclear.co.uk rebuild and elmspark.com/layouts/: lens.makeclear.co.uk (the lens), distil.makeclear.co.uk (distil), strike.makeclear.co.uk (strikethrough). makeclear.co.uk itself is the apex &#x27;resolve&#x27; site. focus pull was rejected and replaced; no focus.makeclear.co.uk exists. roots /var/www/{lens,distil,strike}.makeclear.co.uk and /var/www/makeclear.co.uk; vhosts in sites-enabled (makeclear vhost = makeclear.co.uk) ssh ionos-ts; build artefacts in workspace makeclear-build/">
           <h3>MakeClear /layouts/ trio (lens / focus / distil / strike subdomains)</h3>
-          <p class="what">PageMotor 0.9.2b showcase candidates for the makeclear.co.uk rebuild and elmspark.com/layouts/: lens.makeclear.co.uk (The Lens), distil.makeclear.co.uk (Distil), strike.makeclear.co.uk (Strikethrough). makeclear.co.uk itself is the apex &#x27;Resolve&#x27; site.</p>
+          <p class="what">PageMotor 0.9.2b showcase candidates for the makeclear.co.uk rebuild and elmspark.com/layouts/: lens.makeclear.co.uk (The Lens), distil.makeclear.co.uk (Distil), strike.makeclear.co.uk (Strikethrough). makeclear.co.uk itself is the apex &#x27;Resolve&#x27; site. Focus Pull was rejected and replaced; no focus.makeclear.co.uk exists.</p>
           <p class="where"><span class="lbl">Where</span> roots /var/www/{lens,distil,strike}.makeclear.co.uk and /var/www/makeclear.co.uk; vhosts in sites-enabled (makeclear vhost = makeclear.co.uk)</p>
           <p class="access"><span class="lbl">Access</span> ssh ionos-ts; build artefacts in workspace makeclear-build/</p>
         </article>
-        <article class="card" data-search="conversationswithtonymobley.com + cwtm.elmspark.com conversations with tony mobley podcast site (pagemotor, vps + let&#x27;s encrypt). www and http both 301 to the apex https. served from the shared cwtm pm install roots /var/www/conversationswithtonymobley.com, /var/www/cwtm.elmspark.com; vhosts same names · https://conversationswithtonymobley.com/ . vhost conversationswithtonymobley.com, docroot /var/www/cwtm.elmspark.com (also reachable at the internal cwtm.elmspark.com subdomain). verified 200 on 2026-06-06. public; edit via ssh ionos-ts">
+        <article class="card" data-search="conversationswithtonymobley.com + cwtm.elmspark.com conversations with tony mobley podcast site (pagemotor, vps + let&#x27;s encrypt). www and http both 301 to the apex https. served from the shared cwtm pm install vhosts /etc/nginx/sites-enabled/conversationswithtonymobley.com (server_name conversationswithtonymobley.com + www) and cwtm.elmspark.com; both serve from the single docroot /var/www/cwtm.elmspark.com (there is no /var/www/conversationswithtonymobley.com dir). live https://conversationswithtonymobley.com/ (200). verified 2026-06-06. public; edit via ssh ionos-ts">
           <h3>conversationswithtonymobley.com + cwtm.elmspark.com</h3>
           <p class="what">Conversations with Tony Mobley podcast site (PageMotor, VPS + Let&#x27;s Encrypt). www and http both 301 to the apex https. Served from the shared cwtm PM install</p>
-          <p class="where"><span class="lbl">Where</span> roots /var/www/conversationswithtonymobley.com, /var/www/cwtm.elmspark.com; vhosts same names · <a href="https://conversationswithtonymobley.com/" target="_blank" rel="noopener">https://conversationswithtonymobley.com/</a> . Vhost conversationswithtonymobley.com, docroot /var/www/cwtm.elmspark.com (also reachable at the internal cwtm.elmspark.com subdomain). Verified 200 on 2026-06-06.</p>
+          <p class="where"><span class="lbl">Where</span> vhosts /etc/nginx/sites-enabled/conversationswithtonymobley.com (server_name conversationswithtonymobley.com + www) and cwtm.elmspark.com; BOTH serve from the single docroot /var/www/cwtm.elmspark.com (there is no /var/www/conversationswithtonymobley.com dir). Live <a href="https://conversationswithtonymobley.com/" target="_blank" rel="noopener">https://conversationswithtonymobley.com/</a> (200). Verified 2026-06-06.</p>
           <p class="access"><span class="lbl">Access</span> public; edit via ssh ionos-ts</p>
         </article>
         <article class="card" data-search="ownyourbooking.com + booking demo subdomains ownyourbooking product site plus persona booking demos (coach./dogwalker./lawyer./tutor.ownyourbooking.com) showcasing ep-booking. roots /var/www/ownyourbooking.com and /var/www/{coach,dogwalker,lawyer,tutor}.ownyourbooking.com; vhosts same names ssh ionos-ts">
@@ -198,9 +198,9 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> root /var/www/ourecojourney.com; vhost same name</p>
           <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
         </article>
-        <article class="card" data-search="bringcolourtolife.com + spectrum.bringcolourtolife.com bring colour to life brand site + spectrum subdomain (nb: flagged as the next ionos-ssl-under-cloudflare domino, cert expiring 2026-06-22). roots /var/www/bringcolourtolife.com, /var/www/spectrum.bringcolourtolife.com; vhosts same names ssh ionos-ts">
+        <article class="card" data-search="bringcolourtolife.com + spectrum.bringcolourtolife.com bring colour to life brand site plus spectrum subdomain. earlier flagged as the next ionos-ssl-under-cloudflare domino with cert expiry 2026-06-22; the cert has since been renewed and now expires 2026-09-02. roots /var/www/bringcolourtolife.com, /var/www/spectrum.bringcolourtolife.com; vhosts same names ssh ionos-ts">
           <h3>bringcolourtolife.com + spectrum.bringcolourtolife.com</h3>
-          <p class="what">Bring Colour To Life brand site + spectrum subdomain (NB: flagged as the next IONOS-SSL-under-Cloudflare domino, cert expiring 2026-06-22).</p>
+          <p class="what">Bring Colour To Life brand site plus spectrum subdomain. Earlier flagged as the next IONOS-SSL-under-Cloudflare domino with cert expiry 2026-06-22; the cert has since been renewed and now expires 2026-09-02.</p>
           <p class="where"><span class="lbl">Where</span> roots /var/www/bringcolourtolife.com, /var/www/spectrum.bringcolourtolife.com; vhosts same names</p>
           <p class="access"><span class="lbl">Access</span> ssh ionos-ts</p>
         </article>
@@ -240,6 +240,12 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> <a href="https://elmspark.com/layouts/" target="_blank" rel="noopener">https://elmspark.com/layouts/</a> . Lives under the elmspark.com docroot. Verified 200 on 2026-06-06.</p>
           <p class="access"><span class="lbl">Access</span> public</p>
         </article>
+        <article class="card" data-search="elmspark.com/sighthounds/ (fastest sighthounds kit) public interactive midjourney + higgsfield video-production kit built for don (k9exw.com): the &#x27;top 10 fastest sighthounds&#x27; countdown. 20 clips (gallop + hero ×10), copy-ready per-breed prompts, progress tracking. aspect-aware: holds both 16:9 (youtube) and 9:16 (instagram) renders per clip; the preview follows each row&#x27;s 16:9/9:16 dropdown (fallback to whichever exists). renders complete: 32 assets across all 20/20 clips as of 2026-06-06 (12×16:9 + 20×9:16; every breed&#x27;s gallop + hero; greyhound/saluki/whippet gallops also in 16:9). also a soundtrack section, three editions: 7 core suno tracks (main theme, gallop bed, jingle, 30s advert, brand song, run free, safe hands) + a 4-track &quot;electronic edition&quot; (`electronic style/` subfolder, uk-garage/liquid-dnb style) + a 4-track &quot;top ten countdown&quot; (`top ten countdown/` subfolder, 80s bbc-chart style: a theme that chants the 10-to-1, a clean instrumental bed with an auto-generated 10→1 vo/caption script, a 30s advert, a logo sting). each edition shows its shared suno style line + players. drop-and-redeploy loop: embed-music.py scans root + each edition subfolder -&gt; music.js; deploy finds media by basename anywhere. as of 2026-06-06: 34 takes across 15 slots auditioning, awaiting kenn&#x27;s keeper pick per track (finalise by removing reject takes + redeploy). branded for don&#x27;s &#x27;the sighthound guy&#x27; (north london board &amp; train) as a credit line. static page served by nginx try_files before pagemotor (no vhost change needed) https://elmspark.com/sighthounds/ . docroot /var/www/elmspark.com/sighthounds (index.html + renders.js [nested cid→aspect→asset] + render media + og.jpg). source + one-command redeploy: workspace &#x27;sighthounds video project/&#x27; → `bash deploy-sighthounds.sh`. verified 200 + playwright (toggle works) on 2026-06-06. public; redeploy via deploy-sighthounds.sh (ssh ionos-ts)">
+          <h3>elmspark.com/sighthounds/ (Fastest Sighthounds kit)</h3>
+          <p class="what">Public interactive Midjourney + Higgsfield video-production kit built for Don (k9exw.com): the &#x27;Top 10 Fastest Sighthounds&#x27; countdown. 20 clips (gallop + hero ×10), copy-ready per-breed prompts, progress tracking. ASPECT-AWARE: holds both 16:9 (YouTube) and 9:16 (Instagram) renders per clip; the preview follows each row&#x27;s 16:9/9:16 dropdown (fallback to whichever exists). Renders COMPLETE: 32 assets across all 20/20 clips as of 2026-06-06 (12×16:9 + 20×9:16; every breed&#x27;s gallop + hero; Greyhound/Saluki/Whippet gallops also in 16:9). Also a Soundtrack section, THREE editions: 7 core Suno tracks (main theme, gallop bed, jingle, 30s advert, brand song, Run Free, Safe Hands) + a 4-track &quot;Electronic Edition&quot; (<code>Electronic style/</code> subfolder, UK-garage/liquid-DnB style) + a 4-track &quot;Top Ten Countdown&quot; (<code>Top ten countdown/</code> subfolder, 80s BBC-chart style: a theme that chants the 10-to-1, a clean instrumental bed with an auto-generated 10→1 VO/caption script, a 30s advert, a logo sting). Each edition shows its shared Suno style line + players. Drop-and-redeploy loop: embed-music.py scans root + each edition subfolder -&gt; music.js; deploy finds media by basename anywhere. As of 2026-06-06: 34 takes across 15 slots auditioning, awaiting Kenn&#x27;s keeper pick per track (finalise by removing reject takes + redeploy). Branded for Don&#x27;s &#x27;The Sighthound Guy&#x27; (North London board &amp; train) as a credit line. STATIC page served by nginx try_files before PageMotor (no vhost change needed)</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://elmspark.com/sighthounds/" target="_blank" rel="noopener">https://elmspark.com/sighthounds/</a> . Docroot /var/www/elmspark.com/sighthounds (index.html + renders.js [nested cid→aspect→asset] + render media + og.jpg). Source + one-command redeploy: workspace &#x27;Sighthounds Video Project/&#x27; → <code>bash deploy-sighthounds.sh</code>. Verified 200 + Playwright (toggle works) on 2026-06-06.</p>
+          <p class="access"><span class="lbl">Access</span> public; redeploy via deploy-sighthounds.sh (ssh ionos-ts)</p>
+        </article>
         <article class="card" data-search="layouts-a / -b / -c / -d.elmspark.com four live interactive pagemotor demo subdomains that back the /layouts/ gallery cards (the actual clickable sample sites visitors interact with) https://layouts-a.elmspark.com/ (and -b/-c/-d). vhosts /etc/nginx/sites-available/layouts-{a,b,c,d}.elmspark.com, docroots /var/www/layouts-{a,b,c,d}.elmspark.com. layouts-a verified 200 on 2026-06-06. public">
           <h3>layouts-a / -b / -c / -d.elmspark.com</h3>
           <p class="what">Four live interactive PageMotor demo subdomains that back the /layouts/ gallery cards (the actual clickable sample sites visitors interact with)</p>
@@ -264,10 +270,28 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> <a href="https://picsbay.co.uk/" target="_blank" rel="noopener">https://picsbay.co.uk/</a> -&gt; 301 <a href="https://elmspark.com/" target="_blank" rel="noopener">https://elmspark.com/</a> . Vhost picsbay.co.uk (forward) + picsbay (app). Verified 2026-06-06.</p>
           <p class="access"><span class="lbl">Access</span> public (redirect)</p>
         </article>
+        <article class="card" data-search="elmspark hq hosted page (door 2, the browser mirror) read-only html mirror of the atlas, generated from elmspark-hq.md. the browser door to the asset atlas, basic-auth gated with the same kenn login as the toolkit guide. title: &#x27;elmspark hq — master asset atlas&#x27;. live https://documentation.elmspark.com/hq/ (basic auth). source /users/kennjordan/developer/elmspark/documentation/public/hq/index.html (astro public/ dir, survives every rebuild). basic auth, user &#x27;kenn&#x27;, password in ~/.config/elmspark/toolkit-guide-auth.txt (chmod 600). anonymous gets http 401.">
+          <h3>ElmsPark HQ hosted page (Door 2, the browser mirror)</h3>
+          <p class="what">Read-only HTML mirror of the atlas, generated from ELMSPARK-HQ.md. The browser door to the asset atlas, Basic-Auth gated with the same kenn login as the toolkit guide. Title: &#x27;ElmsPark HQ — Master Asset Atlas&#x27;.</p>
+          <p class="where"><span class="lbl">Where</span> Live <a href="https://documentation.elmspark.com/hq/" target="_blank" rel="noopener">https://documentation.elmspark.com/hq/</a> (Basic Auth). Source /Users/kennjordan/Developer/elmspark/documentation/public/hq/index.html (Astro public/ dir, survives every rebuild).</p>
+          <p class="access"><span class="lbl">Access</span> Basic Auth, user &#x27;kenn&#x27;, password in ~/.config/elmspark/toolkit-guide-auth.txt (chmod 600). Anonymous gets HTTP 401.</p>
+        </article>
+        <article class="card" data-search="brand to pagemotor conversion sites (pm-bento / pm-pigment / pm-spectrum / pm-ship / pm-voidarchitect .elmspark.com) five static brand sites graduated to live pagemotor sites via the /da design-to-pm-batch pipeline (bento, pigment, spectrum, ready-to-ship, void architect). the atlas lists only pm-thebox.elmspark.com (the original canary). https://pm-{bento,pigment,spectrum,ship,voidarchitect}.elmspark.com/ . vps docroots /var/www/pm-&lt;name&gt;.elmspark.com; vhosts /etc/nginx/sites-enabled/pm-&lt;name&gt;.elmspark.com. build sources brand-sites-build/pm-conversions/{abfyb-bento,bctl-pigment,bctl-spectrum,abfyb-ship,voidarchitect}/. public; edit via ssh ionos-ts">
+          <h3>Brand to PageMotor conversion sites (pm-bento / pm-pigment / pm-spectrum / pm-ship / pm-voidarchitect .elmspark.com)</h3>
+          <p class="what">Five static brand sites graduated to live PageMotor sites via the /DA design-to-pm-batch pipeline (Bento, Pigment, Spectrum, Ready-to-Ship, Void Architect). The atlas lists only pm-thebox.elmspark.com (the original canary).</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://pm-{bento,pigment,spectrum,ship,voidarchitect}.elmspark.com/" target="_blank" rel="noopener">https://pm-{bento,pigment,spectrum,ship,voidarchitect}.elmspark.com/</a> . VPS docroots /var/www/pm-&lt;name&gt;.elmspark.com; vhosts /etc/nginx/sites-enabled/pm-&lt;name&gt;.elmspark.com. Build sources brand-sites-build/pm-conversions/{abfyb-bento,bctl-pigment,bctl-spectrum,abfyb-ship,voidarchitect}/.</p>
+          <p class="access"><span class="lbl">Access</span> public; edit via ssh ionos-ts</p>
+        </article>
+        <article class="card" data-search="aidayplan.com candidate subdomains (timeline / chaos / assistant / sunrise) four distinctive static candidate designs for the aidayplan.com rebuild on the adhd/focus angle (timeline, chaos to calm, the assistant, sunrise). one is to take the apex and graduate to pagemotor; the trio stays on subdomains. the apex aidayplan.com is still dead old ionos parking (broken ssl). https://{timeline,chaos,assistant,sunrise}.aidayplan.com/ . vps docroots /var/www/{timeline,chaos,assistant,sunrise}.aidayplan.com; vhosts same names. build sources brand-sites-build/aidayplan-build/{timeline,chaos,assistant,sunrise}/. cf zone 6e7ef49a587bea4885b0e12c7943ad1f (4 grey-cloud a to 88.208.226.236). public (currently static, not yet pagemotor); edit via ssh ionos-ts">
+          <h3>aidayplan.com candidate subdomains (timeline / chaos / assistant / sunrise)</h3>
+          <p class="what">Four distinctive static candidate designs for the aidayplan.com rebuild on the ADHD/focus angle (Timeline, Chaos to Calm, The Assistant, Sunrise). One is to take the apex and graduate to PageMotor; the trio stays on subdomains. The apex aidayplan.com is still dead old IONOS parking (broken SSL).</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://{timeline,chaos,assistant,sunrise}.aidayplan.com/" target="_blank" rel="noopener">https://{timeline,chaos,assistant,sunrise}.aidayplan.com/</a> . VPS docroots /var/www/{timeline,chaos,assistant,sunrise}.aidayplan.com; vhosts same names. Build sources brand-sites-build/aidayplan-build/{timeline,chaos,assistant,sunrise}/. CF zone 6e7ef49a587bea4885b0e12c7943ad1f (4 grey-cloud A to 88.208.226.236).</p>
+          <p class="access"><span class="lbl">Access</span> public (currently STATIC, not yet PageMotor); edit via ssh ionos-ts</p>
+        </article>
         </div>
       </section>
       <section class="cat" id="cat-docs-guides" data-cat="docs-guides">
-        <h2>Docs &amp; Guides <span class="count">38</span></h2>
+        <h2>Docs &amp; Guides <span class="count">53</span></h2>
         <div class="grid">
         <article class="card" data-search="elmspark-toolkit-guide.html interactive searchable guide to every custom cc command and skill (what each does, when to use, examples, status); start here for tooling. also hosted at documentation.elmspark.com/toolkit/ /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/elmspark-toolkit-guide.html local (open in browser)">
           <h3>elmspark-toolkit-guide.html</h3>
@@ -473,9 +497,9 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> Live index: <a href="https://documentation.elmspark.com/hosting/hosting-options/" target="_blank" rel="noopener">https://documentation.elmspark.com/hosting/hosting-options/</a> / Vultr: /hosting/vultr/ / Cloudflare: /hosting/cloudflare/ / Source: /Users/kennjordan/Developer/elmspark/documentation/src/content/docs/hosting/ (vultr, cloudflare, hosting-options, solo-/sme-/agency- managed+diy)</p>
           <p class="access"><span class="lbl">Access</span> public</p>
         </article>
-        <article class="card" data-search="ep suite plugin guides user guide per ep plugin (setup, config, shortcodes, troubleshooting, faq). 75 plugin pages plus an index, autogenerated into the sidebar. covers email/newsletter, ecommerce/pod, bookings, gdpr, passkeys, etc. live index: https://documentation.elmspark.com/plugins/ (e.g. /plugins/ep-email/) / source: /users/kennjordan/developer/elmspark/documentation/src/content/docs/plugins/*.md (75 files + index.md) public">
+        <article class="card" data-search="ep suite plugin guides user guide per ep plugin (setup, config, shortcodes, troubleshooting, faq). 74 plugin pages plus an index, autogenerated into the sidebar. covers email/newsletter, ecommerce/pod, bookings, gdpr, passkeys, etc. live index: https://documentation.elmspark.com/plugins/ (e.g. /plugins/ep-email/) / source: /users/kennjordan/developer/elmspark/documentation/src/content/docs/plugins/*.md (75 files + index.md) public">
           <h3>EP Suite plugin guides</h3>
-          <p class="what">User guide per EP plugin (setup, config, shortcodes, troubleshooting, FAQ). 75 plugin pages plus an index, autogenerated into the sidebar. Covers email/newsletter, ecommerce/POD, bookings, GDPR, passkeys, etc.</p>
+          <p class="what">User guide per EP plugin (setup, config, shortcodes, troubleshooting, FAQ). 74 plugin pages plus an index, autogenerated into the sidebar. Covers email/newsletter, ecommerce/POD, bookings, GDPR, passkeys, etc.</p>
           <p class="where"><span class="lbl">Where</span> Live index: <a href="https://documentation.elmspark.com/plugins/" target="_blank" rel="noopener">https://documentation.elmspark.com/plugins/</a> (e.g. /plugins/ep-email/) / Source: /Users/kennjordan/Developer/elmspark/documentation/src/content/docs/plugins/*.md (75 files + index.md)</p>
           <p class="access"><span class="lbl">Access</span> public</p>
         </article>
@@ -497,10 +521,100 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> Live: <a href="https://documentation.elmspark.com/native-cron-research-bfb992806703d4e2.html" target="_blank" rel="noopener">https://documentation.elmspark.com/native-cron-research-bfb992806703d4e2.html</a> (HTTP 200) / Source: /Users/kennjordan/Developer/elmspark/documentation/public/native-cron-research-bfb992806703d4e2.html</p>
           <p class="access"><span class="lbl">Access</span> public (unlisted URL)</p>
         </article>
+        <article class="card" data-search="elmspark hq — master asset atlas (the atlas file itself) the single-source-of-truth master atlas of every elmspark asset (what / where / how to access), grouped into 6 categories. the file cc reads when kenn asks &#x27;where is x&#x27;. the atlas should be findable from within itself. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/elmspark-hq.md local path, read (auto-loaded for sessions in this workspace once the claude.md pointer lands)">
+          <h3>ElmsPark HQ — Master Asset Atlas (the atlas file itself)</h3>
+          <p class="what">The single-source-of-truth master atlas of every ElmsPark asset (what / where / how to access), grouped into 6 categories. The file CC reads when Kenn asks &#x27;where is X&#x27;. The atlas should be findable from within itself.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/ELMSPARK-HQ.md</p>
+          <p class="access"><span class="lbl">Access</span> local path, Read (auto-loaded for sessions in this workspace once the CLAUDE.md pointer lands)</p>
+        </article>
+        <article class="card" data-search="claude code /ds and /da design shortcuts (claude-design-shortcuts.html) gated docs page explaining the /ds (distinctive-pm-site) and /da (design-to-pm-batch) claude code design shortcuts and the combined publish-on-green flow: design a distinctive site fast as static (/ds) then graduate it to a live pagemotor site in the elmspark.com/layouts/ gallery (/da). https://updates.elmspark.com/docs/claude-design-shortcuts.html (gated router url); raw source /var/www/updates.elmspark.com/docs/pages/claude-design-shortcuts.html passkey gate (webauthn/touch id); anonymous gets http 302 to login (the raw /docs/pages/ path is deny-all by design). edit via ssh ionos-ts.">
+          <h3>Claude Code /DS and /DA design shortcuts (claude-design-shortcuts.html)</h3>
+          <p class="what">Gated docs page explaining the /DS (distinctive-pm-site) and /DA (design-to-pm-batch) Claude Code design shortcuts and the combined publish-on-green flow: design a distinctive site fast as static (/DS) then graduate it to a live PageMotor site in the elmspark.com/layouts/ gallery (/DA).</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/claude-design-shortcuts.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/claude-design-shortcuts.html</a> (gated router URL); raw source /var/www/updates.elmspark.com/docs/pages/claude-design-shortcuts.html</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 302 to login (the raw /docs/pages/ path is deny-all by design). Edit via ssh ionos-ts.</p>
+        </article>
+        <article class="card" data-search="claude code workflow (claude-workflow.html) internal guide on how claude code sessions should read, write and deploy documentation to the ep updates docs site. https://updates.elmspark.com/docs/pages/claude-workflow.html (vps /var/www/updates.elmspark.com/docs/pages/claude-workflow.html) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>Claude Code Workflow (claude-workflow.html)</h3>
+          <p class="what">Internal guide on how Claude Code sessions should read, write and deploy documentation to the EP Updates docs site.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/claude-workflow.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/claude-workflow.html</a> (VPS /var/www/updates.elmspark.com/docs/pages/claude-workflow.html)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="claude code /ultra prefix (claude-ultra-prefix.html) reference for the /ultra force-multiplier slash command that wraps any question in ultrathink discipline before claude answers. https://updates.elmspark.com/docs/pages/claude-ultra-prefix.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>Claude Code /Ultra Prefix (claude-ultra-prefix.html)</h3>
+          <p class="what">Reference for the /Ultra force-multiplier slash command that wraps any question in ultrathink discipline before Claude answers.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/claude-ultra-prefix.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/claude-ultra-prefix.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="qa manager prompts (qa-prompts.html) reusable claude code initialisation prompts for fielding user and tester questions on any ep-suite plugin; the hosted companion to the local ep-plugin-qa / ep-site-qa prompts. https://updates.elmspark.com/docs/pages/qa-prompts.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>QA Manager Prompts (qa-prompts.html)</h3>
+          <p class="what">Reusable Claude Code initialisation prompts for fielding user and tester questions on any EP-suite plugin; the hosted companion to the local ep-plugin-qa / ep-site-qa prompts.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/qa-prompts.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/qa-prompts.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="session log (session-log.html) auto-captured chronological record of every claude code session across all of kenn&#x27;s macs, viewable as a hosted page. https://updates.elmspark.com/docs/pages/session-log.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>Session Log (session-log.html)</h3>
+          <p class="what">Auto-captured chronological record of every Claude Code session across all of Kenn&#x27;s Macs, viewable as a hosted page.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/session-log.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/session-log.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="ionos dns api (ionos-dns-api.html) reference for managing dns zones and records at ionos via api.hosting.ionos.com; the zone/record-level companion to the registrar-level ionos domains api guide. https://updates.elmspark.com/docs/pages/ionos-dns-api.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>IONOS DNS API (ionos-dns-api.html)</h3>
+          <p class="what">Reference for managing DNS zones and records at IONOS via api.hosting.ionos.com; the zone/record-level companion to the registrar-level IONOS Domains API guide.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ionos-dns-api.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ionos-dns-api.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="ionos ssl api (ionos-ssl-api.html) reference for issuing and managing ssl/tls certificates via api.hosting.ionos.com/ssl (ssl_starter dv, wildcard, ev). https://updates.elmspark.com/docs/pages/ionos-ssl-api.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>IONOS SSL API (ionos-ssl-api.html)</h3>
+          <p class="what">Reference for issuing and managing SSL/TLS certificates via api.hosting.ionos.com/ssl (SSL_STARTER DV, wildcard, EV).</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ionos-ssl-api.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ionos-ssl-api.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="cloudflare api token (blanket scope) (cloudflare-api-token.html) the single blanket-scope cloudflare credential reference for provisioning dns records across every zone/account kenn owns; replaces the per-zone-token pattern that broke the thinkprofessionally.com showcase build. https://updates.elmspark.com/docs/pages/cloudflare-api-token.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>Cloudflare API Token (blanket scope) (cloudflare-api-token.html)</h3>
+          <p class="what">The single blanket-scope Cloudflare credential reference for provisioning DNS records across every zone/account Kenn owns; replaces the per-zone-token pattern that broke the thinkprofessionally.com showcase build.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/cloudflare-api-token.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/cloudflare-api-token.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="vps commands reference (vps-commands.html) exact copy-paste commands for everyday operations against the ionos vps at 88.208.226.236. https://updates.elmspark.com/docs/pages/vps-commands.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>VPS Commands Reference (vps-commands.html)</h3>
+          <p class="what">Exact copy-paste commands for everyday operations against the IONOS VPS at 88.208.226.236.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/vps-commands.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/vps-commands.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="ionos exit plan (ionos-exit-plan.html) full operational plan to exit ionos as registrar, dns provider and (later) email host, targeting the recurring renewal bill; complements the cloudflare migration guide. https://updates.elmspark.com/docs/pages/ionos-exit-plan.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>IONOS Exit Plan (ionos-exit-plan.html)</h3>
+          <p class="what">Full operational plan to exit IONOS as registrar, DNS provider and (later) email host, targeting the recurring renewal bill; complements the Cloudflare Migration guide.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ionos-exit-plan.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ionos-exit-plan.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="ionos domains inventory (ionos-domains-inventory.html) live inventory of all 82 zones in kenn&#x27;s ionos dns, classified by ownership bucket; the operational input to the ionos exit plan / cloudflare migration (snapshot 2026-04-27). https://updates.elmspark.com/docs/pages/ionos-domains-inventory.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>IONOS Domains Inventory (ionos-domains-inventory.html)</h3>
+          <p class="what">Live inventory of all 82 zones in Kenn&#x27;s IONOS DNS, classified by ownership bucket; the operational input to the IONOS Exit Plan / Cloudflare migration (snapshot 2026-04-27).</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ionos-domains-inventory.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ionos-domains-inventory.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="help.elmspark.com admin setup guide (ep-helpdesk-setup.html) operator-facing guide to how the support site is built, configured and taken apart; the admin companion to the customer-facing ep-helpdesk user guide. https://updates.elmspark.com/docs/pages/ep-helpdesk-setup.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>help.elmspark.com Admin Setup Guide (ep-helpdesk-setup.html)</h3>
+          <p class="what">Operator-facing guide to how the support site is built, configured and taken apart; the admin companion to the customer-facing ep-helpdesk user guide.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/ep-helpdesk-setup.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/ep-helpdesk-setup.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="vps test rig (vps-test-rig.html) operational reference for the three vps hosts running the full discovery ai pipeline and how to deploy plugin updates to them. https://updates.elmspark.com/docs/pages/vps-test-rig.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403">
+          <h3>VPS Test Rig (vps-test-rig.html)</h3>
+          <p class="what">Operational reference for the three VPS hosts running the full Discovery AI pipeline and how to deploy plugin updates to them.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/vps-test-rig.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/vps-test-rig.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403</p>
+        </article>
+        <article class="card" data-search="claude code /handoff workflow (claude-handoff-workflow.html) hosted guide on preserving a claude code session before /compact via the /handoff command. https://updates.elmspark.com/docs/pages/claude-handoff-workflow.html (vps same dir) passkey gate (webauthn/touch id); anonymous gets http 403. not in the index nav (orphaned page).">
+          <h3>Claude Code /handoff Workflow (claude-handoff-workflow.html)</h3>
+          <p class="what">Hosted guide on preserving a Claude Code session before /compact via the /Handoff command.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://updates.elmspark.com/docs/pages/claude-handoff-workflow.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/claude-handoff-workflow.html</a> (VPS same dir)</p>
+          <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID); anonymous gets HTTP 403. Not in the index nav (orphaned page).</p>
+        </article>
         </div>
       </section>
       <section class="cat" id="cat-tools-commands-skills" data-cat="tools-commands-skills">
-        <h2>Tools (commands &amp; skills) <span class="count">43</span></h2>
+        <h2>Tools (commands &amp; skills) <span class="count">45</span></h2>
         <div class="grid">
         <article class="card" data-search="ep-review-prompts.md two reusable ep review prompts (1 = content &amp; communication reviewer, 2 = technical &amp; architectural reviewer), invoked via /rp and /rc /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/ep-review-prompts.md local (chmod 400)">
           <h3>ep-review-prompts.md</h3>
@@ -760,6 +874,18 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> Documented in workspace CLAUDE.md (Skills + EP Review Prompts sections); install cmd: ln -sf &quot;&lt;workspace&gt;/cc-skills/&lt;name&gt;&quot; ~/.claude/skills/&lt;name&gt;</p>
           <p class="access"><span class="lbl">Access</span> Read workspace CLAUDE.md</p>
         </article>
+        <article class="card" data-search="hq atlas generators (build-hq-atlas.py, build-hq-page.py, refresh-hq.sh) the toolchain that maintains the hq atlas: build-hq-atlas.py bootstraps the markdown from the inventory json, build-hq-page.py renders elmspark-hq.md to the gated hosted page, and refresh-hq.sh is the one-command regenerate-and-deploy wrapper. keeps the two doors from drifting. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/artifacts/hq/ (build-hq-atlas.py, build-hq-page.py, refresh-hq.sh) local; run build-hq-page.py after editing the atlas, then deploy">
+          <h3>HQ atlas generators (build-hq-atlas.py, build-hq-page.py, refresh-hq.sh)</h3>
+          <p class="what">The toolchain that maintains the HQ atlas: build-hq-atlas.py bootstraps the markdown from the inventory JSON, build-hq-page.py renders ELMSPARK-HQ.md to the gated hosted page, and refresh-hq.sh is the one-command regenerate-and-deploy wrapper. Keeps the two doors from drifting.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/artifacts/hq/ (build-hq-atlas.py, build-hq-page.py, refresh-hq.sh)</p>
+          <p class="access"><span class="lbl">Access</span> local; run build-hq-page.py after editing the atlas, then deploy</p>
+        </article>
+        <article class="card" data-search="ep bunny fonts plugin (ep_bunny_fonts) the canonical fonts answer for every brand-site pagemotor conversion: a pm_fonts_google subclass that serves the bunny fonts mirror instead of google&#x27;s cdn. the standing rule is to serve fonts via ep-bunny-fonts, never the conversion skill&#x27;s own google-fonts plugin. /users/kennjordan/developer/elmspark/plugins/ep-bunny-fonts (src/plugin.php, class ep_bunny_fonts, v1.0.7) local path / git (ep-suite monorepo on org elmspark); install on any pm site needing fonts">
+          <h3>EP Bunny Fonts plugin (EP_Bunny_Fonts)</h3>
+          <p class="what">The canonical fonts answer for every brand-site PageMotor conversion: a PM_Fonts_Google subclass that serves the Bunny Fonts mirror instead of Google&#x27;s CDN. The standing rule is to serve fonts via ep-bunny-fonts, never the conversion skill&#x27;s own Google-Fonts plugin.</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/plugins/ep-bunny-fonts (src/plugin.php, class EP_Bunny_Fonts, v1.0.7)</p>
+          <p class="access"><span class="lbl">Access</span> local path / git (ep-suite monorepo on org ElmsPark); install on any PM site needing fonts</p>
+        </article>
         </div>
       </section>
       <section class="cat" id="cat-credentials-access" data-cat="credentials-access">
@@ -777,9 +903,9 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> Live: <a href="https://updates.elmspark.com/docs/pages/credential-access.html" target="_blank" rel="noopener">https://updates.elmspark.com/docs/pages/credential-access.html</a> (VPS same dir); source /Users/kennjordan/Developer/elmspark/ep-updates/docs/pages/credential-access.html</p>
           <p class="access"><span class="lbl">Access</span> passkey gate (WebAuthn/Touch ID) · passkey-gate (WebAuthn/Touch ID), noindex; source editable locally + via ssh ionos-ts</p>
         </article>
-        <article class="card" data-search="elmspark local credential store (dir) the credential/secret access layer: per-mac local directory holding every live secret cc reads directly. 23 entries, every file chmod 600, owner-only (drwx------), gitignored, not in icloud. /users/kennjordan/.config/elmspark/ local path, owner-only (chmod 600 / dir 700); cc reads files directly, no copy-paste; per-mac (copy across to a new mac + chmod 600)">
+        <article class="card" data-search="elmspark local credential store (dir) the credential/secret access layer: per-mac local directory holding every live secret cc reads directly. 21 entries, every file chmod 600, owner-only (drwx------), gitignored, not in icloud. /users/kennjordan/.config/elmspark/ local path, owner-only (chmod 600 / dir 700); cc reads files directly, no copy-paste; per-mac (copy across to a new mac + chmod 600)">
           <h3>ElmsPark local credential store (dir)</h3>
-          <p class="what">The credential/secret ACCESS layer: per-Mac local directory holding every live secret CC reads directly. 23 entries, every file chmod 600, owner-only (drwx------), gitignored, NOT in iCloud.</p>
+          <p class="what">The credential/secret ACCESS layer: per-Mac local directory holding every live secret CC reads directly. 21 entries, every file chmod 600, owner-only (drwx------), gitignored, NOT in iCloud.</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/</p>
           <p class="access"><span class="lbl">Access</span> local path, owner-only (chmod 600 / dir 700); CC reads files directly, no copy-paste; per-Mac (copy across to a new Mac + chmod 600)</p>
         </article>
@@ -825,9 +951,9 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/ionos-shared-u105946716.env</p>
           <p class="access"><span class="lbl">Access</span> local path, chmod 600</p>
         </article>
-        <article class="card" data-search="per-site pm/wp admin .env files (x14) per-site admin logins + db creds + webroot/system-user for playwright ui tests and ops. pattern keys: site_url, admin_url, admin_user/email/password, db_name/user/password, system_user, webroot (some + db_prefix/fpm_socket/theme_target). files: thinkprofessionally-, picsbay-, makeclear-, makeclear-focus-, makeclear-lens-, ownyourbooking-, coach-oyb-, dogwalker-oyb-, lawyer-oyb-, tutor-oyb-, lastweekonofficehours-, gresham-admin.env. dev-admin.env + gresham-admin.env use dev_admin_user/password shape. /users/kennjordan/.config/elmspark/&lt;site&gt;-admin.env local path, chmod 600 (each file)">
+        <article class="card" data-search="per-site pm/wp admin .env files (x14) per-site admin logins + db creds + webroot/system-user for playwright ui tests and ops. pattern keys: site_url, admin_url, admin_user/email/password, db_name/user/password, system_user, webroot (some + db_prefix/fpm_socket/theme_target). 13 files: thinkprofessionally-, picsbay-, makeclear-, makeclear-focus-, makeclear-lens-, ownyourbooking-, coach-oyb-, dogwalker-oyb-, lawyer-oyb-, tutor-oyb-, lastweekonofficehours-, gresham-admin.env, dev-admin.env. dev-admin.env + gresham-admin.env use the dev_admin_user/password shape. /users/kennjordan/.config/elmspark/&lt;site&gt;-admin.env local path, chmod 600 (each file)">
           <h3>Per-site PM/WP admin .env files (x14)</h3>
-          <p class="what">Per-site admin logins + DB creds + webroot/system-user for Playwright UI tests and ops. Pattern keys: SITE_URL, ADMIN_URL, ADMIN_USER/EMAIL/PASSWORD, DB_NAME/USER/PASSWORD, SYSTEM_USER, WEBROOT (some + DB_PREFIX/FPM_SOCKET/THEME_TARGET). Files: thinkprofessionally-, picsbay-, makeclear-, makeclear-focus-, makeclear-lens-, ownyourbooking-, coach-oyb-, dogwalker-oyb-, lawyer-oyb-, tutor-oyb-, lastweekonofficehours-, gresham-admin.env. dev-admin.env + gresham-admin.env use DEV_ADMIN_USER/PASSWORD shape.</p>
+          <p class="what">Per-site admin logins + DB creds + webroot/system-user for Playwright UI tests and ops. Pattern keys: SITE_URL, ADMIN_URL, ADMIN_USER/EMAIL/PASSWORD, DB_NAME/USER/PASSWORD, SYSTEM_USER, WEBROOT (some + DB_PREFIX/FPM_SOCKET/THEME_TARGET). 13 files: thinkprofessionally-, picsbay-, makeclear-, makeclear-focus-, makeclear-lens-, ownyourbooking-, coach-oyb-, dogwalker-oyb-, lawyer-oyb-, tutor-oyb-, lastweekonofficehours-, gresham-admin.env, dev-admin.env. dev-admin.env + gresham-admin.env use the DEV_ADMIN_USER/PASSWORD shape.</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.config/elmspark/&lt;site&gt;-admin.env</p>
           <p class="access"><span class="lbl">Access</span> local path, chmod 600 (each file)</p>
         </article>
@@ -846,7 +972,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
         </div>
       </section>
       <section class="cat" id="cat-code-infra" data-cat="code-infra">
-        <h2>Code &amp; Infra <span class="count">37</span></h2>
+        <h2>Code &amp; Infra <span class="count">38</span></h2>
         <div class="grid">
         <article class="card" data-search="pm9s/current.txt authoritative pointer: line 1 names the canonical pagemotor core folder (now pagemotor v0.9.3b). single source of truth for all pm-core work; resolve via head -n1, never hardcode /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pm9s/current.txt local">
           <h3>PM9s/CURRENT.txt</h3>
@@ -926,9 +1052,9 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/documentation/public/ -&gt; served at site root after deploy</p>
           <p class="access"><span class="lbl">Access</span> local path</p>
         </article>
-        <article class="card" data-search="elmspark vps (ionos) the host itself: ubuntu vps running nginx + php-fpm + mariadb, ~85 vhosts in /etc/nginx/sites-enabled/, all docroots under /var/www/. tls ip 88.208.226.236 (unspoofable, used in the probe.elmspark.test forensics). 88.208.226.236; nginx vhosts /etc/nginx/sites-enabled/, docroots /var/www/&lt;site&gt; ssh ionos-ts (key-only root, password auth disabled via 00-elmspark-hardening.conf)">
+        <article class="card" data-search="elmspark vps (ionos) the host itself: ubuntu vps running nginx + php-fpm + mariadb, ~102 vhosts in /etc/nginx/sites-enabled/, all docroots under /var/www/. tls ip 88.208.226.236 (unspoofable, used in the probe.elmspark.test forensics). 88.208.226.236; nginx vhosts /etc/nginx/sites-enabled/, docroots /var/www/&lt;site&gt; ssh ionos-ts (key-only root, password auth disabled via 00-elmspark-hardening.conf)">
           <h3>ElmsPark VPS (IONOS)</h3>
-          <p class="what">The host itself: Ubuntu VPS running nginx + PHP-FPM + MariaDB, ~85 vhosts in /etc/nginx/sites-enabled/, all docroots under /var/www/. TLS IP 88.208.226.236 (unspoofable, used in the probe.elmspark.test forensics).</p>
+          <p class="what">The host itself: Ubuntu VPS running nginx + PHP-FPM + MariaDB, ~102 vhosts in /etc/nginx/sites-enabled/, all docroots under /var/www/. TLS IP 88.208.226.236 (unspoofable, used in the probe.elmspark.test forensics).</p>
           <p class="where"><span class="lbl">Where</span> 88.208.226.236; nginx vhosts /etc/nginx/sites-enabled/, docroots /var/www/&lt;site&gt;</p>
           <p class="access"><span class="lbl">Access</span> ssh ionos-ts (key-only root, password auth disabled via 00-elmspark-hardening.conf)</p>
         </article>
@@ -1034,15 +1160,15 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> plugins/{discovery-ai,ep-assistant,ep-business-planner,ep-mcp-bridge,ep-passkeys}/.git</p>
           <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; orgs ElmsPark and ElmsPark-Studio</p>
         </article>
-        <article class="card" data-search="documentation (astro docs site) astro static-site repo that builds documentation.elmspark.com (hosting guides, toolkit guide, etc). package.json name &#x27;documentation&#x27;, astro dev/build. deployed via deploy.sh to the vps over ionos-ts. branch main (head 2026-05-22). /users/kennjordan/developer/elmspark/documentation (remote: https://github.com/elmspark-studio/documentation.git) git over https; gh cli; deploy.sh pushes to vps via ssh ionos-ts">
+        <article class="card" data-search="documentation (astro docs site) astro static-site repo that builds documentation.elmspark.com (hosting guides, toolkit guide, etc). package.json name &#x27;documentation&#x27;, astro dev/build. deployed via deploy.sh to the vps over ionos-ts. branch main (head 2026-06-06). /users/kennjordan/developer/elmspark/documentation (remote: https://github.com/elmspark-studio/documentation.git) git over https; gh cli; deploy.sh pushes to vps via ssh ionos-ts">
           <h3>documentation (Astro docs site)</h3>
-          <p class="what">Astro static-site repo that builds documentation.elmspark.com (hosting guides, toolkit guide, etc). package.json name &#x27;documentation&#x27;, astro dev/build. Deployed via deploy.sh to the VPS over ionos-ts. Branch main (HEAD 2026-05-22).</p>
+          <p class="what">Astro static-site repo that builds documentation.elmspark.com (hosting guides, toolkit guide, etc). package.json name &#x27;documentation&#x27;, astro dev/build. Deployed via deploy.sh to the VPS over ionos-ts. Branch main (HEAD 2026-06-06).</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/documentation (remote: <a href="https://github.com/ElmsPark-Studio/documentation.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/documentation.git</a>)</p>
           <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; deploy.sh pushes to VPS via ssh ionos-ts</p>
         </article>
-        <article class="card" data-search="pagemotor (pm core checkout) a pagemotor core checkout used as a local pm install / test rig (config.php + user-content gitignored). contains lib/, pagemotor.php, router.php, index.php. note: this is a working checkout, not the canonical core for validation - canonical core is whatever pm9s/current.txt names (currently pagemotor v0.9.2b in the claude workspace). branch main (head 2026-05-02, stale relative to 0.9.2b). /users/kennjordan/developer/elmspark/pagemotor (remote: https://github.com/elmspark-studio/pagemotor.git) git over https; gh cli; org elmspark-studio (this is the elmspark mirror/checkout of chris pearson&#x27;s pm core)">
+        <article class="card" data-search="pagemotor (pm core checkout) a pagemotor core checkout used as a local pm install / test rig (config.php + user-content gitignored). contains lib/, pagemotor.php, router.php, index.php. note: this is a working checkout, not the canonical core for validation; the canonical core is whatever pm9s/current.txt names (currently pagemotor v0.9.3b in the claude workspace). branch main (head 2026-05-02, stale relative to 0.9.3b). /users/kennjordan/developer/elmspark/pagemotor (remote: https://github.com/elmspark-studio/pagemotor.git) git over https; gh cli; org elmspark-studio (this is the elmspark mirror/checkout of chris pearson&#x27;s pm core)">
           <h3>pagemotor (PM core checkout)</h3>
-          <p class="what">A PageMotor core checkout used as a local PM install / test rig (config.php + user-content gitignored). Contains lib/, pagemotor.php, router.php, index.php. NOTE: this is a working checkout, NOT the canonical core for validation - canonical core is whatever PM9s/CURRENT.txt names (currently pagemotor v0.9.2b in the Claude Workspace). Branch main (HEAD 2026-05-02, stale relative to 0.9.2b).</p>
+          <p class="what">A PageMotor core checkout used as a local PM install / test rig (config.php + user-content gitignored). Contains lib/, pagemotor.php, router.php, index.php. NOTE: this is a working checkout, NOT the canonical core for validation; the canonical core is whatever PM9s/CURRENT.txt names (currently pagemotor v0.9.3b in the Claude Workspace). Branch main (HEAD 2026-05-02, stale relative to 0.9.3b).</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/pagemotor (remote: <a href="https://github.com/ElmsPark-Studio/pagemotor.git" target="_blank" rel="noopener">https://github.com/ElmsPark-Studio/pagemotor.git</a>)</p>
           <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; org ElmsPark-Studio (this is the ElmsPark mirror/checkout of Chris Pearson&#x27;s PM core)</p>
         </article>
@@ -1069,6 +1195,12 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="what">ElmsPark fork of the vtracer raster-to-SVG tracer (Rust), used in the png-to-svg / logo-vectorisation tooling. Branch master (HEAD 2026-05-08).</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Developer/elmspark/vtracer-fork (remote: <a href="https://github.com/ElmsPark/vtracer.git" target="_blank" rel="noopener">https://github.com/ElmsPark/vtracer.git</a>)</p>
           <p class="access"><span class="lbl">Access</span> git over HTTPS; gh CLI; org ElmsPark</p>
+        </article>
+        <article class="card" data-search="gen-layouts-a.py + layouts-a theme assets (the current /layouts/ generator) the design-a /layouts/ generator: loads showcases/registry.json, fetches each manifest, transforms to the design-a data shape, emits scoped inline css + server-rendered cards, and ships the js + data as raw theme-asset files. this is the only generator that should now touch the /layouts/ row; the older gen-layouts-gallery.py would revert design a. generator /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/showcases/tools/gen-layouts-a.py . live theme assets on vps /var/www/elmspark.com/user-content/themes/elmspark/layouts-a.js + layouts-a-data.json . adapted js source brand-sites-build/layouts-mockups/a/app.pm.js . local generator (run layouts_slug=layouts python3 gen-layouts-a.py); theme assets via ssh ionos-ts">
+          <h3>gen-layouts-a.py + layouts-a theme assets (the CURRENT /layouts/ generator)</h3>
+          <p class="what">The design-A /layouts/ generator: loads showcases/registry.json, fetches each manifest, transforms to the design-A data shape, emits scoped inline CSS + server-rendered cards, and ships the JS + data as raw theme-asset files. This is the ONLY generator that should now touch the /layouts/ row; the older gen-layouts-gallery.py would REVERT design A.</p>
+          <p class="where"><span class="lbl">Where</span> Generator /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/showcases/tools/gen-layouts-a.py . Live theme assets on VPS /var/www/elmspark.com/user-content/themes/elmspark/layouts-a.js + layouts-a-data.json . Adapted JS source brand-sites-build/layouts-mockups/a/app.pm.js .</p>
+          <p class="access"><span class="lbl">Access</span> local generator (run LAYOUTS_SLUG=layouts python3 gen-layouts-a.py); theme assets via ssh ionos-ts</p>
         </article>
         </div>
       </section>
@@ -1141,15 +1273,15 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/session-logs/</p>
           <p class="access"><span class="lbl">Access</span> local</p>
         </article>
-        <article class="card" data-search="auto-memory index (memory.md) the persistent auto-memory index: one-line entries each linking to a topic file, loaded into every session. 117kb / 258+ lines (over the ~200-line soft cap warned in-file). /users/kennjordan/.claude/projects/-users-kennjordan-library-mobile-documents-com-apple-clouddocs-claude-workspace/memory/memory.md local path, read">
+        <article class="card" data-search="auto-memory index (memory.md) the persistent auto-memory index: one-line entries each linking to a topic file, loaded into every session. ~120kb / 268 lines (over the ~200-line soft cap warned in-file). /users/kennjordan/.claude/projects/-users-kennjordan-library-mobile-documents-com-apple-clouddocs-claude-workspace/memory/memory.md local path, read">
           <h3>Auto-memory index (MEMORY.md)</h3>
-          <p class="what">The persistent auto-memory index: one-line entries each linking to a topic file, loaded into every session. 117KB / 258+ lines (over the ~200-line soft cap warned in-file).</p>
+          <p class="what">The persistent auto-memory index: one-line entries each linking to a topic file, loaded into every session. ~120KB / 268 lines (over the ~200-line soft cap warned in-file).</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.claude/projects/-Users-kennjordan-Library-Mobile-Documents-com-apple-CloudDocs-Claude-Workspace/memory/MEMORY.md</p>
           <p class="access"><span class="lbl">Access</span> local path, Read</p>
         </article>
-        <article class="card" data-search="auto-memory topic files (project memory/) 261 .md topic files backing the memory.md index. includes 106 feedback_*.md hard-rule/preference files plus reference/project notes (pm_*, ep_*, project_*, cloudflare_*, etc.). one canonical file per topic, wiki-linked by [[name]]. /users/kennjordan/.claude/projects/-users-kennjordan-library-mobile-documents-com-apple-clouddocs-claude-workspace/memory/*.md local path, read; resolve a [[link]] to &lt;name&gt;.md in this dir">
+        <article class="card" data-search="auto-memory topic files (project memory/) 265 .md topic files backing the memory.md index. includes 106 feedback_*.md hard-rule/preference files plus reference/project notes (pm_*, ep_*, project_*, cloudflare_*, etc.). one canonical file per topic, wiki-linked by [[name]]. /users/kennjordan/.claude/projects/-users-kennjordan-library-mobile-documents-com-apple-clouddocs-claude-workspace/memory/*.md local path, read; resolve a [[link]] to &lt;name&gt;.md in this dir">
           <h3>Auto-memory topic files (project memory/)</h3>
-          <p class="what">261 .md topic files backing the MEMORY.md index. Includes 106 feedback_*.md hard-rule/preference files plus reference/project notes (pm_*, ep_*, project_*, cloudflare_*, etc.). One canonical file per topic, wiki-linked by [[name]].</p>
+          <p class="what">265 .md topic files backing the MEMORY.md index. Includes 106 feedback_*.md hard-rule/preference files plus reference/project notes (pm_*, ep_*, project_*, cloudflare_*, etc.). One canonical file per topic, wiki-linked by [[name]].</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/.claude/projects/-Users-kennjordan-Library-Mobile-Documents-com-apple-CloudDocs-Claude-Workspace/memory/*.md</p>
           <p class="access"><span class="lbl">Access</span> local path, Read; resolve a [[link]] to &lt;name&gt;.md in this dir</p>
         </article>
@@ -1165,22 +1297,22 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/memory/</p>
           <p class="access"><span class="lbl">Access</span> local path, Read; passwords redacted (in Apple Passwords)</p>
         </article>
-        <article class="card" data-search="session handoffs (handoff-*.md) per-session handoff notes (did/know/next). 64 files spanning 2026-05-13 to 2026-06-05; newest by filename is the session resume target. includes a few named variants (e.g. handoff-2026-05-30-correction-phpwn-ownership.md). /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-*.md local path, read; pick newest by filename">
+        <article class="card" data-search="session handoffs (handoff-*.md) per-session handoff notes (did/know/next). 65 files spanning 2026-05-13 to 2026-06-06; newest by filename is the session-resume target. includes a few named variants (e.g. handoff-2026-05-30-correction-phpwn-ownership.md). /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-*.md local path, read; pick newest by filename">
           <h3>Session handoffs (handoff-*.md)</h3>
-          <p class="what">Per-session handoff notes (Did/Know/Next). 64 files spanning 2026-05-13 to 2026-06-05; newest by filename is the session resume target. Includes a few named variants (e.g. handoff-2026-05-30-CORRECTION-phpwn-ownership.md).</p>
+          <p class="what">Per-session handoff notes (Did/Know/Next). 65 files spanning 2026-05-13 to 2026-06-06; newest by filename is the session-resume target. Includes a few named variants (e.g. handoff-2026-05-30-CORRECTION-phpwn-ownership.md).</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/handoff-*.md</p>
           <p class="access"><span class="lbl">Access</span> local path, Read; pick newest by filename</p>
         </article>
-        <article class="card" data-search="handoff index (handoff-index.md) reverse-chronological one-line index of every handoff (54 link entries), plus an &#x27;older mechanisms&#x27; section pointing at the archived handoff.md and resume-prompt files. the map for anything older than the three most-recent listed in claude.md. 64kb. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-index.md local path, read">
+        <article class="card" data-search="handoff index (handoff-index.md) reverse-chronological one-line index of every handoff (56 link entries), plus an &#x27;older mechanisms&#x27; section pointing at the archived handoff.md and resume-prompt files. the map for anything older than the three most-recent listed in claude.md. 68kb. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-index.md local path, read">
           <h3>Handoff index (handoff-index.md)</h3>
-          <p class="what">Reverse-chronological one-line index of every handoff (54 link entries), plus an &#x27;Older mechanisms&#x27; section pointing at the archived HANDOFF.md and RESUME-PROMPT files. The map for anything older than the three most-recent listed in CLAUDE.md. 64KB.</p>
+          <p class="what">Reverse-chronological one-line index of every handoff (56 link entries), plus an &#x27;Older mechanisms&#x27; section pointing at the archived HANDOFF.md and RESUME-PROMPT files. The map for anything older than the three most-recent listed in CLAUDE.md. 68KB.</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/handoff-index.md</p>
           <p class="access"><span class="lbl">Access</span> local path, Read</p>
         </article>
-        <article class="card" data-search="latest handoff (session-resume target) the most recent handoff — the first thing a new session reads. currently the six-brand-sites + /layouts/ redesign + distinctive-pm-site skill session; flags the original /layouts/ port as still not done. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-2026-06-05-2130.md local path, read (resolve newest at session start, do not hardcode)">
+        <article class="card" data-search="latest handoff (session-resume target) the most recent handoff, the first thing a new session reads. currently the elmspark hq / atlas session (per the 2026-06-06 handoffs). /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/handoff-2026-06-06-0801.md local path, read (resolve newest at session start, do not hardcode)">
           <h3>Latest handoff (session-resume target)</h3>
-          <p class="what">The most recent handoff — the first thing a new session reads. Currently the six-brand-sites + /layouts/ redesign + distinctive-pm-site skill session; flags the original /layouts/ port as still NOT done.</p>
-          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/handoff-2026-06-05-2130.md</p>
+          <p class="what">The most recent handoff, the first thing a new session reads. Currently the ElmsPark HQ / Atlas session (per the 2026-06-06 handoffs).</p>
+          <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/handoff-2026-06-06-0801.md</p>
           <p class="access"><span class="lbl">Access</span> local path, Read (resolve newest at session start, do not hardcode)</p>
         </article>
         <article class="card" data-search="handoff archive (frozen) archived earlier mechanisms: handoff.md (the original append-only running log, 27 entries 2026-04-29 to 2026-05-13, 124kb, frozen) and seven resume-prompt-*.md resume prompts (2026-05-03 to 2026-05-13), plus an old preferences.md. superseded by per-session handoffs + the index. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/.claude/archive/ local path, read">
@@ -1189,9 +1321,9 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/.claude/archive/</p>
           <p class="access"><span class="lbl">Access</span> local path, Read</p>
         </article>
-        <article class="card" data-search="workspace claude.md (project instructions) checked-in workspace memory/instructions: session-resume protocol, three most-recent handoff links, pagemotor core source-of-truth rule, people/terms/projects, preferences, cross-session (cc/cw) protocol, devices, network/backup pointers. 25kb. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/claude.md local path, read; auto-loaded into sessions in this workspace">
+        <article class="card" data-search="workspace claude.md (project instructions) checked-in workspace memory/instructions: session-resume protocol, three most-recent handoff links, pagemotor core source-of-truth rule, people/terms/projects, preferences, cross-session (cc/cw) protocol, devices, network/backup pointers. ~30kb. /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/claude.md local path, read; auto-loaded into sessions in this workspace">
           <h3>Workspace CLAUDE.md (project instructions)</h3>
-          <p class="what">Checked-in workspace memory/instructions: session-resume protocol, three most-recent handoff links, PageMotor core source-of-truth rule, people/terms/projects, preferences, cross-session (CC/CW) protocol, devices, network/backup pointers. 25KB.</p>
+          <p class="what">Checked-in workspace memory/instructions: session-resume protocol, three most-recent handoff links, PageMotor core source-of-truth rule, people/terms/projects, preferences, cross-session (CC/CW) protocol, devices, network/backup pointers. ~30KB.</p>
           <p class="where"><span class="lbl">Where</span> /Users/kennjordan/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/CLAUDE.md</p>
           <p class="access"><span class="lbl">Access</span> local path, Read; auto-loaded into sessions in this workspace</p>
         </article>
@@ -1209,7 +1341,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
 
 <div class="wrap">
   <footer>
-    Generated 2026-06-06 from <code>ELMSPARK-HQ.md</code> · 179 assets · private, noindex, Basic-Auth gated · Bunny Fonts, no Google Fonts.
+    Generated 2026-06-06 from <code>ELMSPARK-HQ.md</code> · 201 assets · private, noindex, Basic-Auth gated · Bunny Fonts, no Google Fonts.
   </footer>
 </div>
 
@@ -1220,7 +1352,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
       cards=[].slice.call(document.querySelectorAll('.card')),
       cats=[].slice.call(document.querySelectorAll('.cat')),
       chips=[].slice.call(document.querySelectorAll('.chip')),
-      total=179, activeCat='__all';
+      total=201, activeCat='__all';
   function apply(){
     var term=q.value.trim().toLowerCase(), shown=0;
     cards.forEach(function(c){
