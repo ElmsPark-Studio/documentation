@@ -18,13 +18,12 @@
     font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
     line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
-  header.top{padding:14px 20px; border-bottom:1px solid var(--line); background:var(--card)}
-  header.top .inner{max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:10px}
-  .leaf{width:24px;height:24px;flex:none}
-  .brand{font-size:15px; letter-spacing:.04em; text-transform:uppercase; color:var(--pine); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-weight:600; text-decoration:none}
-  .topnav{margin-left:auto; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-size:14px}
-  .topnav a{color:var(--pine); text-decoration:none}
-  .topnav a:hover{text-decoration:underline}
+  nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem}
+  .crumbs-inner{max-width:var(--maxw); margin:0 auto; padding:18px 20px 0; display:flex; align-items:center; gap:.5rem; color:#605647}
+  .crumbs a{color:#605647; text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s}
+  .crumbs a:hover,.crumbs a:focus-visible{color:#3a5140; border-bottom-color:#3a5140}
+  .crumbs .sep{color:#b5ab97}
+  .crumbs [aria-current="page"]{color:#181411; font-weight:500; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
   h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
   .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
   .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
@@ -109,17 +108,13 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 </header>
 
-<header class="top">
-  <div class="inner">
-    <svg class="leaf" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 22V9" stroke="#2f5d4a" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M12 13c0-3 2.4-6 6.5-6.5C18 11 15 13 12 13Z" fill="#2f5d4a"/>
-      <path d="M12 10C12 6.5 9.6 3.6 5.5 3 6 7.8 9 10 12 10Z" fill="#3f7a60"/>
-    </svg>
-    <a class="brand" href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a>
-    <nav class="topnav"><a href="https://documentation.elmspark.com/guides/">All guides →</a></nav>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <div class="crumbs-inner">
+    <a href="https://documentation.elmspark.com/guides/">Guides</a>
+    <span class="sep" aria-hidden="true">&rsaquo;</span>
+    <span aria-current="page">Installing PageMotor on HostGator</span>
   </div>
-</header>
+</nav>
 
 <div class="wrap">
   <span class="kicker">PageMotor Setup Guide</span>
