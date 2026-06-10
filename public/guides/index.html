@@ -12,8 +12,8 @@
   To add a guide to this page:
   1. Copy one <article class="gcard"> block in the "Available now" grid and edit it.
      data-cat must be one of: pagemotor | email | ai | security | privacy | hosting
-     (hosting has CSS but no toolbar chip yet: when adding the FIRST hosting guide,
-     also add <button class="chip" aria-pressed="false" data-cat="hosting">Hosting</button> to the chips group)
+     (all six now have both CSS and a toolbar chip; add a new chip only if you
+     introduce a brand-new category)
      data-search should hold extra search words not visible in the card text.
   2. If the guide replaces a "Coming next" card, remove that card from the planned grid.
   3. Deploy per the elmspark-guides-hub-publishing-pattern memory note, then re-probe.
@@ -180,6 +180,7 @@
       <button class="chip" aria-pressed="false" data-cat="pagemotor">PageMotor</button>
       <button class="chip" aria-pressed="false" data-cat="email">Email</button>
       <button class="chip" aria-pressed="false" data-cat="ai">AI &amp; tools</button>
+      <button class="chip" aria-pressed="false" data-cat="hosting">Hosting</button>
       <button class="chip" aria-pressed="false" data-cat="security">Security</button>
       <button class="chip" aria-pressed="false" data-cat="privacy">Privacy &amp; GDPR</button>
     </div>
@@ -234,6 +235,21 @@
           <li>Finishes with real inbox proof, not a green tick</li>
         </ul>
         <div class="gmeta"><span>⏱ about 20 minutes</span><span>📖 5-min read</span><span>June 2026</span></div>
+      </div>
+    </article>
+
+    <article class="gcard cat-hosting" data-cat="hosting" data-search="vultr vps hosting server nginx php mariadb ubuntu certbot ssl plan picker benchmark claude code provision">
+      <div class="cat-bar"></div>
+      <div class="gbody">
+        <span class="cat-tag">Hosting</span>
+        <h3><a href="/guides/vultr-hosting/">Hosting PageMotor on Vultr</a></h3>
+        <p class="gdesc">Benchmarks, an interactive plan picker, and the exact bootstrap to get PageMotor live on a fresh Vultr box. Or hand the whole thing to Claude Code.</p>
+        <ul class="ginside">
+          <li>April 2026 benchmarks vs DigitalOcean and Linode</li>
+          <li>Plan picker, cost-per-site calculator, region picker</li>
+          <li>Copy-paste Claude Code bootstrap, plus the full by-hand build</li>
+        </ul>
+        <div class="gmeta"><span>⏱ ~30 min</span><span>🧮 interactive</span><span>April 2026</span></div>
       </div>
     </article>
 

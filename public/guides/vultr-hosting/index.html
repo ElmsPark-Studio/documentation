@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Run PageMotor on a Vultr VPS: April 2026 benchmarks, an interactive plan picker and cost calculator, region picker, the copy-paste Claude Code bootstrap, and the full by-hand build. About 30 minutes from empty box to live.">
+<title>Hosting PageMotor on Vultr | ElmsPark Guide</title>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
+<!--
+  Interactive Vultr hosting guide. Family chrome (es-header + breadcrumb) shared
+  with the other /guides/ pages. Content faithfully ported from the Starlight
+  source src/content/docs/hosting/vultr.md (April 2026); format made interactive
+  (tabs, plan picker, cost calculator, region picker). The old /hosting/vultr/
+  Starlight route 301-redirects here. Deploy surgically (scp), not deploy.sh.
+-->
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#a35a20;
+    --vultr:#2f5d4a; --vultr-soft:#e8efe9; --warn:#9a4b2e; --warn-soft:#faf3e3;
+    --codebg:#1f1d17; --radius:14px;
+    --shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{font-family:Outfit,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.6;font-size:16px;padding-bottom:70px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+
+  /* shared brand header */
+  header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
+  .es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+  .es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
+  .es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
+  .es-wordmark .es-mark svg{width:100%;height:100%;display:block}
+  .es-wordmark .es-accent{color:#3a5140}
+  .es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:.75rem;margin-left:-.35rem;line-height:1}
+  .es-nav{display:flex;gap:clamp(.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:.9375rem;font-weight:500}
+  .es-nav a{color:#181411;text-decoration:none;padding:.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
+  .es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+  .es-nav .es-cta{color:#181411;border:1px solid #181411;padding:.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
+  .es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
+  @media(max-width:640px){.es-header .es-inner{padding:1rem 18px;gap:.75rem}.es-sub{display:none}.es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}}
+
+  nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem;background:linear-gradient(180deg,#f2ecdf 0%,var(--paper) 100%)}
+  .crumbs-inner{max-width:900px;margin:0 auto;padding:18px 22px 0;display:flex;align-items:center;gap:.5rem;color:#605647}
+  .crumbs a{color:#605647;text-decoration:none;border-bottom:1px solid transparent;transition:color .15s,border-color .15s}
+  .crumbs a:hover,.crumbs a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+  .crumbs .sep{color:#b5ab97}
+  .crumbs [aria-current="page"]{color:#181411;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  header.hero{padding:26px 0 30px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#f2ecdf 0%,var(--paper) 100%)}
+  .kicker{font-family:'Inter Tight',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
+  h1{font-family:Fraunces,Georgia,serif;font-size:clamp(30px,5vw,44px);line-height:1.1;letter-spacing:-.01em;font-weight:700;color:var(--pine-deep)}
+  .sub{margin-top:12px;color:var(--soft);max-width:640px;font-size:18px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .badge{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--soft)}
+  .badge b{color:var(--pine)}
+
+  nav.tabs{position:sticky;top:0;z-index:50;background:rgba(247,243,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-bottom:28px}
+  .tabrow{display:flex;gap:4px;overflow-x:auto;padding:10px 0;scrollbar-width:none;max-width:900px;margin:0 auto;padding-left:22px;padding-right:22px}
+  .tabrow::-webkit-scrollbar{display:none}
+  .tab{appearance:none;border:1px solid transparent;background:transparent;font:inherit;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:600;color:var(--soft);padding:8px 14px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+  .tab:hover{color:var(--ink);background:#efe9da}
+  .tab[aria-selected="true"]{background:var(--pine);color:#fff}
+
+  section.panel{display:none;animation:fade .25s ease}
+  section.panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){section.panel{animation:none}}
+
+  h2{font-family:Fraunces,Georgia,serif;font-size:24px;font-weight:600;letter-spacing:-.01em;margin:6px 0 14px;color:var(--pine-deep)}
+  h3{font-size:16.5px;font-weight:700;margin:22px 0 8px}
+  p{margin:0 0 14px;max-width:680px}
+  p.lede{font-size:17.5px;max-width:700px}
+  ul,ol{margin:0 0 16px 22px}
+  li{margin:6px 0;max-width:660px}
+  a{color:var(--pine)}
+  strong{color:var(--pine-deep)}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:#efe9da;padding:2px 6px;border-radius:5px;color:#473f2c}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:16px 0;font-size:14.5px}
+  th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:#f0ece2;font-weight:700;font-size:13px}
+  tr:last-child td{border-bottom:none}
+  td.win{color:var(--pine-deep);font-weight:700}
+  tr.hl td{background:var(--vultr-soft)}
+
+  .note{background:var(--warn-soft);border:1px solid #ecdcb8;border-left:4px solid var(--accent);border-radius:var(--radius);padding:14px 18px;font-size:14.5px;margin:16px 0}
+  .note b{color:var(--warn)}
+  .note.calm{background:var(--vultr-soft);border-color:#cfe0d4;border-left-color:var(--pine)}
+  .note.calm b{color:var(--pine-deep)}
+
+  .grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin:16px 0}
+  .colcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+  .colcard h3{margin-top:0}
+  .colcard.yes{border-top:3px solid var(--pine)}
+  .colcard.no{border-top:3px solid var(--warn)}
+  .colcard ul{margin-bottom:0}
+
+  /* interactive picker */
+  .picker{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);margin:18px 0}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .chip{appearance:none;font:inherit;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--soft);padding:8px 14px;border-radius:99px;transition:.15s}
+  .chip:hover{color:var(--pine-deep);border-color:var(--pine)}
+  .chip[aria-pressed="true"]{background:var(--pine);border-color:var(--pine);color:#fff}
+  .verdict{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
+  .verdict .plan{font-family:Fraunces,Georgia,serif;font-size:21px;color:var(--pine-deep);font-weight:600}
+  .verdict .price{font-size:15px;color:var(--soft);margin:2px 0 8px}
+  .verdict .price b{color:var(--ink);font-size:17px}
+
+  .calc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);margin:18px 0}
+  .calc label{font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:600;display:block;margin-bottom:6px}
+  .calc input[type=range]{width:100%;accent-color:var(--pine)}
+  .calc .out{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px}
+  .calc .stat .n{font-family:Fraunces,Georgia,serif;font-size:26px;font-weight:700;color:var(--pine-deep)}
+  .calc .stat .l{font-size:12.5px;color:var(--soft)}
+
+  .codewrap{position:relative;margin:14px 0}
+  pre{background:var(--codebg);color:#eee;border-radius:12px;padding:18px;overflow:auto;font-size:13px;line-height:1.55;margin:0}
+  pre code{background:none;color:inherit;padding:0;font-size:inherit}
+  .tok-c{color:#8f9b7e} .tok-s{color:#9fc7a6}
+  .copy{position:absolute;top:10px;right:10px;font-family:'Inter Tight',sans-serif;font-size:12.5px;border:1px solid #4a463a;background:#33302a;color:#e9e3d3;padding:6px 12px;border-radius:8px;cursor:pointer}
+  .copy:hover{background:#3f3b32}
+  .copy.done{background:var(--pine);border-color:var(--pine);color:#fff}
+
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:10px 0;padding:2px 18px}
+  details[open]{padding-bottom:14px}
+  summary{cursor:pointer;font-weight:600;padding:14px 0;color:var(--pine-deep);font-family:'Inter Tight',sans-serif;font-size:15.5px;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋";color:var(--accent);margin-right:10px}
+  details[open] summary::before{content:"－"}
+
+  .steps{counter-reset:s;list-style:none;margin-left:0}
+  .steps>li{counter-increment:s;position:relative;padding-left:42px;margin:14px 0;max-width:660px}
+  .steps>li::before{content:counter(s);position:absolute;left:0;top:-2px;width:30px;height:30px;border-radius:50%;background:var(--pine);color:#fff;font-family:'Inter Tight',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
+
+  footer.src{margin-top:40px;border-top:1px solid var(--line);padding-top:22px;color:var(--soft);font-size:13.5px}
+  footer.src a{color:var(--pine)}
+  .reflink{background:var(--vultr-soft);border:1px solid #cfe0d4;border-radius:var(--radius);padding:14px 18px;margin:16px 0;font-size:14.5px}
+
+  @media(max-width:560px){ h1{font-size:28px} .calc .out{gap:14px} }
+</style>
+</head>
+<body>
+
+<header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" class="brand-mark-svg" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z m252 -467 c203 -269 329 -496 368 -665 12 -49 11 -53 -14 -91 -15 -22 -87 -96 -162 -163 -74 -68 -175 -165 -224 -217 -79 -84 -89 -91 -93 -70 -3 13 -7 168 -10 344 -4 213 -9 331 -17 347 -14 31 -60 50 -92 38 -51 -20 -50 -8 -53 -534 -2 -463 -12 -728 -34 -911 -5 -44 -12 -82 -15 -85 -9 -8 -160 146 -239 244 -202 250 -279 446 -280 720 -1 150 15 238 75 420 70 211 258 510 515 819 l57 70 48 -52 c26 -28 103 -125 170 -214z m435 -964 c4 -14 4 -83 1 -152 -10 -265 -110 -467 -346 -703 -69 -69 -155 -147 -190 -174 l-64 -48 7 109 c15 227 34 350 64 417 32 68 117 191 193 277 57 64 309 300 321 300 4 0 11 -12 14 -26z m-4198 -425 c322 -59 663 -182 765 -277 34 -32 34 -47 7 -293 -11 -101 -21 -246 -23 -321 -1 -76 -5 -137 -8 -135 -4 1 -40 43 -80 92 -142 174 -301 360 -325 383 -53 48 -134 17 -134 -52 0 -42 18 -68 172 -253 178 -213 281 -344 274 -350 -3 -3 -81 4 -173 16 -92 11 -247 26 -343 31 -96 6 -187 15 -202 21 -20 8 -34 29 -57 83 -57 138 -89 286 -116 545 -15 146 -21 532 -8 545 8 8 29 5 251 -35z m7346 -200 c-1 -347 -48 -660 -127 -854 -37 -90 -43 -93 -247 -105 -96 -6 -233 -18 -305 -26 -71 -9 -154 -18 -184 -21 l-54 -6 48 64 c27 35 97 122 155 193 269 328 269 329 256 381 -6 24 -51 55 -79 55 -27 0 -69 -44 -258 -271 -105 -126 -195 -229 -199 -229 -4 0 -10 73 -13 163 -3 89 -15 247 -27 350 -19 172 -20 191 -6 212 39 60 331 189 551 244 165 41 446 92 480 86 6 -1 10 -87 9 -236z m-1206 -304 c37 -179 42 -605 8 -712 -22 -68 -92 -172 -209 -310 -96 -112 -114 -129 -123 -120 -13 13 -43 293 -44 398 0 132 17 239 62 379 50 156 114 265 222 378 66 69 67 68 84 -13z m-5108 19 c111 -104 201 -275 257 -487 25 -92 27 -119 27 -277 0 -203 -27 -390 -57 -390 -15 0 -160 171 -240 282 -70 98 -86 146 -97 287 -16 202 19 631 52 631 5 0 31 -21 58 -46z m3753 -814 c60 -144 106 -303 123 -427 15 -109 16 -129 2 -224 -24 -167 -81 -284 -201 -414 -56 -61 -154 -145 -169 -145 -15 0 32 402 63 522 23 93 24 117 1 143 -36 43 -48 48 -81 30 -52 -26 -79 -104 -111 -312 -16 -110 -50 -411 -50 -452 0 -29 -27 10 -73 106 -59 123 -107 307 -107 406 0 40 9 110 20 156 42 173 98 277 232 429 82 93 299 285 309 274 3 -4 22 -45 42 -92z m-4451 -36 c191 -19 399 -59 452 -86 23 -11 56 -32 74 -45 37 -28 226 -251 255 -302 l18 -31 -140 0 c-243 0 -436 37 -586 113 -179 90 -314 209 -399 355 -10 17 135 16 326 -4z m6752 4 c-50 -85 -170 -211 -254 -268 -158 -107 -299 -160 -485 -184 -126 -17 -385 -22 -385 -8 0 12 96 139 183 241 62 73 87 94 139 119 117 55 442 106 706 110 80 2 102 -1 96 -10z m-8080 -1349 c134 -32 310 -100 491 -189 194 -97 263 -143 290 -192 19 -36 19 -38 2 -55 -16 -16 -37 -18 -170 -17 -171 1 -303 24 -527 90 -158 47 -195 52 -220 29 -30 -27 -27 -88 5 -113 60 -47 390 -142 585 -168 58 -7 171 -14 252 -14 147 0 148 0 176 -27 17 -16 50 -75 77 -138 65 -152 186 -384 250 -480 30 -44 96 -134 149 -200 52 -66 92 -122 89 -125 -3 -3 -42 35 -87 85 -208 231 -419 410 -568 483 -182 89 -301 114 -563 118 -187 2 -205 4 -268 28 -139 52 -365 200 -488 319 -63 61 -184 210 -279 342 -47 68 -59 90 -48 96 19 13 190 66 289 89 267 62 417 73 563 39z m439 -1094 c177 -31 332 -103 490 -230 98 -79 317 -298 317 -318 0 -4 -104 -7 -232 -5 l-233 3 -67 32 c-101 47 -237 145 -344 246 -103 97 -244 251 -244 266 0 5 8 12 18 14 40 11 216 6 295 -8z m-405 -167 c135 -146 294 -299 357 -344 30 -21 55 -42 55 -45 0 -3 -148 -11 -328 -17 -181 -6 -342 -17 -359 -23 -60 -20 -66 -111 -10 -136 14 -6 162 -8 387 -5 l365 5 -116 -120 c-120 -124 -267 -300 -295 -355 l-16 -31 -72 6 c-137 10 -418 133 -646 284 -139 92 -370 276 -370 295 0 6 6 16 14 22 7 6 65 54 127 107 176 148 394 296 559 379 71 36 196 79 229 80 18 0 49 -26 119 -102z m1199 -574 c9 -26 -266 -289 -392 -375 -68 -46 -202 -102 -316 -133 -98 -26 -249 -39 -256 -21 -6 19 71 123 167 227 116 124 263 248 344 288 l60 30 195 -2 c125 -2 196 -7 198 -14z m442 -14 c22 -11 72 -48 113 -83 186 -162 425 -337 692 -508 l210 -134 -170 -12 c-292 -20 -407 -45 -679 -148 -139 -53 -156 -57 -229 -56 -43 0 -131 8 -195 18 -288 42 -744 -1 -864 -81 -38 -26 -47 -68 -21 -97 21 -24 79 -25 190 -5 163 30 276 39 447 33 95 -2 183 -9 197 -14 23 -10 20 -13 -70 -80 -271 -201 -419 -268 -654 -298 -109 -14 -144 -15 -225 -5 -125 15 -348 62 -484 101 -87 26 -107 35 -102 47 3 9 48 80 100 157 101 152 199 270 313 377 77 72 99 82 247 108 39 7 117 28 175 47 206 67 325 150 597 418 112 110 222 210 245 223 50 27 103 25 167 -8z m1134 -1664 c-259 -265 -393 -432 -393 -488 0 -50 53 -82 104 -62 9 4 77 74 150 158 166 188 417 446 435 446 15 0 8 -143 -14 -280 -71 -431 -344 -664 -969 -824 -76 -20 -145 -36 -154 -36 -13 0 -14 16 -9 113 11 199 82 516 142 638 146 295 354 436 729 494 169 27 171 38 -21 -159z"/><path d="M8159 16019 c-38 -38 -141 -295 -188 -469 -83 -304 -64 -574 56 -774 78 -131 150 -197 383 -352 154 -102 197 -141 231 -210 39 -80 33 -168 -29 -404 -151 -575 -137 -859 57 -1102 74 -94 163 -174 275 -250 163 -109 236 -133 276 -92 21 22 44 122 59 266 12 103 2 243 -24 369 -17 80 -69 233 -90 266 -31 47 -109 41 -133 -10 -12 -25 -10 -41 22 -150 50 -177 56 -214 56 -360 0 -137 -5 -177 -23 -177 -23 0 -175 120 -243 193 -77 82 -124 163 -149 257 -22 80 -19 271 5 415 32 191 106 445 129 445 3 0 58 -42 121 -93 63 -51 179 -139 257 -195 185 -134 237 -192 313 -349 47 -97 65 -124 84 -129 69 -17 94 26 79 132 -27 185 -136 317 -444 534 -169 119 -309 252 -346 329 -41 83 -39 167 9 286 88 218 109 279 124 347 21 100 29 316 15 405 -23 148 -119 334 -238 463 -148 160 -527 430 -603 430 -11 0 -30 -10 -41 -21z"/><path d="M15039 13510 c-200 -41 -467 -129 -599 -195 -189 -96 -370 -252 -460 -397 -125 -205 -165 -408 -138 -713 18 -206 14 -348 -12 -470 -53 -242 -276 -735 -443 -978 -286 -414 -647 -730 -1295 -1132 -150 -93 -457 -296 -568 -375 -264 -189 -488 -414 -657 -663 -172 -252 -326 -657 -386 -1018 -74 -437 -77 -675 -21 -1604 59 -968 60 -983 156 -1669 40 -288 47 -320 77 -341 30 -21 90 -19 118 3 28 24 28 37 -10 272 -101 621 -133 985 -187 2080 -22 469 -24 560 -15 737 24 458 68 686 199 1039 108 291 338 619 447 640 55 10 150 -2 186 -23 64 -37 69 -51 73 -238 8 -319 67 -513 218 -712 101 -134 276 -268 430 -329 35 -14 77 -31 93 -38 149 -66 302 -113 489 -151 256 -52 276 -36 262 209 -22 383 -122 747 -260 940 -93 130 -251 254 -411 323 -152 65 -300 95 -615 123 -112 10 -272 49 -285 70 -13 20 39 82 109 131 94 67 228 134 317 159 161 44 473 51 672 15 182 -33 401 -112 458 -166 29 -27 31 -33 25 -77 -4 -26 -9 -108 -12 -182 -9 -204 27 -392 103 -545 121 -243 338 -419 663 -540 41 -15 84 -31 95 -35 49 -19 145 -50 199 -64 52 -13 62 -13 87 0 16 8 32 26 35 40 11 42 -3 351 -20 451 -18 103 -61 239 -111 348 l-33 74 172 -6 c182 -6 240 -1 471 43 125 25 322 76 415 109 126 44 119 103 -44 365 -70 112 -108 165 -264 367 -23 31 -41 60 -39 66 2 6 59 25 128 43 328 86 630 258 1006 572 62 51 122 105 133 119 34 44 26 77 -32 140 -59 62 -255 228 -364 309 -172 127 -419 274 -547 324 l-68 27 93 56 c296 176 482 363 709 709 106 163 105 184 -11 237 -190 85 -544 175 -772 196 -43 4 -78 9 -78 10 0 2 23 41 52 87 73 117 122 227 157 348 61 214 91 432 91 656 0 241 -15 259 -181 224z m193 -1534 c194 -38 408 -104 408 -125 0 -10 -81 -127 -160 -232 -162 -215 -449 -437 -665 -513 -63 -22 -89 -25 -270 -29 -258 -6 -385 -34 -560 -123 -146 -74 -377 -259 -478 -382 -31 -37 -84 -94 -118 -127 l-62 -60 34 47 c19 26 74 99 122 163 121 157 263 411 357 637 19 47 44 88 62 103 28 24 34 25 171 25 223 0 439 37 679 116 160 53 209 96 180 158 -17 38 -55 43 -147 17 -326 -90 -501 -122 -653 -120 -108 2 -136 9 -140 37 -6 38 24 70 121 134 164 106 445 229 652 284 79 21 106 24 215 20 75 -3 176 -15 252 -30z m-604 -1072 c12 -4 22 -12 22 -18 0 -19 -149 -184 -241 -269 -149 -137 -262 -212 -376 -252 -64 -23 -81 -25 -286 -25 l-218 0 16 22 c31 45 242 251 318 311 140 111 315 192 476 221 79 15 249 20 289 10z m340 -100 c95 -31 212 -94 359 -190 191 -126 475 -350 471 -370 -4 -20 -204 -182 -327 -266 -160 -110 -306 -189 -447 -246 -130 -51 -270 -87 -298 -76 -9 3 -41 42 -72 86 -66 94 -164 209 -283 331 l-86 89 371 -4 c354 -3 373 -2 393 16 28 25 29 86 2 110 -24 22 -133 32 -470 42 -133 4 -240 10 -239 15 2 4 29 28 61 52 76 59 196 175 330 320 83 89 115 117 134 117 13 0 59 -12 101 -26z m-1698 -655 c32 -14 97 -73 220 -197 179 -181 314 -292 449 -369 90 -52 254 -107 383 -129 51 -9 109 -23 128 -32 44 -20 240 -217 319 -321 32 -42 89 -125 125 -184 l66 -107 -24 -10 c-123 -47 -419 -113 -577 -130 -181 -19 -401 20 -559 100 -69 35 -305 193 -365 243 l-39 34 86 13 c122 18 421 8 553 -20 129 -26 180 -28 205 -5 29 27 25 69 -9 97 -51 43 -278 91 -496 103 -105 7 -151 3 -499 -34 -48 -6 -102 -7 -120 -4 -17 3 -101 33 -186 65 -253 97 -419 131 -695 146 l-140 7 215 139 c238 155 451 309 640 465 126 104 204 151 250 151 14 0 45 -10 70 -21z m708 3 c92 -35 223 -143 366 -299 93 -103 184 -229 173 -240 -4 -3 -55 -1 -113 5 -118 13 -268 59 -382 116 -120 60 -276 191 -426 355 -58 64 -59 66 -35 72 13 4 102 7 196 8 145 1 181 -2 221 -17z m-1923 -1537 c253 -50 420 -155 546 -342 28 -42 65 -106 82 -142 66 -146 128 -425 143 -643 6 -86 5 -98 -9 -98 -9 0 -87 18 -174 40 -617 157 -885 394 -957 846 -9 56 -16 136 -16 178 0 70 2 76 18 67 28 -15 279 -274 417 -429 146 -165 161 -177 209 -168 47 9 64 49 42 100 -30 71 -205 276 -413 484 -73 74 -133 136 -133 138 0 9 122 -7 245 -31z"/><path d="M12680 12339 c-278 -30 -553 -197 -801 -485 -94 -111 -119 -149 -119 -187 0 -38 20 -54 110 -90 231 -93 435 -132 645 -124 169 6 246 26 388 99 131 67 238 148 362 272 184 185 240 290 182 344 -55 51 -390 154 -562 172 -100 11 -99 11 -205 -1z"/><path d="M7592 12340 c-92 -10 -187 -32 -327 -77 -214 -68 -267 -104 -251 -167 18 -71 266 -346 396 -438 100 -71 246 -144 345 -174 73 -21 117 -27 230 -31 212 -8 356 21 660 130 66 24 92 56 82 99 -15 59 -188 259 -322 373 -213 181 -377 258 -611 285 -97 11 -96 11 -202 0z"/><path d="M12825 11324 c-201 -87 -390 -239 -493 -397 -57 -87 -87 -159 -109 -262 -28 -132 -3 -540 39 -618 5 -10 25 -25 44 -33 44 -18 72 -7 209 83 136 91 313 269 376 378 93 160 124 289 124 515 0 222 -33 347 -94 363 -11 3 -54 -10 -96 -29z"/><path d="M7531 11324 c-74 -94 -78 -500 -8 -700 24 -65 66 -144 112 -209 88 -123 327 -330 450 -390 43 -21 55 -23 87 -14 44 12 61 38 77 119 36 184 39 453 6 575 -65 246 -280 474 -580 617 -77 36 -117 37 -144 2z"/><path d="M8756 10859 c-15 -18 -40 -76 -60 -142 -132 -425 -137 -675 -21 -923 57 -122 108 -194 196 -281 99 -96 146 -133 264 -213 124 -83 156 -100 193 -100 58 0 94 75 149 308 25 106 27 134 27 307 0 178 -2 196 -27 280 -44 144 -124 296 -222 417 -94 117 -237 255 -342 329 -83 59 -119 63 -157 18z m161 -237 c119 -95 263 -272 332 -409 85 -170 114 -384 77 -588 -18 -98 -41 -194 -50 -203 -13 -13 -187 118 -276 208 -98 98 -144 165 -187 270 -79 197 -71 392 33 743 8 24 16 22 71 -21z"/><path d="M11567 10834 c-199 -138 -387 -348 -473 -529 -29 -60 -65 -150 -81 -200 -26 -85 -27 -101 -28 -290 0 -218 7 -264 67 -463 57 -185 91 -193 278 -69 323 216 475 407 541 684 26 108 28 285 4 418 -15 87 -79 327 -110 416 -38 106 -84 113 -198 33z m106 -311 c20 -82 41 -186 48 -232 27 -192 -19 -384 -133 -549 -64 -93 -287 -289 -361 -318 -11 -4 -19 13 -35 73 -33 123 -43 195 -43 311 -1 186 54 367 156 523 48 73 300 339 321 339 5 0 27 -66 47 -147z"/></g></g></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+    </a>
+    <span class="es-sub">Guides</span>
+    <nav class="es-nav" aria-label="Documentation">
+      <a href="/guides/">Guides</a>
+      <a href="/plugins/">Plugin docs</a>
+      <a href="/hosting/hosting-options/">Hosting</a>
+      <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <div class="crumbs-inner">
+    <a href="https://documentation.elmspark.com/guides/">Guides</a>
+    <span class="sep" aria-hidden="true">&rsaquo;</span>
+    <span aria-current="page">Hosting PageMotor on Vultr</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Hosting guide</div>
+    <h1>Hosting PageMotor on Vultr</h1>
+    <p class="sub">Benchmarks, an interactive plan picker, and the exact bootstrap to get PageMotor live on a fresh Vultr box. About thirty minutes of hands-on work, or hand the whole thing to Claude Code.</p>
+    <div class="badges">
+      <span class="badge">⏱ <b>~30 min</b> hands-on</span>
+      <span class="badge">💷 from <b>$12/mo</b></span>
+      <span class="badge">🤖 <b>Claude Code</b> can do it for you</span>
+      <span class="badge">Updated April 2026</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs"><div class="tabrow" role="tablist">
+  <button class="tab" id="tab-why" role="tab" aria-selected="true" aria-controls="p-why" tabindex="0" data-panel="p-why">Why Vultr</button>
+  <button class="tab" id="tab-plan" role="tab" aria-selected="false" aria-controls="p-plan" tabindex="-1" data-panel="p-plan">Pick your plan</button>
+  <button class="tab" id="tab-region" role="tab" aria-selected="false" aria-controls="p-region" tabindex="-1" data-panel="p-region">Pick a region</button>
+  <button class="tab" id="tab-signup" role="tab" aria-selected="false" aria-controls="p-signup" tabindex="-1" data-panel="p-signup">Sign up</button>
+  <button class="tab" id="tab-claude" role="tab" aria-selected="false" aria-controls="p-claude" tabindex="-1" data-panel="p-claude">The Claude Code way</button>
+  <button class="tab" id="tab-hand" role="tab" aria-selected="false" aria-controls="p-hand" tabindex="-1" data-panel="p-hand">By hand</button>
+  <button class="tab" id="tab-email" role="tab" aria-selected="false" aria-controls="p-email" tabindex="-1" data-panel="p-email">Email</button>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ============ WHY ============ -->
+<section class="panel active" id="p-why" role="tabpanel" aria-labelledby="tab-why" tabindex="0">
+  <h2>Why a VPS, and why Vultr</h2>
+  <p class="lede">Shared hosts cap PHP execution time, usually 30 to 60 seconds, and will not lift it. For a brochure site that is fine. For PageMotor with AI plugins, ecommerce, or a busy contact form, that cap becomes a ceiling the plugin keeps hitting.</p>
+  <p>A plugin waiting on an AI API response can easily spend more than a minute on one request. Shared hosting kills the process halfway through. On a VPS the timeouts are yours to set.</p>
+
+  <h3>The April 2026 test rig</h3>
+  <p>We set up a three-way rig across Vultr (New Jersey), DigitalOcean (New York) and Linode (Newark). Same PageMotor version, same plugins, same scenario on each. In this run, Vultr led on every metric we measured, and on price.</p>
+  <table>
+    <thead><tr><th>What</th><th>Vultr</th><th>DigitalOcean</th><th>Linode</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Sequential disk write</td><td class="win">2,930 MB/s</td><td>1,223 MB/s</td><td>587 MB/s</td></tr>
+      <tr class="hl"><td>Random 4K IOPS</td><td class="win">139,264</td><td>68,894</td><td>94,856</td></tr>
+      <tr class="hl"><td>PHP benchmark</td><td class="win">0.076s</td><td>0.211s</td><td>0.154s</td></tr>
+      <tr class="hl"><td>500 DB inserts</td><td class="win">1,484ms</td><td>5,445ms</td><td>4,233ms</td></tr>
+      <tr class="hl"><td>Anthropic API latency*</td><td class="win">23.8ms</td><td>45.5ms</td><td>35.8ms</td></tr>
+      <tr class="hl"><td>Full pipeline time</td><td class="win">7m 17s</td><td>10m 38s</td><td>7m 58s</td></tr>
+      <tr class="hl"><td>Monthly cost</td><td class="win">$60</td><td>$63</td><td>$72</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>Read it as directional, not a benchmark suite.</b> A single April 2026 run on comparable mid-tier plans in the regions above. *The Anthropic API latency row is dominated by network distance from each data centre to Anthropic's endpoint, not the VPS itself, so treat it as a region and routing signal. Other low-cost hosts (Hetzner, for example) were out of scope.</div>
+  <p>For PageMotor specifically, three numbers matter most. <strong>DB inserts</strong>, because the admin is database-heavy. <strong>Disk IOPS</strong>, because the page cache, CSS compiler and uploads all hit the disk constantly. <strong>API latency</strong>, because AI plugins round-trip to Anthropic dozens of times per session.</p>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section class="panel" id="p-plan" role="tabpanel" aria-labelledby="tab-plan" tabindex="0">
+  <h2>Pick your plan</h2>
+  <p>Vultr charges the same USD price in every data centre, so location does not change the bill. Only the plan does. Tap what you are running:</p>
+
+  <div class="picker">
+    <div class="chips" role="group" aria-label="What are you running?">
+      <button class="chip" aria-pressed="true" data-plan="solo">Solo, 1-2 sites</button>
+      <button class="chip" aria-pressed="false" data-plan="soloai">Solo + AI plugins</button>
+      <button class="chip" aria-pressed="false" data-plan="sme">SME, one busy site</button>
+      <button class="chip" aria-pressed="false" data-plan="smeheavy">SME, heavy traffic</button>
+      <button class="chip" aria-pressed="false" data-plan="agency">Agency, 50-100 sites</button>
+      <button class="chip" aria-pressed="false" data-plan="scale">Agency, 100-200 sites</button>
+    </div>
+    <div class="verdict" id="planVerdict" aria-live="polite"><div class="plan">Cloud Compute, High Performance</div><div class="price"><b>$12/mo</b> &middot; 1 vCPU / 2 GB RAM / 50 GB NVMe</div><div>A capable box for a couple of brochure sites, a contact form, EP Email, EP Newsletter and a Stripe-backed shop. AI plugins run, though heavy generations may hit the 2 GB ceiling.</div></div>
+  </div>
+
+  <h3>Estimate the cost per site</h3>
+  <div class="calc">
+    <label for="siteCount">Sites on one agency box (VX1, 2 vCPU / 8 GB, $60/mo): <b id="scOut">100</b></label>
+    <input type="range" id="siteCount" min="1" max="100" value="100" step="1">
+    <div class="out">
+      <div class="stat"><div class="n" id="perSite">$0.60</div><div class="l">per site / month</div></div>
+      <div class="stat"><div class="n" id="perSiteGbp">~50p</div><div class="l">roughly, in GBP</div></div>
+      <div class="stat"><div class="n">$5-15</div><div class="l">shared hosting, per site (and AI still won't run)</div></div>
+    </div>
+  </div>
+  <div class="note calm"><b>Single-site owners:</b> the $12 High Performance plan is the right answer for one or two sites, not the $60 one. The VX1 box only pays off past roughly five sites.</div>
+
+  <h3>Full reference</h3>
+  <table>
+    <thead><tr><th>Profile</th><th>Plan</th><th>Specs</th><th>Price</th></tr></thead>
+    <tbody>
+      <tr><td>Solo, 1-2 sites</td><td>High Performance</td><td>1 vCPU / 2 GB / 50 GB</td><td>$12/mo</td></tr>
+      <tr><td>Solo with AI plugins</td><td>High Performance</td><td>2 vCPU / 4 GB / 100 GB</td><td>$24/mo</td></tr>
+      <tr><td>SME, one busy site</td><td>High Performance</td><td>2 vCPU / 4 GB / 100 GB</td><td>$24/mo</td></tr>
+      <tr><td>SME, heavy traffic</td><td>High Performance</td><td>4 vCPU / 8 GB / 180 GB</td><td>$48/mo</td></tr>
+      <tr class="hl"><td>Agency, 50-100 sites</td><td>VX1</td><td>2 vCPU / 8 GB / 50 GB</td><td>$60/mo</td></tr>
+      <tr><td>Agency, 100-200 sites</td><td>VX1</td><td>4 vCPU / 16 GB / 80 GB</td><td>$120/mo</td></tr>
+    </tbody>
+  </table>
+  <p>Auto Backups add 20 per cent to whichever plan you pick. On production, enable them. Pricing verified on vultr.com/pricing/ in April 2026.</p>
+</section>
+
+<!-- ============ REGION ============ -->
+<section class="panel" id="p-region" role="tabpanel" aria-labelledby="tab-region" tabindex="0">
+  <h2>Pick a region</h2>
+  <p>Same price everywhere. Latency is the only thing that changes. Pick the closest Vultr data centre to your <em>visitors</em>, not yourself.</p>
+  <div class="picker">
+    <div class="chips" role="group" aria-label="Where are your visitors?">
+      <button class="chip" aria-pressed="true" data-region="ukeu">UK &amp; Europe</button>
+      <button class="chip" aria-pressed="false" data-region="usa">USA</button>
+      <button class="chip" aria-pressed="false" data-region="row">Rest of the world</button>
+    </div>
+    <div class="verdict" id="regionVerdict" aria-live="polite"><div class="plan">UK &amp; Europe</div><div class="price">London, Frankfurt, Paris, Amsterdam, Madrid, Stockholm, Warsaw.</div><div>For most UK and Irish users, London is the obvious pick. Frankfurt fits significant German-speaking traffic or a central-European footprint reaching Berlin, Vienna and Prague at similar latency.</div></div>
+  </div>
+  <p>Vultr has 32 regions at the time of writing (April 2026), across every populated continent. There is almost always one within 100 ms of your audience.</p>
+</section>
+
+<!-- ============ SIGNUP ============ -->
+<section class="panel" id="p-signup" role="tabpanel" aria-labelledby="tab-signup" tabindex="0">
+  <h2>What to tick on the Vultr signup screen</h2>
+  <table>
+    <thead><tr><th>Setting</th><th>Pick</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Server type</td><td class="win">Cloud Compute</td><td>Bare Metal, Kubernetes and Managed Databases are the wrong shape for a PageMotor host.</td></tr>
+      <tr><td>CPU &amp; Storage</td><td class="win">Dedicated CPU, NVMe</td><td>Dedicated vCPUs avoid the noisy-neighbour latency PageMotor's admin feels.</td></tr>
+      <tr><td>Location</td><td class="win">Closest to visitors</td><td>Same price everywhere. Pick by audience latency.</td></tr>
+      <tr><td>Image</td><td class="win">Ubuntu 24.04 LTS x64</td><td>Security updates to 2029, ships PHP 8.3, tooling is first-class.</td></tr>
+      <tr><td>Plan</td><td class="win">Match to size</td><td>$12 solo / $24 SME / $60 agency / $120 scale.</td></tr>
+      <tr><td>Auto Backups</td><td class="win">Enable for production</td><td>20 per cent on top. Skip for a pure test rig only.</td></tr>
+      <tr><td>IPv6</td><td class="win">Enabled (free)</td><td>Future-proofs the box at zero cost.</td></tr>
+      <tr><td>SSH Keys</td><td class="win">ed25519, before first boot</td><td>The most important security click on the page.</td></tr>
+      <tr><td>Hostname</td><td class="win">Descriptive, eg pm-prod-01</td><td>Readable in logs and the dashboard.</td></tr>
+      <tr><td>Everything else</td><td class="win">Default</td><td>No startup script, no VPC, no DDoS add-on at this scale.</td></tr>
+    </tbody>
+  </table>
+  <p>No ed25519 key yet? Generate one on your Mac with <code>ssh-keygen -t ed25519</code>, then paste the public key (<code>~/.ssh/id_ed25519.pub</code>) into Vultr's SSH Keys section before launching.</p>
+  <div class="reflink">🎁 <strong>$300 of free Vultr credit:</strong> signing up through <a href="https://www.vultr.com/?ref=9892518-9J">our referral link</a> gives you $300 of credit to test the platform, at no extra cost. On the $12 plan that is roughly 25 months; on the $24 plan about 12; on the $60 box about 5. You need to link a valid card or PayPal to activate it, and the unused portion expires 30 days after signup, so pick the plan you actually intend to run. <em>Full disclosure: if you stay past 30 days and spend at least $100, we earn a $100 referral credit. It costs you nothing and does not change your price.</em></div>
+</section>
+
+<!-- ============ CLAUDE CODE ============ -->
+<section class="panel" id="p-claude" role="tabpanel" aria-labelledby="tab-claude" tabindex="0">
+  <h2>Let Claude Code do the heavy lifting</h2>
+  <p class="lede">This guide recommends a complete, Claude-Code-driven stack: <strong>Vultr</strong> for the server, <strong>Cloudflare</strong> for DNS, <strong>Mailgun</strong> for email. You say what you want; Claude Code provisions the box over SSH, manages DNS through Cloudflare's API, and configures email through the EP Mailgun plugins.</p>
+  <p>If "bash commands" and "edit the Nginx vhost" made your eyes glaze over, you are the reason this section exists. <a href="https://claude.com/claude-code">Claude Code</a> is a command-line tool from Anthropic that SSHes into your Vultr box, runs every command in this guide, and explains each step in plain English as it goes. You do not need to understand the commands. You need to know what you want: PageMotor running at your domain, with SSL, on a fresh box.</p>
+
+  <div class="grid2">
+    <div class="colcard yes">
+      <h3>What Claude Code does for you</h3>
+      <ul>
+        <li>Runs every <code>apt install</code>, config edit, <code>chmod</code> and <code>systemctl</code> command</li>
+        <li>Shows you each command before running it</li>
+        <li>Checks each step's output, stops on errors, asks before retrying</li>
+        <li>Reads this guide as the reference, so the box matches the docs</li>
+        <li>Never deletes anything without asking first</li>
+        <li>Uses British English and plain language</li>
+      </ul>
+    </div>
+    <div class="colcard no">
+      <h3>What it will NOT do automatically</h3>
+      <ul>
+        <li>Create your Vultr account (you sign up as a human)</li>
+        <li>Provision the VPS (you click through Vultr's screen)</li>
+        <li>Point DNS at the new IP (you edit your domain's DNS)</li>
+        <li>Create your admin account (you register at <code>/admin/</code>)</li>
+        <li>Install EP plugins in the same unattended run (a quick second prompt)</li>
+      </ul>
+      <p style="margin:10px 0 0;font-size:13.5px">The first four cross a human-authorisation line: money, identity, DNS ownership, admin rights.</p>
+    </div>
+  </div>
+
+  <h3>Before Claude Code takes over: 7 manual steps</h3>
+  <ol class="steps">
+    <li><strong>Buy a domain</strong> if you do not have one. Any registrar works; <strong>we recommend Cloudflare</strong> (free DNS, wholesale renewals, Claude-Code-manageable). Full setup is in the <a href="/hosting/cloudflare/">Cloudflare DNS guide</a>. You need to be able to edit the DNS A record.</li>
+    <li><strong>Install Claude Code</strong> on your Mac from <a href="https://claude.com/claude-code">claude.com/claude-code</a>. Free to install; you pay only for Anthropic API usage, a few pence for this setup.</li>
+    <li><strong>Generate an SSH key</strong>, one time ever: <code>ssh-keygen -t ed25519</code>, then press Enter three times. Your public key is at <code>~/.ssh/id_ed25519.pub</code>.</li>
+    <li><strong>Sign up for Vultr and provision the VPS</strong> via <a href="https://www.vultr.com/?ref=9892518-9J">our referral link</a> ($300 credit). Use the choices in the "Sign up" tab. Paste your SSH public key (<code>cat ~/.ssh/id_ed25519.pub | pbcopy</code>) into the SSH Keys field during signup.</li>
+    <li><strong>Note the VPS IP address</strong> once provisioning finishes (30 to 60 seconds). You need it for the next step and the prompt.</li>
+    <li><strong>Point your domain's A record at the VPS IP.</strong> Set it <strong>DNS only (grey cloud)</strong> if on Cloudflare, so certbot can issue SSL without obstruction. Quick check: <code>dig yoursite.com +short</code> should return the VPS IP. Claude Code can do this for you if it has Cloudflare API access.</li>
+    <li><strong>Download the PageMotor 0.8.3b core ZIP</strong> from the forum download area, unzip to somewhere easy like <code>~/Downloads/pagemotor-0.8.3b/</code>, and note the path. It should contain <code>pagemotor.php</code>, <code>index.php</code>, <code>lib/</code>, <code>config-sample.php</code> and <code>license.txt</code>.</li>
+  </ol>
+
+  <h3>The prompt (copy, paste, edit three lines)</h3>
+  <p>Open Claude Code in Terminal, paste this, edit the three bracketed placeholders, then hit Enter and watch it run.</p>
+  <div class="codewrap">
+    <button class="copy" type="button" data-copy="prompt">Copy</button>
+<pre id="prompt"><code>I have a fresh Ubuntu 24.04 VPS at [VPS_IP_FROM_VULTR].
+I can SSH as root using my ed25519 key at ~/.ssh/id_ed25519.
+
+My domain is [yoursite.com]. The A record already points at the VPS IP.
+
+My PageMotor 0.8.3b core files are in [~/Downloads/pagemotor-0.8.3b/].
+The folder contains pagemotor.php, index.php, lib/, config-sample.php, license.txt.
+
+Please follow the "From empty box to live PageMotor" procedure at
+https://documentation.elmspark.com/hosting/vultr/
+
+Do this end-to-end:
+1. Bootstrap the server (nginx, PHP 8.3 FPM with required extensions,
+   MariaDB, certbot, fail2ban, UFW allowing only 22/80/443, and
+   unattended-upgrades for automatic security patches)
+2. Configure a fail2ban [sshd] jail and confirm it is active
+3. Run mysql_secure_installation (set root auth, remove anonymous users
+   and the test database, disallow remote root) and confirm MariaDB
+   listens only on localhost
+4. Configure MariaDB to default to utf8mb4
+5. At an interactive mariadb prompt (never put the DB password on the
+   shell command line), create the database and a dedicated DB user
+   scoped to it
+6. Upload my PageMotor 0.8.3b core to /var/www/mysite on the VPS,
+   create user-content subfolders, set ownership to www-data,
+   755 directories / 644 files (no 777 or 775; www-data owns the tree)
+7. Write config.php with my four database constants:
+   DB_NAME, DB_USER, DB_PASSWORD and DB_HOST (localhost). Leave the rest blank.
+8. Create the Nginx vhost with fastcgi_read_timeout 600,
+   client_max_body_size 64M, and the /lib/ php denial rule
+9. Set PHP max_execution_time to 300 and memory_limit to 256M
+10. Run certbot --nginx for SSL, then verify renewal with
+    certbot renew --dry-run and confirm the certbot timer is active
+11. Verify the Nginx config is valid and services are running
+12. Hit the homepage once with curl to trigger PageMotor's first-load
+    table creation
+13. Confirm the tables exist in the database
+
+Stop after step 13. Do NOT register an admin account. Do NOT install
+EP plugins. I will register via /admin/ in a browser, then ask you to
+install plugins as a separate next task.
+
+Rules:
+- Tell me what you are about to do before doing it
+- Show me the output of each step
+- Stop on any error and ask me before continuing
+- British English (organise, behaviour, colour)
+- No em dashes in any file you write. Use commas or full stops.
+- Ask before anything destructive</code></pre>
+  </div>
+  <p><strong>What to edit:</strong> <code>[VPS_IP_FROM_VULTR]</code> with your VPS IP; <code>[yoursite.com]</code> with your domain (appears twice); <code>[~/Downloads/pagemotor-0.8.3b/]</code> with the path where you unzipped the core.</p>
+
+  <h3>After the prompt finishes</h3>
+  <ol class="steps">
+    <li>Open <code>https://yoursite.com/admin/</code> in your browser.</li>
+    <li>Register your first account. Whoever registers first becomes the administrator.</li>
+    <li>Come back to Claude Code and paste the plugins prompt below.</li>
+  </ol>
+  <div class="codewrap">
+    <button class="copy" type="button" data-copy="plugins">Copy</button>
+<pre id="plugins"><code>Please install EP Email, EP Newsletter, EP Email Mailgun, EP Newsletter Mailgun,
+EP GDPR, EP Password Reset, EP Diagnostics and EP Assistant on yoursite.com.
+Then configure EP Email to send through Mailgun: set the Email Transport to
+Mailgun EU (api.eu.mailgun.net, GDPR-clean routing) using my Mailgun sending
+key [paste-sending-key] and sending domain mg.yoursite.com.</code></pre>
+  </div>
+  <div class="note"><b>One thing the prompt does not cover:</b> email delivery needs a Mailgun account (free plan, 100 emails/day, no card) and a verified sending subdomain <code>mg.yoursite.com</code> with its SPF and DKIM records. See the <strong>Email</strong> tab, or the dedicated <a href="/guides/mailgun-email/">Mailgun setup guide</a>.</div>
+</section>
+
+<!-- ============ BY HAND ============ -->
+<section class="panel" id="p-hand" role="tabpanel" aria-labelledby="tab-hand" tabindex="0">
+  <h2>From empty box to live PageMotor, by hand</h2>
+  <p>Using the Claude Code prompt? You can skip this. This documents the exact sequence Claude Code runs, kept here for transparency and for anyone who prefers to do it themselves. About 30 minutes once DNS has propagated.</p>
+
+  <details open>
+    <summary>1. Bootstrap the server</summary>
+    <p>SSH in as root using your ed25519 key.</p>
+    <div class="codewrap"><button class="copy" type="button" data-copy="boot">Copy</button>
+<pre id="boot"><code>apt update &amp;&amp; apt upgrade -y
+apt install -y nginx php8.3-fpm php8.3-mysql php8.3-curl php8.3-gd \
+  php8.3-mbstring php8.3-xml php8.3-zip php8.3-intl php8.3-bcmath \
+  php8.3-opcache mariadb-server certbot python3-certbot-nginx \
+  fail2ban ufw unattended-upgrades unzip
+
+<span class="tok-c"># Confirm PageMotor's required PHP extensions</span>
+php -m | grep -iE 'mysqli|mbstring|curl|zip|fileinfo|openssl'
+
+<span class="tok-c"># Turn on automatic security updates</span>
+dpkg-reconfigure -plow unattended-upgrades
+
+ufw allow OpenSSH
+ufw allow 'Nginx Full'
+ufw enable</code></pre></div>
+    <p>This leaves only ports 22, 80 and 443 open. Fail2ban installs inactive, so enable an SSH jail:</p>
+    <div class="codewrap"><button class="copy" type="button" data-copy="f2b">Copy</button>
+<pre id="f2b"><code>cat &gt; /etc/fail2ban/jail.local &lt;&lt;'EOF'
+[sshd]
+enabled = true
+maxretry = 5
+bantime = 1h
+EOF
+systemctl enable --now fail2ban
+fail2ban-client status sshd</code></pre></div>
+  </details>
+
+  <details>
+    <summary>2. Make MariaDB speak utf8mb4 by default</summary>
+    <p>Without this, emojis land in the database as <code>?</code>. Create <code>/etc/mysql/conf.d/utf8mb4.cnf</code>:</p>
+    <div class="codewrap"><button class="copy" type="button" data-copy="utf8">Copy</button>
+<pre id="utf8"><code>[mysqld]
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[client]
+default-character-set = utf8mb4</code></pre></div>
+    <p>Then <code>systemctl restart mariadb</code>.</p>
+  </details>
+
+  <details>
+    <summary>3. Harden MariaDB, then create the database</summary>
+    <p>Run <code>mysql_secure_installation</code>: set or confirm root authentication, remove anonymous users, disallow remote root, drop the <code>test</code> database. Ubuntu 24.04's MariaDB already listens only on localhost. Then create a scoped database and user at an interactive prompt so the password never lands in shell history:</p>
+    <div class="codewrap"><button class="copy" type="button" data-copy="db">Copy</button>
+<pre id="db"><code>mariadb -u root -p</code></pre></div>
+    <div class="codewrap"><button class="copy" type="button" data-copy="dbsql">Copy</button>
+<pre id="dbsql"><code>CREATE DATABASE mysite_pm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'mysite_db'@'localhost' IDENTIFIED BY 'your-strong-password';
+GRANT ALL ON mysite_pm.* TO 'mysite_db'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</code></pre></div>
+    <p>Use a dedicated user scoped to this database only. Never put root credentials in <code>config.php</code>.</p>
+  </details>
+
+  <details>
+    <summary>4. Drop PageMotor 0.8.3b into place</summary>
+    <div class="codewrap"><button class="copy" type="button" data-copy="drop">Copy</button>
+<pre id="drop"><code>mkdir -p /var/www/mysite
+cd /var/www/mysite
+<span class="tok-c"># Copy pagemotor.php, index.php and lib/ from your local core</span>
+mkdir -p user-content/{themes,plugins,images,uploads,css,tmp,logs}</code></pre></div>
+    <p>Copy <code>config-sample.php</code> to <code>config.php</code> and fill in the four database constants: <code>DB_NAME</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code> and <code>DB_HOST</code> (stays <code>localhost</code>). Leave the rest at their defaults; PageMotor uses utf8mb4 automatically.</p>
+    <div class="codewrap"><button class="copy" type="button" data-copy="perms">Copy</button>
+<pre id="perms"><code>chown -R www-data:www-data /var/www/mysite
+find /var/www/mysite -type d -exec chmod 755 {} \;
+find /var/www/mysite -type f -exec chmod 644 {} \;
+<span class="tok-c"># setgid so files created later keep the www-data group</span>
+find /var/www/mysite/user-content -type d -exec chmod g+s {} \;</code></pre></div>
+  </details>
+
+  <details>
+    <summary>5. The Nginx vhost</summary>
+    <p>Create <code>/etc/nginx/sites-available/mysite</code>:</p>
+    <div class="codewrap"><button class="copy" type="button" data-copy="vhost">Copy</button>
+<pre id="vhost"><code>server {
+    listen 80;
+    server_name yoursite.com;
+    root /var/www/mysite;
+    index index.php index.html;
+
+    fastcgi_read_timeout 600;
+    proxy_read_timeout 600;
+    send_timeout 600;
+    client_max_body_size 64M;
+
+    add_header X-Content-Type-Options nosniff;
+    add_header X-Frame-Options SAMEORIGIN;
+
+    location / { try_files $uri $uri/ /index.php?$query_string; }
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_read_timeout 600;
+    }
+    location ~ ^/lib/.*\.(js|css|woff|woff2|ttf|eot|svg|png|jpg|gif)$ {
+        try_files $uri =404;
+    }
+    location ~ ^/lib/.*\.php$ { deny all; }
+    location ~ /\.(ht|git|env) { deny all; }
+}</code></pre></div>
+    <div class="codewrap"><button class="copy" type="button" data-copy="vhoston">Copy</button>
+<pre id="vhoston"><code>ln -s /etc/nginx/sites-available/mysite /etc/nginx/sites-enabled/
+nginx -t &amp;&amp; systemctl reload nginx</code></pre></div>
+    <p><code>fastcgi_read_timeout 600</code> is the critical line. Nginx defaults to 60 seconds, which any AI plugin will blow through.</p>
+  </details>
+
+  <details>
+    <summary>6. PHP settings that match Nginx</summary>
+    <p>Edit <code>/etc/php/8.3/fpm/php.ini</code>:</p>
+    <div class="codewrap"><button class="copy" type="button" data-copy="phpini">Copy</button>
+<pre id="phpini"><code>max_execution_time = 300
+memory_limit = 256M
+upload_max_filesize = 64M
+post_max_size = 64M</code></pre></div>
+    <p><code>systemctl reload php8.3-fpm</code>. PHP timeout shorter than Nginx means surprise 504s; longer means processes running past when Nginx gave up. Keep them aligned. On the $12 / 2 GB plan, cap php-fpm <code>pm.max_children</code> and add a small swap file so a burst of AI calls cannot take the box down.</p>
+  </details>
+
+  <details>
+    <summary>7. SSL with Certbot</summary>
+    <p>With your A record pointing at the Vultr IP and DNS propagated:</p>
+    <div class="codewrap"><button class="copy" type="button" data-copy="ssl">Copy</button>
+<pre id="ssl"><code>certbot --nginx -d yoursite.com
+systemctl list-timers | grep certbot
+certbot renew --dry-run</code></pre></div>
+    <div class="note"><b>If you put Cloudflare's proxy in front:</b> issue the cert first with the record DNS-only (grey cloud), so certbot's HTTP-01 challenge reaches nginx. DNS-only also means PageMotor sees a true HTTPS connection and emits correct <code>https://</code> links. Turn the orange proxy on only after the cert is live, and set SSL/TLS mode to <strong>Full (strict)</strong>. Never use Flexible: it talks to your origin over plain HTTP, making PageMotor emit <code>http://</code> links and risk a redirect loop.</div>
+  </details>
+
+  <details>
+    <summary>8. First page load creates the tables</summary>
+    <p>Load your domain in a browser. PageMotor's first front-end request auto-creates its database tables, so there is no SQL file to import. Then visit <code>/admin/</code> to reach Admin Registration; the first account becomes the administrator.</p>
+    <p>Blank page here? PageMotor 0.8.3b keeps PHP errors off the screen and writes them to <code>/var/www/mysite/user-content/logs/php-errors.log</code>. Read that file rather than turning <code>display_errors</code> on.</p>
+  </details>
+
+  <details>
+    <summary>9. Install essential plugins</summary>
+    <p>Through the admin, install and activate: EP Email, EP Newsletter, EP Email Mailgun, EP Newsletter Mailgun, EP GDPR, EP Password Reset, EP Diagnostics and EP Assistant. Configure EP Email to send through Mailgun (see the <strong>Email</strong> tab).</p>
+  </details>
+
+  <h3>Settings people forget (and later regret)</h3>
+  <ul>
+    <li><strong><code>fastcgi_read_timeout</code> 600 or higher.</strong> Default 60 kills AI plugins mid-call.</li>
+    <li><strong><code>max_execution_time = 300</code>.</strong> Match PHP to Nginx or expect 504s.</li>
+    <li><strong>MariaDB <code>character-set-server = utf8mb4</code>.</strong> Without it, emojis corrupt silently.</li>
+    <li><strong>UFW before anything else.</strong> A new server gets scanned within minutes.</li>
+    <li><strong>Run <code>mysql_secure_installation</code>.</strong> A default install leaves an open <code>test</code> database and anonymous users.</li>
+    <li><strong>Enable the fail2ban [sshd] jail.</strong> The package installs inactive.</li>
+    <li><strong>ed25519 keys, then harden login.</strong> Set <code>PasswordAuthentication no</code> and <code>PermitRootLogin prohibit-password</code>, then reload ssh.</li>
+    <li><strong><code>unattended-upgrades</code> on.</strong> A one-time <code>apt upgrade</code> is not enough for a box that lives for years.</li>
+    <li><strong>opcache on.</strong> Default on Ubuntu 24.04; verify with <code>php -m | grep -i opcache</code>. 3 to 5 times the page speed for free.</li>
+  </ul>
+</section>
+
+<!-- ============ EMAIL ============ -->
+<section class="panel" id="p-email" role="tabpanel" aria-labelledby="tab-email" tabindex="0">
+  <h2>Email: Mailgun (recommended)</h2>
+  <p>Vultr gives you the box, not email, and it blocks outbound port 25, so traditional SMTP is out anyway. Mailgun is the production recommendation across both EP Email (transactional) and EP Newsletter (campaigns), via the <strong>EP Email Mailgun</strong> and <strong>EP Newsletter Mailgun</strong> driver plugins.</p>
+  <ul>
+    <li><strong>The port-25 block does not matter.</strong> The drivers POST to Mailgun's HTTPS API on port 443, not SMTP.</li>
+    <li><strong>EU region for GDPR.</strong> Pick <strong>Mailgun EU</strong> (<code>api.eu.mailgun.net</code>) for EU and UK audiences. The region is locked per domain for life, so choose it when you create the domain. North America picks <strong>Mailgun US</strong> (<code>api.mailgun.net</code>).</li>
+    <li><strong>Free to start.</strong> 100 emails a day with one verified custom sending domain, no card.</li>
+  </ul>
+  <div class="note"><b>Never put Mailgun's MX records on your root domain.</b> Verify <code>mg.yourdomain.com</code> in Mailgun, never <code>yourdomain.com</code> itself. Mailgun's MX records are for inbound mail only; on your apex they hijack delivery away from your existing mailbox and incoming mail silently stops. Sending needs only the SPF and DKIM records on <code>mg.</code>.</div>
+  <h3>What to add in Cloudflare</h3>
+  <p>For the <code>mg.yourdomain.com</code> subdomain, all set <strong>DNS only (grey cloud)</strong>, never the orange proxy:</p>
+  <ul>
+    <li>One <strong>SPF</strong> TXT record at <code>mg.yourdomain.com</code></li>
+    <li>Two <strong>DKIM</strong> CNAME records at <code>pdk1._domainkey.mg…</code> and <code>pdk2._domainkey.mg…</code></li>
+    <li>One <strong>tracking</strong> CNAME at <code>email.mg…</code></li>
+    <li>The two <strong>MX</strong> records only if you want Mailgun to <em>receive</em> mail (you usually do not, and never on the apex)</li>
+  </ul>
+  <p>For the full end-to-end walkthrough (signup, region, DNS, DKIM activation, sending key, inbox-placement verification), follow the dedicated <a href="/guides/mailgun-email/">Set up reliable email with Mailgun</a> guide.</p>
+  <div class="note"><b>Fallback:</b> if you cannot use Mailgun, Brevo's free tier (300/day) is a workable second choice via the EP Brevo drivers, with a deliverability trade-off. SendGrid is now legacy for new setups (Twilio ended permanent free plans for new accounts on 25 March 2025).</div>
+</section>
+
+<footer class="src wrap">
+  <p><strong>Summary:</strong> Vultr for the host, Cloudflare for DNS, Mailgun for email, Ubuntu 24.04 with Nginx + PHP 8.3 FPM + MariaDB + Certbot, PHP 300s / Nginx 600s timeouts matched, about 30 minutes from an empty box.</p>
+  <p style="margin-top:10px">Pricing verified April 2026; Vultr changes plans regularly, so cross-check vultr.com/pricing/ before signing up. Spotted a mistake or outdated price? <a href="https://github.com/ElmsPark-Studio/documentation/issues">Open an issue on GitHub</a>. Published by <a href="https://elmspark.com">ElmsPark</a>.</p>
+  <p style="margin-top:10px"><a href="https://documentation.elmspark.com/guides/">← All ElmsPark guides</a></p>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  // tabs (WAI-ARIA tabs pattern: roving tabindex + arrow-key nav)
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('.tab')),
+      panels=document.querySelectorAll('.panel');
+  function selectTab(t,focus){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');x.setAttribute('tabindex','-1')});
+    panels.forEach(function(p){p.classList.remove('active')});
+    t.setAttribute('aria-selected','true');t.setAttribute('tabindex','0');
+    document.getElementById(t.dataset.panel).classList.add('active');
+    if(focus){t.focus();}
+    window.scrollTo({top:0});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){selectTab(t,false)});
+    t.addEventListener('keydown',function(e){
+      var k=e.key,j=null;
+      if(k==='ArrowRight'||k==='ArrowDown'){j=(i+1)%tabs.length;}
+      else if(k==='ArrowLeft'||k==='ArrowUp'){j=(i-1+tabs.length)%tabs.length;}
+      else if(k==='Home'){j=0;}
+      else if(k==='End'){j=tabs.length-1;}
+      if(j!==null){e.preventDefault();selectTab(tabs[j],true);}
+    });
+  });
+
+  // plan picker
+  var plans={
+    solo:{plan:'Cloud Compute, High Performance',spec:'1 vCPU / 2 GB RAM / 50 GB NVMe',price:'$12/mo',cap:'A capable box for a couple of brochure sites, a contact form, EP Email, EP Newsletter and a Stripe-backed shop. AI plugins run, though heavy generations may hit the 2 GB ceiling.'},
+    soloai:{plan:'Cloud Compute, High Performance',spec:'2 vCPU / 4 GB RAM / 100 GB NVMe',price:'$24/mo',cap:'Step up from the $12 box when AI plugins do real work. Generations run without hitting the RAM ceiling.'},
+    sme:{plan:'Cloud Compute, High Performance',spec:'2 vCPU / 4 GB RAM / 100 GB NVMe',price:'$24/mo',cap:'The sweet spot for one serious site: consultancy, small shop, a service business with booking and contact forms all day. 100 GB is years of images and database growth.'},
+    smeheavy:{plan:'Cloud Compute, High Performance',spec:'4 vCPU / 8 GB RAM / 180 GB NVMe',price:'$48/mo',cap:'When sustained daily traffic regularly exceeds a few thousand visitors. AI plugins run without drama.'},
+    agency:{plan:'VX1 (General Purpose)',spec:'2 vCPU / 8 GB RAM / 50 GB NVMe',price:'$60/mo',cap:'Our test rig pick. Dedicated vCPU is the critical difference: 50 to 100 sites per box depending on traffic. Enable Auto Backups on a shared agency box.'},
+    scale:{plan:'VX1 (General Purpose)',spec:'4 vCPU / 16 GB RAM / 80 GB NVMe',price:'$120/mo',cap:'For agencies past about 60 active sites; roughly doubles the ceiling of the $60 box.'}
+  };
+  var pv=document.getElementById('planVerdict'),planChips=document.querySelectorAll('[data-plan]');
+  function showPlan(k){
+    var p=plans[k];
+    pv.innerHTML='<div class="plan">'+p.plan+'</div><div class="price"><b>'+p.price+'</b> &middot; '+p.spec+'</div><div>'+p.cap+'</div>';
+  }
+  planChips.forEach(function(c){c.addEventListener('click',function(){
+    planChips.forEach(function(x){x.setAttribute('aria-pressed','false')});
+    c.setAttribute('aria-pressed','true');showPlan(c.dataset.plan);
+  })});
+  /* #planVerdict is seeded with the 'solo' default in the HTML, so no load-time call */
+
+  // cost calculator
+  var sc=document.getElementById('siteCount'),scOut=document.getElementById('scOut'),
+      perSite=document.getElementById('perSite'),perGbp=document.getElementById('perSiteGbp');
+  function calc(){
+    var n=parseInt(sc.value,10)||1;
+    scOut.textContent=n;
+    var usd=60/n, gbp=usd*0.83;
+    perSite.textContent='$'+usd.toFixed(2);
+    perGbp.textContent=(gbp<1)?('~'+Math.round(gbp*100)+'p'):('~£'+gbp.toFixed(2));
+  }
+  sc.addEventListener('input',calc);calc();
+
+  // region picker
+  var regions={
+    ukeu:{t:'UK &amp; Europe',dc:'London, Frankfurt, Paris, Amsterdam, Madrid, Stockholm, Warsaw.',rec:'For most UK and Irish users, London is the obvious pick. Frankfurt fits significant German-speaking traffic or a central-European footprint reaching Berlin, Vienna and Prague at similar latency.'},
+    usa:{t:'USA',dc:'New Jersey, Miami, Atlanta, Chicago, Dallas, Seattle, Silicon Valley, Los Angeles.',rec:'New Jersey (our test rig choice) covers the eastern US at low latency and reaches the west coast around 70 ms. For a heavily west-coast audience, pick Silicon Valley or Los Angeles. Dallas is the sensible coast-to-coast middle ground.'},
+    row:{t:'Rest of the world',dc:'Toronto, Mexico City, São Paulo, Santiago, Tokyo, Osaka, Seoul, Singapore, Mumbai, Delhi, Bangalore, Sydney, Melbourne, Johannesburg.',rec:'Vultr has regions across every populated continent. Pick the one closest to your audience; there is almost always one within 100 ms.'}
+  };
+  var rv=document.getElementById('regionVerdict'),regChips=document.querySelectorAll('[data-region]');
+  function showRegion(k){
+    var r=regions[k];
+    rv.innerHTML='<div class="plan">'+r.t+'</div><div class="price">'+r.dc+'</div><div>'+r.rec+'</div>';
+  }
+  regChips.forEach(function(c){c.addEventListener('click',function(){
+    regChips.forEach(function(x){x.setAttribute('aria-pressed','false')});
+    c.setAttribute('aria-pressed','true');showRegion(c.dataset.region);
+  })});
+  /* #regionVerdict is seeded with the 'ukeu' default in the HTML, so no load-time call */
+
+  // copy buttons
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var el=document.getElementById(btn.getAttribute('data-copy'));
+      function flash(msg,ok){var old='Copy';btn.textContent=msg;if(ok)btn.classList.add('done');
+        setTimeout(function(){btn.textContent=old;btn.classList.remove('done');},1600);}
+      function fallback(){try{var r=document.createRange();r.selectNodeContents(el);
+        var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+        var ok=document.execCommand('copy');s.removeAllRanges();flash(ok?'Copied':'Press Ctrl/Cmd+C',ok);
+      }catch(e){flash('Press Ctrl/Cmd+C',false);}}
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(el.innerText).then(function(){flash('Copied',true);},fallback);
+      }else{fallback();}
+    });
+  });
+})();
+</script>
+</body>
+</html>

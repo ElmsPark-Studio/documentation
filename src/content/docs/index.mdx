@@ -3,10 +3,10 @@ title: ElmsPark Documentation
 description: Practical guides for PageMotor hosting and EP Suite plugins.
 template: splash
 hero:
-  tagline: Practical guides for PageMotor hosting and EP Suite plugins. Plain language, real commands, nothing padded.
+  tagline: Plain-language, step-by-step guides for PageMotor hosting, EP Suite plugins, and the things every site owner hits. Worked out on real sites first, then written down.
   actions:
-    - text: Vultr Hosting Guide
-      link: /hosting/vultr/
+    - text: Browse the guides
+      link: /guides/
       icon: right-arrow
     - text: EP Suite plugins
       link: /plugins/
@@ -14,21 +14,41 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Start here
+
+<CardGrid>
+	<LinkCard
+		title="ElmsPark Guides"
+		href="/guides/"
+		description="Plain-English, step-by-step guides: installing PageMotor on Bluehost, HostGator, GoDaddy and SiteGround, hosting on Vultr, reliable email with Mailgun, and more. Searchable, with a 'coming next' list you can shape."
+	/>
+	<LinkCard
+		title="Hosting PageMotor on Vultr"
+		href="/guides/vultr-hosting/"
+		description="Benchmarks, an interactive plan picker and cost calculator, and the exact bootstrap to get PageMotor live on a fresh box. About thirty minutes, or hand it to Claude Code."
+	/>
+	<LinkCard
+		title="EP Suite plugin docs"
+		href="/plugins/"
+		description="User guides for every EP plugin: setup, configuration, troubleshooting, and real-world examples."
+	/>
+</CardGrid>
 
 ## What is here
 
 <CardGrid>
-	<Card title="Hosting" icon="rocket">
-		Where to run PageMotor and how to set it up fast. Benchmarked VPS picks, plan sizing by use case, and the exact bootstrap we use.
+	<Card title="Guides" icon="open-book">
+		The field guides: how to install, host, and run PageMotor, in plain English, for the people who just want their site working. Browse them all at [/guides/](/guides/).
 	</Card>
 	<Card title="EP Suite plugins" icon="puzzle">
 		User guides for every EP plugin. Setup, configuration, troubleshooting, and real-world examples.
 	</Card>
-	<Card title="Written with Claude Code" icon="pencil">
-		Every guide is written by people who actually run this stack, then reviewed for accuracy before publishing.
+	<Card title="Written by people who run this stack" icon="pencil">
+		Every guide is worked out on real production sites, then reviewed for accuracy before publishing. If something is hard, we say so.
 	</Card>
 	<Card title="British English, no fluff" icon="document">
-		Short paragraphs, concrete commands, honest trade-offs. If something is hard, we say so.
+		Short paragraphs, concrete commands, honest trade-offs. Nothing padded.
 	</Card>
 </CardGrid>
