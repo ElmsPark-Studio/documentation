@@ -94,8 +94,8 @@
   </div>
 
   <div class="note calm">
-    <strong>Before you start, have these ready:</strong> a Bluehost account with cPanel, the PageMotor files (the .zip you downloaded), and the name of your website. That is everything.
-    <br><br><strong>Not on Bluehost?</strong> Everything in this guide is standard cPanel, so the steps are the same on any cPanel host. Only the colours around the edges will look different.
+    <strong>Before you start, have these ready:</strong> a hosting account with cPanel (Bluehost in our examples), the PageMotor files (the .zip you downloaded), and the name of your website. That is everything.
+    <br><br><strong>Not on Bluehost?</strong> Everything in this guide is standard cPanel, so the steps are the same on any cPanel host. The screens may be laid out a little differently, but the names you need, like File Manager and MySQL Databases, are the same.
   </div>
 
   <nav class="toc">
@@ -132,7 +132,7 @@
       <li>Scroll to <strong>MySQL Users → Add New User</strong>. Pick a username, let the password generator make a strong password, and click <strong>Create User</strong>. <em>Write the password down now.</em></li>
       <li>Scroll to <strong>Add User To Database</strong>. Choose your new user and your new database, click <strong>Add</strong>, then tick <strong>ALL PRIVILEGES</strong> and <strong>Make Changes</strong>.</li>
     </ol>
-    <div class="note"><strong>The one thing nearly everyone misses:</strong> cPanel adds your account name to the front of these, on Bluehost and every other cPanel host. A database you typed as <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>, and the user the same way. Copy the <em>full</em> names exactly as cPanel shows them. You will need three things in the next step: the <strong>database name</strong>, the <strong>username</strong>, and the <strong>password</strong>.</div>
+    <div class="note"><strong>The one thing nearly everyone misses:</strong> cPanel adds your account name to the front of these, on Bluehost and nearly every other cPanel host. A database you typed as <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>, and the user the same way. Copy the <em>full</em> names exactly as cPanel shows them. You will need three things in the next step: the <strong>database name</strong>, the <strong>username</strong>, and the <strong>password</strong>.</div>
   </section>
 
   <section class="step" id="s3">
@@ -190,7 +190,7 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
       <li>The <strong>database name</strong> and <strong>username</strong> include your account prefix (the <code>theaccount_</code> part).</li>
       <li>The <strong>password</strong> is correct.</li>
       <li>The user was <strong>added to the database</strong> with <strong>ALL PRIVILEGES</strong> (step 2, last part).</li>
-      <li>Rarely, a host keeps databases on a separate server, so <code>DB_HOST</code> is not <code>localhost</code>. If the three values above are definitely right, check your host's MySQL Databases page (or ask their support) for the correct host name.</li>
+      <li>Rarely, a host keeps databases on a separate server, so <code>DB_HOST</code> is not <code>localhost</code>. If the three values above are definitely right, check your host's database details page or welcome email, or ask their support, for the correct host name.</li>
     </ul>
   </details>
 
