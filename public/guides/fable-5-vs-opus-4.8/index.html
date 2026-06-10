@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Claude Fable 5 vs Claude Opus 4.8: what Anthropic's first public Mythos-class model is, head-to-head specs, safeguards, pricing and when to use each.">
+<meta name="robots" content="noindex,nofollow">
+<title>Claude Fable 5 vs Opus 4.8 | ElmsPark Guide</title>
+<style>
+  :root{
+    --bg:#faf9f5; --ink:#1f1e1c; --muted:#6e6a63; --card:#ffffff; --line:#e7e3da;
+    --fable:#c15f3c; --fable-soft:#f7e8e1; --fable-deep:#9a4527;
+    --opus:#3a5a78; --opus-soft:#e8eef4; --opus-deep:#2b4459;
+    --good:#3e7d5a; --warn:#a8741f; --warn-soft:#faf3e3;
+    --radius:14px; --shadow:0 1px 3px rgba(31,30,28,.07),0 4px 14px rgba(31,30,28,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:ui-sans-serif,-apple-system,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;font-size:16px;padding-bottom:80px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  header.hero{padding:44px 0 26px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#f4f1ea 0%,var(--bg) 100%)}
+  .kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--fable);font-weight:700;margin-bottom:10px}
+  h1{font-size:clamp(28px,4.5vw,42px);line-height:1.12;letter-spacing:-.02em;font-weight:800}
+  h1 .vs{color:var(--muted);font-weight:400;font-style:italic;padding:0 6px}
+  h1 .f{color:var(--fable-deep)} h1 .o{color:var(--opus-deep)}
+  .sub{margin-top:12px;color:var(--muted);max-width:640px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .badge{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
+  .badge.hot{background:var(--fable-soft);border-color:#eccdbe;color:var(--fable-deep)}
+
+  nav.tabs{position:sticky;top:0;z-index:50;background:rgba(250,249,245,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);margin-bottom:28px}
+  .tabrow{display:flex;gap:4px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+  .tabrow::-webkit-scrollbar{display:none}
+  .tab{appearance:none;border:1px solid transparent;background:transparent;font:inherit;font-size:14px;font-weight:600;
+    color:var(--muted);padding:8px 14px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+  .tab:hover{color:var(--ink);background:#f0ede5}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+
+  section.panel{display:none;animation:fade .25s ease}
+  section.panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  h2{font-size:22px;font-weight:800;letter-spacing:-.01em;margin:6px 0 14px}
+  h3{font-size:16.5px;font-weight:700;margin-bottom:8px}
+  p.lede{font-size:17.5px;max-width:700px}
+  .grid{display:grid;gap:14px;margin:18px 0}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+  .card .num{font-size:30px;font-weight:800;letter-spacing:-.02em}
+  .card .lbl{font-size:13px;color:var(--muted);margin-top:2px}
+  .card.fable{border-top:4px solid var(--fable)}
+  .card.opus{border-top:4px solid var(--opus)}
+  .note{background:var(--warn-soft);border:1px solid #ecdcb8;border-radius:var(--radius);padding:14px 18px;font-size:14.5px;margin:16px 0}
+  .note b{color:var(--warn)}
+  .tag{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:3px 9px;border-radius:6px;margin-bottom:10px}
+  .tag.f{background:var(--fable-soft);color:var(--fable-deep)}
+  .tag.o{background:var(--opus-soft);color:var(--opus-deep)}
+
+  .lineage{display:flex;flex-direction:column;gap:0;margin:20px 0;max-width:640px}
+  .lin-row{display:flex;align-items:center;gap:14px;padding:13px 16px;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+  .lin-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+  .lin-row small{color:var(--muted);display:block;font-size:13px}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;
+    box-shadow:var(--shadow);font-size:14.5px}
+  .tablewrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);margin:16px 0}
+  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{font-size:13px;text-transform:uppercase;letter-spacing:.05em;background:#f4f1ea}
+  thead th.fh{color:var(--fable-deep)} thead th.oh{color:var(--opus-deep)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fcfbf8}
+  td.feat{font-weight:600;width:30%}
+  .diff td:not(.feat){background:#fdf6f2}
+  .toggle-diff{font-size:13.5px;font-weight:600;border:1px solid var(--line);background:var(--card);
+    border-radius:99px;padding:7px 14px;cursor:pointer;font-family:inherit}
+  .toggle-diff:hover{background:#f0ede5}
+
+  .acc{border:1px solid var(--line);border-radius:12px;background:var(--card);margin-bottom:10px;overflow:hidden}
+  .acc summary{padding:14px 18px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-size:15px}
+  .acc summary::-webkit-details-marker{display:none}
+  .acc summary::after{content:"+";font-size:20px;color:var(--muted);transition:.2s}
+  .acc[open] summary::after{transform:rotate(45deg)}
+  .acc .body{padding:0 18px 16px;font-size:14.5px;color:#3c3a36}
+  .acc .body p{margin-bottom:8px}
+
+  .calc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+  .calc-inputs{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+  .calc-inputs label{font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px}
+  .calc-inputs input{font:inherit;font-size:17px;font-weight:700;padding:9px 12px;border:1.5px solid var(--line);
+    border-radius:10px;width:150px;background:var(--bg)}
+  .calc-inputs input:focus{outline:none;border-color:var(--fable)}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 90px;gap:12px;align-items:center;margin-bottom:9px;font-size:14px}
+  .bar-row .name{font-weight:600;text-align:right}
+  .bar-track{background:#f0ede5;border-radius:6px;height:26px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:6px;transition:width .35s ease;min-width:3px}
+  .bar-row .val{font-weight:800;font-variant-numeric:tabular-nums}
+  .calc-foot{margin-top:14px;font-size:13.5px;color:var(--muted)}
+
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px}
+  .chip{font:inherit;font-size:14px;font-weight:600;padding:9px 15px;border-radius:99px;border:1.5px solid var(--line);
+    background:var(--card);cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--ink)}
+  .chip.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .verdict{border-radius:var(--radius);padding:20px 22px;border:1.5px solid var(--line);background:var(--card);min-height:96px}
+  .verdict .pick{font-size:19px;font-weight:800;margin-bottom:6px}
+  .verdict.f{border-color:#eccdbe;background:var(--fable-soft)} .verdict.f .pick{color:var(--fable-deep)}
+  .verdict.o{border-color:#c9d8e4;background:var(--opus-soft)} .verdict.o .pick{color:var(--opus-deep)}
+  .verdict.n{background:#eef3ec;border-color:#cfdccb} .verdict.n .pick{color:var(--good)}
+
+  .tl{list-style:none;margin:18px 0;position:relative;padding-left:26px}
+  .tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .tl li{position:relative;padding:0 0 18px 8px}
+  .tl li::before{content:"";position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--muted)}
+  .tl li.f::before{background:var(--fable)} .tl li.o::before{background:var(--opus)} .tl li.w::before{background:var(--warn)}
+  .tl .d{font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .tl .t{font-weight:700;font-size:15px}
+  .tl .x{font-size:14px;color:#4a4843;max-width:620px}
+
+  ul.clean{list-style:none}
+  ul.clean li{padding:7px 0 7px 26px;position:relative;font-size:14.5px}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--fable)}
+  ul.clean.blue li::before{background:var(--opus)}
+
+  footer.src{margin-top:40px;border-top:1px solid var(--line);padding-top:22px;font-size:13px;color:var(--muted)}
+  footer.src a{color:var(--opus-deep)}
+  footer.src li{margin-bottom:5px}
+  code{background:#f0ede5;border-radius:5px;padding:1.5px 6px;font-size:.9em;font-family:ui-monospace,"SF Mono",Menlo,monospace}
+  a{color:var(--fable-deep)}
+  @media(max-width:640px){
+    .bar-row{grid-template-columns:108px 1fr 78px;font-size:13px}
+    td.feat{width:auto}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">ElmsPark Guide &middot; Claude models</div>
+    <h1><span class="f">Claude Fable 5</span><span class="vs">vs</span><span class="o">Claude Opus 4.8</span></h1>
+    <p class="sub">Anthropic shipped two flagship models within a fortnight. This guide explains what Fable 5 actually is, how it differs from Opus 4.8, what each costs, and which one to reach for.</p>
+    <div class="badges">
+      <span class="badge hot">Fable 5 launched 9 June 2026</span>
+      <span class="badge">Opus 4.8 launched 28 May 2026</span>
+      <span class="badge">Guide compiled 10 June 2026</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs"><div class="wrap"><div class="tabrow" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="p-tldr">TL;DR</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-fable">What is Fable 5?</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-opus">Opus 4.8 recap</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-h2h">Head to head</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-cost">Cost calculator</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-which">Which model when?</button>
+</div></div></nav>
+
+<main class="wrap">
+
+<!-- ============ TL;DR ============ -->
+<section class="panel active" id="p-tldr" role="tabpanel">
+  <h2>The thirty-second version</h2>
+  <p class="lede"><b>Fable 5 is not an Opus upgrade. It is a new, higher tier.</b> Anthropic calls it a Mythos-class model: a class that sits above Opus entirely. Fable 5 is the first Mythos-class model anyone can use, made safe for general release by wrapping it in strict safety classifiers.</p>
+
+  <div class="grid g3">
+    <div class="card fable"><div class="num">+10%</div><div class="lbl">Fable beats Opus 4.8 by more than ten points on some benchmarks. The longer the task, the bigger its lead.</div></div>
+    <div class="card fable"><div class="num">2x</div><div class="lbl">Fable costs double Opus 4.8 on the API: $10/$50 vs $5/$25 per million tokens in/out.</div></div>
+    <div class="card opus"><div class="num">&lt;5%</div><div class="lbl">of sessions trigger Fable's safeguards. Those queries get answered by Opus 4.8 instead.</div></div>
+  </div>
+
+  <h3 style="margin-top:26px">How the family fits together now</h3>
+  <div class="lineage">
+    <div class="lin-row"><span class="lin-dot" style="background:var(--fable)"></span>
+      <div><b>Mythos class</b> (new top tier) <small>Mythos Preview (Apr, invitation-only) &rarr; Fable 5 (public, safeguarded) and Mythos 5 (same model, safeguards lifted, Project Glasswing partners only)</small></div></div>
+    <div class="lin-row"><span class="lin-dot" style="background:var(--opus)"></span>
+      <div><b>Opus class</b> <small>Opus 4.8, the everyday flagship. Also the safety net: Fable falls back to it on restricted topics</small></div></div>
+    <div class="lin-row"><span class="lin-dot" style="background:#8b8678"></span>
+      <div><b>Sonnet and Haiku</b> <small>Sonnet 4.6 for speed-plus-intelligence, Haiku 4.5 for fast cheap work. Unchanged by these launches</small></div></div>
+  </div>
+
+  <div class="note"><b>Time-sensitive:</b> Fable 5 is included on Pro, Max, Team and seat-based Enterprise plans at no extra cost only until <b>22 June 2026</b>. From 23 June it needs usage credits (Anthropic aims to restore it as standard later). If you are on a paid plan, give it a proper run on something hard before then.</div>
+
+  <h3>Naming, briefly</h3>
+  <p style="font-size:14.5px;max-width:680px">Fable and Mythos 5 are the <i>same underlying model</i>. Fable (from the Latin <i>fabula</i>, "that which is told", akin to the Greek <i>mythos</i>) is the safeguarded public version; Mythos 5 is the unrestricted version reserved for vetted cyber defenders. The safeguards are the only difference, hence the two names.</p>
+</section>
+
+<!-- ============ FABLE ============ -->
+<section class="panel" id="p-fable" role="tabpanel">
+  <span class="tag f">Mythos class &middot; released 9 June 2026</span>
+  <h2>What is Claude Fable 5?</h2>
+  <p class="lede">Anthropic's most capable model ever made generally available. State of the art on nearly all tested benchmarks across software engineering, knowledge work, vision and scientific research, and built to run autonomously for longer than any previous Claude.</p>
+
+  <h3 style="margin-top:22px">The back-story</h3>
+  <p style="max-width:700px;font-size:15px">In April 2026 Anthropic built a model so capable in areas like cybersecurity that it would not release it publicly. That model, Claude Mythos Preview, went only to vetted cyber defenders and critical-infrastructure providers under <b>Project Glasswing</b>, run in collaboration with the US government (expanded to roughly 150 organisations across 15+ countries on 2 June). Fable 5 is that class of capability finally made public, with hard safety limits bolted on. The release also landed days after Anthropic publicly urged AI labs to agree a coordinated brake on frontier development, warning of recursive self-improvement, and as the company prepares for an IPO.</p>
+
+  <h3 style="margin-top:22px">What it's notably good at</h3>
+  <div class="grid g2">
+    <div class="card"><h3>Software engineering</h3><p style="font-size:14px">Stripe reported Fable performed a codebase-wide migration across a 50-million-line Ruby codebase in a day; by hand it would have taken a team over two months. Highest frontier score on Cognition's FrontierCode, even at medium effort. State of the art on CursorBench.</p></div>
+    <div class="card"><h3>Vision</h3><p style="font-size:14px">New state of the art. Extracts precise numbers from dense scientific figures and can rebuild a web app's source code from screenshots alone. Completed Pok&eacute;mon FireRed using raw screenshots only, no helper harness, something earlier Claudes could not do even with one.</p></div>
+    <div class="card"><h3>Memory and long context</h3><p style="font-size:14px">Stays focused across millions of tokens and improves its work using its own notes. Given file-based memory in Slay the Spire, its performance gain was three times larger than Opus 4.8's.</p></div>
+    <div class="card"><h3>Knowledge work</h3><p style="font-size:14px">Highest score of any model on Hebbia's senior-level Finance Benchmark. First model to break 90% on Hex's analytics benchmark, a ten-point jump over Opus. Strong document, chart and table reasoning.</p></div>
+  </div>
+
+  <h3 style="margin-top:24px">The safeguards (the bit that makes it "Fable")</h3>
+  <p style="font-size:15px;max-width:700px;margin-bottom:12px">Separate classifier AIs watch every request. When one detects a restricted topic, <b>Opus 4.8 answers instead of Fable</b>, and you're told when that happens. Anthropic has deliberately tuned them cautiously, so they will occasionally catch harmless requests. They trigger in under 5% of sessions; 95%+ of sessions run entirely on Fable.</p>
+
+  <details class="acc"><summary>1. Cybersecurity</summary><div class="body">
+    <p>Mythos-class models excel at discovering and exploiting software vulnerabilities, plus agentic hacking (reconnaissance, lateral movement and so on). The classifiers block both exploitation and broader offensive cyber tasks. One external partner found Fable's cyber safeguards the most robust of any model tested: zero compliance with harmful single-turn requests, with or without 30 public jailbreak techniques.</p></div></details>
+  <details class="acc"><summary>2. Biology and chemistry</summary><div class="body">
+    <p>Tuned very broadly for now: most bio and chem requests fall back to Opus 4.8, because Mythos-class models showed real ability in dual-use tasks such as viral design prediction. A trusted access programme will give vetted biomedical researchers a version with these safeguards removed. Anthropic says it wants to narrow the false positives quickly.</p></div></details>
+  <details class="acc"><summary>3. Distillation</summary><div class="body">
+    <p>Requests flagged as attempts to extract Fable's capabilities to train competing models (Anthropic has identified large-scale attempts from authoritarian countries) also fall back to Opus 4.8.</p></div></details>
+  <details class="acc"><summary>Jailbreak testing</summary><div class="body">
+    <p>An external bug bounty produced no universal jailbreaks in over 1,000 hours. External red-teaming organisations also failed on long-form agentic tasks, although the UK AISI made progress towards one in a brief initial window. Anthropic's stated goal is to make any remaining jailbreaks slow and costly enough to detect before they're used at scale.</p></div></details>
+  <details class="acc"><summary>New: mandatory 30-day data retention</summary><div class="body">
+    <p>All Mythos-class traffic now carries compulsory 30-day retention, even for business customers with previous zero-retention agreements. Anthropic says the data won't train models and is used only to defend against novel attacks and reduce false positives, with human access logged. Worth knowing if you ever route client-sensitive material through Fable.</p></div></details>
+
+  <h3 style="margin-top:24px">Availability</h3>
+  <ul class="clean">
+    <li>API: <code>claude-fable-5</code>, generally available now (Claude API, Bedrock, Vertex AI, Microsoft Foundry). 1M context, 128k max output, adaptive thinking always on.</li>
+    <li>Subscriptions: included on Pro, Max, Team and seat-based Enterprise at no extra cost <b>until 22 June</b>; usage credits required from 23 June; Anthropic intends to restore it as standard "as quickly as we can".</li>
+    <li>Mythos 5 (safeguards lifted): Glasswing partners only for now, with a broader trusted access programme planned. Anthropic calls it the strongest cybersecurity model in the world.</li>
+  </ul>
+</section>
+
+<!-- ============ OPUS ============ -->
+<section class="panel" id="p-opus" role="tabpanel">
+  <span class="tag o">Opus class &middot; released 28 May 2026</span>
+  <h2>Claude Opus 4.8 recap</h2>
+  <p class="lede">The everyday flagship. An upgrade to Opus 4.7 (which it followed by just 41 days), stronger across coding, agentic tasks, reasoning and professional work, at an unchanged price.</p>
+
+  <div class="grid g3">
+    <div class="card opus"><div class="num">4x</div><div class="lbl">less likely than Opus 4.7 to let flaws in its own code pass unremarked. Honesty was the headline improvement.</div></div>
+    <div class="card opus"><div class="num">$5/$25</div><div class="lbl">per million tokens in/out, unchanged from 4.7. Fast mode (2.5x speed) is $10/$50, three times cheaper than before.</div></div>
+    <div class="card opus"><div class="num">1M</div><div class="lbl">token context window with 128k max output, same headline figures as Fable 5.</div></div>
+  </div>
+
+  <h3 style="margin-top:24px">What arrived with it</h3>
+  <ul class="clean blue">
+    <li><b>Dynamic workflows</b> (research preview, Claude Code on Max/Team/Enterprise): Claude plans a big job, runs hundreds of parallel subagents in one session, then verifies its outputs. Demonstrated on codebase-scale migrations across hundreds of thousands of lines.</li>
+    <li><b>Effort control</b> in claude.ai and Cowork on all plans: dial effort down for speed and lighter rate-limit use, or up ("extra", "max") for harder problems. Opus 4.8 defaults to high.</li>
+    <li><b>Mid-task system messages</b> in the API: developers can update instructions mid-run without breaking the prompt cache.</li>
+    <li><b>Alignment</b>: substantially lower misaligned-behaviour rates than 4.7, on a par with Anthropic's best-aligned models, plus fixes for 4.7's comment verbosity and tool-calling niggles.</li>
+  </ul>
+
+  <div class="note"><b>Why it matters in this comparison:</b> Opus 4.8 is not the loser here. It is half Fable's price, has no classifier fallbacks, no mandatory retention policy, full subscription availability, and it's the model Fable itself hands over to on restricted topics. For most day-to-day work it remains the sensible default.</div>
+</section>
+
+<!-- ============ HEAD TO HEAD ============ -->
+<section class="panel" id="p-h2h" role="tabpanel">
+  <h2>Head to head</h2>
+  <p style="margin-bottom:12px;color:var(--muted);font-size:14.5px">Rows where they differ are tinted. Use the button to hide everything they share.</p>
+  <button class="toggle-diff" id="diffBtn">Show differences only</button>
+
+  <div class="tablewrap"><table id="h2hTable">
+    <thead><tr><th>Feature</th><th class="fh">Fable 5</th><th class="oh">Opus 4.8</th></tr></thead>
+    <tbody>
+      <tr class="diff"><td class="feat">Model class</td><td>Mythos class (new top tier)</td><td>Opus class</td></tr>
+      <tr class="diff"><td class="feat">Released</td><td>9 June 2026</td><td>28 May 2026</td></tr>
+      <tr class="diff"><td class="feat">API ID</td><td><code>claude-fable-5</code></td><td><code>claude-opus-4-8</code></td></tr>
+      <tr class="diff"><td class="feat">API price (per MTok in/out)</td><td>$10 / $50</td><td>$5 / $25</td></tr>
+      <tr class="diff"><td class="feat">Fast mode</td><td>Not offered</td><td>$10 / $50 at 2.5x speed</td></tr>
+      <tr><td class="feat">Context window</td><td>1M tokens</td><td>1M tokens (200k on MS Foundry)</td></tr>
+      <tr><td class="feat">Max output</td><td>128k tokens</td><td>128k tokens (300k via batch beta)</td></tr>
+      <tr><td class="feat">Thinking</td><td>Adaptive, always on</td><td>Adaptive (effort defaults to high)</td></tr>
+      <tr class="diff"><td class="feat">Benchmarks</td><td>State of the art nearly everywhere; 10%+ ahead on some tests; lead grows with task length</td><td>Strongest Opus yet; beaten by Fable on most tests</td></tr>
+      <tr class="diff"><td class="feat">Restricted-topic behaviour</td><td>Cyber, bio/chem and distillation queries fall back to Opus 4.8 (&lt;5% of sessions)</td><td>No fallback system; standard safety training</td></tr>
+      <tr class="diff"><td class="feat">Data retention</td><td>Mandatory 30 days, even over zero-retention agreements</td><td>Standard policies, zero-retention possible</td></tr>
+      <tr class="diff"><td class="feat">Subscription access</td><td>Included on Pro/Max/Team/Enterprise seats until 22 June, then usage credits</td><td>Standard on paid plans</td></tr>
+      <tr class="diff"><td class="feat">Sibling model</td><td>Mythos 5: same model, cyber safeguards lifted, Glasswing only</td><td>None</td></tr>
+      <tr><td class="feat">Multimodal input</td><td>Text + image</td><td>Text + image</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Third-party verdicts on Fable vs Opus</h3>
+  <ul class="clean">
+    <li><b>Hex:</b> first model to break 90% on its core analytics benchmark, a 10-point jump over Opus.</li>
+    <li><b>Iambic (Sean Ward):</b> "Claude Fable 5's reasoning is a clear step beyond Opus 4.8... works at senior research scientist grade."</li>
+    <li><b>Anaconda (Peter Wang):</b> beats Opus 4.8 on its everyday spreadsheet suite at every effort level, finishing 25 to 30% faster.</li>
+    <li><b>Rakuten:</b> at the highest effort, Fable reflects on and validates its own work; "the extra thinking pays for itself".</li>
+  </ul>
+
+  <h3 style="margin-top:20px">Timeline</h3>
+  <ul class="tl">
+    <li class="f"><span class="d">7 Apr 2026</span><div class="t">Claude Mythos Preview</div><div class="x">First Mythos-class model, invitation-only via Project Glasswing for cyber defence. $25/$125 per MTok for participants.</div></li>
+    <li class="o"><span class="d">28 May 2026</span><div class="t">Opus 4.8 ships everywhere</div><div class="x">41 days after Opus 4.7. Dynamic workflows, effort control, cheaper fast mode.</div></li>
+    <li class="f"><span class="d">2 Jun 2026</span><div class="t">Glasswing expands</div><div class="x">Mythos access widened to ~150 organisations across 15+ countries running critical infrastructure.</div></li>
+    <li class="f"><span class="d">9 Jun 2026</span><div class="t">Fable 5 + Mythos 5 launch</div><div class="x">Fable 5 generally available; Mythos 5 (safeguards lifted) to Glasswing partners. Both $10/$50.</div></li>
+    <li class="w"><span class="d">22 Jun 2026</span><div class="t">Last day of included access</div><div class="x">Final day Fable 5 is bundled with Pro, Max, Team and seat-based Enterprise plans.</div></li>
+    <li class="w"><span class="d">23 Jun 2026</span><div class="t">Usage credits required</div><div class="x">Fable 5 moves to usage credits on subscriptions; Anthropic aims to restore bundled access when capacity allows.</div></li>
+  </ul>
+</section>
+
+<!-- ============ COST ============ -->
+<section class="panel" id="p-cost" role="tabpanel">
+  <h2>Cost calculator</h2>
+  <p style="margin-bottom:16px;max-width:640px;font-size:15px">API list prices, June 2026. Enter a workload in millions of tokens and compare. (Subscription plans draw on allocation rather than these per-token prices, but the ratios still tell you how fast each model burns it.)</p>
+
+  <div class="calc">
+    <div class="calc-inputs">
+      <div><label for="inTok">Input (million tokens)</label><input type="number" id="inTok" value="5" min="0" step="0.5"></div>
+      <div><label for="outTok">Output (million tokens)</label><input type="number" id="outTok" value="1" min="0" step="0.1"></div>
+    </div>
+    <div id="bars"></div>
+    <div class="calc-foot" id="calcFoot"></div>
+  </div>
+
+  <div class="note" style="margin-top:20px"><b>Allocation logic on subscription plans:</b> if Fable burns roughly double Opus per token, a sensible ladder is Haiku for simple automation, Sonnet 4.6 for routine work, Opus 4.8 for complex jobs, and Fable 5 saved for the genuinely hard, long-horizon ones (bundled at no extra cost until 22 June).</div>
+</section>
+
+<!-- ============ WHICH ============ -->
+<section class="panel" id="p-which" role="tabpanel">
+  <h2>Which model, when?</h2>
+  <p style="font-size:15px;margin-bottom:4px">Tap a job type for a recommendation.</p>
+  <div class="chips" id="chips"></div>
+  <div class="verdict" id="verdict"><div class="pick">Pick a task above</div><div style="font-size:14.5px;color:var(--muted)">Recommendations assume a developer on a paid Claude plan working through Claude Code or Cowork.</div></div>
+
+  <h3 style="margin-top:28px">Rules of thumb</h3>
+  <ul class="clean">
+    <li><b>Default stays Opus 4.8.</b> Half the price, no fallback surprises, dynamic workflows in Claude Code, and it's excellent. Fable is for when Opus isn't enough.</li>
+    <li><b>Fable earns its 2x price on length and difficulty.</b> Its lead over Opus grows as tasks get longer and more complex. Short routine tasks won't show the difference.</li>
+    <li><b>Security work goes straight to Opus.</b> Fable's cyber classifier would route you there anyway; skip the detour (and the false-positive risk).</li>
+    <li><b>Mind the retention policy.</b> Mythos-class traffic is kept 30 days regardless of agreements. For client-confidential material you may prefer Opus.</li>
+    <li><b>Before 22 June:</b> throw at least one genuinely hard job at Fable while it's bundled with paid plans, e.g. a codebase-wide audit or a big migration, and see if the step up matters to your work.</li>
+  </ul>
+</section>
+
+<footer class="src">
+  <b>Sources</b> (all checked 10 June 2026)
+  <ul style="list-style:none;margin-top:8px">
+    <li><a href="https://www.anthropic.com/news/claude-fable-5-mythos-5">Anthropic: Claude Fable 5 and Claude Mythos 5</a> (launch announcement)</li>
+    <li><a href="https://www.anthropic.com/news/claude-opus-4-8">Anthropic: Introducing Claude Opus 4.8</a></li>
+    <li><a href="https://platform.claude.com/docs/en/about-claude/models/overview">Claude API docs: Models overview</a> (specs, IDs, context windows, pricing)</li>
+    <li><a href="https://techcrunch.com/2026/06/09/anthropic-released-claude-fable-5-its-most-powerful-model-publicly-days-after-warning-ai-is-getting-too-dangerous/">TechCrunch: Anthropic's Claude Fable is a version of Mythos the public can access today</a></li>
+    <li><a href="https://llm-stats.com/models/claude-mythos-preview">LLM Stats: Claude Mythos Preview</a> (Preview-era pricing and benchmarks)</li>
+  </ul>
+  <p style="margin-top:12px">An ElmsPark Consultants guide, compiled with Claude (running on Fable 5). Subscription availability dates may change; Anthropic has said it will give notice.</p>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  // ----- Tabs -----
+  var tabs=document.querySelectorAll('.tab'),panels=document.querySelectorAll('.panel');
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false')});
+    panels.forEach(function(p){p.classList.remove('active')});
+    t.setAttribute('aria-selected','true');
+    document.getElementById(t.dataset.panel).classList.add('active');
+    window.scrollTo({top:0});
+  })});
+
+  // ----- Differences toggle -----
+  var diffOnly=false,btn=document.getElementById('diffBtn');
+  btn.addEventListener('click',function(){
+    diffOnly=!diffOnly;
+    document.querySelectorAll('#h2hTable tbody tr').forEach(function(r){
+      r.style.display=(diffOnly&&!r.classList.contains('diff'))?'none':'';
+    });
+    btn.textContent=diffOnly?'Show all rows':'Show differences only';
+  });
+
+  // ----- Calculator -----
+  var models=[
+    {name:'Haiku 4.5',  inP:1,  outP:5,   col:'#8b8678'},
+    {name:'Sonnet 4.6', inP:3,  outP:15,  col:'#6f8aa3'},
+    {name:'Opus 4.8',   inP:5,  outP:25,  col:'#3a5a78'},
+    {name:'Opus 4.8 fast',inP:10,outP:50, col:'#2b4459'},
+    {name:'Fable 5',    inP:10, outP:50,  col:'#c15f3c'},
+    {name:'Mythos Preview',inP:25,outP:125,col:'#9a4527'}
+  ];
+  var inEl=document.getElementById('inTok'),outEl=document.getElementById('outTok'),
+      barsEl=document.getElementById('bars'),footEl=document.getElementById('calcFoot');
+  function fmt(n){return '$'+n.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function calc(){
+    var i=Math.max(0,parseFloat(inEl.value)||0),o=Math.max(0,parseFloat(outEl.value)||0);
+    var costs=models.map(function(m){return{m:m,c:i*m.inP+o*m.outP}});
+    var max=Math.max.apply(null,costs.map(function(x){return x.c}).concat([0.01]));
+    barsEl.innerHTML=costs.map(function(x){
+      var w=Math.max(2,(x.c/max)*100);
+      return '<div class="bar-row"><div class="name">'+x.m.name+'</div>'+
+        '<div class="bar-track"><div class="bar-fill" style="width:'+w+'%;background:'+x.m.col+'"></div></div>'+
+        '<div class="val">'+fmt(x.c)+'</div></div>';
+    }).join('');
+    var opus=costs[2].c,fable=costs[4].c;
+    footEl.textContent=(opus>0)?
+      'For this workload Fable 5 costs '+fmt(fable)+' vs '+fmt(opus)+' on Opus 4.8: exactly 2x. Fable matches Opus fast-mode pricing, and is under half what Mythos Preview cost its Glasswing participants.':'';
+  }
+  inEl.addEventListener('input',calc);outEl.addEventListener('input',calc);calc();
+
+  // ----- Which model picker -----
+  var picks=[
+    {label:'Day-to-day coding',cls:'o',pick:'Opus 4.8',
+     why:'Default high effort handles routine development work comfortably at half Fable’s burn rate. Save the heavy model for jobs that defeat it.'},
+    {label:'Huge refactor or migration',cls:'f',pick:'Fable 5',
+     why:'This is exactly where Fable’s lead grows: Stripe ran a 50-million-line codebase migration in a day. A codebase-wide change or a platform migration fits the same shape.'},
+    {label:'Long autonomous runs',cls:'f',pick:'Fable 5',
+     why:'It works autonomously for longer than any previous Claude, validates its own work at high effort, and uses persistent notes well across millions of tokens.'},
+    {label:'Deep research and analysis',cls:'f',pick:'Fable 5 (Opus if budget-tight)',
+     why:'Best-in-class document, chart and table reasoning; first past 90% on Hex’s long-running analytics benchmark. Opus 4.8 remains very strong if you want it cheaper.'},
+    {label:'Vision: screenshots to code',cls:'f',pick:'Fable 5',
+     why:'New state of the art for vision. It can rebuild an app’s source from screenshots, which maps nicely onto design-to-code work.'},
+    {label:'Security and pen-testing',cls:'o',pick:'Opus 4.8 directly',
+     why:'Fable’s cybersecurity classifier hands those queries to Opus 4.8 anyway. Going direct avoids the fallback round-trip and false positives.'},
+    {label:'Quick scripts and automation',cls:'n',pick:'Haiku 4.5',
+     why:'$1/$5 per MTok and fast. Neither flagship is the right tool for simple repetitive automation; that’s allocation down the drain.'},
+    {label:'Forum posts and writing',cls:'n',pick:'Sonnet 4.6',
+     why:'Speed-plus-intelligence tier is ideal for drafts, reviews and forum replies. Step up to Opus for nuanced or high-stakes pieces.'},
+    {label:'Client-confidential material',cls:'o',pick:'Opus 4.8',
+     why:'Mythos-class models carry mandatory 30-day data retention even over zero-retention agreements. Opus keeps standard policies.'}
+  ];
+  var chipsEl=document.getElementById('chips'),verEl=document.getElementById('verdict');
+  picks.forEach(function(p,idx){
+    var b=document.createElement('button');b.className='chip';b.textContent=p.label;
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
+      b.classList.add('sel');
+      verEl.className='verdict '+p.cls;
+      verEl.innerHTML='<div class="pick">'+p.pick+'</div><div style="font-size:14.5px">'+p.why+'</div>';
+    });
+    chipsEl.appendChild(b);
+  });
+})();
+</script>
+</body>
+</html>
