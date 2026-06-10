@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Install PageMotor on Bluehost or any cPanel host in about ten minutes: upload the files, create the database, fill in config.php and finish in your browser. With troubleshooting.">
-<title>Installing PageMotor on Bluehost | ElmsPark Guide</title>
+<meta name="description" content="Install PageMotor on HostGator in about ten minutes: upload the files, create the database, fill in config.php and finish in your browser. With troubleshooting.">
+<title>Installing PageMotor on HostGator | ElmsPark Guide</title>
 <style>
   :root{
     --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
@@ -85,7 +85,7 @@
 
 <div class="wrap">
   <span class="kicker">PageMotor Setup Guide</span>
-  <h1>Installing PageMotor on Bluehost</h1>
+  <h1>Installing PageMotor on HostGator</h1>
   <p class="lede">A plain-English walkthrough. About ten minutes, and you do not need to be technical.</p>
   <div class="chips">
     <span class="chip">⏱ <b>~10 minutes</b></span>
@@ -94,8 +94,8 @@
   </div>
 
   <div class="note calm">
-    <strong>Before you start, have these ready:</strong> a hosting account with cPanel (Bluehost in our examples), the PageMotor files (the .zip you downloaded), and the name of your website. That is everything.
-    <br><br><strong>Not on Bluehost?</strong> Everything in this guide is standard cPanel, so the steps are the same on any cPanel host. The screens may be laid out a little differently, but the names you need, like File Manager and MySQL Databases, are the same. We also have this guide for <a href="https://documentation.elmspark.com/guides/pagemotor-hostgator/">HostGator</a> and <a href="https://documentation.elmspark.com/guides/pagemotor-godaddy/">GoDaddy</a>, and a different one for <a href="https://documentation.elmspark.com/guides/pagemotor-siteground/">SiteGround</a> (which does not use cPanel).
+    <strong>Before you start, have these ready:</strong> a HostGator web hosting account (their standard hosting plans all include cPanel; their separate Website Builder product does not, and PageMotor cannot run there), the PageMotor files (the .zip you downloaded), and the name of your website. That is everything.
+    <br><br><strong>Not on HostGator?</strong> Everything in this guide is standard cPanel, so the steps are the same on any cPanel host. The screens may be laid out a little differently, but the names you need, like File Manager and MySQL Databases, are the same. We also have this guide for <a href="https://documentation.elmspark.com/guides/pagemotor-bluehost/">Bluehost</a> and <a href="https://documentation.elmspark.com/guides/pagemotor-godaddy/">GoDaddy</a>, and a different one for <a href="https://documentation.elmspark.com/guides/pagemotor-siteground/">SiteGround</a> (which does not use cPanel).
   </div>
 
   <nav class="toc">
@@ -115,9 +115,9 @@
   <section class="step" id="s1">
     <h2><span class="num">1</span><span class="t">Put PageMotor on your site</span></h2>
     <ol class="sub">
-      <li>In Bluehost, open <strong>cPanel</strong> and click <strong>File Manager</strong>.</li>
-      <li>Open the folder for your site. It is usually <code>public_html</code>, or <code>public_html/yourdomain.com</code> if you have more than one site.</li>
-      <li>Click <strong>Upload</strong>, choose your PageMotor <code>.zip</code>, and wait for it to finish.</li>
+      <li>Open cPanel: log in at <strong>portal.hostgator.com</strong>, choose <strong>Hosting</strong> in the menu, and click the <strong>cPanel</strong> button under Quick Links. (A shortcut that always works: go to <code>yourdomain.com/cpanel</code> and log in with the cPanel details from your HostGator welcome email.)</li>
+      <li>In cPanel, click <strong>File Manager</strong> and open the folder for your site. It is usually <code>public_html</code>. (Installing on a second, addon domain? Use that domain's own folder instead; cPanel shows it under <strong>Domains</strong>.)</li>
+      <li>Click <strong>Upload</strong>, choose your PageMotor <code>.zip</code>, and wait for it to finish. (File Manager takes files up to 500&nbsp;MB, far larger than the PageMotor zip.)</li>
       <li>Back in File Manager, right-click the uploaded zip and choose <strong>Extract</strong>.</li>
     </ol>
     <div class="note">When it is done you should see <code>pagemotor.php</code>, a <code>lib</code> folder, and a file called <code>config-sample.php</code> sitting in your site folder. (If extracting gave you a single folder called <code>pagemotor</code> instead, open it, select everything inside, choose <strong>Move</strong> and move it all into your site folder, then delete the empty folder and the zip.) Good. We use that sample file in step 3.</div>
@@ -132,7 +132,7 @@
       <li>Scroll to <strong>MySQL Users → Add New User</strong>. Pick a username, let the password generator make a strong password, and click <strong>Create User</strong>. <em>Write the password down now.</em></li>
       <li>Scroll to <strong>Add User To Database</strong>. Choose your new user and your new database, click <strong>Add</strong>, then tick <strong>ALL PRIVILEGES</strong> and <strong>Make Changes</strong>.</li>
     </ol>
-    <div class="note"><strong>The one thing nearly everyone misses:</strong> cPanel adds your account name to the front of these, on Bluehost and nearly every other cPanel host. A database you typed as <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>, and the user the same way. Copy the <em>full</em> names exactly as cPanel shows them. You will need three things in the next step: the <strong>database name</strong>, the <strong>username</strong>, and the <strong>password</strong>.</div>
+    <div class="note"><strong>The one thing nearly everyone misses:</strong> cPanel adds your account name to the front of these, on HostGator and nearly every other cPanel host. A database you typed as <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>, and the user the same way. Copy the <em>full</em> names exactly as cPanel shows them. You will need three things in the next step: the <strong>database name</strong>, the <strong>username</strong>, and the <strong>password</strong>.</div>
   </section>
 
   <section class="step" id="s3">
@@ -150,7 +150,7 @@
 define(<span class="tok-s">'DB_NAME'</span>, <span class="tok-s">'theaccount_pagemotor'</span>);   <span class="tok-c">// exact name from cPanel</span>
 define(<span class="tok-s">'DB_USER'</span>, <span class="tok-s">'theaccount_pmuser'</span>);      <span class="tok-c">// exact username from cPanel</span>
 define(<span class="tok-s">'DB_PASSWORD'</span>, <span class="tok-s">'your-strong-password'</span>);
-define(<span class="tok-s">'DB_HOST'</span>, <span class="tok-s">'localhost'</span>);            <span class="tok-c">// correct for Bluehost and most cPanel hosts</span>
+define(<span class="tok-s">'DB_HOST'</span>, <span class="tok-s">'localhost'</span>);            <span class="tok-c">// correct for HostGator and most cPanel hosts</span>
 define(<span class="tok-s">'DB_CHARSET'</span>, <span class="tok-s">''</span>);
 define(<span class="tok-s">'DB_COLLATE'</span>, <span class="tok-s">''</span>);
 define(<span class="tok-s">'DB_TABLE_PREFIX'</span>, <span class="tok-s">'pm_'</span>);
@@ -178,7 +178,7 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
     <ul class="sub">
       <li>The file is named exactly <code>config.php</code> (not still <code>config-sample.php</code>, and not <code>config.php.txt</code>).</li>
       <li>It is in the same folder as <code>pagemotor.php</code>.</li>
-      <li>To see the real reason, open <strong>cPanel → Metrics → Errors</strong>, or the <code>error_log</code> file in your site folder. If it says <code>config.php</code> <em>"No such file or directory"</em>, this is your fix.</li>
+      <li>To see the real reason, open <strong>cPanel → Metrics → Errors</strong>, or the <code>error_log</code> file in your site folder. (HostGator's Customer Portal also shows errors without opening cPanel: <strong>Websites → Settings → Advanced → Logs</strong>.) If it says <code>config.php</code> <em>"No such file or directory"</em>, this is your fix.</li>
     </ul>
   </details>
 
@@ -195,7 +195,7 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
 
   <details>
     <summary>I changed my PHP version and nothing changed</summary>
-    <p>The PHP version is rarely the cause. A missing or misnamed <code>config.php</code> fails the same way on every version, so changing it makes no difference. Sort the <code>config.php</code> first. PageMotor is happy on modern PHP 8.x.</p>
+    <p>The PHP version is rarely the cause. A missing or misnamed <code>config.php</code> fails the same way on every version, so changing it makes no difference. Sort the <code>config.php</code> first. PageMotor is happy on modern PHP 8.x. One HostGator note: older accounts can still default to PHP 7.4, so once the install works, check <strong>cPanel → Software → MultiPHP Manager</strong> and pick a PHP 8 version if you are not on one.</p>
   </details>
 
   <details>

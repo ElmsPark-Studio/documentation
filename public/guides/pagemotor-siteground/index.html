@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Install PageMotor on SiteGround in six steps using Site Tools, including taming SiteGround's full-page cache so the admin area and login behave. With troubleshooting.">
+<title>Installing PageMotor on SiteGround | ElmsPark Guide</title>
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+    --warn:#9a4b2e; --codebg:#1f1d17; --radius:14px; --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+  header.top{padding:14px 20px; border-bottom:1px solid var(--line); background:var(--card)}
+  header.top .inner{max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:10px}
+  .leaf{width:24px;height:24px;flex:none}
+  .brand{font-size:15px; letter-spacing:.04em; text-transform:uppercase; color:var(--pine); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-weight:600; text-decoration:none}
+  .topnav{margin-left:auto; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-size:14px}
+  .topnav a{color:var(--pine); text-decoration:none}
+  .topnav a:hover{text-decoration:underline}
+  h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+  .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+  .chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+  .chip b{color:var(--pine)}
+  .note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+  .note.calm{border-left-color:var(--pine)}
+  .note strong{color:var(--pine-deep)}
+  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+  nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+  nav.toc ol{margin:0; padding-left:20px}
+  nav.toc li{margin:5px 0}
+  nav.toc a{color:var(--pine); text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+  .step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+  .num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+  .step h2 .t{line-height:1.2}
+  ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+  ol.sub li,ul.sub li{margin:8px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+  .codewrap{position:relative; margin:14px 0}
+  pre{background:var(--codebg); color:#eee; border-radius:12px; padding:18px; overflow:auto; font-size:14px; line-height:1.55; margin:0}
+  pre code{background:none; color:inherit; padding:0; font-size:inherit}
+  .tok-c{color:#8f9b7e} .tok-s{color:#9fc7a6}
+  .copy{position:absolute; top:10px; right:10px; font-family:system-ui,sans-serif; font-size:12.5px; border:1px solid #4a463a; background:#33302a; color:#e9e3d3; padding:6px 12px; border-radius:8px; cursor:pointer}
+  .copy:hover{background:#3f3b32}
+  .copy.done{background:var(--pine); border-color:var(--pine); color:#fff}
+  h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+  details[open]{padding-bottom:14px}
+  summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-family:system-ui,sans-serif}
+  details[open] summary::before{content:"－"}
+  .tag{display:inline-block; font-family:system-ui,sans-serif; font-size:12px; font-weight:600; padding:2px 9px; border-radius:6px; margin-right:6px}
+  .tag.err{background:#f3e1d9; color:var(--warn)}
+  .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+  .seealso a{color:var(--pine); font-weight:600}
+  footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+  footer a{color:var(--pine)}
+  .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+  @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <svg class="leaf" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 22V9" stroke="#2f5d4a" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12 13c0-3 2.4-6 6.5-6.5C18 11 15 13 12 13Z" fill="#2f5d4a"/>
+      <path d="M12 10C12 6.5 9.6 3.6 5.5 3 6 7.8 9 10 12 10Z" fill="#3f7a60"/>
+    </svg>
+    <a class="brand" href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a>
+    <nav class="topnav"><a href="https://documentation.elmspark.com/guides/">All guides →</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <span class="kicker">PageMotor Setup Guide</span>
+  <h1>Installing PageMotor on SiteGround</h1>
+  <p class="lede">A plain-English walkthrough for SiteGround's Site Tools, including the one job SiteGround makes you do that other hosts do not: taming its cache.</p>
+  <div class="chips">
+    <span class="chip">⏱ <b>~20 minutes</b></span>
+    <span class="chip">🧰 <b>One copy-paste</b>, no real coding</span>
+    <span class="chip">⚠ <b>Cache taming</b> required</span>
+  </div>
+
+  <div class="note calm">
+    <strong>Before you start, have these ready:</strong> a SiteGround hosting account, the PageMotor files (the .zip you downloaded), and the name of your website. SiteGround uses its own panel called <strong>Site Tools</strong>, not cPanel, and it is per-site: open it for the right website via <strong>Client Area → Websites → Site Tools</strong>.
+    <br><br><strong>On a cPanel host instead?</strong> Use the <a href="https://documentation.elmspark.com/guides/pagemotor-bluehost/">Bluehost</a>, <a href="https://documentation.elmspark.com/guides/pagemotor-hostgator/">HostGator</a> or <a href="https://documentation.elmspark.com/guides/pagemotor-godaddy/">GoDaddy</a> guide; the steps there are simpler.
+  </div>
+
+  <nav class="toc">
+    <p>The six steps</p>
+    <ol>
+      <li><a href="#s1">Put PageMotor on your site</a></li>
+      <li><a href="#s2">Tame SiteGround's cache</a></li>
+      <li><a href="#s3">Create your database</a></li>
+      <li><a href="#s4">Fill in config.php</a></li>
+      <li><a href="#s5">Finish in your browser</a></li>
+      <li><a href="#s6">Give your visitors the cache back (optional)</a></li>
+    </ol>
+    <p style="margin-top:14px">Something not working?</p>
+    <ol style="list-style:none;padding-left:0;margin:0">
+      <li><a href="#fix">Jump to troubleshooting →</a></li>
+    </ol>
+  </nav>
+
+  <section class="step" id="s1">
+    <h2><span class="num">1</span><span class="t">Put PageMotor on your site</span></h2>
+    <ol class="sub">
+      <li>In <strong>Site Tools</strong>, open <strong>Site → File Manager</strong> and go into <code>public_html</code>, your site's folder.</li>
+      <li>Click the <strong>File Upload</strong> icon in the toolbar and upload your PageMotor <code>.zip</code>. (SiteGround's File Manager has no upload size limit, so the zip goes up in one piece.)</li>
+      <li>Right-click the uploaded zip and choose the <strong>Extract</strong> option (the exact wording can vary), extracting into <code>public_html</code>.</li>
+    </ol>
+    <div class="note">When it is done you should see <code>pagemotor.php</code>, a <code>lib</code> folder, and a file called <code>config-sample.php</code> sitting in <code>public_html</code>. (If extracting gave you a single folder called <code>pagemotor</code> instead, open it, select everything inside, choose <strong>Move</strong> and move it all into <code>public_html</code>, then delete the empty folder and the zip.) Good. We use that sample file in step 4.</div>
+  </section>
+
+  <section class="step" id="s2">
+    <h2><span class="num">2</span><span class="t">Tame SiteGround's cache</span></h2>
+    <p>SiteGround runs a full-page cache (Dynamic Cache) on every site. It is on by default, there is no off switch in Site Tools, and its only built-in manners are for WordPress and Drupal. Anything else, PageMotor included, gets cached like an ordinary page for up to 12 hours: the install screen, the admin area, even the login. Skip this step and the install will feel haunted: pages that refuse to change, an admin screen that will not appear, a login that goes round in circles.</p>
+    <ol class="sub">
+      <li>In <strong>File Manager</strong>, look inside <code>public_html</code> for a file called <code>.htaccess</code>. If it exists, right-click → <strong>Edit</strong>; if not, create it (<strong>New File</strong>).</li>
+      <li>Paste this at the very top and save:</li>
+    </ol>
+    <div class="codewrap">
+      <button class="copy" type="button" data-copy="kill">Copy</button>
+<pre id="kill"><code><span class="tok-c"># Temporary while installing PageMotor: stops SiteGround's</span>
+<span class="tok-c"># full-page cache serving stale copies of your pages.</span>
+&lt;IfModule mod_headers.c&gt;
+  Header set Cache-Control <span class="tok-s">"private"</span>
+&lt;/IfModule&gt;</code></pre>
+    </div>
+    <ol class="sub" start="3">
+      <li>Now flush the cache once: <strong>Site Tools → Speed → Caching → Dynamic Cache</strong>, then the <strong>Flush Cache</strong> action. SiteGround only applies .htaccess caching changes after a flush, so this part is not optional.</li>
+    </ol>
+    <div class="note"><strong>How to check it worked:</strong> load any page of your site and look at the <code>x-proxy-cache</code> response header (browser dev tools → Network, click the page request). <strong>BYPASS</strong> or <strong>MISS</strong> is what you want. <strong>HIT</strong> means the cache is still answering; flush again.</div>
+  </section>
+
+  <section class="step" id="s3">
+    <h2><span class="num">3</span><span class="t">Create your database</span></h2>
+    <p>PageMotor keeps your content in a database. SiteGround does this differently from cPanel hosts: it chooses the names for you.</p>
+    <ol class="sub">
+      <li>In <strong>Site Tools</strong>, open <strong>Site → MySQL</strong>. On the <strong>Databases</strong> tab, click <strong>Create Database</strong>. SiteGround generates the database name (something like <code>dbabc123xyz</code>); you do not get to choose it.</li>
+      <li>Switch to the <strong>Users</strong> tab and click <strong>Create User</strong>. The username and password are generated too, and the password is shown <em>once</em>, in a notice. <em>Copy it somewhere safe now.</em></li>
+      <li>Still under Users, find your new user and choose <strong>Manage Access</strong> (or <strong>Add New Database</strong>): pick your new database, choose <strong>All Privileges</strong>, and confirm.</li>
+    </ol>
+    <div class="note"><strong>The step nearly everyone misses on SiteGround:</strong> a freshly created user has access to <em>nothing</em>. If you skip the Manage Access part, PageMotor will be turned away at the door. You will need three things in the next step: the generated <strong>database name</strong>, the generated <strong>username</strong>, and the <strong>password</strong> from the notice.</div>
+  </section>
+
+  <section class="step" id="s4">
+    <h2><span class="num">4</span><span class="t">Fill in config.php</span></h2>
+    <p>This is the file that connects PageMotor to the database you just made.</p>
+    <ol class="sub">
+      <li>In <strong>File Manager</strong>, find <code>config-sample.php</code> next to <code>pagemotor.php</code>.</li>
+      <li>Right-click it and choose <strong>Rename</strong>. Rename it to exactly <code>config.php</code>. <em>This rename is the step that switches PageMotor on.</em></li>
+      <li>Right-click <code>config.php</code> and choose <strong>Edit</strong>.</li>
+      <li>Put the three generated values into <code>DB_NAME</code>, <code>DB_USER</code> and <code>DB_PASSWORD</code>. Leave the rest as they are, then <strong>Save</strong>.</li>
+    </ol>
+    <p>Here is what the database section of your <code>config.php</code> should look like once filled in. Edit the existing lines to match, using the values Site Tools generated for you; you are changing three values, not pasting this block in:</p>
+    <div class="codewrap">
+<pre id="cfg"><code><span class="tok-c">// Database connection info:</span>
+define(<span class="tok-s">'DB_NAME'</span>, <span class="tok-s">'dbabc123xyz'</span>);          <span class="tok-c">// the generated name from Site Tools</span>
+define(<span class="tok-s">'DB_USER'</span>, <span class="tok-s">'the-generated-username'</span>); <span class="tok-c">// from the Users tab</span>
+define(<span class="tok-s">'DB_PASSWORD'</span>, <span class="tok-s">'the-password-from-the-notice'</span>);
+define(<span class="tok-s">'DB_HOST'</span>, <span class="tok-s">'localhost'</span>);            <span class="tok-c">// correct for SiteGround</span>
+define(<span class="tok-s">'DB_CHARSET'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'DB_COLLATE'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'DB_TABLE_PREFIX'</span>, <span class="tok-s">'pm_'</span>);
+define(<span class="tok-s">'DB_FLAGS'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</span>);</code></pre>
+    </div>
+    <div class="note"><strong>Two things to double-check:</strong> the file must be named exactly <code>config.php</code> (not <code>config-sample.php</code>, and not <code>config.php.txt</code>), and it must sit in the same folder as <code>pagemotor.php</code>.</div>
+  </section>
+
+  <section class="step" id="s5">
+    <h2><span class="num">5</span><span class="t">Finish in your browser</span></h2>
+    <ol class="sub">
+      <li>Flush <strong>Dynamic Cache</strong> once more (Site Tools → Speed → Caching), so your first visit is answered by PageMotor and not by an old cached copy.</li>
+      <li>Visit your website. On this first visit PageMotor quietly sets up its content for you.</li>
+      <li>Go to <code>yoursite.com/admin/</code> and create your admin user.</li>
+      <li>Straight after creating it: flush <strong>Dynamic Cache</strong> again, and clear your browser's cookies for the site, <em>then</em> log in. This one-two is what prevents the login loop described in the troubleshooting below.</li>
+    </ol>
+    <div class="note calm"><strong>That is it.</strong> You are in. If the login misbehaves anyway, it is the cache; the first troubleshooting item below walks you out of it.</div>
+  </section>
+
+  <section class="step" id="s6">
+    <h2><span class="num">6</span><span class="t">Give your visitors the cache back (optional)</span></h2>
+    <p>The step 2 kill switch turns SiteGround's page cache off for everyone, which is a perfectly fine place to stop for a small site; it will still be quick. If you want visitors to get cached pages for speed, swap the kill switch for a scoped rule that keeps the cache away from the admin area only:</p>
+    <div class="codewrap">
+      <button class="copy" type="button" data-copy="scoped">Copy</button>
+<pre id="scoped"><code><span class="tok-c"># Cache public pages, but never the PageMotor admin.</span>
+&lt;If <span class="tok-s">"%{THE_REQUEST} =~ m#/admin#"</span>&gt;
+  &lt;IfModule mod_headers.c&gt;
+    Header set Cache-Control <span class="tok-s">"private"</span>
+  &lt;/IfModule&gt;
+&lt;/If&gt;</code></pre>
+    </div>
+    <ul class="sub">
+      <li>Replace the step 2 block with this, save, and flush <strong>Dynamic Cache</strong> once more. (Every .htaccess caching change needs a flush before it takes effect.)</li>
+      <li><strong>Know the trade:</strong> with the cache back on, an edit to a public page can take up to 12 hours to show for visitors unless you flush after editing. If you edit the site often, the simple site-wide line from step 2 is the calmer choice.</li>
+      <li>If anything starts acting stale or the login plays up again, go back to the step 2 version.</li>
+    </ul>
+  </section>
+
+  <h2 class="plain" id="fix">If something is not working</h2>
+  <p style="color:var(--soft);font-size:16.5px">Open these only if you hit them. On SiteGround, when in doubt, it is the cache.</p>
+
+  <details>
+    <summary>I see "The user login cookie was not created!"</summary>
+    <p><span class="tag err">most common</span>Your browser really did get the cookie; you can even see it in dev tools. The problem is the <em>next</em> page: SiteGround's cache answers it with an old copy saved before you logged in, so PageMotor never runs and never sees your cookie. Break the loop in this order:</p>
+    <ul class="sub">
+      <li>Log out if you can (or just close the tab).</li>
+      <li>Flush <strong>Dynamic Cache</strong> in Site Tools (Speed → Caching).</li>
+      <li>Delete your browser's cookies for the site.</li>
+      <li>Log in again. If you have just created your first admin user, flush once more straight after creating it.</li>
+      <li>Still looping? Check the step 2 kill switch is actually in <code>.htaccess</code> and that you flushed after saving it.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>The admin screen will not appear on a fresh install</summary>
+    <p>Same cause: the cache is serving an old copy of <code>/admin/</code> from before PageMotor was ready. The giveaway is when a friend on a different connection can see the screen you cannot; that is the cache talking, not your install. Do the step 2 kill switch if you have not, flush Dynamic Cache, and reload. Check the <code>x-proxy-cache</code> header reads <strong>BYPASS</strong> or <strong>MISS</strong>, not HIT.</p>
+  </details>
+
+  <details>
+    <summary>My changes do not show up</summary>
+    <p>Flush <strong>Dynamic Cache</strong> in Site Tools. If a page still will not budge, look at its <code>x-proxy-cache</code> response header: <strong>HIT</strong> means the cache answered, so flush again and re-check your .htaccess rule from step 2 (and remember each .htaccess change itself needs a flush to take effect).</p>
+  </details>
+
+  <details>
+    <summary>I see "HTTP ERROR 500" or a blank white page</summary>
+    <p>Almost always a <code>config.php</code> problem. Check the file is named exactly <code>config.php</code> (not still <code>config-sample.php</code>), that it sits next to <code>pagemotor.php</code>, and then read the real reason in <strong>Site Tools → Statistics → Error Log</strong>. If it says <code>config.php</code> <em>"No such file or directory"</em>, this is your fix.</p>
+  </details>
+
+  <details>
+    <summary>The log says "Access denied" or "MySQLi Connection Error"</summary>
+    <p>PageMotor reached the database step but could not get in. On SiteGround this is nearly always the privileges step:</p>
+    <ul class="sub">
+      <li>The user was given <strong>All Privileges</strong> on the database (step 3, Manage Access). A new user starts with none.</li>
+      <li>The generated <strong>database name</strong> and <strong>username</strong> are copied exactly as Site Tools shows them.</li>
+      <li><code>DB_HOST</code> is <code>localhost</code> on SiteGround.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>I cannot find config-sample.php</summary>
+    <p>It ships inside the PageMotor download, right next to <code>pagemotor.php</code>. Two things to check: the files may have landed in a <code>pagemotor</code> subfolder when the zip extracted, in which case move everything in it up into <code>public_html</code> (see the note in step 1); and if the folder is genuinely empty, the zip did not extract completely, so repeat step 1.</p>
+  </details>
+
+  <div class="seealso">
+    📧 <strong>Will your site send email?</strong> Contact forms, sign-ups and password resets need a proper mail service or they land in spam. Follow the companion guide: <a href="https://documentation.elmspark.com/guides/mailgun-email/">Set up reliable email with Mailgun</a>.
+  </div>
+
+  <footer>
+    <p><strong>Still stuck?</strong> Copy the newest line from your error log (Site Tools → Statistics → Error Log) and post it in the PageMotor forum, along with what <code>x-proxy-cache</code> says for the page. Those two things almost always point straight at the fix.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.getAttribute('data-copy'));
+      function flash(msg, ok){
+        var old = 'Copy'; btn.textContent = msg; if (ok) btn.classList.add('done');
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1600);
+      }
+      function fallback(){
+        try {
+          var range = document.createRange(); range.selectNodeContents(el);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+          var copied = document.execCommand('copy'); sel.removeAllRanges();
+          flash(copied ? 'Copied' : 'Press Ctrl/Cmd+C', copied);
+        } catch (e) { flash('Press Ctrl/Cmd+C', false); }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(el.innerText).then(function(){ flash('Copied', true); }, fallback);
+      } else { fallback(); }
+    });
+  });
+</script>
+</body>
+</html>
