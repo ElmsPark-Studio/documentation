@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Plain-English guides for PageMotor site owners, people running small-business websites, and AI-assisted developers. Worked out on real sites first, then written down.">
+<title>ElmsPark Guides</title>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:600,700|outfit:400,500,600&display=swap">
+<!--
+  To add a guide to this page:
+  1. Copy one <article class="gcard"> block in the "Available now" grid and edit it.
+     data-cat must be one of: pagemotor | email | ai | security | privacy | hosting
+     (hosting has CSS but no toolbar chip yet: when adding the FIRST hosting guide,
+     also add <button class="chip" aria-pressed="false" data-cat="hosting">Hosting</button> to the chips group)
+     data-search should hold extra search words not visible in the card text.
+  2. If the guide replaces a "Coming next" card, remove that card from the planned grid.
+  3. Deploy this file to /var/www/documentation.elmspark.com/guides/index.html (scp + chown,
+     same surgical pattern as refresh-hq.sh) and re-probe https://documentation.elmspark.com/guides/
+-->
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+    --radius:14px; --maxw:1020px;
+    --shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:Outfit,system-ui,-apple-system,"Segoe UI",sans-serif;
+    line-height:1.6; font-size:17px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+
+  header.top{padding:14px 22px; border-bottom:1px solid var(--line); background:var(--card)}
+  header.top .inner{max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:10px}
+  .leaf{width:24px;height:24px;flex:none}
+  .brand{font-size:14px; letter-spacing:.05em; text-transform:uppercase; color:var(--pine); font-weight:600; text-decoration:none}
+  .brand:hover{color:var(--pine-deep)}
+  .top-right{margin-left:auto; font-size:14px}
+  .top-right a{color:var(--soft); text-decoration:none}
+  .top-right a:hover{color:var(--pine); text-decoration:underline}
+
+  .hero{padding:46px 0 30px; border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#f2ecdf 0%,var(--paper) 100%)}
+  .kicker{font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:#a35a20; font-weight:600}
+  h1{font-family:Fraunces,Georgia,serif; font-size:clamp(32px,5vw,46px); line-height:1.1;
+    color:var(--pine-deep); margin:.25em 0 .2em; letter-spacing:-.01em; font-weight:700}
+  .lede{font-size:19px; color:var(--soft); max-width:640px; margin:0 0 18px}
+  .hero-chips{display:flex; flex-wrap:wrap; gap:8px; font-size:13.5px}
+  .hchip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 12px; border-radius:999px}
+  .hchip b{color:var(--pine)}
+
+  .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:30px 0 6px}
+  .search{flex:1 1 260px; max-width:380px; position:relative}
+  .search input{width:100%; font:inherit; font-size:16px; padding:10px 34px 10px 38px;
+    border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--ink)}
+  .search input:focus{outline:2px solid var(--pine); outline-offset:1px; border-color:var(--pine)}
+  .search svg{position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; opacity:.45}
+  .search kbd{position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:11px;
+    border:1px solid var(--line); border-radius:5px; padding:1px 6px; color:var(--soft); background:var(--paper)}
+  @media (pointer:coarse){ .search kbd{display:none} }
+  .chips{display:flex; flex-wrap:wrap; gap:6px}
+  .chip{font:inherit; font-size:14px; font-weight:500; cursor:pointer; border:1px solid var(--line);
+    background:var(--card); color:var(--soft); padding:7px 14px; border-radius:999px; transition:.15s}
+  .chip:hover{color:var(--pine-deep); border-color:var(--pine)}
+  .chip[aria-pressed="true"]{background:var(--pine); border-color:var(--pine); color:#fff}
+  .count{font-size:13.5px; color:var(--soft); margin:6px 2px 0; min-height:1.4em}
+
+  h2{font-family:Fraunces,Georgia,serif; font-size:24px; color:var(--pine-deep); margin:34px 0 4px; font-weight:600}
+  .h2sub{color:var(--soft); font-size:15.5px; margin:0 0 18px}
+
+  .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); margin:0 0 10px}
+  .gcard{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column; transition:transform .15s, box-shadow .15s}
+  .gcard:hover{transform:translateY(-2px); box-shadow:0 2px 5px rgba(35,33,28,.08),0 10px 24px rgba(35,33,28,.08)}
+  @media (prefers-reduced-motion: reduce){ .gcard, .gcard:hover{transform:none; transition:none} }
+  .cat-bar{height:4px; background:var(--cat,var(--pine))}
+  .gbody{padding:18px 20px 16px; display:flex; flex-direction:column; flex:1}
+  .cat-tag{display:inline-block; align-self:flex-start; font-size:11.5px; font-weight:600; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--cat,var(--pine)); margin-bottom:8px}
+  .gcard h3{font-family:Fraunces,Georgia,serif; font-size:20px; line-height:1.25; margin:0 0 8px; font-weight:600}
+  .gcard h3 a{color:var(--pine-deep); text-decoration:none}
+  .gcard h3 a:hover{text-decoration:underline}
+  .gcard h3 a:focus-visible{outline:2px solid var(--pine); outline-offset:2px; border-radius:4px}
+  .gdesc{font-size:15px; color:var(--soft); margin:0 0 12px}
+  .ginside{list-style:none; padding:0; margin:0 0 14px; font-size:14px}
+  .ginside li{padding-left:20px; position:relative; margin:5px 0; color:var(--ink)}
+  .ginside li::before{content:"✓"; position:absolute; left:2px; color:var(--cat,var(--pine)); font-weight:600}
+  .gmeta{margin-top:auto; display:flex; flex-wrap:wrap; gap:6px; font-size:12.5px; color:var(--soft);
+    border-top:1px solid var(--line); padding-top:12px}
+  .gmeta span{background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:2px 8px}
+
+  .cat-pagemotor{--cat:#2f5d4a}
+  .cat-email{--cat:#a35a20}
+  .cat-ai{--cat:#3a5a78}
+  .cat-security{--cat:#9a4b2e}
+  .cat-privacy{--cat:#6b5b8a}
+  .cat-hosting{--cat:#4a6d7c}
+
+  .rcard{background:var(--card); border:1px dashed var(--line); border-radius:var(--radius);
+    padding:16px 18px; display:flex; flex-direction:column}
+  .rcard .cat-tag{margin-bottom:6px}
+  .rcard h3{font-family:Fraunces,Georgia,serif; font-size:17px; line-height:1.3; margin:0 0 6px; color:var(--ink); font-weight:600}
+  .rcard p{font-size:14px; color:var(--soft); margin:0 0 10px}
+  .planned{margin-top:auto; align-self:flex-start; font-size:11.5px; font-weight:600; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--soft); background:var(--paper); border:1px solid var(--line);
+    border-radius:6px; padding:2px 8px}
+
+  .empty{display:none; background:var(--card); border:1px dashed var(--line); border-radius:var(--radius);
+    padding:26px; text-align:center; color:var(--soft); font-size:15.5px; margin:4px 0 10px}
+
+  .request{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:10px; padding:16px 20px; margin:20px 0 0; font-size:15.5px}
+  .request a{color:var(--pine); font-weight:600}
+
+  .about{margin:42px 0 0; padding:22px 24px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius)}
+  .about h2{margin-top:0; font-size:20px}
+  .about p{font-size:15.5px; color:var(--soft); max-width:760px; margin:8px 0}
+  .about a{color:var(--pine)}
+
+  footer{margin:40px 0 0; padding:24px 0 60px; border-top:1px solid var(--line); color:var(--soft); font-size:14px}
+  footer a{color:var(--pine)}
+  footer p{margin:6px 0}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="inner">
+    <svg class="leaf" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 22V9" stroke="#2f5d4a" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12 13c0-3 2.4-6 6.5-6.5C18 11 15 13 12 13Z" fill="#2f5d4a"/>
+      <path d="M12 10C12 6.5 9.6 3.6 5.5 3 6 7.8 9 10 12 10Z" fill="#3f7a60"/>
+    </svg>
+    <a class="brand" href="https://documentation.elmspark.com">ElmsPark Documentation</a>
+    <div class="top-right"><a href="https://documentation.elmspark.com/plugins/">EP Suite plugin docs →</a></div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker">Field guides</span>
+    <h1>ElmsPark Guides</h1>
+    <p class="lede">Plain-English, step-by-step guides for PageMotor site owners, people running small-business websites, and AI-assisted developers. Everything here was worked out on real sites first, then written down.</p>
+    <div class="hero-chips">
+      <span class="hchip">🌱 <b>Plain English</b>, no jargon walls</span>
+      <span class="hchip">🧭 <b>Step by step</b>, with the traps marked</span>
+      <span class="hchip">🔍 <b>Tested on real sites</b> before publishing</span>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <label for="q" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search the guides</label>
+      <input id="q" type="search" placeholder="Search guides…" autocomplete="off">
+      <kbd>/</kbd>
+    </div>
+    <div class="chips" role="group" aria-label="Filter by topic">
+      <button class="chip" aria-pressed="true" data-cat="all">All topics</button>
+      <button class="chip" aria-pressed="false" data-cat="pagemotor">PageMotor</button>
+      <button class="chip" aria-pressed="false" data-cat="email">Email</button>
+      <button class="chip" aria-pressed="false" data-cat="ai">AI &amp; tools</button>
+      <button class="chip" aria-pressed="false" data-cat="security">Security</button>
+      <button class="chip" aria-pressed="false" data-cat="privacy">Privacy &amp; GDPR</button>
+    </div>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+
+  <h2 id="now">Available now</h2>
+  <p class="h2sub">Open one and follow along. Each guide stands on its own.</p>
+
+  <div class="grid" id="liveGrid">
+
+    <article class="gcard cat-pagemotor" data-cat="pagemotor" data-search="install cpanel bluehost shared hosting database config setup white screen 500">
+      <div class="cat-bar"></div>
+      <div class="gbody">
+        <span class="cat-tag">PageMotor</span>
+        <h3><a href="/guides/pagemotor-bluehost/">Installing PageMotor on Bluehost</a></h3>
+        <p class="gdesc">Get PageMotor running on Bluehost, or any cPanel host, in about ten minutes. No coding needed.</p>
+        <ul class="ginside">
+          <li>Four steps: upload, database, config.php, finish</li>
+          <li>The database-prefix trap nearly everyone hits</li>
+          <li>White-screen troubleshooting that names the real cause</li>
+        </ul>
+        <div class="gmeta"><span>⏱ a 10-minute job</span><span>📖 4-min read</span><span>June 2026</span></div>
+      </div>
+    </article>
+
+    <article class="gcard cat-email" data-cat="email" data-search="mailgun spam deliverability dns spf dkim dmarc sending domain newsletter contact form">
+      <div class="cat-bar"></div>
+      <div class="gbody">
+        <span class="cat-tag">Email &amp; deliverability</span>
+        <h3><a href="/guides/mailgun-email/">Set up reliable email with Mailgun</a></h3>
+        <p class="gdesc">Stop your site's email landing in spam. The recommended way to send from any PageMotor site, free up to 100 emails a day.</p>
+        <ul class="ginside">
+          <li>Six steps from signup to email that actually arrives</li>
+          <li>The region choice you can never change later</li>
+          <li>Finishes with real inbox proof, not a green tick</li>
+        </ul>
+        <div class="gmeta"><span>⏱ about 20 minutes</span><span>📖 5-min read</span><span>June 2026</span></div>
+      </div>
+    </article>
+
+    <article class="gcard cat-ai" data-cat="ai" data-search="claude fable opus anthropic model choice pricing cost calculator llm comparison">
+      <div class="cat-bar"></div>
+      <div class="gbody">
+        <span class="cat-tag">AI &amp; tools</span>
+        <h3><a href="/guides/fable-5-vs-opus-4.8/">Claude Fable 5 vs Opus 4.8</a></h3>
+        <p class="gdesc">What Anthropic's first public Mythos-class model is, what it costs, and when it earns its price over Opus 4.8.</p>
+        <ul class="ginside">
+          <li>Head-to-head specs with a differences-only toggle</li>
+          <li>Live cost calculator across six Claude models</li>
+          <li>A which-model-when picker for nine real job types</li>
+        </ul>
+        <div class="gmeta"><span>📖 10-min read</span><span>🧮 interactive</span><span>June 2026</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="empty" id="empty">No guides match that yet. Try another word, or see what is coming next below.</div>
+
+  <h2 id="next">Coming next</h2>
+  <p class="h2sub">Being written in the order people need them. Each one comes from problems solved on production sites.</p>
+
+  <div class="grid" id="planGrid">
+
+    <article class="rcard cat-security" data-cat="security" data-search="spam captcha honeypot forms bots ai triage blocklist">
+      <span class="cat-tag">Security</span>
+      <h3>Stopping contact-form spam without CAPTCHA</h3>
+      <p>A layered, server-side defence that lets humans through and quietly drops the bots, finishing with an AI triage layer.</p>
+      <span class="planned">Planned</span>
+    </article>
+
+    <article class="rcard cat-pagemotor" data-cat="pagemotor" data-search="wordpress migration move convert thesis divi gutenberg dns cutover">
+      <span class="cat-tag">PageMotor</span>
+      <h3>Migrating a WordPress site to PageMotor</h3>
+      <p>The honest end-to-end walkthrough: what carries over cleanly, what needs rebuilding, and the surprises to plan for before you start.</p>
+      <span class="planned">Planned</span>
+    </article>
+
+    <article class="rcard cat-email" data-cat="email" data-search="spf dkim dmarc spam deliverability dns records explained">
+      <span class="cat-tag">Email &amp; deliverability</span>
+      <h3>Why your website's email lands in spam</h3>
+      <p>SPF, DKIM and DMARC explained properly, with real DNS records. The theory half of the Mailgun guide.</p>
+      <span class="planned">Planned</span>
+    </article>
+
+    <article class="rcard cat-pagemotor" data-cat="pagemotor" data-search="plugin development first build oop valet developer tutorial">
+      <span class="cat-tag">PageMotor</span>
+      <h3>Building your first PageMotor plugin</h3>
+      <p>From an empty folder to installed and working, with the architecture explained and the early pitfalls marked.</p>
+      <span class="planned">Planned</span>
+    </article>
+
+    <article class="rcard cat-privacy" data-cat="privacy" data-search="google fonts bunny gdpr legal ruling swap privacy">
+      <span class="cat-tag">Privacy &amp; GDPR</span>
+      <h3>Replacing Google Fonts with Bunny Fonts</h3>
+      <p>The ten-minute fix for a real EU legal risk. Same fonts, same URL shape, no data sent to Google.</p>
+      <span class="planned">Planned</span>
+    </article>
+
+    <article class="rcard cat-ai" data-cat="ai" data-search="verification done claims agents claude code testing probes trust">
+      <span class="cat-tag">AI &amp; tools</span>
+      <h3>AI said it was done. It wasn't.</h3>
+      <p>The verification habit every AI-assisted developer needs: never trust step-success, always run the probe a real user would.</p>
+      <span class="planned">Planned</span>
+    </article>
+
+  </div>
+
+  <div class="request">
+    💬 <strong>Want one of these sooner, or need a guide that is not here?</strong>
+    Say so in the PageMotor forum, or <a href="https://elmspark.com/contact/">get in touch</a> and tell us what you are stuck on. Requests genuinely shape the order.
+  </div>
+
+  <section class="about" aria-labelledby="aboutH">
+    <h2 id="aboutH">About these guides</h2>
+    <p>They are written by <a href="https://elmspark.com">ElmsPark Consultants</a>, the team behind the EP Suite of PageMotor plugins, from a working practice that builds and runs production sites every day. Nothing is published until it has been done for real at least once.</p>
+    <p>Looking for plugin reference instead? The full <a href="https://documentation.elmspark.com/plugins/">EP Suite plugin documentation</a> covers installing and configuring every plugin.</p>
+  </section>
+
+  <footer role="contentinfo">
+    <p>ElmsPark Documentation · guides from real production work · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a> · <a href="https://elmspark.com">elmspark.com</a></p>
+    <p>Made in Wexford, Ireland.</p>
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  var q = document.getElementById('q');
+  var chips = document.querySelectorAll('.chip');
+  var cards = document.querySelectorAll('#liveGrid .gcard, #planGrid .rcard');
+  var liveGrid = document.getElementById('liveGrid');
+  var empty = document.getElementById('empty');
+  var count = document.getElementById('count');
+  var activeCat = 'all';
+
+  function apply(){
+    var term = q.value.trim().toLowerCase();
+    var liveShown = 0, planShown = 0;
+    cards.forEach(function(c){
+      var catOk = (activeCat === 'all') || (c.dataset.cat === activeCat);
+      var text = (c.textContent + ' ' + (c.dataset.search || '')).toLowerCase();
+      var termOk = !term || text.indexOf(term) !== -1;
+      var show = catOk && termOk;
+      c.style.display = show ? '' : 'none';
+      if (show) { if (c.classList.contains('gcard')) liveShown++; else planShown++; }
+    });
+    empty.style.display = liveShown === 0 ? 'block' : 'none';
+    empty.textContent = (liveShown === 0 && planShown === 0)
+      ? 'Nothing matches that yet, live or planned. Try another word.'
+      : 'No guides match that yet. Try another word, or see what is coming next below.';
+    if (term || activeCat !== 'all') {
+      count.textContent = 'Showing ' + liveShown + ' guide' + (liveShown === 1 ? '' : 's') +
+        ' and ' + planShown + ' planned topic' + (planShown === 1 ? '' : 's');
+    } else {
+      count.textContent = '';
+    }
+  }
+
+  q.addEventListener('input', apply);
+  chips.forEach(function(ch){
+    ch.addEventListener('click', function(){
+      chips.forEach(function(x){ x.setAttribute('aria-pressed', 'false'); });
+      ch.setAttribute('aria-pressed', 'true');
+      activeCat = ch.dataset.cat;
+      apply();
+    });
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Install PageMotor on Bluehost or any cPanel host in about ten minutes: upload the files, create the database, fill in config.php and finish in your browser. With troubleshooting.">
+<title>Installing PageMotor on Bluehost | ElmsPark Guide</title>
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+    --warn:#9a4b2e; --codebg:#1f1d17; --radius:14px; --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+  header.top{padding:14px 20px; border-bottom:1px solid var(--line); background:var(--card)}
+  header.top .inner{max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:10px}
+  .leaf{width:24px;height:24px;flex:none}
+  .brand{font-size:15px; letter-spacing:.04em; text-transform:uppercase; color:var(--pine); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-weight:600; text-decoration:none}
+  .topnav{margin-left:auto; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-size:14px}
+  .topnav a{color:var(--pine); text-decoration:none}
+  .topnav a:hover{text-decoration:underline}
+  h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+  .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+  .chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+  .chip b{color:var(--pine)}
+  .note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+  .note.calm{border-left-color:var(--pine)}
+  .note strong{color:var(--pine-deep)}
+  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+  nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+  nav.toc ol{margin:0; padding-left:20px}
+  nav.toc li{margin:5px 0}
+  nav.toc a{color:var(--pine); text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+  .step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+  .num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+  .step h2 .t{line-height:1.2}
+  ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+  ol.sub li,ul.sub li{margin:8px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+  .codewrap{position:relative; margin:14px 0}
+  pre{background:var(--codebg); color:#eee; border-radius:12px; padding:18px; overflow:auto; font-size:14px; line-height:1.55; margin:0}
+  pre code{background:none; color:inherit; padding:0; font-size:inherit}
+  .tok-c{color:#8f9b7e} .tok-s{color:#9fc7a6}
+  .copy{position:absolute; top:10px; right:10px; font-family:system-ui,sans-serif; font-size:12.5px; border:1px solid #4a463a; background:#33302a; color:#e9e3d3; padding:6px 12px; border-radius:8px; cursor:pointer}
+  .copy:hover{background:#3f3b32}
+  .copy.done{background:var(--pine); border-color:var(--pine); color:#fff}
+  h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+  details[open]{padding-bottom:14px}
+  summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-family:system-ui,sans-serif}
+  details[open] summary::before{content:"－"}
+  .tag{display:inline-block; font-family:system-ui,sans-serif; font-size:12px; font-weight:600; padding:2px 9px; border-radius:6px; margin-right:6px}
+  .tag.err{background:#f3e1d9; color:var(--warn)}
+  .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+  .seealso a{color:var(--pine); font-weight:600}
+  footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+  footer a{color:var(--pine)}
+  .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+  @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <svg class="leaf" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 22V9" stroke="#2f5d4a" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12 13c0-3 2.4-6 6.5-6.5C18 11 15 13 12 13Z" fill="#2f5d4a"/>
+      <path d="M12 10C12 6.5 9.6 3.6 5.5 3 6 7.8 9 10 12 10Z" fill="#3f7a60"/>
+    </svg>
+    <a class="brand" href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a>
+    <nav class="topnav"><a href="https://documentation.elmspark.com/guides/">All guides →</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <span class="kicker">PageMotor Setup Guide</span>
+  <h1>Installing PageMotor on Bluehost</h1>
+  <p class="lede">A plain-English walkthrough. About ten minutes, and you do not need to be technical.</p>
+  <div class="chips">
+    <span class="chip">⏱ <b>~10 minutes</b></span>
+    <span class="chip">🧰 <b>No coding</b></span>
+    <span class="chip">🖥 Works on <b>any cPanel host</b></span>
+  </div>
+
+  <div class="note calm">
+    <strong>Before you start, have these ready:</strong> a Bluehost account with cPanel, the PageMotor files (the .zip you downloaded), and the name of your website. That is everything.
+  </div>
+
+  <nav class="toc">
+    <p>The four steps</p>
+    <ol>
+      <li><a href="#s1">Put PageMotor on your site</a></li>
+      <li><a href="#s2">Create your database</a></li>
+      <li><a href="#s3">Fill in config.php</a></li>
+      <li><a href="#s4">Finish in your browser</a></li>
+    </ol>
+    <p style="margin-top:14px">Something not working?</p>
+    <ol style="list-style:none;padding-left:0;margin:0">
+      <li><a href="#fix">Jump to troubleshooting →</a></li>
+    </ol>
+  </nav>
+
+  <section class="step" id="s1">
+    <h2><span class="num">1</span><span class="t">Put PageMotor on your site</span></h2>
+    <ol class="sub">
+      <li>In Bluehost, open <strong>cPanel</strong> and click <strong>File Manager</strong>.</li>
+      <li>Open the folder for your site. It is usually <code>public_html</code>, or <code>public_html/yourdomain.com</code> if you have more than one site.</li>
+      <li>Click <strong>Upload</strong>, choose your PageMotor <code>.zip</code>, and wait for it to finish.</li>
+      <li>Back in File Manager, right-click the uploaded zip and choose <strong>Extract</strong>.</li>
+    </ol>
+    <div class="note">When it is done you should see <code>pagemotor.php</code>, a <code>lib</code> folder, and a file called <code>config-sample.php</code> sitting in your site folder. Good. We use that sample file in step 3.</div>
+  </section>
+
+  <section class="step" id="s2">
+    <h2><span class="num">2</span><span class="t">Create your database</span></h2>
+    <p>PageMotor keeps your content in a database. Make one in three quick stages.</p>
+    <ol class="sub">
+      <li>In cPanel, open <strong>MySQL&nbsp;Databases</strong> (under the Databases section).</li>
+      <li>Under <strong>Create New Database</strong>, type a name like <code>pagemotor</code> and click <strong>Create Database</strong>.</li>
+      <li>Scroll to <strong>MySQL Users → Add New User</strong>. Pick a username, let the password generator make a strong password, and click <strong>Create User</strong>. <em>Write the password down now.</em></li>
+      <li>Scroll to <strong>Add User To Database</strong>. Choose your new user and your new database, click <strong>Add</strong>, then tick <strong>ALL PRIVILEGES</strong> and <strong>Make Changes</strong>.</li>
+    </ol>
+    <div class="note"><strong>The one thing nearly everyone misses:</strong> Bluehost adds your account name to the front of these. A database you typed as <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>, and the user the same way. Copy the <em>full</em> names exactly as cPanel shows them. You will need three things in the next step: the <strong>database name</strong>, the <strong>username</strong>, and the <strong>password</strong>.</div>
+  </section>
+
+  <section class="step" id="s3">
+    <h2><span class="num">3</span><span class="t">Fill in config.php</span></h2>
+    <p>This is the file that connects PageMotor to the database you just made.</p>
+    <ol class="sub">
+      <li>In <strong>File Manager</strong>, find <code>config-sample.php</code> next to <code>pagemotor.php</code>.</li>
+      <li>Right-click it and choose <strong>Rename</strong>. Rename it to exactly <code>config.php</code>. <em>This rename is the step that switches PageMotor on.</em></li>
+      <li>Right-click <code>config.php</code> and choose <strong>Edit</strong>.</li>
+      <li>Put your three values into <code>DB_NAME</code>, <code>DB_USER</code> and <code>DB_PASSWORD</code>, using the full prefixed names from step 2. Leave the rest as they are, then <strong>Save</strong>.</li>
+    </ol>
+    <p>Here is what the top of your <code>config.php</code> should look like. Swap in your own values:</p>
+    <div class="codewrap">
+      <button class="copy" type="button" data-copy="cfg">Copy</button>
+<pre id="cfg"><code><span class="tok-c">// Database connection info:</span>
+define(<span class="tok-s">'DB_NAME'</span>, <span class="tok-s">'theaccount_pagemotor'</span>);   <span class="tok-c">// exact name from cPanel</span>
+define(<span class="tok-s">'DB_USER'</span>, <span class="tok-s">'theaccount_pmuser'</span>);      <span class="tok-c">// exact username from cPanel</span>
+define(<span class="tok-s">'DB_PASSWORD'</span>, <span class="tok-s">'your-strong-password'</span>);
+define(<span class="tok-s">'DB_HOST'</span>, <span class="tok-s">'localhost'</span>);            <span class="tok-c">// correct for Bluehost</span>
+define(<span class="tok-s">'DB_CHARSET'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'DB_COLLATE'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'DB_TABLE_PREFIX'</span>, <span class="tok-s">'pm_'</span>);
+define(<span class="tok-s">'DB_FLAGS'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</span>);</code></pre>
+    </div>
+    <div class="note"><strong>Two things to double-check:</strong> the file must be named exactly <code>config.php</code> (not <code>config-sample.php</code>, and not <code>config.php.txt</code>), and it must sit in the same folder as <code>pagemotor.php</code>.</div>
+  </section>
+
+  <section class="step" id="s4">
+    <h2><span class="num">4</span><span class="t">Finish in your browser</span></h2>
+    <ol class="sub">
+      <li>Visit your website. On this first visit PageMotor quietly sets up its content for you.</li>
+      <li>Now go to <code>yoursite.com/admin/</code> and create your admin user.</li>
+    </ol>
+    <div class="note calm"><strong>That is it.</strong> You are in, and you can start building pages.</div>
+  </section>
+
+  <h2 class="plain" id="fix">If something is not working</h2>
+  <p style="color:var(--soft);font-size:16.5px">Open these only if you hit them. Each one is quick.</p>
+
+  <details>
+    <summary>I see "HTTP ERROR 500" or a blank white page</summary>
+    <p><span class="tag err">most common</span>Almost always a <code>config.php</code> problem. Check three things:</p>
+    <ul class="sub">
+      <li>The file is named exactly <code>config.php</code> (not still <code>config-sample.php</code>, and not <code>config.php.txt</code>).</li>
+      <li>It is in the same folder as <code>pagemotor.php</code>.</li>
+      <li>To see the real reason, open <strong>cPanel → Metrics → Errors</strong>, or the <code>error_log</code> file in your site folder. If it says <code>config.php</code> <em>"No such file or directory"</em>, this is your fix.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>The log says "MySQLi Connection Error"</summary>
+    <p>Good news, that means <code>config.php</code> is now working and PageMotor reached the database step. It just could not log in. Re-check, against the exact names cPanel shows:</p>
+    <ul class="sub">
+      <li>The <strong>database name</strong> and <strong>username</strong> include your account prefix (the <code>theaccount_</code> part).</li>
+      <li>The <strong>password</strong> is correct.</li>
+      <li>The user was <strong>added to the database</strong> with <strong>ALL PRIVILEGES</strong> (step 2, last part).</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>I changed my PHP version and nothing changed</summary>
+    <p>The PHP version is rarely the cause. A missing or misnamed <code>config.php</code> fails the same way on every version, so changing it makes no difference. Sort the <code>config.php</code> first. PageMotor is happy on modern PHP 8.x.</p>
+  </details>
+
+  <details>
+    <summary>I cannot find config-sample.php</summary>
+    <p>It ships inside the PageMotor download, right next to <code>pagemotor.php</code>. If it is not there, the files were not fully extracted, so repeat step 1 and make sure the <code>.zip</code> extracted completely.</p>
+  </details>
+
+  <div class="seealso">
+    📧 <strong>Will your site send email?</strong> Contact forms, sign-ups and password resets need a proper mail service or they land in spam. Follow the companion guide: <a href="https://documentation.elmspark.com/guides/mailgun-email/">Set up reliable email with Mailgun</a>.
+  </div>
+
+  <footer>
+    <p><strong>Still stuck?</strong> Copy the newest line from your error log (cPanel → Metrics → Errors) and post it in the PageMotor forum. That single line almost always points straight at the fix.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.getAttribute('data-copy'));
+      function flash(msg, ok){
+        var old = 'Copy'; btn.textContent = msg; if (ok) btn.classList.add('done');
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1600);
+      }
+      function fallback(){
+        try {
+          var range = document.createRange(); range.selectNodeContents(el);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+          var copied = document.execCommand('copy'); sel.removeAllRanges();
+          flash(copied ? 'Copied' : 'Press Cmd+C', copied);
+        } catch (e) { flash('Press Cmd+C', false); }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(el.innerText).then(function(){ flash('Copied', true); }, fallback);
+      } else { fallback(); }
+    });
+  });
+</script>
+</body>
+</html>

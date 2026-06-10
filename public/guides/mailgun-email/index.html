@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Stop your site's email landing in spam: set up Mailgun for a PageMotor site in six steps, from account and DNS records to a sending key and real inbox proof.">
+<title>Set up reliable email with Mailgun | ElmsPark Guide</title>
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+    --warn:#9a4b2e; --codebg:#1f1d17; --radius:14px; --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+  header.top{padding:14px 20px; border-bottom:1px solid var(--line); background:var(--card)}
+  header.top .inner{max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:10px}
+  .leaf{width:24px;height:24px;flex:none}
+  .brand{font-size:15px; letter-spacing:.04em; text-transform:uppercase; color:var(--pine); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-weight:600; text-decoration:none}
+  .topnav{margin-left:auto; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-size:14px}
+  .topnav a{color:var(--pine); text-decoration:none}
+  .topnav a:hover{text-decoration:underline}
+  h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+  .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+  .chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+  .chip b{color:var(--pine)}
+  .note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+  .note.calm{border-left-color:var(--pine)}
+  .note strong{color:var(--pine-deep)}
+  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+  nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+  nav.toc ol{margin:0; padding-left:20px}
+  nav.toc li{margin:5px 0}
+  nav.toc a{color:var(--pine); text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+  .step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+  .num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+  .step h2 .t{line-height:1.2}
+  ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+  ol.sub li,ul.sub li{margin:8px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+  h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+  details[open]{padding-bottom:14px}
+  summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-family:system-ui,sans-serif}
+  details[open] summary::before{content:"－"}
+  .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+  .seealso a{color:var(--pine); font-weight:600}
+  footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+  footer a{color:var(--pine)}
+  .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+  @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <svg class="leaf" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 22V9" stroke="#2f5d4a" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12 13c0-3 2.4-6 6.5-6.5C18 11 15 13 12 13Z" fill="#2f5d4a"/>
+      <path d="M12 10C12 6.5 9.6 3.6 5.5 3 6 7.8 9 10 12 10Z" fill="#3f7a60"/>
+    </svg>
+    <a class="brand" href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a>
+    <nav class="topnav"><a href="https://documentation.elmspark.com/guides/">All guides →</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <span class="kicker">Email Setup Guide</span>
+  <h1>Set up reliable email with Mailgun</h1>
+  <p class="lede">Stop your site's email landing in spam. The recommended way to send from any PageMotor site.</p>
+  <div class="chips">
+    <span class="chip">⏱ <b>~20 minutes</b></span>
+    <span class="chip">💷 <b>Free</b> to 100/day</span>
+    <span class="chip">🌍 Pick your <b>region once</b></span>
+  </div>
+
+  <div class="note">
+    <strong>Why bother?</strong> Shared hosting sends email with a basic built-in method that big providers like Gmail and Outlook quietly distrust, so your messages land in spam or vanish. <strong>Mailgun</strong> is the recommended fix: it sends your mail properly signed and authenticated, so it actually arrives. The free plan covers 100 emails a day, which is plenty for most sites.
+  </div>
+
+  <div class="note calm">
+    <strong>You will need:</strong> your domain name, a way into wherever your domain's DNS is managed (often Bluehost or Cloudflare), and your PageMotor admin login.
+  </div>
+
+  <nav class="toc">
+    <p>The six steps</p>
+    <ol>
+      <li><a href="#s1">Create a Mailgun account</a></li>
+      <li><a href="#s2">Add your sending domain</a></li>
+      <li><a href="#s3">Add the DNS records</a></li>
+      <li><a href="#s4">Create a sending key</a></li>
+      <li><a href="#s5">Connect PageMotor</a></li>
+      <li><a href="#s6">Prove it works</a></li>
+    </ol>
+    <p style="margin-top:14px">Trouble?</p>
+    <ol style="list-style:none;padding-left:0;margin:0"><li><a href="#fix">Jump to troubleshooting →</a></li></ol>
+  </nav>
+
+  <section class="step" id="s1">
+    <h2><span class="num">1</span><span class="t">Create a Mailgun account</span></h2>
+    <ol class="sub">
+      <li>Sign up free at <a href="https://www.mailgun.com">mailgun.com</a>. No credit card is needed for the free plan.</li>
+      <li>During signup you choose a <strong>Region</strong>. Pick <strong>EU</strong> if your visitors are mainly in the UK or Europe, or <strong>US</strong> otherwise.</li>
+    </ol>
+    <div class="note"><strong>Choose the region carefully.</strong> It is locked to your domain for life and cannot be changed later. EU is the right call for UK and Irish audiences.</div>
+  </section>
+
+  <section class="step" id="s2">
+    <h2><span class="num">2</span><span class="t">Add your sending domain</span></h2>
+    <ol class="sub">
+      <li>In Mailgun, go to <strong>Send → Domains</strong> and click <strong>Add new domain</strong>.</li>
+      <li>Enter <code>mg.yourdomain.com</code> (your real domain with <code>mg.</code> in front).</li>
+      <li>Leave the suggested settings as they are and confirm.</li>
+    </ol>
+    <div class="note"><strong>Why the <code>mg.</code> bit matters:</strong> Mailgun sends from a dedicated sub-name, so your normal email (anything arriving at your main domain) is never touched. Keep the <code>mg.</code> prefix.</div>
+  </section>
+
+  <section class="step" id="s3">
+    <h2><span class="num">3</span><span class="t">Add the DNS records</span></h2>
+    <p>This is the step that proves to the world that Mailgun is allowed to send for you. Mailgun shows you a short list of records: an <strong>SPF</strong> line, one or two <strong>DKIM</strong> records (Mailgun has two DKIM setups and both work, so seeing only one is normal), a tracking record, and two <strong>MX</strong> lines.</p>
+    <ol class="sub">
+      <li><strong>The easy way:</strong> on the records screen, look for Mailgun's <strong>Automatic setup</strong> ("Log in to your provider"). It supports Bluehost, Cloudflare and others. Approve it and Mailgun adds every record for you.</li>
+      <li><strong>By hand:</strong> if your provider is not supported, copy each record into your DNS panel exactly as shown. Do not change or shorten the values.</li>
+      <li>Back in Mailgun, click <strong>Check status</strong> until every record turns verified. Give the DKIM records a few minutes to switch fully on.</li>
+      <li>When Mailgun offers <strong>DMARC</strong>, turn it on and add the one extra record it gives you.</li>
+    </ol>
+    <div class="note"><strong>Golden rule:</strong> only ever one SPF and one DMARC record per name. Because Mailgun uses the <code>mg.</code> sub-name, it never clashes with email you already receive on your main domain.</div>
+  </section>
+
+  <section class="step" id="s4">
+    <h2><span class="num">4</span><span class="t">Create a sending key</span></h2>
+    <ol class="sub">
+      <li>In your Mailgun domain settings, open the <strong>Sending keys</strong> tab and click <strong>Add sending key</strong>.</li>
+      <li>Give it a name you will recognise, create it, and <strong>copy the key straight away</strong>. Mailgun shows it only once.</li>
+    </ol>
+    <div class="note">Keep this key somewhere safe, like your password manager. It is what lets PageMotor send through your Mailgun account.</div>
+  </section>
+
+  <section class="step" id="s5">
+    <h2><span class="num">5</span><span class="t">Connect PageMotor</span></h2>
+    <ol class="sub">
+      <li>In your PageMotor admin, go to <strong>Plugins → Manage Plugins → Upload</strong>.</li>
+      <li>Install the EP Suite Mailgun plugin: <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest/download/ep-email-mailgun.zip"><code>ep-email-mailgun</code></a> handles everyday email (contact forms, password resets). If you also send newsletters, add <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest/download/ep-newsletter-mailgun.zip"><code>ep-newsletter-mailgun</code></a> too.</li>
+      <li>Open the plugin's settings and fill in: your <strong>Sending Key</strong>, the <strong>Sending Domain</strong> <code>mg.yourdomain.com</code>, and the <strong>Region</strong> that matches the one you chose in Mailgun.</li>
+      <li>Click <strong>Test Connection</strong>. It should turn green.</li>
+    </ol>
+  </section>
+
+  <section class="step" id="s6">
+    <h2><span class="num">6</span><span class="t">Prove it works</span></h2>
+    <ol class="sub">
+      <li>Send yourself a real test, through a contact form or the plugin's test button. It should land in your <strong>Inbox</strong>, not spam.</li>
+      <li>For a thorough check, send a message to the address shown at <a href="https://www.mail-tester.com">mail-tester.com</a>, then read your score. Aim for 9 or 10 out of 10.</li>
+    </ol>
+    <div class="note calm"><strong>One honest warning:</strong> Mailgun saying "verified" only means it will accept your mail. It does not prove the message reached someone's inbox. Believe it is done only once a real test email actually arrives where you can see it.</div>
+  </section>
+
+  <h2 class="plain" id="fix">If something is not working</h2>
+  <p style="color:var(--soft);font-size:16.5px">Open these only if you hit them.</p>
+
+  <details>
+    <summary>My test email still lands in spam</summary>
+    <p>Usually the DKIM records have not finished switching on. Wait a few minutes and check Mailgun again. Make sure your <strong>From</strong> address uses your own domain, not a free address like gmail.com. A run through <a href="https://www.mail-tester.com">mail-tester.com</a> will name whatever is still missing.</p>
+  </details>
+
+  <details>
+    <summary>Mailgun says "verified" but mail will not send</summary>
+    <p>After the records verify, Mailgun still needs a few minutes to switch the DKIM keys fully active. Refresh the domain page until the warnings clear, then try the test again.</p>
+  </details>
+
+  <details>
+    <summary>It warns about a duplicate SPF or DMARC record</summary>
+    <p>There can only be one SPF and one DMARC record per name. You should not hit this with the <code>mg.</code> setup, but if you do, edit the existing record rather than adding a second one.</p>
+  </details>
+
+  <details>
+    <summary>I am on WordPress, not PageMotor</summary>
+    <p>Same Mailgun account and DNS, different last step. Use <strong>Gravity SMTP</strong> if you have a Gravity Forms licence (note: it needs Mailgun's account-level Private API key, not the sending key above), or the free official <strong>Mailgun</strong> plugin otherwise.</p>
+  </details>
+
+  <div class="seealso">
+    🌱 <strong>Just getting started?</strong> If you have not installed the site yet, begin with <a href="https://documentation.elmspark.com/guides/pagemotor-bluehost/">Installing PageMotor on Bluehost</a>, then come back here for email.
+  </div>
+
+  <footer>
+    <p><strong>Still stuck?</strong> Post where you got to in the PageMotor forum, including your mail-tester score if you have one. That score points straight at the missing piece.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+  </footer>
+</div>
+</body>
+</html>
