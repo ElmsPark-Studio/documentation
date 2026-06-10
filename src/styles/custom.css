@@ -193,3 +193,71 @@ code:not(pre code) {
 :root[data-theme='dark'] .sl-markdown-content > h2 {
 	border-top-color: rgba(212, 185, 104, 0.15);
 }
+
+/* ============================================================
+   ElmsPark brand header — matches the es-header on /guides/* and elmspark.com
+   ============================================================ */
+
+/* Cream header band with a hairline, matching the guides chrome */
+.header {
+	background: #f6f2ea;
+	border-bottom: 1px solid #e5ddcc;
+}
+:root[data-theme='dark'] .header {
+	background: #1f1d1a;
+	border-bottom-color: #3a3632;
+}
+
+/* The custom SiteTitle wordmark (tree mark + ElmsPark + Docs sub-brand) */
+.es-site-title {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	text-decoration: none;
+	font-family: "Fraunces", Georgia, serif;
+	font-weight: 400;
+	font-size: clamp(1.2rem, 2vw, 1.5rem);
+	line-height: 1;
+	color: #2a231c;
+	white-space: nowrap;
+	overflow: hidden;
+}
+:root[data-theme='dark'] .es-site-title { color: #f1ece2; }
+
+.es-site-title .es-mark {
+	display: inline-flex;
+	align-items: center;
+	width: 2.1rem;
+	height: 2.1rem;
+	color: #3a5140;
+	flex-shrink: 0;
+}
+.es-site-title .es-mark svg { width: 100%; height: 100%; display: block; }
+.es-site-title .es-accent { color: #3a5140; }
+:root[data-theme='dark'] .es-site-title .es-accent { color: #6f9a7e; }
+
+.es-site-title .es-divider {
+	width: 1px;
+	height: 1.3rem;
+	background: #d8cfba;
+	flex-shrink: 0;
+	margin: 0 0.15rem;
+}
+:root[data-theme='dark'] .es-site-title .es-divider { background: #4a4540; }
+
+.es-site-title .es-sub {
+	font-family: "Fraunces", Georgia, serif;
+	font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+	color: #605647;
+}
+:root[data-theme='dark'] .es-site-title .es-sub { color: #b5ab97; }
+
+/* Drop the sub-brand on narrow viewports so the wordmark + search fit */
+@media (max-width: 50rem) {
+	.es-site-title .es-divider,
+	.es-site-title .es-sub { display: none; }
+	.es-site-title .es-mark { width: 1.8rem; height: 1.8rem; }
+}
+
+/* Header nav (site title link hover) stays on brand */
+.es-site-title:hover .es-accent { color: #2f5d4a; }

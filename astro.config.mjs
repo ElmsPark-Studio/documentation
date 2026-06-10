@@ -11,6 +11,9 @@ export default defineConfig({
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/ElmsPark-Studio/documentation' },
 			],
+			components: {
+				SiteTitle: './src/components/SiteTitle.astro',
+			},
 			customCss: [
 				'./src/styles/custom.css',
 			],
@@ -26,7 +29,7 @@ export default defineConfig({
 					tag: 'link',
 					attrs: {
 						rel: 'stylesheet',
-						href: 'https://fonts.bunny.net/css?family=fraunces:600,700|outfit:300,400,500,600|jetbrains-mono:400&display=swap',
+						href: 'https://fonts.bunny.net/css?family=fraunces:400,600,700|inter-tight:400,500,700|outfit:300,400,500,600|jetbrains-mono:400&display=swap',
 					},
 				},
 			],
