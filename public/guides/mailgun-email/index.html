@@ -4,65 +4,128 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Stop your site's email landing in spam: set up Mailgun for a PageMotor site in six steps, from account and DNS records to a sending key and real inbox proof.">
+<meta name="description" content="The complete guide to setting up Mailgun email delivery for a PageMotor site: every screen, every field, from account creation to inbox confirmation.">
 <title>Set up reliable email with Mailgun | ElmsPark Guide</title>
-<style>
-  :root{
-    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
-    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
-    --warn:#9a4b2e; --codebg:#1f1d17; --radius:14px; --maxw:760px;
-  }
-  *{box-sizing:border-box}
-  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
-  body{margin:0; background:var(--paper); color:var(--ink);
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
-    line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
-  nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem}
-  .crumbs-inner{max-width:var(--maxw); margin:0 auto; padding:18px 20px 0; display:flex; align-items:center; gap:.5rem; color:#605647}
-  .crumbs a{color:#605647; text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s}
-  .crumbs a:hover,.crumbs a:focus-visible{color:#3a5140; border-bottom-color:#3a5140}
-  .crumbs .sep{color:#b5ab97}
-  .crumbs [aria-current="page"]{color:#181411; font-weight:500; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-  h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
-  .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
-  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
-  .chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
-  .chip b{color:var(--pine)}
-  .note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
-  .note.calm{border-left-color:var(--pine)}
-  .note strong{color:var(--pine-deep)}
-  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
-  nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
-  nav.toc ol{margin:0; padding-left:20px}
-  nav.toc li{margin:5px 0}
-  nav.toc a{color:var(--pine); text-decoration:none}
-  nav.toc a:hover{text-decoration:underline}
-  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
-  .step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
-  .num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
-  .step h2 .t{line-height:1.2}
-  ol.sub,ul.sub{padding-left:22px; margin:10px 0}
-  ol.sub li,ul.sub li{margin:8px 0}
-  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
-  h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
-  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
-  details[open]{padding-bottom:14px}
-  summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
-  summary::-webkit-details-marker{display:none}
-  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-family:system-ui,sans-serif}
-  details[open] summary::before{content:"－"}
-  .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
-  .seealso a{color:var(--pine); font-weight:600}
-  footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
-  footer a{color:var(--pine)}
-  .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
-  @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
-</style>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
 <style>
-/* ElmsPark brand header (matches elmspark.com site chrome) */
+:root{
+  --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+  --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+  --warn:#9a4b2e; --danger:#b5290f; --codebg:#1f1d17; --radius:14px; --maxw:800px;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem}
+.crumbs-inner{max-width:var(--maxw); margin:0 auto; padding:18px 20px 0; display:flex; align-items:center; gap:.5rem; color:#605647}
+.crumbs a{color:#605647; text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s}
+.crumbs a:hover,.crumbs a:focus-visible{color:#3a5140; border-bottom-color:#3a5140}
+.crumbs .sep{color:#b5ab97}
+.crumbs [aria-current="page"]{color:#181411; font-weight:500}
+h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+.lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+.chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+.chip b{color:var(--pine)}
+/* Note / callout variants */
+.note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+.note.calm{border-left-color:var(--pine)}
+.note.danger{background:#fff2f0; border-color:#f5c5bc; border-left-color:var(--danger)}
+.note.danger strong,.note.danger .label{color:var(--danger)}
+.note.warn{background:#fff8ee; border-color:#f5dec5; border-left-color:var(--accent)}
+.note.warn strong{color:#7a4a0f}
+.note strong{color:var(--pine-deep)}
+/* TOC */
+nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+nav.toc ol{margin:0; padding-left:20px}
+nav.toc li{margin:5px 0}
+nav.toc a{color:var(--pine); text-decoration:none}
+nav.toc a:hover{text-decoration:underline}
+/* Step cards */
+.step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+.step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+.num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+.step h2 .t{line-height:1.2}
+ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+ol.sub li,ul.sub li{margin:8px 0}
+code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+/* Screenshots */
+.screenshot{margin:20px 0; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#e9e4d8}
+.screenshot img{display:block; width:100%; height:auto; border-radius:10px 10px 0 0}
+.screenshot figcaption{font-family:system-ui,sans-serif; font-size:13px; color:var(--soft); padding:8px 14px; background:#f0ece2; border-top:1px solid var(--line)}
+.screenshot-placeholder{min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:repeating-linear-gradient(45deg,#f0ede4,#f0ede4 10px,#e8e3d6 10px,#e8e3d6 20px); padding:30px 20px; border-radius:10px}
+.screenshot-placeholder .sp-label{font-family:system-ui,sans-serif; font-size:13px; color:#8a7d65; font-weight:600; text-align:center; letter-spacing:.02em; text-transform:uppercase}
+.screenshot-placeholder .sp-desc{font-family:system-ui,sans-serif; font-size:13px; color:#a39785; text-align:center; max-width:400px; line-height:1.5}
+/* Field table for the Add Domain form */
+.field-table{width:100%; border-collapse:collapse; margin:16px 0; font-size:16px}
+.field-table th{text-align:left; font-family:system-ui,sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--soft); padding:8px 12px; border-bottom:2px solid var(--line); background:#f4f0e6}
+.field-table td{padding:11px 12px; vertical-align:top; border-bottom:1px solid #ede7d6}
+.field-table tr:last-child td{border-bottom:none}
+.field-table .fname{font-family:system-ui,sans-serif; font-size:15px; font-weight:600; color:var(--ink); white-space:nowrap; width:38%}
+.field-table .fval{width:62%}
+.field-table .pick{display:inline-flex; align-items:center; gap:6px; font-family:system-ui,sans-serif; font-size:14px; background:var(--card); border:1.5px solid var(--line); border-radius:6px; padding:5px 10px; margin:3px 0}
+.field-table .pick.correct{border-color:#2f7a54; background:#edf7f2; color:#1e5238; font-weight:600}
+.field-table .pick.wrong{border-color:#cc4a2e; background:#fff2f0; color:#8a2010; text-decoration:line-through; opacity:.75}
+.pick-icon{font-size:15px}
+/* Choice comparison block */
+.choice-compare{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0}
+.choice{border:2px solid var(--line); border-radius:12px; padding:16px 18px; background:var(--card)}
+.choice.correct{border-color:#2f7a54; background:#edf7f2}
+.choice.wrong{border-color:#cc4a2e; background:#fff4f3; opacity:.9}
+.choice-title{font-family:system-ui,sans-serif; font-weight:700; font-size:15px; margin:0 0 8px; display:flex; align-items:center; gap:8px}
+.choice-title .badge{font-size:11px; padding:2px 8px; border-radius:999px; font-weight:600}
+.correct .badge{background:#d0f0df; color:#1a5c35}
+.wrong .badge{background:#ffd8d0; color:#7a1c0f}
+.choice p{font-family:system-ui,sans-serif; font-size:14px; margin:0; line-height:1.5; color:var(--soft)}
+.choice ul{font-family:system-ui,sans-serif; font-size:14px; padding-left:18px; margin:8px 0 0; line-height:1.5; color:var(--soft)}
+/* DNS record table */
+.dns-table{width:100%; border-collapse:collapse; margin:16px 0; font-size:15px; font-family:system-ui,sans-serif}
+.dns-table th{text-align:left; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--soft); padding:8px 10px; border-bottom:2px solid var(--line); background:#f4f0e6}
+.dns-table td{padding:10px 10px; vertical-align:top; border-bottom:1px solid #ede7d6; word-break:break-all}
+.dns-table tr:last-child td{border-bottom:none}
+.dns-table .type{width:15%; font-weight:600; font-size:13px; white-space:nowrap}
+.dns-table .host{width:34%}
+.dns-table .value{width:51%}
+.dns-table code{font-size:.8em}
+/* Substep counter */
+.substep{display:flex; gap:14px; margin:14px 0}
+.substep-num{flex:none; width:28px; height:28px; border-radius:50%; background:#d8d0bf; color:#5d574c; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:14px; margin-top:2px}
+.substep-body{flex:1}
+/* Section headers */
+h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+details[open]{padding-bottom:14px}
+summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"＋"; color:var(--accent); margin-right:10px}
+details[open] summary::before{content:"－"}
+.seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+.seealso a{color:var(--pine); font-weight:600}
+footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+footer a{color:var(--pine)}
+.kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+/* Verified badge */
+.verified-badge{display:inline-flex; align-items:center; gap:5px; font-family:system-ui,sans-serif; font-size:13px; font-weight:600; color:#1e5238; background:#d0f0df; border:1px solid #8fcfab; padding:3px 10px; border-radius:999px}
+/* Numbered annotation */
+.annot{display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--danger); color:#fff; font-family:system-ui,sans-serif; font-weight:700; font-size:12px; vertical-align:middle; margin:0 2px; flex-shrink:0}
+/* Video slot */
+.video-slot{background:#1f1d17; border-radius:12px; overflow:hidden; margin:20px 0; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; position:relative}
+.video-slot .vs-inner{text-align:center; color:#c8bfa8}
+.video-slot .vs-play{width:56px; height:56px; border:3px solid #c8bfa8; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-size:20px}
+.video-slot .vs-text{font-family:system-ui,sans-serif; font-size:14px; opacity:.7}
+@media (max-width:560px){
+  .choice-compare{grid-template-columns:1fr}
+  body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px}
+  .step{padding:4px 17px 18px} .step h2{font-size:20px}
+  .field-table .fname{width:45%}
+  .dns-table{font-size:13px}
+}
+/* ES header */
 header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 .es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
@@ -81,12 +144,24 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
 </style>
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ElmsPark Guides">
+  <meta property="og:title" content="Set up reliable email with Mailgun">
+  <meta property="og:description" content="The complete guide: every screen, every field, from account creation to inbox confirmation.">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/mailgun-email/">
+  <meta property="og:image" content="https://documentation.elmspark.com/og/mailgun-email.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Set up reliable email with Mailgun — ElmsPark Guides">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://documentation.elmspark.com/og/mailgun-email.png">
 </head>
 <body>
 <header class="es-header">
   <div class="es-inner">
     <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
-      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" class="brand-mark-svg" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z m252 -467 c203 -269 329 -496 368 -665 12 -49 11 -53 -14 -91 -15 -22 -87 -96 -162 -163 -74 -68 -175 -165 -224 -217 -79 -84 -89 -91 -93 -70 -3 13 -7 168 -10 344 -4 213 -9 331 -17 347 -14 31 -60 50 -92 38 -51 -20 -50 -8 -53 -534 -2 -463 -12 -728 -34 -911 -5 -44 -12 -82 -15 -85 -9 -8 -160 146 -239 244 -202 250 -279 446 -280 720 -1 150 15 238 75 420 70 211 258 510 515 819 l57 70 48 -52 c26 -28 103 -125 170 -214z m435 -964 c4 -14 4 -83 1 -152 -10 -265 -110 -467 -346 -703 -69 -69 -155 -147 -190 -174 l-64 -48 7 109 c15 227 34 350 64 417 32 68 117 191 193 277 57 64 309 300 321 300 4 0 11 -12 14 -26z m-4198 -425 c322 -59 663 -182 765 -277 34 -32 34 -47 7 -293 -11 -101 -21 -246 -23 -321 -1 -76 -5 -137 -8 -135 -4 1 -40 43 -80 92 -142 174 -301 360 -325 383 -53 48 -134 17 -134 -52 0 -42 18 -68 172 -253 178 -213 281 -344 274 -350 -3 -3 -81 4 -173 16 -92 11 -247 26 -343 31 -96 6 -187 15 -202 21 -20 8 -34 29 -57 83 -57 138 -89 286 -116 545 -15 146 -21 532 -8 545 8 8 29 5 251 -35z m7346 -200 c-1 -347 -48 -660 -127 -854 -37 -90 -43 -93 -247 -105 -96 -6 -233 -18 -305 -26 -71 -9 -154 -18 -184 -21 l-54 -6 48 64 c27 35 97 122 155 193 269 328 269 329 256 381 -6 24 -51 55 -79 55 -27 0 -69 -44 -258 -271 -105 -126 -195 -229 -199 -229 -4 0 -10 73 -13 163 -3 89 -15 247 -27 350 -19 172 -20 191 -6 212 39 60 331 189 551 244 165 41 446 92 480 86 6 -1 10 -87 9 -236z m-1206 -304 c37 -179 42 -605 8 -712 -22 -68 -92 -172 -209 -310 -96 -112 -114 -129 -123 -120 -13 13 -43 293 -44 398 0 132 17 239 62 379 50 156 114 265 222 378 66 69 67 68 84 -13z m-5108 19 c111 -104 201 -275 257 -487 25 -92 27 -119 27 -277 0 -203 -27 -390 -57 -390 -15 0 -160 171 -240 282 -70 98 -86 146 -97 287 -16 202 19 631 52 631 5 0 31 -21 58 -46z m3753 -814 c60 -144 106 -303 123 -427 15 -109 16 -129 2 -224 -24 -167 -81 -284 -201 -414 -56 -61 -154 -145 -169 -145 -15 0 32 402 63 522 23 93 24 117 1 143 -36 43 -48 48 -81 30 -52 -26 -79 -104 -111 -312 -16 -110 -50 -411 -50 -452 0 -29 -27 10 -73 106 -59 123 -107 307 -107 406 0 40 9 110 20 156 42 173 98 277 232 429 82 93 299 285 309 274 3 -4 22 -45 42 -92z m-4451 -36 c191 -19 399 -59 452 -86 23 -11 56 -32 74 -45 37 -28 226 -251 255 -302 l18 -31 -140 0 c-243 0 -436 37 -586 113 -179 90 -314 209 -399 355 -10 17 135 16 326 -4z m6752 4 c-50 -85 -170 -211 -254 -268 -158 -107 -299 -160 -485 -184 -126 -17 -385 -22 -385 -8 0 12 96 139 183 241 62 73 87 94 139 119 117 55 442 106 706 110 80 2 102 -1 96 -10z m-8080 -1349 c134 -32 310 -100 491 -189 194 -97 263 -143 290 -192 19 -36 19 -38 2 -55 -16 -16 -37 -18 -170 -17 -171 1 -303 24 -527 90 -158 47 -195 52 -220 29 -30 -27 -27 -88 5 -113 60 -47 390 -142 585 -168 58 -7 171 -14 252 -14 147 0 148 0 176 -27 17 -16 50 -75 77 -138 65 -152 186 -384 250 -480 30 -44 96 -134 149 -200 52 -66 92 -122 89 -125 -3 -3 -42 35 -87 85 -208 231 -419 410 -568 483 -182 89 -301 114 -563 118 -187 2 -205 4 -268 28 -139 52 -365 200 -488 319 -63 61 -184 210 -279 342 -47 68 -59 90 -48 96 19 13 190 66 289 89 267 62 417 73 563 39z m439 -1094 c177 -31 332 -103 490 -230 98 -79 317 -298 317 -318 0 -4 -104 -7 -232 -5 l-233 3 -67 32 c-101 47 -237 145 -344 246 -103 97 -244 251 -244 266 0 5 8 12 18 14 40 11 216 6 295 -8z m-405 -167 c135 -146 294 -299 357 -344 30 -21 55 -42 55 -45 0 -3 -148 -11 -328 -17 -181 -6 -342 -17 -359 -23 -60 -20 -66 -111 -10 -136 14 -6 162 -8 387 -5 l365 5 -116 -120 c-120 -124 -267 -300 -295 -355 l-16 -31 -72 6 c-137 10 -418 133 -646 284 -139 92 -370 276 -370 295 0 6 6 16 14 22 7 6 65 54 127 107 176 148 394 296 559 379 71 36 196 79 229 80 18 0 49 -26 119 -102z m1199 -574 c9 -26 -266 -289 -392 -375 -68 -46 -202 -102 -316 -133 -98 -26 -249 -39 -256 -21 -6 19 71 123 167 227 116 124 263 248 344 288 l60 30 195 -2 c125 -2 196 -7 198 -14z m442 -14 c22 -11 72 -48 113 -83 186 -162 425 -337 692 -508 l210 -134 -170 -12 c-292 -20 -407 -45 -679 -148 -139 -53 -156 -57 -229 -56 -43 0 -131 8 -195 18 -288 42 -744 -1 -864 -81 -38 -26 -47 -68 -21 -97 21 -24 79 -25 190 -5 163 30 276 39 447 33 95 -2 183 -9 197 -14 23 -10 20 -13 -70 -80 -271 -201 -419 -268 -654 -298 -109 -14 -144 -15 -225 -5 -125 15 -348 62 -484 101 -87 26 -107 35 -102 47 3 9 48 80 100 157 101 152 199 270 313 377 77 72 99 82 247 108 39 7 117 28 175 47 206 67 325 150 597 418 112 110 222 210 245 223 50 27 103 25 167 -8z m1134 -1664 c-259 -265 -393 -432 -393 -488 0 -50 53 -82 104 -62 9 4 77 74 150 158 166 188 417 446 435 446 15 0 8 -143 -14 -280 -71 -431 -344 -664 -969 -824 -76 -20 -145 -36 -154 -36 -13 0 -14 16 -9 113 11 199 82 516 142 638 146 295 354 436 729 494 169 27 171 38 -21 -159z"/><path d="M8159 16019 c-38 -38 -141 -295 -188 -469 -83 -304 -64 -574 56 -774 78 -131 150 -197 383 -352 154 -102 197 -141 231 -210 39 -80 33 -168 -29 -404 -151 -575 -137 -859 57 -1102 74 -94 163 -174 275 -250 163 -109 236 -133 276 -92 21 22 44 122 59 266 12 103 2 243 -24 369 -17 80 -69 233 -90 266 -31 47 -109 41 -133 -10 -12 -25 -10 -41 22 -150 50 -177 56 -214 56 -360 0 -137 -5 -177 -23 -177 -23 0 -175 120 -243 193 -77 82 -124 163 -149 257 -22 80 -19 271 5 415 32 191 106 445 129 445 3 0 58 -42 121 -93 63 -51 179 -139 257 -195 185 -134 237 -192 313 -349 47 -97 65 -124 84 -129 69 -17 94 26 79 132 -27 185 -136 317 -444 534 -169 119 -309 252 -346 329 -41 83 -39 167 9 286 88 218 109 279 124 347 21 100 29 316 15 405 -23 148 -119 334 -238 463 -148 160 -527 430 -603 430 -11 0 -30 -10 -41 -21z"/><path d="M15039 13510 c-200 -41 -467 -129 -599 -195 -189 -96 -370 -252 -460 -397 -125 -205 -165 -408 -138 -713 18 -206 14 -348 -12 -470 -53 -242 -276 -735 -443 -978 -286 -414 -647 -730 -1295 -1132 -150 -93 -457 -296 -568 -375 -264 -189 -488 -414 -657 -663 -172 -252 -326 -657 -386 -1018 -74 -437 -77 -675 -21 -1604 59 -968 60 -983 156 -1669 40 -288 47 -320 77 -341 30 -21 90 -19 118 3 28 24 28 37 -10 272 -101 621 -133 985 -187 2080 -22 469 -24 560 -15 737 24 458 68 686 199 1039 108 291 338 619 447 640 55 10 150 -2 186 -23 64 -37 69 -51 73 -238 8 -319 67 -513 218 -712 101 -134 276 -268 430 -329 35 -14 77 -31 93 -38 149 -66 302 -113 489 -151 256 -52 276 -36 262 209 -22 383 -122 747 -260 940 -93 130 -251 254 -411 323 -152 65 -300 95 -615 123 -112 10 -272 49 -285 70 -13 20 39 82 109 131 94 67 228 134 317 159 161 44 473 51 672 15 182 -33 401 -112 458 -166 29 -27 31 -33 25 -77 -4 -26 -9 -108 -12 -182 -9 -204 27 -392 103 -545 121 -243 338 -419 663 -540 41 -15 84 -31 95 -35 49 -19 145 -50 199 -64 52 -13 62 -13 87 0 16 8 32 26 35 40 11 42 -3 351 -20 451 -18 103 -61 239 -111 348 l-33 74 172 -6 c182 -6 240 -1 471 43 125 25 322 76 415 109 126 44 119 103 -44 365 -70 112 -108 165 -264 367 -23 31 -41 60 -39 66 2 6 59 25 128 43 328 86 630 258 1006 572 62 51 122 105 133 119 34 44 26 77 -32 140 -59 62 -255 228 -364 309 -172 127 -419 274 -547 324 l-68 27 93 56 c296 176 482 363 709 709 106 163 105 184 -11 237 -190 85 -544 175 -772 196 -43 4 -78 9 -78 10 0 2 23 41 52 87 73 117 122 227 157 348 61 214 91 432 91 656 0 241 -15 259 -181 224z m193 -1534 c194 -38 408 -104 408 -125 0 -10 -81 -127 -160 -232 -162 -215 -449 -437 -665 -513 -63 -22 -89 -25 -270 -29 -258 -6 -385 -34 -560 -123 -146 -74 -377 -259 -478 -382 -31 -37 -84 -94 -118 -127 l-62 -60 34 47 c19 26 74 99 122 163 121 157 263 411 357 637 19 47 44 88 62 103 28 24 34 25 171 25 223 0 439 37 679 116 160 53 209 96 180 158 -17 38 -55 43 -147 17 -326 -90 -501 -122 -653 -120 -108 2 -136 9 -140 37 -6 38 24 70 121 134 164 106 445 229 652 284 79 21 106 24 215 20 75 -3 176 -15 252 -30z m-604 -1072 c12 -4 22 -12 22 -18 0 -19 -149 -184 -241 -269 -149 -137 -262 -212 -376 -252 -64 -23 -81 -25 -286 -25 l-218 0 16 22 c31 45 242 251 318 311 140 111 315 192 476 221 79 15 249 20 289 10z m340 -100 c95 -31 212 -94 359 -190 191 -126 475 -350 471 -370 -4 -20 -204 -182 -327 -266 -160 -110 -306 -189 -447 -246 -130 -51 -270 -87 -298 -76 -9 3 -41 42 -72 86 -66 94 -164 209 -283 331 l-86 89 371 -4 c354 -3 373 -2 393 16 28 25 29 86 2 110 -24 22 -133 32 -470 42 -133 4 -240 10 -239 15 2 4 29 28 61 52 76 59 196 175 330 320 83 89 115 117 134 117 13 0 59 -12 101 -26z m-1698 -655 c32 -14 97 -73 220 -197 179 -181 314 -292 449 -369 90 -52 254 -107 383 -129 51 -9 109 -23 128 -32 44 -20 240 -217 319 -321 32 -42 89 -125 125 -184 l66 -107 -24 -10 c-123 -47 -419 -113 -577 -130 -181 -19 -401 20 -559 100 -69 35 -305 193 -365 243 l-39 34 86 13 c122 18 421 8 553 -20 129 -26 180 -28 205 -5 29 27 25 69 -9 97 -51 43 -278 91 -496 103 -105 7 -151 3 -499 -34 -48 -6 -102 -7 -120 -4 -17 3 -101 33 -186 65 -253 97 -419 131 -695 146 l-140 7 215 139 c238 155 451 309 640 465 126 104 204 151 250 151 14 0 45 -10 70 -21z m708 3 c92 -35 223 -143 366 -299 93 -103 184 -229 173 -240 -4 -3 -55 -1 -113 5 -118 13 -268 59 -382 116 -120 60 -276 191 -426 355 -58 64 -59 66 -35 72 13 4 102 7 196 8 145 1 181 -2 221 -17z m-1923 -1537 c253 -50 420 -155 546 -342 28 -42 65 -106 82 -142 66 -146 128 -425 143 -643 6 -86 5 -98 -9 -98 -9 0 -87 18 -174 40 -617 157 -885 394 -957 846 -9 56 -16 136 -16 178 0 70 2 76 18 67 28 -15 279 -274 417 -429 146 -165 161 -177 209 -168 47 9 64 49 42 100 -30 71 -205 276 -413 484 -73 74 -133 136 -133 138 0 9 122 -7 245 -31z"/><path d="M12680 12339 c-278 -30 -553 -197 -801 -485 -94 -111 -119 -149 -119 -187 0 -38 20 -54 110 -90 231 -93 435 -132 645 -124 169 6 246 26 388 99 131 67 238 148 362 272 184 185 240 290 182 344 -55 51 -390 154 -562 172 -100 11 -99 11 -205 -1z"/><path d="M7592 12340 c-92 -10 -187 -32 -327 -77 -214 -68 -267 -104 -251 -167 18 -71 266 -346 396 -438 100 -71 246 -144 345 -174 73 -21 117 -27 230 -31 212 -8 356 21 660 130 66 24 92 56 82 99 -15 59 -188 259 -322 373 -213 181 -377 258 -611 285 -97 11 -96 11 -202 0z"/><path d="M12825 11324 c-201 -87 -390 -239 -493 -397 -57 -87 -87 -159 -109 -262 -28 -132 -3 -540 39 -618 5 -10 25 -25 44 -33 44 -18 72 -7 209 83 136 91 313 269 376 378 93 160 124 289 124 515 0 222 -33 347 -94 363 -11 3 -54 -10 -96 -29z"/><path d="M7531 11324 c-74 -94 -78 -500 -8 -700 24 -65 66 -144 112 -209 88 -123 327 -330 450 -390 43 -21 55 -23 87 -14 44 12 61 38 77 119 36 184 39 453 6 575 -65 246 -280 474 -580 617 -77 36 -117 37 -144 2z"/><path d="M8756 10859 c-15 -18 -40 -76 -60 -142 -132 -425 -137 -675 -21 -923 57 -122 108 -194 196 -281 99 -96 146 -133 264 -213 124 -83 156 -100 193 -100 58 0 94 75 149 308 25 106 27 134 27 307 0 178 -2 196 -27 280 -44 144 -124 296 -222 417 -94 117 -237 255 -342 329 -83 59 -119 63 -157 18z m161 -237 c119 -95 263 -272 332 -409 85 -170 114 -384 77 -588 -18 -98 -41 -194 -50 -203 -13 -13 -187 118 -276 208 -98 98 -144 165 -187 270 -79 197 -71 392 33 743 8 24 16 22 71 -21z"/><path d="M11567 10834 c-199 -138 -387 -348 -473 -529 -29 -60 -65 -150 -81 -200 -26 -85 -27 -101 -28 -290 0 -218 7 -264 67 -463 57 -185 91 -193 278 -69 323 216 475 407 541 684 26 108 28 285 4 418 -15 87 -79 327 -110 416 -38 106 -84 113 -198 33z m106 -311 c20 -82 41 -186 48 -232 27 -192 -19 -384 -133 -549 -64 -93 -287 -289 -361 -318 -11 -4 -19 13 -35 73 -33 123 -43 195 -43 311 -1 186 54 367 156 523 48 73 300 339 321 339 5 0 27 -66 47 -147z"/></g></g></svg></span>
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z"/></g></g></svg></span>
       <span>Elms<span class="es-accent">Park</span></span>
     </a>
     <span class="es-sub">Guides</span>
@@ -108,126 +183,563 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 </nav>
 
 <div class="wrap">
-  <span class="kicker">Email Setup Guide</span>
+  <span class="kicker">Email Delivery Guide</span>
   <h1>Set up reliable email with Mailgun</h1>
-  <p class="lede">Stop your site's email landing in spam. The recommended way to send from any PageMotor site.</p>
+  <p class="lede">The complete walkthrough: every screen, every field, from account creation to inbox confirmation.</p>
   <div class="chips">
-    <span class="chip">⏱ <b>~20 minutes</b></span>
-    <span class="chip">💷 <b>Free</b> to 100/day</span>
-    <span class="chip">🌍 Pick your <b>region once</b></span>
-  </div>
-
-  <div class="note">
-    <strong>Why bother?</strong> Shared hosting sends email with a basic built-in method that big providers like Gmail and Outlook quietly distrust, so your messages land in spam or vanish. <strong>Mailgun</strong> is the recommended fix: it sends your mail properly signed and authenticated, so it actually arrives. The free plan covers 100 emails a day, which is plenty for most sites.
+    <span class="chip">&#x23F1; <b>20&ndash;30 minutes</b></span>
+    <span class="chip">&#x1F4B7; <b>Free</b> up to 100 emails/day</span>
+    <span class="chip">&#x1F310; Pick your <b>region once</b> &mdash; locked for life</span>
+    <span class="chip">&#x1F4F1; Works for <b>PageMotor</b> and <b>WordPress</b></span>
   </div>
 
   <div class="note calm">
-    <strong>You will need:</strong> your domain name, a way into wherever your domain's DNS is managed (often Bluehost or Cloudflare), and your PageMotor admin login.
+    <strong>What you&rsquo;ll need before you start:</strong> your domain name (e.g. <code>yourdomain.com</code>), login access to wherever your domain&rsquo;s DNS is managed (Cloudflare, IONOS, GoDaddy, Namecheap &hellip;), and your PageMotor or WordPress admin login for the final step.
+  </div>
+
+  <div class="note">
+    <strong>Why Mailgun instead of the built-in mail function?</strong> Shared hosting sends email via a basic method that Gmail and Outlook quietly distrust. The messages land in spam or disappear entirely. Mailgun sends your mail with proper cryptographic signatures (DKIM), a declared sender policy (SPF), and a reporting record (DMARC) &mdash; the three things big providers require before they&rsquo;ll put an email in the inbox. The free plan covers 100 emails a day, which is plenty for most sites.
   </div>
 
   <nav class="toc">
-    <p>The six steps</p>
+    <p>Ten steps to a working setup</p>
     <ol>
-      <li><a href="#s1">Create a Mailgun account</a></li>
-      <li><a href="#s2">Add your sending domain</a></li>
-      <li><a href="#s3">Add the DNS records</a></li>
-      <li><a href="#s4">Create a sending key</a></li>
-      <li><a href="#s5">Connect PageMotor</a></li>
-      <li><a href="#s6">Prove it works</a></li>
+      <li><a href="#s1">Create your Mailgun account</a></li>
+      <li><a href="#s2">Add your sending domain</a> &mdash; <em>read this one carefully</em></li>
+      <li><a href="#s3">Copy the DNS records</a></li>
+      <li><a href="#s4">Add the records at your DNS provider</a></li>
+      <li><a href="#s5">Verify the domain in Mailgun</a></li>
+      <li><a href="#s6">Wait for DKIM activation</a></li>
+      <li><a href="#s7">Enable DMARC</a></li>
+      <li><a href="#s8">Create a sending key</a></li>
+      <li><a href="#s9">Connect PageMotor (or WordPress)</a></li>
+      <li><a href="#s10">Test it really works</a></li>
     </ol>
-    <p style="margin-top:14px">Trouble?</p>
-    <ol style="list-style:none;padding-left:0;margin:0"><li><a href="#fix">Jump to troubleshooting →</a></li></ol>
+    <p style="margin-top:14px">Something wrong?</p>
+    <ol style="list-style:none;padding-left:0;margin:0"><li><a href="#fix">Jump to troubleshooting &rarr;</a></li></ol>
   </nav>
 
+
+  <!-- STEP 1 -->
   <section class="step" id="s1">
-    <h2><span class="num">1</span><span class="t">Create a Mailgun account</span></h2>
-    <ol class="sub">
-      <li>Sign up free at <a href="https://www.mailgun.com">mailgun.com</a>. No credit card is needed for the free plan.</li>
-      <li>During signup you choose a <strong>Region</strong>. Pick <strong>EU</strong> if your visitors are mainly in the UK or Europe, or <strong>US</strong> otherwise.</li>
-    </ol>
-    <div class="note"><strong>Choose the region carefully.</strong> It is locked to your domain for life and cannot be changed later. EU is the right call for UK and Irish audiences.</div>
+    <h2><span class="num">1</span><span class="t">Create your Mailgun account</span></h2>
+
+    <p>Sign up at <a href="https://www.mailgun.com">mailgun.com</a>. The free plan needs no credit card. You&rsquo;ll be asked to verify your email address before you can do anything else &mdash; do that before continuing.</p>
+
+    <figure class="screenshot" aria-label="Mailgun sign-up form">
+      <div class="screenshot-placeholder">
+        <div class="sp-label">Screenshot: Mailgun sign-up page</div>
+        <div class="sp-desc">The sign-up form at mailgun.com. Enter your name, email and choose a password.</div>
+      </div>
+      <figcaption>mailgun.com &rarr; Sign up free</figcaption>
+    </figure>
+
+    <div class="note warn">
+      <strong>The most important choice on the sign-up form: pick your Region.</strong> Choose <strong>EU</strong> if your site visitors are mainly in the UK or Europe. Choose <strong>US</strong> for North American audiences. This is locked per domain for life. You cannot move a domain between regions later, so get this right now.
+    </div>
   </section>
 
+
+  <!-- STEP 2 - THE CRITICAL ONE -->
   <section class="step" id="s2">
     <h2><span class="num">2</span><span class="t">Add your sending domain</span></h2>
-    <ol class="sub">
-      <li>In Mailgun, go to <strong>Send → Domains</strong> and click <strong>Add new domain</strong>.</li>
-      <li>Enter <code>mg.yourdomain.com</code> (your real domain with <code>mg.</code> in front).</li>
-      <li>Leave the suggested settings as they are and confirm.</li>
-    </ol>
-    <div class="note"><strong>Why the <code>mg.</code> bit matters:</strong> Mailgun sends from a dedicated sub-name, so your normal email (anything arriving at your main domain) is never touched. Keep the <code>mg.</code> prefix.</div>
+
+    <p>Once logged in, you land on the dashboard. Navigate to <strong>Send &rarr; Sending &rarr; Domains</strong> in the left sidebar. Your account starts with a sandbox domain &mdash; ignore that. You want to add your own domain.</p>
+
+    <figure class="screenshot" aria-label="Mailgun left sidebar showing Send menu">
+      <div class="screenshot-placeholder">
+        <div class="sp-label">Screenshot: Mailgun dashboard</div>
+        <div class="sp-desc">The left sidebar. Click <strong>Send</strong> to expand it, then click <strong>Sending</strong>, then <strong>Domains</strong>.</div>
+      </div>
+      <figcaption>Mailgun dashboard &mdash; left sidebar navigation</figcaption>
+    </figure>
+
+    <p>On the Domains page, click <strong>Add new domain</strong>.</p>
+
+    <figure class="screenshot" aria-label="Domains list with Add new domain button">
+      <img src="screenshots/03-domains-list.png" alt="Mailgun Domains list page showing a sandbox domain and the Add new domain button" width="1512" height="772" loading="lazy">
+      <figcaption>Send &rarr; Domains &mdash; click <strong>Add new domain</strong></figcaption>
+    </figure>
+
+    <p>The <strong>Add Domain</strong> form opens. This form has four sections and one of them has a choice that will determine which DNS records you&rsquo;ll need to add. Read every field below before you fill anything in.</p>
+
+    <figure class="screenshot" aria-label="The Add Domain form with Use automatic sender security selected">
+      <img src="screenshots/04b-add-domain-form-correct.png" alt="The Mailgun Add Domain form with Use automatic sender security correctly selected" width="1512" height="772" loading="lazy">
+      <figcaption>The Add Domain form &mdash; &ldquo;Use automatic sender security&rdquo; selected (correct)</figcaption>
+    </figure>
+
+    <h3 style="font-size:19px;color:var(--pine-deep);margin:24px 0 8px">Field by field &mdash; what to enter</h3>
+
+    <table class="field-table">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>What to enter and why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fname">Domain name</td>
+          <td class="fval">
+            Enter <code>mg.yourdomain.com</code> &mdash; your real domain with <code>mg.</code> in front. For example: <code>mg.example.com</code>.
+            <p style="font-size:15px;margin:8px 0 0;color:var(--soft)">The <code>mg.</code> prefix creates a dedicated sending subdomain. This keeps Mailgun&rsquo;s records completely separate from the email you already receive on your main domain. It will not affect your existing email setup.</p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fname">Domain region</td>
+          <td class="fval">
+            <span class="pick correct"><span class="pick-icon">&#x2713;</span> EU &mdash; if you or your audience are in the UK or Europe</span><br>
+            <span class="pick correct"><span class="pick-icon">&#x2713;</span> US &mdash; if your audience is in North America</span>
+            <p style="font-size:15px;margin:8px 0 0;color:var(--soft)">This must match the region you chose when you signed up. It is locked per domain for life.</p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fname">IP type</td>
+          <td class="fval">
+            <span class="pick correct"><span class="pick-icon">&#x2713;</span> Shared IP</span>
+            <p style="font-size:15px;margin:8px 0 0;color:var(--soft)">Dedicated IPs are for high-volume senders (50,000+ emails/month). Leave this on Shared unless you specifically need otherwise.</p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fname" style="color:var(--danger);font-weight:700">Security settings<br><span style="font-weight:400;font-size:13px;color:var(--danger)">&larr; READ THIS</span></td>
+          <td class="fval">
+            <span class="pick correct"><span class="pick-icon">&#x2713;</span> <strong>Use automatic sender security</strong></span><br>
+            <span class="pick wrong"><span class="pick-icon">&#x2717;</span> Self-manage DKIM keys</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="fname">DMARC / Red Sift</td>
+          <td class="fval">
+            <span class="pick correct"><span class="pick-icon">&#x2713;</span> Leave unticked</span>
+            <p style="font-size:15px;margin:8px 0 0;color:var(--soft)">You will enable DMARC properly in Step 7. Skipping this checkbox here is intentional.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note danger" id="dkim-warning">
+      <strong>Why &ldquo;Use automatic sender security&rdquo; is the right choice</strong> &mdash; and why the other option will trip you up.
+      <figure class="screenshot" style="margin:14px 0 6px" aria-label="Add Domain form showing Self-manage DKIM keys pre-selected by default">
+        <img src="screenshots/04-add-domain-form-wrong.png" alt="The Add Domain form with the dangerous Self-manage DKIM keys option pre-selected as the default" width="1512" height="772" loading="lazy">
+        <figcaption>This is what Mailgun shows by default &mdash; &ldquo;Self-manage DKIM keys&rdquo; is pre-selected. You must change this.</figcaption>
+      </figure>
+      <div class="choice-compare" style="margin-top:14px">
+        <div class="choice correct">
+          <div class="choice-title">Use automatic sender security <span class="badge">CHOOSE THIS</span></div>
+          <ul>
+            <li>Mailgun manages and rotates your DKIM signing keys automatically</li>
+            <li>Better long-term deliverability with no maintenance</li>
+            <li>Gives you <strong>2 CNAME records</strong> (pdk1 and pdk2) to add to DNS</li>
+            <li>This guide&rsquo;s DNS records table matches this option</li>
+          </ul>
+        </div>
+        <div class="choice wrong">
+          <div class="choice-title">Self-manage DKIM keys <span class="badge">DO NOT USE</span></div>
+          <ul>
+            <li>You get a static 1024-bit key you must rotate yourself manually</li>
+            <li>Gives you <strong>1 TXT record</strong> instead of 2 CNAMEs &mdash; a completely different DNS record set</li>
+            <li>If you pick this, the DNS records in Step 3 will not match what Mailgun shows you &mdash; you will need to start over</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:15px;margin-top:12px"><strong>If you already added the domain with the wrong option:</strong> delete the domain in Mailgun (Domain Settings &rarr; Delete Domain), then add it again with &ldquo;Use automatic sender security&rdquo; selected.</p>
+    </div>
+
+    <p>Once you have filled in all fields correctly, click <strong>Add Domain</strong>. Mailgun will take a few seconds to create the domain and then show you the DNS records screen.</p>
   </section>
 
+
+  <!-- STEP 3 -->
   <section class="step" id="s3">
-    <h2><span class="num">3</span><span class="t">Add the DNS records</span></h2>
-    <p>This is the step that proves to the world that Mailgun is allowed to send for you. Mailgun shows you a short list of records: an <strong>SPF</strong> line, one or two <strong>DKIM</strong> records (Mailgun has two DKIM setups and both work, so seeing only one is normal), a tracking record, and two <strong>MX</strong> lines.</p>
-    <ol class="sub">
-      <li><strong>The easy way:</strong> on the records screen, look for Mailgun's <strong>Automatic setup</strong> ("Log in to your provider"). It supports Bluehost, Cloudflare and others. Approve it and Mailgun adds every record for you.</li>
-      <li><strong>By hand:</strong> if your provider is not supported, copy each record into your DNS panel exactly as shown. Do not change or shorten the values.</li>
-      <li>Back in Mailgun, click <strong>Check status</strong> until every record turns verified. Give the DKIM records a few minutes to switch fully on.</li>
-      <li>When Mailgun offers <strong>DMARC</strong>, turn it on and add the one extra record it gives you.</li>
-    </ol>
-    <div class="note"><strong>Golden rule:</strong> only ever one SPF and one DMARC record per name. Because Mailgun uses the <code>mg.</code> sub-name, it never clashes with email you already receive on your main domain.</div>
+    <h2><span class="num">3</span><span class="t">Copy the DNS records</span></h2>
+
+    <p>After clicking Add Domain, you land on the DNS records screen. This shows every record you need to add to your domain&rsquo;s DNS. Do not close this page.</p>
+
+    <figure class="screenshot" aria-label="Mailgun DNS records screen showing SPF and DKIM records">
+      <img src="screenshots/05-dns-records-sending.png" alt="Mailgun DNS records page showing SPF TXT record and two CNAME DKIM records (pdk1 and pdk2)" width="1512" height="772" loading="lazy">
+      <figcaption>DNS records screen &mdash; keep this open while you work in Step 4</figcaption>
+    </figure>
+
+    <figure class="screenshot" aria-label="Mailgun DNS records screen showing MX and Tracking records">
+      <img src="screenshots/06-dns-records-mx-tracking.png" alt="Mailgun DNS records page scrolled to show MX receiving records and Tracking CNAME record" width="1512" height="772" loading="lazy">
+      <figcaption>Scroll down &mdash; you will also see the MX and Tracking records below the DKIM records</figcaption>
+    </figure>
+
+    <p>If you chose &ldquo;Use automatic sender security&rdquo; in Step 2, you will see <strong>7 records</strong>: one SPF, two DKIM CNAMEs, one tracking CNAME, and two MX records. Here is what each one does:</p>
+
+    <table class="dns-table">
+      <thead>
+        <tr>
+          <th class="type">Type</th>
+          <th class="host">Name / Host</th>
+          <th class="value">Value</th>
+          <th style="width:20%;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="type">TXT</td>
+          <td><code>mg.yourdomain.com</code></td>
+          <td><code>v=spf1 include:mailgun.org ~all</code></td>
+          <td style="font-size:14px">SPF &mdash; declares Mailgun is allowed to send for this domain</td>
+        </tr>
+        <tr>
+          <td class="type">CNAME</td>
+          <td><code>pdk1._domainkey.mg.yourdomain.com</code></td>
+          <td><code>pdk1._domainkey.&lt;hash&gt;.dkim5.eu.mgsend.org</code></td>
+          <td style="font-size:14px">DKIM key 1 &mdash; cryptographic signature (copy exact value from Mailgun)</td>
+        </tr>
+        <tr>
+          <td class="type">CNAME</td>
+          <td><code>pdk2._domainkey.mg.yourdomain.com</code></td>
+          <td><code>pdk2._domainkey.&lt;hash&gt;.dkim5.eu.mgsend.org</code></td>
+          <td style="font-size:14px">DKIM key 2 &mdash; second rotation key (copy exact value from Mailgun)</td>
+        </tr>
+        <tr>
+          <td class="type">CNAME</td>
+          <td><code>email.mg.yourdomain.com</code></td>
+          <td><code>eu.mailgun.org</code></td>
+          <td style="font-size:14px">Tracking &mdash; enables open/click tracking (optional but recommended)</td>
+        </tr>
+        <tr>
+          <td class="type">MX</td>
+          <td><code>mg.yourdomain.com</code></td>
+          <td><code>mxa.eu.mailgun.org</code> (priority 10)</td>
+          <td style="font-size:14px">Bounce handling &mdash; lets Mailgun receive delivery failures</td>
+        </tr>
+        <tr>
+          <td class="type">MX</td>
+          <td><code>mg.yourdomain.com</code></td>
+          <td><code>mxb.eu.mailgun.org</code> (priority 10)</td>
+          <td style="font-size:14px">Bounce handling (second, redundant)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note calm">
+      <strong>US region?</strong> Replace <code>eu.mailgun.org</code> with <code>mailgun.org</code> and <code>eu.mgsend.org</code> with <code>mgsend.org</code> in the values above. The Mailgun screen will show the correct values automatically &mdash; always copy from there rather than typing manually.
+    </div>
+
+    <div class="note">
+      <strong>The two DKIM CNAME values contain a hash unique to your account.</strong> The <code>&lt;hash&gt;</code> part is not derivable from your domain name. Copy the values exactly from the Mailgun screen &mdash; do not type them or try to construct them.
+    </div>
+
+    <div class="note warn">
+      <strong>Why are there 2 DKIM records?</strong> &ldquo;Automatic sender security&rdquo; uses two CNAME-based DKIM keys (pdk1 and pdk2) so Mailgun can rotate them in the background without any action from you. If you see only 1 TXT-based DKIM record, you chose &ldquo;Self-manage DKIM keys&rdquo; in Step 2. Go back and start the domain over.
+    </div>
   </section>
 
+
+  <!-- STEP 4 -->
   <section class="step" id="s4">
-    <h2><span class="num">4</span><span class="t">Create a sending key</span></h2>
-    <ol class="sub">
-      <li>In your Mailgun domain settings, open the <strong>Sending keys</strong> tab and click <strong>Add sending key</strong>.</li>
-      <li>Give it a name you will recognise, create it, and <strong>copy the key straight away</strong>. Mailgun shows it only once.</li>
-    </ol>
-    <div class="note">Keep this key somewhere safe, like your password manager. It is what lets PageMotor send through your Mailgun account.</div>
+    <h2><span class="num">4</span><span class="t">Add the records at your DNS provider</span></h2>
+
+    <p>Open your DNS provider in a separate tab and add each of the 7 records. Keep the Mailgun DNS screen open for reference.</p>
+
+    <div class="note danger">
+      <strong>Two absolute rules:</strong> only one SPF record and only one DMARC record per DNS name. If you already have either of those at <code>mg.yourdomain.com</code>, edit the existing one rather than adding a second. Multiple SPF or DMARC records cause authentication to fail for everything.
+    </div>
+
+    <details open>
+      <summary>Adding records on Cloudflare</summary>
+      <ol class="sub">
+        <li>Log in to Cloudflare &rarr; pick your domain &rarr; go to <strong>DNS &rarr; Records</strong>.</li>
+        <li>Click <strong>Add record</strong> for each of the 7 records.</li>
+        <li><strong>Critical: set every record to DNS Only (grey cloud, not orange).</strong> The Cloudflare proxy (orange cloud) breaks email authentication. Click the orange cloud icon to toggle it to grey before saving each record.</li>
+        <li>For MX records: enter just the hostname in the Priority box (e.g. <code>10</code>) and the mail server address in the Content box.</li>
+        <li>For CNAME records: paste the full value Mailgun gives you including the trailing dot if one appears.</li>
+      </ol>
+
+      <figure class="screenshot" aria-label="Cloudflare DNS panel with records added">
+        <div class="screenshot-placeholder">
+          <div class="sp-label">Screenshot: Cloudflare DNS panel</div>
+          <div class="sp-desc">All 7 Mailgun records added, each showing a grey cloud (DNS only) icon.</div>
+        </div>
+        <figcaption>Cloudflare DNS &rarr; Records &mdash; every record must show the grey cloud, not orange</figcaption>
+      </figure>
+    </details>
+
+    <details>
+      <summary>Adding records on IONOS</summary>
+      <ol class="sub">
+        <li>Log in to IONOS &rarr; go to Domains &amp; SSL &rarr; click your domain &rarr; DNS.</li>
+        <li>Add each record using the Add Record button.</li>
+        <li>For CNAME records, enter the subdomain part only in the Host field (e.g. <code>pdk1._domainkey.mg</code> not the full <code>pdk1._domainkey.mg.yourdomain.com</code>).</li>
+        <li>IONOS may take up to 30 minutes to propagate changes.</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>Adding records on GoDaddy</summary>
+      <ol class="sub">
+        <li>Log in to GoDaddy &rarr; My Products &rarr; DNS &rarr; click your domain.</li>
+        <li>Add each record. GoDaddy expects CNAME values <em>without</em> a trailing dot.</li>
+        <li>For the Host field on GoDaddy, enter only the subdomain portion, not the full domain.</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>Adding records on Namecheap</summary>
+      <ol class="sub">
+        <li>Log in to Namecheap &rarr; Domain List &rarr; Manage &rarr; Advanced DNS.</li>
+        <li>Add each record. For the Host field, enter only the subdomain portion.</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>Mailgun&rsquo;s automatic setup (easiest if your provider is supported)</summary>
+      <p>On the DNS records screen in Mailgun, look for the <strong>Automatic setup</strong> card at the top. It reads &ldquo;Log in to your provider&rdquo;. Mailgun supports Cloudflare, GoDaddy, Bluehost, and others. If your provider appears in the list, click it and follow the authorisation flow &mdash; Mailgun adds every record for you in one step and you can skip the manual steps above entirely.</p>
+    </details>
   </section>
 
+
+  <!-- STEP 5 -->
   <section class="step" id="s5">
-    <h2><span class="num">5</span><span class="t">Connect PageMotor</span></h2>
-    <ol class="sub">
-      <li>In your PageMotor admin, go to <strong>Plugins → Manage Plugins → Upload</strong>.</li>
-      <li>Install the EP Suite Mailgun plugin: <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest/download/ep-email-mailgun.zip"><code>ep-email-mailgun</code></a> handles everyday email (contact forms, password resets). If you also send newsletters, add <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest/download/ep-newsletter-mailgun.zip"><code>ep-newsletter-mailgun</code></a> too.</li>
-      <li>Open the plugin's settings and fill in: your <strong>Sending Key</strong>, the <strong>Sending Domain</strong> <code>mg.yourdomain.com</code>, and the <strong>Region</strong> that matches the one you chose in Mailgun.</li>
-      <li>Click <strong>Test Connection</strong>. It should turn green.</li>
-    </ol>
+    <h2><span class="num">5</span><span class="t">Verify the domain in Mailgun</span></h2>
+
+    <p>Once all records are added at your DNS provider, return to Mailgun and click <strong>Check Status</strong> (or <strong>Verify DNS Settings</strong>) on the DNS records page. Each record should change from a red cross to a green tick.</p>
+
+    <figure class="screenshot" aria-label="DNS records screen with all records verified and green">
+      <div class="screenshot-placeholder">
+        <div class="sp-label">Screenshot: verified DNS records</div>
+        <div class="sp-desc">Every record showing a green tick. The domain status will change from &ldquo;Unverified&rdquo; to &ldquo;Active&rdquo;.</div>
+      </div>
+      <figcaption>All records verified &mdash; every row should be green before you continue</figcaption>
+    </figure>
+
+    <div class="note">
+      <strong>Records not turning green?</strong> DNS changes can take a few minutes (Cloudflare is usually under 60 seconds; IONOS can take up to 30 minutes). Wait a couple of minutes and click Check Status again. If a specific record stays red, compare the value in Mailgun to what you entered in your DNS panel character by character.
+    </div>
   </section>
 
+
+  <!-- STEP 6 -->
   <section class="step" id="s6">
-    <h2><span class="num">6</span><span class="t">Prove it works</span></h2>
-    <ol class="sub">
-      <li>Send yourself a real test, through a contact form or the plugin's test button. It should land in your <strong>Inbox</strong>, not spam.</li>
-      <li>For a thorough check, send a message to the address shown at <a href="https://www.mail-tester.com">mail-tester.com</a>, then read your score. Aim for 9 or 10 out of 10.</li>
-    </ol>
-    <div class="note calm"><strong>One honest warning:</strong> Mailgun saying "verified" only means it will accept your mail. It does not prove the message reached someone's inbox. Believe it is done only once a real test email actually arrives where you can see it.</div>
+    <h2><span class="num">6</span><span class="t">Wait for DKIM activation</span></h2>
+
+    <p>This step catches people out. Even after all DNS records show as &ldquo;Verified&rdquo; in Mailgun&rsquo;s interface, sending may not work yet. Mailgun needs to activate the DKIM signing keys on its own servers, and it does this asynchronously after the CNAMEs validate. It typically takes 30 seconds to 10 minutes.</p>
+
+    <p>On the domain settings page, you may see a yellow warning like &ldquo;Unverified domain settings&rdquo; even though all records are green. That warning clears automatically once DKIM is fully active. Refresh the page every few minutes until the warning disappears.</p>
+
+    <figure class="screenshot" aria-label="Mailgun domain page showing DKIM activation warning">
+      <div class="screenshot-placeholder">
+        <div class="sp-label">Screenshot: DKIM activation in progress</div>
+        <div class="sp-desc">All DNS records are green but a yellow banner still shows &ldquo;Unverified domain settings&rdquo;. This is normal. Refresh until it clears.</div>
+      </div>
+      <figcaption>This yellow warning clears automatically once DKIM is active &mdash; usually within a few minutes</figcaption>
+    </figure>
+
+    <div class="note calm">
+      If the warning has not cleared after 30 minutes, contact Mailgun support &mdash; something may have stalled on their side. But in practice this almost never takes more than 5 minutes.
+    </div>
   </section>
 
-  <h2 class="plain" id="fix">If something is not working</h2>
+
+  <!-- STEP 7 -->
+  <section class="step" id="s7">
+    <h2><span class="num">7</span><span class="t">Enable DMARC</span></h2>
+
+    <p>DMARC (Domain-based Message Authentication, Reporting and Conformance) tells receiving mail servers what to do with messages that fail authentication, and where to send reports. You want this configured before you send any real email.</p>
+
+    <p>In your Mailgun domain settings, scroll to the <strong>Authentication records</strong> section near the bottom and click <strong>Enable DMARC</strong>. Mailgun generates a TXT record value for you.</p>
+
+    <figure class="screenshot" aria-label="Mailgun DMARC section with Enable button">
+      <div class="screenshot-placeholder">
+        <div class="sp-label">Screenshot: Authentication records section</div>
+        <div class="sp-desc">The Enable DMARC button in the domain settings page. Click it and Mailgun generates a TXT record value.</div>
+      </div>
+      <figcaption>Domain settings &rarr; Authentication records &rarr; Enable DMARC</figcaption>
+    </figure>
+
+    <p>Copy the TXT record value Mailgun gives you. It will look something like:</p>
+    <p><code style="font-size:.8em;word-break:break-all">v=DMARC1; p=none; pct=100; fo=1; ri=3600; rua=mailto:&hellip;@dmarc.mailgun.org; ruf=mailto:&hellip;@dmarc.mailgun.org;</code></p>
+
+    <p>Go back to your DNS provider and add a new TXT record:</p>
+    <ul class="sub">
+      <li><strong>Name / Host:</strong> <code>_dmarc.mg.yourdomain.com</code></li>
+      <li><strong>Value:</strong> the full string Mailgun gave you</li>
+    </ul>
+
+    <p>Then return to Mailgun and click <strong>Check Status</strong> again. The DMARC row should turn green.</p>
+
+    <div class="note calm">
+      The <code>p=none</code> policy in the DMARC record is intentional &mdash; it starts in report-only mode. This is correct. Do not change it to <code>p=reject</code> or <code>p=quarantine</code> until you have been sending successfully for several weeks and have reviewed the reports.
+    </div>
+  </section>
+
+
+  <!-- STEP 8 -->
+  <section class="step" id="s8">
+    <h2><span class="num">8</span><span class="t">Create a sending key</span></h2>
+
+    <p>The sending key is the credential that lets your site actually send email through Mailgun. It is scoped to this specific domain, which means even if it were ever compromised it could only be used to send from your one domain.</p>
+
+    <p>In your Mailgun domain settings, click the <strong>Sending keys</strong> tab, then <strong>Add sending key</strong>.</p>
+
+    <figure class="screenshot" aria-label="Mailgun domain settings showing Sending keys tab">
+      <img src="screenshots/08-sending-keys.png" alt="Mailgun domain settings Sending keys tab showing an existing key entry with Add sending key button" width="1512" height="772" loading="lazy">
+      <figcaption>Domain settings &rarr; Sending keys tab &rarr; Add sending key</figcaption>
+    </figure>
+
+    <ol class="sub">
+      <li>Give it a memorable name, for example <code>pagemotor-site</code>.</li>
+      <li>Click <strong>Create sending key</strong>.</li>
+      <li><strong>Copy the key the moment it appears.</strong> Mailgun shows it exactly once. If you miss it, you have to delete the key and create a new one.</li>
+    </ol>
+
+    <figure class="screenshot" aria-label="New sending key revealed with copy button">
+      <div class="screenshot-placeholder">
+        <div class="sp-label">Screenshot: New key revealed</div>
+        <div class="sp-desc">The key value is shown only once. Copy it now and save it in your password manager.</div>
+      </div>
+      <figcaption>Copy the key now &mdash; Mailgun will never show it again</figcaption>
+    </figure>
+
+    <div class="note warn">
+      <strong>Gravity SMTP on WordPress uses a different key type.</strong> If you are setting this up for WordPress with Gravity SMTP, you need the account-level Private API key (from Settings &rarr; API Security), not this domain-scoped sending key. Gravity SMTP&rsquo;s documentation says explicitly it does not support domain-scoped keys.
+    </div>
+  </section>
+
+
+  <!-- STEP 9 -->
+  <section class="step" id="s9">
+    <h2><span class="num">9</span><span class="t">Connect your site</span></h2>
+
+    <details open>
+      <summary>PageMotor &mdash; EP Suite plugins</summary>
+      <p>You need two plugins: <strong>ep-email-mailgun</strong> (handles transactional email: contact forms, password resets) and <strong>ep-newsletter-mailgun</strong> (handles newsletter campaigns). Install both even if you do not plan to use newsletters right away.</p>
+      <ol class="sub">
+        <li>In PageMotor admin, go to <strong>Plugins &rarr; Manage Plugins &rarr; Upload</strong>.</li>
+        <li>Upload <code>ep-email-mailgun.zip</code>. Activate it.</li>
+        <li>Upload <code>ep-newsletter-mailgun.zip</code>. Activate it.</li>
+        <li>Open each plugin&rsquo;s settings and fill in:
+          <ul>
+            <li><strong>Sending Key</strong> &mdash; the key you copied in Step 8</li>
+            <li><strong>Sending Domain</strong> &mdash; <code>mg.yourdomain.com</code></li>
+            <li><strong>Region</strong> &mdash; EU or US, matching what you chose in Step 1</li>
+          </ul>
+        </li>
+        <li>Click <strong>Test Connection</strong>. It should turn green.</li>
+        <li>In <strong>EP Email &rarr; SMTP Configuration</strong>, set the transport to <strong>Mailgun</strong>.</li>
+        <li>In <strong>EP Newsletter &rarr; Email Delivery</strong>, set the driver to <strong>Mailgun</strong>. Also make sure ep-newsletter-mailgun appears <em>before</em> ep-newsletter in the plugin load order &mdash; otherwise the newsletter driver will not be picked up.</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>WordPress &mdash; Mailgun official plugin (recommended for most users)</summary>
+      <ol class="sub">
+        <li>In WordPress admin, go to <strong>Plugins &rarr; Add New</strong> and search for &ldquo;Mailgun&rdquo;. Install the official plugin by Mailgun.</li>
+        <li>Activate it, then go to <strong>Settings &rarr; Mailgun</strong>.</li>
+        <li>Fill in: Region, Domain Name (<code>mg.yourdomain.com</code>), API Key (from Step 8), From Address, From Name.</li>
+        <li>Set <strong>Use API</strong> to Yes.</li>
+        <li>Save, then click <strong>Test Configuration</strong>.</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>WordPress &mdash; Gravity SMTP (if you have a Gravity Forms licence)</summary>
+      <ol class="sub">
+        <li>Download Gravity SMTP from your Gravity Forms account and install it in WordPress.</li>
+        <li>Go to <strong>Gravity SMTP &rarr; Settings &rarr; Integrations</strong> and add Mailgun.</li>
+        <li>Use the <strong>account-level Private API key</strong> from Mailgun Settings &rarr; API Security (not the domain-scoped sending key).</li>
+        <li>Fill in the sending domain, region, and From address.</li>
+        <li>Save and set Mailgun as the Primary integration.</li>
+      </ol>
+    </details>
+  </section>
+
+
+  <!-- STEP 10 -->
+  <section class="step" id="s10">
+    <h2><span class="num">10</span><span class="t">Test it really works</span></h2>
+
+    <p>Mailgun saying &ldquo;domain active&rdquo; and the plugin saying &ldquo;connection successful&rdquo; only mean the credentials are valid. They do not prove a single email will land in an inbox. This step is the only thing that does.</p>
+
+    <div class="substep">
+      <div class="substep-num">A</div>
+      <div class="substep-body">
+        <p><strong>Send a real test email.</strong> Use the plugin&rsquo;s test button or fill in and submit a real contact form on your site. Address it to a Gmail inbox you can open.</p>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-num">B</div>
+      <div class="substep-body">
+        <p><strong>Check the email lands in Inbox, not Spam.</strong> Open Gmail. If the email went to Spam, it is not set up correctly yet. If it landed in Inbox with no &ldquo;Be careful with this message&rdquo; warning, you are close.</p>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-num">C</div>
+      <div class="substep-body">
+        <p><strong>Run a mail-tester check.</strong> Go to <a href="https://www.mail-tester.com">mail-tester.com</a>, copy the one-off address it gives you, and send it a real test email through your site. Then click &ldquo;Then check your score&rdquo;. Aim for <strong>9 or 10 out of 10</strong>. Any lower and mail-tester will tell you exactly what is still misconfigured.</p>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-num">D</div>
+      <div class="substep-body">
+        <p><strong>Check the Mailgun event log.</strong> In Mailgun, go to <strong>Reporting &rarr; Logs</strong>. Find your test message. It should show: <span class="verified-badge">Accepted</span> then <span class="verified-badge">Delivered</span>. SMTP code 250. If it shows &ldquo;Failed&rdquo; or &ldquo;Rejected&rdquo;, there is still a configuration problem.</p>
+      </div>
+    </div>
+
+    <div class="note calm">
+      <strong>Only declare it working when:</strong> the test email is sitting in your Inbox (not Spam), mail-tester.com gives you 9 or 10, and Mailgun shows &ldquo;Delivered&rdquo; in the event log. All three together are the proof. Any one on its own is not enough.
+    </div>
+  </section>
+
+
+  <!-- TROUBLESHOOTING -->
+  <h2 class="plain" id="fix">Troubleshooting</h2>
   <p style="color:var(--soft);font-size:16.5px">Open these only if you hit them.</p>
 
   <details>
-    <summary>My test email still lands in spam</summary>
-    <p>Usually the DKIM records have not finished switching on. Wait a few minutes and check Mailgun again. Make sure your <strong>From</strong> address uses your own domain, not a free address like gmail.com. A run through <a href="https://www.mail-tester.com">mail-tester.com</a> will name whatever is still missing.</p>
+    <summary>My test email lands in Spam</summary>
+    <p>Usually it means DKIM is not fully active yet (Step 6). Wait a few more minutes and resend. Also: make sure your From address uses your own domain, not a free address like gmail.com. Run a mail-tester.com check &mdash; it will name whatever specific thing is still missing.</p>
   </details>
 
   <details>
-    <summary>Mailgun says "verified" but mail will not send</summary>
-    <p>After the records verify, Mailgun still needs a few minutes to switch the DKIM keys fully active. Refresh the domain page until the warnings clear, then try the test again.</p>
+    <summary>Mailgun shows &ldquo;Verified&rdquo; but sending fails</summary>
+    <p>After records verify, Mailgun still needs a few minutes to activate the DKIM keys on its own servers. The domain overview page may show a yellow &ldquo;Unverified domain settings&rdquo; warning even though all DNS rows are green. This is the DKIM activation lag described in Step 6. Wait and refresh.</p>
   </details>
 
   <details>
-    <summary>It warns about a duplicate SPF or DMARC record</summary>
-    <p>There can only be one SPF and one DMARC record per name. You should not hit this with the <code>mg.</code> setup, but if you do, edit the existing record rather than adding a second one.</p>
+    <summary>I see only 1 TXT-based DKIM record, not 2 CNAMEs</summary>
+    <p>You chose &ldquo;Self-manage DKIM keys&rdquo; in Step 2 instead of &ldquo;Use automatic sender security&rdquo;. This guide&rsquo;s DNS records table does not match that mode. The fix: go to Domain Settings &rarr; delete the domain, then add it again with the correct option selected. The 1-TXT mode does work technically, but it means different DNS records to add.</p>
   </details>
 
   <details>
-    <summary>I am on WordPress, not PageMotor</summary>
-    <p>Same Mailgun account and DNS, different last step. Use <strong>Gravity SMTP</strong> if you have a Gravity Forms licence (note: it needs Mailgun's account-level Private API key, not the sending key above), or the free official <strong>Mailgun</strong> plugin otherwise.</p>
+    <summary>Duplicate SPF or DMARC warning</summary>
+    <p>There can only be one SPF record and one DMARC record per DNS name. Edit the existing record rather than adding a second one. This guide uses a subdomain (<code>mg.</code>) which means you should never clash with records on the apex domain, but if you added the records to the wrong place it can happen.</p>
+  </details>
+
+  <details>
+    <summary>Cloudflare records show as verified but mail still fails</summary>
+    <p>Most likely the Cloudflare proxy is still on for one or more records (the orange cloud icon). All email-related DNS records must be <strong>DNS only (grey cloud)</strong>. Click the orange cloud for each Mailgun record in Cloudflare and toggle it to grey, then click Save.</p>
+  </details>
+
+  <details>
+    <summary>I chose the wrong region during signup</summary>
+    <p>The region is locked per domain for life. Your options are: (a) if you have not sent any email yet, delete the domain, delete the Mailgun account, and create a new one with the correct region; or (b) create a second Mailgun account in the correct region and use that for the domain going forward. You cannot move an existing verified domain between regions.</p>
+  </details>
+
+  <details>
+    <summary>I am on WordPress with Gravity SMTP and it says &ldquo;invalid API key&rdquo;</summary>
+    <p>Gravity SMTP does not accept domain-scoped sending keys (the kind created in Step 8). You must use Mailgun&rsquo;s account-level Private API key instead. In Mailgun, go to the main <strong>Settings</strong> menu (top-level, not Domain Settings), then <strong>API Security</strong>, and copy the Private API key from there.</p>
+  </details>
+
+  <details>
+    <summary>Mailgun&rsquo;s &ldquo;Send to a Coworker&rdquo; email is missing the pdk1 / pdk2 CNAME rows</summary>
+    <p>This is a known issue with Mailgun&rsquo;s setup email template when using &ldquo;automatic sender security&rdquo; mode. The email shows 5 records but your domain needs 7. The two missing pdk1 and pdk2 CNAME records are real and required &mdash; they are just missing from the email template. Get the correct values by logging in to Mailgun and reading them directly from the DNS records screen. Do not use the coworker email as your source of truth.</p>
   </details>
 
   <div class="seealso">
-    🌱 <strong>Just getting started?</strong> If you have not installed the site yet, begin with <a href="https://documentation.elmspark.com/guides/pagemotor-bluehost/">Installing PageMotor on Bluehost</a>, then come back here for email.
+    &#x1F331; <strong>Not installed yet?</strong> If you are starting from scratch, begin with <a href="https://documentation.elmspark.com/guides/pagemotor-bluehost/">Installing PageMotor on Bluehost</a>, then come back here for email.
   </div>
 
   <footer>
-    <p><strong>Still stuck?</strong> Post where you got to in the PageMotor forum, including your mail-tester score if you have one. That score points straight at the missing piece.</p>
-    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+    <p><strong>Still stuck?</strong> Post where you got to in the PageMotor Developers forum and include your mail-tester.com score. The score points exactly at the missing piece and saves everyone time.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> &middot; an ElmsPark guide for the PageMotor community &middot; <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
   </footer>
 </div>
 </body>

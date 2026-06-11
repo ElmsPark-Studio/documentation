@@ -67,6 +67,10 @@
   footer a{color:var(--pine)}
   .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
   @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
+  /* Screenshots */
+  figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);background:var(--card)}
+  figure.screenshot img{display:block;width:100%;height:auto}
+  figure.screenshot figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:1px solid var(--line);background:var(--card)}
 </style>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
@@ -90,6 +94,18 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
 </style>
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ElmsPark Guides">
+  <meta property="og:title" content="Installing PageMotor on GoDaddy">
+  <meta property="og:description" content="Get PageMotor running on GoDaddy, or any cPanel host, in about ten minutes. No coding needed.">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/pagemotor-godaddy/">
+  <meta property="og:image" content="https://documentation.elmspark.com/og/pagemotor-godaddy.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Installing PageMotor on GoDaddy — ElmsPark Guides">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://documentation.elmspark.com/og/pagemotor-godaddy.png">
 </head>
 <body>
 <header class="es-header">
@@ -157,6 +173,14 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li>Click <strong>Upload</strong>, choose your PageMotor <code>.zip</code>, and wait for it to finish.</li>
       <li>Back in File Manager, right-click the uploaded zip and choose <strong>Extract</strong>. (If Extract stalls partway, just run it again; GoDaddy's shared servers sometimes pause big jobs, and a retry normally finishes it.)</li>
     </ol>
+    <figure class="screenshot">
+      <img src="screenshots/02-cpanel-home.png" alt="cPanel Tools page showing Email, File Manager and Databases sections" loading="lazy">
+      <figcaption>cPanel's Tools page. File Manager is under the Files section; the MySQL Database Wizard is under Databases.</figcaption>
+    </figure>
+    <figure class="screenshot">
+      <img src="screenshots/03-file-manager.png" alt="cPanel File Manager showing public_html directory ready for upload" loading="lazy">
+      <figcaption>Navigate to public_html in File Manager, then click Upload to add your PageMotor .zip file.</figcaption>
+    </figure>
     <div class="note">When it is done you should see <code>pagemotor.php</code>, a <code>lib</code> folder, and a file called <code>config-sample.php</code> sitting in your site folder. (If extracting gave you a single folder called <code>pagemotor</code> instead, open it, select everything inside, choose <strong>Move</strong> and move it all into your site folder, then delete the empty folder and the zip.) Good. We use that sample file in step 3.</div>
   </section>
 
@@ -169,6 +193,10 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li>Create the database user. Let the password generator make a strong password, and <em>write it down now</em>.</li>
       <li>On the privileges screen, tick <strong>ALL PRIVILEGES</strong> and finish the wizard.</li>
     </ol>
+    <figure class="screenshot">
+      <img src="screenshots/04-mysql-databases.png" alt="MySQL Database Wizard Step 1 — Create A Database" loading="lazy">
+      <figcaption>The MySQL Database Wizard. Enter a name for your database and click Next Step.</figcaption>
+    </figure>
     <div class="note"><strong>One GoDaddy difference from other hosts:</strong> GoDaddy usually shows the database name exactly as you typed it, with no automatic prefix. If your screen <em>does</em> add a prefix (a box showing <code>accountname_</code> before the name), then the full prefixed name is the real one. Either way, copy the final <strong>database name</strong> and <strong>username</strong> exactly as cPanel shows them at the end of the wizard. You will need those two plus the <strong>password</strong> in the next step.</div>
   </section>
 

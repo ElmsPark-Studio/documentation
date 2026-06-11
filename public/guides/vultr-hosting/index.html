@@ -142,7 +142,24 @@
   .reflink{background:var(--vultr-soft);border:1px solid #cfe0d4;border-radius:var(--radius);padding:14px 18px;margin:16px 0;font-size:14.5px}
 
   @media(max-width:560px){ h1{font-size:28px} .calc .out{gap:14px} }
+
+  /* Screenshots */
+  figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:var(--card)}
+  figure.screenshot img{display:block;width:100%;height:auto}
+  figure.screenshot figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:1px solid var(--line);background:var(--card)}
 </style>
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ElmsPark Guides">
+  <meta property="og:title" content="Hosting PageMotor on Vultr">
+  <meta property="og:description" content="Benchmarks, an interactive plan picker, and the exact bootstrap to get PageMotor live on a fresh Vultr box.">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/vultr-hosting/">
+  <meta property="og:image" content="https://documentation.elmspark.com/og/vultr-hosting.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hosting PageMotor on Vultr — ElmsPark Guides">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://documentation.elmspark.com/og/vultr-hosting.png">
 </head>
 <body>
 
@@ -282,18 +299,48 @@
 <!-- ============ SIGNUP ============ -->
 <section class="panel" id="p-signup" role="tabpanel" aria-labelledby="tab-signup" tabindex="0">
   <h2>What to tick on the Vultr signup screen</h2>
+  <p>Once you have signed up and are inside the Vultr console, click <strong>Compute</strong> in the left sidebar, then <strong>Deploy Server</strong>.</p>
+
+  <figure class="screenshot">
+    <img src="screenshots/01-instances-dashboard.png" alt="Vultr Compute Instances dashboard with Deploy Server button" width="1536" height="auto" loading="lazy">
+    <figcaption>The Compute Instances dashboard. Click <strong>Deploy Server</strong> (top right) to begin.</figcaption>
+  </figure>
+
+  <h3>Step 1: Choose Type — select Shared CPU</h3>
+  <p>On the Deploy a Server screen, choose <strong>Shared CPU</strong>. It is the right shape for a PageMotor host at all but the very largest scale.</p>
+
+  <figure class="screenshot">
+    <img src="screenshots/02-choose-type.png" alt="Deploy a Server — Choose Type screen with Shared CPU selected" width="1536" height="auto" loading="lazy">
+    <figcaption>Choose Type. Select <strong>Shared CPU</strong>.</figcaption>
+  </figure>
+
+  <h3>Step 2: Location and Plan</h3>
+  <p>Filter to <strong>Europe</strong> and pick <strong>London</strong> (or the region closest to your visitors). In the plan table below, select <strong>vc2-1c-2gb</strong> ($10/mo) to start — you can resize up later with no reinstall.</p>
+
+  <figure class="screenshot">
+    <img src="screenshots/03-plan-selection.png" alt="Vultr Deploy — Europe/London selected, vc2-1c-2gb plan highlighted in the plan table" width="1536" height="auto" loading="lazy">
+    <figcaption>Filter to Europe, pick London, then select the <strong>vc2-1c-2gb</strong> plan (highlighted). The Deploy Summary on the right confirms your choices.</figcaption>
+  </figure>
+
+  <h3>Step 3: OS, SSH Keys, and Backups</h3>
+  <p>Click <strong>Configure</strong> to move to Step 2. Select <strong>Ubuntu</strong> as the OS and choose the latest LTS version from the Image Version dropdown. Then paste your SSH public key into the SSH Keys field — this is the most important security step.</p>
+
+  <figure class="screenshot">
+    <img src="screenshots/04-os-selection.png" alt="Vultr Step 2 — Ubuntu OS selected, SSH Keys field visible" width="1536" height="auto" loading="lazy">
+    <figcaption>Select <strong>Ubuntu</strong> and the latest LTS image. Paste your SSH public key into the <strong>SSH Keys</strong> field before deploying.</figcaption>
+  </figure>
+
+  <h3>Full settings reference</h3>
   <table>
     <thead><tr><th>Setting</th><th>Pick</th><th>Why</th></tr></thead>
     <tbody>
-      <tr><td>Server type</td><td class="win">Cloud Compute</td><td>Bare Metal, Kubernetes and Managed Databases are the wrong shape for a PageMotor host.</td></tr>
-      <tr><td>CPU &amp; Storage</td><td class="win">Dedicated CPU, NVMe</td><td>Dedicated vCPUs avoid the noisy-neighbour latency PageMotor's admin feels.</td></tr>
+      <tr><td>Server type</td><td class="win">Shared CPU</td><td>Right shape for a PageMotor host at all but the very largest scale.</td></tr>
       <tr><td>Location</td><td class="win">Closest to visitors</td><td>Same price everywhere. Pick by audience latency.</td></tr>
-      <tr><td>Image</td><td class="win">Ubuntu 24.04 LTS x64</td><td>Security updates to 2029, ships PHP 8.3, tooling is first-class.</td></tr>
-      <tr><td>Plan</td><td class="win">Match to size</td><td>$12 solo / $24 SME / $60 agency / $120 scale.</td></tr>
-      <tr><td>Auto Backups</td><td class="win">Enable for production</td><td>20 per cent on top. Skip for a pure test rig only.</td></tr>
-      <tr><td>IPv6</td><td class="win">Enabled (free)</td><td>Future-proofs the box at zero cost.</td></tr>
+      <tr><td>Plan</td><td class="win">vc2-1c-2gb ($10/mo) to start</td><td>Handles a typical PageMotor site; resize up later without reinstalling.</td></tr>
+      <tr><td>Image</td><td class="win">Ubuntu, latest LTS</td><td>Long-term support, ships PHP 8.3, first-class tooling.</td></tr>
+      <tr><td>Auto Backups</td><td class="win">Enable for production</td><td>20 per cent on top of plan price. Skip for a pure test rig.</td></tr>
       <tr><td>SSH Keys</td><td class="win">ed25519, before first boot</td><td>The most important security click on the page.</td></tr>
-      <tr><td>Hostname</td><td class="win">Descriptive, eg pm-prod-01</td><td>Readable in logs and the dashboard.</td></tr>
+      <tr><td>Hostname</td><td class="win">Descriptive, e.g. pm-prod-01</td><td>Readable in logs and the dashboard.</td></tr>
       <tr><td>Everything else</td><td class="win">Default</td><td>No startup script, no VPC, no DDoS add-on at this scale.</td></tr>
     </tbody>
   </table>
