@@ -280,8 +280,19 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
     <p>It ships inside the PageMotor download, right next to <code>pagemotor.php</code>. Two things to check: the files may have landed in a <code>pagemotor</code> subfolder when the zip extracted, in which case move everything in it up into your site folder (see the note in step 1); and if the folder is genuinely empty, the zip did not extract completely, so repeat step 1.</p>
   </details>
 
+  <details>
+    <summary>My SMTP email test "times out" (Mailgun, SendGrid, Brevo and the like)</summary>
+    <p><span class="tag err">GoDaddy-specific</span> If a test connection to an outside mail service <em>times out</em> on port 587 <em>and</em> 465 (rather than rejecting your password), the cause is almost never your settings. <strong>GoDaddy blocks outbound SMTP to external mail servers on its shared cPanel hosting</strong>, as a matter of policy, and routes mail only through its own relay. A timeout, not a login error, is the giveaway: the connection never reaches the provider.</p>
+    <p>Your options on GoDaddy shared hosting:</p>
+    <ul>
+      <li><strong>Use GoDaddy's own relay.</strong> Set your mail host to <code>relay-hosting.secureserver.net</code> on port <code>25</code> with <em>no</em> authentication and no encryption. It only works for mail sent <em>from</em> the GoDaddy box, and deliverability is mediocre, but it gets contact forms and password resets out.</li>
+      <li><strong>Move to a VPS.</strong> On any VPS the SMTP ports are open and an external service like Mailgun works normally, with proper SPF/DKIM and real inbox placement. See <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Hosting PageMotor on Vultr</a>.</li>
+    </ul>
+    <p>This is the one real limit of GoDaddy shared hosting for a PageMotor site. Everything else in this guide works fine; only external SMTP is walled off.</p>
+  </details>
+
   <div class="seealso">
-    📧 <strong>Will your site send email?</strong> Contact forms, sign-ups and password resets need a proper mail service or they land in spam. Follow the companion guide: <a href="https://documentation.elmspark.com/guides/mailgun-email/">Set up reliable email with Mailgun</a>.
+    📧 <strong>Will your site send email?</strong> Contact forms, sign-ups and password resets need a proper mail service or they land in spam. Follow the companion guide: <a href="https://documentation.elmspark.com/guides/mailgun-email/">Set up reliable email with Mailgun</a>. <strong>On GoDaddy shared hosting</strong> note the SMTP limit above: external services are blocked, so you will use GoDaddy's relay or a <a href="https://documentation.elmspark.com/guides/vultr-hosting/">VPS</a>.
   </div>
 
   <footer>
