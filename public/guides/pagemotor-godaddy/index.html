@@ -258,6 +258,16 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
     <li>Send a test email to yourself. A local connection succeeds where the outside services timed out.</li>
   </ol>
 
+  <figure class="screenshot">
+    <img src="screenshots/05-email-localhost.png" alt="EP Email SMTP Connection set to Custom SMTP, host localhost, port 25, encryption None, no authentication" loading="lazy">
+    <figcaption>The working GoDaddy setup in EP Email: Custom SMTP, host <code>localhost</code>, port <code>25</code>, encryption None, no authentication.</figcaption>
+  </figure>
+
+  <figure class="screenshot">
+    <img src="screenshots/06-email-test-sent.png" alt="EP Email test result: test email sent successfully, with a heads-up that Gmail will reject it because the domain is missing DKIM" loading="lazy">
+    <figcaption>Test Connection passes and the test email sends. Note EP Email's own heads-up: the message is &ldquo;sent&rdquo;, but without DKIM, Gmail will silently drop it. That is the next thing to fix.</figcaption>
+  </figure>
+
   <div class="note"><strong>"Sent" is not the same as "delivered".</strong> Your GoDaddy box will happily report the mail as sent, but Gmail and Outlook quietly bin messages from a domain with no <strong>SPF</strong> and <strong>DKIM</strong> records. The mail does not bounce; it just disappears. Add those two DNS records for your domain and real inboxes will accept it. The DNS half of the <a href="https://documentation.elmspark.com/guides/mailgun-email/">Mailgun guide</a> shows exactly what they look like.</div>
 
   <div class="seealso">🚀 <strong>Want a proper external service like Mailgun, with the best possible deliverability?</strong> You need a host that does not block the SMTP ports. That means a small VPS rather than shared hosting. Our <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Hosting PageMotor on Vultr</a> guide takes you from empty box to live, with Mailgun working normally.</div>
@@ -301,10 +311,10 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
     <p><span class="tag err">GoDaddy-specific</span> If a test connection to an outside mail service <em>times out</em> on port 587 <em>and</em> 465 (rather than rejecting your password), the cause is almost never your settings. <strong>GoDaddy blocks outbound SMTP to external mail servers on its shared cPanel hosting</strong>, as a matter of policy, and routes mail only through its own relay. A timeout, not a login error, is the giveaway: the connection never reaches the provider.</p>
     <p>Your options on GoDaddy shared hosting:</p>
     <ul>
-      <li><strong>Use GoDaddy's own relay.</strong> Set your mail host to <code>relay-hosting.secureserver.net</code> on port <code>25</code> with <em>no</em> authentication and no encryption. It only works for mail sent <em>from</em> the GoDaddy box, and deliverability is mediocre, but it gets contact forms and password resets out.</li>
+      <li><strong>Use the server's own mail system.</strong> Set your mail host to <code>localhost</code> on port <code>25</code> with <em>no</em> authentication and no encryption (or pick the PHP mail() transport, which does the same with nothing to configure). This is the reliable GoDaddy path, covered in full under <a href="#email">Sending email on GoDaddy</a> above. Remember to add SPF and DKIM for your domain, or Gmail will silently drop the mail.</li>
       <li><strong>Move to a VPS.</strong> On any VPS the SMTP ports are open and an external service like Mailgun works normally, with proper SPF/DKIM and real inbox placement. See <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Hosting PageMotor on Vultr</a>.</li>
     </ul>
-    <p>This is the one real limit of GoDaddy shared hosting for a PageMotor site. Everything else in this guide works fine; only external SMTP is walled off.</p>
+    <p>(One older GoDaddy relay hostname, <code>relay-hosting.secureserver.net</code>, is widely quoted online but is now deprecated and tends to time out; use <code>localhost</code> instead.) This is the one real limit of GoDaddy shared hosting for a PageMotor site. Everything else in this guide works fine; only external SMTP is walled off.</p>
   </details>
 
   <div class="seealso">
