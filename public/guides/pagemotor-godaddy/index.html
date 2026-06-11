@@ -246,6 +246,22 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
     <div class="note calm"><strong>That is it.</strong> You are in, and you can start building pages.</div>
   </section>
 
+  <h2 class="plain" id="email">Sending email on GoDaddy</h2>
+  <p style="color:var(--soft);font-size:16.5px">Email is the one place GoDaddy genuinely differs from other hosts, so it is worth two minutes now. Contact forms, sign-ups and password resets all need a way to send mail.</p>
+
+  <div class="note"><span class="tag err">Read this first</span> <strong>GoDaddy shared hosting blocks outbound SMTP to outside mail services.</strong> Mailgun, SendGrid, Brevo and the like will simply time out, on every port, because GoDaddy firewalls them as a matter of policy. This is not a setting you can change. So the advice you will see elsewhere, "just point it at Mailgun", does not work here. What <em>does</em> work is GoDaddy's own mail system.</div>
+
+  <p><strong>The setup that works on GoDaddy:</strong> send through the server's own local mail system.</p>
+  <ol class="sub">
+    <li>In your mail plugin (EP Email, for example), set the transport to the local mail server: <strong>SMTP Host</strong> <code>localhost</code>, <strong>Port</strong> <code>25</code>, <strong>Encryption</strong> none, <strong>Authentication</strong> none. There is no username or password, because the server trusts mail sent from itself.</li>
+    <li>Or, even simpler, choose the <strong>PHP mail()</strong> transport if your plugin offers it. It uses that same local mail system with nothing to configure.</li>
+    <li>Send a test email to yourself. A local connection succeeds where the outside services timed out.</li>
+  </ol>
+
+  <div class="note"><strong>"Sent" is not the same as "delivered".</strong> Your GoDaddy box will happily report the mail as sent, but Gmail and Outlook quietly bin messages from a domain with no <strong>SPF</strong> and <strong>DKIM</strong> records. The mail does not bounce; it just disappears. Add those two DNS records for your domain and real inboxes will accept it. The DNS half of the <a href="https://documentation.elmspark.com/guides/mailgun-email/">Mailgun guide</a> shows exactly what they look like.</div>
+
+  <div class="seealso">🚀 <strong>Want a proper external service like Mailgun, with the best possible deliverability?</strong> You need a host that does not block the SMTP ports. That means a small VPS rather than shared hosting. Our <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Hosting PageMotor on Vultr</a> guide takes you from empty box to live, with Mailgun working normally.</div>
+
   <h2 class="plain" id="fix">If something is not working</h2>
   <p style="color:var(--soft);font-size:16.5px">Open these only if you hit them. Each one is quick.</p>
 
