@@ -69,7 +69,7 @@
   @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
   /* Screenshots */
   figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);background:var(--card)}
-  figure.screenshot img{display:block;width:100%;height:auto}
+  figure.screenshot img,figure.screenshot video{display:block;width:100%;height:auto}
   figure.screenshot figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:1px solid var(--line);background:var(--card)}
 </style>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
@@ -259,13 +259,11 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
   </ol>
 
   <figure class="screenshot">
-    <img src="screenshots/05-email-localhost.png" alt="EP Email SMTP Connection set to Custom SMTP, host localhost, port 25, encryption None, no authentication" loading="lazy">
-    <figcaption>The working GoDaddy setup in EP Email: Custom SMTP, host <code>localhost</code>, port <code>25</code>, encryption None, no authentication.</figcaption>
-  </figure>
-
-  <figure class="screenshot">
-    <img src="screenshots/06-email-test-sent.png" alt="EP Email test result: test email sent successfully, with a heads-up that Gmail will reject it because the domain is missing DKIM" loading="lazy">
-    <figcaption>Test Connection passes and the test email sends. Note EP Email's own heads-up: the message is &ldquo;sent&rdquo;, but without DKIM, Gmail will silently drop it. That is the next thing to fix.</figcaption>
+    <video autoplay muted loop playsinline preload="metadata" poster="screenshots/06-email-test-sent.png" aria-label="EP Email on GoDaddy: setting host to localhost, Test Connection passing, and the test email sending successfully with a DKIM heads-up">
+      <source src="screenshots/godaddy-email-clip.mp4" type="video/mp4">
+      <img src="screenshots/06-email-test-sent.png" alt="EP Email test result on GoDaddy: SMTP connection successful and test email sent, with a heads-up that Gmail will reject it because the domain is missing DKIM">
+    </video>
+    <figcaption>The real thing on GoDaddy with host <code>localhost</code>: Test Connection passes and the email sends. Watch EP Email's own heads-up appear: the message is &ldquo;sent&rdquo;, but without DKIM, Gmail will silently drop it. That is the next thing to fix.</figcaption>
   </figure>
 
   <div class="note"><strong>"Sent" is not the same as "delivered".</strong> Your GoDaddy box will happily report the mail as sent, but Gmail and Outlook quietly bin messages from a domain with no <strong>SPF</strong> and <strong>DKIM</strong> records. The mail does not bounce; it just disappears. Add those two DNS records for your domain and real inboxes will accept it. The DNS half of the <a href="https://documentation.elmspark.com/guides/mailgun-email/">Mailgun guide</a> shows exactly what they look like.</div>
