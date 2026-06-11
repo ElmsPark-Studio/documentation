@@ -67,6 +67,9 @@
   footer a{color:var(--pine)}
   .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
   @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
+  figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);background:var(--card)}
+  figure.screenshot img{display:block;width:100%;height:auto}
+  figure.screenshot figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:1px solid var(--line);background:var(--card)}
 </style>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
@@ -143,6 +146,18 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <br><br><strong>Not on HostGator?</strong> Everything in this guide is standard cPanel, so the steps are the same on any cPanel host. The screens may be laid out a little differently, but the names you need, like File Manager and MySQL Databases, are the same. We also have this guide for <a href="https://documentation.elmspark.com/guides/pagemotor-bluehost/">Bluehost</a> and <a href="https://documentation.elmspark.com/guides/pagemotor-godaddy/">GoDaddy</a>, and a different one for <a href="https://documentation.elmspark.com/guides/pagemotor-siteground/">SiteGround</a> (which does not use cPanel).
   </div>
 
+  <!-- LLM prompt download -->
+  <div class="llm-prompt-download" style="margin:26px 0;padding:18px 20px;background:#fffdf8;border:1px solid #e4ddcd;border-left:4px solid #2f5d4a;border-radius:14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif">
+    <div style="flex:1;min-width:220px">
+      <p style="margin:0 0 4px;font-weight:600;font-size:16px;color:#234a3b">Use this guide with any AI assistant</p>
+      <p style="margin:0;font-size:14.5px;line-height:1.5;color:#5d574c">Download it as a prompt file, paste it into Claude, ChatGPT, Gemini or any LLM, and it will walk you through every step interactively.</p>
+    </div>
+    <a href="/downloads/pagemotor-hostgator-prompt.md" download="pagemotor-hostgator-prompt.md" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#2f5d4a;color:#fff;text-decoration:none;border-radius:8px;font-size:14.5px;font-weight:600;white-space:nowrap;flex-shrink:0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download as LLM prompt
+    </a>
+  </div>
+
   <nav class="toc">
     <p>The four steps</p>
     <ol>
@@ -165,6 +180,14 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li>Click <strong>Upload</strong>, choose your PageMotor <code>.zip</code>, and wait for it to finish. (File Manager takes files up to 500&nbsp;MB, far larger than the PageMotor zip.)</li>
       <li>Back in File Manager, right-click the uploaded zip and choose <strong>Extract</strong>.</li>
     </ol>
+    <figure class="screenshot">
+      <img src="screenshots/02-cpanel-home.png" alt="cPanel Tools page showing the Files and Databases sections" loading="lazy">
+      <figcaption>cPanel&rsquo;s Tools page. File Manager is under Files; MySQL&reg; Databases is under Databases. Captured on GoDaddy&rsquo;s cPanel &mdash; apart from your host&rsquo;s logo and colours, these screens are identical on HostGator.</figcaption>
+    </figure>
+    <figure class="screenshot">
+      <img src="screenshots/03-file-manager.png" alt="cPanel File Manager with public_html open, ready for upload" loading="lazy">
+      <figcaption>Navigate to public_html in File Manager, then click Upload to add your PageMotor .zip file.</figcaption>
+    </figure>
     <div class="note">When it is done you should see <code>pagemotor.php</code>, a <code>lib</code> folder, and a file called <code>config-sample.php</code> sitting in your site folder. (If extracting gave you a single folder called <code>pagemotor</code> instead, open it, select everything inside, choose <strong>Move</strong> and move it all into your site folder, then delete the empty folder and the zip.) Good. We use that sample file in step 3.</div>
   </section>
 
@@ -177,6 +200,10 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li>Scroll to <strong>MySQL Users → Add New User</strong>. Pick a username, let the password generator make a strong password, and click <strong>Create User</strong>. <em>Write the password down now.</em></li>
       <li>Scroll to <strong>Add User To Database</strong>. Choose your new user and your new database, click <strong>Add</strong>, then tick <strong>ALL PRIVILEGES</strong> and <strong>Make Changes</strong>.</li>
     </ol>
+    <figure class="screenshot">
+      <img src="screenshots/04-mysql-databases.png" alt="cPanel MySQL Databases page with the Create New Database form" loading="lazy">
+      <figcaption>The MySQL&reg; Databases page. Create the database here, then scroll down for Add New User and Add User To Database. (This capture is from GoDaddy, which shows no prefix box &mdash; on HostGator you will see your <code>theaccount_</code> prefix in front of the name field.)</figcaption>
+    </figure>
     <div class="note"><strong>The one thing nearly everyone misses:</strong> cPanel adds your account name to the front of these, on HostGator and nearly every other cPanel host. A database you typed as <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>, and the user the same way. Copy the <em>full</em> names exactly as cPanel shows them. You will need three things in the next step: the <strong>database name</strong>, the <strong>username</strong>, and the <strong>password</strong>.</div>
   </section>
 
