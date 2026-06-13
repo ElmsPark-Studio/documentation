@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The honest end-to-end walkthrough for migrating a Thesis/Focus WordPress site to PageMotor: what carries over cleanly, what needs rebuilding, and the surprises to plan for before you start.">
+  <meta property="og:title" content="Migrating a WordPress site to PageMotor">
+  <meta property="og:description" content="The honest end-to-end walkthrough: what carries over cleanly, what needs rebuilding, and the surprises to plan for before you start.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/wordpress-to-pagemotor/">
+  <meta property="og:image" content="https://documentation.elmspark.com/og/wordpress-to-pagemotor.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Migrating a WordPress site to PageMotor — ElmsPark Guides">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://documentation.elmspark.com/og/wordpress-to-pagemotor.png">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+  <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600|inter-tight:400,500,600&display=swap">
+  <meta property="og:site_name" content="ElmsPark Guides">
+  <title>Migrating a WordPress site to PageMotor | ElmsPark Guide</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --text:#23211c; --muted:#5d574c; --faint:#8a8170;
+      --border:#e4ddcd; --bg:#f7f3ea; --bg-subtle:#fffdf8;
+      --bg-warn:#fbf6e8; --bg-caution:#f8efe9; --bg-good:#eef6ef;
+      --accent:#2f5d4a; --accent-light:#dceae3;
+      --link:#2f5d4a; --warn:#9a4b2e; --caution:#8b1a1a;
+      --pine-deep:#234a3b;
+      --chip-pagemotor:#e7efe9; --chip-pagemotor-text:#234a3b;
+      --font-sans:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+      --font-serif:Fraunces,Georgia,"Times New Roman",serif;
+      --font-mono:"SF Mono","Fira Code",Consolas,monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+    a:hover { color: var(--accent); }
+
+    /* ── Nav ── */
+    .site-nav {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      height: 52px;
+      font-size: 15px;
+    }
+    .site-nav .brand { font-weight: 700; color: var(--text); text-decoration: none; }
+    .site-nav .brand:hover { color: var(--accent); }
+    .site-nav .divider { color: var(--border); }
+    .site-nav a { color: var(--muted); text-decoration: none; }
+    .site-nav a:hover { color: var(--text); }
+    .site-nav .ext::after { content: " →"; }
+
+    /* ── Layout ── */
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      font-size: 14px;
+      color: var(--faint);
+      margin-bottom: 2rem;
+    }
+    .breadcrumb a { color: var(--faint); }
+    .breadcrumb a:hover { color: var(--link); }
+
+    /* ── Category chip ── */
+    .category-chip {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--chip-pagemotor);
+      color: var(--chip-pagemotor-text);
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── Title ── */
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .guide-hook {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+
+    /* ── Meta chips ── */
+    .meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+      font-size: 15px;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-chips span { white-space: nowrap; }
+
+    /* ── Lead paragraphs ── */
+    .lead {
+      margin-bottom: 1.5rem;
+    }
+    .lead strong { font-weight: 700; }
+
+    /* ── Surprise boxes ── */
+    .surprise-box {
+      background: var(--bg-warn);
+      border-left: 4px solid #f0a500;
+      border-radius: 0 6px 6px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .surprise-box .surprise-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--warn);
+      margin-bottom: 0.4rem;
+    }
+    .surprise-box p { margin: 0; font-size: 15.5px; }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .toc h3 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 0.75rem;
+    }
+    .toc ol {
+      margin: 0 0 0 1.1rem;
+      padding: 0;
+    }
+    .toc li { font-size: 15px; margin-bottom: 0.25rem; }
+    .toc .stage-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-top: 0.75rem;
+      margin-bottom: 0.2rem;
+      list-style: none;
+      margin-left: -1.1rem;
+    }
+    .toc .toc-fix { margin-top: 0.75rem; border-top: 1px solid var(--border); padding-top: 0.75rem; list-style: none; margin-left: -1.1rem; }
+    .toc .toc-fix a { color: var(--caution); }
+
+    /* ── Downloads ── */
+    .downloads {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin: 1.25rem 0;
+    }
+    .download-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .download-item:hover { border-color: var(--accent); background: var(--accent-light); color: var(--text); }
+    .download-item .dl-icon { font-size: 1.3em; flex-shrink: 0; }
+    .download-item strong { font-weight: 700; }
+    .download-item .dl-sub { color: var(--muted); font-size: 13px; }
+
+    /* ── Headings ── */
+    h2.stage-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 3rem;
+      margin-bottom: 0;
+    }
+    h2.step-heading {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-top: 2.5rem;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    h2.step-heading .step-num {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 1px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Body text ── */
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Callouts ── */
+    .callout {
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      font-size: 15.5px;
+    }
+    .callout.warn {
+      background: var(--bg-warn);
+      border-left: 4px solid #f0a500;
+    }
+    .callout.caution {
+      background: var(--bg-caution);
+      border-left: 4px solid #c0392b;
+    }
+    .callout.good {
+      background: var(--bg-good);
+      border-left: 4px solid #27ae60;
+    }
+    .callout.info {
+      background: var(--bg-subtle);
+      border-left: 4px solid var(--border);
+    }
+    .callout p { margin-bottom: 0.5rem; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout strong { font-weight: 700; }
+
+    /* ── Choice comparison ── */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    @media (max-width: 540px) { .choice-grid { grid-template-columns: 1fr; } }
+    .choice-item {
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 14px;
+    }
+    .choice-item.good { border-color: #27ae60; background: var(--bg-good); }
+    .choice-item.bad { border-color: #c0392b; background: var(--bg-caution); }
+    .choice-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .choice-item.good .choice-label { color: #27ae60; }
+    .choice-item.bad .choice-label { color: #c0392b; }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th {
+      background: var(--bg-subtle);
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    .status-yes { color: #27ae60; font-weight: 700; }
+    .status-no { color: #c0392b; font-weight: 700; }
+    .status-partial { color: #7a5800; font-weight: 700; }
+
+    /* ── Ordered/unordered lists ── */
+    ol, ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.3rem; }
+
+    /* ── Code ── */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1rem 0;
+      line-height: 1.5;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    /* ── Section divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* ── Troubleshooting ── */
+    .trouble-section { margin: 1.5rem 0; }
+    .trouble-q {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      color: var(--caution);
+    }
+
+    /* ── Beyond guide ── */
+    .beyond-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    @media (max-width: 540px) { .beyond-grid { grid-template-columns: 1fr; } }
+    .beyond-item {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 14px;
+      background: var(--bg-subtle);
+    }
+    .beyond-item strong { display: block; font-size: 15px; margin-bottom: 0.2rem; }
+
+    /* ── Footer ── */
+    .guide-footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--faint);
+      text-align: center;
+    }
+    .guide-footer a { color: var(--faint); }
+    .guide-footer a:hover { color: var(--link); }
+
+    /* ── Step actions list ── */
+    .step-actions {
+      margin: 0.75rem 0 1rem;
+      padding-left: 1.4rem;
+    }
+    .step-actions li { margin-bottom: 0.4rem; }
+
+    /* ── House style bridge (ElmsPark Guides) ── */
+    body { -webkit-font-smoothing: antialiased; }
+    h1 { font-family: var(--font-serif); font-weight: 600; color: var(--pine-deep); letter-spacing:-0.01em; }
+    h2.step-heading { font-family: var(--font-serif); font-weight: 600; color: var(--pine-deep); }
+    h2.stage-heading { color: var(--accent); }
+    h3 { font-family: var(--font-serif); font-weight: 600; color: var(--pine-deep); }
+    .guide-hook { font-style: normal; font-size: 1.2rem; }
+    .category-chip { font-family: 'Inter Tight', system-ui, sans-serif; background: var(--chip-pagemotor); color: var(--chip-pagemotor-text); }
+    .meta-chips, .toc, .toc h3, .surprise-box .surprise-label, .download-item .dl-sub, .breadcrumb, .guide-footer, h2.stage-heading, th { font-family: 'Inter Tight', system-ui, sans-serif; }
+    .surprise-box { border-left-color: var(--accent); }
+    .surprise-box .surprise-label { color: var(--warn); }
+    .download-item:hover { border-color: var(--accent); background: var(--accent-light); }
+    .callout.warn { border-left-color: var(--accent); }
+    .callout.good { border-left-color: var(--pine-deep); }
+    .status-yes { color: var(--pine-deep); }
+    h2.step-heading .step-num { color: var(--accent); background: var(--accent-light); font-family:'Inter Tight',system-ui,sans-serif; }
+    /* ElmsPark brand header */
+    header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
+    .es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+    .es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
+    .es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
+    .es-wordmark .es-mark svg{width:100%;height:100%;display:block}
+    .es-wordmark .es-accent{color:#3a5140}
+    .es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:0.75rem;margin-left:-0.35rem;line-height:1}
+    .es-nav{display:flex;gap:clamp(0.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:0.9375rem;font-weight:500}
+    .es-nav a{color:#181411;text-decoration:none;padding:0.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
+    .es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+    .es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
+    .es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
+    @media(max-width:640px){ .es-header .es-inner{padding:1rem 18px;gap:.75rem} .es-sub{display:none} .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap} }
+  </style>
+</head>
+<body>
+
+  <header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" class="brand-mark-svg" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z m252 -467 c203 -269 329 -496 368 -665 12 -49 11 -53 -14 -91 -15 -22 -87 -96 -162 -163 -74 -68 -175 -165 -224 -217 -79 -84 -89 -91 -93 -70 -3 13 -7 168 -10 344 -4 213 -9 331 -17 347 -14 31 -60 50 -92 38 -51 -20 -50 -8 -53 -534 -2 -463 -12 -728 -34 -911 -5 -44 -12 -82 -15 -85 -9 -8 -160 146 -239 244 -202 250 -279 446 -280 720 -1 150 15 238 75 420 70 211 258 510 515 819 l57 70 48 -52 c26 -28 103 -125 170 -214z m435 -964 c4 -14 4 -83 1 -152 -10 -265 -110 -467 -346 -703 -69 -69 -155 -147 -190 -174 l-64 -48 7 109 c15 227 34 350 64 417 32 68 117 191 193 277 57 64 309 300 321 300 4 0 11 -12 14 -26z m-4198 -425 c322 -59 663 -182 765 -277 34 -32 34 -47 7 -293 -11 -101 -21 -246 -23 -321 -1 -76 -5 -137 -8 -135 -4 1 -40 43 -80 92 -142 174 -301 360 -325 383 -53 48 -134 17 -134 -52 0 -42 18 -68 172 -253 178 -213 281 -344 274 -350 -3 -3 -81 4 -173 16 -92 11 -247 26 -343 31 -96 6 -187 15 -202 21 -20 8 -34 29 -57 83 -57 138 -89 286 -116 545 -15 146 -21 532 -8 545 8 8 29 5 251 -35z m7346 -200 c-1 -347 -48 -660 -127 -854 -37 -90 -43 -93 -247 -105 -96 -6 -233 -18 -305 -26 -71 -9 -154 -18 -184 -21 l-54 -6 48 64 c27 35 97 122 155 193 269 328 269 329 256 381 -6 24 -51 55 -79 55 -27 0 -69 -44 -258 -271 -105 -126 -195 -229 -199 -229 -4 0 -10 73 -13 163 -3 89 -15 247 -27 350 -19 172 -20 191 -6 212 39 60 331 189 551 244 165 41 446 92 480 86 6 -1 10 -87 9 -236z m-1206 -304 c37 -179 42 -605 8 -712 -22 -68 -92 -172 -209 -310 -96 -112 -114 -129 -123 -120 -13 13 -43 293 -44 398 0 132 17 239 62 379 50 156 114 265 222 378 66 69 67 68 84 -13z m-5108 19 c111 -104 201 -275 257 -487 25 -92 27 -119 27 -277 0 -203 -27 -390 -57 -390 -15 0 -160 171 -240 282 -70 98 -86 146 -97 287 -16 202 19 631 52 631 5 0 31 -21 58 -46z m3753 -814 c60 -144 106 -303 123 -427 15 -109 16 -129 2 -224 -24 -167 -81 -284 -201 -414 -56 -61 -154 -145 -169 -145 -15 0 32 402 63 522 23 93 24 117 1 143 -36 43 -48 48 -81 30 -52 -26 -79 -104 -111 -312 -16 -110 -50 -411 -50 -452 0 -29 -27 10 -73 106 -59 123 -107 307 -107 406 0 40 9 110 20 156 42 173 98 277 232 429 82 93 299 285 309 274 3 -4 22 -45 42 -92z m-4451 -36 c191 -19 399 -59 452 -86 23 -11 56 -32 74 -45 37 -28 226 -251 255 -302 l18 -31 -140 0 c-243 0 -436 37 -586 113 -179 90 -314 209 -399 355 -10 17 135 16 326 -4z m6752 4 c-50 -85 -170 -211 -254 -268 -158 -107 -299 -160 -485 -184 -126 -17 -385 -22 -385 -8 0 12 96 139 183 241 62 73 87 94 139 119 117 55 442 106 706 110 80 2 102 -1 96 -10z m-8080 -1349 c134 -32 310 -100 491 -189 194 -97 263 -143 290 -192 19 -36 19 -38 2 -55 -16 -16 -37 -18 -170 -17 -171 1 -303 24 -527 90 -158 47 -195 52 -220 29 -30 -27 -27 -88 5 -113 60 -47 390 -142 585 -168 58 -7 171 -14 252 -14 147 0 148 0 176 -27 17 -16 50 -75 77 -138 65 -152 186 -384 250 -480 30 -44 96 -134 149 -200 52 -66 92 -122 89 -125 -3 -3 -42 35 -87 85 -208 231 -419 410 -568 483 -182 89 -301 114 -563 118 -187 2 -205 4 -268 28 -139 52 -365 200 -488 319 -63 61 -184 210 -279 342 -47 68 -59 90 -48 96 19 13 190 66 289 89 267 62 417 73 563 39z m439 -1094 c177 -31 332 -103 490 -230 98 -79 317 -298 317 -318 0 -4 -104 -7 -232 -5 l-233 3 -67 32 c-101 47 -237 145 -344 246 -103 97 -244 251 -244 266 0 5 8 12 18 14 40 11 216 6 295 -8z m-405 -167 c135 -146 294 -299 357 -344 30 -21 55 -42 55 -45 0 -3 -148 -11 -328 -17 -181 -6 -342 -17 -359 -23 -60 -20 -66 -111 -10 -136 14 -6 162 -8 387 -5 l365 5 -116 -120 c-120 -124 -267 -300 -295 -355 l-16 -31 -72 6 c-137 10 -418 133 -646 284 -139 92 -370 276 -370 295 0 6 6 16 14 22 7 6 65 54 127 107 176 148 394 296 559 379 71 36 196 79 229 80 18 0 49 -26 119 -102z m1199 -574 c9 -26 -266 -289 -392 -375 -68 -46 -202 -102 -316 -133 -98 -26 -249 -39 -256 -21 -6 19 71 123 167 227 116 124 263 248 344 288 l60 30 195 -2 c125 -2 196 -7 198 -14z m442 -14 c22 -11 72 -48 113 -83 186 -162 425 -337 692 -508 l210 -134 -170 -12 c-292 -20 -407 -45 -679 -148 -139 -53 -156 -57 -229 -56 -43 0 -131 8 -195 18 -288 42 -744 -1 -864 -81 -38 -26 -47 -68 -21 -97 21 -24 79 -25 190 -5 163 30 276 39 447 33 95 -2 183 -9 197 -14 23 -10 20 -13 -70 -80 -271 -201 -419 -268 -654 -298 -109 -14 -144 -15 -225 -5 -125 15 -348 62 -484 101 -87 26 -107 35 -102 47 3 9 48 80 100 157 101 152 199 270 313 377 77 72 99 82 247 108 39 7 117 28 175 47 206 67 325 150 597 418 112 110 222 210 245 223 50 27 103 25 167 -8z m1134 -1664 c-259 -265 -393 -432 -393 -488 0 -50 53 -82 104 -62 9 4 77 74 150 158 166 188 417 446 435 446 15 0 8 -143 -14 -280 -71 -431 -344 -664 -969 -824 -76 -20 -145 -36 -154 -36 -13 0 -14 16 -9 113 11 199 82 516 142 638 146 295 354 436 729 494 169 27 171 38 -21 -159z"/><path d="M8159 16019 c-38 -38 -141 -295 -188 -469 -83 -304 -64 -574 56 -774 78 -131 150 -197 383 -352 154 -102 197 -141 231 -210 39 -80 33 -168 -29 -404 -151 -575 -137 -859 57 -1102 74 -94 163 -174 275 -250 163 -109 236 -133 276 -92 21 22 44 122 59 266 12 103 2 243 -24 369 -17 80 -69 233 -90 266 -31 47 -109 41 -133 -10 -12 -25 -10 -41 22 -150 50 -177 56 -214 56 -360 0 -137 -5 -177 -23 -177 -23 0 -175 120 -243 193 -77 82 -124 163 -149 257 -22 80 -19 271 5 415 32 191 106 445 129 445 3 0 58 -42 121 -93 63 -51 179 -139 257 -195 185 -134 237 -192 313 -349 47 -97 65 -124 84 -129 69 -17 94 26 79 132 -27 185 -136 317 -444 534 -169 119 -309 252 -346 329 -41 83 -39 167 9 286 88 218 109 279 124 347 21 100 29 316 15 405 -23 148 -119 334 -238 463 -148 160 -527 430 -603 430 -11 0 -30 -10 -41 -21z"/><path d="M15039 13510 c-200 -41 -467 -129 -599 -195 -189 -96 -370 -252 -460 -397 -125 -205 -165 -408 -138 -713 18 -206 14 -348 -12 -470 -53 -242 -276 -735 -443 -978 -286 -414 -647 -730 -1295 -1132 -150 -93 -457 -296 -568 -375 -264 -189 -488 -414 -657 -663 -172 -252 -326 -657 -386 -1018 -74 -437 -77 -675 -21 -1604 59 -968 60 -983 156 -1669 40 -288 47 -320 77 -341 30 -21 90 -19 118 3 28 24 28 37 -10 272 -101 621 -133 985 -187 2080 -22 469 -24 560 -15 737 24 458 68 686 199 1039 108 291 338 619 447 640 55 10 150 -2 186 -23 64 -37 69 -51 73 -238 8 -319 67 -513 218 -712 101 -134 276 -268 430 -329 35 -14 77 -31 93 -38 149 -66 302 -113 489 -151 256 -52 276 -36 262 209 -22 383 -122 747 -260 940 -93 130 -251 254 -411 323 -152 65 -300 95 -615 123 -112 10 -272 49 -285 70 -13 20 39 82 109 131 94 67 228 134 317 159 161 44 473 51 672 15 182 -33 401 -112 458 -166 29 -27 31 -33 25 -77 -4 -26 -9 -108 -12 -182 -9 -204 27 -392 103 -545 121 -243 338 -419 663 -540 41 -15 84 -31 95 -35 49 -19 145 -50 199 -64 52 -13 62 -13 87 0 16 8 32 26 35 40 11 42 -3 351 -20 451 -18 103 -61 239 -111 348 l-33 74 172 -6 c182 -6 240 -1 471 43 125 25 322 76 415 109 126 44 119 103 -44 365 -70 112 -108 165 -264 367 -23 31 -41 60 -39 66 2 6 59 25 128 43 328 86 630 258 1006 572 62 51 122 105 133 119 34 44 26 77 -32 140 -59 62 -255 228 -364 309 -172 127 -419 274 -547 324 l-68 27 93 56 c296 176 482 363 709 709 106 163 105 184 -11 237 -190 85 -544 175 -772 196 -43 4 -78 9 -78 10 0 2 23 41 52 87 73 117 122 227 157 348 61 214 91 432 91 656 0 241 -15 259 -181 224z m193 -1534 c194 -38 408 -104 408 -125 0 -10 -81 -127 -160 -232 -162 -215 -449 -437 -665 -513 -63 -22 -89 -25 -270 -29 -258 -6 -385 -34 -560 -123 -146 -74 -377 -259 -478 -382 -31 -37 -84 -94 -118 -127 l-62 -60 34 47 c19 26 74 99 122 163 121 157 263 411 357 637 19 47 44 88 62 103 28 24 34 25 171 25 223 0 439 37 679 116 160 53 209 96 180 158 -17 38 -55 43 -147 17 -326 -90 -501 -122 -653 -120 -108 2 -136 9 -140 37 -6 38 24 70 121 134 164 106 445 229 652 284 79 21 106 24 215 20 75 -3 176 -15 252 -30z m-604 -1072 c12 -4 22 -12 22 -18 0 -19 -149 -184 -241 -269 -149 -137 -262 -212 -376 -252 -64 -23 -81 -25 -286 -25 l-218 0 16 22 c31 45 242 251 318 311 140 111 315 192 476 221 79 15 249 20 289 10z m340 -100 c95 -31 212 -94 359 -190 191 -126 475 -350 471 -370 -4 -20 -204 -182 -327 -266 -160 -110 -306 -189 -447 -246 -130 -51 -270 -87 -298 -76 -9 3 -41 42 -72 86 -66 94 -164 209 -283 331 l-86 89 371 -4 c354 -3 373 -2 393 16 28 25 29 86 2 110 -24 22 -133 32 -470 42 -133 4 -240 10 -239 15 2 4 29 28 61 52 76 59 196 175 330 320 83 89 115 117 134 117 13 0 59 -12 101 -26z m-1698 -655 c32 -14 97 -73 220 -197 179 -181 314 -292 449 -369 90 -52 254 -107 383 -129 51 -9 109 -23 128 -32 44 -20 240 -217 319 -321 32 -42 89 -125 125 -184 l66 -107 -24 -10 c-123 -47 -419 -113 -577 -130 -181 -19 -401 20 -559 100 -69 35 -305 193 -365 243 l-39 34 86 13 c122 18 421 8 553 -20 129 -26 180 -28 205 -5 29 27 25 69 -9 97 -51 43 -278 91 -496 103 -105 7 -151 3 -499 -34 -48 -6 -102 -7 -120 -4 -17 3 -101 33 -186 65 -253 97 -419 131 -695 146 l-140 7 215 139 c238 155 451 309 640 465 126 104 204 151 250 151 14 0 45 -10 70 -21z m708 3 c92 -35 223 -143 366 -299 93 -103 184 -229 173 -240 -4 -3 -55 -1 -113 5 -118 13 -268 59 -382 116 -120 60 -276 191 -426 355 -58 64 -59 66 -35 72 13 4 102 7 196 8 145 1 181 -2 221 -17z m-1923 -1537 c253 -50 420 -155 546 -342 28 -42 65 -106 82 -142 66 -146 128 -425 143 -643 6 -86 5 -98 -9 -98 -9 0 -87 18 -174 40 -617 157 -885 394 -957 846 -9 56 -16 136 -16 178 0 70 2 76 18 67 28 -15 279 -274 417 -429 146 -165 161 -177 209 -168 47 9 64 49 42 100 -30 71 -205 276 -413 484 -73 74 -133 136 -133 138 0 9 122 -7 245 -31z"/><path d="M12680 12339 c-278 -30 -553 -197 -801 -485 -94 -111 -119 -149 -119 -187 0 -38 20 -54 110 -90 231 -93 435 -132 645 -124 169 6 246 26 388 99 131 67 238 148 362 272 184 185 240 290 182 344 -55 51 -390 154 -562 172 -100 11 -99 11 -205 -1z"/><path d="M7592 12340 c-92 -10 -187 -32 -327 -77 -214 -68 -267 -104 -251 -167 18 -71 266 -346 396 -438 100 -71 246 -144 345 -174 73 -21 117 -27 230 -31 212 -8 356 21 660 130 66 24 92 56 82 99 -15 59 -188 259 -322 373 -213 181 -377 258 -611 285 -97 11 -96 11 -202 0z"/><path d="M12825 11324 c-201 -87 -390 -239 -493 -397 -57 -87 -87 -159 -109 -262 -28 -132 -3 -540 39 -618 5 -10 25 -25 44 -33 44 -18 72 -7 209 83 136 91 313 269 376 378 93 160 124 289 124 515 0 222 -33 347 -94 363 -11 3 -54 -10 -96 -29z"/><path d="M7531 11324 c-74 -94 -78 -500 -8 -700 24 -65 66 -144 112 -209 88 -123 327 -330 450 -390 43 -21 55 -23 87 -14 44 12 61 38 77 119 36 184 39 453 6 575 -65 246 -280 474 -580 617 -77 36 -117 37 -144 2z"/><path d="M8756 10859 c-15 -18 -40 -76 -60 -142 -132 -425 -137 -675 -21 -923 57 -122 108 -194 196 -281 99 -96 146 -133 264 -213 124 -83 156 -100 193 -100 58 0 94 75 149 308 25 106 27 134 27 307 0 178 -2 196 -27 280 -44 144 -124 296 -222 417 -94 117 -237 255 -342 329 -83 59 -119 63 -157 18z m161 -237 c119 -95 263 -272 332 -409 85 -170 114 -384 77 -588 -18 -98 -41 -194 -50 -203 -13 -13 -187 118 -276 208 -98 98 -144 165 -187 270 -79 197 -71 392 33 743 8 24 16 22 71 -21z"/><path d="M11567 10834 c-199 -138 -387 -348 -473 -529 -29 -60 -65 -150 -81 -200 -26 -85 -27 -101 -28 -290 0 -218 7 -264 67 -463 57 -185 91 -193 278 -69 323 216 475 407 541 684 26 108 28 285 4 418 -15 87 -79 327 -110 416 -38 106 -84 113 -198 33z m106 -311 c20 -82 41 -186 48 -232 27 -192 -19 -384 -133 -549 -64 -93 -287 -289 -361 -318 -11 -4 -19 13 -35 73 -33 123 -43 195 -43 311 -1 186 54 367 156 523 48 73 300 339 321 339 5 0 27 -66 47 -147z"/></g></g></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+    </a>
+    <span class="es-sub">Guides</span>
+    <nav class="es-nav" aria-label="Documentation">
+      <a href="/guides/">Guides</a>
+      <a href="/plugins/">Plugin docs</a>
+      <a href="/hosting/hosting-options/">Hosting</a>
+      <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="wrap">
+
+    <!-- ── Breadcrumb ── -->
+    <p class="breadcrumb">
+      <a href="https://documentation.elmspark.com/guides/">Guides</a> › Migrating a WordPress site to PageMotor
+    </p>
+
+    <!-- ── Category ── -->
+    <span class="category-chip">PageMotor Migration</span>
+
+    <!-- ── Title ── -->
+    <h1>Migrating a WordPress site to PageMotor</h1>
+    <p class="guide-hook">The honest end-to-end walkthrough: what carries over cleanly, what needs rebuilding, and the surprises to plan for before you start.</p>
+
+    <!-- ── Meta chips ── -->
+    <div class="meta-chips">
+      <span>⏱ <strong>2–4 hours</strong> total</span>
+      <span>🖼️ Most of that is <strong>image transfer</strong></span>
+      <span>🧰 Needs <strong>SFTP + PHP 7+</strong></span>
+      <span>🎯 For <strong>Thesis / Focus</strong> WordPress sites</span>
+      <span>📖 20-min read</span>
+      <span>June 2026</span>
+    </div>
+
+    <!-- ── Lead ── -->
+    <p class="lead"><strong>What you'll need before you start:</strong> WordPress admin access to install the exporter; a PageMotor installation running version 0.8.3b or later; PHP 7.0+ on the computer you'll run the translator from (run <code>php -v</code> in Terminal to check); an SFTP client such as <a href="https://cyberduck.io">Cyberduck</a> (free) or <a href="https://panic.com/transmit/">Transmit</a> (Mac); and the three downloads below. Get all three before you begin.</p>
+
+    <!-- ── Downloads ── -->
+    <div class="downloads">
+      <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/download/latest/ep-wp-exporter-1.4.0.zip" class="download-item">
+        <span class="dl-icon">🔌</span>
+        <span>
+          <strong>EP WP Exporter v1.4.0</strong>
+          <span class="dl-sub"> — WordPress plugin. Install on your WordPress site to export your content and theme data.</span>
+        </span>
+      </a>
+      <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/download/latest/pagemotor-migrator-v2.2.zip" class="download-item">
+        <span class="dl-icon">⚙️</span>
+        <span>
+          <strong>PageMotor Migrator v2.2</strong>
+          <span class="dl-sub"> — Command-line translator. Converts the WordPress export JSON into PageMotor's format.</span>
+        </span>
+      </a>
+      <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/download/latest/focus-bridge.zip" class="download-item">
+        <span class="dl-icon">🎨</span>
+        <span>
+          <strong>Focus Bridge Theme</strong>
+          <span class="dl-sub"> — PageMotor theme. Bridges your Focus CSS classes into PageMotor so your existing styles work without modification.</span>
+        </span>
+      </a>
+    </div>
+
+    <!-- ── Is this guide for me? ── -->
+    <div class="callout info">
+      <p><strong>Is this guide the right one for your site?</strong> This guide covers Thesis/Focus WordPress sites migrating to an existing PageMotor installation. It will not work for Divi, Gutenberg block-based sites, or WooCommerce shops — those have different export shapes and different importers. The <a href="#beyond">"Beyond this guide"</a> section at the bottom covers those paths and points you at the right tools.</p>
+    </div>
+
+    <!-- ── Three surprises ── -->
+    <h2 class="stage-heading">Three things to know before you start</h2>
+
+    <p>These surprises catch nearly everyone on their first migration. Reading them now saves you an hour of confusion later.</p>
+
+    <div class="surprise-box">
+      <p class="surprise-label">Surprise 1 — The images are on you</p>
+      <p>The translator rewrites every image path in your content to point at the new location in PageMotor — but it does not move the actual image files. You will need your SFTP credentials, 10–30 minutes depending on how many images your site has, and a client like Cyberduck or Transmit to transfer them manually. Budget for this. Most migrations feel roughly on track until this step, then slow down here.</p>
+    </div>
+
+    <div class="surprise-box">
+      <p class="surprise-label">Surprise 2 — One click makes the site look right</p>
+      <p>After importing your theme data, the site has no CSS and looks completely broken. This is normal and expected — but only if you know about it. The fix is a single click: open <strong>Admin › Theme Settings › Design Options</strong> and click <strong>Save</strong>. That triggers a full CSS recompile from your imported settings. Without it, the site stays unstyled. Do not skip this step, and do not be alarmed when you first see it.</p>
+    </div>
+
+    <div class="surprise-box">
+      <p class="surprise-label">Surprise 3 — Payment forms look right but don't work</p>
+      <p>Contact forms — name, email, message, phone — migrate cleanly and work fine after you install EP Email. Anything with a payment back-end (Stripe, PayPal), PDF generation, file upload, or conditional logic will appear in the right place in PageMotor and render visually, but the back-end processing that made it charge a card or generate a document does not come with it. If your site has order forms, read the <a href="#fix-payment-forms">payment form troubleshooting entry</a> before you start, not after.</p>
+    </div>
+
+    <!-- ── What migrates ── -->
+    <hr class="section-divider">
+
+    <h2 class="stage-heading">What migrates automatically</h2>
+    <p>The translator handles all of this without any manual work from you. Once the import is done, these things will be on your PageMotor site exactly as they were on WordPress.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Content</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pages (all levels of nesting)</td>
+            <td class="status-yes">Migrates</td>
+            <td>Full parent/child hierarchy preserved, however deep it goes</td>
+          </tr>
+          <tr>
+            <td>Posts</td>
+            <td class="status-yes">Migrates</td>
+            <td>Nested under <code>/blog/</code> with paginated listing and thumbnails</td>
+          </tr>
+          <tr>
+            <td>Blog index</td>
+            <td class="status-yes">Migrates</td>
+            <td>Paginated listing with thumbnails</td>
+          </tr>
+          <tr>
+            <td>Top-level navigation menus</td>
+            <td class="status-yes">Migrates</td>
+            <td>Flat menus only — see below for dropdowns</td>
+          </tr>
+          <tr>
+            <td>Footer widgets and menus</td>
+            <td class="status-yes">Migrates</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Focus skin CSS</td>
+            <td class="status-yes">Migrates</td>
+            <td>Compiled CSS imported directly; your design looks the same</td>
+          </tr>
+          <tr>
+            <td>Focus custom CSS</td>
+            <td class="status-yes">Migrates</td>
+            <td>Included in the compiled output</td>
+          </tr>
+          <tr>
+            <td>Focus design options</td>
+            <td class="status-yes">Migrates</td>
+            <td>Colours, fonts, layout settings</td>
+          </tr>
+          <tr>
+            <td>Featured images</td>
+            <td class="status-yes">Migrates</td>
+            <td>Injected inline at the top of content; files still need manual transfer (Step 12)</td>
+          </tr>
+          <tr>
+            <td>Focus Cards</td>
+            <td class="status-yes">Migrates</td>
+            <td>Converted to static HTML grids, or to the <a href="https://forums.pagemotor.com/t/ep-cards-native-cards-for-pagemotor/395">EP Cards</a> plugin if you run a separate Cards export</td>
+          </tr>
+          <tr>
+            <td>YouTube embeds</td>
+            <td class="status-yes">Migrates</td>
+            <td>Converted to lazy-loading with thumbnail preview</td>
+          </tr>
+          <tr>
+            <td>Internal links</td>
+            <td class="status-yes">Migrates</td>
+            <td>Rewritten to hierarchical paths — <code>/child/</code> becomes <code>/parent/child/</code></td>
+          </tr>
+          <tr>
+            <td>Contact form shortcodes</td>
+            <td class="status-yes">Migrates</td>
+            <td>Gravity Forms, CF7, WPForms shortcodes mapped to EP Email format</td>
+          </tr>
+          <tr>
+            <td>Breadcrumbs (if used)</td>
+            <td class="status-yes">Migrates</td>
+            <td>Auto-detected from Thesis breadcrumb add-on; requires the EP Breadcrumbs plugin (Step 15)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>What does not migrate automatically</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Content</th>
+            <th>What you'll need to do</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dropdown / multi-level menus</td>
+            <td>Rebuild manually in PageMotor after import</td>
+          </tr>
+          <tr>
+            <td>Gutenberg block content</td>
+            <td>Classic Editor only. Gutenberg needs a different migration path — see <a href="#beyond">Beyond this guide</a></td>
+          </tr>
+          <tr>
+            <td>Newsletter subscriber lists</td>
+            <td>Export from your email provider separately</td>
+          </tr>
+          <tr>
+            <td>Dynamic sidebar widgets</td>
+            <td>Archives, categories, and tag clouds need rebuilding</td>
+          </tr>
+          <tr>
+            <td>WooCommerce products, orders, customers</td>
+            <td>Needs a separate migration — see <a href="#beyond">Beyond this guide</a></td>
+          </tr>
+          <tr>
+            <td>Payment form back-ends</td>
+            <td>Stripe, PayPal, PDF generation, conditional logic do not migrate — forms appear on-page but processing stops working</td>
+          </tr>
+          <tr>
+            <td>Multilingual content (WPML / Polylang)</td>
+            <td>Must be migrated one language at a time</td>
+          </tr>
+          <tr>
+            <td>Multiple user accounts</td>
+            <td>Author attributions are preserved in content, but additional users must be recreated manually</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── TOC ── -->
+    <div class="toc">
+      <h3>Steps in this guide</h3>
+      <ol>
+        <li class="stage-label">Stage 1 — Export from WordPress</li>
+        <li><a href="#step1">Install the EP WP Exporter</a></li>
+        <li><a href="#step2">Run the export</a></li>
+        <li><a href="#step3">Clean up WordPress</a></li>
+        <li class="stage-label">Stage 2 — Translate</li>
+        <li><a href="#step4">Check your PHP version</a></li>
+        <li><a href="#step5">Run the translator</a></li>
+        <li><a href="#step6">Review the page map</a></li>
+        <li class="stage-label">Stage 3 — Import into PageMotor</li>
+        <li><a href="#step7">Back up your database</a></li>
+        <li><a href="#step8">Install the Focus Bridge Theme</a></li>
+        <li><a href="#step9">Import the theme data</a></li>
+        <li><a href="#step10">Install Content Types plugin (if generated)</a></li>
+        <li><a href="#step11">Recompile CSS</a> ← do not skip</li>
+        <li><a href="#step12">Transfer images via SFTP</a></li>
+        <li><a href="#step13">Run the content migration</a></li>
+        <li class="stage-label">Stage 4 — Configure and test</li>
+        <li><a href="#step14">Set up contact forms</a></li>
+        <li><a href="#step15">Add breadcrumbs (optional)</a></li>
+        <li><a href="#step16">Review and test</a></li>
+        <li class="toc-fix"><a href="#fix">Something wrong? Jump to troubleshooting →</a></li>
+      </ol>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ══════════════════════════════════
+         STAGE 1
+    ══════════════════════════════════════ -->
+
+    <h2 class="stage-heading">Stage 1 — Export from WordPress</h2>
+    <p>Install the exporter plugin, pull everything out of WordPress in one file, then uninstall it. The exporter is read-only — it does not change your WordPress site in any way.</p>
+
+    <h2 class="step-heading" id="step1"><span class="step-num">1</span> Install the EP WP Exporter</h2>
+    <p>Log in to your WordPress admin. Go to <strong>Plugins › Add New › Upload Plugin</strong>, upload <code>ep-wp-exporter-1.4.0.zip</code>, and activate it. That is all you need to do here.</p>
+
+    <h2 class="step-heading" id="step2"><span class="step-num">2</span> Run the export</h2>
+    <p>Go to <strong>Tools › EP WP Export</strong>. Tick all the boxes: Posts, Pages, Custom Post Types, Navigation Menus, Widgets, Media Manifest, Theme Settings. Click <strong>Export for PageMotor</strong> and save the JSON file that downloads. The filename will include your site name and today's date — keep it somewhere you can find it.</p>
+
+    <p>This one file contains everything: your content, menus, widgets, compiled CSS, and all your Focus skin settings.</p>
+
+    <div class="callout info">
+      <p><strong>Migrating Focus Cards to the EP Cards plugin?</strong> If your site uses Focus Cards and you want them managed natively in PageMotor's <a href="https://forums.pagemotor.com/t/ep-cards-native-cards-for-pagemotor/395">EP Cards plugin</a> rather than converted to static HTML, run a second export: untick everything, tick only <strong>Focus Cards (for EP Cards Importer add-on)</strong>. This produces a separate smaller JSON file for the EP Cards importer. See the <a href="https://forums.pagemotor.com/t/ep-cards-native-cards-for-pagemotor/395">EP Cards announcement</a> for download links and import instructions.</p>
+    </div>
+
+    <h2 class="step-heading" id="step3"><span class="step-num">3</span> Clean up WordPress</h2>
+    <p>Deactivate and delete the EP WP Exporter plugin. You are done with it.</p>
+
+    <hr class="section-divider">
+
+    <!-- ══════════════════════════════════
+         STAGE 2
+    ══════════════════════════════════════ -->
+
+    <h2 class="stage-heading">Stage 2 — Translate</h2>
+    <p>The translator converts your WordPress export JSON into three files PageMotor can work with. It runs from the command line and takes under a minute for most sites.</p>
+
+    <div class="callout good">
+      <p><strong>Using Claude Code?</strong> If you have <a href="https://claude.ai/claude-code">Claude Code</a>, you can skip Steps 4–6 and run the entire translation in a single session. Hand it your export JSON and the translator zip and it handles the PHP execution, form-mapping edits, output review, and troubleshooting as one conversation. The manual steps below are here for anyone who prefers to run it themselves.</p>
+    </div>
+
+    <h2 class="step-heading" id="step4"><span class="step-num">4</span> Check your PHP version</h2>
+    <p>The translator is a PHP command-line script. Open Terminal and run:</p>
+    <pre><code>php -v</code></pre>
+    <p>You need PHP 7.0 or later. If you see "command not found", you will need to install PHP or add it to your PATH before continuing.</p>
+
+    <h2 class="step-heading" id="step5"><span class="step-num">5</span> Run the translator</h2>
+    <p>Unzip <code>pagemotor-migrator-v2.2.zip</code> to a convenient location (your Downloads folder is fine). Open Terminal and run:</p>
+    <pre><code># Navigate into the unzipped folder
+cd ~/Downloads/pagemotor-migrator
+
+# Run the translator against your export file
+php translate.php /path/to/your-export.json --verbose</code></pre>
+
+    <p>The translator auto-detects Focus sites and selects the Focus Bridge theme. You will see a line for each page, post, and menu item it processes.</p>
+
+    <div class="callout warn">
+      <p><strong>"No such file or directory"?</strong> You need to be inside the unzipped <code>pagemotor-migrator</code> folder before running the translate command. Run <code>ls translate.php</code> — if you see the file listed, you are in the right place. If not, find where you unzipped it and <code>cd</code> there first.</p>
+    </div>
+
+    <p>When it finishes, three files appear in the same directory:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>File</th><th>What it is</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>*-import.txt</code></td>
+            <td><strong>Theme data file.</strong> Your blocks, templates, compiled CSS, design options, menus, and footer. This goes into PageMotor via the admin importer.</td>
+          </tr>
+          <tr>
+            <td><code>*-content.php</code></td>
+            <td><strong>Content migration script.</strong> Inserts all your pages and posts into the PageMotor database when you visit it in a browser. Runs once, then delete it immediately.</td>
+          </tr>
+          <tr>
+            <td><code>*-pagemap.md</code></td>
+            <td><strong>Page map.</strong> Every page and post with its old WordPress URL, new PageMotor URL, content type, and any migration notes. Use this as your testing checklist later.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Want to preview what the translator will do without writing any files? Add <code>--dry-run</code> to the command.</p>
+
+    <h2 class="step-heading" id="step6"><span class="step-num">6</span> Review the page map</h2>
+    <p>Open the <code>*-pagemap.md</code> file before you import anything. Check that every page and post is accounted for, the new URLs look right, and there are no unexpected notes on any entries. This is also the document you will use as a testing checklist in Step 16.</p>
+
+    <p>One thing to expect: WordPress can serve any page at its slug directly (<code>/about/</code>), but PageMotor uses the full hierarchical path (<code>/company/about/</code>). The translator rewrites these in content and menus, but any hardcoded links in unusual HTML may have been missed. The page map is the easiest place to spot-check this.</p>
+
+    <hr class="section-divider">
+
+    <!-- ══════════════════════════════════
+         STAGE 3
+    ══════════════════════════════════════ -->
+
+    <h2 class="stage-heading">Stage 3 — Import into PageMotor</h2>
+    <p>This is the longest stage. Steps 9 and 13 write to the database, which is why a backup comes first. Steps 8 and 9 are order-dependent: Focus Bridge must be active before you import. Step 12 (images) takes the most clock time, though most of it is just waiting for files to copy.</p>
+
+    <h2 class="step-heading" id="step7"><span class="step-num">7</span> Back up your database</h2>
+    <p>Use phpMyAdmin, Adminer, or your hosting control panel to export a full SQL dump of your PageMotor database. Save it somewhere safe. If you are importing into a fresh PageMotor installation with nothing in it yet, this is less critical — but it is still good practice and takes two minutes.</p>
+
+    <h2 class="step-heading" id="step8"><span class="step-num">8</span> Install the Focus Bridge Theme</h2>
+    <ol class="step-actions">
+      <li>In PageMotor admin, go to <strong>Manage Themes</strong></li>
+      <li>Upload <code>focus-bridge.zip</code></li>
+      <li>Activate it</li>
+    </ol>
+    <p>Focus Bridge is a minimal bridge theme — it adds the CSS class hooks (<code>.focus</code> and <code>.mode-focus</code>) that your existing Focus skin expects, so all your styles work without any modifications.</p>
+
+    <h2 class="step-heading" id="step9"><span class="step-num">9</span> Import the theme data</h2>
+
+    <div class="callout caution">
+      <p><strong>Focus Bridge must be the active theme before you import.</strong> The import file is tagged with the Focus Bridge theme class name. PageMotor will reject the file if a different theme is active. Make sure you completed Step 8 and Focus Bridge is your current active theme — not just installed — before continuing.</p>
+    </div>
+
+    <ol class="step-actions">
+      <li>Go to <strong>Admin › Theme Settings › Theme Data</strong></li>
+      <li>Click <strong>Import</strong></li>
+      <li>Upload the <code>*-import.txt</code> file from Step 5</li>
+    </ol>
+
+    <p>This imports your blocks, templates, menus, footer content, compiled CSS, and all your Focus design option values in one operation.</p>
+
+    <h2 class="step-heading" id="step10"><span class="step-num">10</span> Install the Content Types plugin (if generated)</h2>
+    <p>If the translator generated a <code>*-content-types/</code> folder alongside the other output files, your WordPress site used custom post types (Focus Cards, Modular Content blocks, or similar) that need to be registered in PageMotor.</p>
+
+    <ol class="step-actions">
+      <li>Using SFTP (you will be setting this up in Step 12 anyway), upload the entire <code>*-content-types/</code> folder to <code>user-content/plugins/</code> on your PageMotor server</li>
+      <li>In PageMotor admin, go to <strong>Manage Plugins</strong> and activate the "Content Types" plugin</li>
+    </ol>
+
+    <p>If the translator did not generate this folder, skip this step. Most Focus Card sites will have one; simpler sites without custom post types will not.</p>
+
+    <h2 class="step-heading" id="step11"><span class="step-num">11</span> Recompile CSS</h2>
+
+    <div class="callout caution">
+      <p><strong>Do not skip this step.</strong> Without it, your site has no CSS at all and will look completely unstyled. It takes ten seconds.</p>
+    </div>
+
+    <ol class="step-actions">
+      <li>Go to <strong>Admin › Theme Settings › Design Options</strong></li>
+      <li>Click <strong>Save</strong></li>
+    </ol>
+
+    <p>The save action always triggers a full CSS recompile from your imported design options. You do not need to change any values — just open the page and click Save. When you reload the front end, your styles should be there.</p>
+
+    <h2 class="step-heading" id="step12"><span class="step-num">12</span> Transfer images via SFTP</h2>
+    <p>The translator rewrites every image path in your content to point at the correct location on PageMotor — but it does not move the actual files. You will need to copy them from your WordPress server to your PageMotor server yourself.</p>
+
+    <h3>What you will need</h3>
+    <ul>
+      <li><strong>SFTP credentials for your PageMotor server</strong> — hostname, username, and password. Find these in your hosting control panel (cPanel, Plesk) or your provider's welcome email. If you cannot find them, contact your hosting provider's support. Not FTP — SFTP, port 22.</li>
+      <li><strong>An SFTP client</strong> — <a href="https://cyberduck.io">Cyberduck</a> (free, Mac and Windows), <a href="https://filezilla-project.org">FileZilla</a> (free, all platforms), or <a href="https://panic.com/transmit/">Transmit</a> (Mac).</li>
+      <li><strong>Your WordPress images</strong> — either from your live WordPress server via a second SFTP connection, or from a local backup.</li>
+    </ul>
+
+    <h3>Where things live</h3>
+    <p>On your <strong>WordPress server</strong>, your images are in <code>wp-content/uploads/</code>, organised in year/month subfolders like <code>2024/01/</code>, <code>2024/02/</code>.</p>
+    <p>On your <strong>PageMotor server</strong>, images go into <code>user-content/uploads/wp-media/</code>. You may need to create the <code>wp-media</code> subfolder if it does not exist yet.</p>
+
+    <h3>How to transfer</h3>
+    <ol class="step-actions">
+      <li>Connect to your PageMotor server in your SFTP client using the hostname, username, and password from your hosting control panel. Set the protocol to SFTP and port to 22.</li>
+      <li>Navigate to <code>user-content/uploads/</code> on the server. Create a <code>wp-media</code> folder here if one does not already exist.</li>
+      <li>Upload all your WordPress image files into <code>user-content/uploads/wp-media/</code>, preserving the same folder structure they had in <code>wp-content/uploads/</code>.</li>
+    </ol>
+
+    <div class="callout info">
+      <p><strong>Keep the folder structure.</strong> A WordPress image at <code>/wp-content/uploads/2024/01/photo.jpg</code> should end up at <code>/user-content/uploads/wp-media/2024/01/photo.jpg</code> on PageMotor. Mirror the year/month subfolders exactly. If your WordPress site had all images in a flat folder (year/month organization disabled), upload them directly into <code>wp-media/</code> without subfolders.</p>
+    </div>
+
+    <h2 class="step-heading" id="step13"><span class="step-num">13</span> Run the content migration</h2>
+    <ol class="step-actions">
+      <li>Using the SFTP connection from Step 12, upload the <code>*-content.php</code> file to the PageMotor root directory — the top-level folder where you can see <code>index.php</code> and <code>config.php</code>.</li>
+      <li>Visit the file in your browser: <code>https://your-site.com/your-site-content.php</code></li>
+      <li>The script runs through every page and post, printing <em>Created</em>, <em>Updated</em>, or <em>Skipped</em> for each one. When it finishes, it shows a summary with totals.</li>
+    </ol>
+
+    <div class="callout caution">
+      <p><strong>Delete the script immediately after it finishes.</strong> The content migration script has direct database write access and no authentication. Anyone who can reach the URL can run it. As soon as the summary screen appears, delete the file from your server via SFTP. Do not wait until later — do it now.</p>
+    </div>
+
+    <div class="callout info">
+      <p><strong>The script is safe to re-run.</strong> If something looks wrong and you need to run it again after fixing something, re-upload and re-visit it. It updates existing content rather than creating duplicates. Just remember to delete it again afterwards.</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ══════════════════════════════════
+         STAGE 4
+    ══════════════════════════════════════ -->
+
+    <h2 class="stage-heading">Stage 4 — Configure and test</h2>
+    <p>Your content is in. This stage connects the working parts and checks that everything landed correctly.</p>
+
+    <h2 class="step-heading" id="step14"><span class="step-num">14</span> Set up contact forms</h2>
+    <p>If your WordPress site had forms, the translator has already converted the shortcodes to EP Email's <code>[contact-form]</code> format and placed them in the right pages. To make them actually send email:</p>
+
+    <ol class="step-actions">
+      <li>Install and activate <strong>EP Email</strong> on your PageMotor site</li>
+      <li>Configure SMTP in <strong>EP Suite › Email › SMTP Connection</strong> — the <a href="https://documentation.elmspark.com/guides/mailgun-email/">Mailgun guide</a> covers this in detail if you need it</li>
+      <li>The translator maps WordPress form IDs to EP Email form names — check your page map for the exact names used</li>
+      <li>For forms with compound name/address fields, star ratings, or conditional logic, also install <strong>EP Email Advanced Forms</strong></li>
+    </ol>
+
+    <div class="callout info">
+      <p><strong>Form mapping is built into the translator.</strong> The translator has a built-in mapping of common WordPress form IDs to EP Email form names. If your site uses unusual IDs or you need different mappings, edit the <code>map_shortcodes()</code> method in <code>translate.php</code> before running the translator.</p>
+    </div>
+
+    <p>If your site had no forms, skip this step.</p>
+
+    <h2 class="step-heading" id="step15"><span class="step-num">15</span> Add breadcrumbs <em style="font-weight:400;font-size:0.9em;">(optional)</em></h2>
+    <p>If your Focus site used the Thesis breadcrumbs add-on, the translator has already placed an EP Breadcrumbs instance above the page title in the content block. You just need the plugin itself.</p>
+
+    <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/download/latest/ep-breadcrumbs-v1.2.zip" class="download-item" style="margin:0.75rem 0;display:flex;">
+      <span class="dl-icon">🧭</span>
+      <span><strong>EP Breadcrumbs v1.2</strong><span class="dl-sub"> — Auto-detected from Thesis breadcrumb data. Outputs Schema.org BreadcrumbList JSON-LD.</span></span>
+    </a>
+
+    <ol class="step-actions">
+      <li>Upload via <strong>Manage Plugins</strong> and activate</li>
+      <li>Breadcrumbs appear automatically on all pages that use the imported templates</li>
+      <li>Optionally configure the default home label and separator in <strong>EP Suite › Breadcrumbs</strong></li>
+    </ol>
+
+    <p>EP Breadcrumbs uses the same CSS class names as Focus breadcrumbs (<code>.crumbs</code>, <code>.crumbs-crumb</code>, <code>.crumbs-sep</code>), so your existing breadcrumb styles carry over unchanged.</p>
+
+    <p>If your site did not use breadcrumbs, skip this step.</p>
+
+    <h2 class="step-heading" id="step16"><span class="step-num">16</span> Review and test</h2>
+    <p>Open the page map (<code>*-pagemap.md</code>) and use it as your testing checklist. Walk through the site and verify:</p>
+
+    <ul>
+      <li>All pages load and display correctly, with the right layout and styles</li>
+      <li>Navigation menus work and link to the right URLs</li>
+      <li>Internal links resolve correctly (check a few from deep pages back to shallow ones)</li>
+      <li>Featured images display at the top of content</li>
+      <li>Footer matches your WordPress site</li>
+      <li>Contact forms submit and you receive the emails</li>
+      <li>Blog index shows posts with thumbnails and pagination works</li>
+      <li>Individual blog posts display correctly with dates</li>
+      <li>Custom CSS overrides are working</li>
+    </ul>
+
+    <div class="callout good">
+      <p><strong>What success looks like.</strong> Your PageMotor site should be visually identical to the WordPress version: same layout, same colours, same fonts, same content. The URLs will be hierarchical now (e.g. <code>/parent/child/</code> instead of just <code>/child/</code>), but the design and content should match exactly.</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ══════════════════════════════════
+         BEYOND
+    ══════════════════════════════════════ -->
+
+    <h2 class="stage-heading" id="beyond">Beyond this guide</h2>
+    <p>This guide is built around one specific path: Thesis/Focus WordPress → existing PageMotor installation, preserving the Focus design. If your situation is different, here are the right tools for each case.</p>
+
+    <div class="beyond-grid">
+      <div class="beyond-item">
+        <strong>Divi or Gutenberg site</strong>
+        The Divi Bridge theme and <code>divi-extract.php</code> handle Divi migrations. For Gutenberg or recipe-blog-style sites, the <strong>wp-to-pm-migration Claude Code skill</strong> drives the extraction — different content shape, different importer.
+      </div>
+      <div class="beyond-item">
+        <strong>No PageMotor install yet</strong>
+        If you need a VPS provisioned, DNS pointed, and HTTPS issued before you can even start, the <strong>wp-to-pm-migration Claude Code skill</strong> handles the full stack. Start there, then come back here.
+      </div>
+      <div class="beyond-item">
+        <strong>Design refresh instead of preserving the Focus look</strong>
+        Skip Step 8 (Focus Bridge) and activate the <strong>Attention</strong> theme — PageMotor's modern default. Then use the <em>design-conversion</em> Claude Code skill to translate an HTML/CSS design into a PageMotor theme import.
+      </div>
+      <div class="beyond-item">
+        <strong>WooCommerce shop</strong>
+        Products, orders, and customer accounts all need a separate migration. The translator does not handle these. Post in the <a href="https://forums.pagemotor.com">PageMotor forum</a> and describe your shop's size — the right approach depends on whether you are continuing to take orders or archiving the data.
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ══════════════════════════════════
+         TROUBLESHOOTING
+    ══════════════════════════════════════ -->
+
+    <h2 class="stage-heading" id="fix">Troubleshooting</h2>
+    <p>Open these only if you hit them.</p>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Pages look completely unstyled — no layout, no colours, just plain text</p>
+      <p>You skipped Step 11. Go to <strong>Admin › Theme Settings › Design Options</strong> and click <strong>Save</strong>. This triggers a CSS recompile. Your site will look right after the page reload.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Admin login keeps redirecting to the home page</p>
+      <p>PageMotor checks two things when you log in: the user must exist in the <code>users</code> table, AND have a <code>type=administrator</code> row in the <code>user_options</code> table. Login succeeds on the first check alone — but then every <code>/admin/*</code> URL silently redirects to the front page. If you created your admin user manually (rather than via the installer), run this once in your hosting control panel's SQL tool:</p>
+      <pre><code>INSERT INTO pm_user_options (user_id, name, value)
+VALUES (&lt;user-id&gt;, 'type', 'administrator');</code></pre>
+      <p>Replace <code>&lt;user-id&gt;</code> with the numeric ID of your admin user, and <code>pm_</code> with your table prefix if you changed it during installation. The translator handles this correctly on fresh installs — this fix is only needed if you created the admin user by hand.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Import says "does not apply to the current Theme"</p>
+      <p>The import file is tagged with a theme class name and PageMotor only accepts it if the active theme matches exactly. Two things to check: (1) Is Focus Bridge the <em>active</em> theme, not just installed? Go to Manage Themes and confirm it is activated. (2) Does the class name match? Open your <code>*-import.txt</code> in a text editor — the very first key is <code>"theme":"Focus_Bridge"</code>. This must match the <code>Class:</code> line in Focus Bridge's <code>theme.php</code> exactly, including case. If Claude Code generated the import, it may have used a slightly different class name. Edit the value in the import file to match.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q" id="fix-payment-forms">My order form (Stripe / payments / PDF generation) does not work after migration</p>
+      <p>The translator migrates form <em>shortcodes</em> — the form renders on the page and looks correct. It does not migrate the back-end functionality: payment processing, PDF generation, file uploads, conditional logic, or electronic signatures. These are tied to WordPress-specific plugins (Gravity Forms Stripe add-on, Gravity PDF, etc.) with no equivalent on PageMotor today.</p>
+      <p>Two practical options: (1) Replace the order form with a contact-to-order notice — the customer fills a simple form, you reply manually with a Stripe Payment Link or bank transfer details. This works in days, not weeks. (2) Re-implement as a custom PageMotor plugin — a multi-day developer job, worth it only for high-volume flows. Plain contact forms (name, email, message, optionally phone or subject) migrate cleanly and work fine after Step 14.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Images are broken</p>
+      <p>The translator rewrites image paths to <code>/user-content/uploads/wp-media/</code>. Make sure your images are uploaded there, preserving the same folder structure they had in <code>wp-content/uploads/</code>. If your WordPress site used year/month subfolders, those must exist on the PageMotor server too — copy the entire folder tree, not just the image files. If images are still broken after checking the folder structure, compare one broken image URL in your browser's dev tools against what is actually on the server via SFTP.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Content migration script shows a blank page</p>
+      <p>The script bootstraps PageMotor by looking for <code>config.php</code> in its own directory. If it is in the wrong folder, it fails silently with a blank page. Make sure you uploaded it to the PageMotor root — the same directory where <code>index.php</code> and <code>config.php</code> live.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Content migration script times out on a large site</p>
+      <p>Sites with hundreds of pages may hit PHP's execution time limit. Add <code>set_time_limit(0);</code> as the first line of the content script (immediately after the opening <code>&lt;?php</code>), or ask your hosting provider to raise <code>max_execution_time</code> in your server's PHP configuration. The script is idempotent — if it times out partway through, fix the limit and run it again. It will skip pages that already exist and pick up where it left off.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Terminal says "no such file or directory" when running translate.php</p>
+      <p>You need to be inside the unzipped <code>pagemotor-migrator</code> folder before running the command. Run <code>ls translate.php</code> — if the file is listed, you are in the right place. If not, find where you unzipped the file and <code>cd</code> there first.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Navigation menu is missing</p>
+      <p>The menu is imported as an HTML Box inside the Header block. Go to the <strong>Theme Editor</strong> and confirm that the Header block is assigned to your templates.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Forms show "Form not found"</p>
+      <p>The form name in the <code>[contact-form]</code> shortcode must match a configured form in EP Email exactly. Open the page with the broken form in the content editor, note the form name in the shortcode, and then check EP Email has a form with that exact name. If not, either add the form in EP Email or update the shortcode to match an existing form name.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Shortcodes showing as raw text on the page</p>
+      <p>If you can see <code>[contact-form name="…"]</code> or <code>[booking-form]</code> as literal text rather than rendered forms, the plugin that handles that shortcode is not installed or not activated. Install EP Email for contact forms, or the appropriate plugin for other shortcode types.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">Internal links point to the wrong pages</p>
+      <p>WordPress serves pages at their slug alone (<code>/about/</code>). PageMotor requires the full hierarchical path (<code>/company/about/</code>). The translator rewrites these throughout your content and menus, but hardcoded links in unusual HTML structures may have been missed. Check the page map for the correct new URL for each page, then search your content for any remaining old-style short slugs.</p>
+    </div>
+
+    <div class="trouble-section">
+      <p class="trouble-q">I do not know my SFTP credentials</p>
+      <p>Check your hosting provider's control panel — look for "FTP Accounts" or "SFTP Access". On IONOS it is under Hosting › SFTP &amp; SSH. On cPanel hosts (Bluehost, HostGator, SiteGround), it is under the FTP Accounts section. If you cannot find them, contact your hosting provider's support team — they can reset or provide credentials in a few minutes.</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="callout info">
+      <p>🌱 <strong>Not installed yet?</strong> If you are setting up PageMotor for the first time before migrating to it, start with <a href="https://documentation.elmspark.com/guides/pagemotor-bluehost/">Installing PageMotor on Bluehost</a> (or <a href="https://documentation.elmspark.com/guides/pagemotor-siteground/">SiteGround</a>), then come back here.</p>
+      <p style="margin-top:0.5rem;"><strong>Still stuck?</strong> Post where you got to in the <a href="https://forums.pagemotor.com">PageMotor forum</a> and include the output from the translator or the migration script. Paste the last few lines of what you see — that is usually enough to diagnose it.</p>
+    </div>
+
+  </main>
+
+  <footer class="guide-footer">
+    <a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> ·
+    an ElmsPark guide for the PageMotor community ·
+    <a href="https://documentation.elmspark.com">documentation.elmspark.com</a> ·
+    <a href="https://elmspark.com">elmspark.com</a>
+    <br>
+    <span style="color:#bbb;font-size:13px;">Made in Wexford, Ireland.</span>
+  </footer>
+
+</body>
+</html>
