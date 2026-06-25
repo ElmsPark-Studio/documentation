@@ -64,8 +64,8 @@
   .why.show{display:block; animation:fade .25s ease both}
   .why b{color:var(--good)}
   .win-list{list-style:none; padding:0; margin:18px 0 0}
-  .win-list li{display:flex; gap:11px; align-items:flex-start; font-size:17px; margin:11px 0}
-  .win-list li::before{content:"\2713"; color:var(--good); font-weight:700; flex:none}
+  .win-list li{position:relative; padding-left:26px; font-size:17px; margin:11px 0; overflow-wrap:break-word}
+  .win-list li::before{content:"\2713"; color:var(--good); font-weight:700; position:absolute; left:0; top:1px}
   .nav{display:flex; gap:12px; align-items:center; justify-content:space-between;
     width:100%; max-width:600px; margin:0 auto; padding:14px 22px calc(14px + env(safe-area-inset-bottom))}
   .btn{font:inherit; font-weight:600; font-size:16px; cursor:pointer; border-radius:12px; padding:13px 24px;
