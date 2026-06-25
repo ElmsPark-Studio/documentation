@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Install PageMotor on A2 Hosting's cPanel in about ten minutes: upload the files, create the database with the wizard, fill in config.php and finish in your browser. With troubleshooting.">
+<title>Installing PageMotor on A2 Hosting | ElmsPark Guide</title>
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+    --warn:#9a4b2e; --codebg:#1f1d17; --radius:14px; --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+  nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem}
+  .crumbs-inner{max-width:var(--maxw); margin:0 auto; padding:18px 20px 0; display:flex; align-items:center; gap:.5rem; color:#605647}
+  .crumbs a{color:#605647; text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s}
+  .crumbs a:hover,.crumbs a:focus-visible{color:#3a5140; border-bottom-color:#3a5140}
+  .crumbs .sep{color:#b5ab97}
+  .crumbs [aria-current="page"]{color:#181411; font-weight:500; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+  .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+  .chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+  .chip b{color:var(--pine)}
+  .note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+  .note.calm{border-left-color:var(--pine)}
+  .note strong{color:var(--pine-deep)}
+  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+  nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+  nav.toc ol{margin:0; padding-left:20px}
+  nav.toc li{margin:5px 0}
+  nav.toc a{color:var(--pine); text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+  .step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+  .num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+  .step h2 .t{line-height:1.2}
+  ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+  ol.sub li,ul.sub li{margin:8px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+  .codewrap{position:relative; margin:14px 0}
+  pre{background:var(--codebg); color:#eee; border-radius:12px; padding:18px; overflow:auto; font-size:14px; line-height:1.55; margin:0}
+  pre code{background:none; color:inherit; padding:0; font-size:inherit}
+  .tok-c{color:#8f9b7e} .tok-s{color:#9fc7a6}
+  .copy{position:absolute; top:10px; right:10px; font-family:system-ui,sans-serif; font-size:12.5px; border:1px solid #4a463a; background:#33302a; color:#e9e3d3; padding:6px 12px; border-radius:8px; cursor:pointer}
+  .copy:hover{background:#3f3b32}
+  .copy.done{background:var(--pine); border-color:var(--pine); color:#fff}
+  h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+  details[open]{padding-bottom:14px}
+  summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-family:system-ui,sans-serif}
+  details[open] summary::before{content:"－"}
+  .tag{display:inline-block; font-family:system-ui,sans-serif; font-size:12px; font-weight:600; padding:2px 9px; border-radius:6px; margin-right:6px}
+  .tag.err{background:#f3e1d9; color:var(--warn)}
+  .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+  .seealso a{color:var(--pine); font-weight:600}
+  footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+  footer a{color:var(--pine)}
+  .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+  @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
+  /* Screenshots */
+  figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);background:var(--card)}
+  figure.screenshot img{display:block;width:100%;height:auto}
+  figure.screenshot figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:1px solid var(--line);background:var(--card)}
+</style>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
+<style>
+/* ElmsPark brand header (matches elmspark.com site chrome) */
+header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
+.es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
+.es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
+.es-wordmark .es-mark svg{width:100%;height:100%;display:block}
+.es-wordmark .es-accent{color:#3a5140}
+.es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:0.75rem;margin-left:-0.35rem;line-height:1}
+.es-nav{display:flex;gap:clamp(0.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:0.9375rem;font-weight:500}
+.es-nav a{color:#181411;text-decoration:none;padding:0.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
+.es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+.es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
+.es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
+@media(max-width:640px){
+  .es-header .es-inner{padding:1rem 18px;gap:.75rem}
+  .es-sub{display:none}
+  .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+<header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" class="brand-mark-svg" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z"/></g></g></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+    </a>
+    <span class="es-sub">Guides</span>
+    <nav class="es-nav" aria-label="Documentation">
+      <a href="/guides/">Guides</a>
+      <a href="/learn/">Learn</a>
+      <a href="/plugins/">Plugin docs</a>
+      <a href="/hosting/hosting-options/">Hosting</a>
+      <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <div class="crumbs-inner">
+    <a href="https://documentation.elmspark.com/guides/">Guides</a>
+    <span class="sep" aria-hidden="true">&rsaquo;</span>
+    <span aria-current="page">Installing PageMotor on A2 Hosting</span>
+  </div>
+</nav>
+
+<div class="wrap">
+  <span class="kicker">PageMotor Setup Guide</span>
+  <h1>Installing PageMotor on A2 Hosting</h1>
+  <p class="lede">A plain-English walkthrough for A2 Hosting's cPanel. About ten minutes, and you do not need to be technical.</p>
+  <div class="chips">
+    <span class="chip">⏱ <b>~10 minutes</b></span>
+    <span class="chip">🧰 <b>No coding</b></span>
+    <span class="chip">🖥 Works on <b>all A2 Hosting shared plans</b></span>
+  </div>
+
+  <div class="note calm">
+    <strong>Before you start, have these ready:</strong> your A2 Hosting account login, the PageMotor files (the .zip you downloaded), and the name of your website. That is everything.
+    <br><br><strong>On a different cPanel host?</strong> Everything in this guide is standard cPanel, so the steps are nearly identical anywhere. We also have dedicated guides for <a href="https://documentation.elmspark.com/guides/pagemotor-godaddy/">GoDaddy</a> and a different one for <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Vultr</a> (a VPS, not shared hosting).
+  </div>
+
+  <!-- LLM prompt download -->
+  <div class="llm-prompt-download" style="margin:26px 0;padding:18px 20px;background:#fffdf8;border:1px solid #e4ddcd;border-left:4px solid #2f5d4a;border-radius:14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif">
+    <div style="flex:1;min-width:220px">
+      <p style="margin:0 0 4px;font-weight:600;font-size:16px;color:#234a3b">Use this guide with any AI assistant</p>
+      <p style="margin:0;font-size:14.5px;line-height:1.5;color:#5d574c">Download it as a prompt file, paste it into Claude, ChatGPT, Gemini or any LLM, and it will walk you through every step interactively.</p>
+    </div>
+    <a href="/downloads/pagemotor-a2hosting-prompt.md" download="pagemotor-a2hosting-prompt.md" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#2f5d4a;color:#fff;text-decoration:none;border-radius:8px;font-size:14.5px;font-weight:600;white-space:nowrap;flex-shrink:0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download as LLM prompt
+    </a>
+  </div>
+
+  <nav class="toc">
+    <p>The four steps</p>
+    <ol>
+      <li><a href="#s1">Put PageMotor on your site</a></li>
+      <li><a href="#s2">Create your database</a></li>
+      <li><a href="#s3">Fill in config.php</a></li>
+      <li><a href="#s4">Finish in your browser</a></li>
+    </ol>
+    <p style="margin-top:14px">Something not working?</p>
+    <ol style="list-style:none;padding-left:0;margin:0">
+      <li><a href="#fix">Jump to troubleshooting →</a></li>
+    </ol>
+  </nav>
+
+  <section class="step" id="s1">
+    <h2><span class="num">1</span><span class="t">Put PageMotor on your site</span></h2>
+    <ol class="sub">
+      <li>Sign in to your A2 Hosting account at <code>my.a2hosting.com</code>, then go to <strong>My Accounts</strong>. Click <strong>Manage</strong> next to your hosting package, then click <strong>Login to Control Panel</strong> on the hosting dashboard to open cPanel.</li>
+    </ol>
+    <figure class="screenshot">
+      <img src="screenshots/01-hosting-dashboard.png" alt="A2 Hosting account dashboard showing hosting packages and Login to Control Panel button" loading="lazy">
+      <figcaption>The A2 Hosting dashboard. Click Login to Control Panel to open cPanel.</figcaption>
+    </figure>
+    <figure class="screenshot">
+      <img src="screenshots/02-cpanel-home.png" alt="cPanel Tools page showing Email, File Manager and Databases sections" loading="lazy">
+      <figcaption>cPanel's Tools page. File Manager (under Files) and the MySQL Database Wizard (under Databases) are both here.</figcaption>
+    </figure>
+    <ol class="sub" start="2">
+      <li>In cPanel, click <strong>File Manager</strong> and open the folder for your site. For your main domain it is <code>public_html</code>. (Installing on a second, addon domain? Use the folder shown as that domain's <strong>Document Root</strong> under cPanel → Domains instead.)</li>
+      <li>Click <strong>Upload</strong>, choose your PageMotor <code>.zip</code>, and wait for it to finish.</li>
+      <li>Back in File Manager, right-click the uploaded zip and choose <strong>Extract</strong>. Then delete the zip file to keep things tidy.</li>
+    </ol>
+    <figure class="screenshot">
+      <img src="screenshots/03-file-manager.png" alt="cPanel File Manager showing public_html directory ready for upload" loading="lazy">
+      <figcaption>Navigate to public_html in File Manager, then click Upload to add your PageMotor .zip file.</figcaption>
+    </figure>
+    <div class="note">When it is done you should see <code>pagemotor.php</code>, a <code>lib</code> folder, and a file called <code>config-sample.php</code> sitting in your site folder. (If extracting gave you a single folder called <code>pagemotor</code> instead, open it, select everything inside, choose <strong>Move</strong> and move it all into your site folder, then delete the empty folder and the zip.) Good. We use that sample file in step 3.</div>
+  </section>
+
+  <section class="step" id="s2">
+    <h2><span class="num">2</span><span class="t">Create your database</span></h2>
+    <p>PageMotor keeps your content in a database. A2 Hosting's cPanel has a wizard that does the whole job in one pass.</p>
+    <ol class="sub">
+      <li>In cPanel, open the <strong>MySQL&nbsp;Database&nbsp;Wizard</strong> (under the Databases section).</li>
+    </ol>
+    <figure class="screenshot">
+      <img src="screenshots/04-mysql-databases.png" alt="MySQL Database Wizard Step 1 — Create A Database" loading="lazy">
+      <figcaption>The MySQL Database Wizard. Enter a name for your database and click Next Step.</figcaption>
+    </figure>
+    <ol class="sub" start="2">
+      <li>Name the database. Pick something descriptive like <code>pagemotor</code>: A2 Hosting prefixes it automatically with your account name, so the full name shown at the end (e.g. <code>accountname_pagemotor</code>) is the one to copy.</li>
+      <li>Create the database user. Let the password generator make a strong password, and <em>write it down now</em>.</li>
+      <li>On the privileges screen, tick <strong>ALL PRIVILEGES</strong> and finish the wizard.</li>
+    </ol>
+    <div class="note">Copy the final <strong>database name</strong> and <strong>username</strong> exactly as cPanel shows them at the end of the wizard, including the account prefix. You will need those two plus the <strong>password</strong> in the next step.</div>
+  </section>
+
+  <section class="step" id="s3">
+    <h2><span class="num">3</span><span class="t">Fill in config.php</span></h2>
+    <p>This is the file that connects PageMotor to the database you just made.</p>
+    <ol class="sub">
+      <li>In <strong>File Manager</strong>, find <code>config-sample.php</code> next to <code>pagemotor.php</code>.</li>
+      <li>Right-click it and choose <strong>Rename</strong>. Rename it to exactly <code>config.php</code>. <em>This rename is the step that switches PageMotor on.</em></li>
+      <li>Right-click <code>config.php</code> and choose <strong>Edit</strong>.</li>
+      <li>Put your three values into <code>DB_NAME</code>, <code>DB_USER</code> and <code>DB_PASSWORD</code>, exactly as the wizard showed them. Leave the rest as they are, then <strong>Save</strong>.</li>
+    </ol>
+    <p>Here is what the database section of your <code>config.php</code> should look like once filled in. Edit the existing lines to match; you are changing three values, not pasting this block in:</p>
+    <div class="codewrap">
+<pre id="cfg"><code><span class="tok-c">// Database connection info:</span>
+define(<span class="tok-s">'DB_NAME'</span>, <span class="tok-s">'accountname_pagemotor'</span>);  <span class="tok-c">// exact name from the wizard</span>
+define(<span class="tok-s">'DB_USER'</span>, <span class="tok-s">'accountname_pmuser'</span>);    <span class="tok-c">// exact username from the wizard</span>
+define(<span class="tok-s">'DB_PASSWORD'</span>, <span class="tok-s">'your-strong-password'</span>);
+define(<span class="tok-s">'DB_HOST'</span>, <span class="tok-s">'localhost'</span>);          <span class="tok-c">// correct for A2 Hosting cPanel</span>
+define(<span class="tok-s">'DB_CHARSET'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'DB_COLLATE'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'DB_TABLE_PREFIX'</span>, <span class="tok-s">'pm_'</span>);
+define(<span class="tok-s">'DB_FLAGS'</span>, <span class="tok-s">''</span>);
+define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</span>);</code></pre>
+    </div>
+    <div class="note"><strong>Two things to double-check:</strong> the file must be named exactly <code>config.php</code> (not <code>config-sample.php</code>, and not <code>config.php.txt</code>), and it must sit in the same folder as <code>pagemotor.php</code>.</div>
+  </section>
+
+  <section class="step" id="s4">
+    <h2><span class="num">4</span><span class="t">Finish in your browser</span></h2>
+    <ol class="sub">
+      <li>Visit your website. On this first visit PageMotor quietly sets up its content for you.</li>
+      <li>Now go to <code>yoursite.com/admin/</code> and create your admin user.</li>
+    </ol>
+    <div class="note calm"><strong>That is it.</strong> You are in, and you can start building pages.</div>
+  </section>
+
+  <h2 class="plain" id="fix">If something is not working</h2>
+  <p style="color:var(--soft);font-size:16.5px">Open these only if you hit them. Each one is quick.</p>
+
+  <details>
+    <summary>I see "HTTP ERROR 500" or a blank white page</summary>
+    <p><span class="tag err">most common</span>Almost always a <code>config.php</code> problem. Check three things:</p>
+    <ul class="sub">
+      <li>The file is named exactly <code>config.php</code> (not still <code>config-sample.php</code>, and not <code>config.php.txt</code>).</li>
+      <li>It is in the same folder as <code>pagemotor.php</code>.</li>
+      <li>To see the real reason, open <strong>cPanel → Metrics → Errors</strong>. If it says <code>config.php</code> <em>"No such file or directory"</em>, this is your fix. A2 Hosting also creates a per-site <code>error_log</code> file inside your <code>public_html</code>, which you can read directly in File Manager.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>The log says "MySQLi Connection Error"</summary>
+    <p>Good news, that means <code>config.php</code> is now working and PageMotor reached the database step. It just could not log in. Re-check, against the exact names the wizard showed:</p>
+    <ul class="sub">
+      <li>The <strong>database name</strong> and <strong>username</strong> include the account prefix (e.g. <code>accountname_pagemotor</code>, not just <code>pagemotor</code>).</li>
+      <li>The <strong>password</strong> is correct.</li>
+      <li>The user has <strong>ALL PRIVILEGES</strong> on the database (the wizard's last screen; you can re-check under cPanel → MySQL Databases).</li>
+      <li>The host is <code>localhost</code>. That is correct for all A2 Hosting cPanel accounts.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>The site is very slow on the first few page loads</summary>
+    <p>A2 Hosting's Turbo plans use LiteSpeed with heavy caching. On the very first visit after installation, LiteSpeed may need a moment to warm its cache. This is normal, and subsequent loads are fast. If the site feels slow beyond the first few minutes, check that your plan's LiteSpeed cache is enabled in cPanel under <strong>LiteSpeed Web Cache Manager</strong>.</p>
+  </details>
+
+  <details>
+    <summary>I cannot find config-sample.php</summary>
+    <p>It ships inside the PageMotor download, right next to <code>pagemotor.php</code>. Two things to check: the files may have landed in a <code>pagemotor</code> subfolder when the zip extracted, in which case move everything in it up into your site folder (see the note in step 1); and if the folder is genuinely empty, the zip did not extract completely, so repeat step 1.</p>
+  </details>
+
+  <div class="seealso">
+    📧 <strong>Will your site send email?</strong> Contact forms, sign-ups and password resets need a proper mail service or they land in spam. Follow the companion guide: <a href="https://documentation.elmspark.com/guides/mailgun-email/">Set up reliable email with Mailgun</a>.
+  </div>
+
+  <footer>
+    <p><strong>Still stuck?</strong> Copy the newest line from your error log (cPanel → Metrics → Errors, or <code>public_html/error_log</code>) and post it in the PageMotor forum. That single line almost always points straight at the fix.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+  </footer>
+</div>
+
+</body>
+</html>

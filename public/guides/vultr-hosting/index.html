@@ -172,6 +172,7 @@
     <span class="es-sub">Guides</span>
     <nav class="es-nav" aria-label="Documentation">
       <a href="/guides/">Guides</a>
+      <a href="/learn/">Learn</a>
       <a href="/plugins/">Plugin docs</a>
       <a href="/hosting/hosting-options/">Hosting</a>
       <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
@@ -200,6 +201,20 @@
     </div>
   </div>
 </header>
+
+<!-- LLM prompt download -->
+<div class="wrap" style="margin-top:22px">
+  <div class="llm-prompt-download" style="padding:18px 20px;background:#fffdf8;border:1px solid #e4ddcd;border-left:4px solid #2f5d4a;border-radius:14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif">
+    <div style="flex:1;min-width:220px">
+      <p style="margin:0 0 4px;font-weight:600;font-size:16px;color:#234a3b">Use this guide with any AI assistant</p>
+      <p style="margin:0;font-size:14.5px;line-height:1.5;color:#5d574c">Download it as a prompt file, paste it into Claude, ChatGPT, Gemini or any LLM, and it will walk you through every step interactively.</p>
+    </div>
+    <a href="/downloads/vultr-hosting-prompt.md" download="vultr-hosting-prompt.md" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#2f5d4a;color:#fff;text-decoration:none;border-radius:8px;font-size:14.5px;font-weight:600;white-space:nowrap;flex-shrink:0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download as LLM prompt
+    </a>
+  </div>
+</div>
 
 <nav class="tabs"><div class="tabrow" role="tablist">
   <button class="tab" id="tab-why" role="tab" aria-selected="true" aria-controls="p-why" tabindex="0" data-panel="p-why">Why Vultr</button>
@@ -299,11 +314,11 @@
 <!-- ============ SIGNUP ============ -->
 <section class="panel" id="p-signup" role="tabpanel" aria-labelledby="tab-signup" tabindex="0">
   <h2>What to tick on the Vultr signup screen</h2>
-  <p>Once you have signed up and are inside the Vultr console, click <strong>Compute</strong> in the left sidebar, then <strong>Deploy Server</strong>.</p>
+  <p>Once you have signed up and are inside the Vultr console, click <strong>Compute</strong> in the left sidebar, then <strong>Instances</strong>, then <strong>Create Instance</strong>.</p>
 
   <figure class="screenshot">
-    <img src="screenshots/01-instances-dashboard.png" alt="Vultr Compute Instances dashboard with Deploy Server button" width="1536" height="auto" loading="lazy">
-    <figcaption>The Compute Instances dashboard. Click <strong>Deploy Server</strong> (top right) to begin.</figcaption>
+    <img src="screenshots/01-instances-dashboard.png" alt="Vultr Compute Instances dashboard with Create Instance button" width="1536" height="auto" loading="lazy">
+    <figcaption>The Compute Instances dashboard. Click <strong>Create Instance</strong> (top right) to begin.</figcaption>
   </figure>
 
   <h3>Step 1: Choose Type — select Shared CPU</h3>
