@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="The complete guide to setting up Mailgun email delivery for a PageMotor site: every screen, every field, from account creation to inbox confirmation.">
-<title>Set up reliable email with Mailgun | ElmsPark Guide</title>
+<title>Set up reliable email with Mailgun | ElmsPark Lesson</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
 <style>
@@ -102,8 +102,8 @@ details{background:var(--card); border:1px solid var(--line); border-radius:12px
 details[open]{padding-bottom:14px}
 summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
 summary::-webkit-details-marker{display:none}
-summary::before{content:"＋"; color:var(--accent); margin-right:10px}
-details[open] summary::before{content:"－"}
+summary::before{content:"\002B"; color:var(--accent); margin-right:10px}
+details[open] summary::before{content:"\2212"}
 .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
 .seealso a{color:var(--pine); font-weight:600}
 footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
@@ -143,6 +143,25 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-sub{display:none}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
+/* ============================================================
+   LESSON COMPONENTS (additive, calm, opt-in)
+   ============================================================ */
+/* Lesson marker chip in the kicker row */
+.lesson-chip{display:inline-block;font-family:'Inter Tight',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c35;background:#d0f0df;border:1px solid #8fcfab;padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:10px}
+summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
+/* Learning objectives box */
+.objectives{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:8px 0 26px}
+.obj-kicker{font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:600;margin:0 0 8px}
+/* Check your understanding (retrieval reveal) */
+.cyu{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0}
+.cyu-q{font-weight:600;color:var(--pine-deep);margin:0 0 6px;font-family:system-ui,sans-serif;font-size:16.5px}
+.cyu details{margin:6px 0 0;border:none;background:transparent;padding:0}
+.cyu summary{padding:6px 0;font-size:15.5px}
+.cyu .cyu-a{font-size:16px}
+.cyu .cyu-a p{margin:6px 0 4px}
+/* Key takeaways recap */
+.recap{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pine);border-radius:12px;padding:14px 20px;margin:30px 0}
+.recap-h{font-family:system-ui,sans-serif;font-weight:700;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
 </style>
 
   <meta property="og:type" content="article">
@@ -153,7 +172,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <meta property="og:image" content="https://documentation.elmspark.com/og/mailgun-email.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Set up reliable email with Mailgun — ElmsPark Guides">
+  <meta property="og:image:alt" content="Set up reliable email with Mailgun, an ElmsPark guide">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://documentation.elmspark.com/og/mailgun-email.png">
 </head>
@@ -183,13 +202,13 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 </nav>
 
 <div class="wrap">
-  <span class="kicker">Email Delivery Guide</span>
+  <span class="kicker">Email &amp; deliverability lesson<span class="lesson-chip">Lesson</span></span>
   <h1>Set up reliable email with Mailgun</h1>
   <p class="lede">The complete walkthrough: every screen, every field, from account creation to inbox confirmation.</p>
   <div class="chips">
-    <span class="chip">&#x23F1; <b>20&ndash;30 minutes</b></span>
+    <span class="chip">&#x23F1; <b>20 to 30 minutes</b></span>
     <span class="chip">&#x1F4B7; <b>Free</b> up to 100 emails/day</span>
-    <span class="chip">&#x1F310; Pick your <b>region once</b> &mdash; locked for life</span>
+    <span class="chip">&#x1F310; Pick your <b>region once</b>, locked for life</span>
     <span class="chip">&#x1F4F1; Works for <b>PageMotor</b> and <b>WordPress</b></span>
   </div>
 
@@ -198,14 +217,40 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 
   <div class="note">
-    <strong>Why Mailgun instead of the built-in mail function?</strong> Shared hosting sends email via a basic method that Gmail and Outlook quietly distrust. The messages land in spam or disappear entirely. Mailgun sends your mail with proper cryptographic signatures (DKIM), a declared sender policy (SPF), and a reporting record (DMARC) &mdash; the three things big providers require before they&rsquo;ll put an email in the inbox. The free plan covers 100 emails a day, which is plenty for most sites.
+    <strong>Why Mailgun instead of the built-in mail function?</strong> Shared hosting sends email via a basic method that Gmail and Outlook quietly distrust. The messages land in spam or disappear entirely. Mailgun sends your mail with proper cryptographic signatures (DKIM), a declared sender policy (SPF), and a reporting record (DMARC), the three things big providers require before they&rsquo;ll put an email in the inbox. The free plan covers 100 emails a day, which is plenty for most sites.
+  </div>
+
+  <!-- LLM prompt download -->
+  <div class="llm-prompt-download" style="margin:26px 0;padding:18px 20px;background:#fffdf8;border:1px solid #e4ddcd;border-left:4px solid #2f5d4a;border-radius:14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif">
+    <div style="flex:1;min-width:220px">
+      <p style="margin:0 0 4px;font-weight:600;font-size:16px;color:#234a3b">Use this guide with any AI assistant</p>
+      <p style="margin:0;font-size:14.5px;line-height:1.5;color:#5d574c">Download it as a prompt file, paste it into Claude, ChatGPT, Gemini or any LLM, and it will walk you through every step interactively.</p>
+    </div>
+    <a href="/downloads/mailgun-email-setup-prompt.md" download="mailgun-email-setup-prompt.md" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#2f5d4a;color:#fff;text-decoration:none;border-radius:8px;font-size:14.5px;font-weight:600;white-space:nowrap;flex-shrink:0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download as LLM prompt
+    </a>
+  </div>
+
+  <section class="objectives" aria-labelledby="obj-h">
+    <p class="obj-kicker" id="obj-h">By the end you will be able to</p>
+    <ul class="sub">
+      <li>Explain why sending through a transactional provider like Mailgun beats the web server&rsquo;s own mailer.</li>
+      <li>Recall, at a high level, what the DNS records Mailgun asks you to add are actually for.</li>
+      <li>Verify delivery properly with a real inbox test and a checker, rather than trusting a &ldquo;sent&rdquo; log.</li>
+    </ul>
+    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">How the pieces fit: this guide is the practical companion to the SPF, DKIM and DMARC lesson. There you learn what the three records mean; here you put them in place through Mailgun and confirm the result lands in an inbox.</p>
+  </section>
+
+  <div class="note calm">
+    <strong>This page is opt-in.</strong> Skim the ten steps for the quick answer and you lose nothing: every step still reads as a plain walkthrough. Open the few reveals and it becomes a light lesson, with a few retrieval prompts and a short recap at the end.
   </div>
 
   <nav class="toc">
     <p>Ten steps to a working setup</p>
     <ol>
       <li><a href="#s1">Create your Mailgun account</a></li>
-      <li><a href="#s2">Add your sending domain</a> &mdash; <em>read this one carefully</em></li>
+      <li><a href="#s2">Add your sending domain</a>, <em>read this one carefully</em></li>
       <li><a href="#s3">Copy the DNS records</a></li>
       <li><a href="#s4">Add the records at your DNS provider</a></li>
       <li><a href="#s5">Verify the domain in Mailgun</a></li>
@@ -217,6 +262,8 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </ol>
     <p style="margin-top:14px">Something wrong?</p>
     <ol style="list-style:none;padding-left:0;margin:0"><li><a href="#fix">Jump to troubleshooting &rarr;</a></li></ol>
+    <p style="margin-top:14px">Lesson</p>
+    <ol style="list-style:none;padding-left:0;margin:0"><li><a href="#recap">Key takeaways recap &rarr;</a></li></ol>
   </nav>
 
 
@@ -224,7 +271,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <section class="step" id="s1">
     <h2><span class="num">1</span><span class="t">Create your Mailgun account</span></h2>
 
-    <p>Sign up at <a href="https://www.mailgun.com">mailgun.com</a>. The free plan needs no credit card. You&rsquo;ll be asked to verify your email address before you can do anything else &mdash; do that before continuing.</p>
+    <p>Sign up at <a href="https://www.mailgun.com">mailgun.com</a>. The free plan needs no credit card. You&rsquo;ll be asked to verify your email address before you can do anything else, so do that before continuing.</p>
 
     <figure class="screenshot" aria-label="Mailgun sign-up form">
       <div class="screenshot-placeholder">
@@ -237,6 +284,14 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <div class="note warn">
       <strong>The most important choice on the sign-up form: pick your Region.</strong> Choose <strong>EU</strong> if your site visitors are mainly in the UK or Europe. Choose <strong>US</strong> for North American audiences. This is locked per domain for life. You cannot move a domain between regions later, so get this right now.
     </div>
+
+    <div class="cyu">
+      <p class="cyu-q">Before you read on: why does it matter that you send through Mailgun rather than just letting PHP <code>mail()</code> or the server send the message itself?</p>
+      <details>
+        <summary>Reveal model answer</summary>
+        <div class="cyu-a"><p>The web server&rsquo;s own mailer sends with no proper authentication and often from a shared IP with a poor reputation, so Gmail and Outlook quietly distrust it and file the mail as spam. Mailgun sends as an authenticated transactional provider, with SPF, DKIM and DMARC tied to your domain, which is what the big providers require before they place a message in the inbox.</p></div>
+      </details>
+    </div>
   </section>
 
 
@@ -244,31 +299,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <section class="step" id="s2">
     <h2><span class="num">2</span><span class="t">Add your sending domain</span></h2>
 
-    <p>Once logged in, you land on the dashboard. Navigate to <strong>Send &rarr; Sending &rarr; Domains</strong> in the left sidebar. Your account starts with a sandbox domain &mdash; ignore that. You want to add your own domain.</p>
+    <p>Once logged in, you land on the dashboard. Navigate to <strong>Send &rarr; Sending &rarr; Domains</strong> in the left sidebar. Your account starts with a sandbox domain, ignore that. You want to add your own domain.</p>
 
     <figure class="screenshot" aria-label="Mailgun left sidebar showing Send menu">
       <div class="screenshot-placeholder">
         <div class="sp-label">Screenshot: Mailgun dashboard</div>
         <div class="sp-desc">The left sidebar. Click <strong>Send</strong> to expand it, then click <strong>Sending</strong>, then <strong>Domains</strong>.</div>
       </div>
-      <figcaption>Mailgun dashboard &mdash; left sidebar navigation</figcaption>
+      <figcaption>Mailgun dashboard, left sidebar navigation</figcaption>
     </figure>
 
     <p>On the Domains page, click <strong>Add new domain</strong>.</p>
 
     <figure class="screenshot" aria-label="Domains list with Add new domain button">
       <img src="screenshots/03-domains-list.png" alt="Mailgun Domains list page showing a sandbox domain and the Add new domain button" width="1512" height="772" loading="lazy">
-      <figcaption>Send &rarr; Domains &mdash; click <strong>Add new domain</strong></figcaption>
+      <figcaption>Send &rarr; Domains, click <strong>Add new domain</strong></figcaption>
     </figure>
 
     <p>The <strong>Add Domain</strong> form opens. This form has four sections and one of them has a choice that will determine which DNS records you&rsquo;ll need to add. Read every field below before you fill anything in.</p>
 
     <figure class="screenshot" aria-label="The Add Domain form with Use automatic sender security selected">
       <img src="screenshots/04b-add-domain-form-correct.png" alt="The Mailgun Add Domain form with Use automatic sender security correctly selected" width="1512" height="772" loading="lazy">
-      <figcaption>The Add Domain form &mdash; &ldquo;Use automatic sender security&rdquo; selected (correct)</figcaption>
+      <figcaption>The Add Domain form, &ldquo;Use automatic sender security&rdquo; selected (correct)</figcaption>
     </figure>
 
-    <h3 style="font-size:19px;color:var(--pine-deep);margin:24px 0 8px">Field by field &mdash; what to enter</h3>
+    <h3 style="font-size:19px;color:var(--pine-deep);margin:24px 0 8px">Field by field: what to enter</h3>
 
     <table class="field-table">
       <thead>
@@ -281,15 +336,15 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
         <tr>
           <td class="fname">Domain name</td>
           <td class="fval">
-            Enter <code>mg.yourdomain.com</code> &mdash; your real domain with <code>mg.</code> in front. For example: <code>mg.example.com</code>.
+            Enter <code>mg.yourdomain.com</code>, your real domain with <code>mg.</code> in front. For example: <code>mg.example.com</code>.
             <p style="font-size:15px;margin:8px 0 0;color:var(--soft)">The <code>mg.</code> prefix creates a dedicated sending subdomain. This keeps Mailgun&rsquo;s records completely separate from the email you already receive on your main domain. It will not affect your existing email setup.</p>
           </td>
         </tr>
         <tr>
           <td class="fname">Domain region</td>
           <td class="fval">
-            <span class="pick correct"><span class="pick-icon">&#x2713;</span> EU &mdash; if you or your audience are in the UK or Europe</span><br>
-            <span class="pick correct"><span class="pick-icon">&#x2713;</span> US &mdash; if your audience is in North America</span>
+            <span class="pick correct"><span class="pick-icon">&#x2713;</span> EU, if you or your audience are in the UK or Europe</span><br>
+            <span class="pick correct"><span class="pick-icon">&#x2713;</span> US, if your audience is in North America</span>
             <p style="font-size:15px;margin:8px 0 0;color:var(--soft)">This must match the region you chose when you signed up. It is locked per domain for life.</p>
           </td>
         </tr>
@@ -318,10 +373,10 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </table>
 
     <div class="note danger" id="dkim-warning">
-      <strong>Why &ldquo;Use automatic sender security&rdquo; is the right choice</strong> &mdash; and why the other option will trip you up.
+      <strong>Why &ldquo;Use automatic sender security&rdquo; is the right choice</strong>, and why the other option will trip you up.
       <figure class="screenshot" style="margin:14px 0 6px" aria-label="Add Domain form showing Self-manage DKIM keys pre-selected by default">
         <img src="screenshots/04-add-domain-form-wrong.png" alt="The Add Domain form with the dangerous Self-manage DKIM keys option pre-selected as the default" width="1512" height="772" loading="lazy">
-        <figcaption>This is what Mailgun shows by default &mdash; &ldquo;Self-manage DKIM keys&rdquo; is pre-selected. You must change this.</figcaption>
+        <figcaption>This is what Mailgun shows by default, &ldquo;Self-manage DKIM keys&rdquo; is pre-selected. You must change this.</figcaption>
       </figure>
       <div class="choice-compare" style="margin-top:14px">
         <div class="choice correct">
@@ -337,8 +392,8 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
           <div class="choice-title">Self-manage DKIM keys <span class="badge">DO NOT USE</span></div>
           <ul>
             <li>You get a static 1024-bit key you must rotate yourself manually</li>
-            <li>Gives you <strong>1 TXT record</strong> instead of 2 CNAMEs &mdash; a completely different DNS record set</li>
-            <li>If you pick this, the DNS records in Step 3 will not match what Mailgun shows you &mdash; you will need to start over</li>
+            <li>Gives you <strong>1 TXT record</strong> instead of 2 CNAMEs, a completely different DNS record set</li>
+            <li>If you pick this, the DNS records in Step 3 will not match what Mailgun shows you, and you will need to start over</li>
           </ul>
         </div>
       </div>
@@ -357,12 +412,12 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
     <figure class="screenshot" aria-label="Mailgun DNS records screen showing SPF and DKIM records">
       <img src="screenshots/05-dns-records-sending.png" alt="Mailgun DNS records page showing SPF TXT record and two CNAME DKIM records (pdk1 and pdk2)" width="1512" height="772" loading="lazy">
-      <figcaption>DNS records screen &mdash; keep this open while you work in Step 4</figcaption>
+      <figcaption>DNS records screen, keep this open while you work in Step 4</figcaption>
     </figure>
 
     <figure class="screenshot" aria-label="Mailgun DNS records screen showing MX and Tracking records">
       <img src="screenshots/06-dns-records-mx-tracking.png" alt="Mailgun DNS records page scrolled to show MX receiving records and Tracking CNAME record" width="1512" height="772" loading="lazy">
-      <figcaption>Scroll down &mdash; you will also see the MX and Tracking records below the DKIM records</figcaption>
+      <figcaption>Scroll down, you will also see the MX and Tracking records below the DKIM records</figcaption>
     </figure>
 
     <p>If you chose &ldquo;Use automatic sender security&rdquo; in Step 2, you will see <strong>7 records</strong>: one SPF, two DKIM CNAMEs, one tracking CNAME, and two MX records. Here is what each one does:</p>
@@ -381,31 +436,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
           <td class="type">TXT</td>
           <td><code>mg.yourdomain.com</code></td>
           <td><code>v=spf1 include:mailgun.org ~all</code></td>
-          <td style="font-size:14px">SPF &mdash; declares Mailgun is allowed to send for this domain</td>
+          <td style="font-size:14px">SPF, declares Mailgun is allowed to send for this domain</td>
         </tr>
         <tr>
           <td class="type">CNAME</td>
           <td><code>pdk1._domainkey.mg.yourdomain.com</code></td>
           <td><code>pdk1._domainkey.&lt;hash&gt;.dkim5.eu.mgsend.org</code></td>
-          <td style="font-size:14px">DKIM key 1 &mdash; cryptographic signature (copy exact value from Mailgun)</td>
+          <td style="font-size:14px">DKIM key 1, cryptographic signature (copy exact value from Mailgun)</td>
         </tr>
         <tr>
           <td class="type">CNAME</td>
           <td><code>pdk2._domainkey.mg.yourdomain.com</code></td>
           <td><code>pdk2._domainkey.&lt;hash&gt;.dkim5.eu.mgsend.org</code></td>
-          <td style="font-size:14px">DKIM key 2 &mdash; second rotation key (copy exact value from Mailgun)</td>
+          <td style="font-size:14px">DKIM key 2, second rotation key (copy exact value from Mailgun)</td>
         </tr>
         <tr>
           <td class="type">CNAME</td>
           <td><code>email.mg.yourdomain.com</code></td>
           <td><code>eu.mailgun.org</code></td>
-          <td style="font-size:14px">Tracking &mdash; enables open/click tracking (optional but recommended)</td>
+          <td style="font-size:14px">Tracking, enables open/click tracking (optional but recommended)</td>
         </tr>
         <tr>
           <td class="type">MX</td>
           <td><code>mg.yourdomain.com</code></td>
           <td><code>mxa.eu.mailgun.org</code> (priority 10)</td>
-          <td style="font-size:14px">Bounce handling &mdash; lets Mailgun receive delivery failures</td>
+          <td style="font-size:14px">Bounce handling, lets Mailgun receive delivery failures</td>
         </tr>
         <tr>
           <td class="type">MX</td>
@@ -417,11 +472,19 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </table>
 
     <div class="note calm">
-      <strong>US region?</strong> Replace <code>eu.mailgun.org</code> with <code>mailgun.org</code> and <code>eu.mgsend.org</code> with <code>mgsend.org</code> in the values above. The Mailgun screen will show the correct values automatically &mdash; always copy from there rather than typing manually.
+      <strong>US region?</strong> Replace <code>eu.mailgun.org</code> with <code>mailgun.org</code> and <code>eu.mgsend.org</code> with <code>mgsend.org</code> in the values above. The Mailgun screen will show the correct values automatically, so always copy from there rather than typing manually.
     </div>
 
     <div class="note">
-      <strong>The two DKIM CNAME values contain a hash unique to your account.</strong> The <code>&lt;hash&gt;</code> part is not derivable from your domain name. Copy the values exactly from the Mailgun screen &mdash; do not type them or try to construct them.
+      <strong>The two DKIM CNAME values contain a hash unique to your account.</strong> The <code>&lt;hash&gt;</code> part is not derivable from your domain name. Copy the values exactly from the Mailgun screen, do not type them or try to construct them.
+    </div>
+
+    <div class="cyu">
+      <p class="cyu-q">Pause here: why do SPF and DKIM need to work together, rather than either one on its own being enough?</p>
+      <details>
+        <summary>Reveal model answer</summary>
+        <div class="cyu-a"><p>SPF authorises which mail servers are allowed to send on behalf of your domain, but it says nothing about whether the visible From address in the message header matches your domain, nor whether the message was altered after it left your server. DKIM signs the message contents and, when aligned to your domain, proves both that the message is genuine and that it was not modified in transit. DMARC needs at least one of them to pass and to align with your visible From domain, so the two records cover what neither one does alone: SPF establishes permission to send, DKIM proves identity and message integrity, and together they give DMARC something to act on.</p></div>
+      </details>
     </div>
 
     <div class="note warn">
@@ -455,7 +518,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
           <div class="sp-label">Screenshot: Cloudflare DNS panel</div>
           <div class="sp-desc">All 7 Mailgun records added, each showing a grey cloud (DNS only) icon.</div>
         </div>
-        <figcaption>Cloudflare DNS &rarr; Records &mdash; every record must show the grey cloud, not orange</figcaption>
+        <figcaption>Cloudflare DNS &rarr; Records, every record must show the grey cloud, not orange</figcaption>
       </figure>
     </details>
 
@@ -488,7 +551,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
     <details>
       <summary>Mailgun&rsquo;s automatic setup (easiest if your provider is supported)</summary>
-      <p>On the DNS records screen in Mailgun, look for the <strong>Automatic setup</strong> card at the top. It reads &ldquo;Log in to your provider&rdquo;. Mailgun supports Cloudflare, GoDaddy, Bluehost, and others. If your provider appears in the list, click it and follow the authorisation flow &mdash; Mailgun adds every record for you in one step and you can skip the manual steps above entirely.</p>
+      <p>On the DNS records screen in Mailgun, look for the <strong>Automatic setup</strong> card at the top. It reads &ldquo;Log in to your provider&rdquo;. Mailgun supports Cloudflare, GoDaddy, Bluehost, and others. If your provider appears in the list, click it and follow the authorisation flow, Mailgun adds every record for you in one step and you can skip the manual steps above entirely.</p>
     </details>
   </section>
 
@@ -504,7 +567,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
         <div class="sp-label">Screenshot: verified DNS records</div>
         <div class="sp-desc">Every record showing a green tick. The domain status will change from &ldquo;Unverified&rdquo; to &ldquo;Active&rdquo;.</div>
       </div>
-      <figcaption>All records verified &mdash; every row should be green before you continue</figcaption>
+      <figcaption>All records verified, every row should be green before you continue</figcaption>
     </figure>
 
     <div class="note">
@@ -526,11 +589,11 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
         <div class="sp-label">Screenshot: DKIM activation in progress</div>
         <div class="sp-desc">All DNS records are green but a yellow banner still shows &ldquo;Unverified domain settings&rdquo;. This is normal. Refresh until it clears.</div>
       </div>
-      <figcaption>This yellow warning clears automatically once DKIM is active &mdash; usually within a few minutes</figcaption>
+      <figcaption>This yellow warning clears automatically once DKIM is active, usually within a few minutes</figcaption>
     </figure>
 
     <div class="note calm">
-      If the warning has not cleared after 30 minutes, contact Mailgun support &mdash; something may have stalled on their side. But in practice this almost never takes more than 5 minutes.
+      If the warning has not cleared after 30 minutes, contact Mailgun support, something may have stalled on their side. But in practice this almost never takes more than 5 minutes.
     </div>
   </section>
 
@@ -563,7 +626,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <p>Then return to Mailgun and click <strong>Check Status</strong> again. The DMARC row should turn green.</p>
 
     <div class="note calm">
-      The <code>p=none</code> policy in the DMARC record is intentional &mdash; it starts in report-only mode. This is correct. Do not change it to <code>p=reject</code> or <code>p=quarantine</code> until you have been sending successfully for several weeks and have reviewed the reports.
+      The <code>p=none</code> policy in the DMARC record is intentional, it starts in report-only mode. This is correct. Do not change it to <code>p=reject</code> or <code>p=quarantine</code> until you have been sending successfully for several weeks and have reviewed the reports.
     </div>
   </section>
 
@@ -592,7 +655,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
         <div class="sp-label">Screenshot: New key revealed</div>
         <div class="sp-desc">The key value is shown only once. Copy it now and save it in your password manager.</div>
       </div>
-      <figcaption>Copy the key now &mdash; Mailgun will never show it again</figcaption>
+      <figcaption>Copy the key now, Mailgun will never show it again</figcaption>
     </figure>
 
     <div class="note warn">
@@ -606,7 +669,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <h2><span class="num">9</span><span class="t">Connect your site</span></h2>
 
     <details open>
-      <summary>PageMotor &mdash; EP Suite plugins</summary>
+      <summary>PageMotor, EP Suite plugins</summary>
       <p>You need two plugins: <strong>ep-email-mailgun</strong> (handles transactional email: contact forms, password resets) and <strong>ep-newsletter-mailgun</strong> (handles newsletter campaigns). Install both even if you do not plan to use newsletters right away.</p>
       <ol class="sub">
         <li>In PageMotor admin, go to <strong>Plugins &rarr; Manage Plugins &rarr; Upload</strong>.</li>
@@ -614,19 +677,19 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
         <li>Upload <code>ep-newsletter-mailgun.zip</code>. Activate it.</li>
         <li>Open each plugin&rsquo;s settings and fill in:
           <ul>
-            <li><strong>Sending Key</strong> &mdash; the key you copied in Step 8</li>
-            <li><strong>Sending Domain</strong> &mdash; <code>mg.yourdomain.com</code></li>
-            <li><strong>Region</strong> &mdash; EU or US, matching what you chose in Step 1</li>
+            <li><strong>Sending Key</strong>, the key you copied in Step 8</li>
+            <li><strong>Sending Domain</strong>, <code>mg.yourdomain.com</code></li>
+            <li><strong>Region</strong>, EU or US, matching what you chose in Step 1</li>
           </ul>
         </li>
         <li>Click <strong>Test Connection</strong>. It should turn green.</li>
         <li>In <strong>EP Email &rarr; SMTP Configuration</strong>, set the transport to <strong>Mailgun</strong>.</li>
-        <li>In <strong>EP Newsletter &rarr; Email Delivery</strong>, set the driver to <strong>Mailgun</strong>. Also make sure ep-newsletter-mailgun appears <em>before</em> ep-newsletter in the plugin load order &mdash; otherwise the newsletter driver will not be picked up.</li>
+        <li>In <strong>EP Newsletter &rarr; Email Delivery</strong>, set the driver to <strong>Mailgun</strong>. Also make sure ep-newsletter-mailgun appears <em>before</em> ep-newsletter in the plugin load order, otherwise the newsletter driver will not be picked up.</li>
       </ol>
     </details>
 
     <details>
-      <summary>WordPress &mdash; Mailgun official plugin (recommended for most users)</summary>
+      <summary>WordPress, Mailgun official plugin (recommended for most users)</summary>
       <ol class="sub">
         <li>In WordPress admin, go to <strong>Plugins &rarr; Add New</strong> and search for &ldquo;Mailgun&rdquo;. Install the official plugin by Mailgun.</li>
         <li>Activate it, then go to <strong>Settings &rarr; Mailgun</strong>.</li>
@@ -637,7 +700,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </details>
 
     <details>
-      <summary>WordPress &mdash; Gravity SMTP (if you have a Gravity Forms licence)</summary>
+      <summary>WordPress, Gravity SMTP (if you have a Gravity Forms licence)</summary>
       <ol class="sub">
         <li>Download Gravity SMTP from your Gravity Forms account and install it in WordPress.</li>
         <li>Go to <strong>Gravity SMTP &rarr; Settings &rarr; Integrations</strong> and add Mailgun.</li>
@@ -686,6 +749,25 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <div class="note calm">
       <strong>Only declare it working when:</strong> the test email is sitting in your Inbox (not Spam), mail-tester.com gives you 9 or 10, and Mailgun shows &ldquo;Delivered&rdquo; in the event log. All three together are the proof. Any one on its own is not enough.
     </div>
+
+    <div class="cyu">
+      <p class="cyu-q">Last one: why is the receiving server&rsquo;s inbox-or-spam verdict never reported back to the sender?</p>
+      <details>
+        <summary>Reveal model answer</summary>
+        <div class="cyu-a"><p>The placement decision is made privately by the receiving mail system after it accepts the message. SMTP only confirms that the message was accepted for onward delivery, not where it was eventually filed. There is no standard channel in the email protocol that reports inbox-versus-spam status back to the sender, which is why you have to check the destination inbox yourself. A &ldquo;sent&rdquo; or &ldquo;accepted&rdquo; log tells you the message left your server and was received by the next hop; it cannot tell you whether it reached someone&rsquo;s inbox or their junk folder.</p></div>
+      </details>
+    </div>
+  </section>
+
+
+  <section class="recap" id="recap" aria-labelledby="recap-h">
+    <p class="recap-h" id="recap-h">Key takeaways</p>
+    <ul class="sub">
+      <li>The web server&rsquo;s own mailer is quietly distrusted by Gmail and Outlook. A transactional provider like Mailgun sends authenticated mail your domain is allowed to send, which is what reaches the inbox.</li>
+      <li>The records Mailgun gives you do two jobs: SPF authorises the sender, and the two DKIM CNAMEs sign each message so tampering shows. DMARC then sets the policy and collects reports.</li>
+      <li>Choose &ldquo;Use automatic sender security&rdquo; so Mailgun rotates your DKIM keys for you. That choice is what produces the 2 CNAME records this guide matches.</li>
+      <li>A &ldquo;sent&rdquo; log and a green &ldquo;connection successful&rdquo; are not delivery. Confirm with a real inbox test, a mail-tester.com score of 9 or 10, and a &ldquo;Delivered&rdquo; line in the Mailgun log.</li>
+    </ul>
   </section>
 
 
@@ -695,7 +777,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <details>
     <summary>My test email lands in Spam</summary>
-    <p>Usually it means DKIM is not fully active yet (Step 6). Wait a few more minutes and resend. Also: make sure your From address uses your own domain, not a free address like gmail.com. Run a mail-tester.com check &mdash; it will name whatever specific thing is still missing.</p>
+    <p>Usually it means DKIM is not fully active yet (Step 6). Wait a few more minutes and resend. Also: make sure your From address uses your own domain, not a free address like gmail.com. Run a mail-tester.com check, it will name whatever specific thing is still missing.</p>
   </details>
 
   <details>
@@ -730,8 +812,10 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <details>
     <summary>Mailgun&rsquo;s &ldquo;Send to a Coworker&rdquo; email is missing the pdk1 / pdk2 CNAME rows</summary>
-    <p>This is a known issue with Mailgun&rsquo;s setup email template when using &ldquo;automatic sender security&rdquo; mode. The email shows 5 records but your domain needs 7. The two missing pdk1 and pdk2 CNAME records are real and required &mdash; they are just missing from the email template. Get the correct values by logging in to Mailgun and reading them directly from the DNS records screen. Do not use the coworker email as your source of truth.</p>
+    <p>This is a known issue with Mailgun&rsquo;s setup email template when using &ldquo;automatic sender security&rdquo; mode. The email shows 5 records but your domain needs 7. The two missing pdk1 and pdk2 CNAME records are real and required, they are just missing from the email template. Get the correct values by logging in to Mailgun and reading them directly from the DNS records screen. Do not use the coworker email as your source of truth.</p>
   </details>
+
+  <p style="color:var(--soft);font-size:16.5px;margin:18px 0 0">That is the whole setup. Once the three proofs line up, your site&rsquo;s email is reaching inboxes, and you can move on.</p>
 
   <div class="seealso">
     &#x1F331; <strong>Not installed yet?</strong> If you are starting from scratch, begin with <a href="https://documentation.elmspark.com/guides/pagemotor-bluehost/">Installing PageMotor on Bluehost</a>, then come back here for email.
