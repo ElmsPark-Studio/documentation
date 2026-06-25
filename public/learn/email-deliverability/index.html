@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="A short, interactive lesson on giving Claude Code control of Cloudflare: the three parts that work together, and how to authorise it safely. One step at a time.">
-<title>Claude Code and Cloudflare, the interactive lesson | ElmsPark</title>
+<meta name="description" content="A short, interactive lesson on why website email lands in spam, and the three records that fix it. One step at a time.">
+<title>Email deliverability, the interactive lesson | ElmsPark</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600|inter-tight:400,500,600,700&display=swap">
 <style>
@@ -85,7 +85,7 @@
 <body>
   <div class="bar">
     <a class="brand" href="/learn/">Elms<b>Park</b><span class="dot">&middot;</span>Lessons</a>
-    <a class="exit" href="/guides/claude-code-cloudflare/">Full guide &rarr;</a>
+    <a class="exit" href="/guides/website-email-spam/">Full guide &rarr;</a>
   </div>
   <div class="progress" aria-hidden="true"><div class="progress-fill" id="pfill"></div></div>
 
@@ -99,50 +99,48 @@
 <script>
 (function(){
   var STEPS = [
-    { type:'intro', icon:'\u{2601}\u{FE0F}', h:'Give Claude Code control of Cloudflare',
-      lead:'Wire it up once and it reads your account, edits DNS, deploys Workers and reads live logs. Ten quick taps to grasp how, and how to keep it safe.' },
+    { type:'intro', icon:'\u{1F4EC}', h:'Why your email lands in spam',
+      lead:'Your contact form says “sent”. The message never arrives. Nine quick taps and you will know exactly why, and how to fix it.' },
 
-    { type:'concept', icon:'\u{1F9E9}', h:'Three parts working together',
-      lead:'Skills, MCP servers and Wrangler each do one job.',
-      sub:'Together they turn &ldquo;knows about Cloudflare&rdquo; into &ldquo;can operate your account&rdquo;.' },
+    { type:'concept', icon:'\u{1F510}', h:'The job: prove it is really you',
+      lead:'Three DNS records vouch for your mail: SPF, DKIM and DMARC.',
+      sub:'Without them, your message looks forgeable, so the receiving server quietly junks it.' },
 
-    { type:'concept', icon:'\u{1F4DA}', h:'Skills: the knowledge',
-      lead:'On-demand files that teach the agent how Cloudflare actually works.',
-      sub:'So you are not re-explaining the platform on every request.' },
-
-    { type:'concept', icon:'\u{1F50C}', h:'MCP servers: the live line',
-      lead:'They give the agent typed tools to call the Cloudflare API at runtime.',
-      sub:'Read config, make changes, fetch logs. This is the operating end.' },
-
-    { type:'question', icon:'\u{1F50E}', h:'Which part is the live connection?',
-      lead:'Which one is the live line into the Cloudflare API?',
-      opts:['Skills','The MCP servers','Wrangler'],
+    { type:'question', icon:'\u{1F50D}', h:'A quick diagnosis',
+      lead:'Your log says “sent”, but the message is in spam. What kind of problem is that?',
+      opts:['Transport: it never really left your server','Authentication: it left fine, but was not trusted'],
       answer:1,
-      why:'<b>The MCP servers.</b> Skills are knowledge and Wrangler builds and deploys. The MCP servers are the runtime tools that actually call the API.' },
+      why:'<b>Authentication.</b> The message left cleanly, so the log is happy. The receiver did not trust it. That is the SPF, DKIM and DMARC problem.' },
 
-    { type:'concept', icon:'\u{1F527}', h:'Wrangler: build and deploy',
-      lead:'The Workers command-line tool for local dev, deploys and jobs like tailing logs.',
-      rec:'npx wrangler deploy' },
+    { type:'concept', icon:'1️⃣', h:'SPF: who may send',
+      lead:'A list of the servers allowed to send for your domain.',
+      sub:'The receiver checks the sending server against this list.',
+      rec:'v=spf1 include:mailgun.org -all' },
 
-    { type:'concept', icon:'\u{1F511}', h:'Authorise in the browser',
-      lead:'On your own machine, sign in with OAuth: no API key to find or leak.',
-      sub:'The first Cloudflare call opens your browser and asks you to approve.' },
+    { type:'concept', icon:'2️⃣', h:'DKIM: a signature',
+      lead:'It proves the message is really yours and was not altered on the way.',
+      sub:'Signed with your domain, it also ties the mail to your own From address.' },
 
-    { type:'question', icon:'\u{26A0}\u{FE0F}', h:'The Wrangler gotcha',
-      lead:'Does a browser OAuth login grant every permission you might need?',
-      opts:['Yes, OAuth covers it all','No, some scopes need a scoped API token instead'],
+    { type:'concept', icon:'3️⃣', h:'DMARC: the policy',
+      lead:'It tells receivers what to do when a check fails, and sends you reports.',
+      sub:'Start gentle and just watch: p=none. Tighten later.',
+      rec:'v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com' },
+
+    { type:'question', icon:'\u{1F9E9}', h:'The classic trap',
+      lead:'SPF passes, but DMARC still fails. What is the usual cause?',
+      opts:['You accidentally added a second SPF record','Alignment: SPF passed for the provider, not your own From domain','Your mail server is down'],
       answer:1,
-      why:'<b>No.</b> A browser login skips some scopes (certain account actions, Turnstile and others). For those, create a scoped API token.' },
+      why:'<b>Alignment.</b> SPF passed for the provider’s domain, not yours. Set up DKIM signed with your domain and DMARC passes through it instead.' },
 
-    { type:'question', icon:'\u{1F510}', h:'Least privilege',
-      lead:'You need a token for a job that only edits DNS. How do you scope it?',
-      opts:['Grant it everything, to be safe','DNS edit only, nothing else','Skip the token and use OAuth'],
+    { type:'question', icon:'\u{1F50E}', h:'The one that catches people',
+      lead:'Your DNS panel clearly shows all three records. Is the email definitely reaching inboxes?',
+      opts:['Yes, the records are right there','No, only a received message with passing headers proves it'],
       answer:1,
-      why:'<b>DNS edit only.</b> Least privilege: a token gets just the permissions the job needs, so a leak has a small blast radius.' },
+      why:'<b>No.</b> A record can be present but wrong. The only proof is a real received message whose headers show SPF, DKIM and DMARC all pass.' },
 
     { type:'win', icon:'✅', h:'You have got it',
-      items:['Three parts: Skills know, MCP servers operate, Wrangler ships.','OAuth for you, scoped tokens for machines.','Least privilege: a token gets only what the job needs.','Mind the Wrangler gotcha: some scopes need a token, not OAuth.'],
-      guide:'/guides/claude-code-cloudflare/' }
+      items:['SPF says who may send.','DKIM signs the mail and ties it to you.','DMARC sets the policy, and you start at p=none.','Proof is passing headers, never a “sent” log.'],
+      guide:'/guides/website-email-spam/' }
   ];
 
   var i = 0, answered = {};
