@@ -134,6 +134,15 @@
   footer{margin:40px 0 0; padding:24px 0 60px; border-top:1px solid var(--line); color:var(--soft); font-size:14px}
   footer a{color:var(--pine)}
   footer p{margin:6px 0}
+  .lcard{display:flex; gap:14px; align-items:flex-start; text-decoration:none; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; transition:transform .15s, box-shadow .15s, border-color .15s}
+  .lcard:hover{transform:translateY(-2px); box-shadow:0 2px 5px rgba(35,33,28,.08),0 10px 24px rgba(35,33,28,.08); border-color:var(--pine)}
+  .lcard:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  @media (prefers-reduced-motion: reduce){ .lcard,.lcard:hover{transform:none; transition:none} }
+  .lcard-ic{font-size:30px; line-height:1; flex:none}
+  .lcard-tx{display:flex; flex-direction:column; min-width:0}
+  .lcard-h{font-family:Fraunces,Georgia,serif; font-size:19px; font-weight:600; color:var(--pine-deep); margin:0 0 4px; line-height:1.2}
+  .lcard-p{font-size:15px; color:var(--soft); margin:0 0 9px}
+  .lcard-m{font-size:13px; color:var(--pine); font-weight:600}
 </style>
 
   <meta property="og:type" content="website">
@@ -171,140 +180,63 @@
   <div class="wrap">
     <span class="kicker">Learn</span>
     <h1>Learn it once, properly</h1>
-    <p class="lede">These are the ElmsPark guides that go a step further. The same plain-English walkthrough, with a few things added that make it stick: a question you answer before the answer shows, a worked example to try yourself, and a short self-test. Open the parts you want, skip the ones you do not.</p>
+    <p class="lede">Short, interactive lessons. One idea on the screen at a time, you tap through it, and it takes a couple of minutes. The calm written guide is always a click away if you want the detail.</p>
     <div class="hero-chips">
       <span class="hchip">&#x1F9E0; <b>Built to stick</b>, not just to read</span>
-      <span class="hchip">&#x1F4D6; <b>Skim or study</b>, the depth is opt-in</span>
-      <span class="hchip">&#x1F517; <a href="/guides/" style="color:inherit;text-decoration:underline">All guides</a></span>
+      <span class="hchip">&#x1F446; <b>Tap through</b>, about 2 minutes each</span>
+      <span class="hchip">&#x1F4D6; A full <a href="/guides/" style="color:inherit;text-decoration:underline">written guide</a> behind each one</span>
     </div>
   </div>
 </div>
 
 <main class="wrap">
 
-  <h2 id="full">Full lessons</h2>
-  <p class="h2sub">The complete treatment: learning objectives, retrieval checks through the page, a worked example to try, an interactive self-test, and a recap.</p>
+    <h2 id="lessons">The lessons</h2>
+  <p class="h2sub">Each one is a short, tap-through interactive lesson. Pick a topic and go.</p>
   <div class="grid">
-    <article class="gcard cat-ai" data-cat="ai" data-search="verification done claims agents claude code testing probes trust corrupt success step-success rlhf" data-lesson="true">
-      <div class="cat-bar"></div>
-      <div class="gbody">
-        <span class="cat-tag">AI &amp; tools</span>
-        <h3><a href="/guides/ai-said-it-was-done/">AI said it was done. It wasn&rsquo;t.</a></h3>
-        <p class="gdesc">The verification habit every AI-assisted developer needs: never trust step-success, always run the probe a real user would.</p>
-        <ul class="ginside">
-          <li>Why models are trained to sound finished</li>
-          <li>Naming and running the customer-shape probe</li>
-          <li>A worked example, and the research behind it</li>
-        </ul>
-        <div class="gmeta"><span>&#x2705; The verification habit</span><span>&#x1F4D6; 8-min read</span><span>June 2026</span></div>
-      </div>
-    </article>
-    <article class="gcard cat-email" data-cat="email" data-search="spf dkim dmarc spam deliverability dns records explained gmail yahoo alignment mailgun authentication" data-lesson="true">
-      <div class="cat-bar"></div>
-      <div class="gbody">
-        <span class="cat-tag">Email &amp; deliverability</span>
-        <h3><a href="/guides/website-email-spam/">Why your website&rsquo;s email lands in spam</a></h3>
-        <p class="gdesc">SPF, DKIM and DMARC explained properly, with the real DNS records. The theory half of the Mailgun guide.</p>
-        <ul class="ginside">
-          <li>The one-minute diagnosis: transport or authentication</li>
-          <li>Each record, with a real example to copy</li>
-          <li>Why alignment means one record is not enough</li>
-        </ul>
-        <div class="gmeta"><span>&#x1F4E7; SPF / DKIM / DMARC</span><span>&#x1F4D6; 9-min read</span><span>June 2026</span></div>
-      </div>
-    </article>
-    <article class="gcard cat-security" data-cat="security" data-search="spam captcha honeypot forms bots ai triage blocklist rate limit time trap server-side keyword" data-lesson="true">
-      <div class="cat-bar"></div>
-      <div class="gbody">
-        <span class="cat-tag">Security</span>
-        <h3><a href="/guides/contact-form-spam/">Stopping contact-form spam without CAPTCHA</a></h3>
-        <p class="gdesc">A layered, server-side defence that lets real people through and quietly drops the bots, with an optional AI triage layer.</p>
-        <ul class="ginside">
-          <li>Honeypot, time trap, rate limit and content checks</li>
-          <li>A shared blocklist with a network effect</li>
-          <li>How it is wired up in EP Email on PageMotor</li>
-        </ul>
-        <div class="gmeta"><span>&#x1F6E1; No CAPTCHA</span><span>&#x1F4D6; 8-min read</span><span>June 2026</span></div>
-      </div>
-    </article>
-    <article class="gcard cat-ai" data-cat="ai" data-search="claude code cloudflare mcp wrangler workers dns r2 kv d1 api token oauth deploy agent terminal codemode skills" data-lesson="true">
-      <div class="cat-bar"></div>
-      <div class="gbody">
-        <span class="cat-tag">AI &amp; tools</span>
-        <h3><a href="/guides/claude-code-cloudflare/">Give Claude Code control of your Cloudflare account</a></h3>
-        <p class="gdesc">Wire Claude Code into Cloudflare so it can deploy Workers, edit DNS and read live logs from the terminal. The full three-part setup, done safely.</p>
-        <ul class="ginside">
-          <li>One plugin install that wires up Skills and the MCP servers</li>
-          <li>OAuth versus scoped API tokens, done with least privilege</li>
-          <li>The Wrangler token gotcha, plus a troubleshooting section</li>
-        </ul>
-        <div class="gmeta"><span>&#x23F1; ~15 min</span><span>&#x1F4D6; 8-min read</span><span>June 2026</span></div>
-      </div>
-    </article>
-    <article class="gcard cat-pagemotor" data-cat="pagemotor" data-search="plugin development first build oop valet developer tutorial shortcode pm_plugin hello world" data-lesson="true">
-      <div class="cat-bar"></div>
-      <div class="gbody">
-        <span class="cat-tag">PageMotor</span>
-        <h3><a href="/guides/first-pagemotor-plugin/">Building your first PageMotor plugin</a></h3>
-        <p class="gdesc">From an empty folder to installed and working, with the architecture explained and the early pitfalls marked.</p>
-        <ul class="ginside">
-          <li>The header, the class, and a working shortcode</li>
-          <li>The valet methods you can implement</li>
-          <li>The traps that catch people first</li>
-        </ul>
-        <div class="gmeta"><span>&#x1F9E9; Plain PHP</span><span>&#x23F1; ~20 min</span><span>June 2026</span></div>
-      </div>
-    </article>
+    <a class="lcard" href="/learn/email-deliverability/">
+      <span class="lcard-ic" aria-hidden="true">📬</span>
+      <span class="lcard-tx">
+        <span class="lcard-h">Why your email lands in spam</span>
+        <span class="lcard-p">SPF, DKIM and DMARC, in nine quick taps.</span>
+        <span class="lcard-m">&#x25B6;&nbsp; Tap through, about 2 minutes</span>
+      </span>
+    </a>
+    <a class="lcard" href="/learn/ai-verification/">
+      <span class="lcard-ic" aria-hidden="true">✅</span>
+      <span class="lcard-tx">
+        <span class="lcard-h">AI said it was done. It wasn&rsquo;t.</span>
+        <span class="lcard-p">The verification habit, made unmissable.</span>
+        <span class="lcard-m">&#x25B6;&nbsp; Tap through, about 2 minutes</span>
+      </span>
+    </a>
+    <a class="lcard" href="/learn/contact-form-spam/">
+      <span class="lcard-ic" aria-hidden="true">🛡</span>
+      <span class="lcard-tx">
+        <span class="lcard-h">Stopping contact-form spam</span>
+        <span class="lcard-p">A layered defence, and not a CAPTCHA in sight.</span>
+        <span class="lcard-m">&#x25B6;&nbsp; Tap through, about 2 minutes</span>
+      </span>
+    </a>
+    <a class="lcard" href="/learn/claude-code-cloudflare/">
+      <span class="lcard-ic" aria-hidden="true">⚡</span>
+      <span class="lcard-tx">
+        <span class="lcard-h">Claude Code and Cloudflare</span>
+        <span class="lcard-p">Skills, MCP and tokens, scoped safely.</span>
+        <span class="lcard-m">&#x25B6;&nbsp; Tap through, about 2 minutes</span>
+      </span>
+    </a>
+    <a class="lcard" href="/learn/first-pagemotor-plugin/">
+      <span class="lcard-ic" aria-hidden="true">🧩</span>
+      <span class="lcard-tx">
+        <span class="lcard-h">Your first PageMotor plugin</span>
+        <span class="lcard-p">An empty folder to a working shortcode.</span>
+        <span class="lcard-m">&#x25B6;&nbsp; Tap through, about 2 minutes</span>
+      </span>
+    </a>
   </div>
 
-  <h2 id="lighter">Lighter lessons</h2>
-  <p class="h2sub">A lighter touch on guides that are mostly step by step: objectives, a few checks, and a recap.</p>
-  <div class="grid">
-    <article class="gcard cat-email" data-cat="email" data-search="mailgun spam deliverability dns spf dkim dmarc sending domain newsletter contact form" data-lesson="true">
-      <div class="cat-bar"></div>
-      <div class="gbody">
-        <span class="cat-tag">Email &amp; deliverability</span>
-        <h3><a href="/guides/mailgun-email/">Set up reliable email with Mailgun</a></h3>
-        <p class="gdesc">The complete guide: every screen, every field, from account creation to inbox confirmation. Covers the Add Domain form most guides skip entirely.</p>
-        <ul class="ginside">
-          <li>Every screen documented, including the Add Domain form</li>
-          <li>The DKIM mode fork that trips everyone up, explained clearly</li>
-          <li>Finishes with real inbox proof, not a green tick</li>
-        </ul>
-        <div class="gmeta"><span>⏱ about 30 minutes</span><span>📖 8-min read</span><span>June 2026</span></div>
-      </div>
-    </article>
-    <article class="gcard cat-hosting" data-cat="hosting" data-search="ep suite shared hosting godaddy cpanel smtp blocked email localhost limits upload memory plugins compatibility budget cheap litespeed" data-lesson="true">
-      <div class="cat-bar"></div>
-      <div class="gbody">
-        <span class="cat-tag">Hosting</span>
-        <h3><a href="/guides/ep-suite-shared-hosting/">Running the EP Suite on shared hosting</a></h3>
-        <p class="gdesc">Tested for real on GoDaddy shared hosting. Only outbound email is blocked, and it has a simple fix. AI, payments, bookings and licence activation all work.</p>
-        <ul class="ginside">
-          <li>The one real limit, email, and the fix</li>
-          <li>What works: AI, Stripe, Zoom, Printify, licence activation</li>
-          <li>The resource caps to know, and when to move to a VPS</li>
-        </ul>
-        <div class="gmeta"><span>✅ tested live</span><span>📖 6-min read</span><span>June 2026</span></div>
-      </div>
-    </article>
-    <article class="gcard cat-ai" data-cat="ai" data-search="claude fable opus anthropic model choice pricing cost calculator llm comparison" data-lesson="true">
-      <div class="cat-bar"></div>
-      <div class="gbody">
-        <span class="cat-tag">AI &amp; tools</span>
-        <h3><a href="/guides/fable-5-vs-opus-4.8/">Claude Fable 5 vs Opus 4.8</a></h3>
-        <p class="gdesc">What Anthropic's first public Mythos-class model is, what it costs, and when it earns its price over Opus 4.8.</p>
-        <ul class="ginside">
-          <li>Head-to-head specs with a differences-only toggle</li>
-          <li>Live cost calculator across six Claude models</li>
-          <li>A which-model-when picker for nine real job types</li>
-        </ul>
-        <div class="gmeta"><span>📖 10-min read</span><span>🧮 interactive</span><span>June 2026</span></div>
-      </div>
-    </article>
-  </div>
-
-  <p style="margin:34px 0 0; color:var(--soft); font-size:15.5px">Looking for the quick, task-focused versions, or a topic that is not a lesson yet? <a href="/guides/" style="color:var(--pine); font-weight:600">Browse all guides &rarr;</a></p>
+  <p style="margin:34px 0 0; color:var(--soft); font-size:15.5px">Prefer to read it straight through? Every lesson has a full <a href="/guides/" style="color:var(--pine); font-weight:600">written guide</a>.</p>
 
 
   <footer role="contentinfo">

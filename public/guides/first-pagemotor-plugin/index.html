@@ -183,6 +183,10 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <strong>How PageMotor plugins work.</strong> A plugin is a folder inside <code>user-content/plugins/</code> containing a <code>plugin.php</code> file. That file declares a PHP class which extends <code>PM_Plugin</code>, the framework&rsquo;s base class. PageMotor includes the file, reads the header comment at the top, and makes the plugin available in the admin. You add capabilities by implementing <em>valet methods</em>: named methods on your class that PageMotor calls at specific moments to register shortcodes, assets, AJAX handlers, settings, and more. Activate the plugin and those capabilities go live.
   </div>
 
+  <div class="note calm">
+    <strong>&#x25B6;&nbsp;Prefer to learn it interactively?</strong> Tap through the <a href="/learn/first-pagemotor-plugin/"><b>interactive lesson</b></a>, one idea at a time, about two minutes, with quick questions as you go.
+  </div>
+
   <div class="llm-prompt">
     <h2>Use this guide with any AI assistant</h2>
     <p>Download it as a prompt file, paste it into Claude, ChatGPT, Gemini or any LLM, and it will walk you through building the plugin step by step.</p>
