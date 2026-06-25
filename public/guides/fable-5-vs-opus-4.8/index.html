@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Claude Fable 5 vs Claude Opus 4.8: what Anthropic's first public Mythos-class model is, head-to-head specs, safeguards, pricing and when to use each.">
 <meta name="robots" content="noindex,nofollow">
-<title>Claude Fable 5 vs Opus 4.8 | ElmsPark Lesson</title>
+<title>Claude Fable 5 vs Opus 4.8 | ElmsPark Guide</title>
 <style>
   :root{
     --bg:#faf9f5; --ink:#1f1e1c; --muted:#6e6a63; --card:#ffffff; --line:#e7e3da;
@@ -13,8 +13,6 @@
     --opus:#3a5a78; --opus-soft:#e8eef4; --opus-deep:#2b4459;
     --good:#3e7d5a; --warn:#a8741f; --warn-soft:#faf3e3;
     --radius:14px; --shadow:0 1px 3px rgba(31,30,28,.07),0 4px 14px rgba(31,30,28,.05);
-    /* lesson-component palette aliases (light touch) */
-    --pine:#2f5d4a; --pine-deep:#234a3b; --soft:#6e6a63; --accent:#c15f3c;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
@@ -167,24 +165,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-sub{display:none}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
-/* ============================================================
-   LESSON COMPONENTS (additive, calm, opt-in): light touch
-   ============================================================ */
-.lesson-chip{display:inline-block;font-family:'Inter Tight',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c35;background:#d0f0df;border:1px solid #8fcfab;padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:10px}
-summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
-/* Learning objectives box */
-.objectives{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:8px 0 26px}
-.obj-kicker{font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:600;margin:0 0 8px}
-/* Check your understanding (retrieval reveal) */
-.cyu{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0}
-.cyu-q{font-weight:600;color:var(--pine-deep);margin:0 0 6px;font-family:system-ui,sans-serif;font-size:16.5px}
-.cyu details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.cyu summary{padding:6px 0;font-size:15.5px}
-.cyu .cyu-a{font-size:16px}
-.cyu .cyu-a p{margin:6px 0 4px}
-/* Key takeaways recap */
-.recap{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pine);border-radius:12px;padding:14px 20px;margin:30px 0}
-.recap-h{font-family:system-ui,sans-serif;font-weight:700;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
 </style>
 
   <meta property="og:type" content="article">
@@ -195,7 +175,7 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
   <meta property="og:image" content="https://documentation.elmspark.com/og/fable-5-vs-opus-4.8.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Claude Fable 5 vs Opus 4.8, an ElmsPark guide">
+  <meta property="og:image:alt" content="Claude Fable 5 vs Opus 4.8 — ElmsPark Guides">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://documentation.elmspark.com/og/fable-5-vs-opus-4.8.png">
 </head>
@@ -224,7 +204,7 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <span class="sep" aria-hidden="true">&rsaquo;</span>
       <span aria-current="page">Claude Fable 5 vs Opus 4.8</span>
     </nav>
-    <div class="kicker">AI &amp; tools lesson<span class="lesson-chip">Lesson</span></div>
+    <div class="kicker">Claude models</div>
     <h1><span class="f">Claude Fable 5</span><span class="vs">vs</span><span class="o">Claude Opus 4.8</span></h1>
     <p class="sub">Anthropic shipped two flagship models within a fortnight. This guide explains what Fable 5 actually is, how it differs from Opus 4.8, what each costs, and which one to reach for.</p>
     <div class="badges">
@@ -234,36 +214,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     </div>
   </div>
 </header>
-
-<!-- LLM prompt download -->
-<div class="wrap" style="margin-top:22px">
-  <div class="llm-prompt-download" style="padding:18px 20px;background:#fffdf8;border:1px solid #e4ddcd;border-left:4px solid #2f5d4a;border-radius:14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif">
-    <div style="flex:1;min-width:220px">
-      <p style="margin:0 0 4px;font-weight:600;font-size:16px;color:#234a3b">Use this guide with any AI assistant</p>
-      <p style="margin:0;font-size:14.5px;line-height:1.5;color:#5d574c">Download it as a prompt file, paste it into Claude, ChatGPT, Gemini or any LLM, and it will walk you through every step interactively.</p>
-    </div>
-    <a href="/downloads/claude-fable5-vs-opus48-prompt.md" download="claude-fable5-vs-opus48-prompt.md" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#2f5d4a;color:#fff;text-decoration:none;border-radius:8px;font-size:14.5px;font-weight:600;white-space:nowrap;flex-shrink:0">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download as LLM prompt
-    </a>
-  </div>
-</div>
-
-<div class="wrap" style="margin-top:22px">
-  <section class="objectives" aria-labelledby="obj-h">
-    <p class="obj-kicker" id="obj-h">By the end you will be able to</p>
-    <ul class="clean">
-      <li>Explain what tier Fable 5 sits in and how that relates to Opus 4.8.</li>
-      <li>Decide when Fable earns its higher price over Opus for a given job.</li>
-      <li>Pick a sensible model for a described task, including when the cheaper or faster one is the right call.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-size:14.5px;color:var(--muted)">How the pieces fit: Fable 5 is a new top tier above Opus, not an Opus upgrade. The question is rarely &ldquo;which is better&rdquo; but &ldquo;does this job need the step up, and is it worth double the cost&rdquo;. The tabs, the cost calculator and the picker below are there to answer that.</p>
-  </section>
-
-  <div class="note calm" style="background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 18px;font-size:14.5px;color:#3c3a36">
-    <b style="color:var(--pine-deep)">This page is opt-in.</b> Skim the tabs for the quick answer and you lose nothing. Open the few reveals dotted through the comparison and the same page becomes a light lesson, with a few questions to answer before you read on and a short recap at the end.
-  </div>
-</div>
 
 <nav class="tabs"><div class="wrap"><div class="tabrow" role="tablist">
   <button class="tab" role="tab" aria-selected="true" data-panel="p-tldr">TL;DR</button>
@@ -301,14 +251,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
 
   <h3>Naming, briefly</h3>
   <p style="font-size:14.5px;max-width:680px">Fable and Mythos 5 are the <i>same underlying model</i>. Fable (from the Latin <i>fabula</i>, "that which is told", akin to the Greek <i>mythos</i>) is the safeguarded public version; Mythos 5 is the unrestricted version reserved for vetted cyber defenders. The safeguards are the only difference, hence the two names.</p>
-
-  <div class="cyu">
-    <p class="cyu-q">Fable 5 sits in a higher tier than Opus 4.8, not above it on the same line. What does that tier difference mean for what you pay, and so when is Fable worth choosing?</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>A higher tier means a higher price per token: Fable costs double Opus 4.8 on the API ($10/$50 against $5/$25). So the question is not which model is better in the abstract, but whether a specific job is hard or long enough that Fable&rsquo;s growing capability lead is worth twice the cost. For routine work Opus 4.8 is the better value; Fable earns its price only on the harder, longer jobs where its extra capability genuinely changes the outcome.</p></div>
-    </details>
-  </div>
 </section>
 
 <!-- ============ FABLE ============ -->
@@ -450,35 +392,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <li><b>Mind the retention policy.</b> Mythos-class traffic is kept 30 days regardless of agreements. For client-confidential material you may prefer Opus.</li>
     <li><b>Before 22 June:</b> throw at least one genuinely hard job at Fable while it's bundled with paid plans, e.g. a codebase-wide audit or a big migration, and see if the step up matters to your work.</li>
   </ul>
-
-  <div class="cyu">
-    <p class="cyu-q">Without scrolling up: name one kind of task that genuinely justifies paying double for Fable 5, and say why that shape of work is where the spend pays off.</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>A big, long-horizon job such as a codebase-wide refactor or migration, a long autonomous run, or deep multi-document research. Fable&rsquo;s lead over Opus grows with the length and difficulty of the task, so the extra cost is recovered on work that is large and complex enough to show the difference. Stripe&rsquo;s 50-million-line migration in a day is the headline example of that shape.</p></div>
-    </details>
-  </div>
-
-  <div class="cyu">
-    <p class="cyu-q">Now the other direction: give one job where reaching for either flagship would be the wrong call, and name the model you would use instead.</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>Simple repetitive automation or quick scripts: use Haiku 4.5 ($1/$5 and fast), because a flagship there is allocation down the drain. Routine drafts, reviews and forum replies suit Sonnet 4.6. And security or pen-testing work should go straight to Opus 4.8, since Fable&rsquo;s cyber classifier hands those queries to Opus anyway.</p></div>
-    </details>
-  </div>
-
-  <section class="recap" aria-labelledby="recap-h">
-    <p class="recap-h" id="recap-h">Key takeaways</p>
-    <ul class="clean">
-      <li>Fable 5 is a new Mythos tier above Opus, not an Opus upgrade, and it costs double on the API.</li>
-      <li>Fable earns that price on long, hard jobs where its lead grows; short routine work will not show it.</li>
-      <li>Opus 4.8 stays the sensible default: half the price, no fallback surprises, no mandatory retention.</li>
-      <li>Match the model to the job: Haiku for simple automation, Sonnet for routine writing, Opus for complex work, Fable for the genuinely hard, long-horizon ones.</li>
-      <li>Send security work straight to Opus, and prefer Opus for client-confidential material because Mythos-class traffic carries mandatory 30-day retention.</li>
-    </ul>
-  </section>
-
-  <p style="max-width:680px;font-size:14.5px;color:var(--muted);margin-top:18px">The right answer is usually Opus, with Fable held back for the jobs that defeat it. A short return to this page after your next big task is what makes the choice second nature.</p>
 </section>
 
 <footer class="src">

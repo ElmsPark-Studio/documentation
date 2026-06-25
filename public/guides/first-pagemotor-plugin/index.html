@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Create your first PageMotor plugin from scratch: one folder, one PHP class, one working shortcode. No build step, no special tooling, about 20 minutes.">
-<title>Building your first PageMotor plugin: a lesson | ElmsPark Lesson</title>
+<title>Building your first PageMotor plugin | ElmsPark Guide</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
 <style>
@@ -125,71 +125,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-sub{display:none}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
-/* ============================================================
-   LESSON COMPONENTS (additive, calm, opt-in)
-   ============================================================ */
-/* Lesson marker chip in the kicker row */
-.lesson-chip{display:inline-block;font-family:'Inter Tight',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c35;background:#d0f0df;border:1px solid #8fcfab;padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:10px}
-summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-/* Learning objectives box */
-.objectives{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:8px 0 26px}
-.obj-kicker{font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:600;margin:0 0 8px}
-/* Check your understanding (retrieval reveal) */
-.cyu{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0}
-.cyu-q{font-weight:600;color:var(--pine-deep);margin:0 0 6px;font-family:system-ui,sans-serif;font-size:16.5px}
-.cyu details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.cyu summary{padding:6px 0;font-size:15.5px}
-.cyu .cyu-a{font-size:16px}
-.cyu .cyu-a p{margin:6px 0 4px}
-/* Worked example + now-you-try */
-.worked{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 20px 16px;margin:18px 0}
-.worked-h,.nyt-h{font-family:system-ui,sans-serif;font-weight:600;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px}
-.worked-steps{margin:0;padding-left:20px}
-.worked-steps li{margin:8px 0}
-.worked-steps .why{color:var(--soft);font-size:.92em}
-.nyt{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:10px 18px 4px;margin:14px 0}
-.nyt details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.nyt summary{padding:6px 0;font-size:15.5px}
-.nyt-a p{margin:6px 0}
-/* Misconception / refutation callout */
-.note.myth{border-left-color:#a35a20;background:#fbf2e6}
-.myth-tag{display:inline-block;font-family:system-ui,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#a35a20;font-weight:700;margin-right:6px}
-.myth-claim{margin:0 0 4px}
-.myth-no{font-family:system-ui,sans-serif;font-weight:700;color:#9a3b1e;margin:0 0 6px}
-.myth-true{margin:0}
-/* Key takeaways recap */
-.recap{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pine);border-radius:12px;padding:14px 20px;margin:30px 0}
-.recap-h{font-family:system-ui,sans-serif;font-weight:700;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
-/* End-of-lesson self-test */
-.selftest{margin:30px 0}
-.st-note{font-family:system-ui,sans-serif;font-size:14.5px;color:var(--soft);margin:0 0 14px}
-.st-q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
-.st-prompt{font-weight:600;color:var(--pine-deep);margin:0 0 4px;font-family:system-ui,sans-serif;font-size:16.5px}
-.st-hint{font-family:system-ui,sans-serif;font-size:13.5px;color:var(--soft);margin:0 0 8px}
-.st-cal{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;align-items:center}
-.st-cal-label{font-family:system-ui,sans-serif;font-size:13px;color:var(--soft);margin-right:2px}
-.st-c{font-family:'Inter Tight',system-ui,sans-serif;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--soft);padding:5px 12px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
-.st-c[aria-pressed="true"]{background:var(--pine);color:#fff;border-color:var(--pine)}
-.st-c[aria-pressed="true"]::before{content:"\2713\00a0"}
-.st-c:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
-.st-q details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.st-q summary{padding:6px 0;font-size:15.5px}
-.st-a p{margin:6px 0}
-/* Teach-back */
-.teachback{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:12px;padding:6px 20px 16px;margin:26px 0}
-.teachback details{margin:6px 0 0}
-.tb-a p{margin:6px 0}
-/* Objectives checkpoint + spaced-recall nudge */
-.checkpoint{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:26px 0}
-.checkpoint .obj-kicker{margin-bottom:6px}
-.spaced{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:22px 0;font-size:16.5px}
-.spaced strong{color:var(--pine-deep)}
-.spaced ul.sub{margin:8px 0 0}
-@media(prefers-reduced-motion:reduce){
-  .st-c{transition:none}
-  a,.es-nav a,.es-cta,.llm-btn,.crumbs a{transition:none}
-}
 </style>
 
   <meta property="og:type" content="article">
@@ -230,7 +165,7 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
 </nav>
 
 <div class="wrap">
-  <span class="kicker">PageMotor lesson<span class="lesson-chip">Lesson</span></span>
+  <span class="kicker">PageMotor guide</span>
   <h1>Building your first PageMotor plugin</h1>
   <p class="lede">A PageMotor plugin is one folder with one PHP file inside. You declare a class, opt into the capabilities you need, activate it, and PageMotor does the rest. This guide takes you from an empty folder to a working <code>[hello-world]</code> shortcode.</p>
   <div class="chips">
@@ -254,21 +189,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/first-pagemotor-plugin-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
-  <section class="objectives" aria-labelledby="obj-h">
-    <p class="obj-kicker" id="obj-h">By the end you will be able to</p>
-    <ul class="check">
-      <li>Explain what a PageMotor plugin is, and what the header comment and the <code>PM_Plugin</code> base class each do.</li>
-      <li>Apply the <code>shortcodes()</code> valet to register a working shortcode whose handler returns its HTML.</li>
-      <li>Distinguish <code>css()</code> from <code>css_sitewide()</code>, and <code>type=page</code> from <code>type=html</code>, so a shortcode and its styles actually appear.</li>
-      <li>Diagnose the early pitfalls: a fatal in <code>plugin.php</code>, an unactivated plugin, and a class-name mismatch.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">How the pieces fit: the header comment names the plugin, the class extends <code>PM_Plugin</code> to inherit the valet slots, each valet you implement adds one capability, and install plus activate is what turns a folder of files into running code. Leave any one of those out and the plugin sits there doing nothing.</p>
-  </section>
-
-  <div class="note calm">
-    <strong>This page is opt-in.</strong> Skim the steps for the quick build and you lose nothing: every lesson part is a closed reveal you can leave shut. Open the reveals and the same page becomes a lesson, with retrieval prompts, a worked example and a self-test. One honest caveat: reading it once will not make it stick. A short return a day or two later is what fixes it in memory, and there is a calm checklist for that at the end.
-  </div>
-
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>
@@ -284,12 +204,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <li><a href="#more">Settings, AJAX and assets, briefly &rarr;</a></li>
       <li><a href="#pitfalls">The early pitfalls &rarr;</a></li>
       <li><a href="#fix">Troubleshooting &rarr;</a></li>
-    </ol>
-    <p style="margin-top:14px">Lesson</p>
-    <ol style="list-style:none;padding-left:0;margin:0">
-      <li><a href="#recap">Key takeaways recap &rarr;</a></li>
-      <li><a href="#selftest">Check yourself: self-test &rarr;</a></li>
-      <li><a href="#teachback">Teach it back &rarr;</a></li>
     </ol>
   </nav>
 
@@ -324,14 +238,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       </tbody>
     </table>
     <div class="note warn"><strong>Version badge note.</strong> PageMotor reads only the first 500 bytes of <code>plugin.php</code> to find the <code>Version:</code> header. Keep the header short, and make sure <code>Version:</code> appears before any long description block.</div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: predict where the plugin folder must live, and name the one file PageMotor looks for inside it. Why must the header comment sit at the very top?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>The folder lives under <code>user-content/plugins/</code>, and PageMotor looks for a <code>plugin.php</code> file inside it. The header comment must be at the very top because PageMotor reads it (in fact only the first 500 bytes) to identify the plugin and find the <code>Version:</code> and <code>Class:</code> fields. If other code pushes the header down, those fields can be missed.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 2 -->
@@ -350,20 +256,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <p>That is a complete, valid plugin. It does nothing yet, but PageMotor can load and activate it.</p>
     <div class="note calm">
       <strong>Two lifecycle hooks you can override.</strong> <code>PM_Plugin</code> provides two override slots for your own code. <code>construct()</code> runs early, before valets are evaluated: use it for database setup, includes, or anything that must exist first. <code>init()</code> runs after all valets have been registered: use it for work that depends on settings or options being available. Do not override <code>__construct()</code> or <code>_init()</code>: those are framework-owned and must not be touched.
-    </div>
-
-    <div class="note myth">
-      <p class="myth-claim"><span class="myth-tag">Many people think</span> dropping the plugin folder onto the server is enough to make the plugin run.</p>
-      <p class="myth-no">That is wrong.</p>
-      <p class="myth-true"><strong>What is true:</strong> uploading the folder only makes the plugin <em>appear</em> in the admin list. PageMotor will not instantiate the class or evaluate its valets until you install it (which registers it in the database) and then activate it. An uploaded but unactivated plugin is inert.</p>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: in one sentence, what must your class extend, and what has to match the <code>Class:</code> header exactly?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>Your class must extend <code>PM_Plugin</code>, the framework base class, and the class name in your <code>class &hellip; extends</code> declaration must match the <code>Class:</code> field in the header comment exactly. A typo in either place means PageMotor cannot instantiate it and the plugin will not load.</p></div>
-      </details>
     </div>
   </section>
 
@@ -402,52 +294,6 @@ class My_Hello_World extends PM_Plugin {
     <div class="note">
       <strong>Frontend CSS for shortcodes.</strong> If your shortcode needs its own CSS, register it with <code>css_sitewide()</code>, not <code>css()</code>. The <code>css()</code> method only loads when an instance of the plugin is placed in the current page template. Shortcodes can appear on any page, so they need <code>css_sitewide()</code> to load on every page. This is a common early mistake.
     </div>
-
-    <div class="note myth">
-      <p class="myth-claim"><span class="myth-tag">Many people think</span> implementing <code>css()</code> will load the styles for their shortcode.</p>
-      <p class="myth-no">That is wrong.</p>
-      <p class="myth-true"><strong>What is true:</strong> <code>css()</code> only fires when an instance of the plugin is placed in the current page template, as a Block or Container. A shortcode can be typed into any page, so its styles must be registered with <code>css_sitewide()</code> to load everywhere. Use <code>css()</code> for placed Block UI; use <code>css_sitewide()</code> for shortcode UI.</p>
-    </div>
-
-    <div class="worked">
-      <p class="worked-h">Worked example: the <code>[hello-world]</code> shortcode</p>
-      <ol class="worked-steps">
-        <li><code>shortcodes()</code> returns <code>['hello-world' =&gt; 'render_hello']</code> <span class="why">mapping the tag <code>[hello-world]</code> to the handler method on this class.</span></li>
-        <li><code>render_hello($args = [])</code> <span class="why">receives the shortcode attributes as an array; defaulting to <code>[]</code> keeps it safe when there are none.</span></li>
-        <li><code>$name = !empty($args['name']) ? htmlspecialchars($args['name']) : 'world'</code> <span class="why">reads the optional <code>name</code> attribute, escapes it, and falls back to <code>world</code>.</span></li>
-        <li><code>return '&lt;p&gt;Hello, ' . $name . '!&lt;/p&gt;'</code> <span class="why">returns the HTML rather than echoing it, which is what a shortcode handler must do.</span></li>
-      </ol>
-    </div>
-    <div class="nyt">
-      <p class="nyt-h">Now you try</p>
-      <p>Adapt the worked example, do not copy it. Register a <em>second</em> shortcode, <code>[goodbye]</code>, on the same class, with its own handler <code>render_goodbye</code> that accepts an optional <code>name</code> attribute and returns <code>&lt;p&gt;Goodbye, world!&lt;/p&gt;</code> by default. Write the updated <code>shortcodes()</code> array and the new handler, then reveal.</p>
-      <details>
-        <summary>Reveal the answer</summary>
-        <div class="nyt-a">
-          <p>The <code>shortcodes()</code> array gains a second entry, and you add the matching handler:</p>
-          <pre class="term">public function shortcodes() {
-    return [
-        'hello-world' =&gt; 'render_hello',
-        'goodbye'     =&gt; 'render_goodbye'
-    ];
-}
-
-public function render_goodbye($args = []) {
-    $name = !empty($args['name']) ? htmlspecialchars($args['name']) : 'world';
-    return '&lt;p&gt;Goodbye, ' . $name . '!&lt;/p&gt;';
-}</pre>
-          <p>One map, two entries; one handler per tag. The same <code>$args</code> pattern carries over, so <code>[goodbye name="Kenn"]</code> returns <code>&lt;p&gt;Goodbye, Kenn!&lt;/p&gt;</code>.</p>
-        </div>
-      </details>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: a shortcode renders on the page but its CSS never loads. Name the cause and the fix, then go one step further: for which UI type is <code>css()</code> actually the right choice?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>The styles are registered with <code>css()</code> instead of <code>css_sitewide()</code>. <code>css()</code> only fires when the plugin is placed in the current template, but a shortcode can appear on any page, so the fix is to register the CSS with <code>css_sitewide()</code> so it loads everywhere. <code>css()</code> is the right choice when your plugin is a Block or Container placed directly in the template: in that case, the plugin is always present when the page renders, so template-scoped loading is both correct and more efficient.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 4 -->
@@ -460,20 +306,6 @@ public function render_goodbye($args = []) {
     </ol>
     <div class="note danger">
       <strong>A fatal in plugin.php can take the site down.</strong> PageMotor includes the plugin file directly. A PHP syntax error or an uncaught fatal exception will stop every page from loading until the file is fixed or the plugin is deactivated. Keep early plugins simple. Test each change, and if something breaks, fix the file on the server before anything else.
-    </div>
-
-    <div class="note myth">
-      <p class="myth-claim"><span class="myth-tag">Many people think</span> a small mistake in <code>plugin.php</code> is harmless, affecting only the plugin.</p>
-      <p class="myth-no">That is wrong.</p>
-      <p class="myth-true"><strong>What is true:</strong> PageMotor includes <code>plugin.php</code> directly into the running site. A single syntax error or uncaught fatal there is not contained to the plugin; it halts <em>every</em> page until the file is corrected or the plugin folder is renamed so PageMotor cannot include it. Work with a safety copy and test each change.</p>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: name the two admin actions, in order, that turn an uploaded folder into running code, and say what each one does.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>First <strong>Install</strong>, which registers the plugin in the database. Then <strong>Activate</strong>, which instantiates the class and evaluates its valets on every page load. Uploading the folder alone does neither, so the plugin stays inert until both are done.</p></div>
-      </details>
     </div>
   </section>
 
@@ -488,14 +320,6 @@ public function render_goodbye($args = []) {
     <p>That should give you <em>Hello, Kenn!</em> The shortcode is live and working.</p>
     <div class="note calm">
       <strong>Shortcodes only run in page content, not in standalone HTML.</strong> PageMotor pages can have a <code>type</code> of <code>page</code> (runs the shortcode pipeline) or <code>html</code> (serves verbatim HTML). Shortcodes only fire in <code>type=page</code> content. If you do not see the output, check the page type in the content editor.
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">A cumulative check, back to step 3. Your shortcode shows up as the literal text <code>[hello-world]</code> on the live page instead of rendering. Produce the two most likely causes, in the order you would check them.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>First, the plugin may not be active: uploading the folder is not enough, so check it is installed and activated in the Plugins section. Second, the page may be <code>type=html</code> rather than <code>type=page</code>; only <code>type=page</code> content runs the shortcode pipeline, so a verbatim HTML page leaves the tag as plain text. Check the page type in the content editor.</p></div>
-      </details>
     </div>
   </section>
 
@@ -557,18 +381,6 @@ public function render_goodbye($args = []) {
   </ul>
 
 
-  <!-- KEY TAKEAWAYS RECAP -->
-  <section class="recap" id="recap" aria-labelledby="recap-h">
-    <p class="recap-h" id="recap-h">The five things that matter</p>
-    <ul class="check">
-      <li>A plugin is one folder under <code>user-content/plugins/</code> with a <code>plugin.php</code> whose header comment names it, kept inside the first 500 bytes.</li>
-      <li>The class extends <code>PM_Plugin</code> and its name must match the <code>Class:</code> header exactly.</li>
-      <li>Capabilities come from valet methods; <code>shortcodes()</code> maps a tag to a handler that <em>returns</em> HTML.</li>
-      <li>Shortcode CSS uses <code>css_sitewide()</code>; <code>css()</code> is only for placed Blocks. Shortcodes run only on <code>type=page</code> content.</li>
-      <li>Uploading is not running: install, then activate. A fatal in <code>plugin.php</code> can take the whole site down.</li>
-    </ul>
-  </section>
-
   <!-- TROUBLESHOOTING -->
   <h2 class="plain" id="fix">Troubleshooting</h2>
   <p class="sub-lede">The most common problems and what to do about them.</p>
@@ -598,161 +410,6 @@ public function render_goodbye($args = []) {
     <p>PageMotor reads only the first 500 bytes of <code>plugin.php</code> to find the <code>Version:</code> header. Move the <code>Version:</code> line higher up in the header comment, before any long description, and make sure the plugin also defines a constant matching the class name in all caps (for example <code>MY_HELLO_WORLD</code>). Both are required for the badge to appear.</p>
   </details>
 
-  <!-- END-OF-LESSON SELF-TEST -->
-  <section class="selftest" id="selftest" aria-labelledby="st-h">
-    <h2 class="plain" id="st-h">Check yourself</h2>
-    <p class="st-note">No score is kept and nothing is saved. Answer each one in your head or on paper first, then reveal, then mark how your attempt compared. The ones that surprised you are the ones to revisit in a day or two.</p>
-
-    <div class="st-q">
-      <p class="st-prompt">1. You need to register a shortcode. Which valet method do you implement, and what shape does it return?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Implement <code>shortcodes()</code>. It returns an array mapping shortcode tags to handler method names, for example <code>['hello-world' =&gt; 'render_hello']</code>. The handler receives <code>$args</code> (the attributes) and should return its HTML, not echo it.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 1">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">2. Your shortcode renders but its CSS never loads. Name the cause and the fix.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>The CSS is registered with <code>css()</code>, which only fires when the plugin is placed in the current template as a Block or Container. A shortcode can appear on any page, so register the styles with <code>css_sitewide()</code> instead, and they load everywhere the shortcode might be used.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 2">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">3. A page shows the literal text <code>[hello-world]</code> instead of rendering it, and the plugin is active. What is the most likely cause, and where do you check?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>The page is <code>type=html</code> rather than <code>type=page</code>. Only <code>type=page</code> content runs the shortcode pipeline; <code>type=html</code> is served verbatim, so the tag stays as plain text. Check the page&rsquo;s type setting in the content editor.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 3">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">4. You have uploaded the plugin folder and the file is correct, but nothing happens on the front end. What two admin steps are you missing, in order?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Install, then Activate. Uploading the folder only makes the plugin appear in the admin list. Install registers it in the database, and Activate instantiates the class and evaluates its valets on every page load. Until both are done, the plugin is inert.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 4">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">5. After saving a small edit to <code>plugin.php</code>, every page on the site is now blank, not just the plugin&rsquo;s output. What does that tell you, and what is the fastest way to get the site back?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>There is a PHP syntax error or uncaught fatal in <code>plugin.php</code>. Because PageMotor includes the file directly, that fatal halts every page, not just the plugin. The fastest recovery is to rename the plugin folder so PageMotor cannot include it, which brings the whole site back, then fix the file at your own pace before renaming it back.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 5">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">6. A cumulative one, back to the header. The plugin loads but its version badge is missing in admin. What does PageMotor read, and how much of the file does it read, to find the <code>Version:</code> field? What is the fix?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>PageMotor reads only the first 500 bytes of <code>plugin.php</code> to find the <code>Version:</code> header. If the <code>Version:</code> line has been pushed below a long description block, it falls outside that window and the badge never appears. The fix is to move <code>Version:</code> higher in the header comment, above any lengthy description, so it sits within those first 500 bytes.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 6">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">7. In your own words: what does the header comment give PageMotor, and what does extending <code>PM_Plugin</code> give you as a plugin author?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>The header comment gives PageMotor the information it needs to identify and manage the plugin: the display name, version, minimum requirements, and crucially the <code>Class:</code> field so PageMotor knows which PHP class to instantiate. Extending <code>PM_Plugin</code> gives you the valet method slots: named methods on your class that PageMotor calls at specific moments to register shortcodes, assets, AJAX handlers, settings, and more. Without the header, PageMotor cannot find or load the plugin; without extending <code>PM_Plugin</code>, there are no valet slots to implement and the plugin has no way to add capabilities.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 7">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-  </section>
-
-  <!-- TEACH-BACK -->
-  <section class="teachback" id="teachback">
-    <h2 class="plain">Teach it back</h2>
-    <p>In five sentences, explain to a developer new to PageMotor how to get from an empty folder to a working <code>[hello-world]</code> shortcode, and one mistake to avoid. Write it before you reveal. A sentence-starter to begin: &ldquo;A PageMotor plugin is just&hellip;&rdquo;</p>
-    <details>
-      <summary>Reveal a model answer and a self-check list</summary>
-      <div class="tb-a">
-        <p>A PageMotor plugin is just one folder under <code>user-content/plugins/</code> with a <code>plugin.php</code> inside it. The top of that file is a header comment that names the plugin and gives the <code>Class:</code>, and below it you declare a class that extends <code>PM_Plugin</code> with a matching name. To add a shortcode you implement the <code>shortcodes()</code> valet, which maps <code>[hello-world]</code> to a handler method that returns its HTML. Then in the admin you install and activate the plugin, because uploading the folder alone does not run it. Finally you add <code>[hello-world]</code> to a <code>type=page</code> page, and it renders.</p>
-        <ul class="check">
-          <li>Did you name the folder location, the <code>plugin.php</code> file, and the <code>PM_Plugin</code> base class?</li>
-          <li>Did you say the shortcode handler must <em>return</em> its HTML, not echo it?</li>
-          <li>Accuracy check: did you avoid claiming the upload alone makes the plugin run? It must be installed <em>and</em> activated.</li>
-          <li>Accuracy check: did you avoid suggesting <code>css()</code> for shortcode styles? Shortcode CSS needs <code>css_sitewide()</code>.</li>
-        </ul>
-      </div>
-    </details>
-  </section>
-
-  <!-- OBJECTIVES CHECKPOINT -->
-  <section class="checkpoint" aria-labelledby="cp-h">
-    <p class="obj-kicker" id="cp-h">Checkpoint: tick what you can now do from memory</p>
-    <ul class="check">
-      <li>I can explain what a PageMotor plugin is, and what the header comment and the <code>PM_Plugin</code> base class each do.</li>
-      <li>I can apply <code>shortcodes()</code> to register a shortcode whose handler returns HTML.</li>
-      <li>I can say when to use <code>css()</code> versus <code>css_sitewide()</code>, and <code>type=page</code> versus <code>type=html</code>.</li>
-      <li>I can diagnose a fatal in <code>plugin.php</code>, an unactivated plugin, and a class-name mismatch.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">Any you could not tick are the ones worth re-reading, then re-testing in the self-test above.</p>
-  </section>
-
-  <!-- SPACED-RECALL NUDGE -->
-  <div class="spaced">
-    <strong>Come back in a day or two.</strong> One sitting does not make this stick; a short return after a gap is what moves it into memory. No need for an app or a reminder file. Keep this short checklist and work through it from memory in a couple of days, opening the page only to check yourself. The scenarios are deliberately worded differently from the questions above, so you retrieve the idea rather than the phrasing:
-    <ul class="sub">
-      <li>A colleague has dropped a plugin folder onto the server and asks why nothing changed on the site. What do you tell them to do?</li>
-      <li>You want a banner shortcode to carry its own styling on every page it is used. Which asset valet do you reach for, and why not the other one?</li>
-      <li>A page is showing your shortcode tag as raw text. Walk through what you would check.</li>
-      <li>You need to add a second shortcode to an existing plugin. Describe the two edits you make to the class.</li>
-      <li>Explain in one line why a typo in <code>plugin.php</code> is more dangerous than a typo in a normal application file.</li>
-    </ul>
-  </div>
-
-  <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;color:var(--soft);margin:28px 0 0;text-align:center">That is the whole picture: one folder, one class, one valet, and the install-then-activate step that brings it to life. If you can run the day-two checklist from memory, you understand how a PageMotor plugin works, not just the steps to build one.</p>
-
   <div class="seealso">
     <strong>See also</strong>
     <ul>
@@ -774,29 +431,5 @@ public function render_goodbye($args = []) {
   </footer>
 
 </div>
-<script>
-/* Post-reveal self-calibration: after revealing, the learner marks how their own
-   attempt compared. Toggles aria-pressed within each .st-cal group (mutually
-   exclusive) and announces the choice in the adjacent live region. This is the only
-   JS on the page; answers are native details elements, so with JS disabled every
-   answer is still reachable and the calibration buttons simply do nothing. */
-(function(){
-  document.addEventListener('click', function(e){
-    var btn = e.target.closest('.st-c');
-    if(!btn) return;
-    var group = btn.closest('.st-cal');
-    if(!group) return;
-    var wasPressed = btn.getAttribute('aria-pressed') === 'true';
-    group.querySelectorAll('.st-c').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
-    btn.setAttribute('aria-pressed', wasPressed ? 'false' : 'true');
-    var out = group.parentNode.querySelector('[data-cal-out]');
-    if(out){
-      if(wasPressed){ out.textContent = ''; }
-      else if(btn.getAttribute('data-cal') === 'surprised'){ out.textContent = 'Noted: this one surprised you. Add it to your day-two review.'; }
-      else { out.textContent = 'Noted: your answer matched.'; }
-    }
-  });
-})();
-</script>
 </body>
 </html>

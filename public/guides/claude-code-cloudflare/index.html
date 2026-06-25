@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Wire Claude Code into Cloudflare so it can read your account, change settings, deploy Workers and debug live logs from the terminal. The full three-part setup, done safely.">
-<title>Giving Claude Code control of Cloudflare: a lesson | ElmsPark Lesson</title>
+<title>Give Claude Code control of your Cloudflare account | ElmsPark Guide</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
 <style>
@@ -125,71 +125,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-sub{display:none}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
-/* ============================================================
-   LESSON COMPONENTS (additive, calm, opt-in)
-   ============================================================ */
-/* Lesson marker chip in the kicker row */
-.lesson-chip{display:inline-block;font-family:'Inter Tight',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c35;background:#d0f0df;border:1px solid #8fcfab;padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:10px}
-summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-/* Learning objectives box */
-.objectives{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:8px 0 26px}
-.obj-kicker{font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:600;margin:0 0 8px}
-/* Check your understanding (retrieval reveal) */
-.cyu{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0}
-.cyu-q{font-weight:600;color:var(--pine-deep);margin:0 0 6px;font-family:system-ui,sans-serif;font-size:16.5px}
-.cyu details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.cyu summary{padding:6px 0;font-size:15.5px}
-.cyu .cyu-a{font-size:16px}
-.cyu .cyu-a p{margin:6px 0 4px}
-/* Worked example + now-you-try */
-.worked{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 20px 16px;margin:18px 0}
-.worked-h,.nyt-h{font-family:system-ui,sans-serif;font-weight:600;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px}
-.worked-steps{margin:0;padding-left:20px}
-.worked-steps li{margin:8px 0}
-.worked-steps .why{color:var(--soft);font-size:.92em}
-.nyt{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:10px 18px 4px;margin:14px 0}
-.nyt details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.nyt summary{padding:6px 0;font-size:15.5px}
-.nyt-a p{margin:6px 0}
-/* Misconception / refutation callout */
-.note.myth{border-left-color:#a35a20;background:#fbf2e6}
-.myth-tag{display:inline-block;font-family:system-ui,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#a35a20;font-weight:700;margin-right:6px}
-.myth-claim{margin:0 0 4px}
-.myth-no{font-family:system-ui,sans-serif;font-weight:700;color:#9a3b1e;margin:0 0 6px}
-.myth-true{margin:0}
-/* Key takeaways recap */
-.recap{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pine);border-radius:12px;padding:14px 20px;margin:30px 0}
-.recap-h{font-family:system-ui,sans-serif;font-weight:700;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
-/* End-of-lesson self-test */
-.selftest{margin:30px 0}
-.st-note{font-family:system-ui,sans-serif;font-size:14.5px;color:var(--soft);margin:0 0 14px}
-.st-q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
-.st-prompt{font-weight:600;color:var(--pine-deep);margin:0 0 4px;font-family:system-ui,sans-serif;font-size:16.5px}
-.st-hint{font-family:system-ui,sans-serif;font-size:13.5px;color:var(--soft);margin:0 0 8px}
-.st-cal{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;align-items:center}
-.st-cal-label{font-family:system-ui,sans-serif;font-size:13px;color:var(--soft);margin-right:2px}
-.st-c{font-family:'Inter Tight',system-ui,sans-serif;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--soft);padding:5px 12px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
-.st-c[aria-pressed="true"]{background:var(--pine);color:#fff;border-color:var(--pine)}
-.st-c[aria-pressed="true"]::before{content:"\2713\00a0"}
-.st-c:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
-.st-q details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.st-q summary{padding:6px 0;font-size:15.5px}
-.st-a p{margin:6px 0}
-/* Teach-back */
-.teachback{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:12px;padding:6px 20px 16px;margin:26px 0}
-.teachback details{margin:6px 0 0}
-.tb-a p{margin:6px 0}
-/* Objectives checkpoint + spaced-recall nudge */
-.checkpoint{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:26px 0}
-.checkpoint .obj-kicker{margin-bottom:6px}
-.spaced{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:22px 0;font-size:16.5px}
-.spaced strong{color:var(--pine-deep)}
-.spaced ul.sub{margin:8px 0 0}
-@media(prefers-reduced-motion:reduce){
-  .st-c{transition:none}
-  a,.es-nav a,.es-cta,.llm-btn,.crumbs a{transition:none}
-}
 </style>
 
   <meta property="og:type" content="article">
@@ -230,7 +165,7 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
 </nav>
 
 <div class="wrap">
-  <span class="kicker">AI &amp; tools lesson<span class="lesson-chip">Lesson</span></span>
+  <span class="kicker">AI &amp; tools guide</span>
   <h1>Give Claude Code control of your Cloudflare account</h1>
   <p class="lede">Wire Claude Code into Cloudflare once, and it can read your account, change settings, deploy Workers and read live logs, all from the terminal. Here is the full setup, done safely.</p>
   <div class="chips">
@@ -254,21 +189,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/claude-code-cloudflare-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
-  <section class="objectives" aria-labelledby="obj-h">
-    <p class="obj-kicker" id="obj-h">By the end you will be able to</p>
-    <ul class="check">
-      <li>Explain the three parts that give Claude Code control of Cloudflare, Skills, MCP servers and Wrangler, and say what each one does.</li>
-      <li>Choose between OAuth and a scoped API token for a given situation, and justify the choice.</li>
-      <li>Apply least privilege when scoping a token, so it can do its one job and no more.</li>
-      <li>Recall the Wrangler login-scope gotcha and the fix for it.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">This lesson covers the three parts that give Claude Code control of Cloudflare, the two ways to authorise it, and how to scope that access safely.</p>
-  </section>
-
-  <div class="note calm">
-    <strong>This page is opt-in.</strong> Skim the steps for the quick answer and you lose nothing: every lesson part is a closed reveal you can leave shut. Open the reveals and the same page becomes a lesson, with retrieval prompts, worked examples and a self-test. One honest caveat: reading it once will not make it stick. A short return a day or two later is what fixes it in memory, and there is a calm checklist for that at the end.
-  </div>
-
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>
@@ -287,12 +207,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <li><a href="#security">Security: sensible habits with tokens &rarr;</a></li>
       <li><a href="#verify">Check it actually works &rarr;</a></li>
       <li><a href="#fix">Troubleshooting &rarr;</a></li>
-    </ol>
-    <p style="margin-top:14px">Lesson</p>
-    <ol style="list-style:none;padding-left:0;margin:0">
-      <li><a href="#recap">Key takeaways recap &rarr;</a></li>
-      <li><a href="#selftest">Check yourself: self-test &rarr;</a></li>
-      <li><a href="#teachback">Teach it back &rarr;</a></li>
     </ol>
   </nav>
 
@@ -328,14 +242,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <li>Registers the Cloudflare <strong>API, docs, bindings, builds and observability MCP servers</strong> (the live line into your account).</li>
     </ul>
     <div class="note"><strong>Why a plugin and not a manual config?</strong> You can wire up the MCP servers by hand (see <a href="#menu">the server menu</a> below), but the plugin sets up the Skills and the servers together and keeps them matched. For most people it is the fastest and tidiest route.</div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: the plugin install wires up two of the three parts. Name them, then explain in a sentence how the third part differs from those two and why it is reached a different way.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>The plugin wires up the Skills and the MCP servers. Wrangler is the third part, and it differs because it is a command-line tool that runs locally to build and deploy code, rather than a knowledge file or a live API connection. You reach it through <code>npx</code> when a deploy is needed, rather than through the plugin install.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 4 -->
@@ -348,20 +254,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <pre class="term"><span class="p">$</span> claude mcp list</pre>
     <p>You should see the Cloudflare servers listed as connected.</p>
     <div class="note warn"><strong>On a server or CI box with no browser?</strong> OAuth needs a browser once. For headless or automated use, skip OAuth and pass a scoped API token instead. That is covered in <a href="#tokens">Access without OAuth</a> below.</div>
-
-    <div class="note myth">
-      <p class="myth-claim"><span class="myth-tag">Many people think</span> the OAuth sign-in in the browser covers every permission, so once it succeeds nothing else is ever needed.</p>
-      <p class="myth-no">That is wrong.</p>
-      <p class="myth-true"><strong>What is true:</strong> a browser OAuth session, including a <code>wrangler login</code> one, does not include every scope. Some account-level actions and products like Turnstile need scopes OAuth will not grant. When you hit that wall the fix is a scoped API token, not another sign-in. That is the Wrangler gotcha, and the next sections show it in full.</p>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: predict what the OAuth handshake stores on your machine, and name the one situation in this step where OAuth is not an option.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>OAuth stores no long-lived secret you can copy or leak; it grants access through your signed-in browser session. The one situation it cannot serve is a headless box with no browser, a server or CI runner, where you pass a scoped API token instead.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 5 -->
@@ -374,14 +266,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <p>Or, from a Workers project folder, the classic:</p>
     <pre class="term"><span class="p">&gt;</span> Deploy this Worker to Cloudflare and give me the live URL.</pre>
     <p>Claude will tell you what it is about to do before it touches anything. Read the plan, then approve. That review step is your safety net, especially while you are learning what it can reach.</p>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: of the three example instructions above, which one is the safest to run first, and why does the order matter?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>The read-only zone list is safest, because it changes nothing and proves the connection returns your real data. Running a read first, then a small reversible change, then a deploy, lets you build trust in what the agent can reach before you let it write anything, and the approve-before-it-acts step is your check at each stage.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- DEEPER: PILLARS -->
@@ -400,14 +284,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <h4>3. Wrangler</h4>
       <p>The Workers command-line tool. It handles local development, deploys and product-specific jobs like <code>d1 migrations apply</code> or <code>tail</code>. The bundled wrangler Skill teaches the agent when to reach for it.</p>
     </div>
-  </div>
-
-  <div class="cyu">
-    <p class="cyu-q">A cumulative check, back to the objectives. Without re-reading the three boxes, produce the one-line job of each part in your own words: Skills, MCP servers, Wrangler. Which one alone could not change anything in your account?</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>Skills are knowledge of how Cloudflare works; MCP servers are the live line that calls the API; Wrangler is the command-line tool that builds and deploys Workers. Skills alone could not change anything, because they are knowledge only, with no connection to the account. The MCP servers and Wrangler are what actually act.</p></div>
-    </details>
   </div>
 
   <h3 class="mini">Code Mode: how one server covers the whole API</h3>
@@ -475,26 +351,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     Wrangler picks the token up automatically. Find your account id with <code>npx wrangler whoami</code>.
   </div>
 
-  <div class="worked">
-    <p class="worked-h">Worked example: scope a token for a DNS-only task</p>
-    <p>Say the only job is to let the agent edit DNS records on one zone, and nothing else. Least privilege says the token should be able to do exactly that and no more.</p>
-    <ol class="worked-steps">
-      <li>At <code>dash.cloudflare.com/profile/api-tokens</code>, choose <strong>Create Token</strong>, then <strong>Custom token</strong>. <span class="why">Custom gives exact control rather than a broad template.</span></li>
-      <li>Add one permission: <strong>Zone, DNS, Edit</strong>. <span class="why">DNS edit is the whole job; nothing about Workers, R2 or account settings is granted.</span></li>
-      <li>Under Zone Resources, scope it to <strong>the one zone</strong>, not &ldquo;all zones&rdquo;. <span class="why">A leak then affects one zone, not your whole account.</span></li>
-      <li>Create it, copy the secret once, store it in your password manager. <span class="why">Cloudflare shows the secret a single time.</span></li>
-    </ol>
-    <p>The result is a token that can edit DNS on one zone and is powerless everywhere else. That is least privilege in practice.</p>
-  </div>
-  <div class="nyt">
-    <p class="nyt-h">Now you try</p>
-    <p>This one takes the next step, not the same one. You need a token for a CI build box that deploys a Worker on a schedule, with no human present. Beyond picking the right permission, name the two extra controls from this guide that a CI token should carry, and say which kind of token (user or account) you would choose. Work it out, then reveal.</p>
-    <details>
-      <summary>Reveal the answer</summary>
-      <div class="nyt-a"><p>Grant the Workers deploy permission (the <em>Edit Cloudflare Workers</em> template, or a custom token with the equivalent scope), scoped to the one account. Then add the two automation controls: an <strong>IP restriction</strong> to the build server&rsquo;s address and a <strong>time-to-live</strong> so the token expires. Choose an <strong>account token</strong> (secret prefixed <code>cfat_</code>), because it is tied to the account rather than a person, so it keeps working when someone leaves the team. The DNS worked example needed none of those; a headless, shared CI token does.</p></div>
-    </details>
-  </div>
-
   <!-- DEEPER: TOKENS -->
   <h2 class="plain" id="tokens">Access without OAuth: scoped API tokens</h2>
   <p class="sub-lede">For CI/CD, a headless server, or simply tighter control over what the agent can touch, a scoped API token is the right tool. OAuth is convenient on your own machine; a token is precise and portable.</p>
@@ -511,14 +367,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
   <h3 class="mini">User tokens vs account tokens</h3>
   <p>A <strong>user token</strong> is tied to you personally. An <strong>account token</strong> (its secret is prefixed <code>cfat_</code>) is tied to the account and keeps working even if a person leaves the team, which makes it the better choice for shared services and CI. Both are accepted by Wrangler and the MCP servers.</p>
 
-  <div class="cyu">
-    <p class="cyu-q">Before you scroll: a colleague asks for one rule of thumb for choosing OAuth versus a scoped token. Produce it in a sentence, and add when a token is not just acceptable but required.</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>OAuth for your own machine, a scoped token for anything headless or shared. A token is required, not just preferred, on a box with no browser (CI or a remote server), and for the tasks whose scopes a browser login will not grant, the Wrangler gotcha.</p></div>
-    </details>
-  </div>
-
   <!-- DEEPER: SECURITY -->
   <h2 class="plain" id="security">Security: sensible habits with tokens</h2>
   <p class="sub-lede">You are handing an agent the keys to live infrastructure. A few habits keep that safe.</p>
@@ -532,20 +380,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <li><strong>Approve before it acts.</strong> Keep reading Claude&rsquo;s planned actions before approving, particularly for anything destructive.</li>
   </ul>
 
-  <div class="note myth">
-    <p class="myth-claim"><span class="myth-tag">Many people think</span> a long-lived token is fine to commit to a repository, as long as the repository is private.</p>
-    <p class="myth-no">That is wrong.</p>
-    <p class="myth-true"><strong>What is true:</strong> a private repository is not a secret store. Access changes, forks, clones, CI logs, screen shares and backups all spread the file beyond your control, and a committed secret lives in the git history even after you delete the line. Keep tokens in environment variables or a secrets manager, never in a tracked file, and if one is ever committed, roll it at the dashboard rather than just removing the line.</p>
-  </div>
-
-  <div class="cyu">
-    <p class="cyu-q">Before you scroll: name the two controls that shrink the blast radius of a CI token specifically, and explain in one line why &ldquo;it is in a private repo&rdquo; is not a safe place to keep it.</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>An IP restriction (so it only works from the build server) and a time-to-live (so it expires) shrink a CI token&rsquo;s blast radius. A private repo is not safe because the secret still lives in git history and spreads through clones, forks, CI logs and backups; access being limited today does not keep it limited.</p></div>
-    </details>
-  </div>
-
   <!-- DEEPER: VERIFY -->
   <h2 class="plain" id="verify">Check it actually works</h2>
   <p class="sub-lede">Four quick proofs that the connection is real, not just configured.</p>
@@ -556,26 +390,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <li>From a project folder, a Worker deploy lands in your Cloudflare dashboard.</li>
   </ul>
   <div class="note calm"><strong>Tip:</strong> if you ever get answers that feel out of date, make sure the <strong>Documentation</strong> MCP server is enabled, or point the agent at <a href="https://developers.cloudflare.com/llms.txt">developers.cloudflare.com/llms.txt</a>. It biases the agent towards current docs over older training knowledge.</div>
-
-  <div class="cyu">
-    <p class="cyu-q">Before you scroll: <code>claude mcp list</code> shows the servers connected. Is that proof the agent can actually operate your account? Predict the answer and the reason.</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>No. Connected means configured, not capable. The real proof is a read-only question returning your own data, then a small reversible change succeeding. A server can list as connected and still fail a write if the OAuth grant or token is missing the scope for it.</p></div>
-    </details>
-  </div>
-
-  <!-- KEY TAKEAWAYS RECAP -->
-  <section class="recap" id="recap" aria-labelledby="recap-h">
-    <p class="recap-h" id="recap-h">The five things that matter</p>
-    <ul class="check">
-      <li>Three parts give Claude Code control: Skills (knowledge), MCP servers (the live API line), and Wrangler (build and deploy).</li>
-      <li>One plugin install wires up the Skills and the MCP servers; Wrangler is reached separately through <code>npx</code>.</li>
-      <li>OAuth for your own machine, a scoped API token for anything headless or shared.</li>
-      <li>The Wrangler gotcha: a browser login does not grant every scope, so some jobs need a scoped token.</li>
-      <li>Least privilege, no committed tokens, and IP plus TTL for automation keep the blast radius small.</li>
-    </ul>
-  </section>
 
   <!-- TROUBLESHOOTING -->
   <h2 class="plain" id="fix">Troubleshooting</h2>
@@ -611,161 +425,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <p>Enable the <strong>Documentation</strong> MCP server (<code>docs.mcp.cloudflare.com/mcp</code>) so it fetches current docs at runtime, or point it at <a href="https://developers.cloudflare.com/llms.txt">developers.cloudflare.com/llms.txt</a> for a directory of every product.</p>
   </details>
 
-  <!-- END-OF-LESSON SELF-TEST -->
-  <section class="selftest" id="selftest" aria-labelledby="st-h">
-    <h2 class="plain" id="st-h">Check yourself</h2>
-    <p class="st-note">No score is kept and nothing is saved. Answer each one in your head or on paper first, then reveal, then mark how your attempt compared. The ones that surprised you are the ones to revisit in a day or two.</p>
-
-    <div class="st-q">
-      <p class="st-prompt">1. Name the three parts that give Claude Code control of Cloudflare, and say in a few words what each does. Which two does the plugin install set up?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Skills (knowledge of how Cloudflare works), MCP servers (the live line that calls the API at runtime), and Wrangler (the command-line tool that builds and deploys Workers). The plugin install sets up the Skills and the MCP servers; Wrangler is reached separately through <code>npx</code> when a deploy is needed.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 1">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">2. You are setting this up on your own laptop for everyday use. OAuth or a scoped token, and why?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>OAuth. On your own machine it stores no long-lived secret you can copy or leak, and it is the convenient default. Save scoped tokens for headless or shared use, where there is no browser, or where you want precise control over what the agent can touch.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 2">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">3. A deploy fails part-way: <code>wrangler login</code> succeeded, yet one account-level action is refused for lack of a scope. Name the cause and the fix.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>This is the Wrangler gotcha. A browser <code>wrangler login</code> session does not include every permission scope, so some account-level actions and products like Turnstile are refused. The fix is to create a scoped API token with that permission and expose it as <code>CLOUDFLARE_API_TOKEN</code>; Wrangler picks it up automatically.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 3">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">4. The agent&rsquo;s one job is to edit DNS on a single zone. Describe, in scoping terms, what least privilege means for that token.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Grant one permission, Zone DNS Edit, and scope it to that one zone rather than all zones. Nothing about Workers, R2 or account settings is granted. The token can do its single job and is powerless everywhere else, so a leak affects one zone, not the whole account.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 4">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">5. A cron job on a shared staging server runs every night and deploys a Worker. You need a token for it. Beyond the right permission, what two extra controls do you apply, and which token type do you pick? Then explain why the DNS-only worked example earlier in this lesson needed neither of those extra controls nor an account-level scope.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>For the cron job, add an IP restriction to the staging server&rsquo;s address and a time-to-live so the token expires automatically. Pick an account token (secret prefixed <code>cfat_</code>), because it is tied to the account rather than a person and keeps working when someone leaves the team. The DNS-only worked example needed neither control because it was a one-off interactive task on a single zone, scoped tightly to one person and one action; the blast radius was already minimal. A long-lived, multi-use token on a shared server is a different threat model, which is where IP limits and expiry earn their place.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 5">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">6. A teammate says it is safe to commit a long-lived token because the repository is private. What do you tell them?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>A private repository is not a secret store. The token spreads through clones, forks, CI logs, screen shares and backups, and it lives in git history even after the line is deleted. Keep tokens in environment variables or a secrets manager, and if one is committed, roll it at the dashboard rather than just removing the line.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 6">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">7. A cumulative one, back to the start. <code>claude mcp list</code> shows the servers connected and your <code>wrangler login</code> succeeded. Can the agent definitely do everything you might ask of it?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>No. Connected proves the servers are wired up, and a browser login proves you signed in, but neither guarantees every scope. A write can still fail if the OAuth grant or token lacks the permission, and the Wrangler gotcha means certain account-level actions need a scoped token regardless. The real proof is a read returning your own data, then the specific action succeeding.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 7">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-  </section>
-
-  <!-- TEACH-BACK -->
-  <section class="teachback" id="teachback">
-    <h2 class="plain">Teach it back</h2>
-    <p>In five sentences, explain to a developer who has never tried this what it takes to give Claude Code control of Cloudflare, and how they decide between OAuth and a token. Write it before you reveal. A sentence-starter to begin: &ldquo;Claude Code can drive Cloudflare because&hellip;&rdquo;</p>
-    <details>
-      <summary>Reveal a model answer and a self-check list</summary>
-      <div class="tb-a">
-        <p>Claude Code can drive Cloudflare because three parts work together: Skills give it knowledge of the platform, MCP servers give it a live line into the API, and Wrangler builds and deploys Workers. One plugin install wires up the Skills and the servers, and Wrangler is reached through <code>npx</code> when needed. To let it act on your account it needs authorisation, and there are two forms: OAuth in the browser for your own machine, and a scoped API token for anything headless or shared. You scope a token to the least privilege the job needs, one permission and one zone or account, and for automation you add an IP restriction and a time-to-live. The catch to remember is that a browser login does not grant every scope, so some account-level jobs need a scoped token even on your own laptop.</p>
-        <ul class="check">
-          <li>Did you name Skills, MCP servers and Wrangler, and say what each does?</li>
-          <li>Did you give the OAuth-for-you, token-for-machines rule of thumb?</li>
-          <li>Accuracy check: did you avoid claiming the browser OAuth login covers every permission? It does not, that is the Wrangler gotcha.</li>
-          <li>Accuracy check: did you avoid saying a token is fine to commit to a private repo? It is not, in any repo.</li>
-        </ul>
-      </div>
-    </details>
-  </section>
-
-  <!-- OBJECTIVES CHECKPOINT -->
-  <section class="checkpoint" aria-labelledby="cp-h">
-    <p class="obj-kicker" id="cp-h">Checkpoint: tick what you can now do from memory</p>
-    <ul class="check">
-      <li>I can name the three parts, Skills, MCP servers and Wrangler, and say what each does.</li>
-      <li>I can choose between OAuth and a scoped token for a situation, and justify it.</li>
-      <li>I can apply least privilege when scoping a token, down to one permission and one zone or account.</li>
-      <li>I can recall the Wrangler login-scope gotcha and its fix.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">Any you could not tick are the ones worth re-reading, then re-testing in the self-test above.</p>
-  </section>
-
-  <!-- SPACED-RECALL NUDGE -->
-  <div class="spaced">
-    <strong>Come back in a day or two.</strong> One sitting does not make this stick; a short return after a gap is what moves it into memory. No need for an app or a reminder file. Keep this short checklist and work through it from memory in a couple of days, opening the page only to check yourself. The scenarios are deliberately worded differently from the questions above, so you retrieve the idea rather than the phrasing:
-    <ul class="sub">
-      <li>A friend has just installed the Cloudflare plugin and asks what is still not set up. What do you tell them, and how do they reach it?</li>
-      <li>You are wiring this into a nightly GitHub Action with no human watching. What kind of credential do you create, and what two limits do you put on it?</li>
-      <li>Everything connected fine, but one Turnstile task keeps being refused. What is going on, and what is the route through it?</li>
-      <li>You need a credential whose only power is to change one DNS record on one site. Describe exactly what you grant it.</li>
-      <li>Someone is about to paste a token into a config file in a private repo. In one line, talk them out of it.</li>
-    </ul>
-  </div>
-
-  <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;color:var(--soft);margin:28px 0 0;text-align:center">That is the whole picture: three parts, two ways to authorise, and one rule, least privilege. If you can run the day-two checklist from memory, you understand why this setup is safe, not just the steps to wire it up.</p>
-
   <div class="seealso">
     <strong>See also</strong>
     <ul>
@@ -788,29 +447,5 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
   </footer>
 
 </div>
-<script>
-/* Post-reveal self-calibration: after revealing, the learner marks how their own
-   attempt compared. Toggles aria-pressed within each .st-cal group (mutually
-   exclusive) and announces the choice in the adjacent live region. This is the only
-   JS on the page; answers are native details elements, so with JS disabled every
-   answer is still reachable and the calibration buttons simply do nothing. */
-(function(){
-  document.addEventListener('click', function(e){
-    var btn = e.target.closest('.st-c');
-    if(!btn) return;
-    var group = btn.closest('.st-cal');
-    if(!group) return;
-    var wasPressed = btn.getAttribute('aria-pressed') === 'true';
-    group.querySelectorAll('.st-c').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
-    btn.setAttribute('aria-pressed', wasPressed ? 'false' : 'true');
-    var out = group.parentNode.querySelector('[data-cal-out]');
-    if(out){
-      if(wasPressed){ out.textContent = ''; }
-      else if(btn.getAttribute('data-cal') === 'surprised'){ out.textContent = 'Noted: this one surprised you. Add it to your day-two review.'; }
-      else { out.textContent = 'Noted: your answer matched.'; }
-    }
-  });
-})();
-</script>
 </body>
 </html>

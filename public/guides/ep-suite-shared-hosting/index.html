@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Tested for real: the EP Suite runs on budget shared hosting like GoDaddy. Only outbound email is blocked, and it has a simple fix. AI, payments, bookings and licence activation all work.">
-<title>Running the EP Suite on shared hosting | ElmsPark Lesson</title>
+<title>Running the EP Suite on shared hosting | ElmsPark Guide</title>
 <style>
   :root{
     --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
@@ -71,25 +71,6 @@
   figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);background:var(--card)}
   figure.screenshot img,figure.screenshot video{display:block;width:100%;height:auto}
   figure.screenshot figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:1px solid var(--line);background:var(--card)}
-  /* ============================================================
-     LESSON COMPONENTS (additive, calm, opt-in)
-     ============================================================ */
-  /* Lesson marker chip in the kicker row */
-  .lesson-chip{display:inline-block;font-family:'Inter Tight',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c35;background:#d0f0df;border:1px solid #8fcfab;padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:10px}
-  summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
-  /* Learning objectives box */
-  .objectives{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:8px 0 26px}
-  .obj-kicker{font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:600;margin:0 0 8px}
-  /* Check your understanding (retrieval reveal) */
-  .cyu{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0}
-  .cyu-q{font-weight:600;color:var(--pine-deep);margin:0 0 6px;font-family:system-ui,sans-serif;font-size:16.5px}
-  .cyu details{margin:6px 0 0;border:none;background:transparent;padding:0}
-  .cyu summary{padding:6px 0;font-size:15.5px}
-  .cyu .cyu-a{font-size:16px}
-  .cyu .cyu-a p{margin:6px 0 4px}
-  /* Key takeaways recap */
-  .recap{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pine);border-radius:12px;padding:14px 20px;margin:30px 0}
-  .recap-h{font-family:system-ui,sans-serif;font-weight:700;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
 </style>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
@@ -122,7 +103,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <meta property="og:image" content="https://documentation.elmspark.com/og/ep-suite-shared-hosting.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Running the EP Suite on shared hosting, an ElmsPark guide">
+  <meta property="og:image:alt" content="Running the EP Suite on shared hosting — ElmsPark Guides">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://documentation.elmspark.com/og/ep-suite-shared-hosting.png">
 </head>
@@ -152,7 +133,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 </nav>
 
 <div class="wrap">
-  <span class="kicker">EP Suite hosting lesson<span class="lesson-chip">Lesson</span></span>
+  <span class="kicker">EP Suite &middot; Hosting</span>
   <h1>Running the EP Suite on shared hosting</h1>
   <p class="lede">Short version: it works. We tested the EP Suite on real GoDaddy shared hosting, the cheapest tier, and almost everything runs exactly as it does on a VPS. There is one genuine limit, email, and it has a simple fix.</p>
   <div class="chips">
@@ -163,20 +144,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <div class="note calm">
     <strong>The short version:</strong> the whole network side of the suite, AI, payments, bookings, print-on-demand and licence activation, runs on budget shared hosting. Only outbound email is blocked, and the fix is to use the server's own mail system. Everything here was measured on a live GoDaddy cPanel box (PHP&nbsp;8.3, LiteSpeed) in June&nbsp;2026, not assumed.
-  </div>
-
-  <section class="objectives" aria-labelledby="obj-h">
-    <p class="obj-kicker" id="obj-h">By the end you will be able to</p>
-    <ul class="sub">
-      <li>Judge when shared hosting is enough for an EP Suite site, and when to move to a VPS.</li>
-      <li>Name the one real limit on shared hosting, outbound email, and the fix for it.</li>
-      <li>Know what works fine on budget shared hosting, and what does not.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">How the pieces fit: almost everything the suite does runs on cheap shared hosting because outbound HTTPS is open. Outbound email is the single exception, and the resource caps decide when a VPS starts to earn its keep.</p>
-  </section>
-
-  <div class="note calm">
-    <strong>This page is opt-in.</strong> Skim the sections for the quick answer and you lose nothing. Open the few reveals and the same page becomes a light lesson, with a retrieval prompt or two and a short recap at the end.
   </div>
 
   <nav class="toc">
@@ -199,14 +166,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </ul>
   <div class="seealso">&#128640; <strong>Want a proper external service like Mailgun, with the best deliverability?</strong> You need a host that does not block the SMTP ports, which means a small VPS. Our <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Vultr guide</a> takes you from empty box to live. The step-by-step email setup on shared hosting is in the <a href="https://documentation.elmspark.com/guides/pagemotor-godaddy/#email">GoDaddy guide</a>.</div>
 
-  <div class="cyu">
-    <p class="cyu-q">Before you read on: your contact form on GoDaddy is set to send through Mailgun and every test times out. What is going wrong, and what do you do about it?</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>Shared hosts block outbound SMTP to external mail services as a matter of policy, so the connection to Mailgun times out on every port. The fix is not a different external provider, it is to stop using external SMTP: point EP Email at the server's own mail system (<code>localhost</code> on port&nbsp;25, or the PHP mail() transport), then add SPF and DKIM records for your domain so Gmail and Outlook accept it.</p></div>
-    </details>
-  </div>
-
   <h2 class="plain" id="works">What works, and it is most things</h2>
   <p>The worry with shared hosting is that the host firewalls everything and breaks any plugin that talks to an outside service. On the box we tested, that was not true. <strong>Only SMTP was blocked. Outbound HTTPS was wide open to every service the suite uses</strong>, each reachable in well under a tenth of a second, with full secure requests completing normally. In plain terms:</p>
   <ul class="sub">
@@ -219,14 +178,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </ul>
   <p>So the headline is the reverse of what people fear: the whole network side of the suite runs on budget shared hosting. Email is the exception, and it has a fix.</p>
 
-  <div class="cyu">
-    <p class="cyu-q">A friend worries that on the cheapest GoDaddy tier a paid plugin will not even activate, and that Stripe checkout will be firewalled. Name one of these that in fact works fine on shared hosting, and say why.</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>Both work. Licence activation and plugin updates reach ElmsPark and activate normally, and Stripe checkout, memberships, class passes and bookings all complete. On the box we tested only outbound SMTP was blocked; outbound HTTPS was wide open to every service the suite uses, so anything that talks over HTTPS, AI, payments, Zoom, Printify and licensing, runs as it does on a VPS.</p></div>
-    </details>
-  </div>
-
   <h2 class="plain" id="limits">The limits worth knowing before you start</h2>
   <p>The real constraints on shared hosting are not the network, they are resources. None of these stops the suite working, but they are worth knowing so nothing surprises you:</p>
   <ul class="sub">
@@ -236,14 +187,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <li><strong>No object cache</strong> (no Redis or Memcached on shared, usually). Plugins fall back to standard caching; a busy site is a little slower than the same site on a tuned VPS.</li>
   </ul>
   <div class="note">If your site is a normal business site, a portfolio, a small shop, a course or a membership, none of this will get in your way. If you are running heavy bulk imports, large media libraries, or a high-traffic store, that is the point where a VPS starts to earn its keep.</div>
-
-  <div class="cyu">
-    <p class="cyu-q">Without scrolling up: name one concrete signal that you have outgrown shared hosting and a VPS would now pay off.</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>Any one of these: theme or media imports that hit the upload cap, bulk or image-heavy jobs that run into the modest memory limit, a busy site feeling slow because there is no object cache, or simply wanting external email through Mailgun for the best deliverability. When the resource caps or the missing cache start to bite, the VPS earns its place and everything you built carries straight over.</p></div>
-    </details>
-  </div>
 
   <h2 class="plain" id="check">How to check your own host</h2>
   <p>Hosts differ, and the cleanest way to know is to test rather than guess.</p>
@@ -255,19 +198,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <h2 class="plain" id="when">When shared hosting is the right call, and when it is not</h2>
   <p><strong>Shared hosting is a good fit</strong> for most PageMotor sites: business sites, brochure and portfolio sites, small shops, courses, memberships and booking sites. The EP Suite runs on it, AI and payments included, for the price of a coffee a month. The only thing to set up differently is email, and the <a href="https://documentation.elmspark.com/guides/pagemotor-godaddy/#email">GoDaddy guide</a> covers that.</p>
   <p><strong>A VPS earns its place</strong> when you want external email through Mailgun with the best deliverability, when you run heavy bulk operations or large media, when traffic is high enough that the resource limits or the missing object cache start to bite, or when you simply want full control of the box. When that day comes, the <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Vultr guide</a> is the move, and everything you built on shared hosting carries straight over.</p>
-
-  <section class="recap" aria-labelledby="recap-h">
-    <p class="recap-h" id="recap-h">Key takeaways</p>
-    <ul class="sub">
-      <li>The EP Suite runs on budget shared hosting, AI and payments included, because outbound HTTPS is open to every service it uses.</li>
-      <li>The one real limit is outbound email: shared hosts block external SMTP, so Mailgun and the like time out.</li>
-      <li>The fix is to send through the server's own mail system (<code>localhost</code> port&nbsp;25, or PHP mail()), then add SPF and DKIM so Gmail and Outlook accept it.</li>
-      <li>Licence activation, plugin updates, Stripe, Zoom and Printify all work on the cheapest tier.</li>
-      <li>Move to a VPS when you want Mailgun deliverability, or when the upload, memory or cache limits start to bite.</li>
-    </ul>
-  </section>
-
-  <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:15.5px;color:var(--soft);margin:18px 0 0">For most sites, shared hosting is enough; set email up the local way, and keep the VPS for the day the resource caps start to bite.</p>
 
   <footer>
     <p>Tested for real on GoDaddy shared hosting, June&nbsp;2026. Nothing here is assumed; the email limit, the open HTTPS, and the resource caps were all measured on a live box.</p>

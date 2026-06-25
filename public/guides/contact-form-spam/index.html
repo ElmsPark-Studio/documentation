@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Stop contact-form spam without making real visitors solve a CAPTCHA. Five server-side layers, each invisible to humans, that stop bots before the message reaches your inbox.">
-<title>Stopping contact-form spam without CAPTCHA: a lesson | ElmsPark Lesson</title>
+<title>Stopping contact-form spam without CAPTCHA | ElmsPark Guide</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
 <style>
@@ -125,71 +125,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-sub{display:none}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
-/* ============================================================
-   LESSON COMPONENTS (additive, calm, opt-in)
-   ============================================================ */
-/* Lesson marker chip in the kicker row */
-.lesson-chip{display:inline-block;font-family:'Inter Tight',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c35;background:#d0f0df;border:1px solid #8fcfab;padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:10px}
-summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-/* Learning objectives box */
-.objectives{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:8px 0 26px}
-.obj-kicker{font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:600;margin:0 0 8px}
-/* Check your understanding (retrieval reveal) */
-.cyu{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0}
-.cyu-q{font-weight:600;color:var(--pine-deep);margin:0 0 6px;font-family:system-ui,sans-serif;font-size:16.5px}
-.cyu details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.cyu summary{padding:6px 0;font-size:15.5px}
-.cyu .cyu-a{font-size:16px}
-.cyu .cyu-a p{margin:6px 0 4px}
-/* Worked example + now-you-try */
-.worked{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 20px 16px;margin:18px 0}
-.worked-h,.nyt-h{font-family:system-ui,sans-serif;font-weight:600;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px}
-.worked-steps{margin:0;padding-left:20px}
-.worked-steps li{margin:8px 0}
-.worked-steps .why{color:var(--soft);font-size:.92em}
-.nyt{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:10px 18px 4px;margin:14px 0}
-.nyt details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.nyt summary{padding:6px 0;font-size:15.5px}
-.nyt-a p{margin:6px 0}
-/* Misconception / refutation callout */
-.note.myth{border-left-color:#a35a20;background:#fbf2e6}
-.myth-tag{display:inline-block;font-family:system-ui,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#a35a20;font-weight:700;margin-right:6px}
-.myth-claim{margin:0 0 4px}
-.myth-no{font-family:system-ui,sans-serif;font-weight:700;color:#9a3b1e;margin:0 0 6px}
-.myth-true{margin:0}
-/* Key takeaways recap */
-.recap{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pine);border-radius:12px;padding:14px 20px;margin:30px 0}
-.recap-h{font-family:system-ui,sans-serif;font-weight:700;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
-/* End-of-lesson self-test */
-.selftest{margin:30px 0}
-.st-note{font-family:system-ui,sans-serif;font-size:14.5px;color:var(--soft);margin:0 0 14px}
-.st-q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
-.st-prompt{font-weight:600;color:var(--pine-deep);margin:0 0 4px;font-family:system-ui,sans-serif;font-size:16.5px}
-.st-hint{font-family:system-ui,sans-serif;font-size:13.5px;color:var(--soft);margin:0 0 8px}
-.st-cal{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;align-items:center}
-.st-cal-label{font-family:system-ui,sans-serif;font-size:13px;color:var(--soft);margin-right:2px}
-.st-c{font-family:'Inter Tight',system-ui,sans-serif;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--soft);padding:5px 12px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
-.st-c[aria-pressed="true"]{background:var(--pine);color:#fff;border-color:var(--pine)}
-.st-c[aria-pressed="true"]::before{content:"\2713\00a0"}
-.st-c:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
-.st-q details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.st-q summary{padding:6px 0;font-size:15.5px}
-.st-a p{margin:6px 0}
-/* Teach-back */
-.teachback{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:12px;padding:6px 20px 16px;margin:26px 0}
-.teachback details{margin:6px 0 0}
-.tb-a p{margin:6px 0}
-/* Objectives checkpoint + spaced-recall nudge */
-.checkpoint{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:26px 0}
-.checkpoint .obj-kicker{margin-bottom:6px}
-.spaced{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:22px 0;font-size:16.5px}
-.spaced strong{color:var(--pine-deep)}
-.spaced ul.sub{margin:8px 0 0}
-@media(prefers-reduced-motion:reduce){
-  .st-c{transition:none}
-  a,.es-nav a,.es-cta,.llm-btn,.crumbs a{transition:none}
-}
 </style>
 
   <meta property="og:type" content="article">
@@ -230,7 +165,7 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
 </nav>
 
 <div class="wrap">
-  <span class="kicker">Security lesson<span class="lesson-chip">Lesson</span></span>
+  <span class="kicker">Security guide</span>
   <h1>Stopping contact-form spam without CAPTCHA</h1>
   <p class="lede">CAPTCHA puts the burden on your visitors. The better approach is five server-side layers, each invisible to a real person, that catch bots before the message ever reaches your inbox. No puzzle, no friction, no third-party widget.</p>
   <div class="chips">
@@ -248,31 +183,10 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <strong>Why not just add a CAPTCHA?</strong> CAPTCHAs add friction for every real visitor in order to stop bots. They hurt accessibility, slow conversions, and leak data to the CAPTCHA provider. Modern bots and commercial solving services bypass them in seconds anyway. The layered server-side approach described here is invisible to humans and stops the vast majority of automated spam without a single puzzle.
   </div>
 
-  <div class="note myth">
-    <p class="myth-claim"><span class="myth-tag">Many people think</span> you need a CAPTCHA to stop contact-form spam.</p>
-    <p class="myth-no">That is wrong.</p>
-    <p class="myth-true"><strong>What is true:</strong> a CAPTCHA taxes every real visitor to catch bots, and modern solving services defeat it cheaply. Five invisible server-side checks stop the large majority of automated spam with no puzzle, no friction, and nothing for a human to do. A CAPTCHA is the wrong default, not the only option.</p>
-  </div>
-
   <div class="llm-prompt">
     <h2>Use this guide with any AI assistant</h2>
     <p>Download it as a prompt file, paste it into Claude, ChatGPT, Gemini or any LLM, and it will walk you through implementing each layer one step at a time.</p>
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/contact-form-spam-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
-  </div>
-
-  <section class="objectives" aria-labelledby="obj-h">
-    <p class="obj-kicker" id="obj-h">By the end you will be able to</p>
-    <ul class="check">
-      <li>Explain why a CAPTCHA is the wrong default, and what replaces it.</li>
-      <li>Describe each of the five layers, and say which class of bot each one catches and why a human passes it.</li>
-      <li>Order the layers by processing cost, cheapest check first.</li>
-      <li>Judge when the optional AI triage step is worth adding, and when it is not.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">How the pieces fit: each layer catches a class of bot the previous one misses, the honeypot stops the naive ones, the time trap and rate limit stop scripted submitters, the content checks and shared blocklist stop the rest, and the order they run in is set by cost. No single layer is enough on its own, which is why they are stacked.</p>
-  </section>
-
-  <div class="note calm">
-    <strong>This page is opt-in.</strong> Skim the sections for the quick answer and you lose nothing: every lesson part is a closed reveal you can leave shut. Open the reveals and the same page becomes a lesson, with retrieval prompts, a worked example and a self-test. One honest caveat: reading it once will not make it stick. A short return a day or two later is what fixes it in memory, and there is a calm checklist for that at the end.
   </div>
 
   <nav class="toc">
@@ -291,12 +205,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <li><a href="#pagemotor">On PageMotor: EP Email&rsquo;s Spam Protection &rarr;</a></li>
       <li><a href="#fix">Troubleshooting &rarr;</a></li>
     </ol>
-    <p style="margin-top:14px">Lesson</p>
-    <ol style="list-style:none;padding-left:0;margin:0">
-      <li><a href="#recap">Key takeaways recap &rarr;</a></li>
-      <li><a href="#selftest">Check yourself: self-test &rarr;</a></li>
-      <li><a href="#teachback">Teach it back &rarr;</a></li>
-    </ol>
   </nav>
 
 
@@ -312,20 +220,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     </ul>
     <p>Real people cannot see the field, so they never fill it in. A bot filling in every visible and invisible field triggers an immediate rejection, at zero cost.</p>
     <div class="note"><strong>Why hide it with CSS, not JavaScript?</strong> CSS hiding needs no script to run: every human browser renders the CSS and never shows the field, while the input stays in the raw HTML for a bot to find and fill. JavaScript hiding is less reliable: it depends on the script executing, it can briefly flash the field on screen, and a visitor with JavaScript disabled would see the field and might fill it in by mistake. Keep the honeypot purely CSS-hidden.</div>
-
-    <div class="note myth">
-      <p class="myth-claim"><span class="myth-tag">Many people think</span> the safest way to hide a honeypot is with JavaScript.</p>
-      <p class="myth-no">That is wrong.</p>
-      <p class="myth-true"><strong>What is true:</strong> hide the honeypot with CSS, not JavaScript, so the field is invisible to every human browser and the trap does not depend on a script running.</p>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: predict what a bot that does not run JavaScript does with a honeypot that is hidden by JavaScript, and why that is the wrong way to hide it.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>The non-JS bot never runs the hiding script, so it sees the field as a plain visible input. It can leave that field empty just like a human would, so the trap never fires. CSS hiding avoids this: the field is invisible to humans but still sits in the raw HTML, so a field-filling bot trips it.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 2 -->
@@ -340,14 +234,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     </ul>
     <p>This layer catches a different class of bot from the honeypot: scripted submitters that understand hidden fields and leave them empty, but still fill and submit faster than any human could.</p>
     <div class="note calm"><strong>Tuning the threshold.</strong> For a short form (name and email only), a 2-second minimum may be enough. For a longer form with a message field, 4 or 5 seconds is fairer. If you start seeing false rejections from real visitors on slow connections, lower the threshold slightly. The goal is to fail closed on bots and open on humans, so err towards a lower number and raise it if spam still gets through.</div>
-
-    <div class="cyu">
-      <p class="cyu-q">A honeypot and a time trap are both in place. Produce an example of a bot the honeypot misses but the time trap catches, and say what tells the time trap it is a bot.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>A scripted submitter that parses the form, recognises the hidden honeypot field and deliberately leaves it empty. It passes the honeypot cleanly. The time trap still catches it, because it fills and submits the form in well under the few seconds a human needs, so the gap between page load and submit is too short to be real.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 3 -->
@@ -361,14 +247,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <li>A window of 5 minutes is a reasonable default. Most real visitors do not submit a contact form twice within 5 minutes.</li>
     </ul>
     <div class="note warn"><strong>What about shared IPs?</strong> Corporate offices, schools, and some mobile networks route many people through a single IP. A 5-minute window is short enough that legitimate repeat submissions from the same IP (two colleagues hitting the same form) will be rare. If you serve a high-volume audience from a known shared network, consider raising the limit to allow, say, 2 submissions per IP per window rather than 1.</div>
-
-    <div class="cyu">
-      <p class="cyu-q">A bot deliberately submits slowly, taking eight seconds per message, so it clears the time trap. Predict which layer stops it once it sends repeatedly, and what that layer is keyed on.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>Rate limiting stops it. The time trap only looks at one submission&rsquo;s fill time, which the slow bot satisfies. Rate limiting is keyed on the IP address across a rolling window, so the second and later submissions from that same IP inside the window are rejected regardless of how slowly each one was sent.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 4 -->
@@ -395,14 +273,6 @@ viagra
 cialis</pre>
     <p>The list works best when it is tuned to the spam you are actually receiving. Keep it short and specific: an overly long list risks false positives and becomes hard to maintain. Review it every few months and drop anything that is no longer appearing in your spam.</p>
     <div class="note"><strong>Run the content checks after the cheap ones.</strong> Keyword matching and link counting scan through text fields, which is slightly more work than checking a hidden field or a timestamp. Run them after the honeypot and time trap, so the majority of spam is already rejected before any text scanning begins.</div>
-
-    <div class="cyu">
-      <p class="cyu-q">A message clears the honeypot, the time trap and the rate limit: it is slow, from a fresh IP, with the trap field empty. For each of the two content-layer checks: what specific property of the message body does it inspect, and what kind of string does it match against? Then explain why both of these checks are deliberately placed after the earlier ones rather than before them.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>The link cap inspects the raw message text and counts occurrences of <code>http://</code> or <code>https://</code>; it flags the message if that count exceeds the allowed maximum, because SEO spam typically packs in multiple URLs. The keyword blocklist performs a case-insensitive substring match against all text fields, catching any submission that contains a known spam phrase such as <code>guest post</code> or <code>backlink</code>. Both run after the honeypot, time trap and rate limit because scanning text is more work than a field comparison or an arithmetic check; placing the cheaper rejections first means most spam never reaches the text-scanning step at all.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 5 -->
@@ -417,26 +287,12 @@ cialis</pre>
     </ul>
     <p>The value comes from scale. A bot IP that hit a dozen other sites before reaching yours is caught before it even gets to the honeypot. The higher the minimum severity you require, the fewer false positives, but the slower the protection against newly active IPs.</p>
     <div class="note calm"><strong>Minimum severity.</strong> A severity of 1 blocks any IP that has been reported once, anywhere. That is aggressive and risks false positives. A minimum of 2 or 3, requiring corroboration from multiple independent installs, is a safer default for most sites.</div>
-
-    <div class="note myth">
-      <p class="myth-claim"><span class="myth-tag">Many people think</span> one good layer is enough on its own.</p>
-      <p class="myth-no">That is wrong.</p>
-      <p class="myth-true"><strong>What is true:</strong> each layer catches a class of bot the others miss. The honeypot misses scripted submitters that skip the hidden field; the time trap misses bots that send slowly; rate limiting misses a fresh IP sending one message; the content checks miss a clean-looking message from a known-bad IP. Stacking them, cheapest first, is what closes the gaps. A single layer always leaves an open door.</p>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">A cumulative check, back to layers 1 and 2. A spam IP that has hit a dozen other sites reaches yours and sends one slow, clean-looking message. Predict whether the honeypot or the time trap stops it, and which layer actually does.</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>Neither the honeypot nor the time trap stops it: the message leaves the trap field empty and is sent slowly enough to pass the timing check. The shared blocklist stops it, because the IP was already reported by the other sites, so it is rejected before it even reaches the honeypot. That is the network effect at work, and the reason no single local layer is enough.</p></div>
-      </details>
-    </div>
   </section>
 
 
   <!-- DEEPER: AI TRIAGE -->
   <h2 class="plain" id="ai">The optional capstone: AI triage</h2>
-  <p class="sub-lede">For the messages that pass all five layers, there is an optional further step. It is not a shipped EP Email feature; it is a pattern you can add yourself.</p>
+  <p class="sub-lede">For the messages that pass all five layers, there is an optional further step.</p>
   <p>Most spam is stopped by the cheap server-side layers: honeypot, time trap, rate limit, content heuristics, and blocklist. But some borderline submissions make it through. The message was composed slowly, from a fresh IP, with no obvious keyword hits, but something about it still reads as automated or off-topic.</p>
   <p>For these borderline cases, you can optionally pass the message text to a language model with a short spam/ham classification prompt. The model reads the actual content and returns a verdict: deliver to inbox, or quarantine for review.</p>
   <p>A few practical notes on this approach:</p>
@@ -447,14 +303,6 @@ cialis</pre>
     <li><strong>Order matters.</strong> Run the AI step last, after all the other checks. Never send a submission that is already clearly spam through an LLM call: that wastes tokens and adds latency for no reason.</li>
   </ul>
   <p>This is a forward-looking option for sites that receive a lot of sophisticated spam. For most contact forms, the five server-side layers alone are sufficient.</p>
-
-  <div class="cyu">
-    <p class="cyu-q">Before you scroll: a site gets a handful of contact-form messages a week and the five layers already clear its inbox. Decide whether AI triage is worth adding here, and give the reason that settles it.</p>
-    <details>
-      <summary>Reveal model answer</summary>
-      <div class="cyu-a"><p>No, it is not worth it. AI triage costs money per call and adds latency, and it only earns its place when sophisticated spam is still slipping past the five free layers in real volume. With a low volume already kept clean, there is nothing for it to catch, so the cost and delay buy nothing. Add it only when borderline spam is genuinely getting through.</p></div>
-    </details>
-  </div>
 
   <!-- DEEPER: STACK -->
   <h2 class="plain" id="stack">Putting it together: order and tuning</h2>
@@ -468,27 +316,6 @@ cialis</pre>
     <li><strong>Content heuristics.</strong> Keyword scan and link count across text fields. Moderate cost.</li>
     <li><strong>AI triage</strong> (optional). One LLM API call. Only for borderline cases that passed everything above.</li>
   </ol>
-
-  <div class="worked">
-    <p class="worked-h">Worked example: ordering five checks by cost</p>
-    <p style="margin:0 0 6px">You have these five checks for one form, listed in no particular order: a keyword scan across all text fields, a hidden-field comparison, an IP lookup against a cached blocklist, a timestamp subtraction, and one database read-and-write for the rate limit. Put them in run order, cheapest first.</p>
-    <ol class="worked-steps">
-      <li><strong>IP lookup against the cached blocklist</strong> <span class="why">a single read against an in-memory or cached list, and it can reject a known-bad sender before any other work is done.</span></li>
-      <li><strong>Hidden-field (honeypot) comparison</strong> <span class="why">one equality check on a single field, essentially free.</span></li>
-      <li><strong>Timestamp subtraction (time trap)</strong> <span class="why">one arithmetic comparison, also essentially free.</span></li>
-      <li><strong>Rate-limit database read and write</strong> <span class="why">a database round-trip, fast but costlier than an in-memory check or arithmetic.</span></li>
-      <li><strong>Keyword scan across all text fields</strong> <span class="why">scans every text field for every blocked phrase, the most work of the five, so it runs last.</span></li>
-    </ol>
-  </div>
-  <div class="nyt">
-    <p class="nyt-h">Now you try</p>
-    <p>This one takes the next step: tune a setting from a described symptom. Real visitors on a long enquiry form with a message box are reporting that their submissions are rejected, yet your logs show no spam getting through. Name the single setting you would change, state the direction you would move it, and say which way you would err. Then reveal.</p>
-    <details>
-      <summary>Reveal the answer</summary>
-      <div class="nyt-a"><p>Lower the minimum fill time (the time-trap threshold). Real visitors are tripping it because the threshold is set too high for how they fill the form, or it is firing on auto-filled fields. Move it down, for example from 5 seconds towards 3 or 2, then watch the logs. Err towards the lower number: the goal is to fail closed on bots and open on humans, so accept a slightly looser timing check and rely on the other four layers, raising it again only if spam reappears.</p></div>
-    </details>
-  </div>
-
   <div class="pillars">
     <div class="pillar">
       <h4>Log, do not silently drop</h4>
@@ -525,18 +352,6 @@ cialis</pre>
   <p>All settings are in EP Email&rsquo;s admin panel under the <strong>Spam Protection</strong> group and the <strong>Central Blocklist</strong> group directly below it.</p>
 
 
-  <!-- KEY TAKEAWAYS RECAP -->
-  <section class="recap" id="recap" aria-labelledby="recap-h">
-    <p class="recap-h" id="recap-h">The five things that matter</p>
-    <ul class="check">
-      <li>A CAPTCHA taxes every human to stop bots; five invisible server-side checks do the job without friction.</li>
-      <li>Each layer catches a class of bot the others miss, so no single layer is enough on its own.</li>
-      <li>Hide the honeypot with CSS, never JavaScript: a non-JS bot then sees a JS-hidden field as a normal visible input and skips it.</li>
-      <li>Run the cheapest checks first: IP blocklist, honeypot, time trap, rate limit, content scan, then optional AI triage.</li>
-      <li>AI triage is optional and not a shipped EP feature; add it only when real volume of sophisticated spam still gets through.</li>
-    </ul>
-  </section>
-
   <!-- TROUBLESHOOTING -->
   <h2 class="plain" id="fix">Troubleshooting</h2>
   <p class="sub-lede">The things that trip people up, and the fix for each.</p>
@@ -566,161 +381,6 @@ cialis</pre>
     <p>The sender&rsquo;s IP may have been reported by another site, possibly because it is a shared office IP or a VPN exit node. Lower the minimum severity setting so only IPs with strong corroboration are blocked, or manually remove the IP from your local copy of the list. Contact the blocklist provider to dispute the report if the false positive recurs.</p>
   </details>
 
-  <!-- END-OF-LESSON SELF-TEST -->
-  <section class="selftest" id="selftest" aria-labelledby="st-h">
-    <h2 class="plain" id="st-h">Check yourself</h2>
-    <p class="st-note">No score is kept and nothing is saved. Answer each one in your head or on paper first, then reveal, then mark how your attempt compared. The ones that surprised you are the ones to revisit in a day or two.</p>
-
-    <div class="st-q">
-      <p class="st-prompt">1. A bot submits a form in half a second with the honeypot field left empty. Which layer catches it, and why does the honeypot miss it?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>The time trap catches it. The honeypot misses it because the bot recognised the hidden field and left it empty, just as a human would. The time trap fires instead, because half a second is far below the few seconds a real person needs to read the labels, type, and submit.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 1">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">2. Put these five checks in the order they should run, and state the rule that sets the order: keyword scan, honeypot comparison, IP blocklist lookup, rate-limit read-and-write, time-trap subtraction.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>IP blocklist lookup, then honeypot comparison, then time-trap subtraction, then rate-limit read-and-write, then keyword scan. The rule is cheapest first: a cached lookup and single-field or arithmetic checks come before a database round-trip, and the text scan, which is the most work, comes last. Ordering this way means most spam is rejected before the expensive checks ever run.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 2">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">3. Why hide the honeypot with CSS rather than JavaScript? Give the specific failure that JavaScript hiding causes.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>A bot that does not run JavaScript never executes the hiding script, so it sees the field as a normal visible input and can leave it empty, defeating the trap. JavaScript hiding can also flash the field on screen, and a real visitor with JavaScript disabled would see it and might fill it in. CSS hiding keeps the field invisible to every human browser while leaving it present in the raw HTML for a field-filling bot to trip.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 3">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">4. A slow bot takes ten seconds per message and sends many of them from one IP. The time trap passes it. Which layer stops it, and what is that layer keyed on?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Rate limiting stops it. It is keyed on the IP address across a rolling window (5 minutes by default), so repeated submissions from the same IP inside that window are rejected no matter how slowly each one is sent. The time trap only judges a single submission&rsquo;s fill time, which the slow bot satisfies.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 4">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">5. A client asks why you will not just add a CAPTCHA to their contact form. Give the two concrete costs a CAPTCHA imposes on real visitors, and the one-line reason the layered server-side approach is the better default.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>A CAPTCHA imposes friction on every real visitor (they must solve a puzzle before submitting) and it leaks visitor data to the CAPTCHA provider. It also hurts accessibility and conversion rates, and modern solving services defeat it cheaply. The layered server-side approach is the better default because it is invisible to humans: no puzzle, no third-party dependency, and nothing for a genuine visitor to do.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 5">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">6. A photographer's booking form is rejecting genuine enquiries from clients on mobile devices: they tap, auto-fill their details, and submit quickly, but the form bounces them. Meanwhile the spam folder stays empty. Name the single setting to adjust, state the direction, and explain the underlying principle about which way to err when the risk is a false rejection rather than a false pass.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Lower the minimum fill time (the time-trap threshold). Mobile auto-fill completes the form faster than the threshold expects, so genuine clients are tripping it. Move the threshold down, for example from 5 seconds towards 2 or 3, and watch the logs. The underlying principle is to err towards letting humans through: the time trap is one layer among five, so accepting a slightly looser timing check and relying on the others is the right trade-off when real visitors are being bounced and no spam is getting in.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 6">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">7. A cumulative one, back to layer 5. A spam IP that hit a dozen other sites first sends you one slow, clean-looking message with no blocked keywords. Do the honeypot or time trap stop it, and what does?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Neither the honeypot nor the time trap stops it: the trap field is empty and the message is sent slowly enough to pass the timing check, and with no blocked keywords the content checks pass too. The shared (central) blocklist stops it, because the IP was already reported by the other sites, so it is rejected before it reaches the honeypot. That is the network effect, and the reason no single local layer is enough.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 7">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-  </section>
-
-  <!-- TEACH-BACK -->
-  <section class="teachback" id="teachback">
-    <h2 class="plain">Teach it back</h2>
-    <p>In five sentences, explain to a non-technical colleague why this site stops spam without a CAPTCHA and how the layers work together. Write it before you reveal. A sentence-starter to begin: &ldquo;We stop spam without a puzzle because&hellip;&rdquo;</p>
-    <details>
-      <summary>Reveal a model answer and a self-check list</summary>
-      <div class="tb-a">
-        <p>We stop spam without a puzzle because five invisible checks run on the server when the form is submitted, so real visitors never have anything to do. A hidden honeypot field catches bots that fill in everything; a time trap catches bots that submit too fast; a rate limit catches an IP that submits too often; content checks catch messages stuffed with links or known spam phrases; and a shared blocklist catches IPs that other sites have already reported. Each layer catches a class of bot the others miss, so we stack them rather than rely on one. We run the cheapest checks first, so most spam is rejected before the slower ones even run. There is an optional AI triage step for borderline messages, but it costs money and is only worth adding if sophisticated spam is still getting through.</p>
-        <ul class="check">
-          <li>Did you name all five layers and say what each one catches in plain words?</li>
-          <li>Did you give the run order, cheapest checks first?</li>
-          <li>Accuracy check: did you avoid claiming a CAPTCHA is needed? It is not; it is the wrong default.</li>
-          <li>Accuracy check: did you say to hide the honeypot with CSS, not JavaScript, and not claim one layer alone is enough?</li>
-        </ul>
-      </div>
-    </details>
-  </section>
-
-  <!-- OBJECTIVES CHECKPOINT -->
-  <section class="checkpoint" aria-labelledby="cp-h">
-    <p class="obj-kicker" id="cp-h">Checkpoint: tick what you can now do from memory</p>
-    <ul class="check">
-      <li>I can explain why a CAPTCHA is the wrong default, and what replaces it.</li>
-      <li>I can describe each of the five layers and say which class of bot each one catches.</li>
-      <li>I can order the layers by processing cost, cheapest check first.</li>
-      <li>I can judge when the optional AI triage is worth adding, and when it is not.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">Any you could not tick are the ones worth re-reading, then re-testing in the self-test above.</p>
-  </section>
-
-  <!-- SPACED-RECALL NUDGE -->
-  <div class="spaced">
-    <strong>Come back in a day or two.</strong> One sitting does not make this stick; a short return after a gap is what moves it into memory. No need for an app or a reminder file. Keep this short checklist and work through it from memory in a couple of days, opening the page only to check yourself. The scenarios are deliberately worded differently from the questions above, so you retrieve the idea rather than the phrasing:
-    <ul class="sub">
-      <li>A client asks why you are not just adding a CAPTCHA to their contact form. Give them the one-line reason and what you use instead.</li>
-      <li>A developer hides a honeypot by toggling it with a script. Tell them what breaks and what to use instead.</li>
-      <li>Spam keeps arriving slowly from many different fresh IPs, each sending once. Name the layer that finally catches it and why the local ones cannot.</li>
-      <li>You are wiring up the checks in code. List them in the order they should run and say what decides that order.</li>
-      <li>Someone wants to bolt an LLM onto every form submission. Explain in one line when that is worth it and when it is not.</li>
-    </ul>
-  </div>
-
-  <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;color:var(--soft);margin:28px 0 0;text-align:center">That is the whole picture: five invisible layers, each catching a class of bot the others miss, run cheapest first, with AI triage held in reserve. If you can run the day-two checklist from memory, you understand why a CAPTCHA is the wrong default, not just the steps to replace it.</p>
-
   <div class="seealso">
     <strong>See also</strong>
     <ul>
@@ -741,29 +401,5 @@ cialis</pre>
   </footer>
 
 </div>
-<script>
-/* Post-reveal self-calibration: after revealing, the learner marks how their own
-   attempt compared. Toggles aria-pressed within each .st-cal group (mutually
-   exclusive) and announces the choice in the adjacent live region. This is the only
-   JS on the page; answers are native details elements, so with JS disabled every
-   answer is still reachable and the calibration buttons simply do nothing. */
-(function(){
-  document.addEventListener('click', function(e){
-    var btn = e.target.closest('.st-c');
-    if(!btn) return;
-    var group = btn.closest('.st-cal');
-    if(!group) return;
-    var wasPressed = btn.getAttribute('aria-pressed') === 'true';
-    group.querySelectorAll('.st-c').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
-    btn.setAttribute('aria-pressed', wasPressed ? 'false' : 'true');
-    var out = group.parentNode.querySelector('[data-cal-out]');
-    if(out){
-      if(wasPressed){ out.textContent = ''; }
-      else if(btn.getAttribute('data-cal') === 'surprised'){ out.textContent = 'Noted: this one surprised you. Add it to your day-two review.'; }
-      else { out.textContent = 'Noted: your answer matched.'; }
-    }
-  });
-})();
-</script>
 </body>
 </html>

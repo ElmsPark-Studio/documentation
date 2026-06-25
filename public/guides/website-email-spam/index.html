@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="SPF, DKIM and DMARC explained plainly. If your website&rsquo;s contact forms or automated emails land in spam, the fix is almost always one of these three DNS records. Here is what each one does and how to set them up.">
-<title>Email deliverability: a lesson on SPF, DKIM and DMARC | ElmsPark Lesson</title>
+<title>Why your website&rsquo;s email lands in spam | ElmsPark Guide</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
 <style>
@@ -125,71 +125,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-sub{display:none}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
-/* ============================================================
-   LESSON COMPONENTS (additive, calm, opt-in)
-   ============================================================ */
-/* Lesson marker chip in the kicker row */
-.lesson-chip{display:inline-block;font-family:'Inter Tight',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c35;background:#d0f0df;border:1px solid #8fcfab;padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:10px}
-summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-/* Learning objectives box */
-.objectives{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:8px 0 26px}
-.obj-kicker{font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:600;margin:0 0 8px}
-/* Check your understanding (retrieval reveal) */
-.cyu{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0}
-.cyu-q{font-weight:600;color:var(--pine-deep);margin:0 0 6px;font-family:system-ui,sans-serif;font-size:16.5px}
-.cyu details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.cyu summary{padding:6px 0;font-size:15.5px}
-.cyu .cyu-a{font-size:16px}
-.cyu .cyu-a p{margin:6px 0 4px}
-/* Worked example + now-you-try */
-.worked{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 20px 16px;margin:18px 0}
-.worked-h,.nyt-h{font-family:system-ui,sans-serif;font-weight:600;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px}
-.worked-steps{margin:0;padding-left:20px}
-.worked-steps li{margin:8px 0}
-.worked-steps .why{color:var(--soft);font-size:.92em}
-.nyt{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:10px 18px 4px;margin:14px 0}
-.nyt details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.nyt summary{padding:6px 0;font-size:15.5px}
-.nyt-a p{margin:6px 0}
-/* Misconception / refutation callout */
-.note.myth{border-left-color:#a35a20;background:#fbf2e6}
-.myth-tag{display:inline-block;font-family:system-ui,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#a35a20;font-weight:700;margin-right:6px}
-.myth-claim{margin:0 0 4px}
-.myth-no{font-family:system-ui,sans-serif;font-weight:700;color:#9a3b1e;margin:0 0 6px}
-.myth-true{margin:0}
-/* Key takeaways recap */
-.recap{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pine);border-radius:12px;padding:14px 20px;margin:30px 0}
-.recap-h{font-family:system-ui,sans-serif;font-weight:700;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
-/* End-of-lesson self-test */
-.selftest{margin:30px 0}
-.st-note{font-family:system-ui,sans-serif;font-size:14.5px;color:var(--soft);margin:0 0 14px}
-.st-q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
-.st-prompt{font-weight:600;color:var(--pine-deep);margin:0 0 4px;font-family:system-ui,sans-serif;font-size:16.5px}
-.st-hint{font-family:system-ui,sans-serif;font-size:13.5px;color:var(--soft);margin:0 0 8px}
-.st-cal{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;align-items:center}
-.st-cal-label{font-family:system-ui,sans-serif;font-size:13px;color:var(--soft);margin-right:2px}
-.st-c{font-family:'Inter Tight',system-ui,sans-serif;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--soft);padding:5px 12px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
-.st-c[aria-pressed="true"]{background:var(--pine);color:#fff;border-color:var(--pine)}
-.st-c[aria-pressed="true"]::before{content:"\2713\00a0"}
-.st-c:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
-.st-q details{margin:6px 0 0;border:none;background:transparent;padding:0}
-.st-q summary{padding:6px 0;font-size:15.5px}
-.st-a p{margin:6px 0}
-/* Teach-back */
-.teachback{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:12px;padding:6px 20px 16px;margin:26px 0}
-.teachback details{margin:6px 0 0}
-.tb-a p{margin:6px 0}
-/* Objectives checkpoint + spaced-recall nudge */
-.checkpoint{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:26px 0}
-.checkpoint .obj-kicker{margin-bottom:6px}
-.spaced{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:22px 0;font-size:16.5px}
-.spaced strong{color:var(--pine-deep)}
-.spaced ul.sub{margin:8px 0 0}
-@media(prefers-reduced-motion:reduce){
-  .st-c{transition:none}
-  a,.es-nav a,.es-cta,.llm-btn,.crumbs a{transition:none}
-}
 </style>
 
   <meta property="og:type" content="article">
@@ -230,7 +165,7 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
 </nav>
 
 <div class="wrap">
-  <span class="kicker">Email &amp; deliverability lesson<span class="lesson-chip">Lesson</span></span>
+  <span class="kicker">Email &amp; deliverability guide</span>
   <h1>Why your website&rsquo;s email lands in spam</h1>
   <p class="lede">Your contact form fires, the log says &ldquo;sent&rdquo;, and the message lands in the recipient&rsquo;s spam folder. Three DNS records, SPF, DKIM and DMARC, are almost always the missing piece. This guide explains what each one does and how to get them right.</p>
   <div class="chips">
@@ -254,21 +189,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/website-email-spam-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
-  <section class="objectives" aria-labelledby="obj-h">
-    <p class="obj-kicker" id="obj-h">By the end you will be able to</p>
-    <ul class="check">
-      <li>Explain what SPF authorises, and what it does not cover.</li>
-      <li>Distinguish when DKIM or DMARC is the record to fix.</li>
-      <li>Read a PASS or FAIL header block and name which record to fix, including the case where SPF passes but DMARC fails.</li>
-      <li>Set the three records in the right order, and verify the result properly.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">How the pieces fit: SPF names the servers allowed to send, DKIM signs each message so tampering shows, and DMARC ties the two to a policy and a report. They work together, which is why one record alone is often not enough.</p>
-  </section>
-
-  <div class="note calm">
-    <strong>This page is opt-in.</strong> Skim the sections for the quick answer and you lose nothing: every lesson part is a closed reveal you can leave shut. Open the reveals and the same page becomes a lesson, with retrieval prompts, worked examples and a self-test. One honest caveat: reading it once will not make it stick. A short return a day or two later is what fixes it in memory, and there is a calm checklist for that at the end.
-  </div>
-
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>
@@ -283,14 +203,7 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <li><a href="#alignment">Alignment: why SPF or DKIM alone is not enough &rarr;</a></li>
       <li><a href="#website">Sending from a website, not the server &rarr;</a></li>
       <li><a href="#pagemotor">On PageMotor and the Mailgun route &rarr;</a></li>
-      <li><a href="#records">The three records at a glance &rarr;</a></li>
       <li><a href="#fix">Troubleshooting &rarr;</a></li>
-    </ol>
-    <p style="margin-top:14px">Lesson</p>
-    <ol style="list-style:none;padding-left:0;margin:0">
-      <li><a href="#recap">Key takeaways recap &rarr;</a></li>
-      <li><a href="#selftest">Check yourself: self-test &rarr;</a></li>
-      <li><a href="#teachback">Teach it back &rarr;</a></li>
     </ol>
   </nav>
 
@@ -307,22 +220,7 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
 <span class="c">DKIM:   FAIL</span>
 <span class="c">DMARC:  FAIL</span></pre>
     <p>Any <code>FAIL</code> tells you exactly which record needs attention. If all three show <code>PASS</code> and mail is still going to spam, the issue is content or sender reputation, not authentication.</p>
-    <p>One pattern is worth memorising. <code>SPF PASS</code> with <code>DMARC FAIL</code> usually does not mean a missing record: it means the mail authenticated for your sending provider, not for your own From domain. That is an alignment problem, and step 4 and the Alignment section cover the fix.</p>
     <div class="note warn"><strong>Log says &ldquo;sent&rdquo;. It still landed in spam.</strong> That is normal. The sending log records whether the message left your server. The spam verdict is made by the receiving server, after delivery, and it does not report back to you. A successful send log is not delivery proof.</div>
-
-    <div class="note myth">
-      <p class="myth-claim"><span class="myth-tag">Many people think</span> a green &ldquo;sent&rdquo; in the log means the email was delivered.</p>
-      <p class="myth-no">That is wrong.</p>
-      <p class="myth-true"><strong>What is true:</strong> the log only records that the message left your server. The spam verdict is made later, by the receiving server, and is never reported back. A send log is not delivery proof.</p>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: in one sentence, what is the difference between a transport failure and an authentication failure?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>A transport failure means the message never left your server, so you see an error in the log. An authentication failure means the message left cleanly, the log says &ldquo;sent&rdquo;, but the receiving server distrusted it and filed it as spam. Only the second is an SPF, DKIM or DMARC problem.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 2 -->
@@ -339,31 +237,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
       <pre class="term" style="margin-top:10px"><b>v=spf1 include:mailgun.org include:sendgrid.net -all</b></pre>
     </div>
     <div class="note warn"><strong>The 10-lookup limit.</strong> Each <code>include:</code> in your SPF record can itself pull in more includes, and SPF only permits 10 DNS lookups in total across the chain. Large providers can use several. If you hit the limit, SPF returns a <code>permerror</code> and mail fails. Keep your includes to the minimum you actually need.</div>
-
-    <div class="worked">
-      <p class="worked-h">Worked example: a correct SPF record</p>
-      <ol class="worked-steps">
-        <li><code>v=spf1</code> <span class="why">declares the line as SPF version 1, so receivers parse it as SPF.</span></li>
-        <li><code>include:mailgun.org</code> <span class="why">authorises your sending provider by pulling in the IPs Mailgun publishes.</span></li>
-        <li><code>-all</code> <span class="why">hard-fails everyone else, the decisive choice for a domain you control.</span></li>
-      </ol>
-    </div>
-    <div class="nyt">
-      <p class="nyt-h">Now you try</p>
-      <p>This one needs the merge rule from the box above. Your site sends through Mailgun <em>and</em> a second provider whose SPF include is <code>spf.example-provider.net</code>, with a hard fail. Write the single SPF record, then reveal.</p>
-      <details>
-        <summary>Reveal the answer</summary>
-        <div class="nyt-a"><p><code>v=spf1 include:mailgun.org include:spf.example-provider.net -all</code></p><p>One record, both includes, a single <code>-all</code> at the end. Two separate SPF records would break authentication entirely, so they must be merged into this one line.</p></div>
-      </details>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: in one sentence, what does SPF actually authorise, and what does it not cover?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>SPF authorises which servers may send for your domain, checked against the envelope sender. It does not protect the visible From address or the message body; that is the work of DKIM and DMARC.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 3 -->
@@ -377,14 +250,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <p>The <code>selector</code> part is chosen by your provider (for example <code>mx</code>, <code>k1</code>, or a custom name you set). The <code>p=</code> value is the public key itself, which your provider gives you to paste in.</p>
     <p>Some providers use CNAMEs instead of a TXT record: they ask you to add a CNAME that points to a subdomain they control, so they can rotate keys without you touching DNS again. Either way, your provider&rsquo;s setup guide will tell you exactly what to add and where.</p>
     <div class="note calm"><strong>Once it is set up, DKIM is invisible.</strong> The signature is added to each message automatically. You do not need to do anything per-message.</div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: which half of the DKIM key pair do you publish in DNS, and which does your provider keep? And what does the signature prove that SPF does not?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>You publish the public key in DNS; your provider keeps the private key and uses it to sign each message. The signature proves the message was signed by your domain and was not altered in transit, which SPF cannot show.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 4 -->
@@ -403,31 +268,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     </ul>
     <p>Start at <code>p=none</code>, watch the reports for a week or two, confirm that your own legitimate mail is all passing, then move to <code>p=quarantine</code> and eventually <code>p=reject</code>.</p>
     <div class="note"><strong>Why DMARC matters beyond policy.</strong> The aggregate reports (sent as XML digests to the <code>rua</code> address) show you exactly what is claiming to be from your domain. They often reveal third-party services sending on your behalf that you had forgotten about, which is useful before you tighten the policy.</div>
-
-    <div class="worked">
-      <p class="worked-h">Worked example: reading a DMARC line</p>
-      <ol class="worked-steps">
-        <li><code>v=DMARC1</code> <span class="why">declares the record as DMARC.</span></li>
-        <li><code>p=none</code> <span class="why">monitor only, take no action yet: the safe starting point.</span></li>
-        <li><code>rua=mailto:dmarc@yourdomain.com</code> <span class="why">where aggregate reports are sent so you can watch before tightening.</span></li>
-      </ol>
-    </div>
-    <div class="nyt">
-      <p class="nyt-h">Now you try</p>
-      <p>You have watched the reports for two weeks and your own mail all passes. Name the policy value you move to next, then reveal.</p>
-      <details>
-        <summary>Reveal the answer</summary>
-        <div class="nyt-a"><p><code>p=quarantine</code>. It sends failing messages to spam. Once that is stable, the final step is <code>p=reject</code>, which discards them outright.</p></div>
-      </details>
-    </div>
-
-    <div class="cyu">
-      <p class="cyu-q">A cumulative check, back to step 2. You send from <code>hello@yourdomain.com</code> through a provider and only SPF is set up. SPF passes, yet DMARC fails. Why does the pass not save it?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>Because SPF passed for the provider&rsquo;s domain, the envelope sender, not for your visible From domain. DMARC needs the authenticated domain to align with the From domain, and here it does not. Hold that thought: before you read on, try to predict which record you could make align with your own From domain. The Alignment section next confirms it.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- STEP 5 -->
@@ -441,14 +281,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
 <span class="c">DMARC:  PASS</span></pre>
     <p>All three passing is the only reliable confirmation. Your DNS panel showing the records is necessary but not sufficient: a record can be there and still fail if the value is wrong, the selector is mismatched, or the SPF record has a syntax error.</p>
     <div class="note danger"><strong>A &ldquo;sent&rdquo; log is not verification.</strong> Neither is your DNS panel saying the record exists. The only ground truth is a received message whose headers show all three checks passing. Run the test, read the headers, then call it done.</div>
-
-    <div class="cyu">
-      <p class="cyu-q">Before you scroll: your DNS panel clearly shows all three records. Is that proof the email will reach the inbox? Why, or why not?</p>
-      <details>
-        <summary>Reveal model answer</summary>
-        <div class="cyu-a"><p>No. A record can be present and still fail if the value is wrong, the selector is mismatched, or the SPF syntax is broken. The only ground truth is a received message whose headers show SPF, DKIM and DMARC all passing.</p></div>
-      </details>
-    </div>
   </section>
 
   <!-- DEEPER: ALIGNMENT -->
@@ -515,18 +347,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     </tbody>
   </table>
 
-  <!-- KEY TAKEAWAYS RECAP -->
-  <section class="recap" id="recap" aria-labelledby="recap-h">
-    <p class="recap-h" id="recap-h">The five things that matter</p>
-    <ul class="check">
-      <li>SPF authorises servers, not the visible From address.</li>
-      <li>DKIM signs the message so any tampering shows, and aligns the signing domain with your From domain.</li>
-      <li>DMARC ties SPF and DKIM to a policy and a report, through alignment.</li>
-      <li>A &ldquo;sent&rdquo; log is not delivery proof; only passing headers are.</li>
-      <li>Fix order: SPF, then DKIM, then DMARC, starting DMARC at <code>p=none</code>.</li>
-    </ul>
-  </section>
-
   <!-- TROUBLESHOOTING -->
   <h2 class="plain" id="fix">Troubleshooting</h2>
   <p class="sub-lede">The problems that actually come up, and what to do about each one.</p>
@@ -561,161 +381,6 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
     <p>If the <code>rua</code> address is on the same domain you are protecting, the reports should simply arrive (check your spam folder, since they come as XML attachments and are easily filtered). If the <code>rua</code> address is on a <em>different</em> domain, that domain has to opt in: it must publish a DMARC external-reporting authorisation record, a TXT record at <code>yourdomain.com._report._dmarc.theirdomain.com</code> with the value <code>v=DMARC1</code>. Without it, many receivers will refuse to send the reports. Free services like Postmark&rsquo;s DMARC Digests or dmarcian can receive and parse reports for you.</p>
   </details>
 
-  <!-- END-OF-LESSON SELF-TEST -->
-  <section class="selftest" id="selftest" aria-labelledby="st-h">
-    <h2 class="plain" id="st-h">Check yourself</h2>
-    <p class="st-note">No score is kept and nothing is saved. Answer each one in your head or on paper first, then reveal, then mark how your attempt compared. The ones that surprised you are the ones to revisit in a day or two.</p>
-
-    <div class="st-q">
-      <p class="st-prompt">1. Your emails land in spam. Which record do you read first in the headers, and why?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Read SPF first, because it is the easiest line to interpret and rules out the simplest failure. If SPF passes, move to DKIM, then to DMARC alignment, which is the usual culprit when SPF passes but mail still fails.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 1">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">2. SPF passes but DMARC still fails. Name the cause and the fix.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>Alignment. SPF is passing for the provider&rsquo;s domain, not your visible From domain, so DMARC cannot align through SPF. Set up DKIM with <code>d=yourdomain.com</code> and DMARC passes through DKIM alignment instead.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 2">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">3. Write the SPF record for a domain that sends through Mailgun only, with a hard fail.</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p><code>v=spf1 include:mailgun.org -all</code>. One include for the provider, <code>-all</code> for the hard fail, nothing extra so you stay under the 10-lookup limit.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 3">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">4. What value should a new DMARC record start at, and why not go straight to reject?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p><code>p=none</code>. It monitors without taking action, so you can read the reports and confirm your own legitimate mail passes before tightening. Jumping straight to <code>p=reject</code> risks discarding your own mail that is not yet aligned.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 4">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">5. A cumulative one. Your DNS panel shows all three records and your send log says &ldquo;sent&rdquo;. Is the email reaching the inbox?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>You do not know yet. Neither the panel nor the send log is proof. A record can be present but wrong, and the log only records that the message left your server. The only ground truth is a received message whose headers show all three checks passing.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 5">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">6. Why does sending straight from a web server&rsquo;s <code>mail()</code> function so often land in spam?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>The message goes from the server&rsquo;s own IP, which has no SPF authorisation for your domain, no DKIM key, and almost no sending reputation. It arrives unauthenticated, so it is junked or dropped. Routing through an SMTP provider with SPF and DKIM coverage fixes it.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 6">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-
-    <div class="st-q">
-      <p class="st-prompt">7. Which half of the DKIM key pair goes in DNS, and what does a valid DKIM signature prove that an SPF pass does not?</p>
-      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
-      <details>
-        <summary>Reveal answer and why</summary>
-        <div class="st-a"><p>The public key goes in DNS; your provider keeps the private key and signs each message with it. A valid signature proves the message was signed by your domain&rsquo;s key and was not altered in transit, and when it signs with <code>d=yourdomain.com</code> it aligns to your From domain. An SPF pass only shows the sending server was authorised, often for the provider&rsquo;s domain, and says nothing about tampering or From-domain alignment.</p></div>
-      </details>
-      <div class="st-cal" role="group" aria-label="Self-check for question 7">
-        <span class="st-cal-label">How did your answer compare?</span>
-        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
-        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
-      </div>
-      <span class="sr-only" aria-live="polite" data-cal-out></span>
-    </div>
-  </section>
-
-  <!-- TEACH-BACK -->
-  <section class="teachback" id="teachback">
-    <h2 class="plain">Teach it back</h2>
-    <p>In five sentences, explain to a non-technical colleague why their email lands in spam and which record fixes it. Write it before you reveal. A sentence-starter to begin: &ldquo;Your email lands in spam because&hellip;&rdquo;</p>
-    <details>
-      <summary>Reveal a model answer and a self-check list</summary>
-      <div class="tb-a">
-        <p>Your email lands in spam because the receiving server cannot confirm it really came from your domain. SPF lists which servers are allowed to send for you, so a message from an unknown server looks forged. DKIM adds a signature that proves the message came from you and was not altered. DMARC ties those two together with a policy and sends you reports on what is happening. The usual fix is to send through a proper provider and publish SPF and DKIM, in that order, then add DMARC.</p>
-        <ul class="check">
-          <li>Did you name SPF, DKIM and DMARC, and say what each does in plain words?</li>
-          <li>Did you give the fix order?</li>
-          <li>Accuracy check: did you avoid claiming SPF protects the visible From address? It does not.</li>
-          <li>Accuracy check: did you say a &ldquo;sent&rdquo; log is not proof of delivery?</li>
-        </ul>
-      </div>
-    </details>
-  </section>
-
-  <!-- OBJECTIVES CHECKPOINT -->
-  <section class="checkpoint" aria-labelledby="cp-h">
-    <p class="obj-kicker" id="cp-h">Checkpoint: tick what you can now do from memory</p>
-    <ul class="check">
-      <li>I can explain what SPF authorises, and what it does not cover.</li>
-      <li>I can say when DKIM or DMARC is the record to fix.</li>
-      <li>I can read a PASS or FAIL header block and name which record to fix, including the SPF-passes-but-DMARC-fails case.</li>
-      <li>I can set the three records in the right order, and verify the result.</li>
-    </ul>
-    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">Any you could not tick are the ones worth re-reading, then re-testing in the self-test above.</p>
-  </section>
-
-  <!-- SPACED-RECALL NUDGE -->
-  <div class="spaced">
-    <strong>Come back in a day or two.</strong> One sitting does not make this stick; a short return after a gap is what moves it into memory. No need for an app or a reminder file. Keep this short checklist and work through it from memory in a couple of days, opening the page only to check yourself. The scenarios are deliberately worded differently from the questions above, so you retrieve the idea rather than the phrasing:
-    <ul class="sub">
-      <li>A client says their forms log &ldquo;sent&rdquo; but nothing arrives. Name the records you would check, and in what order.</li>
-      <li>A message authenticates for the sending provider but still fails DMARC. What has gone wrong, and which record fixes it?</li>
-      <li>Someone shows you a DNS panel full of green records and asks if their email is definitely landing. What do you tell them?</li>
-      <li>You are setting up email for a brand-new domain. What do you publish, in what order, and what value does DMARC start at?</li>
-      <li>Explain in one line what DKIM proves that an SPF pass does not.</li>
-    </ul>
-  </div>
-
-  <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;color:var(--soft);margin:28px 0 0;text-align:center">That is the whole picture: three records, one fix order, and one real proof. If you can run the day-two checklist from memory, you understand why website email lands in spam, not just the steps to fix it.</p>
-
   <div class="seealso">
     <strong>See also</strong>
     <ul>
@@ -741,29 +406,5 @@ summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-ra
   </footer>
 
 </div>
-<script>
-/* Post-reveal self-calibration: after revealing, the learner marks how their own
-   attempt compared. Toggles aria-pressed within each .st-cal group (mutually
-   exclusive) and announces the choice in the adjacent live region. This is the only
-   JS on the page; answers are native details elements, so with JS disabled every
-   answer is still reachable and the calibration buttons simply do nothing. */
-(function(){
-  document.addEventListener('click', function(e){
-    var btn = e.target.closest('.st-c');
-    if(!btn) return;
-    var group = btn.closest('.st-cal');
-    if(!group) return;
-    var wasPressed = btn.getAttribute('aria-pressed') === 'true';
-    group.querySelectorAll('.st-c').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
-    btn.setAttribute('aria-pressed', wasPressed ? 'false' : 'true');
-    var out = group.parentNode.querySelector('[data-cal-out]');
-    if(out){
-      if(wasPressed){ out.textContent = ''; }
-      else if(btn.getAttribute('data-cal') === 'surprised'){ out.textContent = 'Noted: this one surprised you. Add it to your day-two review.'; }
-      else { out.textContent = 'Noted: your answer matched.'; }
-    }
-  });
-})();
-</script>
 </body>
 </html>
