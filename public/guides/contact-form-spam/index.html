@@ -172,7 +172,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <span class="chip">&#x1F6E1; <b>No CAPTCHA</b> required</span>
     <span class="chip">&#x1F441; Invisible to <b>real visitors</b></span>
     <span class="chip">&#x2699; Any site, any <b>backend</b></span>
-    <span class="chip">&#x1F4A4; Works on <b>EP Email</b> too</span>
+    <span class="chip">&#x1F9E9; Built into <b>EP Email</b></span>
   </div>
 
   <div class="note calm">
@@ -219,7 +219,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li>On the server, reject any submission where that field is not empty.</li>
     </ul>
     <p>Real people cannot see the field, so they never fill it in. A bot filling in every visible and invisible field triggers an immediate rejection, at zero cost.</p>
-    <div class="note"><strong>Why not hide it with JavaScript?</strong> If you hide the honeypot via JavaScript, a bot that does not run JS (most simple scrapers) will not see it as visible and may skip it. Hiding with CSS alone is more reliable: the field is visually absent to a human browser, but the HTML is there for any bot reading the raw form.</div>
+    <div class="note"><strong>Why hide it with CSS, not JavaScript?</strong> CSS hiding needs no script to run: every human browser renders the CSS and never shows the field, while the input stays in the raw HTML for a bot to find and fill. JavaScript hiding is less reliable: it depends on the script executing, it can briefly flash the field on screen, and a visitor with JavaScript disabled would see the field and might fill it in by mistake. Keep the honeypot purely CSS-hidden.</div>
   </section>
 
   <!-- STEP 2 -->

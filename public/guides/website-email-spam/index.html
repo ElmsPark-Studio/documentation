@@ -247,7 +247,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <p>The DNS record is a TXT entry at a subdomain shaped like this:</p>
     <pre class="term"><span class="c"># TXT record at:  selector._domainkey.yourdomain.com</span>
 <b>v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUA...</b></pre>
-    <p>The <code>selector</code> part is chosen by your provider (Mailgun uses something like <code>mx</code> or a custom name you set). The <code>p=</code> value is the public key itself, which your provider gives you to paste in.</p>
+    <p>The <code>selector</code> part is chosen by your provider (for example <code>mx</code>, <code>k1</code>, or a custom name you set). The <code>p=</code> value is the public key itself, which your provider gives you to paste in.</p>
     <p>Some providers use CNAMEs instead of a TXT record: they ask you to add a CNAME that points to a subdomain they control, so they can rotate keys without you touching DNS again. Either way, your provider&rsquo;s setup guide will tell you exactly what to add and where.</p>
     <div class="note calm"><strong>Once it is set up, DKIM is invisible.</strong> The signature is added to each message automatically. You do not need to do anything per-message.</div>
   </section>
@@ -378,7 +378,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <details>
     <summary>DMARC reports are not arriving at my rua address</summary>
-    <p>Check that the address in <code>rua=mailto:</code> is on the same domain you are protecting, or that you have published a separate <code>_report._domainkey</code> record allowing reports to go to a different domain. Also check your spam folder. Reports come as XML attachments and may be filtered. Free services like Postmark&rsquo;s DMARC Digests or dmarcian can receive and parse reports for you.</p>
+    <p>If the <code>rua</code> address is on the same domain you are protecting, the reports should simply arrive (check your spam folder, since they come as XML attachments and are easily filtered). If the <code>rua</code> address is on a <em>different</em> domain, that domain has to opt in: it must publish a DMARC external-reporting authorisation record, a TXT record at <code>yourdomain.com._report._dmarc.theirdomain.com</code> with the value <code>v=DMARC1</code>. Without it, many receivers will refuse to send the reports. Free services like Postmark&rsquo;s DMARC Digests or dmarcian can receive and parse reports for you.</p>
   </details>
 
   <div class="seealso">
