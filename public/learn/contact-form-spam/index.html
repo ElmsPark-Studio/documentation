@@ -4,95 +4,168 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="A short, interactive lesson on stopping contact-form spam with layered server-side defences, each one invisible to real visitors and no CAPTCHA. One step at a time.">
-<title>Stopping contact-form spam, the interactive lesson | ElmsPark</title>
+<meta name="description" content="An interactive lesson: switch on spam defences and watch bots and real people flow through the funnel. Learn why one filter is never enough.">
+<title>Stopping contact-form spam | ElmsPark</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600|inter-tight:400,500,600,700&display=swap">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ElmsPark Lessons">
+<meta property="og:title" content="Stopping contact-form spam">
+<meta property="og:description" content="Interactive: toggle spam defences and watch bots and humans flow through. Learn why one filter is never enough, and why keyword blocking backfires.">
+<meta property="og:url" content="https://documentation.elmspark.com/learn/contact-form-spam/">
+<meta property="og:image" content="https://documentation.elmspark.com/og/learn-contact-form-spam.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Stopping contact-form spam, an interactive ElmsPark lesson">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://documentation.elmspark.com/og/learn-contact-form-spam.png">
 <style>
   :root{
-    --paper:#f4efe4; --card:#fffdf8; --ink:#23211c; --soft:#6b6456;
+    --paper:#f4efe4; --card:#fffdf8; --ink:#23211c; --soft:#6b6456; --faint:#8a8170;
     --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
     --good:#2f7a54; --good-bg:#e3f3ea; --good-line:#9ccdb2;
-    --dim:#efe9da; --radius:18px;
+    --bad:#b5452a; --bad-bg:#fbece6; --bad-line:#e7b9a8;
+    --warn:#a8741f; --warn-bg:#f8efda;
+    --dim:#efe9da; --ink-pill:#1f1d17; --radius:16px;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0; background:var(--paper); color:var(--ink);
     font-family:'Inter Tight',system-ui,-apple-system,"Segoe UI",sans-serif;
-    line-height:1.5; -webkit-font-smoothing:antialiased;
-    display:flex; flex-direction:column; min-height:100dvh}
-  .bar{display:flex; justify-content:space-between; align-items:center; gap:12px;
-    padding:14px 20px; font-size:14px}
-  .brand{color:var(--pine-deep); text-decoration:none; font-weight:600; letter-spacing:.01em}
-  .brand b{font-weight:700}
-  .brand .dot{color:var(--soft); font-weight:500; margin:0 6px}
+    line-height:1.5; -webkit-font-smoothing:antialiased; display:flex; flex-direction:column; min-height:100dvh}
+  .bar{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 20px; font-size:14px}
+  .brand{color:var(--pine-deep); text-decoration:none; font-weight:600}
+  .brand b{font-weight:700} .brand .dot{color:var(--soft); margin:0 6px}
   .exit{color:var(--soft); text-decoration:none; font-weight:500; border-bottom:1px solid transparent}
   .exit:hover,.exit:focus-visible{color:var(--pine); border-bottom-color:var(--pine)}
   .progress{height:5px; background:var(--dim); margin:0 20px; border-radius:999px; overflow:hidden}
   .progress-fill{height:100%; width:0; background:var(--pine); border-radius:999px; transition:width .35s cubic-bezier(.4,0,.2,1)}
-  @media (prefers-reduced-motion: reduce){ .progress-fill{transition:none} }
-  .stage{flex:1; display:flex; flex-direction:column; justify-content:center;
-    width:100%; max-width:600px; margin:0 auto; padding:18px 22px 8px}
-  .count{font-size:13px; color:var(--soft); font-weight:500; letter-spacing:.04em; margin:0 0 18px}
-  .step{animation:fade .3s ease both}
-  @media (prefers-reduced-motion: reduce){ .step{animation:none} }
+  .stage{flex:1; width:100%; max-width:640px; margin:0 auto; padding:16px 22px 8px}
+  .count{font-size:13px; color:var(--soft); font-weight:500; letter-spacing:.04em; margin:6px 0 16px}
+  .act{animation:fade .3s ease both}
   @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
-  .icon{font-size:42px; line-height:1; margin:0 0 14px}
-  h1.h{font-family:Fraunces,Georgia,serif; font-weight:600; font-size:clamp(26px,6vw,34px);
-    line-height:1.15; color:var(--pine-deep); margin:0 0 14px; letter-spacing:-.01em}
-  .lead{font-size:clamp(17px,4.4vw,19px); color:var(--ink); margin:0 0 8px}
-  .sub{font-size:16px; color:var(--soft); margin:10px 0 0}
-  .rec{display:inline-block; margin-top:16px; font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
-    font-size:14px; background:#1f1d17; color:#e8e2d0; padding:9px 14px; border-radius:10px; letter-spacing:.01em}
-  .opts{display:flex; flex-direction:column; gap:10px; margin:20px 0 0}
-  .opt{display:flex; align-items:center; gap:12px; width:100%; text-align:left; font:inherit; font-size:16.5px;
-    background:var(--card); border:1.5px solid var(--line); color:var(--ink); padding:15px 16px; border-radius:14px;
-    cursor:pointer; transition:border-color .15s, background .15s, transform .1s}
+  .icon{font-size:38px; line-height:1; margin:0 0 12px}
+  h1.h{font-family:Fraunces,Georgia,serif; font-weight:600; font-size:clamp(24px,5.4vw,31px); line-height:1.18; color:var(--pine-deep); margin:0 0 12px; letter-spacing:-.01em}
+  .lead{font-size:clamp(16px,4.2vw,18px); color:var(--ink); margin:0 0 10px}
+  .sub{font-size:15.5px; color:var(--soft); margin:8px 0 0}
+  .surprise{display:inline-block; font-family:'Inter Tight'; font-size:12px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--accent); margin:0 0 8px}
+  /* envelope diagram (reveal) */
+  .env{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin:16px 0; font-family:"JetBrains Mono",ui-monospace,Menlo,monospace; font-size:13.5px}
+  .env .row{display:flex; justify-content:space-between; gap:10px; padding:4px 0; align-items:center}
+  .env .lbl{color:var(--soft)} .env .val{color:var(--ink)}
+  .env .ok{color:var(--good); font-weight:700} .env .no{color:var(--bad); font-weight:700}
+  /* predict */
+  .opts{display:flex; flex-direction:column; gap:10px; margin:18px 0 0}
+  .opt{display:flex; gap:12px; align-items:center; width:100%; text-align:left; font:inherit; font-size:16px; background:var(--card); border:1.5px solid var(--line); color:var(--ink); padding:14px 16px; border-radius:13px; cursor:pointer; transition:border-color .15s, background .15s, transform .1s}
   .opt:hover:not(:disabled){border-color:var(--pine); transform:translateY(-1px)}
   .opt:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
   .opt>span:last-child{min-width:0; overflow-wrap:break-word}
-  .lead,.sub,.win-list li,.why{overflow-wrap:break-word}
-  .opt .key{flex:none; width:24px; height:24px; border-radius:7px; background:var(--dim); color:var(--soft);
-    display:grid; place-items:center; font-size:13px; font-weight:700}
+  .opt .key{flex:none; width:24px; height:24px; border-radius:7px; background:var(--dim); color:var(--soft); display:grid; place-items:center; font-size:13px; font-weight:700}
   .opt[data-state="correct"]{border-color:var(--good-line); background:var(--good-bg)}
   .opt[data-state="correct"] .key{background:var(--good); color:#fff}
-  .opt[data-state="wrong"]{border-color:#e7c3b6; background:#fbf0ec; color:var(--soft)}
-  .opt[data-state="wrong"] .key{background:#d98c70; color:#fff}
+  .opt[data-state="wrong"]{border-color:var(--bad-line); background:var(--bad-bg); color:var(--soft)}
+  .opt[data-state="wrong"] .key{background:var(--bad); color:#fff}
   .opt[disabled]{cursor:default}
-  .why{margin:16px 0 0; padding:13px 16px; border-radius:12px; font-size:16px;
-    background:var(--good-bg); border:1px solid var(--good-line); color:#1d5236; display:none}
-  .why.show{display:block; animation:fade .25s ease both}
-  .why b{color:var(--good)}
-  .win-list{list-style:none; padding:0; margin:18px 0 0}
-  .win-list li{position:relative; padding-left:26px; font-size:17px; margin:11px 0; overflow-wrap:break-word}
-  .win-list li::before{content:"\2713"; color:var(--good); font-weight:700; position:absolute; left:0; top:1px}
-  .nav{display:flex; gap:12px; align-items:center; justify-content:space-between;
-    width:100%; max-width:600px; margin:0 auto; padding:14px 22px calc(14px + env(safe-area-inset-bottom))}
-  .btn{font:inherit; font-weight:600; font-size:16px; cursor:pointer; border-radius:12px; padding:13px 24px;
-    border:1.5px solid var(--line); background:var(--card); color:var(--ink); transition:.15s}
-  .btn:hover:not(:disabled){border-color:var(--pine)}
-  .btn:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
-  .btn.primary{background:var(--pine); border-color:var(--pine); color:#fff; flex:1; max-width:none}
+  .conf{display:flex; gap:8px; align-items:center; margin:16px 0 0; flex-wrap:wrap}
+  .conf-lbl{font-size:13px; color:var(--soft); margin-right:2px}
+  .cbtn{font:inherit; font-size:14px; border:1.5px solid var(--line); background:var(--paper); color:var(--soft); padding:6px 13px; border-radius:999px; cursor:pointer}
+  .cbtn[aria-pressed="true"]{background:var(--pine); border-color:var(--pine); color:#fff}
+  .cbtn:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .note{margin:16px 0 0; padding:13px 15px; border-radius:12px; font-size:15.5px; border:1px solid var(--line)}
+  .note.good{background:var(--good-bg); border-color:var(--good-line); color:#1d5236}
+  .note.warn{background:var(--warn-bg); border-color:#e6cf9a; color:#73501a}
+  .note.bad{background:var(--bad-bg); border-color:var(--bad-line); color:#7a2c19}
+  .note b{font-weight:700}
+  /* SIMULATOR */
+  .sim-controls{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:6px 16px 14px; margin:14px 0}
+  .ctl{display:flex; align-items:center; gap:11px; padding:11px 0; border-bottom:1px solid var(--line)}
+  .ctl:last-child{border-bottom:none}
+  .ctl input[type=checkbox]{width:20px; height:20px; accent-color:var(--pine); flex:none}
+  .ctl label{font-size:15px; cursor:pointer}
+  .ctl .hintword{display:block; font-size:12.5px; color:var(--faint)}
+  .ctl.disabled{opacity:.45}
+  .seg{display:flex; gap:0; margin-left:auto; border:1.5px solid var(--line); border-radius:999px; overflow:hidden; flex:none}
+  .seg button{font:inherit; font-size:13px; border:none; background:var(--paper); color:var(--soft); padding:6px 12px; cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--pine); color:#fff}
+  .seg button:focus-visible{outline:2px solid var(--pine); outline-offset:-2px}
+  .dmarc-seg{display:flex; gap:6px; margin-left:auto}
+  .dmarc-seg button{font:inherit; font-size:13px; border:1.5px solid var(--line); background:var(--paper); color:var(--soft); padding:5px 11px; border-radius:999px; cursor:pointer}
+  .dmarc-seg button[aria-pressed="true"]{background:var(--pine); border-color:var(--pine); color:#fff}
+  .dmarc-seg button:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .stamps{display:flex; gap:7px; flex-wrap:wrap; margin:14px 0 4px}
+  .stamp{font-family:"JetBrains Mono",monospace; font-size:12px; font-weight:700; padding:4px 9px; border-radius:7px; border:1.5px solid var(--line); background:var(--paper); color:var(--soft)}
+  .stamp.pass{background:var(--good-bg); border-color:var(--good-line); color:var(--good)}
+  .stamp.fail{background:var(--bad-bg); border-color:var(--bad-line); color:var(--bad)}
+  .stage-box{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin:12px 0}
+  .dests{display:flex; gap:8px; margin:0 0 12px}
+  .dest{flex:1; text-align:center; font-size:12px; font-weight:600; color:var(--faint); padding:7px 4px; border:1.5px dashed var(--line); border-radius:10px; transition:.25s}
+  .dest.lit-inbox{border-style:solid; border-color:var(--good-line); background:var(--good-bg); color:var(--good)}
+  .dest.lit-spam{border-style:solid; border-color:var(--bad-line); background:var(--bad-bg); color:var(--bad)}
+  .dest.lit-bounce{border-style:solid; border-color:#cbbf9f; background:var(--dim); color:#6b5f3f}
+  .bouncer{display:flex; gap:10px; align-items:flex-start; margin:6px 0 0}
+  .bouncer .face{font-size:26px; flex:none; line-height:1.2}
+  .bubble{background:var(--paper); border:1px solid var(--line); border-radius:12px; border-top-left-radius:3px; padding:10px 13px; font-size:14.5px; color:var(--ink)}
+  .bubble.empty{color:var(--faint); font-style:italic}
+  .mission{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:14px 0 0; font-size:13.5px; color:var(--soft)}
+  .route{display:inline-flex; gap:6px; align-items:center; border:1.5px solid var(--line); border-radius:999px; padding:4px 11px; font-size:13px; color:var(--soft)}
+  .route.done{background:var(--good-bg); border-color:var(--good-line); color:var(--good); font-weight:600}
+  .route .tick{font-weight:700}
+  .send{font:inherit; font-weight:600; font-size:16px; background:var(--accent); color:#fff; border:none; border-radius:12px; padding:12px 22px; cursor:pointer; margin:14px 0 0; transition:filter .15s}
+  .send:hover{filter:brightness(1.05)} .send:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+  .hintbtn{font:inherit; font-size:14px; background:none; border:none; color:var(--pine); text-decoration:underline; cursor:pointer; margin:14px 0 0 14px}
+  .hintbtn:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .caption{font-size:12.5px; color:var(--faint); margin:10px 0 0; font-style:italic}
+  /* assemble */
+  .build{font-family:"JetBrains Mono",monospace; font-size:14px; background:var(--ink-pill); color:#e8e2d0; padding:13px 15px; border-radius:11px; margin:14px 0; line-height:1.9; word-break:break-word}
+  .slot{display:inline-block; min-width:64px; text-align:center; border-bottom:2px dashed #8a8470; color:#c9a06a; padding:0 6px; margin:0 2px; cursor:pointer}
+  .slot.filled{border-bottom-style:solid; border-color:var(--accent); color:#ffd9a8}
+  .slot.active{background:#33302820; border-bottom-color:#ffd9a8}
+  .chiptray{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0}
+  .chip{font:inherit; font-family:"JetBrains Mono",monospace; font-size:13px; border:1.5px solid var(--line); background:var(--card); color:var(--ink); padding:8px 13px; border-radius:9px; cursor:pointer}
+  .chip:hover:not(:disabled){border-color:var(--pine)} .chip:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .chip[disabled]{opacity:.4; cursor:default}
+  /* diagnose */
+  .crumb{font-size:13px; color:var(--faint); margin:0 0 12px}
+  .crumb b{color:var(--soft)}
+  /* close */
+  .check{list-style:none; padding:0; margin:14px 0 0}
+  .check li{display:flex; gap:11px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--line); font-size:16px}
+  .check input{width:20px; height:20px; accent-color:var(--good); flex:none; margin-top:2px}
+  .recap{margin:16px 0 0}
+  .recap-row{display:flex; gap:10px; align-items:baseline; padding:7px 0; font-size:15.5px}
+  .recap-tag{flex:none; font-size:12px; font-weight:700; padding:2px 9px; border-radius:999px}
+  .recap-tag.ok{background:var(--good-bg); color:var(--good)} .recap-tag.revisit{background:var(--warn-bg); color:var(--warn)}
+  .winbtns{display:flex; flex-direction:column; gap:10px; margin:22px 0 0}
+  .winbtns a{display:block; text-align:center; text-decoration:none}
+  /* nav */
+  .nav{display:flex; gap:12px; align-items:center; justify-content:space-between; width:100%; max-width:640px; margin:0 auto; padding:14px 22px calc(14px + env(safe-area-inset-bottom))}
+  .btn{font:inherit; font-weight:600; font-size:16px; cursor:pointer; border-radius:12px; padding:13px 22px; border:1.5px solid var(--line); background:var(--card); color:var(--ink)}
+  .btn:hover:not(:disabled){border-color:var(--pine)} .btn:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .btn.primary{background:var(--pine); border-color:var(--pine); color:#fff; flex:1}
   .btn.primary:hover:not(:disabled){background:var(--pine-deep)}
   .btn.ghost{background:transparent; border-color:transparent; color:var(--soft)}
   .btn:disabled{opacity:.4; cursor:default}
-  .winbtns{display:flex; flex-direction:column; gap:10px; margin:26px 0 0}
-  .winbtns a{display:block; text-align:center; text-decoration:none}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  @media(min-width:520px){ .winbtns{flex-direction:row} .winbtns a{flex:1} }
+  @media(min-width:560px){ .winbtns{flex-direction:row} .winbtns a{flex:1} }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important} }
+  /* FUNNEL sim-specific */
+  .lanes{display:flex; gap:10px}
+  .lane{flex:1; min-width:0}
+  .lane-head{font-size:12px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--faint); margin:0 0 8px; text-align:center}
+  .lane-blocked .lane-head{color:var(--bad)}
+  .lane-inbox .lane-head{color:var(--good)}
+  .lane-slot{display:flex; flex-direction:column; gap:6px; min-height:60px; padding:8px; border-radius:11px; border:1.5px dashed var(--line); background:var(--paper)}
+  .lane-blocked .lane-slot{border-color:var(--bad-line); background:var(--bad-bg)}
+  .lane-inbox .lane-slot{border-color:var(--good-line); background:var(--good-bg)}
+  .lane-empty{font-size:12.5px; color:var(--faint); font-style:italic; text-align:center; padding:6px 0}
+  .token{display:flex; gap:7px; align-items:center; font-size:13px; padding:6px 9px; border-radius:8px; background:var(--card); border:1.5px solid var(--line); color:var(--ink); animation:tok .25s ease both}
+  .token .tk-ic{flex:none; font-size:14px}
+  .token.is-bot{font-weight:600}
+  .token.blocked.is-human{border-color:var(--bad-line); background:var(--bad-bg); color:var(--bad); font-weight:700}
+  .token.through.is-human{border-color:var(--good-line)}
+  @keyframes tok{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ .token{animation:none} }
 </style>
-
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="ElmsPark Lessons">
-  <meta property="og:title" content="Stopping contact-form spam">
-  <meta property="og:description" content="A short, interactive lesson on stopping contact-form spam with layered server-side defences, each one invisible to real visitors and no CAPTCHA. One step at a time.">
-  <meta property="og:url" content="https://documentation.elmspark.com/learn/contact-form-spam/">
-  <meta property="og:image" content="https://documentation.elmspark.com/og/learn-contact-form-spam.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Stopping contact-form spam, an interactive ElmsPark lesson">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://documentation.elmspark.com/og/learn-contact-form-spam.png">
 </head>
 <body>
   <div class="bar">
@@ -100,167 +173,461 @@
     <a class="exit" href="/guides/contact-form-spam/">Full guide &rarr;</a>
   </div>
   <div class="progress" aria-hidden="true"><div class="progress-fill" id="pfill"></div></div>
-
-  <main class="stage" id="stage" aria-live="polite"></main>
-
+  <main class="stage" id="stage"></main>
   <nav class="nav" aria-label="Lesson navigation">
     <button class="btn ghost" id="back" type="button">&larr; Back</button>
     <button class="btn primary" id="next" type="button">Start &rarr;</button>
   </nav>
+  <span class="sr-only" aria-live="polite" id="sr-polite"></span>
+  <span class="sr-only" aria-live="assertive" id="sr-assertive"></span>
 
 <script>
 (function(){
-  var STEPS = [
-    { type:'intro', icon:'\u{1F6E1}', h:'Stop contact-form spam, no CAPTCHA',
-      lead:'CAPTCHA punishes your real visitors. There is a better way: layered server-side checks that bots fail and humans never even see. Ten quick taps to learn it.' },
+  "use strict";
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(id){ return document.getElementById(id); };
+  var el = function(tag, cls, html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; };
 
-    { type:'concept', icon:'\u{1FAA4}', h:'Layer 1: the honeypot',
-      lead:'A form field that is hidden from people but left in the HTML for bots.',
-      sub:'Real visitors never see it, so they never fill it in. A bot fills every field it finds.',
-      rec:'<input name="website" style="display:none">' },
-
-    { type:'concept', icon:'\u{1F441}', h:'Hide it with CSS, not JavaScript',
-      lead:'CSS hides the field for every browser without a script having to run.',
-      sub:'The bot still finds it in the raw HTML and fills it in. Then you reject anything non-empty.' },
-
-    { type:'concept', icon:'⏱', h:'Layer 2: the time trap',
-      lead:'A human takes a few seconds to read and type. Many bots submit in under one.',
-      sub:'Stamp the time on load, check it on submit, and reject anything suspiciously fast.' },
-
-    { type:'question', icon:'\u{1F916}', h:'A cleverer bot',
-      lead:'A bot spots the honeypot and leaves it empty, then submits in half a second. Which layer stops it?',
-      opts:['The honeypot','The time trap','Neither, it gets through'],
-      answer:1,
-      why:'<b>The time trap.</b> The empty honeypot passes, but no human fills a form that fast, so the timing check rejects it.' },
-
-    { type:'concept', icon:'\u{1F501}', h:'Layer 3: rate limit by IP',
-      lead:'Cap how many submissions one IP address can make in a time window.',
-      sub:'A 5-minute window stops retry bots. Real visitors rarely submit twice that quickly.' },
-
-    { type:'concept', icon:'\u{1F517}', h:'Layer 4: content checks',
-      lead:'Cap the links in a message and block giveaway phrases.',
-      sub:'Most enquiries have a link or two at most. SEO spam piles them in, plus words like “backlink”.' },
-
-    { type:'question', icon:'\u{1F6AB}', h:'Why not just a CAPTCHA?',
-      lead:'A CAPTCHA seems easier. Why is the layered approach better?',
-      opts:['CAPTCHAs are expensive to license','It punishes every real visitor, hurts accessibility, and bots beat it anyway','Layers are faster to set up'],
-      answer:1,
-      why:'<b>It punishes everyone.</b> A CAPTCHA adds friction and accessibility barriers for real people, leaks data, and solving services bypass it in seconds.' },
-
-    { type:'question', icon:'⚙', h:'The right order',
-      lead:'You have all four layers. In which order should the checks run?',
-      opts:['Content checks first, they catch the most','Cheapest first: honeypot and time trap before any database or text scanning','It makes no difference'],
-      answer:1,
-      why:'<b>Cheapest first.</b> A field check and a timestamp cost almost nothing, so run them before slower database lookups or text scanning.' },
-
-    { type:'win', icon:'✅', h:'You have got it',
-      items:['Layered defence: honeypot, time trap, rate limit, content checks.','Every layer is invisible to a real visitor.','No CAPTCHA, no friction, no third-party widget.','Run the cheapest checks first.','EP Email ships all of this built in.'],
-      guide:'/guides/contact-form-spam/' }
+  // ---------- LOCKED TRUTH ORACLE (contact-form spam funnel, node-verified) ----------
+  // Fixed cast of 10 senders: 7 bots + 3 humans, each with attributes.
+  // Layers (toggles): honeypot, timetrap, ratelimit, keyword.
+  // A sender is blocked iff any ACTIVE layer matches its attributes (checked in funnel order).
+  // Mission: block ALL bots AND keep false positives (blocked humans) at 0.
+  //   Reachable ONLY by honeypot + timetrap + ratelimit (the three silent layers).
+  //   The keyword filter can only catch a badword bot when the silent layers are off, but it
+  //   always bins a real human who used a flagged word => a guaranteed false positive. It is the trap.
+  var CAST = [
+    { id:'A', kind:'bot',   name:'Honeypot bot',    honeypot:true,  fast:false, flood:false, badword:false },
+    { id:'B', kind:'bot',   name:'Speed bot',       honeypot:false, fast:true,  flood:false, badword:false },
+    { id:'C', kind:'bot',   name:'Flood bot 1',     honeypot:false, fast:false, flood:true,  badword:false },
+    { id:'D', kind:'bot',   name:'Flood bot 2',     honeypot:false, fast:false, flood:true,  badword:false },
+    { id:'E', kind:'bot',   name:'Sneaky bot',      honeypot:true,  fast:true,  flood:false, badword:false },
+    { id:'F', kind:'bot',   name:'Form-filler bot', honeypot:true,  fast:false, flood:false, badword:false },
+    { id:'G', kind:'bot',   name:'Link-spam bot',   honeypot:false, fast:true,  flood:true,  badword:true  },
+    { id:'H', kind:'human', name:'Real enquiry',    honeypot:false, fast:false, flood:false, badword:false },
+    { id:'I', kind:'human', name:'Slow typer',      honeypot:false, fast:false, flood:false, badword:false },
+    { id:'J', kind:'human', name:'Casino review',   honeypot:false, fast:false, flood:false, badword:true  }
   ];
-
-  var i = 0, answered = {};
-  var stage = document.getElementById('stage');
-  var pfill = document.getElementById('pfill');
-  var back = document.getElementById('back');
-  var next = document.getElementById('next');
-  var KEYS = ['A','B','C','D'];
-
-  function esc(t){ return t; }
-
-  function render(){
-    var s = STEPS[i];
-    pfill.style.width = (i/(STEPS.length-1))*100 + '%';
-    var h = '<div class="step">';
-    if(s.type !== 'win') h += '<p class="count">Step ' + (i+1) + ' of ' + STEPS.length + '</p>';
-    h += '<div class="icon" aria-hidden="true">' + s.icon + '</div>';
-    h += '<h1 class="h">' + s.h + '</h1>';
-    if(s.lead) h += '<p class="lead">' + s.lead + '</p>';
-    if(s.sub) h += '<p class="sub">' + s.sub + '</p>';
-    if(s.rec) h += '<div class="rec">' + s.rec + '</div>';
-    if(s.type === 'question'){
-      h += '<div class="opts" role="group" aria-label="Answer">';
-      for(var o=0;o<s.opts.length;o++){
-        h += '<button class="opt" type="button" data-opt="'+o+'"><span class="key" aria-hidden="true">'+KEYS[o]+'</span><span>'+s.opts[o]+'</span></button>';
-      }
-      h += '</div>';
-      h += '<p class="why" id="why">'+s.why+'</p>';
-    }
-    if(s.type === 'win'){
-      h += '<ul class="win-list">';
-      for(var w=0;w<s.items.length;w++) h += '<li>'+s.items[w]+'</li>';
-      h += '</ul>';
-      h += '<div class="winbtns">'
-         + '<a class="btn primary" href="'+s.guide+'">Read the full guide</a>'
-         + '<a class="btn" href="#" id="restart">Start again</a>'
-         + '</div>';
-    }
-    h += '</div>';
-    stage.innerHTML = h;
-
-    // wire question options
-    if(s.type === 'question'){
-      var chosen = answered[i];
-      var opts = stage.querySelectorAll('.opt');
-      var why = stage.querySelector('#why');
-      opts.forEach(function(btn){
-        btn.addEventListener('click', function(){ choose(parseInt(btn.dataset.opt,10)); });
-      });
-      if(chosen !== undefined) paintAnswer(opts, why, s, chosen);
-    }
-    if(s.type === 'win'){
-      var r = stage.querySelector('#restart');
-      if(r) r.addEventListener('click', function(e){ e.preventDefault(); i=0; answered={}; render(); });
-    }
-
-    // nav state
-    back.style.visibility = i===0 ? 'hidden' : 'visible';
-    if(s.type === 'win'){ next.style.display='none'; }
-    else { next.style.display=''; }
-    next.textContent = i===0 ? 'Start →' : 'Next →';
-    if(s.type === 'question' && answered[i]===undefined){ next.disabled = true; }
-    else { next.disabled = false; }
+  function blockedBy(sender, layers){
+    if(layers.honeypot && sender.honeypot) return 'honeypot';
+    if(layers.timetrap && sender.fast) return 'timetrap';
+    if(layers.ratelimit && sender.flood) return 'ratelimit';
+    if(layers.keyword && sender.badword) return 'keyword';
+    return null;
   }
-
-  function paintAnswer(opts, why, s, chosen){
-    opts.forEach(function(btn){
-      var o = parseInt(btn.dataset.opt,10);
-      btn.disabled = true;
-      if(o === s.answer) btn.dataset.state = 'correct';
-      else if(o === chosen) btn.dataset.state = 'wrong';
+  function compute(layers){
+    var botsThrough=0, falsePositives=0, botsBlocked=0, humansThrough=0, results=[];
+    CAST.forEach(function(s){
+      var by = blockedBy(s, layers);
+      var blocked = by !== null;
+      if(s.kind==='bot'){ if(blocked) botsBlocked++; else botsThrough++; }
+      else { if(blocked) falsePositives++; else humansThrough++; }
+      results.push({id:s.id, kind:s.kind, name:s.name, blocked:blocked, by:by});
     });
-    why.classList.add('show');
-    next.disabled = false;
+    var totalBots = CAST.filter(function(s){return s.kind==='bot';}).length;
+    var allBotsBlocked = botsThrough===0;
+    var missionMet = allBotsBlocked && falsePositives===0;
+    return {botsThrough:botsThrough, botsBlocked:botsBlocked, totalBots:totalBots,
+      falsePositives:falsePositives, humansThrough:humansThrough,
+      allBotsBlocked:allBotsBlocked, missionMet:missionMet, results:results};
   }
 
-  function choose(o){
-    var s = STEPS[i];
-    if(answered[i] !== undefined) return;
-    answered[i] = o;
-    var opts = stage.querySelectorAll('.opt');
-    var why = stage.querySelector('#why');
-    paintAnswer(opts, why, s, o);
-    next.focus();
-  }
+  // ---------- ENGINE ----------
+  var Engine = {
+    state:{ i:0, progress:{}, answers:{} },
+    handlers:{}, sims:{}, lesson:null, gateOpen:true,
+    reg:function(t,h){ this.handlers[t]=h; },
+    regSim:function(n,h){ this.sims[n]=h; },
+    polite:function(m){ $('sr-polite').textContent=m; },
+    assertive:function(m){ $('sr-assertive').textContent=m; },
+    ctx:function(){ var self=this; return {
+      advance:function(){ self.advance(); },
+      gate:function(ok){ self.gateOpen=ok; self.syncNav(); },
+      mark:function(id,st){ self.state.progress[id]=st; },
+      answer:function(id,v){ self.state.answers[id]=v; },
+      polite:function(m){ self.polite(m); },
+      assertive:function(m){ self.assertive(m); },
+      reduced:REDUCED
+    }; },
+    mount:function(lesson){
+      this.lesson=lesson; this.render();
+      var self=this;
+      $('next').addEventListener('click', function(){ self.advance(); });
+      $('back').addEventListener('click', function(){ self.back(); });
+      document.addEventListener('keydown', function(e){
+        if(e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        if(e.key==='ArrowRight' && !$('next').disabled && $('next').style.display!=='none'){ self.advance(); }
+        else if(e.key==='ArrowLeft' && self.state.i>0){ self.back(); }
+      });
+    },
+    render:function(){
+      var act=this.lesson.acts[this.state.i];
+      var total=this.lesson.acts.length;
+      $('pfill').style.width = (this.state.i/(total-1))*100 + '%';
+      var stage=$('stage'); stage.replaceChildren();
+      var wrap=el('div','act');
+      if(act.type!=='close'){ wrap.appendChild(el('p','count','Step '+(this.state.i+1)+' of '+total)); }
+      stage.appendChild(wrap);
+      this.gateOpen = true;
+      var h = act.type==='simulator' ? this.sims[act.sim] : this.handlers[act.type];
+      h.mount(wrap, act, this.ctx());
+      // nav
+      $('back').style.visibility = this.state.i===0 ? 'hidden':'visible';
+      $('next').style.display = act.type==='close' ? 'none':'';
+      $('next').textContent = this.state.i===0 ? 'Start →':'Next →';
+      this.syncNav();
+      // focus the heading
+      var hd=wrap.querySelector('h1.h'); if(hd){ hd.setAttribute('tabindex','-1'); hd.focus(); }
+    },
+    syncNav:function(){ $('next').disabled = !this.gateOpen; },
+    advance:function(){ if(!this.gateOpen) return; if(this.state.i<this.lesson.acts.length-1){ this.state.i++; this.render(); } },
+    back:function(){ if(this.state.i>0){ this.state.i--; this.render(); } }
+  };
 
-  function go(d){
-    var ni = i + d;
-    if(ni < 0 || ni >= STEPS.length) return;
-    i = ni; render();
-    stage.focus && stage.focus();
-  }
-
-  next.addEventListener('click', function(){ go(1); });
-  back.addEventListener('click', function(){ go(-1); });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'ArrowRight' && !next.disabled && next.style.display!=='none') go(1);
-    else if(e.key === 'ArrowLeft' && i>0) go(-1);
-    else if(STEPS[i].type==='question' && answered[i]===undefined){
-      var n = ['1','2','3','4'].indexOf(e.key);
-      if(n>-1 && n<STEPS[i].opts.length) choose(n);
+  // ---------- SCAFFOLD HANDLERS ----------
+  Engine.reg('reveal', { mount:function(root, act){
+    root.appendChild(el('div','icon',act.icon));
+    root.appendChild(el('h1','h',act.belief));
+    root.appendChild(el('p','lead',act.refute));
+    if(act.env){
+      var box=el('div','env');
+      act.env.forEach(function(r){ var row=el('div','row');
+        row.appendChild(el('span','lbl',r[0])); row.appendChild(el('span','val',r[1])); box.appendChild(row); });
+      root.appendChild(box);
     }
-  });
+    if(act.sub) root.appendChild(el('p','sub',act.sub));
+  }});
 
-  render();
+  Engine.reg('predict', { mount:function(root, act, ctx){
+    var self=this; ctx.gate(false);
+    root.appendChild(el('div','icon',act.icon||'\u{1F914}'));
+    root.appendChild(el('h1','h',act.q));
+    if(act.detail) root.appendChild(el('p','lead',act.detail));
+    var chosen=null, conf=null;
+    var opts=el('div','opts');
+    act.options.forEach(function(o,idx){
+      var b=el('button','opt'); b.type='button';
+      b.appendChild(el('span','key',String.fromCharCode(65+idx)));
+      b.appendChild(el('span',null,o));
+      b.addEventListener('click', function(){ if(chosen!=null) return; chosen=idx;
+        ctx.answer(act.id,{choice:idx});
+        [].forEach.call(opts.children,function(c){ c.disabled=true; });
+        b.dataset.state='chosen'; b.style.borderColor='var(--pine)';
+        confRow.style.display='flex';
+        ctx.polite('You chose: '+o+'. Now say how sure you are, then we will test it.');
+        maybeGate();
+      });
+      opts.appendChild(b);
+    });
+    root.appendChild(opts);
+    var confRow=el('div','conf'); confRow.style.display='none'; confRow.setAttribute('role','group'); confRow.setAttribute('aria-label','How sure are you');
+    confRow.appendChild(el('span','conf-lbl','How sure?'));
+    ['Guessing','Fairly','Certain'].forEach(function(c){ var cb=el('button','cbtn',c); cb.type='button'; cb.setAttribute('aria-pressed','false');
+      cb.addEventListener('click', function(){ conf=c; [].forEach.call(confRow.querySelectorAll('.cbtn'),function(x){x.setAttribute('aria-pressed','false');}); cb.setAttribute('aria-pressed','true'); ctx.answer(act.id+'-conf',c); maybeGate(); });
+      confRow.appendChild(cb);
+    });
+    root.appendChild(confRow);
+    root.appendChild(el('p','sub',act.after||'No reveal yet. The simulator is the reveal: you will find out by trying it.'));
+    function maybeGate(){ if(chosen!=null && conf!=null) ctx.gate(true); }
+  }});
+
+  Engine.reg('assemble', { mount:function(root, act, ctx){
+    ctx.gate(false);
+    root.appendChild(el('div','icon',act.icon||'\u{1F9F1}'));
+    root.appendChild(el('h1','h',act.h));
+    root.appendChild(el('p','lead',act.lead));
+    var filled={}; var active=act.slots[0].id;
+    var build=el('div','build'); root.appendChild(build);
+    var tray=el('div','chiptray'); root.appendChild(tray);
+    var fb=el('div','note'); fb.style.display='none'; root.appendChild(fb);
+    var checkBtn=el('button','btn','Check it'); checkBtn.type='button'; checkBtn.style.marginTop='14px';
+    root.appendChild(checkBtn);
+    function renderBuild(){
+      build.replaceChildren();
+      act.parts.forEach(function(p){
+        if(p.slot){ var s=el('span','slot'+(filled[p.slot]?' filled':'')+(active===p.slot?' active':''), filled[p.slot]||p.placeholder);
+          s.setAttribute('role','button'); s.tabIndex=0; s.setAttribute('aria-label','Slot '+p.slot+(filled[p.slot]?', filled with '+filled[p.slot]:', empty'));
+          s.addEventListener('click', function(){ active=p.slot; renderBuild(); renderTray(); });
+          s.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); active=p.slot; renderBuild(); renderTray(); } });
+          build.appendChild(s);
+        } else { build.appendChild(document.createTextNode(p.text)); }
+      });
+    }
+    function renderTray(){
+      tray.replaceChildren();
+      var slot=act.slots.filter(function(x){return x.id===active;})[0];
+      tray.appendChild(el('span','conf-lbl','Tap a value for the highlighted slot:'));
+      slot.chips.forEach(function(ch){ var c=el('button','chip',ch); c.type='button';
+        c.addEventListener('click', function(){ filled[active]=ch; ctx.polite('Placed '+ch+' in '+active+'.');
+          var ai=act.slots.map(function(x){return x.id;}).indexOf(active);
+          for(var k=ai+1;k<act.slots.length;k++){ if(!filled[act.slots[k].id]){ active=act.slots[k].id; break; } }
+          renderBuild(); renderTray();
+        });
+        tray.appendChild(c);
+      });
+    }
+    checkBtn.addEventListener('click', function(){
+      var allFilled=act.slots.every(function(s){return filled[s.id];});
+      if(!allFilled){ fb.style.display='block'; fb.className='note warn'; fb.textContent='Fill every slot first.'; ctx.assertive('Fill every slot first.'); return; }
+      var wrong=null;
+      for(var i=0;i<act.slots.length;i++){ var s=act.slots[i]; if(filled[s.id]!==s.correct){ wrong=s; break; } }
+      if(wrong){ fb.style.display='block'; fb.className='note bad'; fb.innerHTML='<b>Not quite.</b> '+wrong.feedback[filled[wrong.id]] ; ctx.assertive('Not quite. '+fb.textContent); }
+      else { fb.style.display='block'; fb.className='note good'; fb.innerHTML='<b>That is the record.</b> '+act.success; ctx.assertive('Correct. '+act.success); ctx.gate(true); }
+    });
+    renderBuild(); renderTray();
+  }});
+
+  Engine.reg('diagnose', { mount:function(root, act, ctx){
+    ctx.gate(false);
+    root.appendChild(el('div','icon',act.icon||'\u{1F50E}'));
+    root.appendChild(el('h1','h',act.h));
+    var crumb=el('div','crumb'); root.appendChild(crumb);
+    var node=el('div'); root.appendChild(node);
+    var path=[];
+    function show(id){
+      var n=act.nodes[id]; node.replaceChildren();
+      crumb.innerHTML = path.length? 'Your path: <b>'+path.join(' → ')+'</b>' : '';
+      node.appendChild(el('p','lead',n.prompt));
+      if(n.terminal){ var done=el('div','note good'); done.innerHTML='<b>Solved.</b> '+n.prompt; node.replaceChildren(done); ctx.gate(true); ctx.polite('Diagnosis complete. '+n.prompt); return; }
+      var opts=el('div','opts');
+      n.choices.forEach(function(c,idx){ var b=el('button','opt'); b.type='button';
+        b.appendChild(el('span','key',String.fromCharCode(65+idx))); b.appendChild(el('span',null,c.label));
+        b.addEventListener('click', function(){
+          if(c.correct){ path.push(c.short||c.label); show(c.next); var nh=node.querySelector('.lead'); }
+          else { [].forEach.call(opts.children,function(x){x.disabled=true;});
+            b.dataset.state='wrong';
+            var f=el('div','note bad'); f.innerHTML='<b>Not the first move.</b> '+c.feedback; node.appendChild(f);
+            ctx.assertive('Not the first move. '+c.feedback);
+            var retry=el('button','btn','Try again'); retry.type='button'; retry.style.marginTop='12px';
+            retry.addEventListener('click', function(){ show(id); }); node.appendChild(retry);
+          }
+        });
+        opts.appendChild(b);
+      });
+      node.appendChild(opts);
+    }
+    show(act.start);
+  }});
+
+  Engine.reg('close', { mount:function(root, act, ctx){
+    root.appendChild(el('div','icon','✅'));
+    root.appendChild(el('h1','h',act.h));
+    root.appendChild(el('p','lead',act.lead));
+    var ul=el('ul','check');
+    act.checklist.forEach(function(c,i){ var li=el('li'); var cb=el('input'); cb.type='checkbox'; cb.id='ck'+i;
+      var lab=el('label',null,c); lab.setAttribute('for','ck'+i); lab.style.cursor='pointer';
+      li.appendChild(cb); li.appendChild(lab); ul.appendChild(li); });
+    root.appendChild(ul);
+    var recap=el('div','recap'); var p=Engine.state.progress;
+    act.recap.forEach(function(r){ var done = p[r.id]==='correct';
+      var row=el('div','recap-row');
+      row.appendChild(el('span','recap-tag '+(done?'ok':'revisit'), done?'Confirmed':'Revisit'));
+      row.appendChild(el('span',null,r.text)); recap.appendChild(row); });
+    root.appendChild(recap);
+    // confident-miss callout
+    if(Engine.state.answers['p1'] && Engine.state.answers['p1'].choice===0 && Engine.state.answers['p1-conf']==='Certain'){
+      var cm=el('div','note warn'); cm.innerHTML='<b>One to re-check:</b> you were certain a keyword blocklist was the answer, but it leaks bots and bins real people. That confident miss is the exact trap, so it is the one worth remembering.'; root.appendChild(cm);
+    }
+    var bt=el('div','winbtns');
+    var a1=el('a','btn primary','Read the full guide'); a1.href='/guides/contact-form-spam/'; bt.appendChild(a1);
+    var a2=el('a','btn','More lessons'); a2.href='/learn/'; bt.appendChild(a2);
+    root.appendChild(bt);
+  }});
+
+  // ---------- THE FUNNEL SIMULATOR ----------
+  Engine.regSim('funnel', { mount:function(root, act, ctx){
+    ctx.gate(false);
+    var s={ honeypot:false, timetrap:false, ratelimit:false, keyword:false };
+    var runCount=0, stuckRuns=0, hintRung=0, missionDone=false;
+    var LAYER_LABEL={ honeypot:'Honeypot', timetrap:'Time-trap', ratelimit:'Rate-limit', keyword:'Keyword filter' };
+    root.appendChild(el('div','icon','\u{1FA9D}'));
+    root.appendChild(el('h1','h','The funnel'));
+    root.appendChild(el('p','lead','Ten senders are about to hit your contact form: seven bots and three real people. Switch on defences, then run the wave. <b>Your mission: block every bot while letting all three real people through.</b>'));
+
+    // CONTROLS (manipulate zone)
+    var ctrls=el('div','sim-controls');
+    function checkRow(key, label, hint){
+      var row=el('div','ctl'); var cb=el('input'); cb.type='checkbox'; cb.id='c-'+key;
+      var lw=el('label'); lw.setAttribute('for','c-'+key); lw.innerHTML=label+(hint?'<span class="hintword">'+hint+'</span>':'');
+      cb.addEventListener('change', function(){ s[key]=cb.checked; onChange(); });
+      row.appendChild(cb); row.appendChild(lw); row._cb=cb; return row;
+    }
+    var rHoney=checkRow('honeypot','Honeypot field','a hidden field real people never fill, but bots do');
+    var rTime =checkRow('timetrap','Time-trap','rejects a form submitted within a second of loading');
+    var rRate =checkRow('ratelimit','Rate-limit','blocks repeat floods from one address');
+    var rKey  =checkRow('keyword','Keyword filter','blocks messages containing flagged words');
+    ctrls.appendChild(rHoney); ctrls.appendChild(rTime); ctrls.appendChild(rRate); ctrls.appendChild(rKey);
+    root.appendChild(ctrls);
+
+    // live tally
+    var stamps=el('div','stamps'); root.appendChild(stamps);
+
+    // stage (consequence zone): two lanes, blocked vs delivered
+    var box=el('div','stage-box');
+    var lanes=el('div','lanes');
+    var laneBlocked=el('div','lane lane-blocked'); laneBlocked.appendChild(el('div','lane-head','Blocked'));
+    var blockedSlot=el('div','lane-slot'); laneBlocked.appendChild(blockedSlot);
+    var laneInbox=el('div','lane lane-inbox'); laneInbox.appendChild(el('div','lane-head','Reached your inbox'));
+    var inboxSlot=el('div','lane-slot'); laneInbox.appendChild(inboxSlot);
+    lanes.appendChild(laneBlocked); lanes.appendChild(laneInbox); box.appendChild(lanes);
+    root.appendChild(box);
+
+    // verdict line
+    var verdict=el('div','bouncer');
+    verdict.appendChild(el('div','face','\u{1F4DD}'));
+    var bubble=el('div','bubble empty','Switch on some defences and press Run the wave. I will show you who got through.');
+    verdict.appendChild(bubble); root.appendChild(verdict);
+
+    // mission chips
+    var mission=el('div','mission');
+    mission.appendChild(el('span',null,'Mission:'));
+    var chipBots=el('span','route','Block all 7 bots'), chipFP=el('span','route','0 real people blocked');
+    mission.appendChild(chipBots); mission.appendChild(chipFP);
+    root.appendChild(mission);
+
+    var runBtn=el('button','send','Run the wave'); runBtn.type='button'; root.appendChild(runBtn);
+    var hintBtn=el('button','hintbtn','Stuck? Get a hint'); hintBtn.type='button'; root.appendChild(hintBtn);
+    root.appendChild(el('p','caption','Simplified model: a fixed cast of ten. Real forms face a constant, varied stream, but the lesson holds.'));
+
+    function liveTally(){
+      var r=compute(s);
+      stamps.replaceChildren();
+      var any = s.honeypot||s.timetrap||s.ratelimit||s.keyword;
+      var b=el('span','stamp '+(r.allBotsBlocked?'pass':(any?'fail':'')), 'Bots through: '+r.botsThrough+' of '+r.totalBots); stamps.appendChild(b);
+      var f=el('span','stamp '+(r.falsePositives>0?'fail':(any?'pass':'')), 'Real people blocked: '+r.falsePositives); stamps.appendChild(f);
+    }
+    function onChange(){ liveTally(); }
+
+    function token(res){
+      var t=el('span','token '+(res.kind==='bot'?'is-bot':'is-human')+(res.blocked?' blocked':' through'));
+      var icon = res.kind==='bot' ? '\u{1F916}' : '\u{1F464}';
+      t.innerHTML='<span class="tk-ic">'+icon+'</span> '+res.name;
+      if(res.blocked) t.title='Caught by '+LAYER_LABEL[res.by];
+      return t;
+    }
+
+    function reason(r){
+      if(!(s.honeypot||s.timetrap||s.ratelimit||s.keyword)){
+        return 'No defences are on, so all seven bots sailed straight into your inbox.';
+      }
+      var parts=[];
+      if(r.botsThrough>0){ parts.push(r.botsThrough+' bot'+(r.botsThrough>1?'s':'')+' still got through, so a gap remains.'); }
+      else { parts.push('Every bot was caught.'); }
+      if(r.falsePositives>0){
+        var human = r.results.filter(function(x){ return x.kind==='human' && x.blocked; })[0];
+        parts.push('But '+r.falsePositives+' real person was binned: '+human.name+' was caught by the '+LAYER_LABEL[human.by].toLowerCase()+', because their genuine message mentioned a flagged word. That is a lost enquiry.');
+      } else if(r.botsThrough===0){
+        parts.push('And not one real person was blocked. The three silent checks did the whole job with no collateral damage.');
+      } else {
+        parts.push('No real people were blocked yet.');
+      }
+      return parts.join(' ');
+    }
+
+    function run(){
+      runCount++;
+      var r=compute(s);
+      blockedSlot.replaceChildren(); inboxSlot.replaceChildren();
+      r.results.forEach(function(res){ (res.blocked?blockedSlot:inboxSlot).appendChild(token(res)); });
+      if(!blockedSlot.children.length) blockedSlot.appendChild(el('span','lane-empty','nothing yet'));
+      if(!inboxSlot.children.length) inboxSlot.appendChild(el('span','lane-empty','nobody'));
+      var rz=reason(r); bubble.className='bubble'; bubble.textContent=rz;
+      liveTally(); updateMission(r);
+      ctx.polite('Wave run. '+r.botsThrough+' of '+r.totalBots+' bots got through. '+r.falsePositives+' real people blocked. '+rz);
+      var wasDone=missionDone;
+      if(r.missionMet){ missionDone=true; ctx.gate(true); }
+      if(r.missionMet && !wasDone){ ctx.assertive('Mission complete. Every bot blocked, no real people lost. You can continue.'); stuckRuns=0; }
+      else if(!r.missionMet){ stuckRuns++; if(stuckRuns>=3 && hintRung===0) showHint(); }
+    }
+    function updateMission(r){
+      chipBots.className='route'+(r.allBotsBlocked?' done':''); chipBots.innerHTML=(r.allBotsBlocked?'<span class="tick">✓</span> ':'')+'Block all 7 bots';
+      var fpOk = r.falsePositives===0 && (s.honeypot||s.timetrap||s.ratelimit||s.keyword);
+      chipFP.className='route'+(fpOk?' done':'');
+      chipFP.innerHTML=(fpOk?'<span class="tick">✓</span> ':'')+'0 real people blocked';
+    }
+    function showHint(){
+      hintRung++;
+      var r=compute(s); var msg;
+      if(hintRung===1){
+        msg='No single filter catches every bot. Layer several quiet ones, and watch the real-people count: a filter that bins a genuine enquiry has cost you.';
+      } else if(hintRung===2){
+        if(s.keyword && r.falsePositives>0){
+          msg='The keyword filter is binning a real person whose honest message happened to mention a flagged word. Switch it off and lean on the silent checks instead.';
+        } else if(r.botsThrough>0){
+          msg='Three silent checks together catch all seven bots: the honeypot field, the time-trap, and the rate-limit. Turn all three on.';
+        } else {
+          msg='You are almost there. Make sure no filter is blocking a real person.';
+        }
+      } else {
+        s={ honeypot:true, timetrap:true, ratelimit:true, keyword:false };
+        syncControls(); liveTally();
+        msg='Here is the winning setup: honeypot, time-trap and rate-limit on, keyword filter off. Press Run the wave to see it land.';
+      }
+      var fb=root.querySelector('.hint-fb'); if(!fb){ fb=el('div','note good hint-fb'); hintBtn.parentNode.insertBefore(fb, root.querySelector('.caption')); }
+      fb.innerHTML='<b>Hint.</b> '+msg; ctx.assertive('Hint. '+msg); stuckRuns=0;
+    }
+    function syncControls(){
+      rHoney._cb.checked=s.honeypot; rTime._cb.checked=s.timetrap; rRate._cb.checked=s.ratelimit; rKey._cb.checked=s.keyword;
+    }
+    runBtn.addEventListener('click', run);
+    hintBtn.addEventListener('click', showHint);
+    liveTally(); updateMission(compute(s));
+  }});
+
+  // ---------- LESSON DATA ----------
+  var LESSON = { id:'contact-form-spam', acts:[
+    { type:'reveal', icon:'\u{1F4EC}',
+      belief:'You think a CAPTCHA, or one list of banned words, will fix contact-form spam.',
+      refute:'It will not. No single filter catches every bot, and the tempting one, a banned-word list, quietly bins real enquiries too. Good spam defence is a <b>funnel</b> of small, silent checks, not one big gate.',
+      env:[['Form hit by:','7 bots, 3 real people'],['One word-blocklist:','catches some bots'],['Also catches:','a real customer who said a flagged word'],['Net result:','spam still gets in, an enquiry lost']],
+      sub:'Hold that last line: the loudest filter is the one that costs you a customer.' },
+    { type:'predict', id:'p1', icon:'\u{1F914}',
+      q:'A wave of bots and real people is about to hit your form.',
+      detail:'Which single defence stops the most spam with no downside?',
+      options:['A keyword blocklist (it reads the message and bins the spammy ones)','A honeypot field','A time-trap','None of them alone, you have to layer several'],
+      after:'No reveal yet. The simulator is the reveal: switch the layers on and run the wave yourself.' },
+    { type:'simulator', sim:'funnel' },
+    { type:'assemble', icon:'\u{1F9F1}', h:'Now order the funnel',
+      lead:'You have felt the rule. Now lay out a sane defence in three blanks. Tap a value into each.',
+      parts:[{text:'Layer 1 (silent): '},{slot:'l1',placeholder:'____'},{text:'  +  Layer 2 (silent): '},{slot:'l2',placeholder:'____'},{text:'  +  Layer 3 (last resort): '},{slot:'l3',placeholder:'____'}],
+      slots:[
+        { id:'l1', chips:['honeypot','keyword blocklist'], correct:'honeypot', feedback:{ 'keyword blocklist':'A blocklist is the noisy, last-resort filter, not your first line. It bins real people. Start with the silent honeypot.' } },
+        { id:'l2', chips:['time-trap and rate-limit','more banned words'], correct:'time-trap and rate-limit', feedback:{ 'more banned words':'Stacking banned words just bins more real people. Add the silent time-trap and rate-limit instead.' } },
+        { id:'l3', chips:['a careful manual review','an aggressive keyword blocklist'], correct:'a careful manual review', feedback:{ 'an aggressive keyword blocklist':'An aggressive blocklist as your safety net guarantees false positives. If anything is the last resort, make it a human eye, not a word list.' } }
+      ],
+      success:'Silent checks first, a human as the safety net, and no blunt word-blocklist binning real enquiries. That is a funnel that protects you without costing you customers.' },
+    { type:'diagnose', icon:'\u{1F50E}', h:'A real ticket: enquiries stopped arriving',
+      start:'n1',
+      nodes:{
+        n1:{ prompt:'You added a word blocklist last week. Spam dropped, but a client says real enquiries have stopped arriving. What is the likely cause?',
+          choices:[
+            { label:'The form is broken and saving nothing', correct:false, feedback:'Spam still got through earlier, so the form saves fine. Something is now blocking the genuine messages specifically.' },
+            { label:'The blocklist is binning real messages that mention a flagged word', short:'false positives', correct:true, next:'n2' }
+          ] },
+        n2:{ prompt:'You confirm a customer wrote about a "free quote" and got silently blocked. What do you do?',
+          choices:[
+            { label:'Add more banned words to be safe', correct:false, feedback:'That widens the net and bins even more real people. The blocklist is the problem, not the cure.' },
+            { label:'Switch off the keyword filter and lean on the silent layers', short:'drop the blocklist', correct:true, next:'n3' }
+          ] },
+        n3:{ terminal:true, prompt:'You removed the keyword filter and relied on the honeypot, time-trap and rate-limit. Spam stayed low and real enquiries came back. The silent layers do the work without the collateral damage.' }
+      } },
+    { type:'close', h:'You have got it', lead:'Not from being told. From running the wave and watching who got through.',
+      checklist:['Layer honeypot, time-trap and rate-limit first','Avoid keyword blocklists that bin real people','Use a human review, not a word list, as the last resort'],
+      recap:[
+        { id:'layers', text:'No single defence stops all spam. A funnel of silent checks does.' },
+        { id:'silent', text:'Honeypot, time-trap and rate-limit catch bots without touching real people.' },
+        { id:'falsepos', text:'A keyword blocklist costs you real enquiries. The false positive is the hidden price.' }
+      ] }
+  ]};
+  // mark recap concepts as confirmed once the learner reaches the relevant acts
+  var origAdvance=Engine.advance.bind(Engine);
+  Engine.advance=function(){ var act=this.lesson&&this.lesson.acts[this.state.i];
+    if(act){ if(act.type==='simulator'){ this.state.progress['layers']='correct'; this.state.progress['silent']='correct'; }
+      if(act.type==='assemble'){ this.state.progress['falsepos']='correct'; } }
+    origAdvance();
+  };
+
+  Engine.mount(LESSON);
 })();
 </script>
 </body>

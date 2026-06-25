@@ -4,95 +4,170 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="A short, interactive lesson on building your first PageMotor plugin: one folder, one class, one working shortcode. One step at a time.">
-<title>Your first PageMotor plugin, the interactive lesson | ElmsPark</title>
+<meta name="description" content="An interactive lesson: assemble a working shortcode handler piece by piece, then render it. Learn why a plugin capability is a pure function.">
+<title>Your first PageMotor plugin | ElmsPark</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600|inter-tight:400,500,600,700&display=swap">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ElmsPark Lessons">
+<meta property="og:title" content="Your first PageMotor plugin">
+<meta property="og:description" content="Interactive: assemble a working shortcode handler piece by piece and render it. Learn why a plugin capability is a pure function that returns, never echoes.">
+<meta property="og:url" content="https://documentation.elmspark.com/learn/first-pagemotor-plugin/">
+<meta property="og:image" content="https://documentation.elmspark.com/og/learn-first-pagemotor-plugin.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Your first PageMotor plugin, an interactive ElmsPark lesson">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://documentation.elmspark.com/og/learn-first-pagemotor-plugin.png">
 <style>
   :root{
-    --paper:#f4efe4; --card:#fffdf8; --ink:#23211c; --soft:#6b6456;
+    --paper:#f4efe4; --card:#fffdf8; --ink:#23211c; --soft:#6b6456; --faint:#8a8170;
     --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
     --good:#2f7a54; --good-bg:#e3f3ea; --good-line:#9ccdb2;
-    --dim:#efe9da; --radius:18px;
+    --bad:#b5452a; --bad-bg:#fbece6; --bad-line:#e7b9a8;
+    --warn:#a8741f; --warn-bg:#f8efda;
+    --dim:#efe9da; --ink-pill:#1f1d17; --radius:16px;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0; background:var(--paper); color:var(--ink);
     font-family:'Inter Tight',system-ui,-apple-system,"Segoe UI",sans-serif;
-    line-height:1.5; -webkit-font-smoothing:antialiased;
-    display:flex; flex-direction:column; min-height:100dvh}
-  .bar{display:flex; justify-content:space-between; align-items:center; gap:12px;
-    padding:14px 20px; font-size:14px}
-  .brand{color:var(--pine-deep); text-decoration:none; font-weight:600; letter-spacing:.01em}
-  .brand b{font-weight:700}
-  .brand .dot{color:var(--soft); font-weight:500; margin:0 6px}
+    line-height:1.5; -webkit-font-smoothing:antialiased; display:flex; flex-direction:column; min-height:100dvh}
+  .bar{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 20px; font-size:14px}
+  .brand{color:var(--pine-deep); text-decoration:none; font-weight:600}
+  .brand b{font-weight:700} .brand .dot{color:var(--soft); margin:0 6px}
   .exit{color:var(--soft); text-decoration:none; font-weight:500; border-bottom:1px solid transparent}
   .exit:hover,.exit:focus-visible{color:var(--pine); border-bottom-color:var(--pine)}
   .progress{height:5px; background:var(--dim); margin:0 20px; border-radius:999px; overflow:hidden}
   .progress-fill{height:100%; width:0; background:var(--pine); border-radius:999px; transition:width .35s cubic-bezier(.4,0,.2,1)}
-  @media (prefers-reduced-motion: reduce){ .progress-fill{transition:none} }
-  .stage{flex:1; display:flex; flex-direction:column; justify-content:center;
-    width:100%; max-width:600px; margin:0 auto; padding:18px 22px 8px}
-  .count{font-size:13px; color:var(--soft); font-weight:500; letter-spacing:.04em; margin:0 0 18px}
-  .step{animation:fade .3s ease both}
-  @media (prefers-reduced-motion: reduce){ .step{animation:none} }
+  .stage{flex:1; width:100%; max-width:640px; margin:0 auto; padding:16px 22px 8px}
+  .count{font-size:13px; color:var(--soft); font-weight:500; letter-spacing:.04em; margin:6px 0 16px}
+  .act{animation:fade .3s ease both}
   @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
-  .icon{font-size:42px; line-height:1; margin:0 0 14px}
-  h1.h{font-family:Fraunces,Georgia,serif; font-weight:600; font-size:clamp(26px,6vw,34px);
-    line-height:1.15; color:var(--pine-deep); margin:0 0 14px; letter-spacing:-.01em}
-  .lead{font-size:clamp(17px,4.4vw,19px); color:var(--ink); margin:0 0 8px}
-  .sub{font-size:16px; color:var(--soft); margin:10px 0 0}
-  .rec{display:inline-block; margin-top:16px; font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
-    font-size:14px; background:#1f1d17; color:#e8e2d0; padding:9px 14px; border-radius:10px; letter-spacing:.01em}
-  .opts{display:flex; flex-direction:column; gap:10px; margin:20px 0 0}
-  .opt{display:flex; align-items:center; gap:12px; width:100%; text-align:left; font:inherit; font-size:16.5px;
-    background:var(--card); border:1.5px solid var(--line); color:var(--ink); padding:15px 16px; border-radius:14px;
-    cursor:pointer; transition:border-color .15s, background .15s, transform .1s}
+  .icon{font-size:38px; line-height:1; margin:0 0 12px}
+  h1.h{font-family:Fraunces,Georgia,serif; font-weight:600; font-size:clamp(24px,5.4vw,31px); line-height:1.18; color:var(--pine-deep); margin:0 0 12px; letter-spacing:-.01em}
+  .lead{font-size:clamp(16px,4.2vw,18px); color:var(--ink); margin:0 0 10px}
+  .sub{font-size:15.5px; color:var(--soft); margin:8px 0 0}
+  .surprise{display:inline-block; font-family:'Inter Tight'; font-size:12px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--accent); margin:0 0 8px}
+  /* envelope diagram (reveal) */
+  .env{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin:16px 0; font-family:"JetBrains Mono",ui-monospace,Menlo,monospace; font-size:13.5px}
+  .env .row{display:flex; justify-content:space-between; gap:10px; padding:4px 0; align-items:center}
+  .env .lbl{color:var(--soft)} .env .val{color:var(--ink)}
+  .env .ok{color:var(--good); font-weight:700} .env .no{color:var(--bad); font-weight:700}
+  /* predict */
+  .opts{display:flex; flex-direction:column; gap:10px; margin:18px 0 0}
+  .opt{display:flex; gap:12px; align-items:center; width:100%; text-align:left; font:inherit; font-size:16px; background:var(--card); border:1.5px solid var(--line); color:var(--ink); padding:14px 16px; border-radius:13px; cursor:pointer; transition:border-color .15s, background .15s, transform .1s}
   .opt:hover:not(:disabled){border-color:var(--pine); transform:translateY(-1px)}
   .opt:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
   .opt>span:last-child{min-width:0; overflow-wrap:break-word}
-  .lead,.sub,.win-list li,.why{overflow-wrap:break-word}
-  .opt .key{flex:none; width:24px; height:24px; border-radius:7px; background:var(--dim); color:var(--soft);
-    display:grid; place-items:center; font-size:13px; font-weight:700}
+  .opt .key{flex:none; width:24px; height:24px; border-radius:7px; background:var(--dim); color:var(--soft); display:grid; place-items:center; font-size:13px; font-weight:700}
   .opt[data-state="correct"]{border-color:var(--good-line); background:var(--good-bg)}
   .opt[data-state="correct"] .key{background:var(--good); color:#fff}
-  .opt[data-state="wrong"]{border-color:#e7c3b6; background:#fbf0ec; color:var(--soft)}
-  .opt[data-state="wrong"] .key{background:#d98c70; color:#fff}
+  .opt[data-state="wrong"]{border-color:var(--bad-line); background:var(--bad-bg); color:var(--soft)}
+  .opt[data-state="wrong"] .key{background:var(--bad); color:#fff}
   .opt[disabled]{cursor:default}
-  .why{margin:16px 0 0; padding:13px 16px; border-radius:12px; font-size:16px;
-    background:var(--good-bg); border:1px solid var(--good-line); color:#1d5236; display:none}
-  .why.show{display:block; animation:fade .25s ease both}
-  .why b{color:var(--good)}
-  .win-list{list-style:none; padding:0; margin:18px 0 0}
-  .win-list li{position:relative; padding-left:26px; font-size:17px; margin:11px 0; overflow-wrap:break-word}
-  .win-list li::before{content:"\2713"; color:var(--good); font-weight:700; position:absolute; left:0; top:1px}
-  .nav{display:flex; gap:12px; align-items:center; justify-content:space-between;
-    width:100%; max-width:600px; margin:0 auto; padding:14px 22px calc(14px + env(safe-area-inset-bottom))}
-  .btn{font:inherit; font-weight:600; font-size:16px; cursor:pointer; border-radius:12px; padding:13px 24px;
-    border:1.5px solid var(--line); background:var(--card); color:var(--ink); transition:.15s}
-  .btn:hover:not(:disabled){border-color:var(--pine)}
-  .btn:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
-  .btn.primary{background:var(--pine); border-color:var(--pine); color:#fff; flex:1; max-width:none}
+  .conf{display:flex; gap:8px; align-items:center; margin:16px 0 0; flex-wrap:wrap}
+  .conf-lbl{font-size:13px; color:var(--soft); margin-right:2px}
+  .cbtn{font:inherit; font-size:14px; border:1.5px solid var(--line); background:var(--paper); color:var(--soft); padding:6px 13px; border-radius:999px; cursor:pointer}
+  .cbtn[aria-pressed="true"]{background:var(--pine); border-color:var(--pine); color:#fff}
+  .cbtn:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .note{margin:16px 0 0; padding:13px 15px; border-radius:12px; font-size:15.5px; border:1px solid var(--line)}
+  .note.good{background:var(--good-bg); border-color:var(--good-line); color:#1d5236}
+  .note.warn{background:var(--warn-bg); border-color:#e6cf9a; color:#73501a}
+  .note.bad{background:var(--bad-bg); border-color:var(--bad-line); color:#7a2c19}
+  .note b{font-weight:700}
+  /* SIMULATOR */
+  .sim-controls{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:6px 16px 14px; margin:14px 0}
+  .ctl{display:flex; align-items:center; gap:11px; padding:11px 0; border-bottom:1px solid var(--line)}
+  .ctl:last-child{border-bottom:none}
+  .ctl input[type=checkbox]{width:20px; height:20px; accent-color:var(--pine); flex:none}
+  .ctl label{font-size:15px; cursor:pointer}
+  .ctl .hintword{display:block; font-size:12.5px; color:var(--faint)}
+  .ctl.disabled{opacity:.45}
+  .seg{display:flex; gap:0; margin-left:auto; border:1.5px solid var(--line); border-radius:999px; overflow:hidden; flex:none}
+  .seg button{font:inherit; font-size:13px; border:none; background:var(--paper); color:var(--soft); padding:6px 12px; cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--pine); color:#fff}
+  .seg button:focus-visible{outline:2px solid var(--pine); outline-offset:-2px}
+  .dmarc-seg{display:flex; gap:6px; margin-left:auto}
+  .dmarc-seg button{font:inherit; font-size:13px; border:1.5px solid var(--line); background:var(--paper); color:var(--soft); padding:5px 11px; border-radius:999px; cursor:pointer}
+  .dmarc-seg button[aria-pressed="true"]{background:var(--pine); border-color:var(--pine); color:#fff}
+  .dmarc-seg button:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .stamps{display:flex; gap:7px; flex-wrap:wrap; margin:14px 0 4px}
+  .stamp{font-family:"JetBrains Mono",monospace; font-size:12px; font-weight:700; padding:4px 9px; border-radius:7px; border:1.5px solid var(--line); background:var(--paper); color:var(--soft)}
+  .stamp.pass{background:var(--good-bg); border-color:var(--good-line); color:var(--good)}
+  .stamp.fail{background:var(--bad-bg); border-color:var(--bad-line); color:var(--bad)}
+  .stage-box{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin:12px 0}
+  .dests{display:flex; gap:8px; margin:0 0 12px}
+  .dest{flex:1; text-align:center; font-size:12px; font-weight:600; color:var(--faint); padding:7px 4px; border:1.5px dashed var(--line); border-radius:10px; transition:.25s}
+  .dest.lit-inbox{border-style:solid; border-color:var(--good-line); background:var(--good-bg); color:var(--good)}
+  .dest.lit-spam{border-style:solid; border-color:var(--bad-line); background:var(--bad-bg); color:var(--bad)}
+  .dest.lit-bounce{border-style:solid; border-color:#cbbf9f; background:var(--dim); color:#6b5f3f}
+  .bouncer{display:flex; gap:10px; align-items:flex-start; margin:6px 0 0}
+  .bouncer .face{font-size:26px; flex:none; line-height:1.2}
+  .bubble{background:var(--paper); border:1px solid var(--line); border-radius:12px; border-top-left-radius:3px; padding:10px 13px; font-size:14.5px; color:var(--ink)}
+  .bubble.empty{color:var(--faint); font-style:italic}
+  .mission{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:14px 0 0; font-size:13.5px; color:var(--soft)}
+  .route{display:inline-flex; gap:6px; align-items:center; border:1.5px solid var(--line); border-radius:999px; padding:4px 11px; font-size:13px; color:var(--soft)}
+  .route.done{background:var(--good-bg); border-color:var(--good-line); color:var(--good); font-weight:600}
+  .route .tick{font-weight:700}
+  .send{font:inherit; font-weight:600; font-size:16px; background:var(--accent); color:#fff; border:none; border-radius:12px; padding:12px 22px; cursor:pointer; margin:14px 0 0; transition:filter .15s}
+  .send:hover{filter:brightness(1.05)} .send:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+  .hintbtn{font:inherit; font-size:14px; background:none; border:none; color:var(--pine); text-decoration:underline; cursor:pointer; margin:14px 0 0 14px}
+  .hintbtn:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .caption{font-size:12.5px; color:var(--faint); margin:10px 0 0; font-style:italic}
+  /* assemble */
+  .build{font-family:"JetBrains Mono",monospace; font-size:14px; background:var(--ink-pill); color:#e8e2d0; padding:13px 15px; border-radius:11px; margin:14px 0; line-height:1.9; word-break:break-word; white-space:pre-wrap}
+  .slot{display:inline-block; min-width:64px; text-align:center; border-bottom:2px dashed #8a8470; color:#c9a06a; padding:0 6px; margin:0 2px; cursor:pointer}
+  .slot.filled{border-bottom-style:solid; border-color:var(--accent); color:#ffd9a8}
+  .slot.active{background:#33302820; border-bottom-color:#ffd9a8}
+  .chiptray{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0}
+  .chip{font:inherit; font-family:"JetBrains Mono",monospace; font-size:13px; border:1.5px solid var(--line); background:var(--card); color:var(--ink); padding:8px 13px; border-radius:9px; cursor:pointer}
+  .chip:hover:not(:disabled){border-color:var(--pine)} .chip:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .chip[disabled]{opacity:.4; cursor:default}
+  /* diagnose */
+  .crumb{font-size:13px; color:var(--faint); margin:0 0 12px}
+  .crumb b{color:var(--soft)}
+  /* close */
+  .check{list-style:none; padding:0; margin:14px 0 0}
+  .check li{display:flex; gap:11px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--line); font-size:16px}
+  .check input{width:20px; height:20px; accent-color:var(--good); flex:none; margin-top:2px}
+  .recap{margin:16px 0 0}
+  .recap-row{display:flex; gap:10px; align-items:baseline; padding:7px 0; font-size:15.5px}
+  .recap-tag{flex:none; font-size:12px; font-weight:700; padding:2px 9px; border-radius:999px}
+  .recap-tag.ok{background:var(--good-bg); color:var(--good)} .recap-tag.revisit{background:var(--warn-bg); color:var(--warn)}
+  .winbtns{display:flex; flex-direction:column; gap:10px; margin:22px 0 0}
+  .winbtns a{display:block; text-align:center; text-decoration:none}
+  /* nav */
+  .nav{display:flex; gap:12px; align-items:center; justify-content:space-between; width:100%; max-width:640px; margin:0 auto; padding:14px 22px calc(14px + env(safe-area-inset-bottom))}
+  .btn{font:inherit; font-weight:600; font-size:16px; cursor:pointer; border-radius:12px; padding:13px 22px; border:1.5px solid var(--line); background:var(--card); color:var(--ink)}
+  .btn:hover:not(:disabled){border-color:var(--pine)} .btn:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .btn.primary{background:var(--pine); border-color:var(--pine); color:#fff; flex:1}
   .btn.primary:hover:not(:disabled){background:var(--pine-deep)}
   .btn.ghost{background:transparent; border-color:transparent; color:var(--soft)}
   .btn:disabled{opacity:.4; cursor:default}
-  .winbtns{display:flex; flex-direction:column; gap:10px; margin:26px 0 0}
-  .winbtns a{display:block; text-align:center; text-decoration:none}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  @media(min-width:520px){ .winbtns{flex-direction:row} .winbtns a{flex:1} }
+  @media(min-width:560px){ .winbtns{flex-direction:row} .winbtns a{flex:1} }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important} }
+  /* RENDER SIM */
+  .render-out{background:var(--ink-pill); color:#e8e2d0; font-family:"JetBrains Mono",monospace; font-size:13.5px; padding:13px 15px; border-radius:11px; margin:14px 0 0; word-break:break-word; line-height:1.7}
+  .render-out .meta{color:var(--faint); display:block; margin:0 0 7px; font-size:12px}
+  .live-greet{background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin:10px 0 0; color:var(--ink); font-size:16px}
+  .live-greet p{margin:0}
+  .atts-row{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin:6px 0 0}
+  .atts-row .conf-lbl{margin:0}
+  .nameseg{display:flex; gap:6px; flex-wrap:wrap}
+  .nameseg button{font:inherit; font-family:"JetBrains Mono",monospace; font-size:12.5px; border:1.5px solid var(--line); background:var(--paper); color:var(--soft); padding:5px 11px; border-radius:999px; cursor:pointer}
+  .nameseg button[aria-pressed="true"]{background:var(--pine); border-color:var(--pine); color:#fff}
+  .nameseg button:focus-visible{outline:2px solid var(--pine); outline-offset:2px}
+  .compare{display:flex; flex-direction:column; gap:10px; margin:16px 0 0}
+  .cmp{border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:var(--card)}
+  .cmp .cmp-head{font-family:"JetBrains Mono",monospace; font-size:12.5px; color:var(--bad); font-weight:700; margin:0 0 5px}
+  .cmp .cmp-body{font-size:14.5px; color:var(--soft)}
+  .cmp.win{border-color:var(--good-line); background:var(--good-bg)}
+  .cmp.win .cmp-head{color:var(--good)}
+  .cmp.win .cmp-body{color:#1d5236}
+  .breakbox{background:var(--bad-bg); border:1px solid var(--bad-line); border-radius:8px; padding:8px 10px; margin:7px 0 0; font-family:"JetBrains Mono",monospace; font-size:12px; color:#7a2c19; word-break:break-word}
 </style>
-
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="ElmsPark Lessons">
-  <meta property="og:title" content="Your first PageMotor plugin">
-  <meta property="og:description" content="A short, interactive lesson on building your first PageMotor plugin: one folder, one class, one working shortcode. One step at a time.">
-  <meta property="og:url" content="https://documentation.elmspark.com/learn/first-pagemotor-plugin/">
-  <meta property="og:image" content="https://documentation.elmspark.com/og/learn-first-pagemotor-plugin.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Your first PageMotor plugin, an interactive ElmsPark lesson">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://documentation.elmspark.com/og/learn-first-pagemotor-plugin.png">
 </head>
 <body>
   <div class="bar">
@@ -100,167 +175,423 @@
     <a class="exit" href="/guides/first-pagemotor-plugin/">Full guide &rarr;</a>
   </div>
   <div class="progress" aria-hidden="true"><div class="progress-fill" id="pfill"></div></div>
-
-  <main class="stage" id="stage" aria-live="polite"></main>
-
+  <main class="stage" id="stage"></main>
   <nav class="nav" aria-label="Lesson navigation">
     <button class="btn ghost" id="back" type="button">&larr; Back</button>
     <button class="btn primary" id="next" type="button">Start &rarr;</button>
   </nav>
+  <span class="sr-only" aria-live="polite" id="sr-polite"></span>
+  <span class="sr-only" aria-live="assertive" id="sr-assertive"></span>
 
 <script>
 (function(){
-  var STEPS = [
-    { type:'intro', icon:'\u{1F9E9}', h:'Your first PageMotor plugin',
-      lead:'One folder, one PHP file, one working shortcode. Ten quick taps and you will know how a PageMotor plugin is built.' },
+  "use strict";
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(id){ return document.getElementById(id); };
+  var el = function(tag, cls, html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; };
 
-    { type:'concept', icon:'\u{1F4C1}', h:'A plugin is one folder',
-      lead:'It is a folder with a <code>plugin.php</code> inside it.',
-      sub:'That file declares a class that extends <code>PM_Plugin</code>, the framework&rsquo;s base class.' },
-
-    { type:'concept', icon:'\u{1F9F1}', h:'You opt into capabilities',
-      lead:'You add features by implementing valet methods on your class.',
-      sub:'A valet is a named method PageMotor calls at the right moment, for example <code>shortcodes()</code>.' },
-
-    { type:'concept', icon:'\u{1F516}', h:'shortcodes() maps a tag',
-      lead:'It returns an array mapping a shortcode tag to a handler method.',
-      sub:'The handler receives an <code>$args</code> array and returns HTML, it never echoes.',
-      rec:"return ['hello-world' => 'render_hello'];" },
-
-    { type:'question', icon:'\u{1F50D}', h:'Did uploading run it?',
-      lead:'You copied the plugin folder onto the server. Is the plugin running yet?',
-      opts:['Yes, the folder is in place','No, you still have to install and activate it'],
-      answer:1,
-      why:'<b>No.</b> Uploading is not enough. Install it, then activate it in the admin Plugins section before it does anything.' },
-
-    { type:'concept', icon:'\u{1F3A8}', h:'A shortcode&rsquo;s CSS',
-      lead:'Load shortcode styles with <code>css_sitewide()</code>, not <code>css()</code>.',
-      sub:'<code>css()</code> only fires when the plugin is placed in the current template, so a shortcode would go unstyled.' },
-
-    { type:'question', icon:'\u{1F50E}', h:'Which loads the CSS?',
-      lead:'A shortcode can appear on any page. Which method loads its CSS so it is always there?',
-      opts:['css()','css_sitewide()'],
-      answer:1,
-      why:'<b>css_sitewide().</b> <code>css()</code> only loads when the plugin is placed in the template, but a shortcode can be anywhere, so it needs sitewide CSS.' },
-
-    { type:'concept', icon:'⚠️', h:'A fatal takes the site down',
-      lead:'PageMotor includes <code>plugin.php</code> directly on every page load.',
-      sub:'A syntax error or uncaught fatal stops every page until the file is fixed or the plugin is removed.' },
-
-    { type:'question', icon:'\u{1F4A5}', h:'What does a syntax error hit?',
-      lead:'You leave a stray bracket in <code>plugin.php</code>. What breaks?',
-      opts:['Only that one plugin&rsquo;s output','The whole site, since PageMotor includes the file directly','Nothing, it is caught quietly'],
-      answer:1,
-      why:'<b>The whole site.</b> The file is included directly, so a parse error stops every page. Keep early plugins simple and test each change.' },
-
-    { type:'win', icon:'✅', h:'You have got it',
-      items:['One folder, one class extending <code>PM_Plugin</code>.','Opt into capabilities with valet methods like <code>shortcodes()</code>.','A handler returns HTML, it never echoes.','Install and activate it, uploading alone does nothing.','Use <code>css_sitewide()</code> for shortcode CSS, never <code>css()</code>.','A fatal in plugin.php takes the whole site down, so keep early plugins simple.'],
-      guide:'/guides/first-pagemotor-plugin/' }
+  // ---------- LOCKED TRUTH ORACLE (PageMotor shortcode handler = a pure function) ----------
+  // Verified by /tmp/plugin-oracle-test.mjs, 17/17 assertions pass.
+  // A handler is assembled in 4 ordered slots. The oracle owns: which assembly is correct,
+  // what each wrong chip causes, the deterministic render for atts, and that escaping
+  // turns a <script> name into inert text.
+  var ORACLE_SLOTS = [
+    { id:'sig', correct:'public function greeting($atts)',
+      fails:{ 'echo "&lt;p&gt;Hello&lt;/p&gt;";':'A bare echo at the top level runs the moment the file loads, before any page exists. A capability needs a named function the engine can call with attributes.' } },
+    { id:'attr', correct:"$name = $atts['name'] ?? 'friend'",
+      fails:{ "$name = $_GET['name']":'Reading $_GET ignores the shortcode attributes entirely and breaks the contract. The values come in through $atts, and a missing one should fall back to a default.' } },
+    { id:'escape', correct:'$safe = htmlspecialchars($name)',
+      fails:{ '$safe = $name':'Skipping the escape lets a name like a script tag run in the visitor browser. Always escape anything that came from outside before you put it in your output.' } },
+    { id:'return', correct:"return '&lt;p&gt;Hello, '.$safe.'&lt;/p&gt;';",
+      fails:{ "echo '&lt;p&gt;Hello, '.$name.'&lt;/p&gt;';":'Echo prints straight to the output buffer, so the text erupts at the very top of the page above the header and the layout breaks. A capability returns its string so the engine can place it where the shortcode sits.' } }
   ];
+  function escAttr(v){ return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
+  // pure render: correct assembly + atts -> deterministic output string (or error)
+  function compute(assembly, atts){
+    var isCorrect = ORACLE_SLOTS.every(function(s,i){ return assembly[i]===s.correct; });
+    if(!isCorrect) return { error:'assembly not correct' };
+    var name = (atts && atts.name!=null && atts.name!=='') ? atts.name : 'friend';
+    return { output:'<p>Hello, '+escAttr(name)+'</p>', name:name };
+  }
+  function failureOf(slotId, chip){
+    var slot=ORACLE_SLOTS.filter(function(s){return s.id===slotId;})[0];
+    if(!slot || !slot.fails[chip]) return null;
+    return slot.fails[chip];
+  }
 
-  var i = 0, answered = {};
-  var stage = document.getElementById('stage');
-  var pfill = document.getElementById('pfill');
-  var back = document.getElementById('back');
-  var next = document.getElementById('next');
-  var KEYS = ['A','B','C','D'];
-
-  function esc(t){ return t; }
-
-  function render(){
-    var s = STEPS[i];
-    pfill.style.width = (i/(STEPS.length-1))*100 + '%';
-    var h = '<div class="step">';
-    if(s.type !== 'win') h += '<p class="count">Step ' + (i+1) + ' of ' + STEPS.length + '</p>';
-    h += '<div class="icon" aria-hidden="true">' + s.icon + '</div>';
-    h += '<h1 class="h">' + s.h + '</h1>';
-    if(s.lead) h += '<p class="lead">' + s.lead + '</p>';
-    if(s.sub) h += '<p class="sub">' + s.sub + '</p>';
-    if(s.rec) h += '<div class="rec">' + s.rec + '</div>';
-    if(s.type === 'question'){
-      h += '<div class="opts" role="group" aria-label="Answer">';
-      for(var o=0;o<s.opts.length;o++){
-        h += '<button class="opt" type="button" data-opt="'+o+'"><span class="key" aria-hidden="true">'+KEYS[o]+'</span><span>'+s.opts[o]+'</span></button>';
-      }
-      h += '</div>';
-      h += '<p class="why" id="why">'+s.why+'</p>';
-    }
-    if(s.type === 'win'){
-      h += '<ul class="win-list">';
-      for(var w=0;w<s.items.length;w++) h += '<li>'+s.items[w]+'</li>';
-      h += '</ul>';
-      h += '<div class="winbtns">'
-         + '<a class="btn primary" href="'+s.guide+'">Read the full guide</a>'
-         + '<a class="btn" href="#" id="restart">Start again</a>'
-         + '</div>';
-    }
-    h += '</div>';
-    stage.innerHTML = h;
-
-    // wire question options
-    if(s.type === 'question'){
-      var chosen = answered[i];
-      var opts = stage.querySelectorAll('.opt');
-      var why = stage.querySelector('#why');
-      opts.forEach(function(btn){
-        btn.addEventListener('click', function(){ choose(parseInt(btn.dataset.opt,10)); });
+  // ---------- ENGINE ----------
+  var Engine = {
+    state:{ i:0, progress:{}, answers:{} },
+    handlers:{}, sims:{}, lesson:null, gateOpen:true,
+    reg:function(t,h){ this.handlers[t]=h; },
+    regSim:function(n,h){ this.sims[n]=h; },
+    polite:function(m){ $('sr-polite').textContent=m; },
+    assertive:function(m){ $('sr-assertive').textContent=m; },
+    ctx:function(){ var self=this; return {
+      advance:function(){ self.advance(); },
+      gate:function(ok){ self.gateOpen=ok; self.syncNav(); },
+      mark:function(id,st){ self.state.progress[id]=st; },
+      answer:function(id,v){ self.state.answers[id]=v; },
+      polite:function(m){ self.polite(m); },
+      assertive:function(m){ self.assertive(m); },
+      reduced:REDUCED
+    }; },
+    mount:function(lesson){
+      this.lesson=lesson; this.render();
+      var self=this;
+      $('next').addEventListener('click', function(){ self.advance(); });
+      $('back').addEventListener('click', function(){ self.back(); });
+      document.addEventListener('keydown', function(e){
+        if(e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        if(e.key==='ArrowRight' && !$('next').disabled && $('next').style.display!=='none'){ self.advance(); }
+        else if(e.key==='ArrowLeft' && self.state.i>0){ self.back(); }
       });
-      if(chosen !== undefined) paintAnswer(opts, why, s, chosen);
-    }
-    if(s.type === 'win'){
-      var r = stage.querySelector('#restart');
-      if(r) r.addEventListener('click', function(e){ e.preventDefault(); i=0; answered={}; render(); });
-    }
+    },
+    render:function(){
+      var act=this.lesson.acts[this.state.i];
+      var total=this.lesson.acts.length;
+      $('pfill').style.width = (this.state.i/(total-1))*100 + '%';
+      var stage=$('stage'); stage.replaceChildren();
+      var wrap=el('div','act');
+      if(act.type!=='close'){ wrap.appendChild(el('p','count','Step '+(this.state.i+1)+' of '+total)); }
+      stage.appendChild(wrap);
+      this.gateOpen = true;
+      var h = act.type==='simulator' ? this.sims[act.sim] : this.handlers[act.type];
+      h.mount(wrap, act, this.ctx());
+      // nav
+      $('back').style.visibility = this.state.i===0 ? 'hidden':'visible';
+      $('next').style.display = act.type==='close' ? 'none':'';
+      $('next').textContent = this.state.i===0 ? 'Start →':'Next →';
+      this.syncNav();
+      // focus the heading
+      var hd=wrap.querySelector('h1.h'); if(hd){ hd.setAttribute('tabindex','-1'); hd.focus(); }
+    },
+    syncNav:function(){ $('next').disabled = !this.gateOpen; },
+    advance:function(){ if(!this.gateOpen) return; if(this.state.i<this.lesson.acts.length-1){ this.state.i++; this.render(); } },
+    back:function(){ if(this.state.i>0){ this.state.i--; this.render(); } }
+  };
 
-    // nav state
-    back.style.visibility = i===0 ? 'hidden' : 'visible';
-    if(s.type === 'win'){ next.style.display='none'; }
-    else { next.style.display=''; }
-    next.textContent = i===0 ? 'Start →' : 'Next →';
-    if(s.type === 'question' && answered[i]===undefined){ next.disabled = true; }
-    else { next.disabled = false; }
-  }
+  // ---------- SCAFFOLD HANDLERS ----------
+  Engine.reg('reveal', { mount:function(root, act){
+    root.appendChild(el('div','icon',act.icon));
+    root.appendChild(el('h1','h',act.belief));
+    root.appendChild(el('p','lead',act.refute));
+    if(act.env){
+      var box=el('div','env');
+      act.env.forEach(function(r){ var row=el('div','row');
+        row.appendChild(el('span','lbl',r[0])); row.appendChild(el('span','val',r[1])); box.appendChild(row); });
+      root.appendChild(box);
+    }
+    if(act.sub) root.appendChild(el('p','sub',act.sub));
+  }});
 
-  function paintAnswer(opts, why, s, chosen){
-    opts.forEach(function(btn){
-      var o = parseInt(btn.dataset.opt,10);
-      btn.disabled = true;
-      if(o === s.answer) btn.dataset.state = 'correct';
-      else if(o === chosen) btn.dataset.state = 'wrong';
+  Engine.reg('predict', { mount:function(root, act, ctx){
+    var self=this; ctx.gate(false);
+    root.appendChild(el('div','icon',act.icon||'\u{1F914}'));
+    root.appendChild(el('h1','h',act.q));
+    if(act.detail) root.appendChild(el('p','lead',act.detail));
+    var chosen=null, conf=null;
+    var opts=el('div','opts');
+    act.options.forEach(function(o,idx){
+      var b=el('button','opt'); b.type='button';
+      b.appendChild(el('span','key',String.fromCharCode(65+idx)));
+      b.appendChild(el('span',null,o));
+      b.addEventListener('click', function(){ if(chosen!=null) return; chosen=idx;
+        ctx.answer(act.id,{choice:idx});
+        [].forEach.call(opts.children,function(c){ c.disabled=true; });
+        b.dataset.state='chosen'; b.style.borderColor='var(--pine)';
+        confRow.style.display='flex';
+        ctx.polite('You chose: '+o+'. Now say how sure you are, then we will test it.');
+        maybeGate();
+      });
+      opts.appendChild(b);
     });
-    why.classList.add('show');
-    next.disabled = false;
-  }
+    root.appendChild(opts);
+    var confRow=el('div','conf'); confRow.style.display='none'; confRow.setAttribute('role','group'); confRow.setAttribute('aria-label','How sure are you');
+    confRow.appendChild(el('span','conf-lbl','How sure?'));
+    ['Guessing','Fairly','Certain'].forEach(function(c){ var cb=el('button','cbtn',c); cb.type='button'; cb.setAttribute('aria-pressed','false');
+      cb.addEventListener('click', function(){ conf=c; [].forEach.call(confRow.querySelectorAll('.cbtn'),function(x){x.setAttribute('aria-pressed','false');}); cb.setAttribute('aria-pressed','true'); ctx.answer(act.id+'-conf',c); maybeGate(); });
+      confRow.appendChild(cb);
+    });
+    root.appendChild(confRow);
+    root.appendChild(el('p','sub',act.after||'No reveal yet. The simulator is the reveal: you will find out by trying it.'));
+    function maybeGate(){ if(chosen!=null && conf!=null) ctx.gate(true); }
+  }});
 
-  function choose(o){
-    var s = STEPS[i];
-    if(answered[i] !== undefined) return;
-    answered[i] = o;
-    var opts = stage.querySelectorAll('.opt');
-    var why = stage.querySelector('#why');
-    paintAnswer(opts, why, s, o);
-    next.focus();
-  }
-
-  function go(d){
-    var ni = i + d;
-    if(ni < 0 || ni >= STEPS.length) return;
-    i = ni; render();
-    stage.focus && stage.focus();
-  }
-
-  next.addEventListener('click', function(){ go(1); });
-  back.addEventListener('click', function(){ go(-1); });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'ArrowRight' && !next.disabled && next.style.display!=='none') go(1);
-    else if(e.key === 'ArrowLeft' && i>0) go(-1);
-    else if(STEPS[i].type==='question' && answered[i]===undefined){
-      var n = ['1','2','3','4'].indexOf(e.key);
-      if(n>-1 && n<STEPS[i].opts.length) choose(n);
+  Engine.reg('assemble', { mount:function(root, act, ctx){
+    ctx.gate(false);
+    root.appendChild(el('div','icon',act.icon||'\u{1F9F1}'));
+    root.appendChild(el('h1','h',act.h));
+    root.appendChild(el('p','lead',act.lead));
+    var filled={}; var active=act.slots[0].id;
+    var build=el('div','build'); root.appendChild(build);
+    var tray=el('div','chiptray'); root.appendChild(tray);
+    var fb=el('div','note'); fb.style.display='none'; root.appendChild(fb);
+    var checkBtn=el('button','btn','Check it'); checkBtn.type='button'; checkBtn.style.marginTop='14px';
+    root.appendChild(checkBtn);
+    function renderBuild(){
+      build.replaceChildren();
+      act.parts.forEach(function(p){
+        if(p.slot){ var s=el('span','slot'+(filled[p.slot]?' filled':'')+(active===p.slot?' active':''), filled[p.slot]||p.placeholder);
+          s.setAttribute('role','button'); s.tabIndex=0; s.setAttribute('aria-label','Slot '+p.slot+(filled[p.slot]?', filled with '+filled[p.slot]:', empty'));
+          s.addEventListener('click', function(){ active=p.slot; renderBuild(); renderTray(); });
+          s.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); active=p.slot; renderBuild(); renderTray(); } });
+          build.appendChild(s);
+        } else { build.appendChild(document.createTextNode(p.text)); }
+      });
     }
-  });
+    function renderTray(){
+      tray.replaceChildren();
+      var slot=act.slots.filter(function(x){return x.id===active;})[0];
+      tray.appendChild(el('span','conf-lbl','Tap a value for the highlighted slot:'));
+      slot.chips.forEach(function(ch){ var c=el('button','chip',ch); c.type='button';
+        c.addEventListener('click', function(){ filled[active]=ch; ctx.polite('Placed '+ch+' in '+active+'.');
+          var ai=act.slots.map(function(x){return x.id;}).indexOf(active);
+          for(var k=ai+1;k<act.slots.length;k++){ if(!filled[act.slots[k].id]){ active=act.slots[k].id; break; } }
+          renderBuild(); renderTray();
+        });
+        tray.appendChild(c);
+      });
+    }
+    checkBtn.addEventListener('click', function(){
+      var allFilled=act.slots.every(function(s){return filled[s.id];});
+      if(!allFilled){ fb.style.display='block'; fb.className='note warn'; fb.textContent='Fill every slot first.'; ctx.assertive('Fill every slot first.'); return; }
+      var wrong=null;
+      for(var i=0;i<act.slots.length;i++){ var s=act.slots[i]; if(filled[s.id]!==s.correct){ wrong=s; break; } }
+      if(wrong){ fb.style.display='block'; fb.className='note bad'; fb.innerHTML='<b>Not quite.</b> '+wrong.feedback[filled[wrong.id]] ; ctx.assertive('Not quite. '+fb.textContent); }
+      else { fb.style.display='block'; fb.className='note good'; fb.innerHTML='<b>That is the record.</b> '+act.success; ctx.assertive('Correct. '+act.success); ctx.gate(true); }
+    });
+    renderBuild(); renderTray();
+  }});
 
-  render();
+  Engine.reg('diagnose', { mount:function(root, act, ctx){
+    ctx.gate(false);
+    root.appendChild(el('div','icon',act.icon||'\u{1F50E}'));
+    root.appendChild(el('h1','h',act.h));
+    var crumb=el('div','crumb'); root.appendChild(crumb);
+    var node=el('div'); root.appendChild(node);
+    var path=[];
+    function show(id){
+      var n=act.nodes[id]; node.replaceChildren();
+      crumb.innerHTML = path.length? 'Your path: <b>'+path.join(' → ')+'</b>' : '';
+      node.appendChild(el('p','lead',n.prompt));
+      if(n.terminal){ var done=el('div','note good'); done.innerHTML='<b>Solved.</b> '+n.prompt; node.replaceChildren(done); ctx.gate(true); ctx.polite('Diagnosis complete. '+n.prompt); return; }
+      var opts=el('div','opts');
+      n.choices.forEach(function(c,idx){ var b=el('button','opt'); b.type='button';
+        b.appendChild(el('span','key',String.fromCharCode(65+idx))); b.appendChild(el('span',null,c.label));
+        b.addEventListener('click', function(){
+          if(c.correct){ path.push(c.short||c.label); show(c.next); var nh=node.querySelector('.lead'); }
+          else { [].forEach.call(opts.children,function(x){x.disabled=true;});
+            b.dataset.state='wrong';
+            var f=el('div','note bad'); f.innerHTML='<b>Not the first move.</b> '+c.feedback; node.appendChild(f);
+            ctx.assertive('Not the first move. '+c.feedback);
+            var retry=el('button','btn','Try again'); retry.type='button'; retry.style.marginTop='12px';
+            retry.addEventListener('click', function(){ show(id); }); node.appendChild(retry);
+          }
+        });
+        opts.appendChild(b);
+      });
+      node.appendChild(opts);
+    }
+    show(act.start);
+  }});
+
+  Engine.reg('close', { mount:function(root, act, ctx){
+    root.appendChild(el('div','icon','✅'));
+    root.appendChild(el('h1','h',act.h));
+    root.appendChild(el('p','lead',act.lead));
+    var ul=el('ul','check');
+    act.checklist.forEach(function(c,i){ var li=el('li'); var cb=el('input'); cb.type='checkbox'; cb.id='ck'+i;
+      var lab=el('label',null,c); lab.setAttribute('for','ck'+i); lab.style.cursor='pointer';
+      li.appendChild(cb); li.appendChild(lab); ul.appendChild(li); });
+    root.appendChild(ul);
+    var recap=el('div','recap'); var p=Engine.state.progress;
+    act.recap.forEach(function(r){ var done = p[r.id]==='correct';
+      var row=el('div','recap-row');
+      row.appendChild(el('span','recap-tag '+(done?'ok':'revisit'), done?'Confirmed':'Revisit'));
+      row.appendChild(el('span',null,r.text)); recap.appendChild(row); });
+    root.appendChild(recap);
+    // confident-miss callout
+    if(Engine.state.answers['p1'] && Engine.state.answers['p1'].choice===0 && Engine.state.answers['p1-conf']==='Certain'){
+      var cm=el('div','note warn'); cm.innerHTML='<b>One to re-check:</b> you were certain the handler should echo its HTML, but echo is the exact trap. That confident miss is the one worth remembering.'; root.appendChild(cm);
+    }
+    var bt=el('div','winbtns');
+    var a1=el('a','btn primary','Read the full guide'); a1.href='/guides/first-pagemotor-plugin/'; bt.appendChild(a1);
+    var a2=el('a','btn','More lessons'); a2.href='/learn/'; bt.appendChild(a2);
+    root.appendChild(bt);
+  }});
+
+  // ---------- THE RENDER SIMULATOR ----------
+  // The handler you assembled is now run. Change the shortcode's name attribute and
+  // watch the SAME pure function return its escaped string. The trap case (a script-tag
+  // name) is the gate: render it once and see the escape make it inert.
+  Engine.regSim('render', { mount:function(root, act, ctx){
+    ctx.gate(false);
+    var CORRECT = ORACLE_SLOTS.map(function(s){ return s.correct; });
+    var atts = { name:'Kenn' };
+    var sawScript = false;
+    root.appendChild(el('div','icon','\u{25B6}\u{FE0F}'));
+    root.appendChild(el('h1','h','Now render it'));
+    root.appendChild(el('p','lead','The engine has your handler. A page contains <b>[greeting name="Kenn"]</b>. Change the attribute below and watch the same pure function return its string. <b>Your mission: try the awkward name and see the escape hold.</b>'));
+
+    // the handler, shown read-only as the function we are running
+    var code=el('div','build');
+    code.innerHTML='public function greeting($atts){<br>'+
+      '&nbsp;&nbsp;$name = $atts[\'name\'] ?? \'friend\';<br>'+
+      '&nbsp;&nbsp;$safe = htmlspecialchars($name);<br>'+
+      '&nbsp;&nbsp;return \'&lt;p&gt;Hello, \'.$safe.\'&lt;/p&gt;\';<br>}';
+    root.appendChild(code);
+
+    // attribute control (manipulate zone)
+    var attsRow=el('div','atts-row');
+    attsRow.appendChild(el('span','conf-lbl','name attribute:'));
+    var seg=el('div','nameseg'); seg.setAttribute('role','group'); seg.setAttribute('aria-label','Choose a name attribute');
+    var CHOICES=[
+      { label:'"Kenn"', val:'Kenn' },
+      { label:'(none)', val:'' },
+      { label:'"&lt;script&gt;"', val:'<script>alert(1)<\/script>' }
+    ];
+    CHOICES.forEach(function(c){ var b=el('button','',c.label); b.type='button';
+      b.setAttribute('aria-pressed', c.val===atts.name?'true':'false');
+      b.addEventListener('click', function(){ atts.name=c.val;
+        [].forEach.call(seg.children,function(x){x.setAttribute('aria-pressed','false');});
+        b.setAttribute('aria-pressed','true'); doRender(); });
+      seg.appendChild(b);
+    });
+    attsRow.appendChild(seg); root.appendChild(attsRow);
+
+    var renderBtn=el('button','send','Run greeting($atts)'); renderBtn.type='button'; root.appendChild(renderBtn);
+
+    // consequence zone
+    var box=el('div','stage-box');
+    var ret=el('div','render-out'); box.appendChild(ret);
+    var live=el('div','live-greet'); box.appendChild(live);
+    root.appendChild(box);
+
+    // side-by-side: what each wrong choice would have caused
+    var cmpWrap=el('div','compare'); cmpWrap.style.display='none'; root.appendChild(cmpWrap);
+    var revealBtn=el('button','hintbtn','Show what each wrong choice would have caused'); revealBtn.type='button'; root.appendChild(revealBtn);
+    root.appendChild(el('p','caption','Nothing is run as code here. The output is a deterministic lookup keyed on the handler you assembled.'));
+
+    function doRender(){
+      var r = compute(CORRECT, atts);
+      // returned string (escaped so it shows as source)
+      ret.replaceChildren();
+      ret.appendChild(el('span','meta','// the function returns this string'));
+      ret.appendChild(document.createTextNode(r.output));
+      // live placed output (engine drops the returned string where the shortcode sat)
+      live.replaceChildren();
+      live.appendChild(el('span','conf-lbl','Placed on the page where [greeting] sat:'));
+      live.insertAdjacentHTML('beforeend', r.output);
+      var saidName = (atts.name===''?'friend':atts.name);
+      if(atts.name && atts.name.indexOf('<script')!==-1){
+        sawScript=true;
+        ctx.assertive('Rendered. The script tag came back as inert text, &lt;script&gt;, not a running tag. The escape held. You can continue.');
+        ctx.gate(true);
+      } else {
+        ctx.polite('Rendered. The function returned a plain string for name '+saidName+'. The engine placed it on the page.');
+      }
+    }
+    function showCompare(){
+      cmpWrap.style.display='flex';
+      cmpWrap.replaceChildren();
+      // the winning version
+      var win=el('div','cmp win');
+      win.appendChild(el('div','cmp-head','return $safe  (what you built)'));
+      var wb=el('div','cmp-body'); wb.innerHTML='Attributes in, an <b>escaped string returned</b>. The engine places it exactly where the shortcode sits. Layout intact, output safe.';
+      win.appendChild(wb); cmpWrap.appendChild(win);
+      // echo instead of return
+      var c1=el('div','cmp');
+      c1.appendChild(el('div','cmp-head','echo instead of return'));
+      var b1=el('div','cmp-body'); b1.innerHTML=failureOf('return', "echo '&lt;p&gt;Hello, '.$name.'&lt;/p&gt;';");
+      c1.appendChild(b1);
+      var bk=el('div','breakbox'); bk.textContent='<p>Hello, Kenn</p>  <!-- printed above <html>, header now broken -->';
+      c1.appendChild(bk); cmpWrap.appendChild(c1);
+      // no escape
+      var c2=el('div','cmp');
+      c2.appendChild(el('div','cmp-head','no htmlspecialchars'));
+      var b2=el('div','cmp-body'); b2.innerHTML=failureOf('escape', '$safe = $name');
+      c2.appendChild(b2);
+      var bk2=el('div','breakbox'); bk2.textContent='name="<script>" -> <p>Hello, <script>alert(1)<\/script></p>  the script runs';
+      c2.appendChild(bk2); cmpWrap.appendChild(c2);
+      // $_GET instead of $atts
+      var c3=el('div','cmp');
+      c3.appendChild(el('div','cmp-head','$_GET instead of $atts'));
+      var b3=el('div','cmp-body'); b3.innerHTML=failureOf('attr', "$name = $_GET['name']");
+      c3.appendChild(b3); cmpWrap.appendChild(c3);
+      revealBtn.disabled=true; revealBtn.textContent='The three traps, shown above';
+      ctx.polite('Showing what each wrong choice would have caused, beside the version you built.');
+    }
+    renderBtn.addEventListener('click', doRender);
+    revealBtn.addEventListener('click', showCompare);
+    doRender();
+  }});
+
+  // ---------- LESSON DATA ----------
+  var LESSON = { id:'first-pagemotor-plugin', acts:[
+    { type:'reveal', icon:'\u{1F9E9}',
+      belief:'You think a plugin means pages of boilerplate, and that you echo your HTML out to the page.',
+      refute:'A PageMotor capability is far smaller than that. At its heart it is a single <b>pure function</b>: attributes come in, an escaped <b>string is returned</b>, and the engine places that string where the shortcode sits. It never prints to the page itself.',
+      env:[['Shortcode:','[greeting name="Kenn"]'],['Engine calls:','greeting($atts)'],['$atts holds:','[\'name\' => \'Kenn\']'],['Handler returns:','&lt;p&gt;Hello, Kenn&lt;/p&gt;']],
+      sub:'The reader writes a shortcode. The engine hands your function the attributes and asks for a string. Hold that shape in mind.' },
+    { type:'predict', id:'p1', icon:'\u{1F914}',
+      q:'Your handler has built the HTML it wants to show: <b>&lt;p&gt;Hello, Kenn&lt;/p&gt;</b>.',
+      detail:'What should the handler DO with that HTML?',
+      options:['echo it, so it prints to the page straight away','return it as a string, and let the engine place it'],
+      after:'No reveal yet. You will assemble the handler yourself, then run it and see which one actually works.' },
+    { type:'assemble', icon:'\u{1F9F1}', h:'Assemble the handler',
+      lead:'Here is the worked example with four blanks. Tap the right value into each. The chips include some tempting mistakes.',
+      parts:[
+        {text:''},{slot:'sig',placeholder:'____'},{text:' {'},
+        {text:'\n  '},{slot:'attr',placeholder:'____'},{text:';'},
+        {text:'\n  '},{slot:'escape',placeholder:'____'},{text:';'},
+        {text:'\n  '},{slot:'return',placeholder:'____'},
+        {text:'\n}'}
+      ],
+      slots:[
+        { id:'sig', chips:['public function greeting($atts)','echo "&lt;p&gt;Hello&lt;/p&gt;";'], correct:'public function greeting($atts)',
+          feedback:{ 'echo "&lt;p&gt;Hello&lt;/p&gt;";':'A bare echo at the top level runs the moment the file loads, before any page exists. A capability needs a named function the engine can call with the attributes.' } },
+        { id:'attr', chips:["$name = $atts['name'] ?? 'friend'","$name = $_GET['name']"], correct:"$name = $atts['name'] ?? 'friend'",
+          feedback:{ "$name = $_GET['name']":'Reading $_GET ignores the shortcode attributes entirely and breaks the contract. The values arrive through $atts, and a missing one should fall back to a default.' } },
+        { id:'escape', chips:['$safe = htmlspecialchars($name)','$safe = $name'], correct:'$safe = htmlspecialchars($name)',
+          feedback:{ '$safe = $name':'Skipping the escape lets a name like a script tag run in the visitor browser. Always escape anything that came from outside before you put it in your output.' } },
+        { id:'return', chips:["return '&lt;p&gt;Hello, '.$safe.'&lt;/p&gt;';","echo '&lt;p&gt;Hello, '.$name.'&lt;/p&gt;';"], correct:"return '&lt;p&gt;Hello, '.$safe.'&lt;/p&gt;';",
+          feedback:{ "echo '&lt;p&gt;Hello, '.$name.'&lt;/p&gt;';":'Echo prints straight to the output buffer, so the text erupts at the very top of the page above the header and the layout breaks. A capability returns its string so the engine can place it where the shortcode sits. It also drops the escape, which is unsafe.' } }
+      ],
+      success:'A named function, a defaulted attribute, escaped output, and a returned string. That is the whole capability.' },
+    { type:'simulator', sim:'render' },
+    { type:'diagnose', icon:'\u{1F50E}', h:'A real bug: text at the top of every page',
+      start:'n1',
+      nodes:{
+        n1:{ prompt:'Your shortcode prints its HTML at the very top of every page, above the header. Why?',
+          choices:[
+            { label:'PageMotor placed the shortcode in the wrong spot', correct:false, feedback:'The engine places the returned string exactly where the shortcode sits. If it appears above the header, your handler is not returning, it is printing.' },
+            { label:'The handler echoes instead of returning', short:'echo not return', correct:true, next:'n2' }
+          ] },
+        n2:{ prompt:'You swap the echo for a return. Anything else worth fixing while you are here?',
+          choices:[
+            { label:'No, returning is the only thing that mattered', correct:false, feedback:'Returning fixes the layout, but the echo line also used the raw $name, not the escaped $safe. Leaving that means an attribute could inject markup.' },
+            { label:'Return the escaped $safe value, not the raw $name', short:'return $safe', correct:true, next:'n3' }
+          ] },
+        n3:{ terminal:true, prompt:'Echo printed to the buffer before the page existed, so it erupted at the top. Returning the escaped $safe string hands it back to the engine to place in the right spot, safely. Fixed.' }
+      } },
+    { type:'close', h:'You have written a capability', lead:'Not from being told. From assembling the handler and running it.',
+      checklist:['Return my HTML as a string, never echo it','Read attributes from $atts with a default','Escape anything from outside with htmlspecialchars','Think of a capability as a pure function: attributes in, an escaped string out'],
+      recap:[
+        { id:'shape', text:'A capability is a pure function: it takes $atts and returns a string.' },
+        { id:'return', text:'Return, never echo. Echo erupts at the top of the page and breaks the layout.' },
+        { id:'safe', text:'Default your attributes and escape your output before returning it.' }
+      ] }
+  ]};
+  // mark recap concepts as confirmed once the learner reaches the relevant acts
+  var origAdvance=Engine.advance.bind(Engine);
+  Engine.advance=function(){ var act=this.lesson&&this.lesson.acts[this.state.i];
+    if(act){ if(act.type==='assemble'){ this.state.progress['shape']='correct'; this.state.progress['safe']='correct'; }
+      if(act.type==='simulator'){ this.state.progress['return']='correct'; } }
+    origAdvance();
+  };
+
+  Engine.mount(LESSON);
 })();
 </script>
 </body>
