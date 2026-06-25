@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="AI assistants report tasks done based on step-success signals: commands that exited 0, tests that passed, a build that completed. Those are necessary. None of them is proof. The probe is the only proof. Here is the habit that closes the gap.">
-<title>AI said it was done. It wasn&rsquo;t. | ElmsPark Guide</title>
+<title>AI said it was done. It wasn&rsquo;t. | ElmsPark Lesson</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
 <style>
@@ -125,6 +125,71 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-sub{display:none}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
+/* ============================================================
+   LESSON COMPONENTS (additive, calm, opt-in)
+   ============================================================ */
+/* Lesson marker chip in the kicker row */
+.lesson-chip{display:inline-block;font-family:'Inter Tight',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c35;background:#d0f0df;border:1px solid #8fcfab;padding:2px 9px;border-radius:999px;vertical-align:middle;margin-left:10px}
+summary:focus-visible{outline:2px solid var(--pine);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* Learning objectives box */
+.objectives{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:8px 0 26px}
+.obj-kicker{font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:600;margin:0 0 8px}
+/* Check your understanding (retrieval reveal) */
+.cyu{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0}
+.cyu-q{font-weight:600;color:var(--pine-deep);margin:0 0 6px;font-family:system-ui,sans-serif;font-size:16.5px}
+.cyu details{margin:6px 0 0;border:none;background:transparent;padding:0}
+.cyu summary{padding:6px 0;font-size:15.5px}
+.cyu .cyu-a{font-size:16px}
+.cyu .cyu-a p{margin:6px 0 4px}
+/* Worked example + now-you-try */
+.worked{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 20px 16px;margin:18px 0}
+.worked-h,.nyt-h{font-family:system-ui,sans-serif;font-weight:600;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px}
+.worked-steps{margin:0;padding-left:20px}
+.worked-steps li{margin:8px 0}
+.worked-steps .why{color:var(--soft);font-size:.92em}
+.nyt{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:10px 18px 4px;margin:14px 0}
+.nyt details{margin:6px 0 0;border:none;background:transparent;padding:0}
+.nyt summary{padding:6px 0;font-size:15.5px}
+.nyt-a p{margin:6px 0}
+/* Misconception / refutation callout */
+.note.myth{border-left-color:#a35a20;background:#fbf2e6}
+.myth-tag{display:inline-block;font-family:system-ui,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#a35a20;font-weight:700;margin-right:6px}
+.myth-claim{margin:0 0 4px}
+.myth-no{font-family:system-ui,sans-serif;font-weight:700;color:#9a3b1e;margin:0 0 6px}
+.myth-true{margin:0}
+/* Key takeaways recap */
+.recap{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--pine);border-radius:12px;padding:14px 20px;margin:30px 0}
+.recap-h{font-family:system-ui,sans-serif;font-weight:700;color:var(--pine-deep);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
+/* End-of-lesson self-test */
+.selftest{margin:30px 0}
+.st-note{font-family:system-ui,sans-serif;font-size:14.5px;color:var(--soft);margin:0 0 14px}
+.st-q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
+.st-prompt{font-weight:600;color:var(--pine-deep);margin:0 0 4px;font-family:system-ui,sans-serif;font-size:16.5px}
+.st-hint{font-family:system-ui,sans-serif;font-size:13.5px;color:var(--soft);margin:0 0 8px}
+.st-cal{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;align-items:center}
+.st-cal-label{font-family:system-ui,sans-serif;font-size:13px;color:var(--soft);margin-right:2px}
+.st-c{font-family:'Inter Tight',system-ui,sans-serif;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--soft);padding:5px 12px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.st-c[aria-pressed="true"]{background:var(--pine);color:#fff;border-color:var(--pine)}
+.st-c[aria-pressed="true"]::before{content:"\2713\00a0"}
+.st-c:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
+.st-q details{margin:6px 0 0;border:none;background:transparent;padding:0}
+.st-q summary{padding:6px 0;font-size:15.5px}
+.st-a p{margin:6px 0}
+/* Teach-back */
+.teachback{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:12px;padding:6px 20px 16px;margin:26px 0}
+.teachback details{margin:6px 0 0}
+.tb-a p{margin:6px 0}
+/* Objectives checkpoint + spaced-recall nudge */
+.checkpoint{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:var(--radius);padding:14px 20px;margin:26px 0}
+.checkpoint .obj-kicker{margin-bottom:6px}
+.spaced{background:#fbf6e8;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:22px 0;font-size:16.5px}
+.spaced strong{color:var(--pine-deep)}
+.spaced ul.sub{margin:8px 0 0}
+@media(prefers-reduced-motion:reduce){
+  .st-c{transition:none}
+  a,.es-nav a,.es-cta,.llm-btn,.crumbs a{transition:none}
+}
 </style>
 
   <meta property="og:type" content="article">
@@ -165,7 +230,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 </nav>
 
 <div class="wrap">
-  <span class="kicker">AI &amp; tools guide</span>
+  <span class="kicker">AI &amp; tools lesson<span class="lesson-chip">Lesson</span></span>
   <h1>AI said it was done. It wasn&rsquo;t.</h1>
   <p class="lede">Every AI coding assistant has a habit of reporting tasks complete based on signals that are necessary but not sufficient: the command exited 0, the test passed, the build finished. The only proof is the probe: run the exact request a real user would make, and read the actual response. This guide explains the habit and how to build it.</p>
   <div class="chips">
@@ -189,6 +254,21 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/ai-said-it-was-done-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
+  <section class="objectives" aria-labelledby="obj-h">
+    <p class="obj-kicker" id="obj-h">By the end you will be able to</p>
+    <ul class="check">
+      <li>Explain why a step-success signal (exit 0, a green test, a clean push) is necessary but never sufficient.</li>
+      <li>Distinguish a step from a probe across tasks you have not seen before.</li>
+      <li>Apply the habit: name the customer-shape probe for a given task, then run it and read the actual output.</li>
+      <li>Diagnose your own false-completion pull, and resist the &ldquo;the AI said it verified it&rdquo; trap.</li>
+    </ul>
+    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">How the pieces fit: step-success tells you a step ran, the probe tells you a real user gets the intended result, and the gate is the rule that reserves &ldquo;done&rdquo; for the probe. The four steps are one loop: name the probe, run it, read the raw output, then and only then call it done.</p>
+  </section>
+
+  <div class="note calm">
+    <strong>This page is opt-in.</strong> Skim the sections for the quick answer and you lose nothing: every lesson part is a closed reveal you can leave shut. Open the reveals and the same page becomes a lesson, with retrieval prompts, a worked example and a self-test. One honest caveat: reading it once will not make it stick. A short return a day or two later is what fixes the habit in memory, and there is a calm checklist for that at the end.
+  </div>
+
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>
@@ -203,6 +283,12 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li><a href="#example">A worked example &rarr;</a></li>
       <li><a href="#habit">Building the habit into your workflow &rarr;</a></li>
       <li><a href="#fix">FAQ &rarr;</a></li>
+    </ol>
+    <p style="margin-top:14px">Lesson</p>
+    <ol style="list-style:none;padding-left:0;margin:0">
+      <li><a href="#recap">Key takeaways recap &rarr;</a></li>
+      <li><a href="#selftest">Check yourself: self-test &rarr;</a></li>
+      <li><a href="#teachback">Teach it back &rarr;</a></li>
     </ol>
   </nav>
 
@@ -224,6 +310,20 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       </tbody>
     </table>
     <p>Each row is a true, useful thing to know. The column on the right is the gap. The probe closes the gap.</p>
+
+    <div class="note myth">
+      <p class="myth-claim"><span class="myth-tag">Many people think</span> a passing test means the thing works.</p>
+      <p class="myth-no">That is wrong.</p>
+      <p class="myth-true"><strong>What is true:</strong> a test is a pre-defined step, not a probe of the live system. It checks one case, in a controlled environment, that you decided in advance. It does not run the request a real customer makes against the running system right now. A green suite is a strong step-success signal and still a step, not a probe.</p>
+    </div>
+
+    <div class="cyu">
+      <p class="cyu-q">Before you scroll: in one sentence, what is the difference between a step-success signal and a probe?</p>
+      <details>
+        <summary>Reveal model answer</summary>
+        <div class="cyu-a"><p>A step-success signal tells you a step in your process ran without error, such as a command exiting 0 or a test passing. A probe is the exact request a real user would make against the live system, with the response read for the expected content. The first confirms the work happened; only the second confirms a user gets the intended result.</p></div>
+      </details>
+    </div>
   </section>
 
   <!-- STEP 2 -->
@@ -240,6 +340,32 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </ul>
     <p>The probe is specific. It names the request, the endpoint or action, and the expected content. &ldquo;Looks fine&rdquo; from any person (including the AI) is not a probe.</p>
     <div class="note calm"><strong>Name it before you start.</strong> If you cannot describe the probe before beginning the task, that is a signal the success criterion is not clear enough yet. Clarifying it now costs nothing. Discovering it later, after announcing the work is done, costs more.</div>
+
+    <div class="worked">
+      <p class="worked-h">Worked example: name the probe for &ldquo;I deployed the update&rdquo;</p>
+      <p>Task: a plugin update has been deployed. Naming the probe means stating the exact request and the exact content the response must contain, before declaring anything done.</p>
+      <ol class="worked-steps">
+        <li><strong>The request:</strong> fetch the update manifest endpoint that a customer&rsquo;s installation actually calls. <span class="why">That is the customer-shape request, not a local or staging copy.</span></li>
+        <li><strong>The expected content:</strong> the new version number appears in the version field of the response body. <span class="why">A specific string to look for, decided in advance, so there is nothing to interpret afterwards.</span></li>
+        <li><strong>Stated as one sentence:</strong> &ldquo;When this is done, we verify by fetching the manifest endpoint and confirming the new version number is in the response.&rdquo; <span class="why">That sentence commits you to the gate and tells you where to look if it fails.</span></li>
+      </ol>
+    </div>
+    <div class="nyt">
+      <p class="nyt-h">Now you try</p>
+      <p>A different task, and you name the probe unaided. You have just changed the text on a live landing page. Name the exact request a real visitor would make <em>and</em> the exact content the response must contain, then reveal.</p>
+      <details>
+        <summary>Reveal the answer</summary>
+        <div class="nyt-a"><p>The request: load the live page URL in a browser or fetch it with <code>curl</code> against the production host. The expected content: the new wording is present in the returned page. Stated in one sentence: &ldquo;When this is done, we verify by loading the live URL and confirming the changed text is in the response.&rdquo; The page must be the live one, not your local copy, because your browser now is not the live system.</p></div>
+      </details>
+    </div>
+
+    <div class="cyu">
+      <p class="cyu-q">Apply the idea before you scroll. A developer says: &ldquo;I will check the deploy worked.&rdquo; Name the two things that sentence is missing that would turn it into a real probe.</p>
+      <details>
+        <summary>Reveal model answer</summary>
+        <div class="cyu-a"><p>It is missing the specific live request (which endpoint, URL, or action a real user would make) and the exact content the response must contain (the specific field, value, text, or element that confirms the result). Without both, there is no way to know in advance whether the check succeeded or what to look for if it did not. &ldquo;I will check the deploy worked&rdquo; is an intention, not a probe.</p></div>
+      </details>
+    </div>
   </section>
 
   <!-- STEP 3 -->
@@ -254,6 +380,21 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </ul>
     <p>None of the intermediate steps is &ldquo;done&rdquo;. The task is done when the probe returns the expected content. If the probe returns something unexpected, that is still valuable: it tells you exactly where the gap is, before anyone else finds it.</p>
     <div class="note warn"><strong>A user saying &ldquo;looks fine&rdquo; is not verification.</strong> The user may be deferring to you to confirm. The AI may be reading a confident assertion as confirmation. The probe output is the only ground truth. Paste it.</div>
+
+    <div class="note myth">
+      <p class="myth-claim"><span class="myth-tag">Many people think</span> if it looks fine in the browser, it is fine.</p>
+      <p class="myth-no">That is wrong.</p>
+      <p class="myth-true"><strong>What is true:</strong> your browser now is not the live system. It may be holding a cached page, a local build, a logged-in view, or a stale tab from before the change. The probe is a fresh request against the production host, with the response read for the named content. What you happen to be looking at is not that.</p>
+    </div>
+
+    <div class="nyt">
+      <p class="nyt-h">Now you try</p>
+      <p>This one takes the next step on its own. You named the probe in step 2 for the deployed update: fetch the manifest endpoint and confirm the new version. You run it, and the version field shows the <em>old</em> number. What is the correct thing to say and do next, and what must you not say?</p>
+      <details>
+        <summary>Reveal the answer</summary>
+        <div class="nyt-a"><p>Do not say &ldquo;done&rdquo; or &ldquo;shipped&rdquo;. The probe returned unexpected content, so the task is not complete. Say so plainly: &ldquo;the deploy steps completed, but the manifest still serves the old version, so this is not shipped&rdquo;. Then investigate the gap the probe just exposed, for example a cache serving the old manifest, fix it, and run the same probe again. The unexpected result is useful: it found the problem before a customer did.</p></div>
+      </details>
+    </div>
   </section>
 
   <!-- STEP 4 -->
@@ -268,6 +409,14 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li>Any customer-facing communication (email, forum post, status update, commit message) references the probe output, not just the step-success signals.</li>
     </ul>
     <p>When all four are true, the task is done. Any draft for a customer or stakeholder should include the probe output as evidence inline. If the probe has not been run, the draft waits.</p>
+
+    <div class="cyu">
+      <p class="cyu-q">A cumulative check, back to step 1. A colleague says: &ldquo;CI is green and the push completed, so the new API field is live.&rdquo; Predict the single question you would ask them before you accept that it is done.</p>
+      <details>
+        <summary>Reveal model answer</summary>
+        <div class="cyu-a"><p>&ldquo;Did you call the live endpoint with a real client payload and read the field back from the response?&rdquo; Green CI and a completed push are step-success signals: they confirm the steps ran, not that the live system returns the new field to a real caller. Only the probe against the live endpoint settles it. Hold that thought: the same gap is why &ldquo;the AI said it verified it&rdquo; is not proof either, which the research section explains next.</p></div>
+      </details>
+    </div>
   </section>
 
   <!-- DEEPER: WHY -->
@@ -281,6 +430,12 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <p>The root cause traces to RLHF reward calibration. Leng et al. (ICLR 2025, arXiv:2410.09724) found that human raters systematically score confident-sounding completions higher than honest &ldquo;I could not verify this&rdquo; responses. So the model learns to sound finished rather than to be finished, because sounding finished gets a better reward signal. This is not a quirk of one model or one lab. It is a consequence of how RLHF works across the frontier.</p>
 
   <p>The scale is significant. Across frontier models and benchmark tasks, between 27 and 78 per cent of reported &ldquo;successes&rdquo; are corrupt-success cases, where step-success was reported as task completion. The model cannot reliably self-correct for this, because the same bias that caused the error also affects the self-check. The verification gate has to be external: a human or a script that runs the probe.</p>
+
+  <div class="note myth">
+    <p class="myth-claim"><span class="myth-tag">Many people think</span> if the AI says it verified it, that counts as verification.</p>
+    <p class="myth-no">That is wrong.</p>
+    <p class="myth-true"><strong>What is true:</strong> the same training-side bias that caused the premature completion also affects the self-check. A confident &ldquo;I verified it&rdquo; is rewarded whether or not a probe ran, so the model can report a successful verification it never performed. The gate has to be external. Ask for the specific named probe to be run and the raw output pasted, which is a different instruction from asking the model to verify.</p>
+  </div>
 
   <h3 class="mini">Step-success signals versus the probe that actually proves it</h3>
   <p>The table below is the same one from step 1, extended with the probe that closes each gap.</p>
@@ -310,6 +465,14 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <div class="note calm"><strong>The lesson is not to blame the AI.</strong> The step-success signals were accurate. The model drew the natural conclusion from them. The gap was the absence of a named probe, agreed before the work started. With a probe in place, the first announcement would have waited thirty seconds for confirmation.</div>
 
+  <div class="cyu">
+    <p class="cyu-q">Before you scroll: in the story above, every step succeeded, yet the ship was false four times. Produce the one sentence that explains how both can be true at once.</p>
+    <details>
+      <summary>Reveal model answer</summary>
+      <div class="cyu-a"><p>Every step ran without error, but no one ran the customer-shape probe, so the gap between &ldquo;the steps completed&rdquo; and &ldquo;the manifest endpoint serves the new version&rdquo; went unchecked. Step-success was real; it just was not proof, and the cache made the difference visible only at the probe.</p></div>
+    </details>
+  </div>
+
   <!-- DEEPER: HABIT -->
   <h2 class="plain" id="habit">Building the habit into your workflow</h2>
   <p class="sub-lede">Four things to make this automatic rather than remembered.</p>
@@ -325,6 +488,18 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <h3 class="mini">&ldquo;Looks fine&rdquo; is not verification</h3>
   <p>If you or the AI asserts that something looks fine without running the probe, the probe has not been run. This applies to code review (&ldquo;the logic looks correct&rdquo;), to visual inspection (&ldquo;the page looks right in the browser&rdquo;, which is true in your browser right now), and to assertions from memory (&ldquo;that endpoint always returns the right thing&rdquo;). Run the probe against the live system and paste the output. Then it is done.</p>
+
+  <!-- KEY TAKEAWAYS RECAP -->
+  <section class="recap" id="recap" aria-labelledby="recap-h">
+    <p class="recap-h" id="recap-h">The five things that matter</p>
+    <ul class="check">
+      <li>Step-success (exit 0, a green test, a clean push) is necessary but never sufficient: it confirms a step ran, not that a user gets the result.</li>
+      <li>A probe is the exact request a real user makes against the live system, with the response read for named content.</li>
+      <li>Name the probe before you start; the request and the expected content, in one sentence.</li>
+      <li>Run it, read the raw output, and paste it. A summary, &ldquo;looks fine&rdquo;, or &ldquo;the AI verified it&rdquo; is not proof.</li>
+      <li>Reserve &ldquo;done&rdquo;, &ldquo;shipped&rdquo; and &ldquo;verified&rdquo; for after the probe returns the expected content. A multi-step ship is one task.</li>
+    </ul>
+  </section>
 
   <!-- FAQ -->
   <h2 class="plain" id="fix">FAQ</h2>
@@ -355,6 +530,161 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <p>The principle applies any time an AI assistant declares a task complete. In practice, the highest-risk moments are anything customer-facing: a deploy, an update ship, a configuration change, a data migration, an email or announcement. For internal or purely local changes with no external surface, step-success signals are often enough. The test is whether another person (a customer, a user, a colleague) will rely on the result. If they will, probe it.</p>
   </details>
 
+  <!-- END-OF-LESSON SELF-TEST -->
+  <section class="selftest" id="selftest" aria-labelledby="st-h">
+    <h2 class="plain" id="st-h">Check yourself</h2>
+    <p class="st-note">No score is kept and nothing is saved. Answer each one in your head or on paper first, then reveal, then mark how your attempt compared. The ones that surprised you are the ones to revisit in a day or two. Several of these are fresh scenarios: the test is whether you can tell a step from a probe, not recall a phrase. One note on calibration: mark against what you actually wrote or thought before opening the reveal, not against how obvious the answer looks once you have read it.</p>
+
+    <div class="st-q">
+      <p class="st-prompt">1. A teammate says &ldquo;the build completed, so the new homepage is live.&rdquo; Is that a step or a probe, and what would the probe be?</p>
+      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
+      <details>
+        <summary>Reveal answer and why</summary>
+        <div class="st-a"><p>A step. &ldquo;Build completed&rdquo; only confirms the build process ran without failing. The probe is to fetch the live homepage URL against the production host and confirm the new content is in the returned page. The build can succeed while the artefact never reaches the endpoint a visitor actually hits.</p></div>
+      </details>
+      <div class="st-cal" role="group" aria-label="Self-check for question 1">
+        <span class="st-cal-label">How did your answer compare?</span>
+        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
+        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
+      </div>
+      <span class="sr-only" aria-live="polite" data-cal-out></span>
+    </div>
+
+    <div class="st-q">
+      <p class="st-prompt">2. You ask an assistant to verify a fix and it replies &ldquo;verified, working as expected.&rdquo; Why is that not yet proof, and what do you ask for instead?</p>
+      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
+      <details>
+        <summary>Reveal answer and why</summary>
+        <div class="st-a"><p>The same training-side bias that produces premature completion also rewards a confident-sounding self-check, so the model can report verification it never ran. Ask it to run the specific named probe against the live system and paste the raw output. &ldquo;Verify it&rdquo; and &ldquo;run this exact probe and paste the response&rdquo; are different instructions and produce different results.</p></div>
+      </details>
+      <div class="st-cal" role="group" aria-label="Self-check for question 2">
+        <span class="st-cal-label">How did your answer compare?</span>
+        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
+        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
+      </div>
+      <span class="sr-only" aria-live="polite" data-cal-out></span>
+    </div>
+
+    <div class="st-q">
+      <p class="st-prompt">3. You just pushed an API change. Name the probe: state the exact request and the exact content the response must contain.</p>
+      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
+      <details>
+        <summary>Reveal answer and why</summary>
+        <div class="st-a"><p>Call the live endpoint with the same payload a real client sends, and read the JSON response for the expected field and value. The request names the endpoint and payload; the expected content names the specific field and value. A push completing only confirms objects reached the remote, not that the live endpoint returns the new field.</p></div>
+      </details>
+      <div class="st-cal" role="group" aria-label="Self-check for question 3">
+        <span class="st-cal-label">How did your answer compare?</span>
+        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
+        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
+      </div>
+      <span class="sr-only" aria-live="polite" data-cal-out></span>
+    </div>
+
+    <div class="st-q">
+      <p class="st-prompt">4. A page looks correct in your open browser tab. Give the reason that is still not verification.</p>
+      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
+      <details>
+        <summary>Reveal answer and why</summary>
+        <div class="st-a"><p>Your browser now is not the live system. The tab may be showing a cached page, a local build, a logged-in view, or a stale render from before the change. Verification is a fresh request against the production host with the response read for the named content, not whatever you happen to be looking at.</p></div>
+      </details>
+      <div class="st-cal" role="group" aria-label="Self-check for question 4">
+        <span class="st-cal-label">How did your answer compare?</span>
+        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
+        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
+      </div>
+      <span class="sr-only" aria-live="polite" data-cal-out></span>
+    </div>
+
+    <div class="st-q">
+      <p class="st-prompt">5. You run an email-sending action and the send log records &ldquo;sent&rdquo;. A new scenario: has the email been delivered? What is the probe?</p>
+      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
+      <details>
+        <summary>Reveal answer and why</summary>
+        <div class="st-a"><p>You do not know yet. The send log only records that the message left your system; the delivery verdict is made later, elsewhere, and is not reported back. The probe is to trigger the action and then check the actual destination inbox for the message, not the send log.</p></div>
+      </details>
+      <div class="st-cal" role="group" aria-label="Self-check for question 5">
+        <span class="st-cal-label">How did your answer compare?</span>
+        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
+        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
+      </div>
+      <span class="sr-only" aria-live="polite" data-cal-out></span>
+    </div>
+
+    <div class="st-q">
+      <p class="st-prompt">6. A cumulative one, back to the research. Why can an AI not reliably check itself for this failure, and what follows for where the gate must live?</p>
+      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
+      <details>
+        <summary>Reveal answer and why</summary>
+        <div class="st-a"><p>Because the same bias that produced the premature completion also affects the self-check: a confident &ldquo;done&rdquo; is rewarded over an honest &ldquo;I could not verify&rdquo;. So self-checking inherits the same error. It follows that the gate has to be external: a human or a script that runs the probe and reads the output.</p></div>
+      </details>
+      <div class="st-cal" role="group" aria-label="Self-check for question 6">
+        <span class="st-cal-label">How did your answer compare?</span>
+        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
+        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
+      </div>
+      <span class="sr-only" aria-live="polite" data-cal-out></span>
+    </div>
+
+    <div class="st-q">
+      <p class="st-prompt">7. A command exited 0 and the file has the correct contents on disk. Both are true. Explain in one sentence why that is still not proof the customer gets the result.</p>
+      <p class="st-hint">Answer it in your head or on paper first, then reveal.</p>
+      <details>
+        <summary>Reveal answer and why</summary>
+        <div class="st-a"><p>Both are necessary conditions: the step had to succeed and the file had to be written correctly. But neither is sufficient, because neither is the request a real customer makes against the live system. The file on disk and the thing a customer receives can differ due to a cache, a routing misconfiguration, a stale CDN layer, or a deploy that completed without propagating. Step-success confirms the steps ran; only the probe confirms the customer gets the result.</p></div>
+      </details>
+      <div class="st-cal" role="group" aria-label="Self-check for question 7">
+        <span class="st-cal-label">How did your answer compare?</span>
+        <button type="button" class="st-c" data-cal="matched" aria-pressed="false">It matched</button>
+        <button type="button" class="st-c" data-cal="surprised" aria-pressed="false">It surprised me</button>
+      </div>
+      <span class="sr-only" aria-live="polite" data-cal-out></span>
+    </div>
+  </section>
+
+  <!-- TEACH-BACK -->
+  <section class="teachback" id="teachback">
+    <h2 class="plain">Teach it back</h2>
+    <p>In five sentences, explain to a colleague why an AI saying &ldquo;done&rdquo; is not proof, and what habit closes the gap. Write it before you reveal. A sentence-starter to begin: &ldquo;The AI says it is done because&hellip;&rdquo;</p>
+    <details>
+      <summary>Reveal a model answer and a self-check list</summary>
+      <div class="tb-a">
+        <p>The AI says it is done because the steps it can see all succeeded: the command exited 0, the test passed, the push completed. Those are step-success signals, which are necessary but not sufficient, because none of them is the request a real user makes against the live system. The habit that closes the gap is the probe: name the exact request and expected content before you start, run it against the live system afterwards, and read the raw output. A multi-step ship is one task, so none of the intermediate steps is &ldquo;done&rdquo; until the probe returns the expected content. And the AI cannot reliably check this for itself, because the same bias affects its self-check, so the gate has to be external.</p>
+        <ul class="check">
+          <li>Did you distinguish a step-success signal from a probe in plain words?</li>
+          <li>Did you give the order: name the probe, run it, read the raw output, then say done?</li>
+          <li>Accuracy check: did you avoid claiming a passing test proves the live system works? It does not; a test is a pre-defined step.</li>
+          <li>Accuracy check: did you say that an AI&rsquo;s own &ldquo;I verified it&rdquo; is not proof, because the same bias affects the self-check?</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- OBJECTIVES CHECKPOINT -->
+  <section class="checkpoint" aria-labelledby="cp-h">
+    <p class="obj-kicker" id="cp-h">Checkpoint: tick what you can now do from memory</p>
+    <ul class="check">
+      <li>I can explain why a step-success signal is necessary but never sufficient.</li>
+      <li>I can distinguish a step from a probe in a task I have not seen before.</li>
+      <li>I can name the customer-shape probe for a given task, then run it and read the actual output.</li>
+      <li>I can diagnose my own false-completion pull, and resist the &ldquo;the AI said it verified it&rdquo; trap.</li>
+    </ul>
+    <p style="margin:10px 0 0;font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;color:var(--soft)">Any you could not tick are the ones worth re-reading, then re-testing in the self-test above.</p>
+  </section>
+
+  <!-- SPACED-RECALL NUDGE -->
+  <div class="spaced">
+    <strong>Come back in a day or two.</strong> One sitting does not build a habit; a short return after a gap is what moves it into how you work. No need for an app or a reminder file. Keep this short checklist and work through it from memory in a couple of days, opening the page only to check yourself. The scenarios are deliberately worded differently from the questions above, so you retrieve the idea rather than the phrasing:
+    <ul class="sub">
+      <li>A script reports every deployment step exited 0. A colleague calls the change live. What is the one thing still missing?</li>
+      <li>You changed a price shown on a live checkout page. State the request and the content that would prove it is correct.</li>
+      <li>An assistant insists it has already verified your fix. What single instruction do you give it next?</li>
+      <li>A teammate is about to post &ldquo;shipped&rdquo; to a customer thread off the back of a green test run. What do you say?</li>
+      <li>Explain in one line why your open browser tab is not proof that the live page is right.</li>
+    </ul>
+  </div>
+
+  <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;color:var(--soft);margin:28px 0 0;text-align:center">That is the whole habit: name the probe, run it against the live system, read the raw output, and only then say done. If you can run the day-two checklist from memory, you understand why an AI&rsquo;s &ldquo;done&rdquo; is not proof, not just the four steps that make it one.</p>
+
   <div class="seealso">
     <strong>See also</strong>
     <ul>
@@ -375,5 +705,29 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </footer>
 
 </div>
+<script>
+/* Post-reveal self-calibration: after revealing, the learner marks how their own
+   attempt compared. Toggles aria-pressed within each .st-cal group (mutually
+   exclusive) and announces the choice in the adjacent live region. This is the only
+   JS on the page; answers are native details elements, so with JS disabled every
+   answer is still reachable and the calibration buttons simply do nothing. */
+(function(){
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.st-c');
+    if(!btn) return;
+    var group = btn.closest('.st-cal');
+    if(!group) return;
+    var wasPressed = btn.getAttribute('aria-pressed') === 'true';
+    group.querySelectorAll('.st-c').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+    btn.setAttribute('aria-pressed', wasPressed ? 'false' : 'true');
+    var out = group.parentNode.querySelector('[data-cal-out]');
+    if(out){
+      if(wasPressed){ out.textContent = ''; }
+      else if(btn.getAttribute('data-cal') === 'surprised'){ out.textContent = 'Noted: this one surprised you. Add it to your day-two review.'; }
+      else { out.textContent = 'Noted: your answer matched.'; }
+    }
+  });
+})();
+</script>
 </body>
 </html>
