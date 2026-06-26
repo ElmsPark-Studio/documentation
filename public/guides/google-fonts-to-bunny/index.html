@@ -297,6 +297,8 @@ import '@fontsource/outfit/600.css';</pre>
   <p>Use the <strong>EP Bunny Fonts</strong> plugin. It registers your chosen families through PageMotor&rsquo;s head valet, so the Bunny stylesheet and preconnect are emitted on every page without you embedding anything by hand, and without a theme update wiping your change. Pick the families and weights in its settings, and it handles the markup.</p>
   <p>This is the recommended approach for any PageMotor theme or plugin: keep font loading in one place that survives updates, rather than scattered across template files.</p>
 
+  <div class="note"><strong>On PageMotor 0.10 and later, this is built in.</strong> Open <strong>Site Settings</strong>, find <strong>Font Delivery Service</strong>, and switch it from Google to <strong>Bunny Fonts</strong>. Every font your site loads then comes from Bunny&rsquo;s EU CDN, with no plugin and nothing to embed by hand. The separate EP Bunny Fonts plugin is deprecated from 0.10, so on a 0.10 install use this Site Settings option instead. On 0.9 and earlier, the plugin above is still the right tool.</div>
+
   <!-- DEEPER: NOTHING -->
   <h2 class="plain" id="nothing">What changes visually: nothing</h2>
   <p class="sub-lede">The most common worry, answered.</p>

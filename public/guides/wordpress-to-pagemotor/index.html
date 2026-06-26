@@ -992,7 +992,11 @@ php translate.php /path/to/your-export.json --verbose</code></pre>
       <p>PageMotor checks two things when you log in: the user must exist in the <code>users</code> table, AND have a <code>type=administrator</code> row in the <code>user_options</code> table. Login succeeds on the first check alone — but then every <code>/admin/*</code> URL silently redirects to the front page. If you created your admin user manually (rather than via the installer), run this once in your hosting control panel's SQL tool:</p>
       <pre><code>INSERT INTO pm_user_options (user_id, name, value)
 VALUES (&lt;user-id&gt;, 'type', 'administrator');</code></pre>
-      <p>Replace <code>&lt;user-id&gt;</code> with the numeric ID of your admin user, and <code>pm_</code> with your table prefix if you changed it during installation. The translator handles this correctly on fresh installs — this fix is only needed if you created the admin user by hand.</p>
+      <p>Replace <code>&lt;user-id&gt;</code> with the numeric ID of your admin user, and <code>pm_</code> with your table prefix if you changed it during installation. The translator handles this correctly on fresh installs, so this fix is only needed if you created the admin user by hand.</p>
+      <p><strong>On PageMotor 0.10 and later</strong>, user options moved to a class-scoped shape: PageMotor reads <code>type</code> from a single <code>PM_Users</code> JSON row, not a flat <code>type</code> row, so the command above is silently ignored. On a 0.10 install use this instead:</p>
+      <pre><code>INSERT INTO pm_user_options (user_id, name, value)
+VALUES (&lt;user-id&gt;, 'PM_Users', '{"type":"administrator"}');</code></pre>
+      <p>If a <code>PM_Users</code> row already exists for that user, edit its JSON to include <code>"type":"administrator"</code> rather than inserting a second row. The 0.9 command above stays correct for 0.9.x installs.</p>
     </div>
 
     <div class="trouble-section">
