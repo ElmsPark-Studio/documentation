@@ -149,11 +149,11 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <p>Steps</p>
     <ol>
       <li><a href="#s1">Go to the Hostinger API page</a></li>
-      <li><a href="#s2">Choose Cursor and the tools you need</a></li>
+      <li><a href="#s2">Select the MCP tools you need</a></li>
       <li><a href="#s3">Generate your API token</a></li>
-      <li><a href="#s4">Copy the token before the page refreshes</a></li>
+      <li><a href="#s4">Copy the token before leaving the page</a></li>
       <li><a href="#s5">Copy the MCP JSON config</a></li>
-      <li><a href="#s6">Add the MCP servers in Cursor</a></li>
+      <li><a href="#s6">Save to ~/.cursor/mcp.json and restart</a></li>
       <li><a href="#s7">Open Composer and provision the VPS</a></li>
       <li><a href="#s8">Let Composer finish the on-box setup</a></li>
       <li><a href="#s9">Verify with EP Host Check</a></li>
@@ -162,62 +162,78 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <div class="step">
     <h2 id="s1"><span class="num">1</span><span class="t">Go to the Hostinger API page</span></h2>
-    <p>Log into hPanel and click <strong>API</strong> in the left sidebar under Dev tools. This is Hostinger&rsquo;s dedicated MCP connection page for AI coding tools including Cursor.</p>
+    <p>Log into hPanel and click <strong>API</strong> in the left sidebar under Dev tools. The page opens with the Cursor tab already highlighted.</p>
     <figure class="screenshot">
       <picture>
-        <source srcset="img/01-mcp-config.webp" type="image/webp">
-        <img src="img/01-mcp-config.png" alt="Hostinger hPanel showing the 'Connect your IDEs to Hostinger MCP' page with VS Code, Cursor, and Claude Code tabs" width="1200" height="auto" loading="lazy">
+        <source srcset="img/01-cursor-tab.webp" type="image/webp">
+        <img src="img/01-cursor-tab.png" alt="Hostinger hPanel API page with the Cursor tab selected, showing the Install in Cursor extension button and Config manually option" width="1200" height="auto" loading="lazy">
       </picture>
-      <figcaption>The MCP connection page in hPanel. Cursor has its own tab alongside VS Code and Claude Code.</figcaption>
+      <figcaption>The Cursor-specific MCP setup page. Two paths: the Hostinger Connector extension (Install in Cursor) or manual JSON config. This guide covers manual config.</figcaption>
     </figure>
+    <div class="note cur"><strong>Extension path:</strong> if you prefer, click <strong>Install in Cursor</strong> and the Hostinger Connector extension handles the connection through a UI &mdash; no JSON editing needed. Skip to Step 7 once it&rsquo;s connected. The manual path (this guide) gives you more control over which tools load in Composer.</div>
   </div>
 
   <div class="step">
-    <h2 id="s2"><span class="num">2</span><span class="t">Choose Cursor and the tools you need</span></h2>
-    <p>Click the <strong>Cursor</strong> tab. Then tick the tool categories. For provisioning a PageMotor VPS you need at minimum:</p>
+    <h2 id="s2"><span class="num">2</span><span class="t">Select the MCP tools you need</span></h2>
+    <p>Click <strong>Config manually</strong>. The page reveals a numbered setup flow, starting with tool selection. For PageMotor you need two:</p>
     <ul class="sub">
+      <li><strong>Domains and DNS</strong> &mdash; sets the A record that points your domain at the new server</li>
       <li><strong>VPS hosting</strong> &mdash; creates and manages your servers</li>
-      <li><strong>Domains and DNS</strong> &mdash; sets the A record pointing your domain at the new server</li>
     </ul>
-    <p>Tick Websites too if you plan to deploy WordPress or static sites via Cursor &mdash; it is not needed for PageMotor.</p>
-    <div class="note cur"><strong>Cursor tip:</strong> Cursor shows MCP tools alongside your regular Composer context. Ticking fewer categories means a cleaner, more focused tool set, and Cursor&rsquo;s context window is not cluttered with billing and email tools you are not using right now.</div>
+    <p>Tick only those two and untick the rest. The file path below the grid confirms where the config goes: <code>~/.cursor/mcp.json</code>.</p>
+    <figure class="screenshot">
+      <picture>
+        <source srcset="img/02-select-tools.webp" type="image/webp">
+        <img src="img/02-select-tools.png" alt="Tool selection grid with Domains and DNS and VPS hosting ticked, other categories unticked. ~/.cursor/mcp.json file path shown below." width="1200" height="auto" loading="lazy">
+      </picture>
+      <figcaption>Tick only the tools you need. The file path below confirms exactly where the generated config goes.</figcaption>
+    </figure>
+    <div class="note cur">The page says it well: <em>&ldquo;Enable only the products you use for faster and more focused MCP responses.&rdquo;</em> Fewer tools means a cleaner Composer context window.</div>
   </div>
 
   <div class="step">
     <h2 id="s3"><span class="num">3</span><span class="t">Generate your API token</span></h2>
-    <p>Scroll down and click <strong>Generate API token</strong>. Give it a recognisable name, for example <code>hostinger-cursor-api</code>.</p>
+    <p>Scroll up to the <strong>Generate an API token</strong> section and click the button.</p>
     <figure class="screenshot">
       <picture>
-        <source srcset="img/02-generate-token.webp" type="image/webp">
-        <img src="img/02-generate-token.png" alt="The 'Generate an API token' button on the Hostinger MCP page, with feature tiles: Spin up infrastructure, Ship sites, Monitor in real-time, Manage domains" width="1200" height="auto" loading="lazy">
+        <source srcset="img/03-generate-btn.webp" type="image/webp">
+        <img src="img/03-generate-btn.png" alt="Hostinger hPanel showing the Install extension section above and the Generate an API token button below it" width="1200" height="auto" loading="lazy">
       </picture>
-      <figcaption>The feature tiles confirm what the MCP can do: spin up VPSs on the fly, set DNS, monitor. All from inside Cursor.</figcaption>
+      <figcaption>The generate button sits between the extension option at the top and the manual config section below.</figcaption>
+    </figure>
+    <p>A modal opens with a name field and an expiration dropdown. Give it a name you will recognise (e.g. <code>cursor-token</code>) and set expiration to <strong>Never expires</strong>.</p>
+    <figure class="screenshot">
+      <picture>
+        <source srcset="img/04-token-modal.webp" type="image/webp">
+        <img src="img/04-token-modal.png" alt="Generate an API token modal with a token name field and expiration dropdown showing options: 1 month, 3 months, 6 months, 1 year, Never expires" width="1200" height="auto" loading="lazy">
+      </picture>
+      <figcaption>The expiration options. Never expires is the practical choice for a dev tool token on your own machine.</figcaption>
     </figure>
   </div>
 
   <div class="step">
-    <h2 id="s4"><span class="num">4</span><span class="t">Copy the token before the page refreshes</span></h2>
-    <p>The token appears once. Copy it now &mdash; refreshing or leaving the page hides it permanently.</p>
+    <h2 id="s4"><span class="num">4</span><span class="t">Copy the token before leaving the page</span></h2>
+    <p>After generating, the token appears once with a copy warning. Copy it now &mdash; refreshing or leaving the page hides it permanently.</p>
     <figure class="screenshot">
       <picture>
-        <source srcset="img/04-token-generated.webp" type="image/webp">
-        <img src="img/04-token-generated.png" alt="Generated API token shown with a copy button. Token name: hostinger-cc-api, created 2026-06-26, never expires." width="1200" height="auto" loading="lazy">
+        <source srcset="img/05-token-copied.webp" type="image/webp">
+        <img src="img/05-token-copied.png" alt="API token section showing 'Copy your token — it won't be shown again' warning, with the cursor-token entry listed below" width="1200" height="auto" loading="lazy">
       </picture>
-      <figcaption>Copy immediately. If you miss it, delete the token and generate a fresh one &mdash; it only takes a moment.</figcaption>
+      <figcaption>Copy it now. If you miss it, click Regenerate next to the token name &mdash; the old one is invalidated immediately.</figcaption>
     </figure>
   </div>
 
   <div class="step">
     <h2 id="s5"><span class="num">5</span><span class="t">Copy the MCP JSON config</span></h2>
-    <p>Scroll back up. The page shows a ready-made JSON block. Each entry is one Hostinger MCP server. Copy the whole block or use the Copy button on the page.</p>
+    <p>Scroll back down to the Manual Configuration section. Step 3 on the page shows the JSON Hostinger generated for the tools you selected. Use the Copy button on the right of the code block.</p>
     <figure class="screenshot">
       <picture>
-        <source srcset="img/03-json-config.webp" type="image/webp">
-        <img src="img/03-json-config.png" alt="The full MCP JSON config block generated by Hostinger, showing entries for hosting, domains, dns, billing, reach, and vps servers" width="1200" height="auto" loading="lazy">
+        <source srcset="img/06-json-config.webp" type="image/webp">
+        <img src="img/06-json-config.png" alt="Copy JSON config section with the generated mcpServers block and a Copy button. Step 4 below says: Restart Cursor to pick up the new configuration." width="1200" height="auto" loading="lazy">
       </picture>
-      <figcaption>The complete config. You will paste this into Cursor in the next step, replacing YOUR-TOKEN-HERE with the token you just copied.</figcaption>
+      <figcaption>The JSON is tailored to the tools you ticked. Step 4 on the page tells you to restart Cursor once it is saved.</figcaption>
     </figure>
-    <p>The minimal config for this guide (just VPS and DNS) looks like this:</p>
+    <p>Add your token as an <code>env</code> variable in each server entry. The complete, paste-ready version for DNS + VPS:</p>
     <div class="codewrap">
       <button class="copy" onclick="copy(this,'json-min')">Copy</button>
       <pre id="json-min"><code>{
@@ -235,18 +251,14 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   }
 }</code></pre>
     </div>
+    <p>Replace <code>YOUR-TOKEN-HERE</code> with the token from Step 4. It must appear in each server entry separately.</p>
   </div>
 
   <div class="step">
-    <h2 id="s6"><span class="num">6</span><span class="t">Add the MCP servers in Cursor</span></h2>
-    <p>In Cursor, open <strong>Settings</strong> (the gear icon, or <kbd>Cmd ,</kbd>). Go to <strong>Features &rarr; MCP servers</strong> and click <strong>Add new MCP server</strong>. Cursor lets you add servers either via a form or by directly editing its JSON config.</p>
-    <p>The easiest route is to edit the config directly:</p>
-    <ol class="sub">
-      <li>In Cursor Settings, scroll to the MCP section and click <strong>Edit in settings.json</strong> (or open <code>~/.cursor/mcp.json</code> directly).</li>
-      <li>Paste the <code>mcpServers</code> block from Step 5. If the file already has other servers, add the Hostinger entries inside the existing object.</li>
-      <li>Save the file. Cursor picks up the new servers automatically &mdash; no restart needed.</li>
-    </ol>
-    <div class="note cur"><strong>Confirm it loaded:</strong> open a Composer session (<kbd>Cmd I</kbd>). In the tool picker (the wrench icon in the Composer panel), you should see the Hostinger servers listed. If they are not there, check that Node.js is installed (<code>node --version</code>) so npx can fetch the package.</div>
+    <h2 id="s6"><span class="num">6</span><span class="t">Save to ~/.cursor/mcp.json and restart</span></h2>
+    <p>Save the JSON to <code>~/.cursor/mcp.json</code> (the path the Hostinger page showed in Step 2). Create the file if it does not exist; if it does, add the Hostinger entries inside the existing <code>mcpServers</code> object.</p>
+    <p>Restart Cursor. The MCP servers load automatically.</p>
+    <div class="note cur"><strong>Confirm they loaded:</strong> open Composer (<kbd>Cmd I</kbd>) and check the tool picker (the wrench icon). The Hostinger servers should be listed. If they are missing, check that Node.js is installed (<code>node --version</code>) so npx can fetch the package on first run.</div>
   </div>
 
   <div class="step">
