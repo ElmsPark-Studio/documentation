@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="The no-terminal way to run PageMotor on a VPS with CloudPanel: install the free panel with one paste, then create the site, database and SSL from a GUI. PageMotor gets the writable filesystem it needs.">
+<title>PageMotor on a VPS the easy way, with CloudPanel | ElmsPark Guide</title>
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+    --warn:#9a4b2e; --codebg:#1f1d17; --radius:14px; --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+  nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem}
+  .crumbs-inner{max-width:var(--maxw); margin:0 auto; padding:18px 20px 0; display:flex; align-items:center; gap:.5rem; color:#605647}
+  .crumbs a{color:#605647; text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s}
+  .crumbs a:hover,.crumbs a:focus-visible{color:#3a5140; border-bottom-color:#3a5140}
+  .crumbs .sep{color:#b5ab97}
+  .crumbs [aria-current="page"]{color:#181411; font-weight:500; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+  .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+  .chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+  .chip b{color:var(--pine)}
+  .note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+  .note.calm{border-left-color:var(--pine)}
+  .note strong{color:var(--pine-deep)}
+  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+  nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+  nav.toc ol{margin:0; padding-left:20px}
+  nav.toc li{margin:5px 0}
+  nav.toc a{color:var(--pine); text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+  .step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+  .num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+  .step h2 .t{line-height:1.2}
+  ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+  ol.sub li,ul.sub li{margin:8px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+  .codewrap{position:relative; margin:14px 0}
+  pre{background:var(--codebg); color:#eee; border-radius:12px; padding:18px; overflow:auto; font-size:14px; line-height:1.55; margin:0}
+  pre code{background:none; color:inherit; padding:0; font-size:inherit}
+  .tok-c{color:#8f9b7e} .tok-s{color:#9fc7a6}
+  .copy{position:absolute; top:10px; right:10px; font-family:system-ui,sans-serif; font-size:12.5px; border:1px solid #4a463a; background:#33302a; color:#e9e3d3; padding:6px 12px; border-radius:8px; cursor:pointer}
+  .copy:hover{background:#3f3b32}
+  .copy.done{background:var(--pine); border-color:var(--pine); color:#fff}
+  h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+  details[open]{padding-bottom:14px}
+  summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-family:system-ui,sans-serif}
+  details[open] summary::before{content:"－"}
+  .tag{display:inline-block; font-family:system-ui,sans-serif; font-size:12px; font-weight:600; padding:2px 9px; border-radius:6px; margin-right:6px}
+  .tag.err{background:#f3e1d9; color:var(--warn)}
+  .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+  .seealso a{color:var(--pine); font-weight:600}
+  footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+  footer a{color:var(--pine)}
+  .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+  @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
+  /* Screenshots */
+  figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);background:var(--card)}
+  figure.screenshot img,figure.screenshot video{display:block;width:100%;height:auto}
+  figure.screenshot figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:1px solid var(--line);background:var(--card)}
+</style>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
+<style>
+/* ElmsPark brand header (matches elmspark.com site chrome) */
+header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
+.es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
+.es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
+.es-wordmark .es-mark svg{width:100%;height:100%;display:block}
+.es-wordmark .es-accent{color:#3a5140}
+.es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:0.75rem;margin-left:-0.35rem;line-height:1}
+.es-nav{display:flex;gap:clamp(0.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:0.9375rem;font-weight:500}
+.es-nav a{color:#181411;text-decoration:none;padding:0.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
+.es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+.es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
+.es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
+@media(max-width:640px){
+  .es-header .es-inner{padding:1rem 18px;gap:.75rem}
+  .es-sub{display:none}
+  .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
+}
+</style>
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ElmsPark Guides">
+  <meta property="og:title" content="PageMotor on a VPS the easy way, with CloudPanel">
+  <meta property="og:description" content="The no-terminal route onto a proper VPS: install CloudPanel with one paste, then create the site, database and SSL from a GUI. PageMotor gets the writable filesystem it needs.">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/pagemotor-cloudpanel/">
+  <meta name="twitter:card" content="summary">
+</head>
+<body>
+<header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" class="brand-mark-svg" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z m252 -467 c203 -269 329 -496 368 -665 12 -49 11 -53 -14 -91 -15 -22 -87 -96 -162 -163 -74 -68 -175 -165 -224 -217 -79 -84 -89 -91 -93 -70 -3 13 -7 168 -10 344 -4 213 -9 331 -17 347 -14 31 -60 50 -92 38 -51 -20 -50 -8 -53 -534 -2 -463 -12 -728 -34 -911 -5 -44 -12 -82 -15 -85 -9 -8 -160 146 -239 244 -202 250 -279 446 -280 720 -1 150 15 238 75 420 70 211 258 510 515 819 l57 70 48 -52 c26 -28 103 -125 170 -214z m435 -964 c4 -14 4 -83 1 -152 -10 -265 -110 -467 -346 -703 -69 -69 -155 -147 -190 -174 l-64 -48 7 109 c15 227 34 350 64 417 32 68 117 191 193 277 57 64 309 300 321 300 4 0 11 -12 14 -26z m-4198 -425 c322 -59 663 -182 765 -277 34 -32 34 -47 7 -293 -11 -101 -21 -246 -23 -321 -1 -76 -5 -137 -8 -135 -4 1 -40 43 -80 92 -142 174 -301 360 -325 383 -53 48 -134 17 -134 -52 0 -42 18 -68 172 -253 178 -213 281 -344 274 -350 -3 -3 -81 4 -173 16 -92 11 -247 26 -343 31 -96 6 -187 15 -202 21 -20 8 -34 29 -57 83 -57 138 -89 286 -116 545 -15 146 -21 532 -8 545 8 8 29 5 251 -35z m7346 -200 c-1 -347 -48 -660 -127 -854 -37 -90 -43 -93 -247 -105 -96 -6 -233 -18 -305 -26 -71 -9 -154 -18 -184 -21 l-54 -6 48 64 c27 35 97 122 155 193 269 328 269 329 256 381 -6 24 -51 55 -79 55 -27 0 -69 -44 -258 -271 -105 -126 -195 -229 -199 -229 -4 0 -10 73 -13 163 -3 89 -15 247 -27 350 -19 172 -20 191 -6 212 39 60 331 189 551 244 165 41 446 92 480 86 6 -1 10 -87 9 -236z m-1206 -304 c37 -179 42 -605 8 -712 -22 -68 -92 -172 -209 -310 -96 -112 -114 -129 -123 -120 -13 13 -43 293 -44 398 0 132 17 239 62 379 50 156 114 265 222 378 66 69 67 68 84 -13z m-5108 19 c111 -104 201 -275 257 -487 25 -92 27 -119 27 -277 0 -203 -27 -390 -57 -390 -15 0 -160 171 -240 282 -70 98 -86 146 -97 287 -16 202 19 631 52 631 5 0 31 -21 58 -46z m3753 -814 c60 -144 106 -303 123 -427 15 -109 16 -129 2 -224 -24 -167 -81 -284 -201 -414 -56 -61 -154 -145 -169 -145 -15 0 32 402 63 522 23 93 24 117 1 143 -36 43 -48 48 -81 30 -52 -26 -79 -104 -111 -312 -16 -110 -50 -411 -50 -452 0 -29 -27 10 -73 106 -59 123 -107 307 -107 406 0 40 9 110 20 156 42 173 98 277 232 429 82 93 299 285 309 274 3 -4 22 -45 42 -92z m-4451 -36 c191 -19 399 -59 452 -86 23 -11 56 -32 74 -45 37 -28 226 -251 255 -302 l18 -31 -140 0 c-243 0 -436 37 -586 113 -179 90 -314 209 -399 355 -10 17 135 16 326 -4z m6752 4 c-50 -85 -170 -211 -254 -268 -158 -107 -299 -160 -485 -184 -126 -17 -385 -22 -385 -8 0 12 96 139 183 241 62 73 87 94 139 119 117 55 442 106 706 110 80 2 102 -1 96 -10z m-8080 -1349 c134 -32 310 -100 491 -189 194 -97 263 -143 290 -192 19 -36 19 -38 2 -55 -16 -16 -37 -18 -170 -17 -171 1 -303 24 -527 90 -158 47 -195 52 -220 29 -30 -27 -27 -88 5 -113 60 -47 390 -142 585 -168 58 -7 171 -14 252 -14 147 0 148 0 176 -27 17 -16 50 -75 77 -138 65 -152 186 -384 250 -480 30 -44 96 -134 149 -200 52 -66 92 -122 89 -125 -3 -3 -42 35 -87 85 -208 231 -419 410 -568 483 -182 89 -301 114 -563 118 -187 2 -205 4 -268 28 -139 52 -365 200 -488 319 -63 61 -184 210 -279 342 -47 68 -59 90 -48 96 19 13 190 66 289 89 267 62 417 73 563 39z m439 -1094 c177 -31 332 -103 490 -230 98 -79 317 -298 317 -318 0 -4 -104 -7 -232 -5 l-233 3 -67 32 c-101 47 -237 145 -344 246 -103 97 -244 251 -244 266 0 5 8 12 18 14 40 11 216 6 295 -8z m-405 -167 c135 -146 294 -299 357 -344 30 -21 55 -42 55 -45 0 -3 -148 -11 -328 -17 -181 -6 -342 -17 -359 -23 -60 -20 -66 -111 -10 -136 14 -6 162 -8 387 -5 l365 5 -116 -120 c-120 -124 -267 -300 -295 -355 l-16 -31 -72 6 c-137 10 -418 133 -646 284 -139 92 -370 276 -370 295 0 6 6 16 14 22 7 6 65 54 127 107 176 148 394 296 559 379 71 36 196 79 229 80 18 0 49 -26 119 -102z m1199 -574 c9 -26 -266 -289 -392 -375 -68 -46 -202 -102 -316 -133 -98 -26 -249 -39 -256 -21 -6 19 71 123 167 227 116 124 263 248 344 288 l60 30 195 -2 c125 -2 196 -7 198 -14z m442 -14 c22 -11 72 -48 113 -83 186 -162 425 -337 692 -508 l210 -134 -170 -12 c-292 -20 -407 -45 -679 -148 -139 -53 -156 -57 -229 -56 -43 0 -131 8 -195 18 -288 42 -744 -1 -864 -81 -38 -26 -47 -68 -21 -97 21 -24 79 -25 190 -5 163 30 276 39 447 33 95 -2 183 -9 197 -14 23 -10 20 -13 -70 -80 -271 -201 -419 -268 -654 -298 -109 -14 -144 -15 -225 -5 -125 15 -348 62 -484 101 -87 26 -107 35 -102 47 3 9 48 80 100 157 101 152 199 270 313 377 77 72 99 82 247 108 39 7 117 28 175 47 206 67 325 150 597 418 112 110 222 210 245 223 50 27 103 25 167 -8z m1134 -1664 c-259 -265 -393 -432 -393 -488 0 -50 53 -82 104 -62 9 4 77 74 150 158 166 188 417 446 435 446 15 0 8 -143 -14 -280 -71 -431 -344 -664 -969 -824 -76 -20 -145 -36 -154 -36 -13 0 -14 16 -9 113 11 199 82 516 142 638 146 295 354 436 729 494 169 27 171 38 -21 -159z"/><path d="M8159 16019 c-38 -38 -141 -295 -188 -469 -83 -304 -64 -574 56 -774 78 -131 150 -197 383 -352 154 -102 197 -141 231 -210 39 -80 33 -168 -29 -404 -151 -575 -137 -859 57 -1102 74 -94 163 -174 275 -250 163 -109 236 -133 276 -92 21 22 44 122 59 266 12 103 2 243 -24 369 -17 80 -69 233 -90 266 -31 47 -109 41 -133 -10 -12 -25 -10 -41 22 -150 50 -177 56 -214 56 -360 0 -137 -5 -177 -23 -177 -23 0 -175 120 -243 193 -77 82 -124 163 -149 257 -22 80 -19 271 5 415 32 191 106 445 129 445 3 0 58 -42 121 -93 63 -51 179 -139 257 -195 185 -134 237 -192 313 -349 47 -97 65 -124 84 -129 69 -17 94 26 79 132 -27 185 -136 317 -444 534 -169 119 -309 252 -346 329 -41 83 -39 167 9 286 88 218 109 279 124 347 21 100 29 316 15 405 -23 148 -119 334 -238 463 -148 160 -527 430 -603 430 -11 0 -30 -10 -41 -21z"/><path d="M15039 13510 c-200 -41 -467 -129 -599 -195 -189 -96 -370 -252 -460 -397 -125 -205 -165 -408 -138 -713 18 -206 14 -348 -12 -470 -53 -242 -276 -735 -443 -978 -286 -414 -647 -730 -1295 -1132 -150 -93 -457 -296 -568 -375 -264 -189 -488 -414 -657 -663 -172 -252 -326 -657 -386 -1018 -74 -437 -77 -675 -21 -1604 59 -968 60 -983 156 -1669 40 -288 47 -320 77 -341 30 -21 90 -19 118 3 28 24 28 37 -10 272 -101 621 -133 985 -187 2080 -22 469 -24 560 -15 737 24 458 68 686 199 1039 108 291 338 619 447 640 55 10 150 -2 186 -23 64 -37 69 -51 73 -238 8 -319 67 -513 218 -712 101 -134 276 -268 430 -329 35 -14 77 -31 93 -38 149 -66 302 -113 489 -151 256 -52 276 -36 262 209 -22 383 -122 747 -260 940 -93 130 -251 254 -411 323 -152 65 -300 95 -615 123 -112 10 -272 49 -285 70 -13 20 39 82 109 131 94 67 228 134 317 159 161 44 473 51 672 15 182 -33 401 -112 458 -166 29 -27 31 -33 25 -77 -4 -26 -9 -108 -12 -182 -9 -204 27 -392 103 -545 121 -243 338 -419 663 -540 41 -15 84 -31 95 -35 49 -19 145 -50 199 -64 52 -13 62 -13 87 0 16 8 32 26 35 40 11 42 -3 351 -20 451 -18 103 -61 239 -111 348 l-33 74 172 -6 c182 -6 240 -1 471 43 125 25 322 76 415 109 126 44 119 103 -44 365 -70 112 -108 165 -264 367 -23 31 -41 60 -39 66 2 6 59 25 128 43 328 86 630 258 1006 572 62 51 122 105 133 119 34 44 26 77 -32 140 -59 62 -255 228 -364 309 -172 127 -419 274 -547 324 l-68 27 93 56 c296 176 482 363 709 709 106 163 105 184 -11 237 -190 85 -544 175 -772 196 -43 4 -78 9 -78 10 0 2 23 41 52 87 73 117 122 227 157 348 61 214 91 432 91 656 0 241 -15 259 -181 224z m193 -1534 c194 -38 408 -104 408 -125 0 -10 -81 -127 -160 -232 -162 -215 -449 -437 -665 -513 -63 -22 -89 -25 -270 -29 -258 -6 -385 -34 -560 -123 -146 -74 -377 -259 -478 -382 -31 -37 -84 -94 -118 -127 l-62 -60 34 47 c19 26 74 99 122 163 121 157 263 411 357 637 19 47 44 88 62 103 28 24 34 25 171 25 223 0 439 37 679 116 160 53 209 96 180 158 -17 38 -55 43 -147 17 -326 -90 -501 -122 -653 -120 -108 2 -136 9 -140 37 -6 38 24 70 121 134 164 106 445 229 652 284 79 21 106 24 215 20 75 -3 176 -15 252 -30z m-604 -1072 c12 -4 22 -12 22 -18 0 -19 -149 -184 -241 -269 -149 -137 -262 -212 -376 -252 -64 -23 -81 -25 -286 -25 l-218 0 16 22 c31 45 242 251 318 311 140 111 315 192 476 221 79 15 249 20 289 10z m340 -100 c95 -31 212 -94 359 -190 191 -126 475 -350 471 -370 -4 -20 -204 -182 -327 -266 -160 -110 -306 -189 -447 -246 -130 -51 -270 -87 -298 -76 -9 3 -41 42 -72 86 -66 94 -164 209 -283 331 l-86 89 371 -4 c354 -3 373 -2 393 16 28 25 29 86 2 110 -24 22 -133 32 -470 42 -133 4 -240 10 -239 15 2 4 29 28 61 52 76 59 196 175 330 320 83 89 115 117 134 117 13 0 59 -12 101 -26z m-1698 -655 c32 -14 97 -73 220 -197 179 -181 314 -292 449 -369 90 -52 254 -107 383 -129 51 -9 109 -23 128 -32 44 -20 240 -217 319 -321 32 -42 89 -125 125 -184 l66 -107 -24 -10 c-123 -47 -419 -113 -577 -130 -181 -19 -401 20 -559 100 -69 35 -305 193 -365 243 l-39 34 86 13 c122 18 421 8 553 -20 129 -26 180 -28 205 -5 29 27 25 69 -9 97 -51 43 -278 91 -496 103 -105 7 -151 3 -499 -34 -48 -6 -102 -7 -120 -4 -17 3 -101 33 -186 65 -253 97 -419 131 -695 146 l-140 7 215 139 c238 155 451 309 640 465 126 104 204 151 250 151 14 0 45 -10 70 -21z m708 3 c92 -35 223 -143 366 -299 93 -103 184 -229 173 -240 -4 -3 -55 -1 -113 5 -118 13 -268 59 -382 116 -120 60 -276 191 -426 355 -58 64 -59 66 -35 72 13 4 102 7 196 8 145 1 181 -2 221 -17z m-1923 -1537 c253 -50 420 -155 546 -342 28 -42 65 -106 82 -142 66 -146 128 -425 143 -643 6 -86 5 -98 -9 -98 -9 0 -87 18 -174 40 -617 157 -885 394 -957 846 -9 56 -16 136 -16 178 0 70 2 76 18 67 28 -15 279 -274 417 -429 146 -165 161 -177 209 -168 47 9 64 49 42 100 -30 71 -205 276 -413 484 -73 74 -133 136 -133 138 0 9 122 -7 245 -31z"/><path d="M12680 12339 c-278 -30 -553 -197 -801 -485 -94 -111 -119 -149 -119 -187 0 -38 20 -54 110 -90 231 -93 435 -132 645 -124 169 6 246 26 388 99 131 67 238 148 362 272 184 185 240 290 182 344 -55 51 -390 154 -562 172 -100 11 -99 11 -205 -1z"/><path d="M7592 12340 c-92 -10 -187 -32 -327 -77 -214 -68 -267 -104 -251 -167 18 -71 266 -346 396 -438 100 -71 246 -144 345 -174 73 -21 117 -27 230 -31 212 -8 356 21 660 130 66 24 92 56 82 99 -15 59 -188 259 -322 373 -213 181 -377 258 -611 285 -97 11 -96 11 -202 0z"/><path d="M12825 11324 c-201 -87 -390 -239 -493 -397 -57 -87 -87 -159 -109 -262 -28 -132 -3 -540 39 -618 5 -10 25 -25 44 -33 44 -18 72 -7 209 83 136 91 313 269 376 378 93 160 124 289 124 515 0 222 -33 347 -94 363 -11 3 -54 -10 -96 -29z"/><path d="M7531 11324 c-74 -94 -78 -500 -8 -700 24 -65 66 -144 112 -209 88 -123 327 -330 450 -390 43 -21 55 -23 87 -14 44 12 61 38 77 119 36 184 39 453 6 575 -65 246 -280 474 -580 617 -77 36 -117 37 -144 2z"/><path d="M8756 10859 c-15 -18 -40 -76 -60 -142 -132 -425 -137 -675 -21 -923 57 -122 108 -194 196 -281 99 -96 146 -133 264 -213 124 -83 156 -100 193 -100 58 0 94 75 149 308 25 106 27 134 27 307 0 178 -2 196 -27 280 -44 144 -124 296 -222 417 -94 117 -237 255 -342 329 -83 59 -119 63 -157 18z m161 -237 c119 -95 263 -272 332 -409 85 -170 114 -384 77 -588 -18 -98 -41 -194 -50 -203 -13 -13 -187 118 -276 208 -98 98 -144 165 -187 270 -79 197 -71 392 33 743 8 24 16 22 71 -21z"/><path d="M11567 10834 c-199 -138 -387 -348 -473 -529 -29 -60 -65 -150 -81 -200 -26 -85 -27 -101 -28 -290 0 -218 7 -264 67 -463 57 -185 91 -193 278 -69 323 216 475 407 541 684 26 108 28 285 4 418 -15 87 -79 327 -110 416 -38 106 -84 113 -198 33z m106 -311 c20 -82 41 -186 48 -232 27 -192 -19 -384 -133 -549 -64 -93 -287 -289 -361 -318 -11 -4 -19 13 -35 73 -33 123 -43 195 -43 311 -1 186 54 367 156 523 48 73 300 339 321 339 5 0 27 -66 47 -147z"/></g></g></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+    </a>
+    <span class="es-sub">Guides</span>
+    <nav class="es-nav" aria-label="Documentation">
+      <a href="/guides/">Guides</a>
+      <a href="/learn/">Learn</a>
+      <a href="/plugins/">Plugin docs</a>
+      <a href="/hosting/hosting-options/">Hosting</a>
+      <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <div class="crumbs-inner">
+    <a href="https://documentation.elmspark.com/guides/">Guides</a>
+    <span class="sep" aria-hidden="true">&rsaquo;</span>
+    <span aria-current="page">PageMotor on a VPS with CloudPanel</span>
+  </div>
+</nav>
+
+<div class="wrap">
+  <span class="kicker">PageMotor &middot; Hosting</span>
+  <h1>PageMotor on a VPS the easy way, with CloudPanel</h1>
+  <p class="lede">A point-and-click way onto a proper VPS. CloudPanel gives you a clean web panel, and PageMotor gets the writable, correctly-owned filesystem it needs. One paste in the terminal to install the panel, then everything else is clicks.</p>
+  <div class="chips">
+    <span class="chip">&#128421; <b>GUI, not the terminal</b></span>
+    <span class="chip">&#9989; <b>Free panel</b></span>
+    <span class="chip">&#9201; <b>about 20 minutes</b></span>
+  </div>
+
+  <div class="note calm">
+    <strong>Why this route:</strong> our <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Vultr guide</a> builds the same stack by hand on the command line. This one does it through a panel instead, for people who would rather click than type. You still get a real VPS with a writable, properly-owned filesystem, which is the thing PageMotor needs and a locked-down shared host  <strong>On Hostinger?</strong> Follow the <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger/">picture-by-picture Hostinger guide</a>, every step shown as a screenshot.
+  </div>
+
+  <div class="note">
+    <strong>Tested on Hostinger, June 2026, four small traps to dodge:</strong>
+    <ol>
+      <li><strong>Pick CloudPanel inside the order wizard.</strong> On the "Choose what to install" screen, open the <strong>Control panel</strong> tab and choose CloudPanel on Ubuntu 24.04, not a plain OS.</li>
+      <li><strong>No underscores in the database name or user.</strong> CloudPanel rejects them ("this value is not valid"). Use hyphens, for example <code>pagemotor-db</code> and <code>pagemotor-user</code>.</li>
+      <li><strong>Choose PHP 8.3.</strong> The new-site form may default to a newer version. PageMotor needs 8.2 or newer, and 8.3 is the safe choice.</li>
+      <li><strong>Uploading with File Manager? Extract makes a subfolder.</strong> Let it extract into a folder such as <code>pagemotor</code>, then point the site at it: open the site, Settings, set Root Directory to <code>yourdomain.com/pagemotor</code>, Save.</li>
+    </ol>
+  </div>
+
+  <nav class="toc">
+    <p>On this page</p>
+    <ol>
+      <li><a href="#vps">Step 1: a VPS with plain Ubuntu</a></li>
+      <li><a href="#install">Step 2: install CloudPanel (one paste)</a></li>
+      <li><a href="#site">Step 3: create the site</a></li>
+      <li><a href="#db">Step 4: create the database</a></li>
+      <li><a href="#upload">Step 5: upload PageMotor</a></li>
+      <li><a href="#rewrite">Step 6: the one PageMotor tweak</a></li>
+      <li><a href="#ssl">Step 7: turn on SSL</a></li>
+      <li><a href="#why">Why this fixes the &ldquo;design won't save&rdquo; problem</a></li>
+    </ol>
+  </nav>
+
+  <div class="step">
+  <h2 id="vps"><span class="num">1</span><span class="t">A VPS with plain Ubuntu</span></h2>
+  <p>Spin up a VPS at any provider, Hetzner, DigitalOcean, Vultr or Hostinger, with at least 2&nbsp;GB of RAM and a plain <strong>Ubuntu 22.04 or 24.04</strong> image. CloudPanel wants a fresh box, so don't install anything else on it first.</p>
+  <p>On <strong>Hostinger</strong> you can skip the next step: at setup, choose the <strong>CloudPanel</strong> template instead of plain Ubuntu and the panel is installed for you. On any other host, do step 2.</p>
+  </div>
+
+  <div class="step">
+  <h2 id="install"><span class="num">2</span><span class="t">Install CloudPanel (one paste)</span></h2>
+  <p>SSH into the box as root and run these three lines. The install takes five to ten minutes, and it is the only time you touch the command line.</p>
+  <pre><code>apt update &amp;&amp; apt upgrade -y
+curl -sS https://installer.cloudpanel.io/ce/v2/install.sh -o install.sh
+sudo bash install.sh</code></pre>
+  <p>When it finishes, open <code>https://YOUR-SERVER-IP:8443</code> in your browser (expect a certificate warning the first time, that is normal on a raw IP) and create your admin account. From here on it is all panel.</p>
+  </div>
+
+  <div class="step">
+  <h2 id="site"><span class="num">3</span><span class="t">Create the site</span></h2>
+  <p>In CloudPanel go to <strong>Sites &rarr; Add Site &rarr; Create a PHP Site</strong>, and set:</p>
+  <ul class="sub">
+    <li><strong>Application:</strong> Generic / PHP.</li>
+    <li><strong>PHP version:</strong> 8.3 (PageMotor needs 8.1 or newer).</li>
+    <li><strong>Domain:</strong> your site's domain.</li>
+    <li><strong>Site user and password:</strong> set them and write them down. This is the user that owns the files and that PHP runs as.</li>
+  </ul>
+  <p>CloudPanel creates the Nginx vhost, the PHP-FPM pool, and the document root at <code>/home/&lt;site-user&gt;/htdocs/&lt;domain&gt;/</code>.</p>
+  </div>
+
+  <div class="step">
+  <h2 id="db"><span class="num">4</span><span class="t">Create the database</span></h2>
+  <p>Go to <strong>Databases &rarr; Add Database</strong>. Give it a name, a database user and a password, and note all three, PageMotor needs them in a moment. CloudPanel runs MySQL / MariaDB, which PageMotor is happy with.</p>
+  </div>
+
+  <div class="step">
+  <h2 id="upload"><span class="num">5</span><span class="t">Upload PageMotor</span></h2>
+  <ul class="sub">
+    <li>Put the PageMotor files into the site's document root (<code>/home/&lt;site-user&gt;/htdocs/&lt;domain&gt;/</code>) using CloudPanel's <strong>File Manager</strong>, or SFTP with the site-user login.</li>
+    <li>Copy <code>config-sample.php</code> to <code>config.php</code> and fill in the database name, user and password from step 4.</li>
+  </ul>
+  <div class="note">Because the files are uploaded as the site user, they are owned by the same user PHP runs as. That is the whole game: PageMotor can write its compiled theme CSS to disk, which is exactly what a locked-down shared host won't let it do.</div>
+  </div>
+
+  <div class="step">
+  <h2 id="rewrite"><span class="num">6</span><span class="t">The one PageMotor tweak</span></h2>
+  <p>PageMotor routes every request through <code>index.php</code>, so the vhost needs the standard front-controller rewrite. Open the site's <strong>Vhost</strong> tab in CloudPanel and make sure the main location block reads:</p>
+  <pre><code>location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}</code></pre>
+  <p>Save, and CloudPanel reloads Nginx for you. That single line is the difference between clean PageMotor URLs and a wall of 404s.</p>
+  </div>
+
+  <div class="step">
+  <h2 id="ssl"><span class="num">7</span><span class="t">Turn on SSL</span></h2>
+  <p>Point your domain's DNS at the server's IP first (an A record) and wait for it to resolve. Then in the site go to <strong>SSL/TLS &rarr; Actions &rarr; New Let's Encrypt Certificate</strong>, add your domain, and <strong>Create and Install</strong>. CloudPanel issues and renews the certificate for you.</p>
+  </div>
+
+  <h2 class="plain" id="why">Why this fixes the &ldquo;design won't save&rdquo; problem</h2>
+  <p>The most common PageMotor &ldquo;bug&rdquo; is a design that won't apply: you save it, nothing changes, no error. Nine times out of ten that is a host refusing to let PHP write the compiled stylesheet to disk (more on what hosts block in the <a href="https://documentation.elmspark.com/guides/ep-suite-shared-hosting/">shared-hosting guide</a>).</p>
+  <p>On a CloudPanel VPS that is gone by construction. It is a real server with a normal, writable filesystem, the site files are owned by the user PHP runs as, and nothing firewalls PHP from doing its job. PageMotor compiles its CSS, writes it, and serves it, exactly as it is meant to.</p>
+
+  <div class="seealso">&#128736; <strong>Prefer the command line, or want no panel at all?</strong> The <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Vultr guide</a> builds the same Nginx + PHP 8.3 + MariaDB stack by hand, no panel involved.</div>
+
+  <footer>
+    <p>Steps current for CloudPanel CE&nbsp;v2, June&nbsp;2026. CloudPanel is a free, Nginx-based control panel for Ubuntu and Debian.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> &middot; an ElmsPark guide for the PageMotor community &middot; <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+  </footer>
+</div>
+
+</body>
+</html>
