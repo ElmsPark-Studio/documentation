@@ -263,13 +263,13 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <div class="step">
     <h2 id="s7"><span class="num">7</span><span class="t">Ask Claude Code to provision the VPS</span></h2>
-    <p>Open Claude Code and give it a clear brief. This is the whole prompt — the MCP handles everything behind it:</p>
+    <p>Open Claude Code and give it a clear brief. This is the whole prompt — the MCP handles the API calls behind it:</p>
     <div class="prompt-box">
       <div class="prompt-label">Paste this into Claude Code (edit the domain and details)</div>
 Using the Hostinger MCP, provision a new VPS for me:
 - Plan: KVM 2
 - Template: CloudPanel on Ubuntu 24.04
-- Region: EU (nearest to Ireland/UK)
+- Region: Manchester, UK (data_center_id 18)
 - Hostname: pagemotor-mysite
 - Inject my SSH key from ~/.ssh/id_ed25519.pub
 
@@ -281,8 +281,62 @@ Once the VPS is running:
 
 Then tell me the IP and confirm when DNS is set.
     </div>
-    <p>Claude Code will use the <code>hostinger-vps</code> MCP to create the server and <code>hostinger-dns</code> to set the DNS record. Provisioning takes three to six minutes. CC will poll the API and tell you when the VPS is running.</p>
-    <div class="note"><strong>A word on billing:</strong> the VPS creation call charges your Hostinger account. Make sure you have a payment method on file and know what plan you are ordering. A KVM 2 is around $7&ndash;9/month depending on the billing term you set.</div>
+
+    <details>
+      <summary>Which region should I pick? (datacenter IDs)</summary>
+      <p>Specify by name or ID — the MCP understands both. IDs confirmed from the live API:</p>
+      <table style="width:100%;border-collapse:collapse;font-family:system-ui,sans-serif;font-size:15px;margin:8px 0">
+        <thead><tr style="border-bottom:2px solid var(--line)">
+          <th style="text-align:left;padding:6px 10px">ID</th>
+          <th style="text-align:left;padding:6px 10px">Location</th>
+          <th style="text-align:left;padding:6px 10px">Good for</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:6px 10px"><code>18</code></td><td style="padding:6px 10px">Manchester, UK</td><td style="padding:6px 10px">Ireland, UK, Northern Europe</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:6px 10px"><code>15</code></td><td style="padding:6px 10px">Paris, France</td><td style="padding:6px 10px">Western Europe</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:6px 10px"><code>19</code></td><td style="padding:6px 10px">Frankfurt, Germany</td><td style="padding:6px 10px">Central Europe</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:6px 10px"><code>11</code></td><td style="padding:6px 10px">Vilnius, Lithuania</td><td style="padding:6px 10px">Eastern Europe / Baltic</td></tr>
+          <tr><td style="padding:6px 10px"><code>24</code></td><td style="padding:6px 10px">Boston 2, USA</td><td style="padding:6px 10px">US East Coast</td></tr>
+        </tbody>
+      </table>
+    </details>
+
+    <details>
+      <summary>What does Claude Code actually send to the Hostinger API?</summary>
+      <p>For the technically curious. The MCP translates your plain-English request into a call like this:</p>
+      <div class="codewrap" style="margin-top:8px">
+        <pre><code><span class="tok-c">POST /api/vps/v1/virtual-machines</span>
+{
+  <span class="tok-s">"item_id"</span>: <span class="tok-s">"hostingercom-vps-kvm2-usd-1m"</span>,   <span class="tok-c">// KVM 2, billed monthly</span>
+  <span class="tok-s">"setup"</span>: {
+    <span class="tok-s">"template_id"</span>: <span class="tok-k">1096</span>,               <span class="tok-c">// Ubuntu 24.04 with CloudPanel</span>
+    <span class="tok-s">"data_center_id"</span>: <span class="tok-k">18</span>,             <span class="tok-c">// Manchester, UK</span>
+    <span class="tok-s">"hostname"</span>: <span class="tok-s">"pagemotor-mysite"</span>,
+    <span class="tok-s">"public_key"</span>: <span class="tok-s">"ssh-ed25519 ..."</span>   <span class="tok-c">// from ~/.ssh/id_ed25519.pub</span>
+  }
+}</code></pre>
+      </div>
+      <p style="font-size:15px;margin:10px 0 4px">The <code>item_id</code> is the billing price ID, not just the plan name. Monthly and annual differ by suffix:</p>
+      <table style="width:100%;border-collapse:collapse;font-family:system-ui,sans-serif;font-size:14.5px;margin:6px 0">
+        <thead><tr style="border-bottom:2px solid var(--line)">
+          <th style="text-align:left;padding:5px 10px">Plan</th>
+          <th style="text-align:left;padding:5px 10px">RAM</th>
+          <th style="text-align:left;padding:5px 10px">Monthly price ID</th>
+          <th style="text-align:left;padding:5px 10px">Intro price</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:5px 10px">KVM 1</td><td style="padding:5px 10px">4 GB</td><td style="padding:5px 10px"><code>hostingercom-vps-kvm1-usd-1m</code></td><td style="padding:5px 10px">$9.99/mo</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:5px 10px">KVM 2</td><td style="padding:5px 10px">8 GB</td><td style="padding:5px 10px"><code>hostingercom-vps-kvm2-usd-1m</code></td><td style="padding:5px 10px">$13.99/mo</td></tr>
+          <tr style="border-bottom:1px solid var(--line)"><td style="padding:5px 10px">KVM 4</td><td style="padding:5px 10px">16 GB</td><td style="padding:5px 10px"><code>hostingercom-vps-kvm4-usd-1m</code></td><td style="padding:5px 10px">$25.99/mo</td></tr>
+          <tr><td style="padding:5px 10px">KVM 8</td><td style="padding:5px 10px">32 GB</td><td style="padding:5px 10px"><code>hostingercom-vps-kvm8-usd-1m</code></td><td style="padding:5px 10px">$50.99/mo</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:15px;margin:10px 0 4px">Swap <code>-1m</code> for <code>-1y</code> or <code>-2y</code> for annual billing, which is cheaper per month.</p>
+      <div class="note calm" style="font-size:14.5px;margin:12px 0 4px"><strong>Bonus template:</strong> Hostinger also has template <code>1189</code> — "Ubuntu 24.04 with Claude Code" — which pre-installs the CC CLI on your server. If you want to use Claude Code directly on the VPS itself, swap <code>template_id: 1096</code> for <code>1189</code> and tell CC that in your prompt.</div>
+    </details>
+
+    <p>Claude Code will use the <code>hostinger-vps</code> MCP to create the server and <code>hostinger-dns</code> to set the DNS record. Provisioning takes three to six minutes. CC polls the API and tells you when the VPS is running.</p>
+    <div class="note"><strong>A word on billing:</strong> the VPS creation call charges your Hostinger account. Make sure you have a payment method on file. KVM 2 (8 GB, the recommended starting point for PageMotor) is <strong>$13.99/month</strong> at introductory pricing. Annual billing reduces that significantly.</div>
   </div>
 
   <div class="step">
@@ -334,7 +388,7 @@ Use provision-pagemotor.sh if you need a reference for the exact commands.
   </div>
 
   <footer>
-    <p>An <a href="https://elmspark.com/">ElmsPark</a> guide. Validated on Hostinger KVM 2 + CloudPanel + PageMotor 0.9.4b. The Hostinger MCP server is an official Hostinger product; check their API docs at <code>developers.hostinger.com</code> for the latest endpoint shapes.</p>
+    <p>An <a href="https://elmspark.com/">ElmsPark</a> guide. API field names and datacenter IDs confirmed live against the Hostinger REST API (2026-06-26). CloudPanel template ID 1096, Ubuntu 24.04 with CloudPanel. The Hostinger MCP server is an official Hostinger product.</p>
   </footer>
 </div>
 

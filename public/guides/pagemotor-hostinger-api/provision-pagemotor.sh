@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 # provision-pagemotor.sh
-# On-box setup script: run this via SSH after the Hostinger VPS is provisioned.
-# It creates the CloudPanel site + database, deploys PageMotor, and issues the SSL cert.
+# On-box setup script for CloudPanel + PageMotor.
+# Run this via SSH after the VPS is provisioned (by Claude Code via the Hostinger MCP or API).
 #
-# USAGE (Claude Code will run this for you):
-#   ssh root@VPS_IP 'bash -s' < provision-pagemotor.sh DOMAIN SITE_SLUG DB_PASS PM_ZIP_DEST
+# USAGE:
+#   ssh root@VPS_IP 'bash -s' -- << 'EOF' < provision-pagemotor.sh DOMAIN SLUG DB_PASS PM_ZIP_PATH
 #
 # Or tell Claude Code:
-#   "SSH into [IP] and run provision-pagemotor.sh for [domain]"
+#   "SSH into [IP] as root using ~/.ssh/id_ed25519 and run provision-pagemotor.sh
+#    for domain mysite.com, slug mysite. The PageMotor zip is at /tmp/pagemotor.zip."
 #
 # ARGUMENTS:
 #   $1  DOMAIN    e.g. mysite.com
-#   $2  SITE_SLUG short slug used as site user and in db names  e.g. mysite
-#   $3  DB_PASS   a strong random password for the database user
-#   $4  PM_ZIP    path to the PageMotor zip already on the server  e.g. /tmp/pagemotor.zip
+#   $2  SLUG      short identifier used as site user + in db name  e.g. mysite
+#   $3  DB_PASS   strong random password for the database user
+#   $4  PM_ZIP    path to the PageMotor zip already on the server  default: /tmp/pagemotor.zip
 
 set -euo pipefail
 
@@ -22,16 +23,19 @@ SLUG="${2:?Arg 2 required: site slug (e.g. mysite)}"
 DB_PASS="${3:?Arg 3 required: database password}"
 PM_ZIP="${4:-/tmp/pagemotor.zip}"
 
+# CloudPanel requires hyphens, not underscores, in db names and usernames
 DB_NAME="${SLUG}-db"
 DB_USER="${SLUG}-user"
 SITE_PASS="$(openssl rand -base64 18 | tr -d '=/+' | head -c 20)"
+WEBROOT="/home/$SLUG/htdocs/$DOMAIN"
 
 PINE="\033[32m"; YELL="\033[33m"; OFF="\033[0m"
 log()  { echo -e "${PINE}▶ $*${OFF}"; }
 warn() { echo -e "${YELL}⚠ $*${OFF}"; }
 
-# -- Step 1: CloudPanel site --
-log "Creating PHP 8.3 site: $DOMAIN (user: $SLUG)"
+# ── Step 1: Create CloudPanel site ──────────────────────────────────────────
+log "Creating PHP 8.3 site for $DOMAIN (user: $SLUG)"
+# PHP must be 8.3 — CloudPanel may default to 8.5; PageMotor needs ≥8.2 (8.3 is proven)
 clpctl site:add:php \
   --domainName="$DOMAIN" \
   --phpVersion=8.3 \
@@ -39,38 +43,38 @@ clpctl site:add:php \
   --siteUser="$SLUG" \
   --siteUserPassword="$SITE_PASS"
 
-# -- Step 2: Database --
-log "Creating database: $DB_NAME"
+# ── Step 2: Create database ─────────────────────────────────────────────────
+log "Creating database $DB_NAME (user: $DB_USER)"
+# CloudPanel rejects underscores in DB name/username — use hyphens
 clpctl db:add \
   --domainName="$DOMAIN" \
   --databaseName="$DB_NAME" \
   --databaseUserName="$DB_USER" \
   --databaseUserPassword="$DB_PASS"
 
-# -- Step 3: Deploy PageMotor --
-WEBROOT="/home/$SLUG/htdocs/$DOMAIN"
+# ── Step 3: Deploy PageMotor ────────────────────────────────────────────────
 log "Deploying PageMotor from $PM_ZIP to $WEBROOT"
-
-[[ -f "$PM_ZIP" ]] || { warn "PageMotor zip not at $PM_ZIP — upload it first"; exit 1; }
+[[ -f "$PM_ZIP" ]] || { warn "PageMotor zip not found at $PM_ZIP — upload it first"; exit 1; }
 
 TMPDIR="/tmp/pm-deploy-$$"
 mkdir -p "$TMPDIR"
 unzip -q "$PM_ZIP" -d "$TMPDIR"
 
-# Find the folder containing index.php (handles pagemotor-X.X.Xb/ wrapper)
+# Handle wrapper folder (e.g. pagemotor-0.9.4b/) — find the dir containing index.php
 PMDIR=$(find "$TMPDIR" -name "index.php" -maxdepth 2 | head -1 | xargs dirname)
-[[ -n "$PMDIR" ]] || { warn "Could not find index.php in zip"; exit 1; }
+[[ -n "$PMDIR" ]] || { warn "Could not find index.php inside the zip"; exit 1; }
 
+# Deploy straight into site root (no subfolder = no web root change needed)
 cp -a "$PMDIR/." "$WEBROOT/"
 rm -rf "$TMPDIR"
 
-# -- Step 4: config.php --
+# ── Step 4: Write config.php ────────────────────────────────────────────────
 log "Writing config.php"
 cat > "$WEBROOT/config.php" << CONF
 <?php
-define( 'DB_NAME',         '$DB_NAME' );
-define( 'DB_USER',         '$DB_USER' );
-define( 'DB_PASSWORD',     '$DB_PASS' );
+define( 'DB_NAME',         '${DB_NAME}' );
+define( 'DB_USER',         '${DB_USER}' );
+define( 'DB_PASSWORD',     '${DB_PASS}' );
 define( 'DB_HOST',         '127.0.0.1' );
 define( 'DB_CHARSET',      'utf8mb4' );
 define( 'DB_COLLATE',      'utf8mb4_unicode_ci' );
@@ -84,39 +88,41 @@ define( 'PM_MCP_SLUG',     'mcp' );
 define( 'PM_ERROR_LOGS',   true );
 CONF
 
-# -- Step 5: Ownership --
-log "Setting file ownership"
+# ── Step 5: Fix ownership ───────────────────────────────────────────────────
+log "Setting ownership and permissions"
 chown -R "$SLUG:www-data" "$WEBROOT/"
 find "$WEBROOT" -type d -exec chmod 755 {} \;
 find "$WEBROOT" -type f -exec chmod 644 {} \;
 
-# -- Step 6: Wait for DNS, then SSL --
+# ── Step 6: Wait for DNS, then SSL cert ─────────────────────────────────────
 log "Checking DNS for $DOMAIN..."
 VPS_IP=$(hostname -I | awk '{print $1}')
+RESOLVED=""
 for i in $(seq 1 18); do
-  RESOLVED=$(dig +short "$DOMAIN" 2>/dev/null | head -1 || true)
-  [[ "$RESOLVED" == "$VPS_IP" ]] && break
-  warn "  DNS not yet resolved (attempt $i/18, waiting 20s)..."
+  RESOLVED=$(dig +short "$DOMAIN" 2>/dev/null | grep -F "$VPS_IP" || true)
+  [[ -n "$RESOLVED" ]] && break
+  warn "  DNS not yet pointing here (check $i/18, waiting 20s)..."
   sleep 20
 done
 
-if [[ "$RESOLVED" == "$VPS_IP" ]]; then
-  log "DNS resolved. Requesting Let's Encrypt certificate..."
+if [[ -n "$RESOLVED" ]]; then
+  log "DNS confirmed. Requesting Let's Encrypt certificate..."
   clpctl lets-encrypt:install:certificate --domainName="$DOMAIN" \
     && log "SSL certificate installed" \
-    || warn "SSL failed — retry with: clpctl lets-encrypt:install:certificate --domainName=$DOMAIN"
+    || warn "SSL failed — retry: clpctl lets-encrypt:install:certificate --domainName=$DOMAIN"
 else
-  warn "DNS still not resolved. Set an A record for $DOMAIN → $VPS_IP then retry SSL."
-  warn "Retry: clpctl lets-encrypt:install:certificate --domainName=$DOMAIN"
+  warn "DNS still not resolved after 6 min. Add an A record for $DOMAIN → $VPS_IP"
+  warn "Then retry: clpctl lets-encrypt:install:certificate --domainName=$DOMAIN"
 fi
 
-# -- Done --
+# ── Done ─────────────────────────────────────────────────────────────────────
 echo ""
 echo -e "${PINE}=== PageMotor deployed ===${OFF}"
+echo "  URL:       https://$DOMAIN/"
+echo "  Admin:     https://$DOMAIN/admin/  ← register here first"
 echo "  Site root: $WEBROOT"
 echo "  DB name:   $DB_NAME"
 echo "  DB user:   $DB_USER"
 echo "  DB pass:   $DB_PASS"
-echo "  Admin:     https://$DOMAIN/admin/"
 echo ""
-echo "Visit https://$DOMAIN/ — if it loads, create your admin account at /admin/ right away."
+echo -e "${YELL}Save the DB password — it is not stored anywhere else.${OFF}"
