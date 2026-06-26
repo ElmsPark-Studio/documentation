@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Hostinger has a native MCP server for Claude Code. Connect it once, then ask Claude Code to provision a PageMotor VPS — it handles the API calls, DNS, and on-box setup without you leaving your editor.">
+<title>PageMotor on Hostinger with Claude Code | ElmsPark Guide</title>
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+    --warn:#9a4b2e; --codebg:#1f1d17; --radius:14px; --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+  nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem}
+  .crumbs-inner{max-width:var(--maxw); margin:0 auto; padding:18px 20px 0; display:flex; align-items:center; gap:.5rem; color:#605647}
+  .crumbs a{color:#605647; text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s}
+  .crumbs a:hover,.crumbs a:focus-visible{color:#3a5140; border-bottom-color:#3a5140}
+  .crumbs .sep{color:#b5ab97}
+  .crumbs [aria-current="page"]{color:#181411; font-weight:500; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+  .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+  .chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+  .chip b{color:var(--pine)}
+  .note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+  .note.calm{border-left-color:var(--pine)}
+  .note.ai{border-left-color:#1a3d7c; background:#f0f4fb}
+  .note strong{color:var(--pine-deep)}
+  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+  nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+  nav.toc ol{margin:0; padding-left:20px}
+  nav.toc li{margin:5px 0}
+  nav.toc a{color:var(--pine); text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+  .step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+  .num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+  .step h2 .t{line-height:1.2}
+  ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+  ol.sub li,ul.sub li{margin:8px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+  .codewrap{position:relative; margin:14px 0}
+  pre{background:var(--codebg); color:#eee; border-radius:12px; padding:18px; overflow:auto; font-size:14px; line-height:1.55; margin:0}
+  pre code{background:none; color:inherit; padding:0; font-size:inherit}
+  .tok-c{color:#8f9b7e} .tok-s{color:#9fc7a6} .tok-k{color:#c7a86f}
+  .copy{position:absolute; top:10px; right:10px; font-family:system-ui,sans-serif; font-size:12.5px; border:1px solid #4a463a; background:#33302a; color:#e9e3d3; padding:6px 12px; border-radius:8px; cursor:pointer}
+  .copy:hover{background:#3f3b32}
+  .copy.done{background:var(--pine); border-color:var(--pine); color:#fff}
+  /* Prompt box */
+  .prompt-box{background:#0f1117; border:1px solid #2a2a3a; border-radius:12px; padding:18px 20px; margin:14px 0; font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:14px; line-height:1.6; color:#d8dff0; position:relative}
+  .prompt-label{font-family:system-ui,sans-serif; font-size:12px; color:#6b7899; text-transform:uppercase; letter-spacing:.07em; margin-bottom:8px}
+  h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+  details[open]{padding-bottom:14px}
+  summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-family:system-ui,sans-serif}
+  details[open] summary::before{content:"－"}
+  .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+  .seealso a{color:var(--pine); font-weight:600}
+  footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+  footer a{color:var(--pine)}
+  .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+  figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);background:var(--card)}
+  figure.screenshot img{display:block;width:100%;height:auto}
+  figure.screenshot figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:1px solid var(--line);background:var(--card)}
+  .dl-btn{display:inline-block;background:var(--pine);color:#fff;font-family:system-ui,sans-serif;font-size:14.5px;font-weight:600;padding:10px 20px;border-radius:8px;text-decoration:none;margin:8px 0}
+  .dl-btn:hover{background:var(--pine-deep)}
+  @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px}}
+</style>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
+<style>
+header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
+.es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
+.es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
+.es-wordmark .es-mark svg{width:100%;height:100%;display:block}
+.es-wordmark .es-accent{color:#3a5140}
+.es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:0.75rem;margin-left:-0.35rem;line-height:1}
+.es-nav{display:flex;gap:clamp(0.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:0.9375rem;font-weight:500}
+.es-nav a{color:#181411;text-decoration:none;padding:0.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
+.es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+.es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
+.es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
+@media(max-width:640px){
+  .es-header .es-inner{padding:1rem 18px;gap:.75rem}
+  .es-sub{display:none}
+  .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
+}
+</style>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ElmsPark Guides">
+<meta property="og:title" content="PageMotor on Hostinger with Claude Code">
+<meta property="og:description" content="Hostinger has a native MCP server for Claude Code. Connect it once, then ask CC to provision a PageMotor VPS — it handles everything without you leaving your editor.">
+<meta property="og:url" content="https://documentation.elmspark.com/guides/pagemotor-hostinger-api/">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z"/></g></g></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+    </a>
+    <span class="es-sub">Guides</span>
+    <nav class="es-nav" aria-label="Documentation">
+      <a href="/guides/">Guides</a>
+      <a href="/learn/">Learn</a>
+      <a href="/plugins/">Plugin docs</a>
+      <a href="/hosting/hosting-options/">Hosting</a>
+      <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <div class="crumbs-inner">
+    <a href="https://documentation.elmspark.com/guides/">Guides</a>
+    <span class="sep" aria-hidden="true">&rsaquo;</span>
+    <span aria-current="page">PageMotor on Hostinger with Claude Code</span>
+  </div>
+</nav>
+
+<div class="wrap">
+  <span class="kicker">PageMotor &middot; Hosting &middot; AI Tools</span>
+  <h1>PageMotor on Hostinger with Claude Code</h1>
+  <p class="lede">Hostinger has a native MCP server for Claude Code. Give it access to your account once, then tell it what you want. It provisions the VPS, sets the DNS record, and deploys PageMotor — without you leaving your editor.</p>
+  <div class="chips">
+    <span class="chip">&#129302; <b>Runs in Claude Code</b></span>
+    <span class="chip">&#128279; <b>Official Hostinger MCP</b></span>
+    <span class="chip">&#9201; <b>One-time setup, then just ask</b></span>
+  </div>
+
+  <div class="note ai">
+    <strong>What this is:</strong> the Hostinger API is behind an official MCP (Model Context Protocol) server that Claude Code can talk to directly. You connect it once by pasting a JSON block into your CC config. After that, Claude Code can call the Hostinger API, read your server list, create VPSs, manage DNS records &mdash; without a browser, without copy-pasting credentials. The <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger/">picture-by-picture manual guide</a> shows every click if you prefer to do it yourself. This guide hands the whole thing to Claude Code.
+  </div>
+
+  <nav class="toc">
+    <p>Steps</p>
+    <ol>
+      <li><a href="#s1">Go to the Hostinger API page</a></li>
+      <li><a href="#s2">Choose Claude Code and the tools you need</a></li>
+      <li><a href="#s3">Generate your API token</a></li>
+      <li><a href="#s4">Copy the token before the page refreshes</a></li>
+      <li><a href="#s5">Copy the MCP JSON config</a></li>
+      <li><a href="#s6">Add it to Claude Code</a></li>
+      <li><a href="#s7">Ask Claude Code to provision the VPS</a></li>
+      <li><a href="#s8">Let Claude Code finish the on-box setup</a></li>
+      <li><a href="#s9">Verify with EP Host Check</a></li>
+    </ol>
+  </nav>
+
+  <div class="step">
+    <h2 id="s1"><span class="num">1</span><span class="t">Go to the Hostinger API page</span></h2>
+    <p>Log into hPanel and click <strong>API</strong> in the left sidebar (under Dev tools). You land on the page Hostinger have built specifically for AI coding tools.</p>
+    <figure class="screenshot">
+      <picture>
+        <source srcset="img/01-mcp-config.webp" type="image/webp">
+        <img src="img/01-mcp-config.png" alt="Hostinger hPanel showing the 'Connect your IDEs to Hostinger MCP' page with VS Code, Cursor, and Claude Code tabs" width="1200" height="auto" loading="lazy">
+      </picture>
+      <figcaption>The MCP connection page in hPanel. There are tabs for each AI coding tool at the top.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <h2 id="s2"><span class="num">2</span><span class="t">Choose Claude Code and the tools you need</span></h2>
+    <p>Click the <strong>Claude Code</strong> tab. Then tick the tool categories you want to use. For provisioning a PageMotor VPS you need at minimum:</p>
+    <ul class="sub">
+      <li><strong>VPS hosting</strong> &mdash; creates and manages your servers</li>
+      <li><strong>Domains and DNS</strong> &mdash; sets the A record that points your domain at the new server</li>
+    </ul>
+    <p>The others (Websites, Billing, Email Marketing) are useful but optional for this task. You can untick them for a leaner MCP config.</p>
+    <div class="note calm"><strong>Tip:</strong> if you use Hostinger for domains too, tick Domains as well. Claude Code will then be able to register new domains and point them at your VPS in one conversation.</div>
+  </div>
+
+  <div class="step">
+    <h2 id="s3"><span class="num">3</span><span class="t">Generate your API token</span></h2>
+    <p>Scroll down on the same page and click <strong>Generate API token</strong>. It creates a token instantly. Give it a name you will recognise, for example <code>hostinger-cc-api</code>.</p>
+    <figure class="screenshot">
+      <picture>
+        <source srcset="img/02-generate-token.webp" type="image/webp">
+        <img src="img/02-generate-token.png" alt="The 'Generate an API token' button on the Hostinger MCP page" width="1200" height="auto" loading="lazy">
+      </picture>
+      <figcaption>One button, one token. Give it a name that tells you what it is for.</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <h2 id="s4"><span class="num">4</span><span class="t">Copy the token before the page refreshes</span></h2>
+    <p>The token appears once. Hostinger will not show it again if you refresh or leave the page. Copy it now.</p>
+    <figure class="screenshot">
+      <picture>
+        <source srcset="img/04-token-generated.webp" type="image/webp">
+        <img src="img/04-token-generated.png" alt="The generated API token displayed with a copy button. The token is shown once only." width="1200" height="auto" loading="lazy">
+      </picture>
+      <figcaption>Copy the token immediately. The page is showing it for the last time. If you miss it, just regenerate a new one.</figcaption>
+    </figure>
+    <div class="note"><strong>Missed it?</strong> If you accidentally refreshed, delete the old token and click Generate again. Tokens are cheap, security is not.</div>
+  </div>
+
+  <div class="step">
+    <h2 id="s5"><span class="num">5</span><span class="t">Copy the MCP JSON config</span></h2>
+    <p>Scroll back up. The page shows a ready-made JSON block you copy straight into your Claude Code config. It looks like this:</p>
+    <figure class="screenshot">
+      <picture>
+        <source srcset="img/03-json-config.webp" type="image/webp">
+        <img src="img/03-json-config.png" alt="The MCP JSON config block shown by Hostinger, with server entries for hosting, domains, DNS, billing, and VPS" width="1200" height="auto" loading="lazy">
+      </picture>
+      <figcaption>The exact JSON config Hostinger generates for you. Copy the whole block or click the Copy button on the page.</figcaption>
+    </figure>
+    <p>Replace every <code>your-token-here</code> with the token you just copied. The full block, with your token in place, is what goes into Claude Code next.</p>
+    <div class="codewrap">
+      <button class="copy" onclick="copy(this,'json-config')">Copy</button>
+      <pre id="json-config"><code><span class="tok-s">"mcpServers"</span>: {
+  <span class="tok-s">"hostinger-hosting"</span>: {
+    <span class="tok-s">"command"</span>: <span class="tok-s">"npx"</span>,
+    <span class="tok-s">"args"</span>: [<span class="tok-s">"--package=hostinger-api-mcp@latest"</span>, <span class="tok-s">"hostinger-hosting-mcp"</span>],
+    <span class="tok-s">"env"</span>: { <span class="tok-s">"HOSTINGER_API_TOKEN"</span>: <span class="tok-s">"YOUR-TOKEN-HERE"</span> }
+  },
+  <span class="tok-s">"hostinger-domains"</span>: {
+    <span class="tok-s">"command"</span>: <span class="tok-s">"npx"</span>,
+    <span class="tok-s">"args"</span>: [<span class="tok-s">"--package=hostinger-api-mcp@latest"</span>, <span class="tok-s">"hostinger-domains-mcp"</span>],
+    <span class="tok-s">"env"</span>: { <span class="tok-s">"HOSTINGER_API_TOKEN"</span>: <span class="tok-s">"YOUR-TOKEN-HERE"</span> }
+  },
+  <span class="tok-s">"hostinger-dns"</span>: {
+    <span class="tok-s">"command"</span>: <span class="tok-s">"npx"</span>,
+    <span class="tok-s">"args"</span>: [<span class="tok-s">"--package=hostinger-api-mcp@latest"</span>, <span class="tok-s">"hostinger-dns-mcp"</span>],
+    <span class="tok-s">"env"</span>: { <span class="tok-s">"HOSTINGER_API_TOKEN"</span>: <span class="tok-s">"YOUR-TOKEN-HERE"</span> }
+  },
+  <span class="tok-s">"hostinger-vps"</span>: {
+    <span class="tok-s">"command"</span>: <span class="tok-s">"npx"</span>,
+    <span class="tok-s">"args"</span>: [<span class="tok-s">"--package=hostinger-api-mcp@latest"</span>, <span class="tok-s">"hostinger-vps-mcp"</span>],
+    <span class="tok-s">"env"</span>: { <span class="tok-s">"HOSTINGER_API_TOKEN"</span>: <span class="tok-s">"YOUR-TOKEN-HERE"</span> }
+  }
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <h2 id="s6"><span class="num">6</span><span class="t">Add it to Claude Code</span></h2>
+    <p>Open your Claude Code config file at <code>~/.claude/config.json</code> (create it if it does not exist). Paste the <code>mcpServers</code> block inside the top-level JSON object.</p>
+    <div class="codewrap">
+      <button class="copy" onclick="copy(this,'cc-config')">Copy</button>
+      <pre id="cc-config"><code>{
+  <span class="tok-s">"mcpServers"</span>: {
+    <span class="tok-c">/* paste the hostinger-hosting, hostinger-domains,  */</span>
+    <span class="tok-c">/* hostinger-dns, and hostinger-vps blocks here     */</span>
+  }
+}</code></pre>
+    </div>
+    <p>If you already have other MCP servers in the file, just add the Hostinger entries inside the existing <code>mcpServers</code> object — do not create a second one.</p>
+    <p>After saving, restart Claude Code so it picks up the new servers. You can confirm they loaded by typing <code>/mcp</code> in a CC session — the Hostinger servers should appear in the list.</p>
+    <div class="note calm"><strong>Shortcut:</strong> if you prefer, open a CC session and type <code>/mcp add hostinger-vps npx --package=hostinger-api-mcp@latest hostinger-vps-mcp</code> (repeat for each server). CC adds it to the config for you.</div>
+  </div>
+
+  <div class="step">
+    <h2 id="s7"><span class="num">7</span><span class="t">Ask Claude Code to provision the VPS</span></h2>
+    <p>Open Claude Code and give it a clear brief. This is the whole prompt — the MCP handles everything behind it:</p>
+    <div class="prompt-box">
+      <div class="prompt-label">Paste this into Claude Code (edit the domain and details)</div>
+Using the Hostinger MCP, provision a new VPS for me:
+- Plan: KVM 2
+- Template: CloudPanel on Ubuntu 24.04
+- Region: EU (nearest to Ireland/UK)
+- Hostname: pagemotor-mysite
+- Inject my SSH key from ~/.ssh/id_ed25519.pub
+
+Once the VPS is running:
+1. Read the IP address from the Hostinger API
+2. Create a DNS A record pointing mysite.com at that IP
+   (if my domain is at Hostinger, use the Hostinger DNS MCP;
+    if it is at Cloudflare, I will add it manually)
+
+Then tell me the IP and confirm when DNS is set.
+    </div>
+    <p>Claude Code will use the <code>hostinger-vps</code> MCP to create the server and <code>hostinger-dns</code> to set the DNS record. Provisioning takes three to six minutes. CC will poll the API and tell you when the VPS is running.</p>
+    <div class="note"><strong>A word on billing:</strong> the VPS creation call charges your Hostinger account. Make sure you have a payment method on file and know what plan you are ordering. A KVM 2 is around $7&ndash;9/month depending on the billing term you set.</div>
+  </div>
+
+  <div class="step">
+    <h2 id="s8"><span class="num">8</span><span class="t">Let Claude Code finish the on-box setup</span></h2>
+    <p>Once you have the IP and DNS is set, give CC the second brief. It will SSH in and use CloudPanel&rsquo;s CLI to create the site, database, and SSL certificate, then deploy PageMotor.</p>
+    <div class="prompt-box">
+      <div class="prompt-label">Second prompt — run after step 7 is confirmed</div>
+Good. Now SSH into [IP] as root using ~/.ssh/id_ed25519 and:
+
+1. Create a PHP 8.3 site in CloudPanel for mysite.com
+   (site user: mysite, generate a password)
+2. Add a database: mysite-db / user mysite-user / strong random password
+3. Upload ~/Downloads/pagemotor-0.9.4b.zip to /tmp/pagemotor.zip on the server,
+   then extract it into /home/mysite/htdocs/mysite.com/
+4. Write config.php with the database credentials
+   (DB_HOST is 127.0.0.1, prefix pm_, error logs on)
+5. Fix file ownership: chown -R mysite:www-data
+6. Once DNS resolves, run: clpctl lets-encrypt:install:certificate --domainName=mysite.com
+7. Confirm the site is live at https://mysite.com/
+
+Use provision-pagemotor.sh if you need a reference for the exact commands.
+    </div>
+    <p>Download the ready-made on-box script and drop it in your project folder so Claude Code can reference it:</p>
+    <a class="dl-btn" href="provision-pagemotor.sh" download>&#8659; Download provision-pagemotor.sh</a>
+    <p>You do not need to run the script yourself. Give Claude Code the file and the prompt above — it reads the script, adapts the commands to your site, and runs them over SSH.</p>
+    <div class="note calm">
+      <strong>CloudPanel clpctl gotchas baked into the script:</strong>
+      <ul class="sub" style="margin-top:8px">
+        <li>Database names and users use <strong>hyphens, not underscores</strong> (CloudPanel rejects underscores).</li>
+        <li>PHP version must be set to <strong>8.3</strong> &mdash; do not let it default to 8.5.</li>
+        <li>PageMotor files go directly into the <strong>site root</strong>, not a subfolder, so no web root change is needed.</li>
+        <li>SSL cert is requested <em>after</em> DNS resolves, not before &mdash; the script handles the wait loop.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <h2 id="s9"><span class="num">9</span><span class="t">Verify with EP Host Check</span></h2>
+    <p>Visit <code>https://mysite.com/admin/</code> and register your PageMotor admin account. Then install the <strong>EP Host Check</strong> plugin (available on the EP Suite updates channel) and run it.</p>
+    <p>You are looking for all 12 checks green, especially <em>PHP can save PageMotor&rsquo;s files</em>. That one goes red on a locked-down shared host &mdash; it should be green here because you are on a proper VPS with correct file ownership.</p>
+    <div class="note calm"><strong>You are done when:</strong> the EP Host Check plugin reports green on a Hostinger VPS, which means PageMotor can write its compiled CSS to disk. That is the thing that breaks on cheap shared hosting, and the whole reason this setup exists.</div>
+  </div>
+
+  <div class="seealso">
+    <strong>Related guides:</strong>
+    <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger/">Picture-by-picture manual guide</a> (34 screenshots, for people who prefer to click) &middot;
+    <a href="https://documentation.elmspark.com/guides/pagemotor-cloudpanel/">CloudPanel concept guide</a> (why the panel approach fixes the hosting problem) &middot;
+    <a href="https://documentation.elmspark.com/guides/pagemotor-cursor/">Same setup with Cursor</a>
+  </div>
+
+  <footer>
+    <p>An <a href="https://elmspark.com/">ElmsPark</a> guide. Validated on Hostinger KVM 2 + CloudPanel + PageMotor 0.9.4b. The Hostinger MCP server is an official Hostinger product; check their API docs at <code>developers.hostinger.com</code> for the latest endpoint shapes.</p>
+  </footer>
+</div>
+
+<script>
+function copy(btn, id) {
+  const el = document.getElementById(id);
+  const text = el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied';
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
