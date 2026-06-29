@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Architect AI: Multi-Provider Plugins for PageMotor</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Architect AI: Multi-Provider Plugins for PageMotor">
+<meta property="og:description" content="One OpenAI-compatible adapter plus thin per-provider plugins, to run PageMotor's Architect agent on DeepSeek, GPT and more. Tested on PageMotor 0.9.4b.">
+<meta property="og:url" content="https://documentation.elmspark.com/plugins/architect-ai/">
+<meta name="description" content="Run PageMotor's Architect agent on DeepSeek, GPT and more. One OpenAI-compatible adapter plus thin per-provider plugins.">
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=outfit:400,500,600,700|jetbrains-mono:400,500&display=swap">
+<style>
+:root{
+  --ink:#1a1d21; --muted:#5b6470; --line:#e6e8ec; --bg:#fbfcfd; --card:#fff;
+  --accent:#2f6df0; --ok:#0a8a4a; --warn:#9a6a00; --okbg:#e7f6ee; --warnbg:#fbf2dd;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Outfit',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:56px 22px 80px}
+header{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:30px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 12px;font-weight:700;letter-spacing:-.01em}
+.lede{color:var(--muted);font-size:17px;margin:0;max-width:60ch}
+h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:38px 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.card.base{border-color:#cfe0ff;background:#f5f9ff}
+.card .meta{flex:1;min-width:220px}
+.card .name{font-weight:600;font-size:17px;margin:0 0 3px}
+.card .desc{color:var(--muted);font-size:14px;margin:0}
+.badge{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.badge.ok{background:var(--okbg);color:var(--ok)}
+.badge.warn{background:var(--warnbg);color:var(--warn)}
+.dl{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:9px 16px;border-radius:8px;white-space:nowrap;transition:background .15s}
+.dl:hover{background:#2257cf}
+.dl.ghost{background:#eef1f5;color:var(--ink)}
+.dl.ghost:hover{background:#e3e7ec}
+ol{padding-left:22px;margin:0}
+ol li{margin:0 0 9px;color:#2c3138}
+code{font-family:'JetBrains Mono',monospace;font-size:13px;background:#eef1f5;padding:2px 6px;border-radius:5px;color:#2c3138}
+.note{font-size:14px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 14px;margin:14px 0}
+footer{margin-top:48px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="kicker">PageMotor · Architect AI</p>
+  <h1>Architect AI on the provider of your choice</h1>
+  <p class="lede">One small OpenAI-compatible adapter, plus thin per-provider plugins, that let PageMotor&rsquo;s built-in Architect agent run on DeepSeek, GPT and more. No core changes. A proof of concept, tested on PageMotor 0.9.4b with DeepSeek and ChatGPT keys.</p>
+</header>
+
+<h2>Start here: the base (required)</h2>
+<div class="card base">
+  <div class="meta">
+    <p class="name">Architect AI: OpenAI-Compatible</p>
+    <p class="desc">The shared adapter, and a generic provider in its own right. Point it at any OpenAI-compatible Base URL (local models, OpenRouter, Groq, anything). Every provider below needs this installed and active.</p>
+  </div>
+  <a class="dl" href="base.zip">Download .zip</a>
+</div>
+
+<h2>Curated providers (install the base first)</h2>
+
+<div class="card">
+  <div class="meta">
+    <p class="name">DeepSeek <span class="badge ok">Verified live</span></p>
+    <p class="desc">Curated V4 model list (Flash / Pro). Strong tool-calling, cheap, no painful rate caps. Paste your DeepSeek key and go.</p>
+  </div>
+  <a class="dl" href="deepseek.zip">Download .zip</a>
+</div>
+
+<div class="card">
+  <div class="meta">
+    <p class="name">OpenAI GPT <span class="badge ok">Verified live</span></p>
+    <p class="desc">GPT-4o / 4o-mini / 4.1. Note: the Architect prompt is large, so gpt-4o-mini is the default to avoid the per-minute token cap on low-tier accounts.</p>
+  </div>
+  <a class="dl" href="gpt.zip">Download .zip</a>
+</div>
+
+<div class="card">
+  <div class="meta">
+    <p class="name">xAI Grok <span class="badge warn">Unverified</span></p>
+    <p class="desc">Built and validated, but not yet key-tested, and its preset model ids may be stale. Check them against the live /models endpoint before relying on it.</p>
+  </div>
+  <a class="dl ghost" href="grok.zip">Download .zip</a>
+</div>
+
+<div class="card">
+  <div class="meta">
+    <p class="name">Mistral <span class="badge warn">Unverified</span></p>
+    <p class="desc">Built and validated, not yet key-tested. Uses Mistral&rsquo;s OpenAI-compatible endpoint with the stable <code>-latest</code> aliases.</p>
+  </div>
+  <a class="dl ghost" href="mistral.zip">Download .zip</a>
+</div>
+
+<h2>Install (about 60 seconds)</h2>
+<ol>
+  <li>PageMotor Admin &rarr; <strong>Plugins</strong> &rarr; <strong>Manage Plugins</strong> &rarr; <strong>Upload a New Plugin</strong>.</li>
+  <li>Upload <code>base.zip</code> first and activate it. This is the shared OpenAI-compatible base.</li>
+  <li>Upload the provider you want (e.g. <code>deepseek.zip</code>) and activate it.</li>
+  <li>Go to <strong>AI Setup</strong>, tick <strong>Use Architect AI</strong>, pick your provider and model, then open its <strong>Settings</strong> and paste your API key.</li>
+  <li>On the Admin dashboard, ask the Architect prompt box to &ldquo;create a Page about&hellip;&rdquo; and watch it build.</li>
+</ol>
+
+<p class="note">Order matters: a provider only appears under AI Setup once the base plugin is active. Install and activate <code>base.zip</code> first, then the provider.</p>
+
+<p class="note">If you only want the generic route (a local model, or any endpoint not listed), the base plugin alone is enough: it gives you an editable Base URL and Model field.</p>
+
+<p class="note">Cost: on deepseek-v4-flash a full multi-section page runs well under a cent, so a few dollars of credit lasts a long time. Tip: switch on a balance alert in your DeepSeek dashboard, so a dry balance emails you before a build fails with a provider error.</p>
+
+<p class="note">Good to know: review what it writes before you publish, as DeepSeek can get facts and figures wrong. And because hosted DeepSeek processes data on servers in China, keep regulated data, client PII and financials out of it. For those, self-host a model behind the generic base, or use a provider with data-residency guarantees.</p>
+
+<footer>
+  Built by Elmspark. Provided as-is for the PageMotor developer community. Architect AI is being superseded by the API + MCP route (Claude Code / Codex now, any client once 0.10&rsquo;s OAuth lands); these plugins are for running the in-Admin agent on your own provider today.
+</footer>
+</div>
+</body>
+</html>
