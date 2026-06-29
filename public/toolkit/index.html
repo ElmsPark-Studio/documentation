@@ -360,6 +360,12 @@ const TOOLS = [
    ex:"write me a video prompt for a 3-shot product reveal",
    tags:["prompt","image","video","midjourney","veo","media"],
    detail:"<p class='note'>Ownership to confirm (installed in your skills dir). Minor issues: two dangling references to a non-existent 'video-prompt-builder' (this skill is it), a drifting model roster, and a trigger that overlaps the higgsfield-* skills. <b>Upgraded 2026-06-01:</b> delete dead refs + add a hand-off boundary (defer to higgsfield-* when generation is wanted in-session).</p>"},
+  {name:"higgsfield-still-to-clip", kind:"skill", cat:"comms", status:"solid",
+   what:"Makes a short cinematic video clip the reliable way: GPT Image 2 renders a high-fidelity start frame, then Seedance 2.0 animates it image-to-video. Saves both the still and the .mp4 into a project folder you name.",
+   when:"You want a vertical (or any aspect) clip of a described subject: 'make me a 9:16 clip of X', 'animate a still of Y'.",
+   ex:"make me a 9:16 clip of an Italian Greyhound at full gallop",
+   tags:["higgsfield","video","image-to-video","seedance","gpt image 2","clip","9:16","animate"],
+   detail:"<p class='note'>Built and verified end to end 2026-06-13 (the Italian Greyhound gallop run). The opinionated two-step pipeline, distinct from the broad higgsfield-generate: it handles the Seedance NSFW false-positive by retrying once with softened motion wording, and will not claim done until both files are verified on disk. Auth token lives in <span class='mono'>~/.config/elmspark/higgsfield.env</span>.</p>"},
 ];
 
 const BUILTINS = [
