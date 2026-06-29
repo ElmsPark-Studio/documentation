@@ -9,7 +9,7 @@
 set -e
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SERVER="root@88.208.226.236"
+SERVER="ionos-ts"   # Tailscale SSH alias (User root, s2l key). Public port 22 closed 2026-05-27.
 REMOTE="/var/www/documentation.elmspark.com"
 
 echo "Building..."
