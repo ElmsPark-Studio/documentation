@@ -1,8 +1,6 @@
 ---
 title: "EP Email Inbox"
 description: "AI-powered incoming email handler for EP Email. Polls an IMAP mailbox, classifies messages, and auto-replies using your LLM provider. Useful for first-line support triage."
-sidebar:
-  order: 28
 ---
 
 EP Email Inbox polls an IMAP mailbox and handles incoming email with AI. Useful for first-line support where most questions can be answered by an AI given your site context, and the remainder are routed to a human.
@@ -105,7 +103,7 @@ Logs are retained for 90 days by default.
 
 ## Troubleshooting
 
-### "IMAP connection fails"
+### “IMAP connection fails”
 
 Check:
 - Host and port are correct.
@@ -113,23 +111,23 @@ Check:
 - App-specific password if your mail provider requires one (Gmail, Fastmail).
 - PHP IMAP extension installed (`phpinfo()` should list IMAP).
 
-### "Plugin polls but no messages are being processed"
+### “Plugin polls but no messages are being processed”
 
 Check the poll log on the settings page. If it shows "No new messages", the mailbox is empty (or all messages are already marked as seen). IMAP polling only picks up new unseen messages.
 
-### "Auto-replies are going to the wrong people"
+### “Auto-replies are going to the wrong people”
 
 The plugin replies to the `Reply-To` header if present, otherwise the `From`. If someone emailed you from an alias, replies might go to the alias unless their mail system rewrites. Test with a colleague first.
 
-### "AI is confidently wrong about my products"
+### “AI is confidently wrong about my products”
 
 Tighten the site description and FAQ context. The AI only knows what you tell it. More context = fewer wrong answers. Also lower the confidence threshold to flag more messages for human review.
 
-### "Auto-replies sound robotic"
+### “Auto-replies sound robotic”
 
 Rewrite the brand voice setting. "Friendly but professional" is generic. Be specific: "Reply in plain English. Short paragraphs. One clear answer per paragraph. No buzzwords."
 
-### "Cost is going up on the LLM API"
+### “Cost is going up on the LLM API”
 
 Switch to a smaller model (Haiku vs Opus). Or raise the poll interval to reduce frequency. Or add more keywords to the always-flag list so only straightforward messages hit the AI.
 

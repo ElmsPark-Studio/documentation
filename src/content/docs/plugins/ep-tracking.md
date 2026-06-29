@@ -1,8 +1,6 @@
 ---
 title: "EP Tracking"
 description: "Tracked redirect links with click analytics and conversion attribution. A built-in link shortener for campaigns and affiliate tracking across EP Suite."
-sidebar:
-  order: 56
 ---
 
 EP Tracking is a built-in link shortener with analytics. Create short tracked URLs that redirect to any destination, log every click with referrer and timestamp, and optionally attribute conversions. Designed for use inside EP Suite: campaign tracking, affiliate coordination, outbound link analysis.
@@ -80,19 +78,19 @@ Useful for semi-private links — share with a specific group, don't trust them 
 
 ## Troubleshooting
 
-### "Click doesn't redirect"
+### “Click doesn't redirect”
 
 Check the destination URL is valid and not empty. Also check expiry hasn't passed.
 
-### "No analytics data despite people clicking"
+### “No analytics data despite people clicking”
 
 Check the EP Tracking endpoint is reachable. Try clicking the link yourself and verify the click appears in the analytics.
 
-### "Conversion attribution doesn't work"
+### “Conversion attribution doesn't work”
 
 The visitor's browser must accept cookies. Private browsing modes sometimes don't. Also the attribution cookie is per-domain — if your tracked link redirects to a different domain, conversions there aren't tracked.
 
-### "Short URLs clash with other plugin URLs"
+### “Short URLs clash with other plugin URLs”
 
 The default path prefix `/go/` can be changed in settings. Pick something that doesn't collide with your site's content structure.
 

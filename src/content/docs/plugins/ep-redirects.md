@@ -1,8 +1,6 @@
 ---
 title: "EP Redirects"
 description: "URL redirect manager for PageMotor. 301s and 302s, wildcard patterns, bulk import for migrations, 404 log to spot missing redirects."
-sidebar:
-  order: 44
 ---
 
 EP Redirects is a URL redirect manager for PageMotor. Set up 301s (permanent) and 302s (temporary) from any old URL to any new URL. Supports wildcard patterns for bulk migrations. Includes a 404 log so you can spot and fix missing redirects.
@@ -79,26 +77,26 @@ Log auto-purges after 30 days by default.
 
 ## Troubleshooting
 
-### "My redirect isn't triggering"
+### “My redirect isn't triggering”
 
 Check:
 - The From path starts with `/` and matches exactly (no trailing slash mismatch).
 - No more-specific PageMotor page exists at the From path — PageMotor's page router runs before the redirect.
 - Caching isn't serving an old version. Clear caches.
 
-### "Wildcard isn't capturing what I expect"
+### “Wildcard isn't capturing what I expect”
 
 Test the pattern in isolation. The `*` captures greedily to the end of the URL. If you want to stop at a specific character, use a more specific pattern.
 
-### "Import is rejecting rows"
+### “Import is rejecting rows”
 
 Check the CSV format: two columns, exactly `from` and `to` as headers, no BOM, UTF-8 encoded. Download a sample CSV from the import page to match the expected shape.
 
-### "301 vs 302 — which?"
+### “301 vs 302 — which?”
 
 Almost always 301. Permanent redirects pass ranking signals to the new URL. Use 302 only when the old URL will genuinely come back (e.g. temporary maintenance page).
 
-### "404 log is huge"
+### “404 log is huge”
 
 A bot is probing for WordPress admin URLs (`/wp-admin/`, `/xmlrpc.php`). That's normal. Filter by URL pattern to focus on real 404s from your actual content.
 

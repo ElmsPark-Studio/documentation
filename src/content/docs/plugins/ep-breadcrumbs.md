@@ -1,8 +1,6 @@
 ---
 title: "EP Breadcrumbs"
 description: "Breadcrumb navigation for PageMotor with Schema.org structured data and Focus/Thesis-compatible CSS classes for migration-friendly styling."
-sidebar:
-  order: 11
 ---
 
 EP Breadcrumbs walks your page's parent hierarchy and renders a trail with Schema.org markup, so search engines can use it too. CSS classes match Focus and Thesis conventions so sites migrated from WordPress retain their existing styling.
@@ -67,23 +65,23 @@ Matches Focus and Thesis conventions, so existing stylesheets from migrated site
 
 ## Troubleshooting
 
-### "Breadcrumbs show 'Home › Current page' with no middle crumbs"
+### “Breadcrumbs show 'Home › Current page' with no middle crumbs”
 
 The current page has no parent in the page hierarchy. Set a parent on the page's options and the trail fills in.
 
-### "Breadcrumbs show the wrong crumb name for one page"
+### “Breadcrumbs show the wrong crumb name for one page”
 
 Use **Custom breadcrumb text** in that page's content options to override. Useful when your full page title is "The ultimate guide to XYZ for beginners" but you want the crumb to just say "XYZ Guide".
 
-### "Breadcrumbs appear on the home page and I don't want them to"
+### “Breadcrumbs appear on the home page and I don't want them to”
 
 Settings → Breadcrumbs → **Hide on home page** to on.
 
-### "Breadcrumbs appear on a 404 page"
+### “Breadcrumbs appear on a 404 page”
 
 They shouldn't — EP Breadcrumbs hides itself automatically on error pages. If they do appear, the page is not correctly detected as an error page by PageMotor. Check PageMotor's 404 handling.
 
-### "Schema.org warnings in Search Console"
+### “Schema.org warnings in Search Console”
 
 Google's rich results testing tool validates BreadcrumbList schema. If it flags warnings, paste the test URL into the review queue and we'll look at the emitted schema.
 

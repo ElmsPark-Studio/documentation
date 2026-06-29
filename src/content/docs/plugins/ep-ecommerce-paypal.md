@@ -1,8 +1,6 @@
 ---
 title: "EP Ecommerce PayPal"
 description: "PayPal payment provider for EP Ecommerce. Orders API v2, client-side approve via PayPal Buttons, webhook verification, sandbox and live modes."
-sidebar:
-  order: 21
 ---
 
 EP Ecommerce PayPal handles PayPal payments for [EP Ecommerce](/plugins/ep-ecommerce/) using the PayPal REST API v2 (Orders). Implements the standard server-create, client-approve, server-capture flow, with OAuth2 access token management, webhook verification, and optional PayPal Subscriptions for recurring billing.
@@ -100,7 +98,7 @@ What appears on the customer's PayPal account as the purchase description. Defau
 
 ## Troubleshooting
 
-### "PayPal buttons don't appear on the checkout"
+### “PayPal buttons don't appear on the checkout”
 
 Check the browser console. Common causes:
 
@@ -108,19 +106,19 @@ Check the browser console. Common causes:
 - Mode is set to Live but you're using sandbox credentials, or vice versa.
 - PayPal JS SDK is being blocked by an ad-blocker or CSP header. Loosen CSP if needed.
 
-### "Webhook signature verification fails"
+### “Webhook signature verification fails”
 
 The Webhook ID saved in the plugin doesn't match the one in PayPal. Rotate in PayPal, paste the new ID, try again.
 
-### "Sandbox works, Live fails with authentication error"
+### “Sandbox works, Live fails with authentication error”
 
 Live credentials must come from the live side of your PayPal app (same dashboard, different toggle). Mixing sandbox Client ID with live Secret is a common trip-up.
 
-### "Orders stay in Pending forever"
+### “Orders stay in Pending forever”
 
 The webhook isn't reaching your site, or is being rejected. Check PayPal Developer Dashboard → Webhooks → your webhook → event history. Failed deliveries show status codes. Common causes: firewall blocking PayPal IPs, HTTPS certificate issues, wrong URL path.
 
-### "I get a refund error 'Capture not found'"
+### “I get a refund error 'Capture not found'”
 
 The payment was authorised but not captured, or was captured through a different flow (direct Express Checkout instead of Orders API). These cases happen on very old orders. Refund through PayPal directly.
 

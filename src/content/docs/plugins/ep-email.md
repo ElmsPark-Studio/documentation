@@ -1,8 +1,6 @@
 ---
 title: "EP Email"
 description: "Reliable SMTP delivery, JSON-defined contact forms, delivery logging, and a developer extension API for PageMotor."
-sidebar:
-  order: 1
 ---
 
 EP Email routes your PageMotor site's outgoing mail through a proper SMTP server, provides JSON-defined contact forms with conditional logic and file uploads, logs every message, and exposes an extension API for building premium add-ons.

@@ -1,8 +1,6 @@
 ---
 title: "EP GDPR"
 description: "GDPR compliance toolkit for PageMotor. Cookie consent banner, data subject request handling, consent logging, and cross-plugin integration with EP Email, EP Newsletter, and EP Booking."
-sidebar:
-  order: 33
 ---
 
 EP GDPR is a complete GDPR compliance toolkit for PageMotor. Cookie consent banner, data subject request handling (access, rectification, erasure, portability), consent logging across forms and subscriptions, and integration with every EP Suite plugin that touches personal data.
@@ -126,23 +124,23 @@ Red and green indicators. Green means that area is sorted.
 
 ## Troubleshooting
 
-### "Banner doesn't appear"
+### “Banner doesn't appear”
 
 Check **Settings → EP GDPR → Cookie consent → Enabled**. Also check the banner isn't being hidden by an ad-blocker — some aggressive blockers hide consent dialogs.
 
-### "Erasure didn't delete a record in plugin X"
+### “Erasure didn't delete a record in plugin X”
 
 Not every plugin integrates with EP GDPR's erasure flow. The dashboard shows which do. Manual deletion is required for non-integrated plugins. Log the gap in the review queue if you spot one.
 
-### "Data export contains fields that shouldn't be there"
+### “Data export contains fields that shouldn't be there”
 
 Plugins control what they expose. If a field shouldn't be in the export, it's either sensitive data that's leaking (bug) or metadata the plugin considers user-facing (intentional). Log specifics in the review queue.
 
-### "Consent log is huge"
+### “Consent log is huge”
 
 Retention is configurable. Default retains everything. Consider a 24-month retention for non-erasure consent events and indefinite for consents tied to existing active accounts.
 
-### "Visitors complain about the banner appearing on every page load"
+### “Visitors complain about the banner appearing on every page load”
 
 Check cookies are being set correctly. If the visitor's browser blocks all cookies, the banner has no way to remember their choice and shows every time. Nothing to fix — their browser is actively preventing persistence.
 

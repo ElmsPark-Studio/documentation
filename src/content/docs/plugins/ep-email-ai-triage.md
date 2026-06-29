@@ -1,8 +1,6 @@
 ---
 title: "EP Email AI Triage"
 description: "AI-powered spam triage for EP Email contact forms. Classifies every submission, blocks confirmed spam silently, holds it in quarantine for review."
-sidebar:
-  order: 25.5
 ---
 
 EP Email AI Triage adds intent-aware spam protection to [EP Email](/plugins/ep-email/) contact forms. Every submission that survives EP Email's free heuristics is classified by an LLM. Real enquiries reach your inbox. Confirmed spam is blocked silently and held in a quarantine you can audit.
@@ -193,11 +191,11 @@ The plugin does not store submission content beyond what the quarantine table ho
 
 ## Troubleshooting
 
-### "AI Triage tab doesn't appear in admin"
+### “AI Triage tab doesn't appear in admin”
 
 Verify the plugin is activated in your active Theme's plugin configuration. Verify the plugin ZIP unpacked successfully — the admin UI lives in `plugin.php` of the AI Triage plugin and won't render if the file is missing or corrupted.
 
-### "Submissions arrive but are never classified"
+### “Submissions arrive but are never classified”
 
 Open AI Triage settings. Check:
 
@@ -207,25 +205,25 @@ Open AI Triage settings. Check:
 
 If all three look right, send a test submission with the word "bitcoin" in the message body. EP Email's free keyword filter should silently block it — that confirms Phase 1 is working. Then send a marketing-style submission ("Hi, we offer SEO services for businesses like yours, reply to discuss"). That should hit the LLM and either reach your inbox `[FLAGGED]` or appear in the quarantine.
 
-### "Real enquiries are landing in quarantine"
+### “Real enquiries are landing in quarantine”
 
 Either the site description doesn't match what real submitters look like, or the confidence threshold is too low. Refine the site description first — add a sentence about your typical customer's tone and intent. Then, if needed, raise the threshold by 0.05.
 
 Use **Release** on each false-positive row to send those messages to your inbox.
 
-### "Spam is reaching my inbox flagged [FLAGGED]"
+### “Spam is reaching my inbox flagged [FLAGGED]”
 
 Confidence threshold is too high — the classifier is calling spam correctly but not confidently enough to block. Lower the threshold by 0.05. Or extend the EP Email keyword blocklist with terms specific to the spam you're seeing; that's a free Phase 1 catch and saves the LLM call.
 
-### "Classifier returned null" or "[REVIEW]" on every submission
+### “Classifier returned null” or “[REVIEW]” on every submission
 
 API key is wrong, expired, or your provider account is out of credit. Check your provider's dashboard. Test with a real submission; if the issue is API-side you'll see API errors in your server's PHP error log.
 
-### "I want to test the classifier without sending real submissions"
+### “I want to test the classifier without sending real submissions”
 
 Submit your own test messages from a private browser window. EP Email's per-IP rate limit may push back if you submit too fast — wait the configured rate-limit window between tests, or temporarily reduce it to 1 minute in EP Email's Contact Forms settings.
 
-### "Cost is higher than I expected"
+### “Cost is higher than I expected”
 
 Check the EP Email per-IP rate limit is enabled and set to a sensible value (5 minutes is the default). A misconfigured rate limit can let a single attacker fire many classification calls per minute. Also check your **Confidence Threshold** isn't so high that every borderline submission gets passed through with `[FLAGGED]` flags — that doesn't reduce cost since the LLM call still happens, but it does mean noise in your inbox.
 

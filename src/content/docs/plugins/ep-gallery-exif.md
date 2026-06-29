@@ -1,8 +1,6 @@
 ---
 title: "EP Gallery EXIF"
 description: "Enhanced EXIF extraction and display for EP Gallery. Lens ID, shooting mode, white balance, GPS, copyright fields, and camera-specific metadata."
-sidebar:
-  order: 31
 ---
 
 EP Gallery EXIF extends [EP Gallery](/plugins/ep-gallery/)'s built-in EXIF support with richer metadata extraction and display. Base EP Gallery gets camera body, exposure, aperture, ISO, and focal length. This add-on adds lens identification, shooting mode, white balance, GPS coordinates (if present), copyright fields, and camera-specific details.
@@ -69,19 +67,19 @@ EP Gallery EXIF displays whatever is in the file. It does not strip GPS unless y
 
 ## Troubleshooting
 
-### "Enhanced EXIF isn't showing despite installing the add-on"
+### “Enhanced EXIF isn't showing despite installing the add-on”
 
 Re-extract EXIF on the image from the admin. Existing images carry only the base EP Gallery EXIF until re-processed.
 
-### "GPS coordinates are wrong"
+### “GPS coordinates are wrong”
 
 The coordinates are exactly what the camera recorded. If they're wrong, the camera's GPS was drifting (indoors, urban canyon, tunnel). Nothing this plugin can fix.
 
-### "Some images show more EXIF than others"
+### “Some images show more EXIF than others”
 
 Older cameras, phone cameras, and processed files (from Lightroom, Photoshop) often write different EXIF fields. The plugin shows what's present and hides what isn't. Partial EXIF is normal.
 
-### "The lens identification is wrong or missing"
+### “The lens identification is wrong or missing”
 
 Lens identification depends on the lens ID code being in the EXIF. Some third-party lenses don't write IDs or write ambiguous ones. Manual correction isn't yet supported — feature request in the review queue.
 

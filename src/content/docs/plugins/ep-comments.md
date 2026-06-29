@@ -1,8 +1,6 @@
 ---
 title: "EP Comments"
 description: "Comment system for PageMotor with moderation, threaded replies, spam protection, Gravatar avatars, and WordPress comment import."
-sidebar:
-  order: 14
 ---
 
 EP Comments is a proper comment system for PageMotor. Database-backed, admin moderation queue, threaded replies with email notifications, spam protection via honeypot and rate limiting, Gravatar avatars, and a WordPress-to-PageMotor comment import path.
@@ -112,27 +110,27 @@ Imported comments are stamped with an `import_batch_id`. If something goes wrong
 
 ## Troubleshooting
 
-### "Comments don't appear on any page"
+### “Comments don't appear on any page”
 
 Check the page has **Enable comments** ticked in its content options, and that the `[comments]` shortcode is actually in the page body.
 
-### "Admin notifications aren't arriving"
+### “Admin notifications aren't arriving”
 
 Install and configure EP Email. The plugin's own `mail()` fallback often fails on modern hosts because raw PHP `mail()` is blocked or spam-filtered. EP Email with proper SMTP fixes this.
 
-### "Commenter got a reply notification for a reply to their own comment"
+### “Commenter got a reply notification for a reply to their own comment”
 
 That's the design — someone replied to their comment, they should know. If you don't want that for some category of replies, the feature request can go in the review queue.
 
-### "All new comments are queuing as pending even though I turned auto-approve on"
+### “All new comments are queuing as pending even though I turned auto-approve on”
 
 Check the global auto-approve setting saved correctly. Also check the trusted-returning-commenter threshold is 0 or low; if it's high, first-timers still queue.
 
-### "A specific commenter keeps being marked as pending despite being trusted"
+### “A specific commenter keeps being marked as pending despite being trusted”
 
 They may be submitting from different email addresses or different IPs. Trust is tied to email + approved history. Same commenter with three emails has three trust records.
 
-### "Spam is still getting through"
+### “Spam is still getting through”
 
 Drop the rate limit to 120 or 300 seconds. Investigate specific IPs with the moderation dashboard's IP filter and block persistent offenders at the nginx or Cloudflare level.
 

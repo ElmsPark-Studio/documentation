@@ -1,8 +1,6 @@
 ---
 title: "EP Provisioning"
 description: "Remote provisioning receiver for PageMotor sites. Accepts setup requests from a Discovery AI central server and auto-configures the fresh site."
-sidebar:
-  order: 43
 ---
 
 EP Provisioning turns a freshly-installed PageMotor site into a receiver for automated setup. A central Discovery AI server can push configuration (theme, plugins, initial content, assistant memory, API keys) to a brand-new site and the site configures itself from that payload. Designed for hosting companies rolling out AI-managed websites at scale.
@@ -77,23 +75,23 @@ Response: `{ "success": true, "applied": [...] }` listing what was applied, or `
 
 ## Troubleshooting
 
-### "Provisioning request fails with 401 Unauthorized"
+### “Provisioning request fails with 401 Unauthorized”
 
 API key is wrong or disabled. Regenerate and update on the Discovery AI side.
 
-### "Some plugins got configured, others didn't"
+### “Some plugins got configured, others didn't”
 
 The log shows which sections applied and which didn't. Missing plugins are the usual culprit — EP Provisioning can only configure what's installed.
 
-### "The provisioned site's admin login doesn't work"
+### “The provisioned site's admin login doesn't work”
 
 Check the magic-link token hasn't expired. Tokens have a default 24-hour window. Customer can request a password reset if they miss the window.
 
-### "Site was accidentally re-provisioned and customer's data was overwritten"
+### “Site was accidentally re-provisioned and customer's data was overwritten”
 
 This is why the **Lock after provisioning** setting exists. Turn it on after first successful provision. If the damage is done, restore from a backup.
 
-### "I want to manually trigger provisioning from the central side to re-sync"
+### “I want to manually trigger provisioning from the central side to re-sync”
 
 On the target site, clear the lock, then POST a fresh payload. Audit log tracks the re-sync event.
 

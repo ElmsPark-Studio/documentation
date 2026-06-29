@@ -1,8 +1,6 @@
 ---
 title: "EP Email File Uploads"
 description: "Adds drag-and-drop file upload fields to EP Email contact forms. Multi-file, MIME filtering, size caps, admin-side download of received files."
-sidebar:
-  order: 27
 ---
 
 EP Email File Uploads adds a file upload field type to [EP Email](/plugins/ep-email/)'s contact forms. Visitors drop files onto the form; files are stored on your server; you download them from the submission in the admin.
@@ -100,23 +98,23 @@ If you need to accept large files (>10MB), check:
 
 ## Troubleshooting
 
-### "The drop zone doesn't highlight when I drag over it"
+### “The drop zone doesn't highlight when I drag over it”
 
 JS isn't loaded. Check browser console. Clear any caching plugin if you have one.
 
-### "Uploads fail with 'file too large' at 2MB even though I set max_size_mb to 10"
+### “Uploads fail with 'file too large' at 2MB even though I set max_size_mb to 10”
 
 Server-level limit is kicking in before the plugin's check. Raise PHP `upload_max_filesize` and `post_max_size`, and web-server limits (nginx `client_max_body_size`).
 
-### "Rejected extensions I thought I'd allowed"
+### “Rejected extensions I thought I'd allowed”
 
 The hardcoded blocklist of executable extensions (php, cgi, etc.) overrides your allowlist. This cannot be disabled.
 
-### "Uploaded files aren't appearing in the submission"
+### “Uploaded files aren't appearing in the submission”
 
 Check the upload completed — the drop zone shows a progress bar. If the browser showed an error, the file never reached the server. Also check the `user-content/uploads/ep-email/` directory has write permission for the PHP user (`www-data` typically).
 
-### "I want to clean up old uploaded files"
+### “I want to clean up old uploaded files”
 
 No auto-cleanup yet. Delete the `user-content/uploads/ep-email/<form-id>/<submission-id>/` folder when the submission is closed. Feature request for auto-purge is in the review queue.
 

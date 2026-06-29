@@ -1,8 +1,6 @@
 ---
 title: "EP Documents"
 description: "Hierarchical documentation site for PageMotor. Author docs in HTML or Markdown, organise by section, draft / improve / translate with Claude, six EU languages."
-sidebar:
-  order: 17
 ---
 
 EP Documents turns any PageMotor site into a documentation site. Hierarchical sections, HTML or Markdown content, draft / published workflow, optional Claude-assisted writing, and a translate action that produces French / German / Spanish / Italian / Dutch / Portuguese versions on demand.
@@ -142,15 +140,15 @@ EP Documents is independent of the other EP Suite plugins. It uses the EP Suite 
 
 ## Troubleshooting
 
-### "Claude API key is not configured"
+### “Claude API key is not configured”
 
 You haven't set an Anthropic API key in **EP Documents → Claude AI assistance**. Get one from [console.anthropic.com](https://console.anthropic.com), paste it into the field, and save. The Draft / Improve / Translate buttons will enable on the next page load.
 
-### "You have hit the hourly Claude limit. Please wait a while before trying again."
+### “You have hit the hourly Claude limit. Please wait a while before trying again.”
 
 The plugin enforces 20 successful Claude calls per hour per admin user. The window is rolling — check back in an hour. If you regularly hit this limit, you're either drafting a lot of new content (legitimate, just wait) or Improve-looping on the same document (try saving a final draft instead of regenerating).
 
-### "Claude API key is invalid"
+### “Claude API key is invalid”
 
 The key in your settings has been revoked or has a typo. Check the key against your Anthropic console, paste it back into the settings field, and save.
 
@@ -162,7 +160,7 @@ Almost always a missing or duplicate slug. Slugs are unique per section. If you 
 
 Check three things in order: (1) is an API key set in **Claude AI assistance**? (2) for **Improve** and **Translate** specifically, does the document have any content? (3) for **Draft**, is this a new document (Draft only enables on a fresh form, not on an existing record)?
 
-### "Cannot reach Claude right now"
+### “Cannot reach Claude right now”
 
 Network problem between your server and `api.anthropic.com`. Check your server can resolve and reach the host. If you're behind a corporate firewall, your egress rules may need updating.
 

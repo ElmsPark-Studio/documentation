@@ -1,8 +1,6 @@
 ---
 title: "EP Social Share"
 description: "Privacy-friendly share buttons for X/Twitter, Facebook, LinkedIn, and email. No tracking scripts, no cookies, just URL-based share links."
-sidebar:
-  order: 53
 ---
 
 EP Social Share adds share buttons for X/Twitter, Facebook, LinkedIn, and email. No tracking scripts, no iframes, no cookies, no external SDK — just URL-based share links and SVG icons that visitors can click to share the current page.
@@ -63,23 +61,23 @@ Attributes:
 
 ## Troubleshooting
 
-### "The share pops open but shows the wrong title or URL"
+### “The share pops open but shows the wrong title or URL”
 
 Share URLs are populated from the current page's metadata. If your Open Graph tags are wrong, the share uses the wrong values. Install [EP SEO](/plugins/ep-seo/) and configure Open Graph properly.
 
-### "Facebook share shows generic preview instead of my image"
+### “Facebook share shows generic preview instead of my image”
 
 Facebook caches preview data. Force refresh via [Facebook's Sharing Debugger](https://developers.facebook.com/tools/debug/).
 
-### "Sharers complain no image is appearing in the preview"
+### “Sharers complain no image is appearing in the preview”
 
 Your page needs an `og:image` meta tag pointing to an accessible image. EP SEO handles this; check your EP SEO config.
 
-### "I want to add a network not listed"
+### “I want to add a network not listed”
 
 Shortcode attributes are fixed to the four supported networks. Pinterest, Reddit, WhatsApp, Telegram — feature request in the review queue.
 
-### "The icons look wrong on my theme"
+### “The icons look wrong on my theme”
 
 CSS specificity might be overriding. Inspect the `.ep-social-share` elements in dev tools and adjust your theme's styles.
 

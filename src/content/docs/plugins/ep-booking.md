@@ -1,8 +1,6 @@
 ---
 title: "EP Booking"
 description: "Online appointment scheduling for PageMotor. Services, staff, availability, payments via Stripe, automated notifications via EP Email, Zoom integration."
-sidebar:
-  order: 9
 ---
 
 EP Booking is a full appointment-scheduling system. Services, staff, availability schedules, a multi-step booking form your customers fill out on your site, Stripe payments, automated email confirmations and reminders, and (via the companion add-on) automatic Zoom meeting creation.
@@ -155,7 +153,7 @@ Every confirmation email includes a tokenised cancel link. The customer clicks i
 
 ## Troubleshooting
 
-### "The form shows no available slots"
+### “The form shows no available slots”
 
 Check:
 1. A staff member has been assigned to the service.
@@ -163,23 +161,23 @@ Check:
 3. No holiday block is covering the date.
 4. Existing bookings haven't filled every slot.
 
-### "Confirmation emails aren't sending"
+### “Confirmation emails aren't sending”
 
 EP Email handles delivery. Check EP Email's delivery log. Common causes: SMTP config is wrong, from-address is unverified, or the email queue is stalled.
 
-### "Stripe webhook says signature invalid"
+### “Stripe webhook says signature invalid”
 
 The webhook secret in your EP Booking settings does not match the webhook endpoint secret in your Stripe dashboard. Rotate the secret on both sides.
 
-### "I can't refund a booking from admin"
+### “I can't refund a booking from admin”
 
 Stripe refunds require the original charge to exist on the Stripe side. If the booking was imported from a prior system or paid outside Stripe, the refund button is inactive. Refund through Stripe directly.
 
-### "Customers are booking impossible slots"
+### “Customers are booking impossible slots”
 
 Check the time slot interval and the staff duration. If a service is 45 minutes and your slot interval is 60 minutes, customers can still book at :00 and :15 adjacent slots. Tighten the interval to 15 minutes, or align durations to your interval.
 
-### "The booking form submits but nothing appears in the admin"
+### “The booking form submits but nothing appears in the admin”
 
 Check for CSRF or rate-limiting errors in your browser's network tab. Both return a 403 that shows as a generic error in the form.
 

@@ -1,8 +1,6 @@
 ---
 title: "EP Agent"
 description: "Claude Code CLI embedded in the PageMotor admin panel. Chat with a full AI coding agent that can read files, edit code, run shell commands, and debug your site, all server-side."
-sidebar:
-  order: 5
 ---
 
 EP Agent runs the Claude Code CLI on your server and gives you a chat panel in the admin to drive it. This is not a chatbot wrapper. The agent has the same capabilities as Claude Code on your local machine: file read and edit, bash commands, web search, codebase search, all scoped to the server your site lives on.
@@ -114,27 +112,27 @@ Logs auto-purge after **90 days**.
 
 ## Troubleshooting
 
-### "Prerequisites checklist shows Claude CLI not found"
+### “Prerequisites checklist shows Claude CLI not found”
 
 SSH to the server and run `which claude`. If empty, `npm install -g @anthropic-ai/claude-code`. If present but the checklist still fails, PHP-FPM may be running with a PATH that doesn't include the Node global bin directory. Either symlink `claude` into `/usr/local/bin/`, or add `env[PATH]` to your PHP-FPM pool config with the Node bin path.
 
-### "Authentication check fails despite setting the env variable"
+### “Authentication check fails despite setting the env variable”
 
 PHP-FPM needs a reload, not just a restart of the site. Run `systemctl reload php8.2-fpm` (adjust version number) then reload the settings page.
 
-### "The agent times out on long prompts"
+### “The agent times out on long prompts”
 
 Increase `max_execution_time` in PHP to at least 120 seconds. Claude Code can take minutes on complex prompts that use many tools. Also check your PHP-FPM `request_terminate_timeout` is at least as high.
 
-### "Budget exceeded" messages on API billing
+### “Budget exceeded” messages on API billing
 
 Either you set Max Budget too low for what you are asking, or the model you chose is too expensive for this task. Opus on a file-refactor job can burn a dollar a prompt. Drop to Sonnet for cost savings.
 
-### "I want to give the agent access to a specific directory outside the site root"
+### “I want to give the agent access to a specific directory outside the site root”
 
 Use the **Additional System Prompt** to tell it where. The agent already runs as the PHP-FPM user (typically `www-data`), so it can only touch files that user owns. If you want it to read other paths, they need to be readable by `www-data`.
 
-### "I want to stop a runaway prompt mid-flight"
+### “I want to stop a runaway prompt mid-flight”
 
 Right now, no in-UI stop button. If the agent is stuck, `ps aux | grep claude` on the server and kill the process. Feature request logged for a stop button in a future version.
 

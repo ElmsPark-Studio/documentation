@@ -1,8 +1,6 @@
 ---
 title: "EP Ecommerce Stripe"
 description: "Stripe payment provider for EP Ecommerce. Full PaymentIntent lifecycle, webhook verification, admin refunds, test/live mode switching."
-sidebar:
-  order: 20
 ---
 
 EP Ecommerce Stripe handles Stripe payments for [EP Ecommerce](/plugins/ep-ecommerce/). It uses raw cURL against the Stripe API, so no Composer dependencies, and implements the full payment lifecycle: PaymentIntent creation with idempotency keys, webhook signature verification, payment confirmation fallback for delayed webhooks, and admin-initiated refunds.
@@ -105,23 +103,23 @@ What appears on the customer's bank statement. Defaults to your business name (a
 
 ## Troubleshooting
 
-### "Webhook signature verification fails"
+### “Webhook signature verification fails”
 
 The webhook signing secret you pasted doesn't match the one in your Stripe dashboard. Rotate the secret in Stripe, paste the new one, test again.
 
-### "Orders are showing as Paid but memberships aren't being granted"
+### “Orders are showing as Paid but memberships aren't being granted”
 
 Fulfilment happens after webhook verification. If webhook verification passed but fulfilment didn't, check error logs — commonly a database constraint error or a missing product reference. Paste the order ID into the review queue.
 
-### "Test mode works, live mode fails"
+### “Test mode works, live mode fails”
 
 Live-mode keys must be from the same Stripe account as your test keys. Mixing up accounts is a common cause. Also check that live mode is enabled in your Stripe account (some new accounts start with a hold).
 
-### "The Payment Element shows an error about invalid publishable key"
+### “The Payment Element shows an error about invalid publishable key”
 
 The publishable key in the settings doesn't match the mode. If mode is Live but you pasted a test key, Stripe rejects. Check the prefix: `pk_live_` for live, `pk_test_` for test.
 
-### "Customers complain about 3D Secure prompts"
+### “Customers complain about 3D Secure prompts”
 
 3DS is triggered by Stripe based on risk and issuer rules. The Payment Element handles it automatically. If customers can't complete 3DS, it's usually their issuer or a network issue, not your site.
 

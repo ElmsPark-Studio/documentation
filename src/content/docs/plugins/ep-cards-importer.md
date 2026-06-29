@@ -1,8 +1,6 @@
 ---
 title: "EP Cards Importer"
 description: "WordPress-to-PageMotor migration add-on for EP Cards. Reads JSON exports from EP WP Exporter, rehosts images locally, commits groups and cards as a single rollbackable batch."
-sidebar:
-  order: 13
 ---
 
 EP Cards Importer is the official migration add-on for [EP Cards](/plugins/ep-cards/). Feed it a JSON export from your WordPress site, click Preview, click Commit, done. Thesis Focus Cards content lands in EP Cards with images rehosted locally and every import as a single rollbackable batch.
@@ -125,11 +123,11 @@ Other cards and groups (from other imports, or hand-created) are untouched.
 
 ## Troubleshooting
 
-### "The preflight panel shows red for upload_max_filesize"
+### “The preflight panel shows red for upload_max_filesize”
 
 Edit your PHP config (`/etc/php/8.2/fpm/php.ini` or equivalent) and set `upload_max_filesize = 50M` and `post_max_size = 50M`. Reload PHP-FPM. Reload the settings page.
 
-### "The import succeeds but images are broken"
+### “The import succeeds but images are broken”
 
 The rehoster ran into errors. Open the batch in Import History, look at the per-image stats. Common causes:
 
@@ -139,15 +137,15 @@ The rehoster ran into errors. Open the batch in Import History, look at the per-
 
 Click **Rehost** on the batch row after fixing the underlying issue.
 
-### "Groups are created but all cards are ungrouped"
+### “Groups are created but all cards are ungrouped”
 
 The source JSON doesn't have the `focus_cards_group` taxonomy populated on the cards, or the group slugs in taxonomies don't match what the importer created as groups. The preview panel warns about this specifically.
 
-### "The `[card]` shortcode still doesn't work after import"
+### “The `[card]` shortcode still doesn't work after import”
 
 The importer registers legacy aliases only if it is active. If you uninstalled EP Cards Importer after migration, the aliases are gone. Either re-activate the importer, or do a global search-and-replace in your content from `[card` to `[ep_card`.
 
-### "Rerunning the import duplicates cards"
+### “Rerunning the import duplicates cards”
 
 Use **Delete** on the existing batch first. The importer does not deduplicate cards across batches — it trusts you to roll back before re-importing.
 

@@ -1,8 +1,6 @@
 ---
 title: "EP Assistant"
 description: "Browser-based AI website management for PageMotor. Your customers manage their site in plain English through a chat interface powered by Claude, GPT, or any of nine LLM providers."
-sidebar:
-  order: 7
 ---
 
 EP Assistant puts an AI chat interface in the PageMotor admin panel and wires it up to nine server-side tools so the customer can manage their entire site in plain English. Write a new page. Check today's enquiries. Send a follow-up email. Update the brand colours. All through conversation.
@@ -144,27 +142,27 @@ This layered prompt is why the assistant feels tailored to the customer's site r
 
 ## Troubleshooting
 
-### "Provider API key is rejected"
+### “Provider API key is rejected”
 
 Check the key matches the provider selected in the dropdown. Anthropic keys start `sk-ant-`, OpenAI keys start `sk-`, Gemini keys are alphanumeric with no prefix. Paste the full key including the prefix.
 
-### "The assistant hangs forever"
+### “The assistant hangs forever”
 
 LLM provider is slow or down. Check your provider's status page. Try switching to a different provider temporarily.
 
-### "SQL tool refuses to run my query"
+### “SQL tool refuses to run my query”
 
 The `run_query` tool has a whitelist of 10 allowed tables. Custom plugin tables are not on it by default. If you need to give the assistant access to more tables, edit the whitelist in `class-ep-assistant-tools.php` carefully.
 
-### "Write tool fails with 'outside writable directory'"
+### “Write tool fails with 'outside writable directory'”
 
 The `write_file` tool only writes inside a specific allowlist of directories (themes, custom CSS, user content). Writing to plugin code or PM core is deliberately blocked.
 
-### "Audit log is huge"
+### “Audit log is huge”
 
 Every tool call creates a row. Over a busy month this can be thousands of rows. Truncate `{prefix}ep_assistant_audit` manually if it grows unmanageable.
 
-### "I changed the memory files but the assistant doesn't seem to know"
+### “I changed the memory files but the assistant doesn't seem to know”
 
 Memory files are read once per conversation at start. Open a fresh conversation to pick up changes. Existing conversations keep their original system prompt for consistency.
 

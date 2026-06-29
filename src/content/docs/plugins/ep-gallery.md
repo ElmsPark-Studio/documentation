@@ -1,8 +1,6 @@
 ---
 title: "EP Gallery"
 description: "Album-based image gallery for PageMotor with drag-and-drop upload, client-side compression, lightbox, EXIF display, slideshow, and responsive grid layout."
-sidebar:
-  order: 3
 ---
 
 EP Gallery adds proper album-based image galleries to PageMotor. Drop your photos onto an album, the plugin compresses them client-side to keep your upload fast, generates thumbnails server-side, strips and preserves EXIF, and renders a responsive grid with a keyboard-accessible lightbox. Two optional add-ons extend it with photographer-grade EXIF display and focal-point framing.
@@ -188,7 +186,7 @@ Contact [ElmsPark Studio](https://elmspark.com) if you are building an add-on an
 
 ## Troubleshooting
 
-### "The upload progress stalls or fails partway through"
+### “The upload progress stalls or fails partway through”
 
 Usually one of three things:
 
@@ -196,11 +194,11 @@ Usually one of three things:
 - Your PHP `max_execution_time` is too short. Thumbnail generation with GD can take seconds per image on large originals. 60 seconds is a safe minimum.
 - Your server has limited memory (shared hosting under 128MB). GD needs roughly 4× the pixel dimensions in RAM. Enable compression so the server sees smaller files, or upgrade to hosting with more headroom.
 
-### "My images look pixellated in the grid"
+### “My images look pixellated in the grid”
 
 The grid shows thumbnails, not the original. Increase **Thumbnail Width** in settings from 200px to 400px. Re-uploading existing images will regenerate the thumbnails; existing thumbnails will not update retroactively.
 
-### "EXIF data is not appearing in the lightbox"
+### “EXIF data is not appearing in the lightbox”
 
 Check three things:
 
@@ -208,19 +206,19 @@ Check three things:
 2. Client-side compression on EP Gallery preserves EXIF by default, but some browsers strip it on canvas re-encode. If EXIF is critical, turn compression off for that upload.
 3. The lightbox shows EXIF only if there is extracted data. Open the image in the admin and confirm the `exif_data` column has content; if it is empty, the source file had no EXIF.
 
-### "I want to reorder albums but there is no drag handle"
+### “I want to reorder albums but there is no drag handle”
 
 Click and hold the album row's left edge (the small handle icon). Drag up or down, drop in the new position. The order saves as you drop.
 
-### "The cover image is wrong after I deleted the first photo"
+### “The cover image is wrong after I deleted the first photo”
 
 EP Gallery does not automatically reassign the cover when you delete its source image. Open another image in the album and click **Set as cover**.
 
-### "The drop zone highlights but the upload does not start"
+### “The drop zone highlights but the upload does not start”
 
 The panel must be expanded for drops to register. If you drop outside the expanded `.ep-gallery-album-images` area, the browser will try to open the file as a URL in a new tab. Expand the album first, then drop.
 
-### "I dropped a .pdf or a .mov onto the panel and nothing happened"
+### “I dropped a .pdf or a .mov onto the panel and nothing happened”
 
 That's by design. Only files with an `image/*` MIME type are accepted. Other files are silently filtered rather than rejected with an error.
 

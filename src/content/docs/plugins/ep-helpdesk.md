@@ -1,8 +1,6 @@
 ---
 title: "EP Helpdesk"
 description: "AI-first support ticket system for EP Suite plugins. Structured intake, two-pass auto-send pipeline, Pushover admin alerts, 48-hour retract window."
-sidebar:
-  order: 34
 ---
 
 EP Helpdesk is a support desk that accepts structured tickets from your customers, asks Claude to draft a reply grounded in your docs, safety-checks the draft with a second model pass, then either sends the reply automatically or flags it for a human. Live demo at [help.elmspark.com](https://help.elmspark.com/).
@@ -146,28 +144,28 @@ Matching uses a word-overlap score (Jaccard on tokens) with a threshold. Near-du
 
 ## Troubleshooting
 
-### "Nothing happens after I click Submit"
+### “Nothing happens after I click Submit”
 
 Check the browser console for JavaScript errors. The chip-based progressive disclosure requires JS. Without JS, the form still submits a ticket, but the category metadata is less complete.
 
-### "The AI draft was wrong"
+### “The AI draft was wrong”
 
 That is what the 48-hour retract window is for. From admin, open the ticket and hit **Retract and apologise**. Then regenerate the draft or write the reply yourself.
 
 If the same kind of wrongness keeps happening, tune the system prompt in EP Agent to give clearer grounding on the topic that is drifting.
 
-### "I am not getting Pushover notifications"
+### “I am not getting Pushover notifications”
 
 1. Check `EP_HELPDESK_PUSHOVER_TOKEN` and `EP_HELPDESK_PUSHOVER_USER` are both defined.
 2. Check the Pushover app is installed and logged in on your phone.
 3. Submit a test ticket with the word `refund` in the subject. It should fire a safety-net ping.
 4. Check PHP error log for any Pushover failures.
 
-### "Customer submitted a ticket but didn't get a confirmation email"
+### “Customer submitted a ticket but didn't get a confirmation email”
 
 EP Email handles delivery. Check EP Email's log. Usually an SMTP credentials or from-address issue.
 
-### "Auto-reply went to spam"
+### “Auto-reply went to spam”
 
 The site's from-address needs SPF, DKIM, and DMARC set up. Ask your hosting provider how to configure DKIM for outgoing mail.
 

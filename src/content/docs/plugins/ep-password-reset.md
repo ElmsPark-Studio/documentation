@@ -1,8 +1,6 @@
 ---
 title: "EP Password Reset"
 description: "Email-based password reset for PageMotor admin accounts. Tokenised reset links, single-use, time-limited. Integrates with EP Email."
-sidebar:
-  order: 42
 ---
 
 EP Password Reset adds a "Forgot your password?" flow to PageMotor's admin login. The admin enters their email, gets a tokenised reset link, clicks it, sets a new password. Token is single-use and time-limited.
@@ -15,7 +13,7 @@ PageMotor core has no built-in password reset for admin accounts. If an admin fo
 
 Flow:
 
-1. Admin clicks **Forgot your password?** on the login page.
+1. Admin opens the password reset page at `/?ep_password_reset=1`.
 2. Enters their email address.
 3. Plugin generates a single-use token, stores it, sends a reset link via EP Email.
 4. Admin clicks the link (must be within the expiry window, 1 hour by default).
@@ -24,13 +22,17 @@ Flow:
 
 ## Requirements
 
-- **PageMotor 0.8.2b or later**
+- **PageMotor 0.9 or later** (verified on 0.9.4b)
 - **EP Email** (required for the reset email)
 - **EP Suite base class**
 
 ## Installation
 
-Not currently available for install. EP Password Reset depends on a PageMotor core change that has not yet shipped. Installation steps will be published here once the core change lands.
+1. Download `ep-password-reset.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Upload it via **Plugins → Manage Plugins** and activate.
+3. Make sure **EP Email** is installed and configured. The reset link is delivered through it.
+
+Current version **1.0.8**. Installs and works on PageMotor 0.9.x. Admins request a reset at `/?ep_password_reset=1` on your site, then follow the emailed link to set a new password.
 
 ## Settings
 
@@ -47,19 +49,19 @@ Not currently available for install. EP Password Reset depends on a PageMotor co
 
 ## Troubleshooting
 
-### "Reset email doesn't arrive"
+### “Reset email doesn't arrive”
 
 EP Email handles delivery. Check EP Email's log. Common causes: SMTP config wrong, email in spam folder, admin's email address is outdated in the PageMotor user record.
 
-### "Reset link says 'expired' despite clicking quickly"
+### “Reset link says 'expired' despite clicking quickly”
 
 Token expiry default is 1 hour. If the admin forwarded the email to another account or clicked in a delayed session, more than 60 minutes may have passed. Request a new reset.
 
-### "Link says 'already used'"
+### “Link says 'already used'”
 
 Single-use tokens. If the admin clicked twice (once to set password, once accidentally), the second click fails. Request a new reset if the password wasn't actually set.
 
-### "Reset flow works but admin still can't log in"
+### “Reset flow works but admin still can't log in”
 
 After reset, the admin is logged out of any existing sessions. Close all browser tabs, start fresh at the login page, use the new password.
 

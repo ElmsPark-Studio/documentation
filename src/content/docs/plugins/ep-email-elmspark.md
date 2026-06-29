@@ -1,8 +1,6 @@
 ---
 title: "EP Email ElmsPark"
 description: "ElmsPark Email managed delivery service for EP Email. One API key, proper SMTP via AWS SES, no server config. Drop-in alternative to configuring SMTP yourself."
-sidebar:
-  order: 26
 ---
 
 EP Email ElmsPark is a transport driver for [EP Email](/plugins/ep-email/). Instead of configuring SMTP against Mailgun, SendGrid, or your own mail server, you paste an ElmsPark Email API key and your outbound mail routes through ElmsPark's managed delivery service, backed by AWS SES.
@@ -65,26 +63,26 @@ All outbound mail now routes through ElmsPark.
 
 ## Troubleshooting
 
-### "API key rejected"
+### “API key rejected”
 
 Copy the key again carefully from [send.elmspark.com](https://send.elmspark.com). Watch for leading/trailing whitespace.
 
-### "Emails not delivering despite a valid key"
+### “Emails not delivering despite a valid key”
 
 Check your sending domain's verification status on [send.elmspark.com](https://send.elmspark.com). If DNS records are wrong, ElmsPark won't deliver. Fix the DNS, wait for re-verification.
 
-### "Emails go to spam"
+### “Emails go to spam”
 
 Domain verification usually fixes this. If you've verified and still hit spam, check:
 - Your from-address matches your verified sending domain.
 - SPF and DMARC are configured correctly on the top-level domain.
 - Your subject lines and content aren't spam-triggering (all-caps subjects, excessive link density).
 
-### "EP Email shows ElmsPark as an option but nothing sends through it"
+### “EP Email shows ElmsPark as an option but nothing sends through it”
 
 The dropdown in EP Email → SMTP needs to be set to **ElmsPark Email**. Just activating this plugin registers the driver as available; selecting it makes it active.
 
-### "I want to switch away from ElmsPark"
+### “I want to switch away from ElmsPark”
 
 Open **EP Email → SMTP**, change transport to SMTP or another driver. Configure the alternative. No data migration needed — switch happens instantly.
 

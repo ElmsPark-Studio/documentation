@@ -1,8 +1,6 @@
 ---
 title: "EP Email Advanced Forms"
 description: "Adds compound and layout field types to EP Email contact forms: name, address, section, HTML, email confirmation, and rating fields."
-sidebar:
-  order: 24
 ---
 
 EP Email Advanced Forms extends [EP Email](/plugins/ep-email/)'s JSON-defined contact forms with six extra field types: compound fields that group related inputs, layout fields that structure the form visually, and validation fields like email confirmation.
@@ -118,22 +116,22 @@ Renders two email inputs. Form won't submit if they don't match. Saved value is 
 
 ## Troubleshooting
 
-### "The new field types aren't appearing in my form"
+### “The new field types aren't appearing in my form”
 
 Check:
 - The plugin is activated.
 - The field `type` in your JSON is spelled correctly (`name`, `address`, `section`, `html`, `confirm_email`, `rating`).
 - No typos in the form JSON breaking parsing.
 
-### "Confirm email validates on submit but still lets mismatched values through"
+### “Confirm email validates on submit but still lets mismatched values through”
 
 Browser extensions can interfere with form validation. Test in incognito mode. If it still misbehaves, log in the review queue with a repro.
 
-### "Address field shows a country I don't ship to"
+### “Address field shows a country I don't ship to”
 
 Use the `countries` array to restrict the list. Without it, you get every country.
 
-### "Rating field looks broken on mobile"
+### “Rating field looks broken on mobile”
 
 Star rating touch targets can be fiddly on small screens. Use `numeric` style on mobile-heavy sites for a more forgiving UX.
 

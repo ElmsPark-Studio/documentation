@@ -1,8 +1,6 @@
 ---
 title: "EP Courses"
 description: "Course and lesson management for PageMotor with enrolment, progress tracking, and 24-language multilingual content support. Work in progress."
-sidebar:
-  order: 16
 ---
 
 EP Courses is course and lesson management for PageMotor. Courses contain lessons, students enrol, their progress is tracked as they work through the material, and content can be translated into any of 24 languages including Welsh, Irish, and several South African languages.
@@ -90,23 +88,23 @@ The 24 supported languages are configured in settings. Welsh, Irish, Scots Gaeli
 
 ## Troubleshooting
 
-### "The course catalogue is empty"
+### “The course catalogue is empty”
 
 Only **active** courses appear. Check your courses have status = Active, not Draft.
 
-### "Clicking a course goes to a 404"
+### “Clicking a course goes to a 404”
 
 The viewer page must exist at the slug configured in **Settings → Viewer slug**, and that page must contain `[course-viewer]`. Verify both.
 
-### "Translations aren't appearing"
+### “Translations aren't appearing”
 
 The viewer uses the active site language. Check your translation JSON has the exact language code your site uses (e.g. `en-GB` vs `en`). Missing translations fall back to the default language.
 
-### "I want to restrict a course to paid subscribers only"
+### “I want to restrict a course to paid subscribers only”
 
 That's a job for EP Membership plus EP Ecommerce Subscriptions. Gate the viewer page's parent, or specific courses, via EP Membership's access rules.
 
-### "Students can see lessons they haven't completed prerequisites for"
+### “Students can see lessons they haven't completed prerequisites for”
 
 Prerequisite-based progression isn't built in yet. On the roadmap but not shipped. See the review queue.
 

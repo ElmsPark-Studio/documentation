@@ -1,8 +1,6 @@
 ---
 title: "EP Ecommerce Products"
 description: "Styled checkout UI for EP Ecommerce. Three layout options (card, inline, modal), configurable price placement, purchase confirmation emails tailored to each product type."
-sidebar:
-  order: 19
 ---
 
 EP Ecommerce Products is the checkout-UI layer of [EP Ecommerce](/plugins/ep-ecommerce/). The base plugin handles data and logic; this plugin handles what the customer sees. Install it alongside EP Ecommerce whenever you want a polished checkout form with a styled button, good price placement, and proper confirmation emails.
@@ -67,19 +65,19 @@ Every email template uses EP Email's placeholder system, so you can customise co
 
 ## Troubleshooting
 
-### "My checkout looks unstyled"
+### “My checkout looks unstyled”
 
 This plugin must be active. Check **Plugins → Manage Plugins** and confirm EP Ecommerce Products is on.
 
-### "The modal layout doesn't open"
+### “The modal layout doesn't open”
 
 Modal requires JavaScript. Check your browser console for errors that might be breaking the bundle.
 
-### "Confirmation emails show raw placeholders like {product_name}"
+### “Confirmation emails show raw placeholders like {product_name}”
 
 The email template is missing context. Check your EP Email template has the placeholders matched and that the fulfilment flow completed (not just the payment). Placeholders only substitute when the order has a known product attached.
 
-### "Admin sale notifications aren't arriving"
+### “Admin sale notifications aren't arriving”
 
 Check the admin notification email address is set in EP Ecommerce base settings, and that EP Email's SMTP is working.
 

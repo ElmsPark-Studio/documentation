@@ -48,10 +48,12 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Custom content types
 
-EP Sitemap defers to PageMotor's own enumerator, `$motor->content->types_with_url(true)`, to decide which content types are URL-bearing on the front end. On a vanilla PageMotor 0.8.3b install with the EP Suite active, the complete set of registered content types is:
+EP Sitemap defers to PageMotor's own enumerator, `$motor->content->types_with_url(true)`, to decide which content types are URL-bearing on the front end. Reading the filter logic in `lib/content.php`, the rule is straightforward: include every content type that has a URL and is enabled in the `theme` environment.
+
+On a vanilla PageMotor 0.8.3b install with the EP Suite active, the complete set of registered content types is:
 
 | Source | Type | Appears in `/sitemap.xml`? |
-|---|---|---|
+| --- | --- | --- |
 | PM core | `home` | Yes (one row) |
 | PM core | `page` | Yes |
 | PM core | `error` | No: `no-slug` and not `home` |
@@ -60,15 +62,36 @@ EP Sitemap defers to PageMotor's own enumerator, `$motor->content->types_with_ur
 | [EP Events](/plugins/ep-events/) | `event` (plus 12 sub-types: conference, workshop, meetup, webinar, etc.) | Yes |
 | [EP Locations](/plugins/ep-locations/) | `location` | Yes |
 
-If you have a custom content type registered by your own plugin or theme and its rows are not appearing in `/sitemap.xml`, the registration is almost certainly missing one of three flags. `types_with_url(true)` only returns types whose registration carries all three of:
+### Minimum registration for sitemap inclusion
+
+If you have a custom content type registered by your own plugin or theme and its rows are not appearing in `/sitemap.xml`, your registration needs:
 
 ```php
 'url'         => true,
-'environment' => ['admin', 'theme'],
+'environment' => ['theme'],   // 'theme' must be present
 // AND not 'no-slug' (unless the type is 'home')
 ```
 
-EP Events is a useful worked example. Its `content_types()` method looks like this:
+`'theme'` is the only environment value required for sitemap inclusion. Add `'admin'` only if you want the type to be manageable from PageMotor's admin Content area, which for most custom content types you probably don't want.
+
+### Worked examples
+
+A type your code populates programmatically (an importer, a feed processor, a derived archive). The rows live in the database and are not edited by site admins:
+
+```php
+public function content_types() {
+    return [
+        'post' => [
+            'name'        => 'Imported Post',
+            'environment' => ['theme'],
+            'url'         => true,
+            'fields'      => ['title', 'content'],
+        ]
+    ];
+}
+```
+
+A type that IS edited by site admins (the EP Events case — event records are managed in admin Content and also render on the front end). It uses both environments by design:
 
 ```php
 public function content_types() {
@@ -83,9 +106,11 @@ public function content_types() {
 }
 ```
 
-If any one of those flags is wrong on your custom type registration, the type silently drops out of `types_with_url()` and EP Sitemap filters its rows out before emitting any URL. Fix the registration and EP Sitemap will pick the type up on the next request.
+Both register correctly with EP Sitemap because both have `'theme'` in their environment array. The difference is whether the type also surfaces in admin Content for human editing.
 
-The most common miss is forgetting `'environment' => ['admin', 'theme']`. It looks redundant if you only see `admin` in your head, but `theme` is what tells PageMotor "this type renders on the public site", and EP Sitemap requires that flag to include the type.
+### Most common miss
+
+Leaving `'theme'` out of the `environment` array, or omitting the `environment` key entirely. `'theme'` is what tells PageMotor "this type renders on the public site", and EP Sitemap requires it to include the type. Fix that one entry and EP Sitemap picks the type up on the next request.
 
 ## Search engine submission
 

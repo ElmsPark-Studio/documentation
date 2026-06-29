@@ -1,8 +1,6 @@
 ---
 title: "EP Analytics"
 description: "Privacy-respecting page view analytics for PageMotor. Server-side tracking with no cookies, no JavaScript pixel, no external services, no GDPR consent required."
-sidebar:
-  order: 6
 ---
 
 EP Analytics gives you a real analytics dashboard for your PageMotor site with none of the privacy baggage. No cookies, no JavaScript tracking pixel, no third-party scripts, no data leaving your server. Your visitors don't need to click a consent banner because there is nothing to consent to.
@@ -134,7 +132,7 @@ EP Analytics is the better choice when you need page view numbers and nothing el
 
 ## Troubleshooting
 
-### "No data is showing up after I installed"
+### “No data is showing up after I installed”
 
 Wait a few minutes and reload. First-load wait is normal. If you still see zeros after an hour:
 
@@ -142,19 +140,19 @@ Wait a few minutes and reload. First-load wait is normal. If you still see zeros
 - Is your IP in the exclusion list? Check.
 - Are you testing from a machine running an ad-blocker that identifies as a bot? Unlikely, but possible.
 
-### "My own visits are being counted"
+### “My own visits are being counted”
 
 Add your IP to the exclusion list. Find your IP at [ifconfig.me](https://ifconfig.me).
 
-### "I see bot traffic getting through"
+### “I see bot traffic getting through”
 
 Some bots are new and not yet in the blocklist. Log the offending user-agent in your review queue; bot patterns can be extended.
 
-### "The Today tab shows fewer views than the 7 Days tab for today"
+### “The Today tab shows fewer views than the 7 Days tab for today”
 
 This is not a bug. Today data comes from hourly buckets. The 7-day bar for today is the sum of today's hourly buckets. They should match. If they don't, check whether your server clock is in the timezone you expect.
 
-### "Dashboard loads slowly on a site with millions of page views"
+### “Dashboard loads slowly on a site with millions of page views”
 
 Top pages and referrers queries aggregate at read time. On very large datasets this can be slow. Dropping retention from **Forever** to 180 or 365 days usually fixes it.
 

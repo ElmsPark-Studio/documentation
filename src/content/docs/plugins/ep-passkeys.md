@@ -1,8 +1,6 @@
 ---
 title: "EP Passkeys"
 description: "Passwordless login for PageMotor using WebAuthn passkeys. Face ID, Touch ID, Windows Hello, or hardware keys instead of passwords."
-sidebar:
-  order: 41
 ---
 
 EP Passkeys replaces passwords with passkeys: the WebAuthn standard that backs Face ID, Touch ID, Windows Hello, and physical security keys. Users register their device once, then log in with a biometric or tap instead of a password. Phishing-resistant by design.
@@ -20,18 +18,22 @@ Why passkeys:
 
 ## Status
 
-**Version 0.3.** Core flows work in development. Public install is blocked on a PageMotor core change that has not yet shipped.
+**Version 0.4.0.** Available now. Migrated to PageMotor 0.9's open-tier AJAX. Passwordless sign-in is served from a dedicated page at `/?ep_passkey_login=1`.
 
 ## Requirements
 
-- **PageMotor 0.8.2b or later**
+- **PageMotor 0.9 or later** (verified on 0.9.4b)
 - **EP Suite base class**
 - **HTTPS** required — WebAuthn does not work over plain HTTP.
 - **Modern browser** — Chrome, Firefox, Safari, Edge (recent versions).
 
 ## Installation
 
-Not currently available for install. EP Passkeys depends on a PageMotor core change that has not yet shipped. Installation steps will be published here once the core change lands.
+1. Download `ep-passkeys.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Upload it via **Plugins → Manage Plugins** and activate.
+3. Register a passkey from your account page, then sign in at `/?ep_passkey_login=1`.
+
+Current version **0.4.0**. Installs and works on PageMotor 0.9.x.
 
 ## User flow
 
@@ -45,8 +47,8 @@ Not currently available for install. EP Passkeys depends on a PageMotor core cha
 
 ### Logging in with a passkey
 
-1. User visits the login page.
-2. Clicks **Log in with passkey**.
+1. User visits the passkey sign-in page at `/?ep_passkey_login=1`.
+2. Clicks **Sign in with Passkey**.
 3. Device prompts for biometric.
 4. They're in.
 
@@ -58,19 +60,19 @@ Not currently available for install. EP Passkeys depends on a PageMotor core cha
 
 ## Troubleshooting
 
-### "Register passkey button doesn't appear"
+### “Register passkey button doesn't appear”
 
 Check you're on HTTPS. WebAuthn is blocked on HTTP.
 
-### "Device prompt opens but registration fails"
+### “Device prompt opens but registration fails”
 
 Check browser console for errors. Common cause: site domain doesn't match what was registered. If you change domain after registering, passkeys break.
 
-### "I lost my device, I can't log in"
+### “I lost my device, I can't log in”
 
 Passkeys on the lost device are gone. If you had a backup method (password, second device, recovery email), use it. If not, admin can reset the user from the database.
 
-### "Passkeys don't sync across my devices"
+### “Passkeys don't sync across my devices”
 
 Syncing depends on the platform (iCloud, Google, etc.) and the device's settings. This plugin doesn't control syncing.
 

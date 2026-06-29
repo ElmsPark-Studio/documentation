@@ -1,8 +1,6 @@
 ---
 title: "EP Cards"
 description: "Native card groups and grids for PageMotor with LLM-driven import, per-card style overrides, image upload, and a public API."
-sidebar:
-  order: 2
 ---
 
 EP Cards adds a proper card component to PageMotor. Groups, grids, per-card styling, image upload, and an LLM-driven import path that lets you hand a prompt to any AI, paste the JSON back, and get a fully-styled card group in one step. Built to reach full feature parity with Thesis Focus Cards so sites migrating from WordPress can keep their existing card content.
@@ -211,33 +209,33 @@ The renderer resolves whole-card, title-only, and image-only link slots so you c
 
 ## Troubleshooting
 
-### "I created a group but the card won't save"
+### “I created a group but the card won't save”
 
 The single most common cause is the **Title** field. Title is the only required field on the Add Card form. If it is blank, the browser silently blocks the submit and shows a tooltip on the Title input that is easy to miss. Fill in a Title, even a short placeholder, and it will save. Everything else, subtitle, body, image, links, is optional.
 
-### "The image I pasted doesn't appear"
+### “The image I pasted doesn't appear”
 
 Check the URL resolves in a browser. If you are pasting a URL from a site that blocks hotlinking, the card will save but the image will be broken. Download the image and re-upload it instead, or use the EP Cards Importer on your source site to rehost.
 
-### "The global defaults I set don't seem to apply"
+### “The global defaults I set don't seem to apply”
 
 Per-card style values win over global defaults. If you set a per-card value during testing and forgot about it, that card will ignore the global default forever. Open the card, expand **Per-card style overrides**, and set each property back to `(inherit global)` or blank.
 
-### "My shortcode isn't rendering anything"
+### “My shortcode isn't rendering anything”
 
 Check two things:
 - The `group` attribute uses the group's **slug**, not its **title**. The slug is shown under the group title in the admin, and in the shortcode hint above the card list.
 - The group has at least one active card. If you have only draft cards, the group renders empty.
 
-### "I want to delete one bad import batch but not everything"
+### “I want to delete one bad import batch but not everything”
 
 Open the EP Cards settings page and scroll to **Import History**. Every import batch has a Delete button. Clicking it cascade-deletes only the groups and cards written by that specific batch. Other cards, even in the same group, are untouched.
 
-### "How do I upload an image without paying for external hosting"
+### “How do I upload an image without paying for external hosting”
 
 Since v1.0.5, the card edit form has a native drop zone. Drag a file onto it or click to browse. Files are stored locally under `user-content/uploads/ep-cards/` on your own server.
 
-### "Can I override the grid column count for one specific placement"
+### “Can I override the grid column count for one specific placement”
 
 Yes. The `grid` attribute on the shortcode overrides the global default. Use `[ep_card_group group=services grid=4]` to force four columns on one page even if your global is three.
 

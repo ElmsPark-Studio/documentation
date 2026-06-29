@@ -1,8 +1,6 @@
 ---
 title: "EP Connect"
 description: "Outbound webhooks for PageMotor. Send JSON payloads to Zapier, Make, Slack, or any URL when events happen on your site. HMAC-signed, sensitive-field-stripped."
-sidebar:
-  order: 15
 ---
 
 EP Connect sends webhook notifications from your PageMotor site to external services when things happen. Someone fills out a contact form, a booking is confirmed, a newsletter subscription lands — EP Connect fires a JSON POST to whatever URL you configured.
@@ -150,23 +148,23 @@ Your event appears in the webhook dropdown and fires through the same signing an
 
 ## Troubleshooting
 
-### "Send Test succeeds but real events don't fire"
+### “Send Test succeeds but real events don't fire”
 
 Check the webhook is **Enabled** (toggle in the management UI). Check the event you are expecting actually happened — look at the source plugin's own logs.
 
-### "Receiver gets the payload but signature verification fails"
+### “Receiver gets the payload but signature verification fails”
 
 The secret on your receiver must match the secret saved on the webhook row, byte-for-byte, including any trailing whitespace. Rotate the secret and paste it cleanly on both sides.
 
-### "Delivery log shows HTTP 403 from my receiver"
+### “Delivery log shows HTTP 403 from my receiver”
 
 Your receiver is rejecting the request. Common cause: the receiver expects a specific User-Agent or authentication header. EP Connect sends `User-Agent: EP-Connect/1.0` and the `X-EP-Signature` header. If the receiver needs anything else, it needs to be a proxy or adapter, not a direct EP Connect target.
 
-### "Delivery log shows 'timeout' for every event"
+### “Delivery log shows 'timeout' for every event”
 
 The receiver is slow or unreachable. EP Connect waits up to 10 seconds. If your receiver is legitimately slow, use a faster endpoint (a Zapier webhook that queues, rather than a slow direct integration).
 
-### "Events I expect to fire aren't in the delivery log"
+### “Events I expect to fire aren't in the delivery log”
 
 Some events come from plugins that must be active and configured. For example, "Booking Confirmed" only fires if EP Booking is installed and a booking was actually confirmed. Check the source plugin is doing its bit.
 

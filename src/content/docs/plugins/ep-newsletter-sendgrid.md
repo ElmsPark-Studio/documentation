@@ -1,8 +1,6 @@
 ---
 title: "EP Newsletter SendGrid"
 description: "SendGrid delivery driver for EP Newsletter. High-volume sending with automatic bounce and complaint handling via SendGrid webhooks."
-sidebar:
-  order: 40
 ---
 
 EP Newsletter SendGrid is a delivery driver for [EP Newsletter](/plugins/ep-newsletter/). When installed and selected, campaigns send through SendGrid instead of your general SMTP. Better for high-volume campaigns, with automatic bounce and complaint handling through SendGrid's webhooks.
@@ -99,11 +97,11 @@ Complaints (spam reports) immediately disable the subscriber's marketing consent
 
 ## Troubleshooting
 
-### "Test connection fails"
+### “Test connection fails”
 
 API key is wrong, expired, or has insufficient permissions. Regenerate in SendGrid and paste again. Check the API key has at least Mail Send permission.
 
-### "Campaign sends but emails don't arrive"
+### “Campaign sends but emails don't arrive”
 
 Check SendGrid's own activity log at **Activity → Activity Feed**. SendGrid knows exactly why an email was dropped. Common reasons:
 
@@ -111,15 +109,15 @@ Check SendGrid's own activity log at **Activity → Activity Feed**. SendGrid kn
 - Recipient on your suppression list (previously bounced).
 - Content triggering spam filters.
 
-### "Bounces aren't being flagged"
+### “Bounces aren't being flagged”
 
 The event webhook isn't configured or isn't reaching your site. In SendGrid, go to the webhook settings and check recent activity — failed deliveries show status codes. Fix URL, firewall, or HTTPS cert issues.
 
-### "I'm being charged more than expected"
+### “I'm being charged more than expected”
 
 SendGrid charges by email sent. Check your Stats page to see actual volume. Verify you're on the plan matching your volume.
 
-### "I want to switch back to regular SMTP"
+### “I want to switch back to regular SMTP”
 
 In EP Newsletter settings, change Delivery driver from SendGrid to EP Email. Campaigns from that point on route through SMTP. Past campaign history stays intact.
 

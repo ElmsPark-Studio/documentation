@@ -1,8 +1,6 @@
 ---
 title: "EP Local Business"
 description: "Schema.org LocalBusiness emission for single-location businesses on PageMotor. Address, hours, geo, payment methods, areas served, and a coexistence handshake with EP SEO."
-sidebar:
-  order: 32
 ---
 
 EP Local Business adds a complete Schema.org LocalBusiness JSON-LD node to a single-location PageMotor site. Address, opening hours, geo coordinates, payment methods, areas served, per-page subtype overrides. Coordinates with EP SEO so you don't end up with two competing Organization nodes on the page, and yields entirely to EP Locations on multi-location installs.
@@ -116,23 +114,23 @@ The emitted Schema.org JSON-LD becomes part of every public page on your site. A
 
 ## Troubleshooting
 
-### "Schema isn't appearing on my pages"
+### “Schema isn't appearing on my pages”
 
 Check the Master Switch is on. Then check Business name and Address are filled in — schema won't emit if either is blank. View page source on any page and search for `application/ld+json` to confirm the node is rendering.
 
-### "I'm seeing two Organization nodes on the page"
+### “I'm seeing two Organization nodes on the page”
 
 EP SEO and EP Local Business are both emitting an Organization. Switch the **Coexistence mode** under EP Local Business → Settings to **Merged**, save, and reload. EP SEO will yield its Organization branch.
 
-### "The Look up coordinates button does nothing"
+### “The Look up coordinates button does nothing”
 
 Three possible causes: (1) your server cannot reach `nominatim.openstreetmap.org` (check egress rules); (2) the address is too vague for Nominatim to resolve (try adding the country); (3) Nominatim's rate limit (1.5 seconds between calls) — wait a moment and try again.
 
-### "EP Local Business says it's deferred to EP Locations"
+### “EP Local Business says it's deferred to EP Locations”
 
 EP Locations is active and has at least one live Location entry. They're mutually exclusive at runtime. If you actually want EP Local Business to handle schema, deactivate EP Locations or delete its live locations.
 
-### "My hours grid won't accept overnight times"
+### “My hours grid won't accept overnight times”
 
 It should. If you enter open: 22:00, close: 02:00, the emission code splits this into two daily entries automatically. If you're seeing a validation error, file a ticket with the exact times and day you entered.
 

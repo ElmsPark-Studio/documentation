@@ -1,8 +1,6 @@
 ---
 title: "EP Testimonials"
 description: "Collect and display customer testimonials on PageMotor. Star ratings, moderation, Schema.org Review markup, carousel or grid display."
-sidebar:
-  order: 55
 ---
 
 EP Testimonials lets you collect customer testimonials through a form on your site, moderate them, and display approved testimonials in carousel, grid, or list layouts. Star ratings and Schema.org Review markup are included.
@@ -89,23 +87,23 @@ Each testimonial renders with `Review` schema plus an aggregate `AggregateRating
 
 ## Troubleshooting
 
-### "Submission form shows but submissions don't arrive"
+### “Submission form shows but submissions don't arrive”
 
 Check EP Email is configured. Without EP Email, admin notifications fail silently.
 
-### "Photos don't appear"
+### “Photos don't appear”
 
 Check the uploads directory has write permission. Also check file sizes — uploads over the PHP limit fail.
 
-### "Carousel doesn't auto-advance"
+### “Carousel doesn't auto-advance”
 
 Check browser console for JS errors. Also check the carousel has at least 2 testimonials — 1-item carousels don't rotate.
 
-### "Testimonials appear but without star rating icons"
+### “Testimonials appear but without star rating icons”
 
 CSS might not be loading. Check the plugin's stylesheet is enqueued. Hard refresh to bypass cache.
 
-### "Imported CSV assigns all testimonials to the wrong person"
+### “Imported CSV assigns all testimonials to the wrong person”
 
 CSV needs specific headers: `name,email,company,body,rating,featured`. Case-sensitive. Check your CSV.
 

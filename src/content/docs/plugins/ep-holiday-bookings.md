@@ -1,8 +1,6 @@
 ---
 title: "EP Holiday Bookings"
 description: "Holiday package management for independent travel agents. Package listings, enquiry-driven booking flow, deposit and balance payments via Stripe, traveller management with encrypted passport storage."
-sidebar:
-  order: 35
 ---
 
 EP Holiday Bookings is a purpose-built plugin for independent travel agents. Not a DIY booking engine — an enquiry-first workflow that matches how small agents actually work. Package listings attract interest, enquiries land in a pipeline, the agent quotes, collects deposits, then balances, and tracks traveller details securely.
@@ -127,23 +125,23 @@ On a data subject erasure request, the plugin:
 
 ## Troubleshooting
 
-### "Enquiry form submitted but I didn't get notified"
+### “Enquiry form submitted but I didn't get notified”
 
 Check EP Email config. Enquiry notifications go through EP Email's queue.
 
-### "Deposit payment link is generated but the customer can't pay"
+### “Deposit payment link is generated but the customer can't pay”
 
 Check Stripe keys are for the correct mode (test vs live). Check the payment link hasn't expired — Stripe links have configurable lifetimes.
 
-### "Passport number shows 'decryption failed'"
+### “Passport number shows 'decryption failed'”
 
 The encryption key has changed since the record was encrypted. Either restore the old key, or re-collect the passport from the customer.
 
-### "Package isn't appearing in the catalogue"
+### “Package isn't appearing in the catalogue”
 
 Check status is Active and dates haven't expired. Packages past their end date are auto-hidden by default.
 
-### "Enquiry pipeline status doesn't update when I mark an enquiry as Booked"
+### “Enquiry pipeline status doesn't update when I mark an enquiry as Booked”
 
 Creating a booking from an enquiry should auto-advance the enquiry to Booked. If it doesn't, there's a likely bug — log in the review queue with an enquiry ID.
 

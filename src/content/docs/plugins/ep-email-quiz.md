@@ -1,8 +1,6 @@
 ---
 title: "EP Email Quiz"
 description: "Adds quiz field types with automatic scoring and grading to EP Email contact forms. Multiple choice, true/false, rating, and configurable grade bands."
-sidebar:
-  order: 29
 ---
 
 EP Email Quiz adds quiz field types to [EP Email](/plugins/ep-email/)'s contact forms. Define multiple-choice and true/false questions with correct answers, configure grade bands ("A: 90%+, B: 75%+, ..."), and the plugin auto-scores every submission.
@@ -116,19 +114,19 @@ Add a `feedback` option to any question for custom feedback shown on the success
 
 ## Troubleshooting
 
-### "Scores come out wrong"
+### “Scores come out wrong”
 
 Check `points` is set on each question. Missing `points` defaults to 1 but can be confusing if some questions are weighted differently than you think.
 
-### "Success page shows no grade band"
+### “Success page shows no grade band”
 
 Grade bands are optional. If you didn't configure them, no band shows — the score alone is recorded.
 
-### "Submitter can see correct answers in page source"
+### “Submitter can see correct answers in page source”
 
 They can. Quiz fields carry correct answers in the form definition, which is rendered to the page. If you need cheating-proof assessments, this plugin isn't the right tool — you need a server-validated exam platform.
 
-### "Multiple correct answers field doesn't score properly"
+### “Multiple correct answers field doesn't score properly”
 
 `quiz_multiple_many` requires `correct` to be an array of values: `"correct": ["a", "c"]`. Full points only if the submitter picked exactly those values.
 

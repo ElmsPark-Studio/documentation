@@ -31,68 +31,75 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 
 ### Ecommerce
 
+- **[EP Affiliate](/plugins/ep-affiliate/)**. Full affiliate programme with referral tracking, tiers, payouts, coupons.
 - **[EP Ecommerce](/plugins/ep-ecommerce/)**. Information product ecommerce base — memberships, downloads, licenses, bundles, subscriptions.
+- **[EP Ecommerce PayPal](/plugins/ep-ecommerce-paypal/)**. PayPal payment provider.
 - **[EP Ecommerce Products](/plugins/ep-ecommerce-products/)**. Styled checkout UI for EP Ecommerce.
 - **[EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/)**. Stripe payment provider.
-- **[EP Ecommerce PayPal](/plugins/ep-ecommerce-paypal/)**. PayPal payment provider.
 - **[EP Ecommerce Subscriptions](/plugins/ep-ecommerce-subscriptions/)**. Recurring billing with dunning, grace periods, and UK/EU compliance.
 - **[EP Reviews](/plugins/ep-reviews/)**. Product reviews with star ratings, verified-purchase badges, Schema.org markup.
-- **[EP Affiliate](/plugins/ep-affiliate/)**. Full affiliate programme with referral tracking, tiers, payouts, coupons.
 
 ### Bookings, membership, courses
 
 - **[EP Booking](/plugins/ep-booking/)**. Appointment scheduling with services, staff, availability, Stripe payments.
 - **[EP Booking Zoom](/plugins/ep-booking-zoom/)**. Auto-created Zoom meetings for confirmed bookings.
+- **[EP Courses](/plugins/ep-courses/)**. Course and lesson management with multilingual content and progress tracking.
+- **[EP Events](/plugins/ep-events/)**. Full event platform with tickets, registrations, check-in PWA, Stripe Connect, Zoom, Schema.org, six EU languages, and depth EP Suite integration.
 - **[EP Holiday Bookings](/plugins/ep-holiday-bookings/)**. Holiday packages, enquiry-first booking, deposit/balance for independent travel agents.
 - **[EP Membership](/plugins/ep-membership/)**. Public registration, login, member levels, content gating.
-- **[EP Courses](/plugins/ep-courses/)**. Course and lesson management with multilingual content and progress tracking.
 
 ### Content and UX
 
+- **[EP Breadcrumbs](/plugins/ep-breadcrumbs/)**. Breadcrumb navigation with Schema.org structured data.
 - **[EP Cards](/plugins/ep-cards/)**. Native card groups and grids with LLM-driven import. Thesis Focus Cards migration via add-on.
 - **[EP Cards Importer](/plugins/ep-cards-importer/)**. Migration add-on for EP Cards — imports from WordPress Thesis.
+- **[EP Comments](/plugins/ep-comments/)**. Comment system with moderation, threaded replies, WordPress import.
+- **[EP Documents](/plugins/ep-documents/)**. Hierarchical documentation site for PageMotor. Author docs in HTML or Markdown, organise by section, draft / improve / translate with Claude, six EU languages.
+- **[EP Editor](/plugins/ep-editor/)**. Visual inline page editor (work in progress).
+- **[EP FAQ](/plugins/ep-faq/)**. FAQ management with accordion, search, Schema.org markup, voting.
 - **[EP Gallery](/plugins/ep-gallery/)**. Album-based image gallery with drag-and-drop upload, lightbox, EXIF display.
 - **[EP Gallery EXIF](/plugins/ep-gallery-exif/)**. Enhanced EXIF extraction and display (lens, GPS, shooting mode).
 - **[EP Gallery Presentation](/plugins/ep-gallery-presentation/)**. Master crop, aspect-ratio frames, focal-point picker.
-- **[EP Comments](/plugins/ep-comments/)**. Comment system with moderation, threaded replies, WordPress import.
-- **[EP FAQ](/plugins/ep-faq/)**. FAQ management with accordion, search, Schema.org markup, voting.
-- **[EP Testimonials](/plugins/ep-testimonials/)**. Collect and display customer testimonials with star ratings.
-- **[EP Breadcrumbs](/plugins/ep-breadcrumbs/)**. Breadcrumb navigation with Schema.org structured data.
 - **[EP Sidebar](/plugins/ep-sidebar/)**. Sidebar layout activation with manageable widget blocks.
-- **[EP Editor](/plugins/ep-editor/)**. Visual inline page editor (work in progress).
+- **[EP Testimonials](/plugins/ep-testimonials/)**. Collect and display customer testimonials with star ratings.
+- **[EP YouTube](/plugins/ep-youtube/)**. GDPR-friendly YouTube embeds for PageMotor. Click-to-load thumbnails so no Google cookies fire on page load, no-cookie iframe host by default, optional thumbnail self-hosting.
 
 ### SEO, discoverability, analytics
 
+- **[EP Analytics](/plugins/ep-analytics/)**. Privacy-respecting server-side page view analytics. No cookies, no pixel.
+- **[EP Local Business](/plugins/ep-local-business/)**. Schema.org LocalBusiness emission for single-location businesses on PageMotor. Address, hours, geo, payment methods, areas served, and a coexistence handshake with EP SEO.
+- **[EP Locations](/plugins/ep-locations/)**. Multi-location LocalBusiness schema for PageMotor with built-in store finder. MapLibre + MapTiler tiles, postcode search, GDPR consent gating, six EU languages.
+- **[EP Redirects](/plugins/ep-redirects/)**. URL redirect manager with wildcards and 404 log.
+- **[EP RSS](/plugins/ep-rss/)**. RSS 2.0 and Atom 1.0 feed generation.
+- **[EP Search](/plugins/ep-search/)**. Site search with results page, form shortcode, basic analytics.
 - **[EP SEO](/plugins/ep-seo/)**. Open Graph, Twitter Card, favicon, Schema.org. Per-page overrides.
 - **[EP Sitemap](/plugins/ep-sitemap/)**. Dynamic XML sitemap with image references.
-- **[EP RSS](/plugins/ep-rss/)**. RSS 2.0 and Atom 1.0 feed generation.
-- **[EP Txt Files](/plugins/ep-txt-files/)**. Dynamic robots.txt and llms.txt served from admin settings.
-- **[EP Redirects](/plugins/ep-redirects/)**. URL redirect manager with wildcards and 404 log.
-- **[EP Analytics](/plugins/ep-analytics/)**. Privacy-respecting server-side page view analytics. No cookies, no pixel.
 - **[EP Social Share](/plugins/ep-social-share/)**. Share buttons for X/Twitter, Facebook, LinkedIn, email.
-- **[EP Search](/plugins/ep-search/)**. Site search with results page, form shortcode, basic analytics.
 - **[EP Tracking](/plugins/ep-tracking/)**. Tracked short URLs with click analytics and conversion attribution.
+- **[EP Txt Files](/plugins/ep-txt-files/)**. Dynamic robots.txt and llms.txt served from admin settings.
 
 ### Privacy, security, auth
 
-- **[EP GDPR](/plugins/ep-gdpr/)**. Cookie consent, data subject requests, consent logging across EP Suite.
 - **[EP Bunny Fonts](/plugins/ep-bunny-fonts/)**. GDPR-compliant font delivery. Replaces Google Fonts with Bunny Fonts.
+- **[EP GDPR](/plugins/ep-gdpr/)**. Cookie consent, data subject requests, consent logging across EP Suite.
 - **[EP Passkeys](/plugins/ep-passkeys/)**. Passwordless login via WebAuthn. *Not yet available, awaiting a PageMotor core change.*
 - **[EP Password Reset](/plugins/ep-password-reset/)**. Email-based password reset for admin accounts. *Not yet available, awaiting a PageMotor core change.*
 
 ### Operations, AI, admin
 
-- **[EP Assistant](/plugins/ep-assistant/)**. Customer-facing AI website manager. Chat interface with nine LLM providers.
 - **[EP Agent](/plugins/ep-agent/)**. Claude Code CLI in your admin panel for server-side work.
-- **[EP Support](/plugins/ep-support/)**. AI support chatbot for admins. Knows every EP Suite plugin.
+- **[EP Assistant](/plugins/ep-assistant/)**. Customer-facing AI website manager. Chat interface with nine LLM providers.
+- **[EP Audit Log](/plugins/ep-audit-log/)**. Activity log for content, users, and plugin events.
+- **[EP Connect](/plugins/ep-connect/)**. Outbound webhooks for Zapier, Make, Slack, or any URL.
+- **[EP Diagnostics](/plugins/ep-diagnostics/)**. System report for support requests.
 - **[EP Helpdesk](/plugins/ep-helpdesk/)**. Support ticket system with AI-drafted replies.
+- **[EP Host Check](/plugins/ep-host-check/)**. Read-only host diagnostics. A green/amber/red report of what your hosting can and cannot do for PageMotor: file writes, outbound HTTPS and SMTP, PHP version, extensions and limits, each with a plain fix.
+- **[EP Maintenance](/plugins/ep-maintenance/)**. Coming-soon and maintenance-mode overlays.
 - **[EP MCP Bridge](/plugins/ep-mcp-bridge/)**. JSON-RPC API for remote PageMotor management via MCP clients.
 - **[EP Provisioning](/plugins/ep-provisioning/)**. Remote provisioning receiver for automated site setup.
-- **[EP Connect](/plugins/ep-connect/)**. Outbound webhooks for Zapier, Make, Slack, or any URL.
-- **[EP Audit Log](/plugins/ep-audit-log/)**. Activity log for content, users, and plugin events.
-- **[EP Diagnostics](/plugins/ep-diagnostics/)**. System report for support requests.
 - **[EP Scheduled Content](/plugins/ep-scheduled-content/)**. Publish pages at a scheduled future time.
-- **[EP Maintenance](/plugins/ep-maintenance/)**. Coming-soon and maintenance-mode overlays.
+- **[EP Support](/plugins/ep-support/)**. AI support chatbot for admins. Knows every EP Suite plugin.
+- **[EP WP Exporter](/plugins/ep-wp-exporter/)**. WordPress companion plugin. Install on a WordPress source site to produce a JSON snapshot for migration to PageMotor. Read-only.
 
 ## While you wait (or when in doubt)
 

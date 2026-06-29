@@ -1,8 +1,6 @@
 ---
 title: "EP Scheduled Content"
 description: "Schedule draft pages and posts for automatic publication at a future date and time. No manual intervention needed."
-sidebar:
-  order: 47
 ---
 
 EP Scheduled Content lets you write a page or post as a draft, set a publish date and time, then walk away. When the scheduled time arrives, the content goes live automatically.
@@ -55,19 +53,19 @@ Publish times are stored in the site's configured timezone (PageMotor settings �
 
 ## Troubleshooting
 
-### "Scheduled items aren't publishing"
+### “Scheduled items aren't publishing”
 
 PageMotor's scheduler needs to be working. Check `cron` is running on your server. A common cause of unreliable scheduling is disabled cron on shared hosting.
 
-### "Items publish hours later than scheduled"
+### “Items publish hours later than scheduled”
 
 The check interval determines how precise the timing is. With the 60-minute check interval, an item scheduled for 9:00am might not publish until 9:59am. Reduce the interval to 5 or 15 minutes for tighter timing.
 
-### "I scheduled for next week, the item is already live"
+### “I scheduled for next week, the item is already live”
 
 Check the date was saved correctly. Timezone confusion is the usual cause.
 
-### "I want to schedule an unpublish (retract) too"
+### “I want to schedule an unpublish (retract) too”
 
 Not currently supported. Auto-unpublish is a separate feature request in the review queue.
 

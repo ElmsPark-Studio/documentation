@@ -1,8 +1,6 @@
 ---
 title: "EP Sidebar"
 description: "Activates PageMotor's sidebar layout with manageable widget blocks. Pick which pages get sidebars and which widgets they contain."
-sidebar:
-  order: 51
 ---
 
 EP Sidebar activates PageMotor's built-in sidebar layout and gives you an admin UI to manage which widgets appear in it. Sidebars can be site-wide or per-page. Widget types include recent posts, text blocks, menu, RSS feed, and custom HTML.
@@ -79,19 +77,19 @@ Wraps any shortcode in a widget. Examples:
 
 ## Troubleshooting
 
-### "Sidebar doesn't appear on my site"
+### “Sidebar doesn't appear on my site”
 
 Check the theme's layout is set to include a sidebar. EP Sidebar activates the layout but the theme has to support it. Some landing-page themes deliberately don't.
 
-### "Widgets show in admin but nothing on the front end"
+### “Widgets show in admin but nothing on the front end”
 
 Check **Per-page Show sidebar** isn't set to off globally. Also double-check the theme layout.
 
-### "RSS widget is empty"
+### “RSS widget is empty”
 
 The feed URL is unreachable, or the feed is malformed. Test the feed URL in a browser — should see XML.
 
-### "Menu widget shows the wrong items"
+### “Menu widget shows the wrong items”
 
 Your menu was updated but the widget still references the old one. Re-pick the menu in the widget settings.
 

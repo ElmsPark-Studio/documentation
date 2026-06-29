@@ -1,8 +1,6 @@
 ---
 title: "EP Email AI Reply"
 description: "AI-powered draft replies for EP Email contact form submissions. Generates a professional draft response you can review, edit, and send."
-sidebar:
-  order: 25
 ---
 
 EP Email AI Reply adds an AI draft-reply feature to [EP Email](/plugins/ep-email/)'s submissions inbox. Open a contact form submission, click **Draft reply with AI**, get a draft response you can edit and send.
@@ -61,26 +59,26 @@ The reply goes out with your site's from-address via EP Email. The submission is
 
 ## Troubleshooting
 
-### "Draft button doesn't appear"
+### “Draft button doesn't appear”
 
 Check:
 - The plugin is activated.
 - An API key is saved in settings.
 - You're viewing a specific submission (not the list view).
 
-### "Draft fails with 'Unauthorized'"
+### “Draft fails with 'Unauthorized'”
 
 API key is wrong or expired. Rotate it.
 
-### "Draft takes ages to generate"
+### “Draft takes ages to generate”
 
 LLM provider is slow or rate-limited. Switch to a faster model or a different provider temporarily. Check your provider's status page.
 
-### "Drafts are being charged to my account but I'm not actually sending them"
+### “Drafts are being charged to my account but I'm not actually sending them”
 
 Cost is incurred when the draft is generated, not when you send it. If you're generating drafts and discarding them all, that's still billable tokens. Use the rate limit setting to cap generations.
 
-### "Draft answers a different question than the customer asked"
+### “Draft answers a different question than the customer asked”
 
 The AI sometimes misreads submissions, especially ones with unusual phrasing. Always read before sending. If a specific submission confuses the AI, file a note in the review queue — bad outputs help us improve the system prompt.
 

@@ -1,8 +1,6 @@
 ---
 title: "EP Ecommerce"
 description: "Information product ecommerce for PageMotor. Memberships, digital downloads, license keys, and subscriptions, with Stripe and PayPal via separate extensions."
-sidebar:
-  order: 18
 ---
 
 EP Ecommerce is the base plugin in a five-plugin family for selling information products from your PageMotor site. Memberships, digital downloads, license keys, bundles, and subscriptions. Payment providers (Stripe, PayPal) and checkout styling ship as separate extension plugins that hook into the same core.
@@ -125,23 +123,23 @@ Same pattern as `EP_Email_Extension`. See the Stripe and PayPal extensions for r
 
 ## Troubleshooting
 
-### "Checkout renders but no payment buttons appear"
+### “Checkout renders but no payment buttons appear”
 
 You need at least one payment extension installed and configured. Install EP Ecommerce Stripe or EP Ecommerce PayPal, paste API keys on their settings page, and the buttons render.
 
-### "Orders appear as Paid but no membership / download was granted"
+### “Orders appear as Paid but no membership / download was granted”
 
 Check the payment extension's webhook is configured correctly and reaching your site. Stripe / PayPal push async notifications; without webhooks, orders show as paid from the frontend flow but fulfilment doesn't fire.
 
-### "Download URLs expire too quickly"
+### “Download URLs expire too quickly”
 
 Configure per-product download token lifetime and max download count in the product's admin. Default is usually 24 hours and 3 downloads, which is deliberately conservative.
 
-### "License keys I generate aren't validating"
+### “License keys I generate aren't validating”
 
 Validation requires the software to call your site's license API with the key. If the software isn't coded to check, keys are cosmetic. This is about what the customer-facing software expects.
 
-### "I want to sell a custom product type that isn't one of the five"
+### “I want to sell a custom product type that isn't one of the five”
 
 Build a small EP Suite plugin that extends `EP_Ecommerce_Extension` and implements `product_types()` and `render_product_admin()`. Ask on the support forum for the current reference signatures.
 

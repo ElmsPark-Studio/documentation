@@ -1,8 +1,6 @@
 ---
 title: "EP Voice Messages"
 description: "Voice message recording widget for PageMotor. Visitors record audio in the browser, submission is transcribed, admin gets email notification with audio and transcript."
-sidebar:
-  order: 58
 ---
 
 EP Voice Messages adds a voice recording widget to PageMotor. Visitors click, record, and submit audio directly from their browser — no file uploads, no phone calls. The message is transcribed automatically, the admin gets an email notification with the audio file and the transcript.
@@ -77,23 +75,23 @@ From `[voice-messages-inbox]` on an admin-only page:
 
 ## Troubleshooting
 
-### "Record button doesn't request mic permission"
+### “Record button doesn't request mic permission”
 
 Browser quirk. Check the page is HTTPS (mic requires secure context). Some extensions block mic requests; test in incognito.
 
-### "Recording works but submission fails"
+### “Recording works but submission fails”
 
 Check max file size vs PHP upload limits. A 60-second recording is typically 500KB to 1MB. PHP defaults usually handle that, but if you have low limits, raise them.
 
-### "Transcript is inaccurate"
+### “Transcript is inaccurate”
 
 Whisper is usually very good but struggles with heavy accents, background noise, or unusual names. Transcripts are a convenience; the original audio is the source of truth.
 
-### "Admin notification didn't arrive"
+### “Admin notification didn't arrive”
 
 Check EP Email log. Also check the transcription finished — if transcription fails (API timeout), the whole job might fail.
 
-### "Audio files are filling up disk"
+### “Audio files are filling up disk”
 
 Auto-delete is on by default at 90 days. Verify. Or clean up manually from the storage path.
 

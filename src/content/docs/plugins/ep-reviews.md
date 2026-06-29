@@ -1,8 +1,6 @@
 ---
 title: "EP Reviews"
 description: "Product reviews for EP Ecommerce. Star ratings, verified-purchase badges, moderation, Schema.org Product + Review markup for rich search results."
-sidebar:
-  order: 45
 ---
 
 EP Reviews adds product reviews to [EP Ecommerce](/plugins/ep-ecommerce/) products. Customers leave a star rating and written review, verified purchasers get a badge, admin moderates, and the structured data lets your products appear with star ratings in search results.
@@ -83,23 +81,23 @@ Reviews sortable by helpfulness, so the most-helpful bubbles to the top.
 
 ## Troubleshooting
 
-### "Star rating doesn't appear in Google search results"
+### “Star rating doesn't appear in Google search results”
 
 Rich result eligibility depends on meeting Google's criteria beyond just valid schema: at least 5 reviews, review body must be substantive, product needs to be a real e-commerce product. Schema being right is necessary but not sufficient.
 
-### "Verified purchase badge isn't showing for genuine buyers"
+### “Verified purchase badge isn't showing for genuine buyers”
 
 The reviewer's email must match the email on their completed order exactly. If they used a different email to order vs review, no match. Consider requiring login-based reviews if this matters.
 
-### "Reviews are being spammed"
+### “Reviews are being spammed”
 
 Enable **Require approval**. Also enable the honeypot (already on by default). Consider **Verified purchase required** to block non-buyers entirely.
 
-### "A 1-star review is unfair — can I delete it?"
+### “A 1-star review is unfair — can I delete it?”
 
 You can, but think twice. Deleting legitimate negative reviews damages trust if customers notice. A public **Owner response** showing you addressed the concern is usually better PR.
 
-### "Helpful vote count reset to 0"
+### “Helpful vote count reset to 0”
 
 Cookie-based voting means votes are tied to the visitor's browser. If cookies clear or the visitor switches browsers, they can vote again. Aggregate counts should be stable though.
 

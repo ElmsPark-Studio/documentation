@@ -1,8 +1,6 @@
 ---
 title: "EP Booking Zoom"
 description: "Zoom meeting add-on for EP Booking. Creates a Zoom meeting automatically when a booking is confirmed, deletes it on cancellation. Server-to-Server OAuth."
-sidebar:
-  order: 10
 ---
 
 EP Booking Zoom is an add-on for [EP Booking](/plugins/ep-booking/). When a booking is confirmed, this plugin creates a Zoom meeting and puts the join link into the confirmation email. When the booking is cancelled, the Zoom meeting is deleted.
@@ -112,23 +110,23 @@ If for any reason EP Booking fires a confirmation event twice for the same booki
 
 ## Troubleshooting
 
-### "Test Connection succeeds but bookings still don't get Zoom links"
+### “Test Connection succeeds but bookings still don't get Zoom links”
 
 The scope you added is read-only. Go back to Zoom Marketplace → Scopes and add `meeting:write:admin` specifically. Read-only scopes are not enough to create meetings.
 
-### "Test Connection fails with invalid_client"
+### “Test Connection fails with invalid_client”
 
 Client ID or Client Secret is wrong. Regenerate the secret in Zoom Marketplace and paste again carefully. Secrets can have leading/trailing whitespace that breaks them.
 
-### "Meeting is created but the link is blank in the email"
+### “Meeting is created but the link is blank in the email”
 
 The placeholder `{zoom_url}` must be inside the EP Booking template for the relevant notification (confirmation / reminder). Edit the template from EP Booking's settings. Re-sending the email (via EP Email's delivery log) after fixing the template does NOT retroactively fill it — the substitution happens at send time.
 
-### "Cancellation deletes the booking but the Zoom meeting is still active"
+### “Cancellation deletes the booking but the Zoom meeting is still active”
 
 Check the Zoom Marketplace app is still activated. If the app was deactivated after the meeting was created, the delete API call will fail silently. Re-activate the app.
 
-### "Customers complain the start time in Zoom doesn't match my site"
+### “Customers complain the start time in Zoom doesn't match my site”
 
 The timezone setting in this plugin must match your EP Booking timezone. They are separate settings because Zoom requires its own timezone on the meeting object.
 

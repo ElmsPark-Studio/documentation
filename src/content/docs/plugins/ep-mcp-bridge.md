@@ -1,8 +1,6 @@
 ---
 title: "EP MCP Bridge"
 description: "JSON-RPC API for remote PageMotor content and plugin management. Lets Claude Desktop, Claude Code, or any MCP-aware client drive your site from outside."
-sidebar:
-  order: 37
 ---
 
 EP MCP Bridge exposes your PageMotor site through the Model Context Protocol. With it installed, a remote MCP client (Claude Desktop, Claude Code, or any MCP-aware tool) can read your content, edit it, invoke plugin actions, and run admin tasks without opening a browser.
@@ -117,26 +115,26 @@ Every request is logged with timestamp, API key name (not the key itself), tool 
 
 ## Troubleshooting
 
-### "My client can't connect"
+### “My client can't connect”
 
 Check:
 - URL is correct, including the `?ep_mcp_bridge=1` query parameter.
 - Authorization header uses `Bearer` format.
 - The API key matches a key saved in the plugin (keys can be disabled individually).
 
-### "I get 403 Forbidden"
+### “I get 403 Forbidden”
 
 Either the key is invalid, disabled, or your IP isn't in the allowlist for that key.
 
-### "A tool I expected isn't available"
+### “A tool I expected isn't available”
 
 Check the API key's scopes. A key without `write_content` cannot invoke `create_page`, `update_page`, or `delete_page`.
 
-### "Tool invocation succeeds but the result is wrong"
+### “Tool invocation succeeds but the result is wrong”
 
 Check the audit log for the full parameters sent. The AI might be passing arguments you don't expect. Refine the AI's prompt or tighten the scope.
 
-### "I want to rotate a key"
+### “I want to rotate a key”
 
 Create a new key with the same scopes. Update your client to use it. Delete the old key.
 

@@ -1,8 +1,6 @@
 ---
 title: "EP Editor"
 description: "Visual inline page editor for PageMotor. Admins click text on the live site and edit in place with a floating toolbar. No admin panel trip required. Work in progress."
-sidebar:
-  order: 23
 ---
 
 EP Editor puts a frontend inline editor on your live site for admins. Click any text, get a floating toolbar, type directly into the page. Changes save back to the database without ever opening the admin panel.
@@ -60,19 +58,19 @@ Non-admin visitors never trigger any of this. The plugin checks auth on page loa
 
 ## Troubleshooting
 
-### "I don't see the toolbar when I click text"
+### “I don't see the toolbar when I click text”
 
 Check **Settings → EP Editor → Enabled** is on. Refresh the page. Check the browser console for JS errors.
 
-### "I clicked text but nothing happens"
+### “I clicked text but nothing happens”
 
 Not every text element is editable. Some content is rendered from shortcodes or plugin output and doesn't map cleanly to a saveable field. The editor only attaches to elements it knows how to save.
 
-### "Changes don't persist"
+### “Changes don't persist”
 
 Check the network tab during save. If the save request fails, the error message tells you why. Common causes: session expired, CSRF token invalid after sitting open for hours.
 
-### "I edited the wrong thing by accident"
+### “I edited the wrong thing by accident”
 
 Undo is not currently supported in the inline editor. Reload the page before saving to discard changes. If you already saved, restore from PageMotor's revision history if your install keeps them.
 

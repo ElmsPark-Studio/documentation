@@ -1,8 +1,6 @@
 ---
 title: "EP Audit Log"
 description: "Activity log for PageMotor. Tracks content changes, user registrations, and logins via passive database observation, with a public log API for other plugins."
-sidebar:
-  order: 8
 ---
 
 EP Audit Log is a simple activity log. It watches your database for changes to content, users, and logins and records what happened, when, and by whom. Other plugins can also record their own events through a public API.
@@ -66,15 +64,15 @@ Entries older than your configured retention are deleted automatically during a 
 
 ## Troubleshooting
 
-### "Events appear in the log up to 30 seconds after they happen"
+### “Events appear in the log up to 30 seconds after they happen”
 
 That's the observation throttle. The plugin runs its database scan at most every 30 seconds. If you need real-time audit, use `EP_Audit_Log::log()` directly from your event source.
 
-### "Failed logins don't appear"
+### “Failed logins don't appear”
 
 Failed logins are not currently tracked by the automatic observer — only successful ones. If you need them, log them explicitly from your auth code via the static `log()` method.
 
-### "I cleared the log but it looks like entries are coming back"
+### “I cleared the log but it looks like entries are coming back”
 
 The log is cleared with a SQL `TRUNCATE`, but as soon as anyone creates or edits content, the next 30-second scan captures that and logs it. That is working as intended.
 

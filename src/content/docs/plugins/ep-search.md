@@ -1,8 +1,6 @@
 ---
 title: "EP Search"
 description: "Site search for PageMotor. Search form shortcode, results page, title and body matching, basic filtering, optional search analytics."
-sidebar:
-  order: 48
 ---
 
 EP Search adds site search to PageMotor. Drop in a search form shortcode, and a dedicated results page renders matches across your content. Basic but reliable full-text search.
@@ -61,22 +59,22 @@ Useful for spotting content gaps.
 
 ## Troubleshooting
 
-### "Search returns no results for terms I know are in my content"
+### “Search returns no results for terms I know are in my content”
 
 Check:
 - The content is Published, not Draft.
 - The content type is in the "include" list in settings.
 - The terms actually appear — search is literal, not fuzzy. "CEO" won't match "Chief Executive Officer".
 
-### "Results page returns 404"
+### “Results page returns 404”
 
 The page at the Results page URL (default `/search/`) needs to exist and contain `[ep-search-results]`. Create it.
 
-### "Highlighting breaks page styling"
+### “Highlighting breaks page styling”
 
 Highlighting wraps matches in `<mark>` tags. If your theme styles `<mark>` oddly, the highlights look wrong. Override in your theme's CSS.
 
-### "Search is slow on a large site"
+### “Search is slow on a large site”
 
 `LIKE '%query%'` queries don't use indexes. On sites with thousands of pages, search slows. If this becomes a problem, consider external search (Algolia, Meilisearch) via a custom integration — EP Search is deliberately simple.
 

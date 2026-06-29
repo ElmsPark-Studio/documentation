@@ -1,8 +1,6 @@
 ---
 title: "EP Membership"
 description: "Public membership for PageMotor. Registration, login, profiles, password management, and access control for gated content and courses."
-sidebar:
-  order: 38
 ---
 
 EP Membership gives your PageMotor site a public-user authentication layer. Visitors register, log in, manage their profile, and you gate content or courses behind membership. Pairs naturally with [EP Courses](/plugins/ep-courses/) and [EP Ecommerce Subscriptions](/plugins/ep-ecommerce-subscriptions/) for paid members-only content.
@@ -113,23 +111,23 @@ Configurable in settings. Common options:
 
 ## Troubleshooting
 
-### "Registration form says email already exists but the user doesn't remember registering"
+### “Registration form says email already exists but the user doesn't remember registering”
 
 Search the members admin by email. If the email exists, the user has an account they forgot about. Send them a password reset via EP Password Reset.
 
-### "Member can log in but can't see gated content"
+### “Member can log in but can't see gated content”
 
 Check their member level matches the gate's required level. A Free member cannot access Pro content unless you upgrade them.
 
-### "Logins work but the session doesn't persist"
+### “Logins work but the session doesn't persist”
 
 Check cookies are being set correctly. Common cause: session cookie's `Secure` flag is on but the site is being accessed via HTTP. Ensure HTTPS is the only way in.
 
-### "Password reset emails aren't arriving"
+### “Password reset emails aren't arriving”
 
 EP Email and EP Password Reset are both required. Check both are active. Check EP Email's delivery log for the specific send.
 
-### "Subscription subscriber doesn't have membership despite paying"
+### “Subscription subscriber doesn't have membership despite paying”
 
 Check EP Ecommerce Subscriptions has a mapping from the subscription product to a membership level. Without the mapping, payment doesn't trigger membership grant.
 

@@ -1,8 +1,6 @@
 ---
 title: "EP Maintenance"
 description: "Coming-soon and maintenance-mode overlays for your PageMotor site. Whitelisted admin access, configurable page, email capture for launches."
-sidebar:
-  order: 36
 ---
 
 EP Maintenance puts a coming-soon or maintenance page in front of your site while keeping the admin and whitelisted users working normally. Useful pre-launch, during a big update, or when something is broken and you need to take the site off the air temporarily.
@@ -98,23 +96,23 @@ This matters for SEO. Returning 503 on a long-lived "coming soon" page can cause
 
 ## Troubleshooting
 
-### "I set mode to Coming Soon but I still see the real site"
+### “I set mode to Coming Soon but I still see the real site”
 
 You're probably logged in as admin. That's working as intended. Open an incognito window to see what visitors see.
 
-### "My office team sees the overlay despite being whitelisted"
+### “My office team sees the overlay despite being whitelisted”
 
 Verify the whitelisted IP is correct. Your apparent IP might be different from what you expect (corporate VPN, mobile hotspot). Check what [ifconfig.me](https://ifconfig.me) says from the affected machine.
 
-### "Webhook endpoint returns 503 even though I whitelisted the path"
+### “Webhook endpoint returns 503 even though I whitelisted the path”
 
 Path match must be exact. If your webhook is at `/wh/stripe/` and you whitelisted `/webhooks/`, they won't match. Be specific.
 
-### "Search engines keep crawling my site during maintenance"
+### “Search engines keep crawling my site during maintenance”
 
 Make sure mode is set to Maintenance (returns 503), not Coming Soon (returns 200). Also check your robots.txt isn't still indicating "crawl everything".
 
-### "Email capture form submissions aren't saving"
+### “Email capture form submissions aren't saving”
 
 Check EP Email is installed and configured (for the submission to go through EP Email's processing). Check the newsletter list ID in settings is valid.
 

@@ -1,8 +1,6 @@
 ---
 title: "EP Txt Files"
 description: "Dynamically serve robots.txt and llms.txt from the PageMotor admin. Edit through a UI instead of FTP. Version history included."
-sidebar:
-  order: 57
 ---
 
 EP Txt Files dynamically serves `/robots.txt` and `/llms.txt` from PageMotor's settings rather than files on disk. Edit through the admin UI, see version history, have changes go live instantly. No FTP, no cache-busting, no forgotten deploys.
@@ -89,7 +87,7 @@ Click an old version to revert.
 
 ## Troubleshooting
 
-### "/robots.txt still serves the old version"
+### “/robots.txt still serves the old version”
 
 Check:
 - The plugin is active.
@@ -97,15 +95,15 @@ Check:
 - Your web server isn't serving a physical `robots.txt` file that overrides the plugin. Remove or rename any file at `/robots.txt` on disk.
 - Your CDN isn't caching the old version. Purge the CDN.
 
-### "I broke robots.txt and now Google can't crawl my site"
+### “I broke robots.txt and now Google can't crawl my site”
 
 Revert to a previous version from the history. Or use the default starter content.
 
-### "I don't know what to put in llms.txt"
+### “I don't know what to put in llms.txt”
 
 Start simple. A one-line description and links to your 5 most important pages is enough. The spec at [llmstxt.org](https://llmstxt.org) has examples.
 
-### "Cache-Control is ignored"
+### “Cache-Control is ignored”
 
 Your CDN or hosting provider might override. Check the response headers in browser dev tools. If the CDN is overriding, configure it to respect origin cache headers.
 

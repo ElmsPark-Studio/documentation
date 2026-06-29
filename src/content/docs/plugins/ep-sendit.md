@@ -1,8 +1,6 @@
 ---
 title: "EP SendIt"
 description: "ElmsPark Email (send.elmspark.com) transport driver for EP Email. Managed delivery powered by AWS SES. Single-API-key setup."
-sidebar:
-  order: 49
 ---
 
 EP SendIt is a transport driver for [EP Email](/plugins/ep-email/) that routes mail through [send.elmspark.com](https://send.elmspark.com) — ElmsPark's managed delivery service, backed by AWS SES. Single API key, no SMTP config, no bounces to handle manually.
@@ -57,15 +55,15 @@ The settings page shows:
 
 ## Troubleshooting
 
-### "API key rejected"
+### “API key rejected”
 
 Copy the key again from send.elmspark.com. Check for whitespace.
 
-### "Emails not delivering"
+### “Emails not delivering”
 
 Domain verification is probably incomplete. Check status on send.elmspark.com. Fix DNS if records are missing.
 
-### "I have both EP SendIt and EP Email ElmsPark — which wins?"
+### “I have both EP SendIt and EP Email ElmsPark — which wins?”
 
 EP Email lets you pick one transport at a time in its SMTP settings. Pick whichever is configured. They don't conflict if only one is selected.
 

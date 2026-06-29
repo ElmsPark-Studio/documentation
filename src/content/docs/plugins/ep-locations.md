@@ -1,8 +1,6 @@
 ---
 title: "EP Locations"
 description: "Multi-location LocalBusiness schema for PageMotor with built-in store finder. MapLibre + MapTiler tiles, postcode search, GDPR consent gating, six EU languages."
-sidebar:
-  order: 33
 ---
 
 EP Locations turns a PageMotor site into a multi-location operator's home: a `Location` content type so you create branches like any other PageMotor content, full Schema.org LocalBusiness emission per branch, and a built-in store finder shortcode with map, postcode search and "Use my location" geolocation. GDPR consent gating wraps the public finder when EP GDPR is installed.
@@ -137,27 +135,27 @@ When EP GDPR is active, none of these fire until the visitor has accepted analyt
 
 ## Troubleshooting
 
-### "I added a Location but it's not appearing in the finder"
+### “I added a Location but it's not appearing in the finder”
 
 Check three things in order: (1) is the Location's status set to **Live**? (2) does it have geo coordinates filled in? (the finder needs lat/lng to plot the marker); (3) is the EP Locations Master Switch on?
 
-### "The map is blank"
+### “The map is blank”
 
 Most likely no MapTiler API key. Go to **EP Locations → Settings → Finder** and paste your MapTiler key. The map style dropdown will populate too.
 
-### "The consent gate is blocking my finder even though I'm an admin"
+### “The consent gate is blocking my finder even though I'm an admin”
 
 Admins are not exempt from the consent gate. Click **Open cookie settings** in the gate, accept analytics, and the finder will load. Or temporarily deactivate EP GDPR to test the finder without the gate.
 
-### "Look up coordinates fills in 0, 0 (or wrong location)"
+### “Look up coordinates fills in 0, 0 (or wrong location)”
 
 The address was too vague for Nominatim. Add more specificity (full street, town, country) and try again. Manual entry of lat/lng always wins — Nominatim is a one-shot helper.
 
-### "Two Organization nodes are emitting on every page"
+### “Two Organization nodes are emitting on every page”
 
 EP SEO and EP Locations are both emitting an Organization. Switch the **Coexistence mode** under EP Locations → Settings → Integration to **Merged**, save, and reload.
 
-### "A branch I deleted is still showing up in Google search results"
+### “A branch I deleted is still showing up in Google search results”
 
 Schema only controls what you tell search engines today. Google's index updates on its own crawl cycle, typically 1–4 weeks. Be patient or request re-crawl through Google Search Console.
 

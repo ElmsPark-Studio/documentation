@@ -1,8 +1,6 @@
 ---
 title: "EP Ecommerce Subscriptions"
 description: "Recurring billing for EP Ecommerce. Provider-agnostic subscription lifecycle, automatic membership grants, UK/EU compliance, dunning and grace periods, self-service portal."
-sidebar:
-  order: 22
 ---
 
 EP Ecommerce Subscriptions adds recurring billing to [EP Ecommerce](/plugins/ep-ecommerce/). Works with Stripe and PayPal as payment providers, handles the full subscription lifecycle from activation through renewal, cancellation, and expiration, and automatically grants and revokes membership access as payments succeed or fail.
@@ -122,27 +120,27 @@ These comply with the UK Consumer Rights Act and EU Consumer Rights Directive de
 
 ## Troubleshooting
 
-### "Subscription activated but access wasn't granted"
+### “Subscription activated but access wasn't granted”
 
 Check the membership-level mapping on the product. If the product doesn't map to a membership level, the plugin doesn't know what to grant.
 
-### "Cancelled subscriptions still have access"
+### “Cancelled subscriptions still have access”
 
 Cancellation policy is probably End-of-period. Access stays until paid-through. If you want Immediate, change the policy setting.
 
-### "Failed payments aren't triggering dunning emails"
+### “Failed payments aren't triggering dunning emails”
 
 Check EP Email is installed, configured, and queuing emails correctly. Also check the webhook is being received — if the provider can't notify you of the failure, the plugin never knows.
 
-### "Customer paid via PayPal and never activated"
+### “Customer paid via PayPal and never activated”
 
 Check PayPal webhook is receiving events. `BILLING.SUBSCRIPTION.ACTIVATED` is the one that flips the subscription to Active. Event history is in the PayPal Developer Dashboard.
 
-### "I want to extend a subscription by N days manually"
+### “I want to extend a subscription by N days manually”
 
 Edit the subscription row's paid-through date via SQL, or through EP Assistant with a prompt like "extend subscription ID 42 by 30 days". No built-in admin UI for this yet.
 
-### "Affiliate didn't get credit for the renewal"
+### “Affiliate didn't get credit for the renewal”
 
 EP Affiliate's recurring commission setting must be enabled. If it's off, only first-time conversions trigger commissions.
 

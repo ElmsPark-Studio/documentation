@@ -1,8 +1,6 @@
 ---
 title: "EP RSS"
 description: "RSS 2.0 and Atom 1.0 feed generation for PageMotor. Auto-publishes feeds at conventional URLs with configurable content filters."
-sidebar:
-  order: 46
 ---
 
 EP RSS adds RSS 2.0 and Atom 1.0 feed generation to PageMotor. Visitors and feed readers (Feedly, Inoreader, NetNewsWire) can subscribe to your content. Search engines also consume feeds for faster indexing.
@@ -55,19 +53,19 @@ Useful when you want a separate feed for a blog category, a newsletter archive, 
 
 ## Troubleshooting
 
-### "/feed/ returns a 404"
+### “/feed/ returns a 404”
 
 PageMotor's router needs to recognise the feed URL. Check the plugin is active. Also check you don't have a page at the path `/feed/` that's taking precedence.
 
-### "Feed validates but my reader doesn't update"
+### “Feed validates but my reader doesn't update”
 
 Feed readers poll on their own schedule (usually every hour). Adding content doesn't instantly appear in the reader. Wait.
 
-### "Items per feed setting isn't respected"
+### “Items per feed setting isn't respected”
 
 Double-check the setting saved. Also check your reader isn't pulling from a cached URL with different parameters.
 
-### "Images in the feed don't load"
+### “Images in the feed don't load”
 
 Check the image URLs are absolute (include `https://yoursite.com/`). Relative URLs in feed content don't resolve in most readers.
 

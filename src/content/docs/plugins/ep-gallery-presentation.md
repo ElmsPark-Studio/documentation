@@ -1,8 +1,6 @@
 ---
 title: "EP Gallery Presentation"
 description: "Master crop, gallery frame aspect ratios, focal point picker, and per-image display settings for EP Gallery. Photographer-grade presentation controls."
-sidebar:
-  order: 32
 ---
 
 EP Gallery Presentation adds photographer-grade presentation controls to [EP Gallery](/plugins/ep-gallery/). Master crop with revert, aspect-ratio frame options on the grid, focal-point picker so cropped frames keep the important part of the image, and per-image display settings.
@@ -102,19 +100,19 @@ All backward-compatible: EP Gallery works without Presentation installed.
 
 ## Troubleshooting
 
-### "Aspect-ratio frame attribute has no effect"
+### “Aspect-ratio frame attribute has no effect”
 
 Confirm EP Gallery Presentation is installed and activated. Without it, `aspect` on the shortcode is inert.
 
-### "Focal point doesn't seem to keep the subject in frame"
+### “Focal point doesn't seem to keep the subject in frame”
 
 Double-check the focal point is where you think it is. Re-open the image edit panel and look at the marker. Focal point uses 0-100 on each axis; (50, 50) is dead centre.
 
-### "Master crop revert doesn't work"
+### “Master crop revert doesn't work”
 
 The original file needs to be preserved. Check the `preserved_originals/` directory in your uploads exists and is writable. If it's missing, the plugin can't revert.
 
-### "Cropping a large image fails with a memory error"
+### “Cropping a large image fails with a memory error”
 
 GD needs roughly 4x the pixel dimensions in RAM. For a 6000x4000 photo that's about 100MB. Raise PHP `memory_limit` to 256M or higher.
 

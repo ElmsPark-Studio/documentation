@@ -1,8 +1,6 @@
 ---
 title: "EP SEO"
 description: "SEO essentials for PageMotor. Open Graph, Twitter Card, favicon, Schema.org structured data. Per-page overrides and site-wide defaults."
-sidebar:
-  order: 50
 ---
 
 EP SEO adds the SEO essentials PageMotor core doesn't: Open Graph tags so links preview nicely on social media, Twitter Card tags for Twitter/X, favicon configuration, and Schema.org structured data. All with site-wide defaults and per-page overrides. v1.5 adds full six-EU-language admin UI and a coexistence handshake with EP Local Business / EP Locations so the Schema.org graph stays clean when one of those is also installed.
@@ -100,23 +98,23 @@ Switch UI language from the EP Suite language dropdown in the admin nav.
 
 ## Troubleshooting
 
-### "Link preview on Facebook shows old image"
+### “Link preview on Facebook shows old image”
 
 Facebook caches Open Graph data aggressively. Use their [Sharing Debugger](https://developers.facebook.com/tools/debug/) to force-refresh the cache.
 
-### "Twitter/X link preview is broken"
+### “Twitter/X link preview is broken”
 
 Test in [the Card Validator](https://cards-dev.twitter.com/validator). Common causes: OG image URL is wrong, image is too small, image is blocked by robots.txt.
 
-### "Favicon doesn't update after I uploaded a new one"
+### “Favicon doesn't update after I uploaded a new one”
 
 Browsers cache favicons aggressively. Try hard refresh (Cmd+Shift+R), or incognito mode, or a different browser. If still wrong, check the image path is actually updated in your site's head.
 
-### "Rich results test shows 'unnamed property' warnings"
+### “Rich results test shows 'unnamed property' warnings”
 
 One of your schema fields is empty. Check the Organisation schema setting has all required fields. If a per-page override is partial, complete it or remove it.
 
-### "I don't want OG tags on a specific page"
+### “I don't want OG tags on a specific page”
 
 Set **Noindex** on the page's content options. Most plugins (including EP SEO) will skip rich metadata on noindex pages.
 

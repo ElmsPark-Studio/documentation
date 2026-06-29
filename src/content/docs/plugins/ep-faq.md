@@ -1,8 +1,6 @@
 ---
 title: "EP FAQ"
 description: "FAQ management for PageMotor with accordion display, search, Schema.org FAQPage structured data, voting, and analytics. Import from Markdown or JSON."
-sidebar:
-  order: 30
 ---
 
 EP FAQ is a proper FAQ plugin for PageMotor. Database-backed questions grouped into categories, accordion display, visitor search, Schema.org FAQPage markup for rich-result eligibility, and voting so you can see which answers help and which don't.
@@ -118,23 +116,23 @@ Search is client-side JavaScript. On very large FAQs (hundreds of questions), pe
 
 ## Troubleshooting
 
-### "Rich results test shows no FAQ schema"
+### “Rich results test shows no FAQ schema”
 
 Confirm the `[faq]` shortcode is on the page. Schema is only emitted when the shortcode is rendered. Also check your page has at least one active question in an active category, otherwise nothing to mark up.
 
-### "Search doesn't find a question I know is there"
+### “Search doesn't find a question I know is there”
 
 Check the question is `status = active`. Inactive questions don't render, so search can't find them.
 
-### "Voting buttons do nothing"
+### “Voting buttons do nothing”
 
 Check browser console for JS errors. Also check that AJAX endpoints are reachable — voting is an AJAX call, and something blocking it (CSP, cache) will break it.
 
-### "Import from Markdown puts everything in 'Uncategorised'"
+### “Import from Markdown puts everything in 'Uncategorised'”
 
 Your Markdown must use `##` for category headings and `###` for questions. Other header levels aren't recognised. Check the shape against the example above.
 
-### "FAQ page loads slowly with many questions"
+### “FAQ page loads slowly with many questions”
 
 If you have 200+ questions and are rendering all of them, the accordion HTML + JS is heavy. Split into multiple pages by category using `[faq category=X]` on each.
 

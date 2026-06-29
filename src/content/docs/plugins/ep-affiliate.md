@@ -1,8 +1,6 @@
 ---
 title: "EP Affiliate"
 description: "Affiliate management for PageMotor — partner recruitment, referral tracking, commission tiers, payouts, coupons, creatives, and a self-service affiliate portal."
-sidebar:
-  order: 4
 ---
 
 EP Affiliate is a full affiliate programme for PageMotor. Recruit partners, track every referral via first-party cookie, calculate tiered commissions, process payouts, and give affiliates their own self-service portal with stats, marketing creatives, and a leaderboard.
@@ -129,11 +127,11 @@ Flagged referrals are held for manual review rather than auto-approved. Review t
 
 ## Troubleshooting
 
-### "Applications are not sending the admin email"
+### “Applications are not sending the admin email”
 
 Check EP Email is installed, activated, and has working SMTP. The plugin fires notifications through EP Email's queue, so if EP Email is broken, affiliate emails are queued but not sent.
 
-### "Referrals are not being tracked"
+### “Referrals are not being tracked”
 
 Three things to check:
 
@@ -141,15 +139,15 @@ Three things to check:
 2. Is the `?ref=CODE` making it to the page? If your infrastructure strips query strings (some caching layers do), attribution never happens.
 3. Is your site served over HTTPS? Mixed-content cookies can fail silently in some browsers.
 
-### "Commissions are not calculating"
+### “Commissions are not calculating”
 
 The plugin only calculates commission when your other plugin (ecommerce, bookings, whatever) reports a conversion to EP Affiliate. Check that your conversion source is calling the commission API.
 
-### "Affiliate cannot log into the portal"
+### “Affiliate cannot log into the portal”
 
 Send them a magic link from the Affiliates tab. This bypasses any forgotten credentials.
 
-### "A fraudulent affiliate is signing up repeatedly"
+### “A fraudulent affiliate is signing up repeatedly”
 
 Turn off **Registration open** temporarily. Review the Affiliates list, mark the bad account as fraudulent (this blocks future signups from the same email and IP).
 

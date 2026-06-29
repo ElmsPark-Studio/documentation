@@ -1,8 +1,6 @@
 ---
 title: "EP Support"
 description: "AI-powered support chatbot for PageMotor administrators. Full knowledge base of every EP Suite plugin, answers how-to questions in context."
-sidebar:
-  order: 54
 ---
 
 EP Support is an AI chatbot embedded in the PageMotor admin for you, the site owner. Ask it how to do something ("How do I set up Stripe in EP Booking?") and it answers in context, with knowledge of every EP Suite plugin. Distinct from [EP Assistant](/plugins/ep-assistant/) which is the customer-facing AI — this one is just for you.
@@ -73,23 +71,23 @@ Just: your question, what plugins you have installed, and relevant excerpts from
 
 ## Troubleshooting
 
-### "Chat panel doesn't appear"
+### “Chat panel doesn't appear”
 
 Plugin needs to be active and API key set. Check both.
 
-### "Responses are slow"
+### “Responses are slow”
 
 Depends on LLM provider. Switching from Opus to Sonnet speeds things up noticeably.
 
-### "Answer is outdated compared to a recent plugin update"
+### “Answer is outdated compared to a recent plugin update”
 
 The knowledge base updates with plugin releases but there's a lag. Use the most recent plugin documentation as the source of truth; EP Support is a conversation aid.
 
-### "Answer is confidently wrong"
+### “Answer is confidently wrong”
 
 LLMs hallucinate. Never act on an answer from EP Support for anything destructive without verifying in the real docs. Especially for config changes.
 
-### "I want the AI to know my specific custom setup"
+### “I want the AI to know my specific custom setup”
 
 Add context in the **Extra system prompt** setting: "This site sells made-to-measure curtains. Prices are in GBP. Orders are handled through EP Booking for consultations, not EP Ecommerce."
 

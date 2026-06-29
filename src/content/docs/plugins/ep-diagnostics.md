@@ -1,8 +1,6 @@
 ---
 title: "EP Diagnostics"
 description: "System diagnostics and environment report for PageMotor. One-click copy of your PHP/MySQL/server details plus active plugins, for sharing in support requests."
-sidebar:
-  order: 17
 ---
 
 EP Diagnostics is a single-purpose plugin: it generates a full report of your server environment, installed plugins, and client browser, and lets you copy the whole thing to your clipboard as plain text. When you contact support, paste the report into the email. No more "what PHP version are you on again?"
@@ -88,19 +86,19 @@ Nothing leaves your server unless you choose to share the report. No telemetry, 
 
 ## Troubleshooting
 
-### "Copy to clipboard doesn't work"
+### “Copy to clipboard doesn't work”
 
 Browser permissions on clipboard have tightened. Some browsers only allow clipboard writes on user-initiated clicks. If your browser blocks it, select the text manually and Cmd/Ctrl+C.
 
-### "The report says an extension is missing but I installed it"
+### “The report says an extension is missing but I installed it”
 
 The extension needs to be enabled for the SAPI PHP is running under (usually `fpm` for web). Check `/etc/php/8.2/fpm/conf.d/` for the extension's `.ini` file. Reload PHP-FPM after adding it.
 
-### "The report doesn't see my custom plugin"
+### “The report doesn't see my custom plugin”
 
 The plugin must be in `user-content/plugins/` and activated in the active theme to appear. Inactive plugins are listed separately with their status greyed out.
 
-### "I want to share the report but it contains information I'd rather not make public"
+### “I want to share the report but it contains information I'd rather not make public”
 
 The report is deliberately information-dense for support purposes. It doesn't contain credentials or personal data, but it does reveal your server software and versions. If you're pasting into a public forum, skim first and redact anything you're uncomfortable sharing.
 
