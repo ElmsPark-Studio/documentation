@@ -158,6 +158,29 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </ol>
   </nav>
 
+  <div class="note">
+    <strong>First time on a VPS? Start here.</strong>
+    <p style="margin:10px 0 6px">A VPS is a real computer that you control, and a few steps below ask you to run a command "on the server". Here is what that means, because it trips up nearly everyone the first time.</p>
+    <p style="margin:6px 0 4px"><strong>Three things, three different jobs:</strong></p>
+    <ul style="margin:4px 0 12px; padding-left:20px">
+      <li><strong>Claude Desktop (the chat app)</strong> is for asking questions. On its own it cannot reach your server. Claude <em>Code</em> can, once it is connected, which is exactly what this guide sets up.</li>
+      <li><strong>CloudPanel</strong> is your control panel: a web page for managing sites, databases and SSL. Point and click. It is not where you type server commands.</li>
+      <li><strong>A terminal</strong> is a plain text window connected to the server itself. This is where any command in this guide actually runs.</li>
+    </ul>
+    <p style="margin:6px 0 4px">So when you see a line like <code>chown -R ...</code>, it runs in a <strong>terminal on the VPS</strong>. Not in Claude, not in CloudPanel.</p>
+    <p style="margin:12px 0 4px"><strong>Two ways to open a terminal on your VPS:</strong></p>
+    <ol style="margin:4px 0 12px; padding-left:20px">
+      <li><strong>Browser terminal (easiest).</strong> In hPanel, open your VPS and click the <strong>Terminal</strong> button in the overview. A terminal opens in your browser, already logged in to your server. Paste your command and press Enter. Hostinger has a step-by-step with screenshots: <a href="https://www.hostinger.com/support/7978544-how-to-use-the-browser-terminal-in-hostinger/">How to use the Hostinger VPS Browser terminal</a>.</li>
+      <li><strong>SSH from your own computer.</strong> Open Terminal on a Mac, or PowerShell on Windows, and type <code>ssh root@YOUR-VPS-IP</code>. Your IP is on the Hostinger VPS page. Enter the root password when prompted. <strong>Note:</strong> as you type the password nothing appears on screen, no dots or stars. That is normal, just type it and press Enter.</li>
+    </ol>
+    <p style="margin:6px 0 4px"><strong>The details you swap into commands:</strong></p>
+    <ul style="margin:4px 0 12px; padding-left:20px">
+      <li><strong>VPS IP</strong> and <strong>root password</strong>: on your Hostinger VPS dashboard.</li>
+      <li><strong>Site User</strong> and <strong>site path</strong>: in CloudPanel. The path is usually <code>/home/SITEUSER/htdocs/yourdomain.com</code>.</li>
+    </ul>
+    <p style="margin:6px 0 0">When you are finished, type <code>exit</code> to leave. That is the whole mystery solved. The rest of this guide is the easy part.</p>
+  </div>
+
   <div class="step">
     <h2 id="s1"><span class="num">1</span><span class="t">Go to the Hostinger API page</span></h2>
     <p>Log into hPanel and click <strong>API</strong> in the left sidebar (under Dev tools). You land on the page Hostinger have built specifically for AI coding tools.</p>
@@ -212,7 +235,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <figure class="screenshot">
       <picture>
         <source srcset="img/03-json-config.webp" type="image/webp">
-        <img src="img/03-json-config.png" alt="The MCP JSON config block shown by Hostinger, with server entries for hosting, domains, DNS, billing, and VPS" width="1200" height="auto" loading="lazy">
+        <img src="img/03-json-config.png" alt="The MCP JSON config block shown by Hostinger, with a red callout pointing at the your-token-here placeholder and the instruction to replace every one with your real API token" width="1200" height="auto" loading="lazy">
       </picture>
       <figcaption>The exact JSON config Hostinger generates for you. Copy the whole block or click the Copy button on the page.</figcaption>
     </figure>
