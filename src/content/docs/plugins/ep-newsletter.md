@@ -163,6 +163,8 @@ The token is generated once and checked with a timing-safe compare; a wrong or m
 
 Access tiers follow the data each action touches: reads are `read-only` so an agent can report without write access, writes are `admin`, and `subscribe` is `producer` (a trusted caller).
 
+*1.2.1 adds autoresponder edit and delete actions, read actions for the queue and the send log, and a `delay_minutes` option on email steps so sequences can run sub-hour.*
+
 | Action | Access | Purpose |
 |---|---|---|
 | `list-lists` | read-only | All mailing lists with subscriber counts. |
@@ -179,14 +181,20 @@ Access tiers follow the data each action touches: reads are `read-only` so an ag
 | `send-campaign` | admin | Queue recipients and start sending now. |
 | `schedule-campaign` | admin | Schedule a draft to send at a future time. |
 | `create-autoresponder` | admin | Create an autoresponder series. |
-| `add-email` | admin | Add a timed email step to a series. |
+| `add-email` | admin | Add a timed email step to a series (delay in days, hours, and minutes). |
+| `update-autoresponder` | admin | Update a series (name, list binding, or active/paused status). |
+| `delete-autoresponder` | admin | Delete a series and all its email steps and pending queue items. |
+| `update-email` | admin | Update one email step (subject, body, delays, template). |
+| `delete-email` | admin | Delete one email step and its pending queue items. |
+| `get-autoresponder-queue` | admin | Read the autoresponder queue (pending, sent, failed, cancelled) with scheduled times, filterable by subscriber or status. |
 | `process-queue` | admin | Run the background queue now: due campaign batches, autoresponder emails, scheduled campaigns, and due digests. |
+| `list-send-log` | admin | Read the unified send log, newest first, filterable by `send_type`. |
 
 The API `subscribe` deliberately bypasses the per-domain cap and disposable-email blocklist that guard the public `[newsletter-form]`, because an authenticated API caller is trusted. This is the same reasoning as the `subscribe_external()` PHP path that EP Booking uses for checkout-time sign-ups.
 
 ## Delivery log
 
-*(new in 1.2.0)* Every newsletter send is recorded in a single table, `ep_newsletter_send_log`, whichever delivery route it took (an external driver, EP Email, EP Email's SMTP class, or the PHP mail fallback). Each row carries a `send_type` column (campaign, autoresponder, welcome, confirmation, transactional), the recipient, status, the driver used, the provider message id, and the related campaign and subscriber ids. One place to diagnose deliverability, instead of piecing it together from the queue tables.
+*(new in 1.2.0)* Every newsletter send is recorded in a single table, `ep_newsletter_send_log`, whichever delivery route it took (an external driver, EP Email, EP Email's SMTP class, or the PHP mail fallback). Each row carries a `send_type` column (campaign, autoresponder, welcome, confirmation, transactional), the recipient, status, the driver used, the provider message id, and the related campaign and subscriber ids. One place to diagnose deliverability, instead of piecing it together from the queue tables. Read it over the API with `list-send-log` (new in 1.2.1).
 
 ## Troubleshooting
 
