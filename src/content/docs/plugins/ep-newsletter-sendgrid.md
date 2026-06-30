@@ -30,7 +30,7 @@ If you send fewer than 1,000 emails a month and your SMTP provider is happy, you
 ## Installation
 
 1. Install **EP Newsletter** first.
-2. Download `ep-newsletter-sendgrid.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-newsletter-sendgrid.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-newsletter-sendgrid).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Open **Plugin Settings → EP Newsletter → Email delivery**.
 5. Select **SendGrid** as the driver.

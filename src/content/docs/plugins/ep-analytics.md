@@ -42,7 +42,7 @@ That's it. No external service accounts, no JavaScript SDK, no Google tag manage
 
 ## Installation
 
-1. **Download** `ep-analytics.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. **Download** `ep-analytics.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-analytics).
 2. Upload via **Plugins → Manage Plugins**.
 3. Activate. Tracking starts immediately.
 

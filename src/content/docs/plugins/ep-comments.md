@@ -32,7 +32,7 @@ Features:
 
 ## Installation
 
-1. Download `ep-comments.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-comments.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-comments).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Drop the `[comments]` shortcode on any page where you want comments.
 

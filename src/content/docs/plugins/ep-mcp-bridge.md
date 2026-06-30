@@ -55,7 +55,7 @@ Remote access is a real attack surface. EP MCP Bridge gates it carefully:
 
 ## Installation
 
-1. Download `ep-mcp-bridge.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-mcp-bridge.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-mcp-bridge).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP MCP Bridge**.
 4. Click **Create API key**. Give it a name, pick scopes, set IP allowlist if needed.

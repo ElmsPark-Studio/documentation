@@ -28,7 +28,7 @@ Structured data is emitted in two places:
 
 ## Installation
 
-1. Download `ep-breadcrumbs.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-breadcrumbs.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-breadcrumbs).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open your Theme Editor and add an **EP Breadcrumbs** instance to any Block. Most sites put it in the header Block above the page title.
 

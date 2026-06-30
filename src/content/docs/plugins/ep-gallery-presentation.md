@@ -49,7 +49,7 @@ Any image can override:
 ## Installation
 
 1. Install **EP Gallery** first.
-2. Download `ep-gallery-presentation.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-gallery-presentation.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-gallery-presentation).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 
 Once installed, new options appear in every image's admin edit panel.

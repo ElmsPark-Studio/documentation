@@ -64,12 +64,12 @@ To protect you from accidental charges, the engine holds each paid Prodigi order
 
 Install in this order, activating each before the next:
 
-1. **EP Ecommerce** (0.1.22+).
-2. **EP Ecommerce — POD** (the engine).
-3. **EP Ecommerce — Prodigi** (this connector).
-4. **EP Ecommerce — Stripe** (card payment).
+1. **[EP Ecommerce](https://updates.elmspark.com/download.php?plugin=ep-ecommerce)** (0.1.22+).
+2. **[EP Ecommerce — POD](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-pod)** (the engine).
+3. **[EP Ecommerce — Prodigi](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-prodigi)** (this connector).
+4. **[EP Ecommerce — Stripe](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-stripe)** (card payment).
 
-Download each from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest). Database tables are created automatically on first load.
+Database tables are created automatically on first load.
 
 ## Setup
 

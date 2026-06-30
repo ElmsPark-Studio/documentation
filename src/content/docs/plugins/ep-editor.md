@@ -35,7 +35,7 @@ Roadmap items. When they ship, this guide will be expanded.
 
 ## Installation
 
-1. Download `ep-editor.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-editor.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-editor).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP Editor** and tick **Enabled**.
 4. Visit any page on your site while logged in as admin. Click any text to start editing.

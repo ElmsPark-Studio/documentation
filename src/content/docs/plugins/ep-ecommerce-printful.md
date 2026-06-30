@@ -35,12 +35,12 @@ The **Test Connection** button checks this for you. It lists every store on your
 
 Install in this order, activating each before the next:
 
-1. **EP Ecommerce** (0.1.22+).
-2. **EP Ecommerce — POD** (the engine).
-3. **EP Ecommerce — Printful** (this connector).
-4. **EP Ecommerce — Stripe** (card payment).
+1. **[EP Ecommerce](https://updates.elmspark.com/download.php?plugin=ep-ecommerce)** (0.1.22+).
+2. **[EP Ecommerce — POD](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-pod)** (the engine).
+3. **[EP Ecommerce — Printful](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-printful)** (this connector).
+4. **[EP Ecommerce — Stripe](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-stripe)** (card payment).
 
-Download each from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest). Database tables are created automatically on first load.
+Database tables are created automatically on first load.
 
 ## Setup
 

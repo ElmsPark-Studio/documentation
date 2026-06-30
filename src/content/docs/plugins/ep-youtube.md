@@ -27,7 +27,7 @@ Optional: enable Self-Host Thumbnails to download each video's thumbnail to your
 
 ## Installation
 
-1. Download `ep-youtube.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-youtube.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-youtube).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP YouTube**.
 4. Defaults are sensible. No-Cookie Mode is on, default aspect ratio is 16:9, default thumbnail resolution is Standard. Most sites need nothing else.

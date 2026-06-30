@@ -25,7 +25,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Installation
 
-1. Download `ep-indexnow.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-indexnow.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-indexnow).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **EP IndexNow** settings, tick **Enable real-time URL submission**, and save. Your key and verification file are generated on save.
 

@@ -23,7 +23,7 @@ EP Dashboard works on its own, showing your active EP plugins as a set of chips.
 
 ## Installation
 
-1. Download `ep-dashboard.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-dashboard.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-dashboard).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open your PageMotor admin dashboard. The EP Suite Command Centre renders at the top.
 

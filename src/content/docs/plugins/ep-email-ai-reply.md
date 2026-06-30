@@ -28,7 +28,7 @@ The reply goes out through EP Email's normal SMTP config, so it's signed, tracke
 ## Installation
 
 1. Install **EP Email** first.
-2. Download `ep-email-ai-reply.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-email-ai-reply.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-ai-reply).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Configure your LLM provider API key in the plugin settings.
 

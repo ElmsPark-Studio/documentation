@@ -31,7 +31,7 @@ What it avoids:
 
 ## Installation
 
-1. Download `ep-social-share.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-social-share.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-social-share).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Add `[ep-social-share]` to any page or template.
 

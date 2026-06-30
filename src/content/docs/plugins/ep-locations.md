@@ -32,7 +32,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Installation
 
-1. Download the latest `ep-locations.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download the latest `ep-locations.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-locations).
 2. In PageMotor admin go to **Plugins → Manage Plugins → Upload**, select the zip, and activate.
 3. Go to **EP Locations → Settings**. Set the Master Switch on once you've created at least one Location and filled in the parent Organisation details.
 4. (Optional) Sign up at [maptiler.com](https://www.maptiler.com) for a free Cloud key and paste it into the Finder section of settings to enable map rendering.

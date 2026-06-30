@@ -40,7 +40,7 @@ Receives a signed JSON payload and applies the contents:
 
 EP Provisioning is typically installed as part of the fresh-site automation rather than manually. If you're setting up a provisioning target by hand:
 
-1. Download `ep-provisioning.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-provisioning.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-provisioning).
 2. Upload and activate.
 3. Open **Plugin Settings → EP Provisioning**.
 4. Click **Generate API key**.

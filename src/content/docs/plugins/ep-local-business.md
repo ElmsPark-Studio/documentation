@@ -33,7 +33,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Installation
 
-1. Download the latest `ep-local-business.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download the latest `ep-local-business.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-local-business).
 2. In PageMotor admin go to **Plugins → Manage Plugins → Upload**, select the zip, and activate.
 3. Click **EP Local Business** in the admin nav. The first thing to set is the Master Switch (off by default — schema only emits when you've filled in the basics and turned it on).
 

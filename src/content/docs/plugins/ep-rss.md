@@ -23,7 +23,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Installation
 
-1. Download `ep-rss.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-rss.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-rss).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open `https://yoursite.com/feed/` — should render a valid RSS feed of your latest content.
 

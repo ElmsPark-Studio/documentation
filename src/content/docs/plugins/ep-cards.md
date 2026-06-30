@@ -25,7 +25,7 @@ What you get:
 
 Standard PageMotor plugin install, under a minute.
 
-1. **Download.** Grab `ep-cards.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest) or the link in your ElmsPark account.
+1. **Download.** Grab `ep-cards.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-cards) or the link in your ElmsPark account.
 2. **Sign in to your PageMotor admin** at `yourdomain.com/admin/`.
 3. **Go to Plugins, then Manage Plugins.**
 4. **Upload the zip.** PageMotor extracts it to the correct location automatically.
@@ -165,7 +165,7 @@ EP Cards Importer uses this to tell the LLM that imported cards may already exis
 
 ## Migrating from Thesis Focus Cards
 
-Optional add-on: [EP Cards Importer](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/download/latest/ep-cards-importer.zip). Install alongside EP Cards and both plugins coordinate automatically.
+Optional add-on: [EP Cards Importer](https://updates.elmspark.com/download.php?plugin=ep-cards-importer). Install alongside EP Cards and both plugins coordinate automatically.
 
 The workflow:
 

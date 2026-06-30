@@ -33,7 +33,7 @@ The newer convention for guiding LLM crawlers (GPTBot, ClaudeBot, etc.) with a s
 
 ## Installation
 
-1. Download `ep-txt-files.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-txt-files.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-txt-files).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Check that `https://yoursite.com/robots.txt` now returns the plugin's version.
 

@@ -54,7 +54,7 @@ Optional but commonly paired:
 ## Installation
 
 1. Install EP Ecommerce, EP Ecommerce Products, and at least one payment extension (Stripe and/or PayPal).
-2. Download `ep-ecommerce-subscriptions.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-ecommerce-subscriptions.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-subscriptions).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 
 ## Creating a subscription product

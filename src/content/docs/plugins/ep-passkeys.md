@@ -29,7 +29,7 @@ Why passkeys:
 
 ## Installation
 
-1. Download `ep-passkeys.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-passkeys.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-passkeys).
 2. Upload it via **Plugins → Manage Plugins** and activate.
 3. Register a passkey from your account page, then sign in at `/?ep_passkey_login=1`.
 

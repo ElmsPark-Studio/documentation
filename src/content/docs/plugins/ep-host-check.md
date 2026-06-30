@@ -50,7 +50,7 @@ This replicates what PageMotor does when it compiles your design: it writes a te
 
 ## Installation
 
-1. Download `ep-host-check.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest). If you already run EP Suite plugins, it will also appear in your PageMotor admin under updates.
+1. Download `ep-host-check.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-host-check). If you already run EP Suite plugins, it will also appear in your PageMotor admin under updates.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP Host Check**. The report runs automatically.
 

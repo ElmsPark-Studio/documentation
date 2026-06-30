@@ -35,7 +35,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Installation
 
-1. Download `ep-sitemap.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-sitemap.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-sitemap).
 2. Upload via **Plugins, then Manage Plugins**. Activate.
 3. Visit `https://yoursite.com/sitemap.xml`. You should see XML.
 4. Submit the URL to Google Search Console (Indexing, then Sitemaps). Use the **Notify Bing** button on the settings page, or submit manually at bing.com/webmasters.

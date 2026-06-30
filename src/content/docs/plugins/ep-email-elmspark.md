@@ -30,7 +30,7 @@ ElmsPark Email bundles all of that behind a single API key. Sign up at [send.elm
 ## Installation
 
 1. Install **EP Email** first.
-2. Download `ep-email-elmspark.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-email-elmspark.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-elmspark).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Open **Plugin Settings → ElmsPark Email**.
 5. Paste your API key.

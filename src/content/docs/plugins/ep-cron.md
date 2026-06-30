@@ -25,7 +25,7 @@ EP Cron is optional for every other EP plugin: without it, each plugin keeps its
 
 ## Installation
 
-1. Download `ep-cron.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-cron.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-cron).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP Cron** and copy your heartbeat URL (below).
 

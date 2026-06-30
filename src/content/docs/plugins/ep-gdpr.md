@@ -49,7 +49,7 @@ Coordinates with (optional):
 
 ## Installation
 
-1. Download `ep-gdpr.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-gdpr.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-gdpr).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP GDPR** and work through the configuration.
 

@@ -28,7 +28,7 @@ Flow:
 
 ## Installation
 
-1. Download `ep-password-reset.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-password-reset.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-password-reset).
 2. Upload it via **Plugins → Manage Plugins** and activate.
 3. Make sure **EP Email** is installed and configured. The reset link is delivered through it.
 

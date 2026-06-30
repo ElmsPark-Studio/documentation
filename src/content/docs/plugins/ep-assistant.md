@@ -61,7 +61,7 @@ Every provider is configured with API key, model, and max tokens. Swap providers
 
 Typically installed as part of an automated provisioning flow driven by Discovery AI. If you are installing manually:
 
-1. **Download** `ep-assistant.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. **Download** `ep-assistant.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-assistant).
 2. Upload via **Plugins → Manage Plugins**.
 3. Activate.
 4. Open **Plugin Settings → EP Assistant** and set:

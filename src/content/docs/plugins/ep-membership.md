@@ -39,7 +39,7 @@ Optional:
 ## Installation
 
 1. Install EP Email and EP Password Reset first.
-2. Download `ep-membership.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-membership.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-membership).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Create pages for registration, login, and profile:
    - `[membership-register]` at `/register/`.

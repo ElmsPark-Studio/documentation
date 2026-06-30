@@ -31,7 +31,7 @@ Configuring SMTP well is fiddly. Getting into inboxes reliably requires SPF, DKI
 ## Installation
 
 1. Install **EP Email**.
-2. Download `ep-sendit.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-sendit.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-sendit).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Open **Plugin Settings → EP SendIt**.
 5. Paste your send.elmspark.com API key.

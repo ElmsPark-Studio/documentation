@@ -33,7 +33,7 @@ What you get:
 
 ## Installation
 
-1. **Download** `ep-affiliate.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. **Download** `ep-affiliate.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-affiliate).
 2. **Sign in to your PageMotor admin** at `yourdomain.com/admin/`.
 3. **Go to Plugins, then Manage Plugins.**
 4. **Upload the zip.**

@@ -39,7 +39,7 @@ Optional:
 ## Installation
 
 1. Install EP Email.
-2. Download `ep-newsletter.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-newsletter.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-newsletter).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Work through the settings sections below.
 

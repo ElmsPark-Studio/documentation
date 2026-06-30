@@ -46,7 +46,7 @@ Every message, auto-replied or flagged, is logged with full transcript so you ca
 ## Installation
 
 1. Install **EP Email** first.
-2. Download `ep-email-inbox.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-email-inbox.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-inbox).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Open **Plugin Settings → EP Email Inbox**.
 

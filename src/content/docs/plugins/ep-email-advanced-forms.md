@@ -29,7 +29,7 @@ Each field type plugs into EP Email's form-definition JSON and renders automatic
 ## Installation
 
 1. Install **EP Email** first.
-2. Download `ep-email-advanced-forms.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-email-advanced-forms.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-advanced-forms).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. The new field types are immediately available in EP Email form definitions.
 

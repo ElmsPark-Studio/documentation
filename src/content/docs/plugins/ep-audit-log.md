@@ -24,7 +24,7 @@ The plugin works by observing the database every 30 seconds rather than hooking 
 
 ## Installation
 
-1. Download `ep-audit-log.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-audit-log.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-audit-log).
 2. Upload via **Plugins → Manage Plugins**.
 3. Activate. Logging starts immediately.
 

@@ -34,7 +34,7 @@ If you need a public docs site today, EP Documents v0.3 lets you author and stag
 
 ## Installation
 
-1. Download the latest `ep-documents.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download the latest `ep-documents.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-documents).
 2. In PageMotor admin go to **Plugins → Manage Plugins → Upload**, select the zip, and activate.
 3. Click **EP Documents** in the admin nav to open the dashboard. The first time you load the page the plugin creates two database tables (`{prefix}ep_documents` and `{prefix}ep_documents_generations`).
 

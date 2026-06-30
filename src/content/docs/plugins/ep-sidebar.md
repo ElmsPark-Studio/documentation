@@ -27,7 +27,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Installation
 
-1. Download `ep-sidebar.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+1. Download `ep-sidebar.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-sidebar).
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open your Theme's configuration and enable the sidebar layout.
 4. Go to **Plugin Settings → EP Sidebar → Widgets** to add widgets.

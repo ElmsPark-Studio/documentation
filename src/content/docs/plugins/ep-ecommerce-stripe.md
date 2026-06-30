@@ -30,7 +30,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 ## Installation
 
 1. Install **EP Ecommerce** and **EP Ecommerce Products** first.
-2. Download `ep-ecommerce-stripe.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
+2. Download `ep-ecommerce-stripe.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-stripe).
 3. Upload via **Plugins → Manage Plugins**. Activate.
 
 ## Setting up Stripe
