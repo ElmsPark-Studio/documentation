@@ -19,7 +19,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 - **PageMotor 0.10b or later** (it renders into the 0.10 admin dashboard).
 - **EP Suite base class.**
 
-EP Dashboard works on its own, showing your active EP plugins as a set of chips. The data panels are contributed by the other EP plugins: activate EP Ecommerce, EP Cron, EP Newsletter, EP Email, EP Analytics, EP SEO or EP Events and each one adds its panel.
+EP Dashboard works on its own, showing your active EP plugins as a set of chips. The data panels are contributed by the other EP plugins: activate EP Ecommerce, EP Cron, EP Newsletter, EP Email, EP Analytics, EP SEO, EP IndexNow or EP Events and each one adds its panel.
 
 ## Installation
 
@@ -55,6 +55,10 @@ Views today and across the last seven days, the number of active pages, the huma
 
 A green/amber/red health roll-up, your sitemap URL count, social-card readiness, structured-data type, and any noindex pages, plus your social image and favicon source. See [EP SEO](/plugins/ep-seo/).
 
+### IndexNow (from EP IndexNow)
+
+A status pill (Active, Off, or a failure flag), the number of indexable pages changed since the last submission, how long ago it last ran, and the auto-submit cadence, with the last result and key status beneath. A quick read on whether changed URLs are reaching Bing, Yandex and the Bing-powered AI search engines. See [EP IndexNow](/plugins/ep-indexnow/).
+
 ### Events (from EP Events)
 
 Upcoming events and registration figures, so the next thing on the calendar is in front of you. See [EP Events](/plugins/ep-events/).
@@ -88,7 +92,7 @@ public function ep_dashboard_panel() {
 
 Every struct key is optional except `title`. `stats` renders the tile row, `table` (a `head` plus `rows`) renders a result table, `meta` a small label/value footer, and `body` injects any bespoke HTML after them — style it with the dashboard's own CSS variables (`--epd-muted`, `--epd-border-soft`, `--epd-green`, and so on) so it matches the theme. Prefer the struct for a consistent look; reach for raw HTML — return a string, or `array('html' => '…', 'priority' => N)` — when you want a fully custom panel. Keep every query read-only and guarded, since the method runs on each admin dashboard load.
 
-The shipped panels above (EP Ecommerce, EP Cron, EP Newsletter, EP Email, EP Analytics, EP SEO and EP Events) each provide their panel this way, so they are worth reading as worked examples.
+The shipped panels above (EP Ecommerce, EP Cron, EP Newsletter, EP Email, EP Analytics, EP SEO, EP IndexNow and EP Events) each provide their panel this way, so they are worth reading as worked examples.
 
 ## Troubleshooting
 
