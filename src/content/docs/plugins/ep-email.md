@@ -58,7 +58,7 @@ SMTP is the industry standard for sending email reliably. EP Email connects to y
 
 **Gmail users:** you will need an App Password. Regular passwords no longer work with SMTP. Go to your Google Account, then Security, then 2-Step Verification, then App Passwords.
 
-**VPS users:** most providers block outbound port 25, so direct server-to-server SMTP is not an option anyway. A dedicated SMTP provider like SendGrid, Mailgun or Postmark is the right answer.
+**VPS users:** most providers block outbound port 25, so direct server-to-server SMTP is not an option anyway. A dedicated provider like **Mailgun** (our recommended email delivery agent) is the right answer.
 
 ## Contact Forms
 

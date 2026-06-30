@@ -19,7 +19,7 @@ Core features:
 - **Double opt-in** with confirmation and welcome emails.
 - **Autoresponders** — timed sequences of emails triggered when someone subscribes.
 - **Automated digests** — daily, weekly, or monthly digests of new content on your site.
-- **Delivery extensions.** Swap in SendGrid, Mailgun, or a custom driver.
+- **Delivery extensions.** Swap in Mailgun (the recommended provider) or a custom driver.
 - **Webhook handling** for bounces and complaints from delivery services.
 - **PM API control** *(new in 1.2.0)* — manage lists, subscribers, campaigns and autoresponders over the PM API and MCP, no direct database access.
 - **Unified send log** *(new in 1.2.0)* — every send recorded in one table with a type/source column for deliverability diagnosis.
@@ -32,7 +32,7 @@ Core features:
 
 Optional:
 
-- **EP Newsletter SendGrid** for SendGrid delivery.
+- **EP Newsletter Mailgun** for Mailgun delivery (the recommended provider).
 - **EP GDPR** for consent logging on subscription.
 - **EP Affiliate** for affiliate-source tracking on subscription.
 
@@ -105,7 +105,7 @@ Four layers of defence against subscription form abuse, layered to catch differe
 
 ### Email delivery
 
-- **Driver.** EP Email built-in (uses your configured SMTP), SendGrid (via EP Newsletter SendGrid), or any registered third-party driver.
+- **Driver.** EP Email built-in (uses your configured SMTP), Mailgun (via EP Newsletter Mailgun, the recommended provider), or any registered third-party driver.
 - **Test connection** button.
 - **Check bounces** button — polls the driver's bounce API and marks bad addresses.
 
@@ -212,7 +212,7 @@ EP Email SMTP config is wrong, or emails are going to spam. Check EP Email's del
 
 ### “I'm hitting my SMTP provider's rate limit”
 
-Drop batch size, increase batch delay. If you're regularly sending thousands, consider EP Newsletter SendGrid which handles higher volumes more smoothly.
+Drop batch size, increase batch delay. If you're regularly sending thousands, consider EP Newsletter Mailgun which handles higher volumes more smoothly.
 
 ### “Bounce addresses keep receiving campaigns”
 

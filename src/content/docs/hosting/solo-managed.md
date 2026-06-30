@@ -19,7 +19,7 @@ One or two PageMotor sites, no hosting hassle. We provision the VPS, keep it pat
 - **Backups every night.** One-click restore if anything goes wrong.
 - **Free SSL.** Set up once, renews itself forever.
 - **Monthly core and plugin maintenance.** PageMotor and EP Suite updates tested and applied on a scheduled monthly window.
-- **Outbound email wired up.** SendGrid SMTP so contact form notifications, password resets and newsletter dispatch actually arrive.
+- **Outbound email wired up.** Mailgun so contact form notifications, password resets and newsletter dispatch actually arrive.
 - **Monitoring.** If the site goes down, we know before you do.
 - **Support.** Same-day email support for anything site-related.
 

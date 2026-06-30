@@ -26,7 +26,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Email Inbox](/plugins/ep-email-inbox/)**. AI-powered IMAP inbox handler with auto-reply.
 - **[EP Email Quiz](/plugins/ep-email-quiz/)**. Quiz field types with scoring and grading for EP Email forms.
 - **[EP Newsletter](/plugins/ep-newsletter/)**. Subscribers, lists, campaigns, autoresponders, content digests.
-- **[EP Newsletter SendGrid](/plugins/ep-newsletter-sendgrid/)**. SendGrid delivery driver for high-volume campaigns.
+- **[EP Newsletter SendGrid](/plugins/ep-newsletter-sendgrid/)**. Legacy SendGrid delivery driver. For new sites use EP Newsletter Mailgun (our recommended provider) instead.
 - **[EP Voice Messages](/plugins/ep-voice-messages/)**. Record-in-browser voice messages with auto-transcription.
 
 ### Ecommerce

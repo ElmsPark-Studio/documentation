@@ -83,7 +83,7 @@ Edit the three bracketed placeholders, hit Enter, watch it go. About 30 minutes 
 
 1. Open `https://yoursite.com/admin/` in your browser.
 2. Register. Whoever registers first becomes the administrator.
-3. Come back to Claude Code and ask it to install EP Email, EP Newsletter, EP Newsletter SendGrid, EP GDPR, EP Password Reset and EP Diagnostics. SendGrid is a third-party email relay service. Vultr blocks direct SMTP on port 25, so transactional email has to route through SendGrid or equivalent. The free tier covers most solo volumes.
+3. Come back to Claude Code and ask it to install EP Email, EP Newsletter, EP Newsletter Mailgun, EP GDPR, EP Password Reset and EP Diagnostics. Mailgun is our recommended email delivery service. Vultr blocks direct SMTP on port 25, so transactional email routes through Mailgun's API instead.
 
 That is the minimum plugin set for a real site.
 

@@ -20,7 +20,7 @@ One site, doing real work, and nobody on your team wants to become a sysadmin. W
 - **Best-effort 99.9 per cent uptime.** Monitored every 60 seconds, we are paged when the site stops responding. Not an SLA-backed guarantee; formal SLAs are available on request at higher tiers.
 - **Core and plugin maintenance.** PageMotor and EP Suite updates tested and applied in a scheduled monthly window.
 - **Security patching.** OS patches, SSH hardening, Fail2ban, firewall locked down to 22, 80 and 443.
-- **SMTP wired up.** Contact form notifications, password resets and newsletter dispatch via SendGrid.
+- **SMTP wired up.** Contact form notifications, password resets and newsletter dispatch via Mailgun.
 - **Support.** Same-day email support during UK working hours.
 
 ## What you bring

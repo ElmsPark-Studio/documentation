@@ -84,14 +84,14 @@ Edit the three bracketed placeholders, hit Enter, watch it run. About 30 minutes
 
 After registering your admin account at `/admin/`, ask Claude Code to install:
 
-- EP Email and EP Newsletter SendGrid (transactional email and broadcast).
+- EP Email and EP Newsletter Mailgun (transactional email and broadcast).
 - EP GDPR (cookie banner and privacy policy for UK and EU sites).
 - EP Password Reset (so password resets do not become your job).
 - EP Diagnostics (tells you what is wrong before your visitors do).
 
 ## Settings that matter at this scale
 
-- **SendGrid SMTP.** Vultr blocks outbound port 25. You will use SMTP relay. Free tier covers most SME volumes.
+- **Mailgun.** Vultr blocks outbound port 25, so route transactional and broadcast mail through Mailgun (our recommended provider) rather than direct SMTP.
 - **fastcgi_read_timeout 600.** Claude Code sets this. Verify in `/etc/nginx/sites-enabled/` if you do the bootstrap by hand.
 - **Auto Backups on.** $4.80 per month for sleep at night.
 - **Off-site backup of user-content and DB** on top of Vultr's snapshots. Weekly `restic` run to S3-compatible storage is standard practice.
