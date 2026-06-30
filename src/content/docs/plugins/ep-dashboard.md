@@ -1,26 +1,25 @@
 ---
 title: "EP Dashboard"
-description: "A branded command centre for the PageMotor 0.10 admin dashboard. Aggregates the health of your active EP Suite plugins into one screen: background-task heartbeat, newsletter audience and campaigns, and your active plugin set."
+description: "A branded Command Centre for the PageMotor 0.10 admin dashboard. Every active EP Suite plugin contributes its own panel: shop takings, background-task heartbeat, newsletter audience, email deliverability, site traffic, SEO health, events, and your active plugin set."
 ---
 
-EP Dashboard fills PageMotor 0.10's native admin dashboard with a branded EP Suite command centre. It gathers the state of whichever EP plugins you have active into one screen: your background-task heartbeat from EP Cron, your audience and campaign figures from EP Newsletter, and the EP plugins running on the site. The panels light up on their own as you activate more EP plugins.
+EP Dashboard fills PageMotor 0.10's native admin dashboard with a branded EP Suite Command Centre. Every EP plugin you have active contributes its own panel, so the screen you land on at login shows the health of your whole suite at a glance: shop takings, background-task heartbeat, newsletter audience, email deliverability, site traffic, SEO health, upcoming events, and the EP plugins running on the site. The panels assemble themselves — activate more EP plugins and their panels appear, in priority order, with nothing to configure.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Overview
 
-- **Native to PM 0.10.** PageMotor 0.10 added a real admin dashboard; EP Dashboard is the EP Suite's panel set for it, in the EP Suite house style.
-- **Background Tasks panel.** EP Cron's heartbeat (beating, stale, or down), and a count of registered, overdue, and dead tasks, with the live task table.
-- **Audience & Campaigns panel.** EP Newsletter's subscriber and campaign figures: total on file, active, pending, campaigns, sent in the last seven days, and the last campaign.
-- **Your EP Suite panel.** The EP plugins currently active, so you can see your suite at a glance.
-- **Self-assembling.** Each panel only appears when the plugin that feeds it is active. Activate more EP plugins and the relevant panels appear; there is nothing to configure.
+- **Native to PM 0.10.** PageMotor 0.10 added a real admin dashboard; EP Dashboard is the EP Suite's Command Centre for it, in the EP Suite house style.
+- **Every plugin brings its own panel.** EP Dashboard asks each active EP plugin for a panel and renders whatever it returns. The plugin owns its panel, so the figures are always the plugin's own and current, never a stale copy held by the dashboard.
+- **Self-assembling, priority-ordered.** A panel appears only when its plugin is active, and the panels sort into a sensible order (shop first, your active-plugin set last). There is nothing to configure.
+- **One glance.** Revenue, sends, traffic, deliverability, task heartbeat and SEO health, on the screen you see when you log in.
 
 ## Requirements
 
 - **PageMotor 0.10b or later** (it renders into the 0.10 admin dashboard).
 - **EP Suite base class.**
 
-The panels are populated by other EP plugins. With **EP Cron** active you get the background-tasks panel; with **EP Newsletter** active you get the audience and campaigns panel. EP Dashboard works on its own too, showing your active EP plugins.
+EP Dashboard works on its own, showing your active EP plugins as a set of chips. The data panels are contributed by the other EP plugins: activate EP Ecommerce, EP Cron, EP Newsletter, EP Email, EP Analytics, EP SEO or EP Events and each one adds its panel.
 
 ## Installation
 
@@ -30,21 +29,66 @@ The panels are populated by other EP plugins. With **EP Cron** active you get th
 
 ## The panels
 
+Each panel is provided by the plugin named, and appears only when that plugin is active.
+
+### Shop (from EP Ecommerce)
+
+Revenue and order counts for the last seven days and today, in your shop's main currency, with average order value and a pending-orders count, then a recent-sales list: the last five orders with their status, buyer, amount and time. See [EP Ecommerce](/plugins/ep-ecommerce/).
+
 ### Background Tasks (from EP Cron)
 
-The heartbeat status pill, a count of tasks, overdue tasks, and dead tasks, and a table of every registered task with its schedule and last result. It is a read-only summary of the [EP Cron](/plugins/ep-cron/) Background Tasks screen, surfaced where you land when you log in.
+The heartbeat status pill (beating, stale, or down), a count of registered, overdue and dead tasks, and a table of every task with its schedule and last result. A read-only view of the [EP Cron](/plugins/ep-cron/) Background Tasks screen, surfaced where you land when you log in.
 
 ### Audience & Campaigns (from EP Newsletter)
 
-Total subscribers on file, with active and pending counts, the number of campaigns, the count sent in the last seven days, and the last campaign sent. A quick read on your list and recent sending. See [EP Newsletter](/plugins/ep-newsletter/).
+Total subscribers on file, with active and pending counts, the number of campaigns, the count sent in the last seven days, and the last campaign. A quick read on your list and recent sending. See [EP Newsletter](/plugins/ep-newsletter/).
+
+### Email Deliverability (from EP Email)
+
+The active delivery transport (for example Mailgun over SMTP), emails sent and failures over the last seven days with the delivery rate, and a recent-failures list showing the reason for each. See [EP Email](/plugins/ep-email/).
+
+### Traffic (from EP Analytics)
+
+Views today and across the last seven days, the number of active pages, the human/bot split, and your top pages by views. Human and bot traffic are kept separate, so the headline figures are real people. See [EP Analytics](/plugins/ep-analytics/).
+
+### SEO health (from EP SEO)
+
+A green/amber/red health roll-up, your sitemap URL count, social-card readiness, structured-data type, and any noindex pages, plus your social image and favicon source. See [EP SEO](/plugins/ep-seo/).
+
+### Events (from EP Events)
+
+Upcoming events and registration figures, so the next thing on the calendar is in front of you. See [EP Events](/plugins/ep-events/).
 
 ### Your EP Suite
 
-The EP plugins active on the site, as a set of chips, with a note that panels appear automatically as you turn on more.
+The EP plugins active on the site, as a set of chips. Each chip links straight to that plugin's settings, so the dashboard doubles as a launcher for your suite.
 
-## How it extends
+## For plugin authors
 
-EP Dashboard reads from the EP plugins you have active and renders a panel for each one it recognises. There is nothing to configure: install an EP plugin that EP Dashboard knows about, and its panel appears on the dashboard the next time you load it. As more EP plugins gain dashboard panels, they show up here automatically.
+Any EP plugin can contribute a panel by implementing `ep_dashboard_panel()` on its main class. EP Dashboard calls it on every active plugin and renders whatever comes back. You have total design freedom: return a structured array and the Command Centre styles it for you, or return raw HTML and own the whole panel.
+
+```php
+public function ep_dashboard_panel() {
+    return array(
+        'title'    => 'Shop',
+        'source'   => 'EP Ecommerce',
+        'detail'   => '3 active products',
+        'accent'   => 'green',          // gold | green | blue | red | amber (left border)
+        'priority' => 5,                // lower sorts higher up the grid
+        'pill'     => array('label' => '4 today', 'class' => 'green'),
+        'stats'    => array(
+            array('value' => '£116.98', 'label' => 'Revenue (7d)', 'color' => 'green'),
+            array('value' => 5,         'label' => 'Orders (7d)',  'color' => 'blue'),
+        ),
+        'body'     => '<ul>…your own HTML…</ul>',   // optional bespoke markup
+        'empty'    => 'No sales yet.',
+    );
+}
+```
+
+Every struct key is optional except `title`. `stats` renders the tile row, `table` (a `head` plus `rows`) renders a result table, `meta` a small label/value footer, and `body` injects any bespoke HTML after them — style it with the dashboard's own CSS variables (`--epd-muted`, `--epd-border-soft`, `--epd-green`, and so on) so it matches the theme. Prefer the struct for a consistent look; reach for raw HTML — return a string, or `array('html' => '…', 'priority' => N)` — when you want a fully custom panel. Keep every query read-only and guarded, since the method runs on each admin dashboard load.
+
+The shipped panels above (EP Ecommerce, EP Cron, EP Newsletter, EP Email, EP Analytics, EP SEO and EP Events) each provide their panel this way, so they are worth reading as worked examples.
 
 ## Troubleshooting
 
@@ -54,7 +98,7 @@ EP Dashboard renders into the PageMotor 0.10 admin dashboard. Confirm you are on
 
 ### "A panel I expected isn't there"
 
-Each panel needs its source plugin active. No background-tasks panel means EP Cron is not active; no audience panel means EP Newsletter is not active. Activate the plugin and reload the dashboard.
+Each panel needs its source plugin active. No Shop panel means EP Ecommerce is not active; no Background Tasks panel means EP Cron is not active, and so on down the list. Activate the plugin and reload the dashboard.
 
 ### "The heartbeat panel says stale or down"
 
