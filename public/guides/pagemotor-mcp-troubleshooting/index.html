@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Why PageMotor sites fail to connect to Claude Code over MCP: every verified cause, from claude mcp add traps to trailing-slash redirects, stripped Authorization headers, timezone-broken OAuth and plugin interference. With the exact diagnostic for each.">
+<title>PageMotor + Claude Code MCP: why it won't connect | ElmsPark Guide</title>
+<style>
+  :root{
+    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+    --warn:#9a4b2e; --codebg:#1f1d17; --radius:14px; --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+  nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem}
+  .crumbs-inner{max-width:var(--maxw); margin:0 auto; padding:18px 20px 0; display:flex; align-items:center; gap:.5rem; color:#605647}
+  .crumbs a{color:#605647; text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s}
+  .crumbs a:hover,.crumbs a:focus-visible{color:#3a5140; border-bottom-color:#3a5140}
+  .crumbs .sep{color:#b5ab97}
+  .crumbs [aria-current="page"]{color:#181411; font-weight:500; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+  .lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+  .chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+  .chip b{color:var(--pine)}
+  .note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+  .note.calm{border-left-color:var(--pine)}
+  .note strong{color:var(--pine-deep)}
+  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+  nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+  nav.toc ol{margin:0; padding-left:20px}
+  nav.toc li{margin:5px 0}
+  nav.toc a{color:var(--pine); text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+  .step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+  .num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+  .step h2 .t{line-height:1.2}
+  .step h3{font-size:18.5px; color:var(--pine-deep); margin:22px 0 4px}
+  ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+  ol.sub li,ul.sub li{margin:8px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+  .codewrap{position:relative; margin:14px 0}
+  pre{background:var(--codebg); color:#eee; border-radius:12px; padding:18px; overflow:auto; font-size:14px; line-height:1.55; margin:0}
+  pre code{background:none; color:inherit; padding:0; font-size:inherit}
+  .tok-c{color:#8f9b7e} .tok-s{color:#9fc7a6} .tok-k{color:#c7a86f}
+  .copy{position:absolute; top:10px; right:10px; font-family:system-ui,sans-serif; font-size:12.5px; border:1px solid #4a463a; background:#33302a; color:#e9e3d3; padding:6px 12px; border-radius:8px; cursor:pointer}
+  .copy:hover{background:#3f3b32}
+  .copy.done{background:var(--pine); border-color:var(--pine); color:#fff}
+  h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+  .seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+  .seealso a{color:var(--pine); font-weight:600}
+  footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+  footer a{color:var(--pine)}
+  .kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+  details[open]{padding-bottom:14px}
+  summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-family:system-ui,sans-serif}
+  details[open] summary::before{content:"－"}
+  table.diag{width:100%; border-collapse:collapse; font-family:system-ui,sans-serif; font-size:15.5px; margin:14px 0}
+  table.diag th{text-align:left; padding:9px 12px; background:#efe9da; color:#473f2c; font-size:13px; text-transform:uppercase; letter-spacing:.04em}
+  table.diag td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+  table.diag tr:last-child td{border-bottom:none}
+  table.diag td:first-child{white-space:nowrap; font-weight:600; color:var(--pine-deep)}
+  @media (max-width:520px){body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px} .step{padding:4px 17px 18px} .step h2{font-size:20px} table.diag td:first-child{white-space:normal}}
+</style>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
+<style>
+header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
+.es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
+.es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
+.es-wordmark .es-mark svg{width:100%;height:100%;display:block}
+.es-wordmark .es-accent{color:#3a5140}
+.es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:0.75rem;margin-left:-0.35rem;line-height:1}
+.es-nav{display:flex;gap:clamp(0.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:0.9375rem;font-weight:500}
+.es-nav a{color:#181411;text-decoration:none;padding:0.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
+.es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+.es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
+.es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
+@media(max-width:640px){
+  .es-header .es-inner{padding:1rem 18px;gap:.75rem}
+  .es-sub{display:none}
+  .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
+}
+</style>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ElmsPark Guides">
+<meta property="og:title" content="PageMotor + Claude Code MCP: why it won't connect">
+<meta property="og:description" content="Every verified reason a PageMotor site fails to connect to Claude Code over MCP, with the exact diagnostic and fix for each.">
+<meta property="og:url" content="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z"/></g></g></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+    </a>
+    <span class="es-sub">Guides</span>
+    <nav class="es-nav" aria-label="Documentation">
+      <a href="/guides/">Guides</a>
+      <a href="/learn/">Learn</a>
+      <a href="/plugins/">Plugin docs</a>
+      <a href="/hosting/hosting-options/">Hosting</a>
+      <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <div class="crumbs-inner">
+    <a href="https://documentation.elmspark.com/guides/">Guides</a>
+    <span class="sep" aria-hidden="true">&rsaquo;</span>
+    <span aria-current="page">PageMotor + Claude Code MCP: why it won't connect</span>
+  </div>
+</nav>
+
+<div class="wrap">
+  <span class="kicker">PageMotor &middot; Claude Code &middot; MCP</span>
+  <h1>PageMotor + Claude Code MCP: why it won't connect</h1>
+  <p class="lede">Several PageMotor developers hit the same wall: the site is up, the token is minted, and Claude Code still refuses to connect (or connects and then claims it has no access). There is no single bug. This guide covers every verified cause and gives you the exact 60-second diagnostic for each.</p>
+  <div class="chips">
+    <span class="chip">&#128300; <b>Every cause wire-verified</b></span>
+    <span class="chip">&#9201; <b>60-second diagnostics</b></span>
+    <span class="chip">&#129302; <b>Investigated by Claude Fable 5</b></span>
+  </div>
+
+  <div class="note calm">
+    <strong>How this guide was made.</strong> Kenn pointed Claude (Fable&nbsp;5, running in Claude Code) at the PageMotor 0.10.2b source and the connection reports, and it ran the whole investigation in a single session: it read the MCP, OAuth and routing code end to end, ran live wire probes against a working 0.10.2 install and a live 0.9.4 install, fanned the work out across 55 parallel sub-agents, then adversarially re-verified every finding against source and the wire. Of 49 candidate causes, 14 were refuted outright; the survivors are grouped into the failure families below, and the most common dead ends are listed at the end so you can stop chasing them.
+  </div>
+
+  <nav class="toc" aria-label="Contents">
+    <p>In this guide</p>
+    <ol>
+      <li><a href="#diagnostic">Start here: the 60-second diagnostic</a></li>
+      <li><a href="#client">Three client-side traps that look like server faults</a></li>
+      <li><a href="#slash">The trailing slash and the redirect trap</a></li>
+      <li><a href="#access">&ldquo;Claude says it has no access&rdquo; (it does)</a></li>
+      <li><a href="#plugins">Why &ldquo;disable all plugins&rdquo; works</a></li>
+      <li><a href="#hosting">Four hosting-environment killers</a></li>
+      <li><a href="#core">For core developers: the confirmed defects</a></li>
+      <li><a href="#ruledout">Checked and ruled out</a></li>
+    </ol>
+  </nav>
+
+  <div class="note">
+    <strong>Version matters.</strong> The <code>/mcp/</code> endpoint shipped in PageMotor 0.9b, authenticated by Bearer token only. The OAuth browser sign-in arrived in 0.10b. Two consequences if you are still on 0.9.x: no sign-in flow can ever work (mint a token under Manage API Access instead), and a missing or host-stripped token does not produce an error. The connection quietly succeeds at read-only tier (verified on the wire: an anonymous initialize returns a full handshake). 0.10.x answers a token-less request with an explicit 401 challenge instead.
+  </div>
+
+  <section class="step" id="diagnostic">
+    <h2><span class="num">1</span><span class="t">Start here: the 60-second diagnostic</span></h2>
+    <p>One curl command tells you which failure family you are in. Replace the site and token, run it, and read the <em>first line</em> of the output.</p>
+    <div class="codewrap">
+      <pre id="cmd-curl"><code>curl -sS -D - -X POST https://your-site.com/mcp/ \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer YOUR-TOKEN" \
+  --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"probe","version":"1.0"}}}'</code></pre>
+      <button class="copy" onclick="copy(this,'cmd-curl')">Copy</button>
+    </div>
+    <table class="diag">
+      <tr><th>First line says</th><th>You are hitting</th></tr>
+      <tr><td>301 or 302</td><td>The redirect trap. Fix the URL you configured: trailing slash, https not http, www vs apex. See <a href="#slash">section 3</a>.</td></tr>
+      <tr><td>401 (with a valid token)</td><td>Your host is stripping the Authorization header, or (0.10.x) OAuth tokens are dying to the timezone bug. See <a href="#hosting">section 6</a>. On 0.9.x the same header-strip shows as a working-but-read-only 200 instead of a 401 (see <a href="#access">section 4</a>).</td></tr>
+      <tr><td>200, but empty body</td><td>A plugin is shipping invalid UTF-8 in a tool description. See <a href="#plugins">section 5</a>.</td></tr>
+      <tr><td>500 or an HTML error page</td><td>A plugin is fataling inside the request path. Check the error log and see <a href="#plugins">section 5</a>.</td></tr>
+      <tr><td>200 with a JSON <code>initialize</code> result</td><td>The server side is healthy. Your problem is client-side configuration: see <a href="#client">section 2</a>, or <a href="#access">section 4</a> if Claude connects but denies access.</td></tr>
+    </table>
+  </section>
+
+  <section class="step" id="client">
+    <h2><span class="num">2</span><span class="t">Three client-side traps that look like server faults</span></h2>
+
+    <h3>Trap one: the missing <code>--transport http</code></h3>
+    <p><code>claude mcp add</code> defaults to <strong>stdio</strong> transport. Run it without the flag and Claude Code stores your URL as a <em>local command to execute</em>. No HTTP request ever reaches your site, and the error is indistinguishable from a server fault. The known-good form:</p>
+    <div class="codewrap">
+      <pre id="cmd-add"><code>claude mcp add mysite --transport http https://your-site.com/mcp/ \
+  --header "Authorization: Bearer YOUR-TOKEN"</code></pre>
+      <button class="copy" onclick="copy(this,'cmd-add')">Copy</button>
+    </div>
+    <p>Then run <code>claude mcp list</code> and confirm the entry shows type <code>http</code>. If it says <code>stdio</code>, remove it and re-add with the flag.</p>
+
+    <h3>Trap two: the folder you ran it in</h3>
+    <p>MCP servers are <strong>project-scoped by default</strong>. Add the server while sitting in one directory, open Claude Code in a different directory, and the server is simply absent. Nothing is broken; it is just not visible from there. Add it in the project folder you actually work in, or use a wider scope.</p>
+
+    <h3>Trap three: the stale session</h3>
+    <p>Claude Code does not hot-reload MCP configuration. After any <code>claude mcp add</code> or config edit, close the session and open a fresh one before judging whether the connection works.</p>
+  </section>
+
+  <section class="step" id="slash">
+    <h2><span class="num">3</span><span class="t">The trailing slash and the redirect trap</span></h2>
+    <p>The endpoint is <code>https://your-site.com/mcp/</code>, slash included. Here is why that matters so much.</p>
+    <p>Any HTTP redirect in front of the endpoint converts the client's POST into a body-less GET (standard fetch redirect semantics), so the JSON-RPC handshake never completes. The trap is that the redirect is invisible to a human: paste the URL into a browser and you get a response, so the endpoint looks alive. But the MCP client sends a POST, and the redirect quietly turns it into an empty GET the handshake cannot use. It <em>resolves like a URL</em> without ever <em>behaving like an MCP</em>. Live probe against a 0.9.4 install:</p>
+    <div class="codewrap">
+      <pre><code><span class="tok-c"># POST /mcp (initialize, correct headers, valid JSON body)</span>
+HTTP/2 302
+location: https://the-site.com/mcp/
+x-redirect-by: PageMotor
+
+<span class="tok-c"># following the redirect:</span>
+{"jsonrpc":"2.0","id":null,"error":{"code":-32700,"message":"Empty request body"}}</code></pre>
+    </div>
+    <p>The handshake never happens. Who is affected:</p>
+    <ul class="sub">
+      <li><strong>Every PageMotor 0.9.x install</strong>, on the slash-less URL, every time. 0.9.x has no reserved-slug guard and redirects the POST itself.</li>
+      <li><strong>0.10.x subdirectory installs</strong> (PageMotor living at <code>example.com/something/</code>). 0.10 added a guard, but it checks the URL path before the install slug is stripped, so it never matches and the redirect still fires.</li>
+      <li><strong>Anyone whose configured URL differs from the canonical one.</strong> http vs https, www vs apex, or a CDN rule adding a slash: each produces the same POST-to-GET conversion. The URL in your <code>claude mcp add</code> line must match your canonical scheme and host exactly.</li>
+    </ul>
+    <p>Root-level 0.10.x installs answer the slash-less POST correctly (verified on the wire), but use the slash anyway: it is the documented form and it sidesteps the whole class.</p>
+  </section>
+
+  <section class="step" id="access">
+    <h2><span class="num">4</span><span class="t">&ldquo;Claude says it has no access&rdquo; (it does)</span></h2>
+    <p>A common report: the connection succeeds, and Claude still insists it cannot touch the site. Then the user pushes it to try, and suddenly it has full access. Nothing was broken. Two things compound:</p>
+    <ul class="sub">
+      <li><strong>Client side:</strong> Claude Code lazy-loads MCP tool schemas. At session start the model holds tool names, not capabilities, and it can hedge into &ldquo;I don't have access&rdquo; until something forces a tool call.</li>
+      <li><strong>Server side, by design:</strong> PageMotor deliberately exposes exactly <strong>three</strong> generic dispatch tools (verified on the wire with a full admin token): <code>PM_API__list-actions</code>, <code>PM_API__describe-action</code> and <code>PM_API__call-action</code>. The handshake never states what access tier the caller holds, and the tool descriptions lead with what <em>anonymous</em> callers may do, so the model assumes it is unprivileged.</li>
+    </ul>
+    <p>The reliable fix is one sentence to Claude:</p>
+    <div class="codewrap">
+      <pre id="cmd-prompt"><code>Use the PageMotor MCP tools: call PM_API__list-actions, then call-action.</code></pre>
+      <button class="copy" onclick="copy(this,'cmd-prompt')">Copy</button>
+    </div>
+    <p>The moment it calls <code>list-actions</code> it sees the full registry its token unlocks and gets on with the job.</p>
+    <div class="note">
+      <strong>Tier check.</strong> If actions you expect are genuinely missing from <code>list-actions</code>, your token's tier is too low. Discovery is tier-filtered with no trace: a read-only token hides every admin action entirely, and calling one by name returns &ldquo;Unknown tool&rdquo; rather than &ldquo;requires admin&rdquo;. Check the token's access tier under Manage API Access; full site management needs an admin-tier token, which only administrator-type users can mint.</div>
+    <div class="note">
+      <strong>On 0.9.x, also check you are authenticated at all.</strong> 0.9.x accepts anonymous MCP connections at read-only tier, so a token your host stripped (see <a href="#hosting">section 6a</a>) or a typo in the header looks identical to a working connection until every admin action is missing. Quick test: POST <code>{"class":"PM_API","action":"welcome"}</code> to <code>/api/</code> with your token; if <code>data.you.token</code> is null, the token never arrived.</div>
+  </section>
+
+  <section class="step" id="plugins">
+    <h2><span class="num">5</span><span class="t">Why &ldquo;disable all plugins&rdquo; works</span></h2>
+    <p>Disabling all plugins is a genuinely good test, and here is the mechanism behind it. Every active plugin's code is loaded and initialised <em>inside</em> the MCP request path, before the JSON-RPC dispatch runs, and the response is echoed with no output buffering around it. Two consequences:</p>
+    <ul class="sub">
+      <li><strong>A plugin that fatals</strong> takes down every authenticated MCP call with a 500 or an HTML error page.</li>
+      <li><strong>A plugin that outputs anything</strong> (a PHP notice, debug output, maintenance-mode HTML) prepends garbage to the JSON-RPC body, and the client fails to parse it.</li>
+    </ul>
+    <p>The cruel part: the 401 challenge and the OAuth discovery routes complete <em>before</em> the plugin init and dispatch step where those fatals and stray output happen, so they stay healthy. You can sign in successfully and then watch the connection fail, which reads exactly like a client bug. It is not.</p>
+    <p>If you upgraded to PageMotor 0.10 with older plugins still active, start at <code>user-content/logs/pagemotor-errors.log</code>: a number of pre-0.10 plugins are known to fatal on 0.10 and need updates.</p>
+    <div class="note">
+      <strong>The empty-body variant.</strong> The response encoder is unguarded, so a single invalid UTF-8 byte anywhere in a plugin's tool description (a Windows-1252 curly quote pasted from a word processor is enough) turns <code>tools/list</code> into HTTP 200 with a zero-length body, right after a successful handshake. Disabling plugins &ldquo;fixes&rdquo; this one too. If the diagnostic in section 1 gives you 200-with-empty-body, hunt for the plugin whose descriptions carry non-UTF-8 characters.</div>
+  </section>
+
+  <section class="step" id="hosting">
+    <h2><span class="num">6</span><span class="t">Four hosting-environment killers</span></h2>
+
+    <h3>a. Apache shared hosting eats your Authorization header</h3>
+    <p>On Apache running PHP as CGI/FastCGI (the default on most shared hosting), the Authorization header is not passed to PHP unless the configuration says so, and PageMotor's generated <code>.htaccess</code> does not yet include that rule. Result on 0.10.x: a perpetual 401 with a perfectly valid token, and disabling plugins changes nothing because the header dies in the web server before PageMotor runs. On 0.9.x, which accepts anonymous connections, the symptom is quieter: the connection works but silently drops to read-only tier, and you only notice when admin actions are missing (see <a href="#access">section 4</a>).</p>
+    <p>Test it: POST to <code>/api/</code> with your token and the body <code>{"class":"PM_API","action":"welcome"}</code>. If <code>data.you.token</code> comes back null, the host is eating the header. Fix it by adding this inside the PageMotor block of your <code>.htaccess</code>:</p>
+    <div class="codewrap">
+      <pre id="cmd-htaccess"><code>SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1</code></pre>
+      <button class="copy" onclick="copy(this,'cmd-htaccess')">Copy</button>
+    </div>
+    <p>WordPress ships an equivalent line for exactly this reason.</p>
+    <p>Two caveats. First, the test only means something with a <em>real, valid</em> token: PageMotor silently treats an invalid token as anonymous (verified in source), so a made-up value cannot distinguish &ldquo;stripped&rdquo; from &ldquo;wrong token&rdquo;. Second, a successful OAuth sign-in proves nothing here: the browser flow runs on redirects that never use the Authorization header. The connection then shows as established on <em>both</em> sides while every actual tool call dies at the web server. If your Connected Apps table shows an active token but the client reports no tools, this is the first thing to check.</p>
+
+    <h3>b. The timezone bug that breaks OAuth sign-in entirely (0.10.x only)</h3>
+    <p>If you connect by browser sign-in (OAuth) rather than a pasted token, and your server's PHP timezone is ahead of UTC (Europe/Berlin, Europe/Paris and most European shared hosts), the sign-in <em>always</em> fails with an &ldquo;Unknown or used code&rdquo; style error. PageMotor writes token expiry times in UTC but reads them back in server-local time, so on a UTC+ host the 60-second authorisation code is judged expired at the moment it is issued. Servers at or behind UTC are immune, which is why the same PageMotor build works for one person and not another.</p>
+    <p>Workarounds today: set <code>date.timezone = UTC</code> in the site's php.ini or .user.ini, or skip sign-in and use a minted Bearer token (personal tokens carry no expiry and are immune).</p>
+
+    <h3>c. Cloudflare Flexible SSL and other TLS-terminating proxies (OAuth on 0.10.x)</h3>
+    <p>PageMotor detects HTTPS only from the local server environment. Behind Cloudflare Flexible SSL the origin never sees HTTPS, so every OAuth URL the site advertises is built as <code>http://</code> while your client connected over <code>https://</code>, and the flow dies on the mismatch. Test: fetch <code>https://your-site.com/.well-known/oauth-protected-resource</code> and look at the <code>resource</code> field. If it starts <code>http://</code>, switch Cloudflare to Full (strict) with an origin certificate, or pass HTTPS through to PHP (<code>fastcgi_param HTTPS on;</code>).</p>
+
+    <h3>d. The nginx Let's Encrypt block swallows OAuth discovery (0.10.x only)</h3>
+    <p>The OAuth discovery documents are dynamic routes at <code>/.well-known/oauth-protected-resource</code> and <code>/.well-known/oauth-authorization-server</code>. A stock <code>location ~ /.well-known</code> ACME block (common in CloudPanel, Plesk and hand-rolled vhosts) serves that whole path from the filesystem, so the client follows PageMotor's 401 pointer straight into a 404 and gives up. Test: <code>curl -sI https://your-site.com/.well-known/oauth-protected-resource</code>. A 404 means the block is intercepting; narrow it to <code>/.well-known/acme-challenge/</code> or add <code>location ^~</code> overrides for the discovery paths. PageMotor's own shipped connection doc covers the exact nginx fix.</p>
+  </section>
+
+  <section class="step" id="core">
+    <h2><span class="num">7</span><span class="t">For core developers: the confirmed defects</span></h2>
+    <p>Everything below was verified against the PageMotor 0.10.2b source with file and line references, and reported upstream. Summarised here so self-hosters know what is a workaround versus what is fixable in core.</p>
+    <details>
+      <summary>Redirects on the MCP endpoint (section 3)</summary>
+      <p>0.9.x redirects the slash-less POST itself; 0.10.x's reserved-slug guard in <code>lib/page.php</code> computes its check before the install slug is stripped, so subdirectory installs still 302. Suggested fix: do the reserved check after slug stripping, and never redirect a programmatic endpoint with anything but 308 (which preserves method and body).</p>
+    </details>
+    <details>
+      <summary>Plugins inside the MCP request path (section 5)</summary>
+      <p>Plugin includes and <code>_init()</code> run before JSON-RPC dispatch, and <code>respond()</code> echoes without output buffering. Suggested fix: wrap plugin/theme init in try/catch for MCP and API requests, returning a JSON-RPC internal error, plus output buffering from preflight discarded at respond time.</p>
+    </details>
+    <details>
+      <summary>OAuth timezone skew (section 6b)</summary>
+      <p>Expiries are written with <code>gmdate()</code> but parsed with <code>strtotime()</code> in server-local time, in six places across the OAuth and user code. On UTC+ hosts, codes and tokens are expired at issuance. Suggested fix: parse stored expiries as UTC or store epoch integers.</p>
+    </details>
+    <details>
+      <summary>Authorization pass-through (section 6a)</summary>
+      <p>The generated <code>.htaccess</code> has no Authorization forwarding rule and the token reader has no <code>REDIRECT_HTTP_AUTHORIZATION</code> fallback. Suggested fix: ship the rule in the generated block and add the fallback.</p>
+    </details>
+    <details>
+      <summary>Proxy HTTPS detection (section 6c)</summary>
+      <p>SSL detection reads only <code>$_SERVER['HTTPS']</code>. Suggested fix: honour <code>X-Forwarded-Proto</code> behind a trusted-proxy setting.</p>
+    </details>
+    <details>
+      <summary>Unguarded JSON encoding (section 5, empty-body variant)</summary>
+      <p>One invalid UTF-8 byte anywhere in a response payload produces HTTP 200 with an empty body. Suggested fix: encode with <code>JSON_INVALID_UTF8_SUBSTITUTE</code> and emit a JSON-RPC internal error if encoding still fails.</p>
+    </details>
+    <details>
+      <summary>Tier visibility (section 4)</summary>
+      <p>Nothing in the handshake states the caller's resolved tier, tier-filtered discovery hides higher-tier actions without trace, and calling one returns &ldquo;Unknown tool&rdquo;. Suggested fix: state the resolved tier in the initialize instructions, expose a whoami tool, and return &ldquo;requires admin tier&rdquo; where that is the truth.</p>
+    </details>
+  </section>
+
+  <section class="step" id="ruledout">
+    <h2><span class="num">8</span><span class="t">Checked and ruled out</span></h2>
+    <p>These theories came up during the investigation and did not survive verification. None of them cause the symptoms above, so save yourself the detour:</p>
+    <ul class="sub">
+      <li>MCP protocol-version negotiation between client and server</li>
+      <li>CORS and OPTIONS preflight handling (irrelevant to CLI clients)</li>
+      <li>Claude Code's Accept headers and SSE stream handling</li>
+      <li>Client-side URL path stripping</li>
+      <li>Bun-versus-Node networking differences in the client</li>
+      <li>Validation of plugin-contributed tool names and schemas (0.10.2b normalises these adequately)</li>
+      <li>Mid-session reconnect behaviour</li>
+    </ul>
+  </section>
+
+  <div class="seealso">
+    <p><strong>Related guides:</strong> <a href="/guides/ask-your-studio-with-claude/">Ask your studio anything with Claude</a> (connecting claude.ai to a PageMotor site), <a href="/guides/claude-code-cloudflare/">Claude Code + Cloudflare</a>, and <a href="/guides/ai-said-it-was-done/">The AI said it was done</a> (why verification beats confidence).</p>
+  </div>
+
+  <footer>
+    <p>An <a href="https://elmspark.com/">ElmsPark</a> guide. Investigation performed end to end by Claude (Fable&nbsp;5) in a single Claude Code session on 1 July 2026: 55 parallel sub-agents over the PageMotor 0.10.2b source, live wire probes against 0.9.4 and 0.10.2 installs, and an adversarial re-verification pass on all 49 candidate findings before publication. Nothing in this guide is asserted from memory.</p>
+  </footer>
+</div>
+
+<script>
+function copy(btn, id) {
+  const el = document.getElementById(id);
+  const text = el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied';
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
