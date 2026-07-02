@@ -196,6 +196,10 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
     <h3>Trap three: the stale session</h3>
     <p>Claude Code does not hot-reload MCP configuration. After any <code>claude mcp add</code> or config edit, close the session and open a fresh one before judging whether the connection works.</p>
+
+    <h3>Trap four: the connector you already had</h3>
+    <p>This one bites people <em>re</em>-connecting a site. claude.ai and the Claude desktop app keep their connector list keyed by URL, so if a site was ever connected before (for example by an older token method), adding it again is refused with &ldquo;A server with this URL already exists&rdquo;. Nothing is wrong with the site. Remove the existing connector (Settings, then Connectors, then the menu next to the entry, Remove), fully close and reopen the tab or app (the old entry can linger in cache until a proper restart), then add it fresh and sign in again. Claude Code is different: it dedupes by <em>name</em>, not URL, so there it is just <code>claude mcp remove</code> then re-add.</p>
+    <p>The same treatment applies after you fix a server-side fault from this guide: a connector that was added while the server was broken can hold on to its failed state. If the curl diagnostic now passes but the client still shows no tools, remove the connector, restart, and add it again.</p>
   </section>
 
   <section class="step" id="slash">
@@ -263,6 +267,7 @@ x-redirect-by: PageMotor
       <button class="copy" onclick="copy(this,'cmd-htaccess')">Copy</button>
     </div>
     <p>WordPress ships an equivalent line for exactly this reason.</p>
+    <p>Placement matters: the line goes in the <strong>webroot</strong> <code>.htaccess</code> (the one carrying the PageMotor rewrite block), after <code>RewriteEngine On</code>. If it changes nothing, try the other primitive, <code>CGIPassAuth On</code> (Apache 2.4.13+), which works on some FastCGI setups where the SetEnvIf variant does not. And if the token still never arrives after both, the stripping is happening in the host's front-end proxy, above your .htaccess entirely. That needs a support ticket; wording that works: &ldquo;Please ensure the Authorization HTTP header is passed through to PHP for my domain; it is currently being stripped before reaching my application.&rdquo;</p>
     <p>Two caveats. First, the test only means something with a <em>real, valid</em> token: PageMotor silently treats an invalid token as anonymous (verified in source), so a made-up value cannot distinguish &ldquo;stripped&rdquo; from &ldquo;wrong token&rdquo;. Second, a successful OAuth sign-in proves nothing here: the browser flow runs on redirects that never use the Authorization header. The connection then shows as established on <em>both</em> sides while every actual tool call dies at the web server. If your Connected Apps table shows an active token but the client reports no tools, this is the first thing to check.</p>
 
     <h3>b. The timezone bug that breaks OAuth sign-in entirely (0.10.x only)</h3>
