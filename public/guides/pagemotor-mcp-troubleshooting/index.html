@@ -137,7 +137,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 
   <div class="note calm">
-    <strong>How this guide was made.</strong> Kenn pointed Claude (Fable&nbsp;5, running in Claude Code) at the PageMotor 0.10.2b source and the connection reports, and it ran the whole investigation in a single session: it read the MCP, OAuth and routing code end to end, ran live wire probes against a working 0.10.2 install and a live 0.9.4 install, fanned the work out across 55 parallel sub-agents, then adversarially re-verified every finding against source and the wire. Of 49 candidate causes, 14 were refuted outright; the survivors are grouped into the failure families below, and the most common dead ends are listed at the end so you can stop chasing them.
+    <strong>How this guide was made.</strong> Kenn pointed Claude (Fable&nbsp;5, running in Claude Code) at the PageMotor 0.10.2b source and the connection reports, and it ran the whole investigation in a single session: it read the MCP, OAuth and routing code end to end, ran live wire probes against a working 0.10.2 install and a live 0.9.4 install, fanned the work out across 55 parallel sub-agents, then adversarially re-verified every finding against source and the wire. Of 49 candidate causes, 14 were refuted outright; the survivors are grouped into the failure families below, and the most common dead ends are listed at the end so you can stop chasing them. Re-checked against the 0.10.3b release (2 July 2026): its MCP, OAuth and routing code is byte-identical to 0.10.2b, so everything here applies unchanged.
   </div>
 
   <nav class="toc" aria-label="Contents">
@@ -284,7 +284,7 @@ x-redirect-by: PageMotor
 
   <section class="step" id="core">
     <h2><span class="num">7</span><span class="t">For core developers: the confirmed defects</span></h2>
-    <p>Everything below was verified against the PageMotor 0.10.2b source with file and line references, and reported upstream. Summarised here so self-hosters know what is a workaround versus what is fixable in core.</p>
+    <p>Everything below was verified against the PageMotor 0.10.2b source with file and line references, and reported upstream. Re-verified unchanged in the 0.10.3b release. Summarised here so self-hosters know what is a workaround versus what is fixable in core.</p>
     <details>
       <summary>Redirects on the MCP endpoint (section 3)</summary>
       <p>0.9.x redirects the slash-less POST itself; 0.10.x's reserved-slug guard in <code>lib/page.php</code> computes its check before the install slug is stripped, so subdirectory installs still 302. Suggested fix: do the reserved check after slug stripping, and never redirect a programmatic endpoint with anything but 308 (which preserves method and body).</p>
