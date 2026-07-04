@@ -278,8 +278,28 @@ x-redirect-by: PageMotor
     <h3>c. Cloudflare Flexible SSL and other TLS-terminating proxies (OAuth on 0.10.x)</h3>
     <p>PageMotor detects HTTPS only from the local server environment. Behind Cloudflare Flexible SSL the origin never sees HTTPS, so every OAuth URL the site advertises is built as <code>http://</code> while your client connected over <code>https://</code>, and the flow dies on the mismatch. Test: fetch <code>https://your-site.com/.well-known/oauth-protected-resource</code> and look at the <code>resource</code> field. If it starts <code>http://</code>, switch Cloudflare to Full (strict) with an origin certificate, or pass HTTPS through to PHP (<code>fastcgi_param HTTPS on;</code>).</p>
 
-    <h3>d. The nginx Let's Encrypt block swallows OAuth discovery (0.10.x only)</h3>
-    <p>The OAuth discovery documents are dynamic routes at <code>/.well-known/oauth-protected-resource</code> and <code>/.well-known/oauth-authorization-server</code>. A stock <code>location ~ /.well-known</code> ACME block (common in CloudPanel, Plesk and hand-rolled vhosts) serves that whole path from the filesystem, so the client follows PageMotor's 401 pointer straight into a 404 and gives up. Test: <code>curl -sI https://your-site.com/.well-known/oauth-protected-resource</code>. A 404 means the block is intercepting; narrow it to <code>/.well-known/acme-challenge/</code> or add <code>location ^~</code> overrides for the discovery paths. PageMotor's own shipped connection doc covers the exact nginx fix.</p>
+    <h3>d. The nginx <code>.well-known</code> block swallows OAuth discovery (0.10.x only)</h3>
+    <p>PageMotor serves the OAuth discovery documents as dynamic routes at <code>/.well-known/oauth-protected-resource</code> and <code>/.well-known/oauth-authorization-server</code>. A stock <code>location ~ /.well-known</code> block (CloudPanel, Plesk and many hand-rolled vhosts ship one for Let's Encrypt) serves that whole path from the filesystem instead, so the client follows PageMotor's 401 pointer straight into a 404 and gives up. A PageMotor developer confirmed exactly this on CloudPanel. Test it with <code>curl -sI https://your-site.com/.well-known/oauth-protected-resource</code>: a 404 while the endpoint itself is healthy is this problem.</p>
+    <p>The fix keeps the Let's Encrypt challenge served from disk while routing the rest of <code>/.well-known/</code> to PageMotor. Order does not matter here because <code>^~</code> is a prefix match that outranks the <code>~</code> regex block, and the longer prefix (<code>acme-challenge</code>) always claims its own requests:</p>
+    <div class="codewrap">
+      <pre id="cfg-wellknown"><code><span class="tok-c"># Keep Let's Encrypt HTTP-01 renewal working (served from disk)</span>
+location ^~ /.well-known/acme-challenge/ {
+    auth_basic off;
+    allow all;
+    try_files $uri =404;
+}
+
+<span class="tok-c"># Hand the OAuth discovery docs (and the rest of /.well-known/) to PageMotor</span>
+location ^~ /.well-known/ {
+    auth_basic off;
+    allow all;
+    try_files $uri $uri/ /index.php?$args;
+}</code></pre>
+      <button class="copy" onclick="copy(this,'cfg-wellknown')">Copy</button>
+    </div>
+    <p>That is the standard PageMotor-on-CloudPanel case, where PHP runs through php-fpm, so the <code>/index.php</code> hand-off inherits the site's own PHP handler and there is no port to set. If your site instead reverse-proxies (Varnish, or a Node or app backend), replace the second block's <code>try_files</code> line with <code>proxy_pass</code> pointing at whatever your existing <code>location /</code> already targets (do not assume a port), and add <code>proxy_set_header X-Forwarded-Proto https;</code> so PageMotor builds its discovery URLs as https rather than http.</p>
+    <div class="note">
+      <strong>Do not proxy the whole block.</strong> Forwarding all of <code>/.well-known/</code> to the app without the <code>acme-challenge</code> line in front sends Let's Encrypt's HTTP-01 challenge to PageMotor, which cannot answer it, and your certificate then silently stops renewing until it expires around 90 days later. Keep the <code>acme-challenge</code> block, and on CloudPanel make the change through the Vhost Editor so a renewal cannot revert it. After applying, confirm both things: the discovery URL now returns JSON, and your next certificate renewal succeeds.</div>
   </section>
 
   <section class="step" id="core">
