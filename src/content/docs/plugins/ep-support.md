@@ -25,7 +25,7 @@ Think of it as: "the documentation you're reading now, but talk-to-able."
 
 ## Installation
 
-1. Download `ep-support.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-support).
+1. `ep-support.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP Support**.
 4. Add your LLM API key.

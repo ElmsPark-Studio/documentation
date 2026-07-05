@@ -32,7 +32,7 @@ For EP Newsletter campaigns, the Brevo driver gives you:
 ## Installation
 
 1. Install EP Newsletter first.
-2. Download `ep-newsletter-brevo.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-newsletter-brevo).
+2. `ep-newsletter-brevo.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Configure the plugin (see below).
 5. Open **Plugin Settings → EP Newsletter → Email Delivery**.

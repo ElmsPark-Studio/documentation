@@ -26,7 +26,7 @@ What EP Search doesn't do: AI-powered semantic search, fuzzy matching, spelling 
 
 ## Installation
 
-1. Download `ep-search.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-search).
+1. `ep-search.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Create a page at `/search/` and add `[ep-search-results]`.
 4. Add `[ep-search-form]` to your header or wherever you want the search box.

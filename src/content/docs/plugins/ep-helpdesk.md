@@ -31,7 +31,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 ## Installation
 
 1. Install **EP Email** and **EP Agent** first.
-2. Download `ep-helpdesk.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-helpdesk).
+2. `ep-helpdesk.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Place the intake form on a page with the `[helpdesk-form]` shortcode.
 5. Create a tracking page at `/track/` using the `[helpdesk-status]` shortcode.

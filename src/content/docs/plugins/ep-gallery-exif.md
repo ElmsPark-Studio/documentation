@@ -32,7 +32,7 @@ On top of EP Gallery's default EXIF:
 ## Installation
 
 1. Install **EP Gallery** first.
-2. Download `ep-gallery-exif.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-gallery-exif).
+2. `ep-gallery-exif.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 
 From this point on, every new image uploaded to EP Gallery gets enhanced EXIF extraction. Existing images don't automatically reprocess — see below.

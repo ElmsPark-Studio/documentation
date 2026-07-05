@@ -33,7 +33,7 @@ Plus:
 ## Installation
 
 1. Install **EP Ecommerce** first.
-2. Download `ep-ecommerce-products.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-products).
+2. `ep-ecommerce-products.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 
 Once installed, `[ep-checkout]` uses the styled layout instead of the bare base-plugin rendering.

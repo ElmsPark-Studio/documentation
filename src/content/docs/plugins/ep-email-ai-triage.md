@@ -45,7 +45,7 @@ What happens next is a configurable decision matrix.
 ## Installation
 
 1. Install **EP Email** first if you haven't already, and upgrade to **1.10.1 or later**.
-2. Download `ep-email-ai-triage.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-ai-triage).
+2. `ep-email-ai-triage.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. In your PageMotor admin, go to **Plugins then Manage Plugins** and upload the zip.
 4. Activate **AI Triage** in your active Theme's plugin configuration.
 5. Database table for the quarantine is created on first load.

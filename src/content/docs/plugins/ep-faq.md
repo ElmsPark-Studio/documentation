@@ -27,7 +27,7 @@ Features:
 
 ## Installation
 
-1. Download `ep-faq.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-faq).
+1. `ep-faq.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Create a page for your FAQ and drop in `[faq]`.
 

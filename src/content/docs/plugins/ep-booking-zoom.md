@@ -49,7 +49,7 @@ Keep these credentials handy for the next step.
 
 ## Installation
 
-1. Download `ep-booking-zoom.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-booking-zoom).
+1. `ep-booking-zoom.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP Booking Zoom**.
 

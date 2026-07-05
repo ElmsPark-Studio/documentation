@@ -36,7 +36,7 @@ Optional add-ons:
 
 ## Installation
 
-1. Download `ep-booking.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-booking).
+1. `ep-booking.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Work through the settings sections in this order: General → Services → Staff → Categories → Booking Rules → Notifications → Form Design → Payments → Booking Form.
 

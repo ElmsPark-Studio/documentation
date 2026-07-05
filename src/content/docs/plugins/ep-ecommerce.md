@@ -72,7 +72,7 @@ For Download products, the customer gets a time-limited tokenised URL in their c
 
 ## Installation
 
-1. Download `ep-ecommerce.zip` plus the extensions you need from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-ecommerce).
+1. `ep-ecommerce.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload and activate **EP Ecommerce** first.
 3. Upload and activate **EP Ecommerce Products**.
 4. Upload and activate your payment provider(s): **EP Ecommerce Stripe** and/or **EP Ecommerce PayPal**.

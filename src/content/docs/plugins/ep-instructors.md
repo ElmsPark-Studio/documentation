@@ -24,7 +24,7 @@ It integrates with EP Events (the schedule) and EP Events Recurring (cover overr
 
 ## Installation
 
-1. Download `ep-instructors.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-instructors).
+1. `ep-instructors.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **EP Suite nav → Instructors**, add your instructors, and set their pay-rate rules.
 

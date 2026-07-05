@@ -31,7 +31,7 @@ If your campaign volume sits comfortably under 100 emails/day, Mailgun's free pl
 ## Installation
 
 1. Install **EP Newsletter** first.
-2. Download `ep-newsletter-mailgun.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-newsletter-mailgun).
+2. `ep-newsletter-mailgun.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Configure the plugin (see below).
 5. Open **Plugin Settings → EP Newsletter → Email Delivery**.

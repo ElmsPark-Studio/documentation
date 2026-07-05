@@ -30,7 +30,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Installation
 
-1. Download `ep-scheduled-content.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-scheduled-content).
+1. `ep-scheduled-content.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. The **Scheduled** status option appears on every page's content options.
 

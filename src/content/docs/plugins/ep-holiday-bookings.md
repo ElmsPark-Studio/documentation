@@ -82,7 +82,7 @@ Optional:
 ## Installation
 
 1. Install EP Email.
-2. Download `ep-holiday-bookings.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-holiday-bookings).
+2. `ep-holiday-bookings.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Configure Stripe keys in the settings.
 5. Work through Destinations → Packages → Test enquiry form.

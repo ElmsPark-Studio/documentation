@@ -23,7 +23,7 @@ Your data never leaves the server except as the model's answer, and your Anthrop
 
 ## Installation
 
-1. Download `ep-studio-assistant.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-studio-assistant).
+1. `ep-studio-assistant.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **EP Suite nav → Assistant** and start asking. If a Claude key is already in **AI Setup**, the assistant picks it up automatically.
 

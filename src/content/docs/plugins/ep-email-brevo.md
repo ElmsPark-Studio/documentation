@@ -25,7 +25,7 @@ The default PHP `mail()` transport has serious deliverability problems on shared
 ## Installation
 
 1. Install EP Email first.
-2. Download `ep-email-brevo.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-brevo).
+2. `ep-email-brevo.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Open **Plugin Settings → EP Email Brevo**.
 5. Paste your API v3 key, sender email, and sender name.

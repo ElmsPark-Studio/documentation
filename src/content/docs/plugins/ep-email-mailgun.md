@@ -34,7 +34,7 @@ Routing transactional through a known-good ESP fixes this. Mailgun specifically 
 ## Installation
 
 1. Install **EP Email** first.
-2. Download `ep-email-mailgun.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-mailgun).
+2. `ep-email-mailgun.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Open **Plugin Settings → EP Email Mailgun**.
 5. Paste your Sending Key, Sending Domain, and Region.

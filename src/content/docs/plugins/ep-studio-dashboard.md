@@ -33,7 +33,7 @@ The whole dashboard is also exposed as read-only PageMotor API actions and MCP t
 
 ## Installation
 
-1. Download `ep-studio-dashboard.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-studio-dashboard).
+1. `ep-studio-dashboard.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **EP Suite nav → Dashboard**. Set your operating timezone in the settings group so "today" and "this month" are measured correctly.
 

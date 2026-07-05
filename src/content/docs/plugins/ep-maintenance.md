@@ -32,7 +32,7 @@ Optional:
 
 ## Installation
 
-1. Download `ep-maintenance.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-maintenance).
+1. `ep-maintenance.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP Maintenance**.
 

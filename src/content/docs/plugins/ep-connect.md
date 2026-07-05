@@ -39,7 +39,7 @@ Five events (Email, Booking, Newsletter, Comments, Ecommerce) fire in **real tim
 
 ## Installation
 
-1. Download `ep-connect.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-connect).
+1. `ep-connect.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 
 ## Setting up a webhook

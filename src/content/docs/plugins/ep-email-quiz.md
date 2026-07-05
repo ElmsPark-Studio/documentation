@@ -47,7 +47,7 @@ The band matching the submission's score is shown on the success page and includ
 ## Installation
 
 1. Install **EP Email** first.
-2. Download `ep-email-quiz.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-quiz).
+2. `ep-email-quiz.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 
 ## Example form

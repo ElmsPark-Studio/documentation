@@ -36,7 +36,7 @@ Use cases:
 ## Installation
 
 1. Install EP Email.
-2. Download `ep-voice-messages.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-voice-messages).
+2. `ep-voice-messages.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Configure the transcription provider API key in settings.
 5. Drop `[voice-message]` on any page.

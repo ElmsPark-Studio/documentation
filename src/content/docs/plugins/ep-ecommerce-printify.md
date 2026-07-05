@@ -27,10 +27,10 @@ On its own it does nothing visible. It is one half of a pair: the engine does th
 
 Install in this order, activating each before the next:
 
-1. **[EP Ecommerce](https://updates.elmspark.com/download.php?plugin=ep-ecommerce)** (0.1.22+).
-2. **[EP Ecommerce — POD](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-pod)** (the engine).
-3. **[EP Ecommerce — Printify](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-printify)** (this connector).
-4. **[EP Ecommerce — Stripe](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-stripe)** (card payment).
+1. **[EP Ecommerce](/plugins/ep-ecommerce/)** (0.1.22+).
+2. **[EP Ecommerce — POD](/plugins/ep-ecommerce-pod/)** (the engine).
+3. **[EP Ecommerce — Printify](/plugins/ep-ecommerce-printify/)** (this connector).
+4. **[EP Ecommerce — Stripe](/plugins/ep-ecommerce-stripe/)** (card payment).
 
 Database tables are created automatically on first load.
 

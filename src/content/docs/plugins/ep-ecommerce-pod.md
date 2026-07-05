@@ -40,10 +40,10 @@ This page covers the engine. The connector is documented separately.
 
 Install in this order, activating each before the next:
 
-1. **[EP Ecommerce](https://updates.elmspark.com/download.php?plugin=ep-ecommerce)** (0.1.22+).
-2. **[EP Ecommerce — POD](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-pod)** (this engine).
-3. Your connector — **[EP Ecommerce — Printify](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-printify)**.
-4. **[EP Ecommerce — Stripe](https://updates.elmspark.com/download.php?plugin=ep-ecommerce-stripe)**.
+1. **[EP Ecommerce](/plugins/ep-ecommerce/)** (0.1.22+).
+2. **[EP Ecommerce — POD](/plugins/ep-ecommerce-pod/)** (this engine).
+3. Your connector — **[EP Ecommerce — Printify](/plugins/ep-ecommerce-printify/)**.
+4. **[EP Ecommerce — Stripe](/plugins/ep-ecommerce-stripe/)**.
 
 Database tables are created automatically on first load.
 

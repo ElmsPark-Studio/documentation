@@ -34,7 +34,7 @@ What you get:
 
 Standard PageMotor plugin install.
 
-1. **Download.** Grab `ep-gallery.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-gallery) or the link in your ElmsPark account.
+1. `ep-gallery.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. **Sign in to your PageMotor admin** at `yourdomain.com/admin/`.
 3. **Go to Plugins, then Manage Plugins.**
 4. **Upload the zip.** PageMotor extracts it automatically.

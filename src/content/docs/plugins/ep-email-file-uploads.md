@@ -34,7 +34,7 @@ Features:
 ## Installation
 
 1. Install **EP Email** first.
-2. Download `ep-email-file-uploads.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-email-file-uploads).
+2. `ep-email-file-uploads.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. The `file_upload` field type is now available in EP Email form definitions.
 

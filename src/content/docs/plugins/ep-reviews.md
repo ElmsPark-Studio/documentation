@@ -27,7 +27,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 ## Installation
 
 1. Install **EP Ecommerce**.
-2. Download `ep-reviews.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-reviews).
+2. `ep-reviews.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 3. Upload via **Plugins → Manage Plugins**. Activate.
 4. Add `[ep-reviews product=SLUG]` to any product page, or enable auto-injection in settings.
 

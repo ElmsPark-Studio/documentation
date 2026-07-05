@@ -25,7 +25,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Installation
 
-1. Download `ep-class-passes.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-class-passes).
+1. `ep-class-passes.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Create a class-pass product in EP Ecommerce, set its credits, validity and eligible class types, and sell it like any other product.
 

@@ -42,7 +42,7 @@ Optional but commonly paired:
 
 ## Installation
 
-1. Download `ep-courses.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-courses).
+1. `ep-courses.zip` comes with an EP Suite licence — ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/)); after install it updates through your site's **Updates** screen.
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open the settings page and set the **viewer slug** (URL slug of the page that will host the lesson viewer).
 4. Create a PageMotor page with that slug and add the `[course-viewer]` shortcode to it.
