@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Higgsfield AI credits explained: what top-up packs, Unlimited passes and Concurrency Boost Credits actually cost per generation, the MCP/CLI exclusion that catches automated pipelines out, and a real worked example.">
+<meta property="og:title" content="Higgsfield credits, decoded">
+<meta property="og:description" content="Top-up packs vs Unlimited passes vs Concurrency Boost Credits: real credits-per-dollar, the exclusion clause that catches API/MCP/CLI pipelines out, and a worked example from a real production day.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://documentation.elmspark.com/guides/higgsfield-credits-explained/">
+<meta property="og:image" content="https://documentation.elmspark.com/og/guides-hub.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Higgsfield credits, decoded — an ElmsPark guide">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://documentation.elmspark.com/og/guides-hub.png">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600|inter-tight:400,500,600&display=swap">
+<meta property="og:site_name" content="ElmsPark Guides">
+<title>Higgsfield credits, decoded | ElmsPark Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --text:#23211c; --muted:#5d574c; --faint:#8a8170;
+    --border:#e4ddcd; --bg:#f7f3ea; --bg-subtle:#fffdf8;
+    --bg-warn:#fbf6e8; --bg-caution:#f8efe9; --bg-good:#eef6ef;
+    --accent:#2f5d4a; --accent-light:#dceae3;
+    --link:#2f5d4a; --warn:#9a4b2e; --caution:#8b1a1a;
+    --pine-deep:#234a3b;
+    --chip-ai:#e8eef4; --chip-ai-text:#2b4459;
+    --font-sans:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --font-serif:Fraunces,Georgia,"Times New Roman",serif;
+    --font-mono:"SF Mono","Fira Code",Consolas,monospace;
+  }
+
+  body { font-family: var(--font-sans); font-size: 17px; line-height: 1.7; color: var(--text); background: var(--bg); }
+  a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+  a:hover { color: var(--accent); }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+  .breadcrumb { font-size: 14px; color: var(--faint); margin-bottom: 2rem; }
+  .breadcrumb a { color: var(--faint); }
+  .breadcrumb a:hover { color: var(--link); }
+
+  .category-chip { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--chip-ai); color: var(--chip-ai-text); padding: 4px 10px; border-radius: 6px; margin-bottom: 1rem;
+    font-family: 'Inter Tight', system-ui, sans-serif; }
+
+  h1 { font-family: var(--font-serif); font-size: clamp(1.9rem, 4.5vw, 2.6rem); font-weight: 600; line-height: 1.15; margin: 0.25rem 0 0.75rem; letter-spacing: -0.01em; }
+  .guide-hook { font-size: 1.2rem; color: var(--muted); max-width: 640px; margin-bottom: 1.25rem; }
+
+  .meta-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 13.5px;
+    color: var(--muted); margin-bottom: 1.75rem; }
+  .meta-chips span { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 99px; padding: 4px 12px; }
+
+  .lead { font-size: 1.08rem; color: var(--text); margin-bottom: 1.5rem; }
+
+  h2 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 2.25rem 0 0.9rem; letter-spacing: -0.01em; }
+  h2.stage-heading { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 1.05rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--accent); margin: 2rem 0 0.75rem; }
+  h3 { font-size: 1.12rem; font-weight: 600; margin: 1.4rem 0 0.5rem; }
+  p { margin-bottom: 1rem; }
+  ul, ol { margin: 0 0 1rem 1.4rem; }
+  li { margin-bottom: 0.4rem; }
+  code { font-family: var(--font-mono); font-size: 0.92em; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; }
+
+  /* Tabs */
+  nav.tabs { position: sticky; top: 0; z-index: 50; background: rgba(247,243,234,.94); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border); margin: 0 0 1.75rem; }
+  .tabrow { display: flex; gap: 4px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; max-width: 820px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; }
+  .tabrow::-webkit-scrollbar { display: none; }
+  .tab { appearance: none; border: 1px solid transparent; background: transparent; font: inherit; font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 14px; font-weight: 600; color: var(--muted); padding: 8px 14px; border-radius: 99px; cursor: pointer; white-space: nowrap; transition: .15s; }
+  .tab:hover { color: var(--text); background: var(--bg-subtle); }
+  .tab[aria-selected="true"] { background: var(--text); color: #fff; }
+  section.panel { display: none; }
+  section.panel.active { display: block; }
+  @media (prefers-reduced-motion: no-preference) { section.panel.active { animation: fade .2s ease; } }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* Cards & tables */
+  .grid { display: grid; gap: 14px; margin: 1.25rem 0; }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .card { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .card .num { font-family: var(--font-serif); font-size: 1.9rem; font-weight: 600; letter-spacing: -0.02em; color: var(--pine-deep); }
+  .card .lbl { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .card.pick { border-color: var(--accent); background: var(--accent-light); }
+  .card .tag { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 11.5px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--pine-deep); background: #fff; border-radius: 99px; padding: 2px 9px; display: inline-block; margin-bottom: 8px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 15.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+  th { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.best td { background: var(--bg-good); font-weight: 600; }
+  .tablewrap { overflow-x: auto; }
+
+  .callout { border-left: 4px solid var(--accent); background: var(--bg-subtle); border-radius: 10px; padding: 14px 18px; margin: 1.25rem 0;
+    box-shadow: 0 1px 3px rgba(35,33,28,.06); }
+  .callout.warn { border-left-color: var(--warn); background: var(--bg-warn); }
+  .callout.caution { border-left-color: var(--caution); background: var(--bg-caution); }
+  .callout.good { border-left-color: var(--pine-deep); background: var(--bg-good); }
+  .callout .quote { font-style: italic; color: var(--muted); }
+
+  .surprise-box { border: 1px dashed var(--warn); background: var(--bg-warn); border-radius: 10px; padding: 14px 18px; margin: 1.25rem 0; }
+  .surprise-box .surprise-label { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--warn); margin-bottom: 4px; display: block; }
+
+  /* Estimator */
+  .estimator { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; margin: 1.25rem 0; }
+  .estimator label { display: block; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 13.5px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+  .estimator input[type="range"] { width: 100%; margin-bottom: 4px; accent-color: var(--accent); }
+  .estimator .rangeval { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 14px; color: var(--text); margin-bottom: 16px; }
+  .estimator .result { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-top: 6px; }
+  .estimator .result .card { text-align: center; }
+  .noscript-note { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 13px; color: var(--faint); margin-top: 10px; }
+
+  .verdict-table td:first-child { font-weight: 600; }
+
+  .toc { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin: 0 0 1.5rem; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 14px; }
+  .toc h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 6px; }
+  .toc ol { margin: 0 0 0 1.1rem; }
+  .toc li { margin-bottom: 2px; }
+
+  .guide-footer { text-align: center; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 14px; color: var(--faint); padding: 2rem 1.5rem 3rem; }
+  .guide-footer a { color: var(--faint); }
+  .guide-footer a:hover { color: var(--link); }
+
+  /* ElmsPark brand header */
+  header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
+  .es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+  .es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
+  .es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
+  .es-wordmark .es-mark svg{width:100%;height:100%;display:block}
+  .es-wordmark .es-accent{color:#3a5140}
+  .es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:0.75rem;margin-left:-0.35rem;line-height:1}
+  .es-nav{display:flex;gap:clamp(0.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:0.9375rem;font-weight:500}
+  .es-nav a{color:#181411;text-decoration:none;padding:0.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
+  .es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+  .es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
+  .es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
+  @media(max-width:640px){ .es-header .es-inner{padding:1rem 18px;gap:.75rem} .es-sub{display:none} .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap} }
+</style>
+</head>
+<body>
+
+  <header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" class="brand-mark-svg" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z m252 -467 c203 -269 329 -496 368 -665 12 -49 11 -53 -14 -91 -15 -22 -87 -96 -162 -163 -74 -68 -175 -165 -224 -217 -79 -84 -89 -91 -93 -70 -3 13 -7 168 -10 344 -4 213 -9 331 -17 347 -14 31 -60 50 -92 38 -51 -20 -50 -8 -53 -534 -2 -463 -12 -728 -34 -911 -5 -44 -12 -82 -15 -85 -9 -8 -160 146 -239 244 -202 250 -279 446 -280 720 -1 150 15 238 75 420 70 211 258 510 515 819 l57 70 48 -52 c26 -28 103 -125 170 -214z m435 -964 c4 -14 4 -83 1 -152 -10 -265 -110 -467 -346 -703 -69 -69 -155 -147 -190 -174 l-64 -48 7 109 c15 227 34 350 64 417 32 68 117 191 193 277 57 64 309 300 321 300 4 0 11 -12 14 -26z m-4198 -425 c322 -59 663 -182 765 -277 34 -32 34 -47 7 -293 -11 -101 -21 -246 -23 -321 -1 -76 -5 -137 -8 -135 -4 1 -40 43 -80 92 -142 174 -301 360 -325 383 -53 48 -134 17 -134 -52 0 -42 18 -68 172 -253 178 -213 281 -344 274 -350 -3 -3 -81 4 -173 16 -92 11 -247 26 -343 31 -96 6 -187 15 -202 21 -20 8 -34 29 -57 83 -57 138 -89 286 -116 545 -15 146 -21 532 -8 545 8 8 29 5 251 -35z m7346 -200 c-1 -347 -48 -660 -127 -854 -37 -90 -43 -93 -247 -105 -96 -6 -233 -18 -305 -26 -71 -9 -154 -18 -184 -21 l-54 -6 48 64 c27 35 97 122 155 193 269 328 269 329 256 381 -6 24 -51 55 -79 55 -27 0 -69 -44 -258 -271 -105 -126 -195 -229 -199 -229 -4 0 -10 73 -13 163 -3 89 -15 247 -27 350 -19 172 -20 191 -6 212 39 60 331 189 551 244 165 41 446 92 480 86 6 -1 10 -87 9 -236z m-1206 -304 c37 -179 42 -605 8 -712 -22 -68 -92 -172 -209 -310 -96 -112 -114 -129 -123 -120 -13 13 -43 293 -44 398 0 132 17 239 62 379 50 156 114 265 222 378 66 69 67 68 84 -13z m-5108 19 c111 -104 201 -275 257 -487 25 -92 27 -119 27 -277 0 -203 -27 -390 -57 -390 -15 0 -160 171 -240 282 -70 98 -86 146 -97 287 -16 202 19 631 52 631 5 0 31 -21 58 -46z m3753 -814 c60 -144 106 -303 123 -427 15 -109 16 -129 2 -224 -24 -167 -81 -284 -201 -414 -56 -61 -154 -145 -169 -145 -15 0 32 402 63 522 23 93 24 117 1 143 -36 43 -48 48 -81 30 -52 -26 -79 -104 -111 -312 -16 -110 -50 -411 -50 -452 0 -29 -27 10 -73 106 -59 123 -107 307 -107 406 0 40 9 110 20 156 42 173 98 277 232 429 82 93 299 285 309 274 3 -4 22 -45 42 -92z m-4451 -36 c191 -19 399 -59 452 -86 23 -11 56 -32 74 -45 37 -28 226 -251 255 -302 l18 -31 -140 0 c-243 0 -436 37 -586 113 -179 90 -314 209 -399 355 -10 17 135 16 326 -4z m6752 4 c-50 -85 -170 -211 -254 -268 -158 -107 -299 -160 -485 -184 -126 -17 -385 -22 -385 -8 0 12 96 139 183 241 62 73 87 94 139 119 117 55 442 106 706 110 80 2 102 -1 96 -10z m-8080 -1349 c134 -32 310 -100 491 -189 194 -97 263 -143 290 -192 19 -36 19 -38 2 -55 -16 -16 -37 -18 -170 -17 -171 1 -303 24 -527 90 -158 47 -195 52 -220 29 -30 -27 -27 -88 5 -113 60 -47 390 -142 585 -168 58 -7 171 -14 252 -14 147 0 148 0 176 -27 17 -16 50 -75 77 -138 65 -152 186 -384 250 -480 30 -44 96 -134 149 -200 52 -66 92 -122 89 -125 -3 -3 -42 35 -87 85 -208 231 -419 410 -568 483 -182 89 -301 114 -563 118 -187 2 -205 4 -268 28 -139 52 -365 200 -488 319 -63 61 -184 210 -279 342 -47 68 -59 90 -48 96 19 13 190 66 289 89 267 62 417 73 563 39z m439 -1094 c177 -31 332 -103 490 -230 98 -79 317 -298 317 -318 0 -4 -104 -7 -232 -5 l-233 3 -67 32 c-101 47 -237 145 -344 246 -103 97 -244 251 -244 266 0 5 8 12 18 14 40 11 216 6 295 -8z m-405 -167 c135 -146 294 -299 357 -344 30 -21 55 -42 55 -45 0 -3 -148 -11 -328 -17 -181 -6 -342 -17 -359 -23 -60 -20 -66 -111 -10 -136 14 -6 162 -8 387 -5 l365 5 -116 -120 c-120 -124 -267 -300 -295 -355 l-16 -31 -72 6 c-137 10 -418 133 -646 284 -139 92 -370 276 -370 295 0 6 6 16 14 22 7 6 65 54 127 107 176 148 394 296 559 379 71 36 196 79 229 80 18 0 49 -26 119 -102z m1199 -574 c9 -26 -266 -289 -392 -375 -68 -46 -202 -102 -316 -133 -98 -26 -249 -39 -256 -21 -6 19 71 123 167 227 116 124 263 248 344 288 l60 30 195 -2 c125 -2 196 -7 198 -14z m442 -14 c22 -11 72 -48 113 -83 186 -162 425 -337 692 -508 l210 -134 -170 -12 c-292 -20 -407 -45 -679 -148 -139 -53 -156 -57 -229 -56 -43 0 -131 8 -195 18 -288 42 -744 -1 -864 -81 -38 -26 -47 -68 -21 -97 21 -24 79 -25 190 -5 163 30 276 39 447 33 95 -2 183 -9 197 -14 23 -10 20 -13 -70 -80 -271 -201 -419 -268 -654 -298 -109 -14 -144 -15 -225 -5 -125 15 -348 62 -484 101 -87 26 -107 35 -102 47 3 9 48 80 100 157 101 152 199 270 313 377 77 72 99 82 247 108 39 7 117 28 175 47 206 67 325 150 597 418 112 110 222 210 245 223 50 27 103 25 167 -8z m1134 -1664 c-259 -265 -393 -432 -393 -488 0 -50 53 -82 104 -62 9 4 77 74 150 158 166 188 417 446 435 446 15 0 8 -143 -14 -280 -71 -431 -344 -664 -969 -824 -76 -20 -145 -36 -154 -36 -13 0 -14 16 -9 113 11 199 82 516 142 638 146 295 354 436 729 494 169 27 171 38 -21 -159z"/><path d="M8159 16019 c-38 -38 -141 -295 -188 -469 -83 -304 -64 -574 56 -774 78 -131 150 -197 383 -352 154 -102 197 -141 231 -210 39 -80 33 -168 -29 -404 -151 -575 -137 -859 57 -1102 74 -94 163 -174 275 -250 163 -109 236 -133 276 -92 21 22 44 122 59 266 12 103 2 243 -24 369 -17 80 -69 233 -90 266 -31 47 -109 41 -133 -10 -12 -25 -10 -41 22 -150 50 -177 56 -214 56 -360 0 -137 -5 -177 -23 -177 -23 0 -175 120 -243 193 -77 82 -124 163 -149 257 -22 80 -19 271 5 415 32 191 106 445 129 445 3 0 58 -42 121 -93 63 -51 179 -139 257 -195 185 -134 237 -192 313 -349 47 -97 65 -124 84 -129 69 -17 94 26 79 132 -27 185 -136 317 -444 534 -169 119 -309 252 -346 329 -41 83 -39 167 9 286 88 218 109 279 124 347 21 100 29 316 15 405 -23 148 -119 334 -238 463 -148 160 -527 430 -603 430 -11 0 -30 -10 -41 -21z"/><path d="M15039 13510 c-200 -41 -467 -129 -599 -195 -189 -96 -370 -252 -460 -397 -125 -205 -165 -408 -138 -713 18 -206 14 -348 -12 -470 -53 -242 -276 -735 -443 -978 -286 -414 -647 -730 -1295 -1132 -150 -93 -457 -296 -568 -375 -264 -189 -488 -414 -657 -663 -172 -252 -326 -657 -386 -1018 -74 -437 -77 -675 -21 -1604 59 -968 60 -983 156 -1669 40 -288 47 -320 77 -341 30 -21 90 -19 118 3 28 24 28 37 -10 272 -101 621 -133 985 -187 2080 -22 469 -24 560 -15 737 24 458 68 686 199 1039 108 291 338 619 447 640 55 10 150 -2 186 -23 64 -37 69 -51 73 -238 8 -319 67 -513 218 -712 101 -134 276 -268 430 -329 35 -14 77 -31 93 -38 149 -66 302 -113 489 -151 256 -52 276 -36 262 209 -22 383 -122 747 -260 940 -93 130 -251 254 -411 323 -152 65 -300 95 -615 123 -112 10 -272 49 -285 70 -13 20 39 82 109 131 94 67 228 134 317 159 161 44 473 51 672 15 182 -33 401 -112 458 -166 29 -27 31 -33 25 -77 -4 -26 -9 -108 -12 -182 -9 -204 27 -392 103 -545 121 -243 338 -419 663 -540 41 -15 84 -31 95 -35 49 -19 145 -50 199 -64 52 -13 62 -13 87 0 16 8 32 26 35 40 11 42 -3 351 -20 451 -18 103 -61 239 -111 348 l-33 74 172 -6 c182 -6 240 -1 471 43 125 25 322 76 415 109 126 44 119 103 -44 365 -70 112 -108 165 -264 367 -23 31 -41 60 -39 66 2 6 59 25 128 43 328 86 630 258 1006 572 62 51 122 105 133 119 34 44 26 77 -32 140 -59 62 -255 228 -364 309 -172 127 -419 274 -547 324 l-68 27 93 56 c296 176 482 363 709 709 106 163 105 184 -11 237 -190 85 -544 175 -772 196 -43 4 -78 9 -78 10 0 2 23 41 52 87 73 117 122 227 157 348 61 214 91 432 91 656 0 241 -15 259 -181 224z m193 -1534 c194 -38 408 -104 408 -125 0 -10 -81 -127 -160 -232 -162 -215 -449 -437 -665 -513 -63 -22 -89 -25 -270 -29 -258 -6 -385 -34 -560 -123 -146 -74 -377 -259 -478 -382 -31 -37 -84 -94 -118 -127 l-62 -60 34 47 c19 26 74 99 122 163 121 157 263 411 357 637 19 47 44 88 62 103 28 24 34 25 171 25 223 0 439 37 679 116 160 53 209 96 180 158 -17 38 -55 43 -147 17 -326 -90 -501 -122 -653 -120 -108 2 -136 9 -140 37 -6 38 24 70 121 134 164 106 445 229 652 284 79 21 106 24 215 20 75 -3 176 -15 252 -30z m-604 -1072 c12 -4 22 -12 22 -18 0 -19 -149 -184 -241 -269 -149 -137 -262 -212 -376 -252 -64 -23 -81 -25 -286 -25 l-218 0 16 22 c31 45 242 251 318 311 140 111 315 192 476 221 79 15 249 20 289 10z m340 -100 c95 -31 212 -94 359 -190 191 -126 475 -350 471 -370 -4 -20 -204 -182 -327 -266 -160 -110 -306 -189 -447 -246 -130 -51 -270 -87 -298 -76 -9 3 -41 42 -72 86 -66 94 -164 209 -283 331 l-86 89 371 -4 c354 -3 373 -2 393 16 28 25 29 86 2 110 -24 22 -133 32 -470 42 -133 4 -240 10 -239 15 2 4 29 28 61 52 76 59 196 175 330 320 83 89 115 117 134 117 13 0 59 -12 101 -26z m-1698 -655 c32 -14 97 -73 220 -197 179 -181 314 -292 449 -369 90 -52 254 -107 383 -129 51 -9 109 -23 128 -32 44 -20 240 -217 319 -321 32 -42 89 -125 125 -184 l66 -107 -24 -10 c-123 -47 -419 -113 -577 -130 -181 -19 -401 20 -559 100 -69 35 -305 193 -365 243 l-39 34 86 13 c122 18 421 8 553 -20 129 -26 180 -28 205 -5 29 27 25 69 -9 97 -51 43 -278 91 -496 103 -105 7 -151 3 -499 -34 -48 -6 -102 -7 -120 -4 -17 3 -101 33 -186 65 -253 97 -419 131 -695 146 l-140 7 215 139 c238 155 451 309 640 465 126 104 204 151 250 151 14 0 45 -10 70 -21z m708 3 c92 -35 223 -143 366 -299 93 -103 184 -229 173 -240 -4 -3 -55 -1 -113 5 -118 13 -268 59 -382 116 -120 60 -276 191 -426 355 -58 64 -59 66 -35 72 13 4 102 7 196 8 145 1 181 -2 221 -17z m-1923 -1537 c253 -50 420 -155 546 -342 28 -42 65 -106 82 -142 66 -146 128 -425 143 -643 6 -86 5 -98 -9 -98 -9 0 -87 18 -174 40 -617 157 -885 394 -957 846 -9 56 -16 136 -16 178 0 70 2 76 18 67 28 -15 279 -274 417 -429 146 -165 161 -177 209 -168 47 9 64 49 42 100 -30 71 -205 276 -413 484 -73 74 -133 136 -133 138 0 9 122 -7 245 -31z"/><path d="M12680 12339 c-278 -30 -553 -197 -801 -485 -94 -111 -119 -149 -119 -187 0 -38 20 -54 110 -90 231 -93 435 -132 645 -124 169 6 246 26 388 99 131 67 238 148 362 272 184 185 240 290 182 344 -55 51 -390 154 -562 172 -100 11 -99 11 -205 -1z"/><path d="M7592 12340 c-92 -10 -187 -32 -327 -77 -214 -68 -267 -104 -251 -167 18 -71 266 -346 396 -438 100 -71 246 -144 345 -174 73 -21 117 -27 230 -31 212 -8 356 21 660 130 66 24 92 56 82 99 -15 59 -188 259 -322 373 -213 181 -377 258 -611 285 -97 11 -96 11 -202 0z"/><path d="M12825 11324 c-201 -87 -390 -239 -493 -397 -57 -87 -87 -159 -109 -262 -28 -132 -3 -540 39 -618 5 -10 25 -25 44 -33 44 -18 72 -7 209 83 136 91 313 269 376 378 93 160 124 289 124 515 0 222 -33 347 -94 363 -11 3 -54 -10 -96 -29z"/><path d="M7531 11324 c-74 -94 -78 -500 -8 -700 24 -65 66 -144 112 -209 88 -123 327 -330 450 -390 43 -21 55 -23 87 -14 44 12 61 38 77 119 36 184 39 453 6 575 -65 246 -280 474 -580 617 -77 36 -117 37 -144 2z"/><path d="M8756 10859 c-15 -18 -40 -76 -60 -142 -132 -425 -137 -675 -21 -923 57 -122 108 -194 196 -281 99 -96 146 -133 264 -213 124 -83 156 -100 193 -100 58 0 94 75 149 308 25 106 27 134 27 307 0 178 -2 196 -27 280 -44 144 -124 296 -222 417 -94 117 -237 255 -342 329 -83 59 -119 63 -157 18z m161 -237 c119 -95 263 -272 332 -409 85 -170 114 -384 77 -588 -18 -98 -41 -194 -50 -203 -13 -13 -187 118 -276 208 -98 98 -144 165 -187 270 -79 197 -71 392 33 743 8 24 16 22 71 -21z"/><path d="M11567 10834 c-199 -138 -387 -348 -473 -529 -29 -60 -65 -150 -81 -200 -26 -85 -27 -101 -28 -290 0 -218 7 -264 67 -463 57 -185 91 -193 278 -69 323 216 475 407 541 684 26 108 28 285 4 418 -15 87 -79 327 -110 416 -38 106 -84 113 -198 33z m106 -311 c20 -82 41 -186 48 -232 27 -192 -19 -384 -133 -549 -64 -93 -287 -289 -361 -318 -11 -4 -19 13 -35 73 -33 123 -43 195 -43 311 -1 186 54 367 156 523 48 73 300 339 321 339 5 0 27 -66 47 -147z"/></g></g></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+    </a>
+    <span class="es-sub">Guides</span>
+    <nav class="es-nav" aria-label="Documentation">
+      <a href="/guides/">Guides</a>
+      <a href="/learn/">Learn</a>
+      <a href="/plugins/">Plugin docs</a>
+      <a href="/hosting/hosting-options/">Hosting</a>
+      <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="tabs"><div class="tabrow" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="p-tldr">TL;DR</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-credits">How credits work</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-unlimited">Unlimited passes</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-boost">Boost credits</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-estimator">Estimator</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-example">Worked example</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="p-decide">Which one?</button>
+</div></nav>
+
+  <main class="wrap">
+
+    <p class="breadcrumb">
+      <a href="https://documentation.elmspark.com/guides/">Guides</a> &rsaquo; Higgsfield credits, decoded
+    </p>
+
+    <span class="category-chip">AI &middot; Tools</span>
+
+    <h1>Higgsfield credits, decoded</h1>
+    <p class="guide-hook">Top-up packs, Unlimited passes and Concurrency Boost Credits, priced out in real credits-per-dollar, including the exclusion clause that quietly writes off an Unlimited pass for anyone generating through the API, MCP or CLI.</p>
+
+    <div class="meta-chips">
+      <span>&#9201; 10-minute read</span>
+      <span>&#129513; API/MCP/CLI focus</span>
+      <span>&#128202; live pricing, snapshotted July 2026</span>
+      <span>July 2026</span>
+    </div>
+
+    <p class="lead">Higgsfield sells the same generating power four different ways &mdash; a subscription, one-time top-up packs, time-boxed &ldquo;Unlimited&rdquo; passes and Concurrency Boost Credits &mdash; and the small print changes which one is actually cheap depending on how you generate. This guide prices all four against real per-model costs, using Higgsfield&rsquo;s own live billing data, plus a genuine worked example from a full production day.</p>
+
+    <div class="toc">
+      <h3>On this page</h3>
+      <ol>
+        <li>TL;DR &mdash; the one-line verdict</li>
+        <li>How credits actually work (plans, concurrency, per-model cost)</li>
+        <li>Unlimited passes &mdash; and the clause that excludes API/MCP/CLI work</li>
+        <li>Concurrency Boost Credits &mdash; what they really buy</li>
+        <li>A credit estimator you can use for your own numbers</li>
+        <li>A worked example: a real 24-hour production day</li>
+        <li>A plain decision guide</li>
+      </ol>
+    </div>
+
+<!-- ============ TL;DR ============ -->
+<section class="panel active" id="p-tldr" role="tabpanel">
+  <h2>The one-line version</h2>
+  <p class="lede">If you generate through the <strong>API, an MCP server or the CLI</strong> &mdash; which is how any coding agent, automation or scripted pipeline talks to Higgsfield &mdash; <strong>one-time top-up credit packs are almost always the cheapest option</strong>, because Higgsfield&rsquo;s &ldquo;Unlimited&rdquo; passes explicitly exclude that traffic. If you sit in the web app yourself generating by hand, the maths changes, and a pass can occasionally win, but only at very high, sustained volume.</p>
+
+  <div class="grid g3">
+    <div class="card pick">
+      <span class="tag">Best for automation</span>
+      <div class="num">~21</div>
+      <div class="lbl">credits per dollar, one-time top-up packs (2,000 or 4,000 credit packs, July 2026 pricing)</div>
+    </div>
+    <div class="card">
+      <span class="tag">Unlimited passes</span>
+      <div class="num">0%</div>
+      <div class="lbl">of API/MCP/CLI spend they cover &mdash; the small print excludes it outright</div>
+    </div>
+    <div class="card">
+      <span class="tag">Boost credits</span>
+      <div class="num">~10</div>
+      <div class="lbl">credits per dollar &mdash; roughly half the value of a plain top-up, buying concurrency and queue priority, not cheaper generations</div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <strong>The one clause that changes everything:</strong> every Higgsfield Unlimited pass (1-day, 7-day, 14-day) carries this line in its own small print: <span class="quote">&ldquo;Standard generation modes only. Excludes MCP, Supercomputer, Canvas, &amp; CLI.&rdquo;</span> If your generations come from a script, an agent or an integration rather than a human clicking Generate in the web app, none of your usage is covered.
+  </div>
+
+  <p>Everything below shows the working: real credit costs per model, the live pricing snapshot this guide was built from, and a genuine production day&rsquo;s numbers to check the maths against.</p>
+</section>
+
+<!-- ============ HOW CREDITS WORK ============ -->
+<section class="panel" id="p-credits" role="tabpanel">
+  <h2>How Higgsfield credits actually work</h2>
+  <p>Every generation on Higgsfield costs credits, whatever plan you are on. The plan changes how many credits you get and at what rate; it does not change what a generation costs.</p>
+
+  <h3>What a plan actually gives you</h3>
+  <p>The Ultra plan (the one relevant to most production work) included, as of the July 2026 pricing snapshot:</p>
+  <ul>
+    <li><strong>3,000 credits a month</strong>, billed annually at roughly $99/month (23% off the monthly-equivalent list price).</li>
+    <li><strong>Parallel generations: up to 8 videos and 8 images at once</strong> &mdash; this is the base concurrency almost every plan-holder actually uses.</li>
+    <li>Access to every model, including Seedance 2.0, GPT Image 2 and Seed Audio.</li>
+  </ul>
+
+  <h3>What generations actually cost, measured</h3>
+  <p>These are real, measured costs from a live account&rsquo;s billing ledger and cost-preflight checks, not marketing copy:</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Model</th><th>Typical use</th><th class="num">Cost</th></tr></thead>
+    <tbody>
+      <tr><td>GPT Image 2</td><td>Still frame, quality high, 1k, 16:9</td><td class="num">4 credits</td></tr>
+      <tr><td>GPT Image 2</td><td>Still frame, quality medium</td><td class="num">~2 credits</td></tr>
+      <tr><td>Seedance 2.0</td><td>1080p, standard mode, 4&ndash;5 second clip</td><td class="num">9 credits per second</td></tr>
+      <tr><td>Seed Audio 1.0</td><td>One voiceover take, ~65-word script</td><td class="num">~0.8&ndash;1.1 credits</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Video is the expensive line item by a wide margin. A single 5-second Seedance 2.0 clip at 1080p (45 credits) costs roughly the same as eleven GPT Image 2 stills. Any production that leans on video clips, not just stills, should expect video to dominate the bill: in the worked example further down, Seedance clips alone were about 80% of a full day&rsquo;s spend.</p>
+
+  <div class="callout good">
+    <strong>Preflight before you commit.</strong> Higgsfield&rsquo;s own tools (the <code>generate_...</code> MCP calls and the CLI) accept a <code>get_cost: true</code> flag that returns the exact credit cost for a generation without submitting it. Always check this before a batch, rather than trusting a remembered rate &mdash; costs and models both change.
+  </div>
+</section>
+
+<!-- ============ UNLIMITED PASSES ============ -->
+<section class="panel" id="p-unlimited" role="tabpanel">
+  <h2>Unlimited passes: what they cover, and the clause that undoes them</h2>
+  <p>Higgsfield also sells time-boxed passes that promise unlimited generations on a named set of models. As of July 2026 the offer looked like this:</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Pass</th><th class="num">List price</th><th class="num">Sale price</th><th>Concurrency while active</th></tr></thead>
+    <tbody>
+      <tr><td>1-day Unlimited</td><td class="num">$281</td><td class="num">$179</td><td rowspan="3">2 image &amp; 1 video concurrent</td></tr>
+      <tr><td>7-day Unlimited</td><td class="num">$1,964</td><td class="num">$780</td></tr>
+      <tr><td>14-day Unlimited</td><td class="num">$3,927</td><td class="num">$1,570</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The models covered are genuinely the ones that matter for video-ad production: Nano Banana Pro (4K), <strong>Seedance 2.0 (1080p)</strong>, Enhanced Seedance 2.0 Fast &amp; Mini (720p), Kling 3.0 (4K) and <strong>GPT Image 2 (4K)</strong>. On paper, that is exactly the model list this guide priced out above.</p>
+
+  <div class="surprise-box">
+    <span class="surprise-label">The catch, quoted exactly</span>
+    Higgsfield&rsquo;s own offer states: <span class="quote">&ldquo;Standard generation modes only. Excludes MCP, Supercomputer, Canvas, &amp; CLI. 4K plan also includes 2K &amp; 1K, and other lower quality modes. Max 2 parallel generations for unlimited image mode and max 1 for unlimited video mode.&rdquo;</span> Standard generation modes means a human, in the web app, clicking Generate. It does not mean the API, an MCP server, or the CLI &mdash; which is how any coding agent, automated pipeline or script talks to Higgsfield. If that is how your work runs, a pass covers precisely none of it, and the same generations bill exactly as they would with no pass at all.
+  </div>
+
+  <h3>Even granting API/MCP/CLI coverage, does the maths work?</h3>
+  <p>Suppose, hypothetically, a pass did cover automated traffic. The 1-day pass costs $179. At the best one-time top-up rate (~21 credits per dollar), $179 buys about 3,760 credits. So break-even for the 1-day pass is roughly <strong>3,760 credits generated in 24 hours</strong> &mdash; and its own concurrency cap (1 video at a time) makes that a stretch: at 5 seconds and 45 credits per Seedance clip, hitting 3,760 credits of video alone in a single 24-hour window one clip at a time, each taking several minutes to render, is close to the physical ceiling of what is possible.</p>
+
+  <h3>When a pass genuinely does make sense</h3>
+  <p>For a human sitting in the web app generating stills or short clips by hand &mdash; mass product photography, bulk b-roll, high-volume Nano Banana or GPT Image work with no automation involved &mdash; a 7-day or 14-day pass can be excellent value, because it is priced against sustained daily volume, not a single burst. The exclusion clause only bites when the traffic is scripted.</p>
+</section>
+
+<!-- ============ BOOST CREDITS ============ -->
+<section class="panel" id="p-boost" role="tabpanel">
+  <h2>Concurrency Boost Credits: what they really buy</h2>
+  <p>Boost Credits are a separate purchase from the subscription: a credit pool bundled with extra parallel-generation slots, applied across all 62 models including Seedance 2.0, Nano Banana Pro and GPT Image 2.</p>
+
+  <h3>The mechanics</h3>
+  <ul>
+    <li><strong>Concurrency tiers:</strong> +4, +8, +12 or +16 parallel slots, added on top of your base plan concurrency (8 video / 8 image on Ultra). Maximum additional concurrency purchasable is +16 above your current limit.</li>
+    <li><strong>Priority processing:</strong> boosted jobs get &ldquo;highest priority paid processing&rdquo; in the queue.</li>
+    <li><strong>Per-bundle toggle:</strong> each concurrency tier is its own bundle; when enabled, all supported models consume boost credits at the boosted concurrency; when disabled, generations fall back to regular subscription credits at base concurrency.</li>
+    <li><strong>No expiry.</strong> Unlike one-time top-up packs (90-day validity), Boost Credits do not expire.</li>
+    <li><strong>Consumption order:</strong> if you own packs at different concurrency tiers, credits draw from the highest tier first; same-tier packs simply combine into one pool.</li>
+  </ul>
+
+  <h3>The price, measured</h3>
+  <p>A live example: <strong>1,000 boost credits with a +8 concurrency tier for $97</strong> (list $134). That is <strong>~10.3 credits per dollar</strong> at the sale price, or ~7.5 at list &mdash; roughly half the value of a plain top-up pack (~21 credits per dollar). The extra you pay buys concurrency and queue priority, not a cheaper credit.</p>
+
+  <div class="callout warn">
+    <strong>Boost concurrency and Unlimited-pass concurrency are separate systems.</strong> Boosting your parallel-job limit does not lift the 1-video-at-a-time cap that applies while an Unlimited pass&rsquo;s toggle is active; they are different products with different rules. Read both sets of terms before assuming they stack the way the marketing copy might imply.
+  </div>
+
+  <h3>When boost credits are worth it</h3>
+  <p>They earn their premium when the constraint is genuinely the queue: large same-day batches where you need far more than 8 parallel jobs to hit a deadline. They do not help if your bottleneck is somewhere else &mdash; reviewing outputs, retaking rejected frames, writing prompts, assembling a final cut &mdash; which, for most careful production work, is where the real time actually goes.</p>
+</section>
+
+<!-- ============ ESTIMATOR ============ -->
+<section class="panel" id="p-estimator" role="tabpanel">
+  <h2>Rough-and-ready credit estimator</h2>
+  <p>Use this to sanity-check a project before buying anything. It is deliberately simple: a shot list of stills and video clips, priced at the measured rates above.</p>
+
+  <div class="estimator">
+    <label for="rStills">Number of GPT Image 2 stills (high quality, 4 credits each)</label>
+    <input type="range" id="rStills" min="0" max="200" value="18" step="1">
+    <div class="rangeval" id="rStillsVal">18 stills</div>
+
+    <label for="rClips">Number of Seedance 2.0 clips (1080p, average 4.5 seconds each)</label>
+    <input type="range" id="rClips" min="0" max="100" value="15" step="1">
+    <div class="rangeval" id="rClipsVal">15 clips</div>
+
+    <label for="rVo">Number of voiceover takes (Seed Audio, ~1 credit each, allow for retakes)</label>
+    <input type="range" id="rVo" min="0" max="30" value="5" step="1">
+    <div class="rangeval" id="rVoVal">5 takes</div>
+
+    <div class="result">
+      <div class="card">
+        <div class="num" id="outCredits">685</div>
+        <div class="lbl">estimated credits</div>
+      </div>
+      <div class="card pick">
+        <div class="num" id="outDollars">$32</div>
+        <div class="lbl">at the ~21 cr/$ top-up rate</div>
+      </div>
+      <div class="card">
+        <div class="num" id="outPack">1,000-credit pack</div>
+        <div class="lbl">smallest pack that covers it</div>
+      </div>
+    </div>
+  </div>
+  <p class="noscript-note">The figures above (685 credits, $32, a 1,000-credit pack) are the worked default for 18 stills, 15 clips and 5 voiceover takes &mdash; roughly one 30-second AI video advert. Move the sliders to price your own project; this needs JavaScript enabled.</p>
+
+  <h3>Top-up pack rates, for reference</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Pack</th><th class="num">Price</th><th class="num">Credits per $</th><th>Validity</th></tr></thead>
+    <tbody>
+      <tr><td>500 credits</td><td class="num">$26</td><td class="num">19.2</td><td>90 days</td></tr>
+      <tr><td>1,000 credits</td><td class="num">$49</td><td class="num">20.4</td><td>90 days</td></tr>
+      <tr class="best"><td>2,000 credits</td><td class="num">$95</td><td class="num">21.1</td><td>90 days</td></tr>
+      <tr class="best"><td>4,000 credits</td><td class="num">$190</td><td class="num">21.1</td><td>90 days</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Auto-refill, for comparison, tops up at roughly <strong>18 credits per dollar</strong> &mdash; a worse rate than any one-time pack, priced for the convenience of never running dry mid-batch rather than for value.</p>
+</section>
+
+<!-- ============ WORKED EXAMPLE ============ -->
+<section class="panel" id="p-example" role="tabpanel">
+  <h2>A worked example: a real 24-hour production day</h2>
+  <p>Numbers from an actual production run, entirely through the MCP/CLI (no web-app clicking): a family of nine independent 30-second AI-generated video adverts, each built as frames &rarr; animated clips &rarr; voiceover &rarr; assembly &rarr; a verification gate before anything was called finished.</p>
+
+  <div class="grid g3">
+    <div class="card">
+      <div class="num">9</div>
+      <div class="lbl">finished 30-second films, gate-passed</div>
+    </div>
+    <div class="card">
+      <div class="num">1,446</div>
+      <div class="lbl">credits spent across the full 24 hours</div>
+    </div>
+    <div class="card pick">
+      <div class="num">~$69</div>
+      <div class="lbl">at the best top-up rate, for the whole day&rsquo;s output</div>
+    </div>
+  </div>
+
+  <p>The split, roughly: <strong>~80% on Seedance 2.0 clips</strong> (the animated shots), <strong>~10% on GPT Image 2 stills</strong> (the source frames each clip was animated from), and the remainder on voiceover takes, where duration variance meant several retakes per film before one landed under the target length.</p>
+
+  <p>Checked against the numbers above: at ~230 credits per finished film, an Unlimited day pass ($179) would need roughly <strong>19 films&rsquo; worth of clips in a single day</strong> to break even &mdash; and it would need to be run entirely by hand in the web app to count at all, since this whole run was MCP/CLI traffic the pass explicitly excludes. Credits, not a pass, were the right call here, and by a wide margin.</p>
+
+  <div class="callout good">
+    <strong>The general lesson:</strong> the bottleneck in careful production work is rarely the generation queue. It is the verification between stages &mdash; eyeballing every frame for anatomy and lettering errors, retaking rejects, choosing the voiceover take that lands under the time limit, checking the assembled file frame-by-frame before calling it done. None of that is sped up by more concurrency or an unlimited quota; it is sped up by not skipping it.
+  </div>
+</section>
+
+<!-- ============ DECISION GUIDE ============ -->
+<section class="panel" id="p-decide" role="tabpanel">
+  <h2>A plain decision guide</h2>
+
+  <div class="tablewrap">
+  <table class="verdict-table">
+    <thead><tr><th>Your situation</th><th>Best option</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>You generate via a coding agent, script, MCP server, or the CLI</td>
+        <td>One-time top-up packs (2,000 or 4,000 credits)</td>
+        <td>Best credits-per-dollar available, and the only option Unlimited passes explicitly exclude</td>
+      </tr>
+      <tr>
+        <td>You are a human in the web app, generating occasionally</td>
+        <td>Top-up packs, bought as needed</td>
+        <td>90-day validity comfortably covers occasional use; no reason to prepay for a pass you won&rsquo;t fill</td>
+      </tr>
+      <tr>
+        <td>You are a human in the web app, generating heavily every day for a week or two</td>
+        <td>A 7-day or 14-day Unlimited pass</td>
+        <td>Priced for sustained daily volume; can beat top-up rates if you would otherwise spend well beyond the pass price in credits</td>
+      </tr>
+      <tr>
+        <td>Your bottleneck is genuinely the parallel-job queue, not review time</td>
+        <td>Concurrency Boost Credits, on top of whichever credit source you already use</td>
+        <td>Buys queue priority and higher concurrency; costs roughly double per credit, so only worth it when speed itself is the constraint</td>
+      </tr>
+      <tr>
+        <td>You are about to run out mid-batch and cannot stop to buy credits</td>
+        <td>Auto-refill, as a safety net only</td>
+        <td>Convenience over value (~18 credits per dollar); top up manually with packs when you can plan ahead instead</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Whatever you choose, re-check the live pricing before committing real spend: Higgsfield rotates offers (several of its bundled perks in this snapshot were explicitly time-limited, &ldquo;buy until July 8&rdquo;), and credit rates, model costs and exclusion terms can all change without notice. The MCP/CLI exclusion in particular is the one clause worth reading in full every time, since it is the single line that decides whether a pass is a bargain or a write-off.</p>
+</section>
+
+  </main>
+
+<footer class="guide-footer">
+    <a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> &middot;
+    an ElmsPark guide for anyone pricing out AI generation work &middot;
+    <a href="https://documentation.elmspark.com">documentation.elmspark.com</a> &middot;
+    <a href="https://elmspark.com">elmspark.com</a>
+    <br>
+    <span style="color:#bbb;font-size:13px;">Made in Wexford, Ireland. Pricing snapshotted July 2026; always check the live figures before you buy.</span>
+  </footer>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.tab');
+  var panels = document.querySelectorAll('.panel');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.setAttribute('aria-selected','false'); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      t.setAttribute('aria-selected','true');
+      document.getElementById(t.dataset.panel).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  var rStills=document.getElementById('rStills'), rClips=document.getElementById('rClips'), rVo=document.getElementById('rVo');
+  var rStillsVal=document.getElementById('rStillsVal'), rClipsVal=document.getElementById('rClipsVal'), rVoVal=document.getElementById('rVoVal');
+  var outCredits=document.getElementById('outCredits'), outDollars=document.getElementById('outDollars'), outPack=document.getElementById('outPack');
+
+  function packFor(credits){
+    if (credits <= 500) return '500-credit pack';
+    if (credits <= 1000) return '1,000-credit pack';
+    if (credits <= 2000) return '2,000-credit pack';
+    if (credits <= 4000) return '4,000-credit pack';
+    return 'multiple 4,000-credit packs';
+  }
+
+  function recompute(){
+    var stills = parseInt(rStills.value,10);
+    var clips = parseInt(rClips.value,10);
+    var vo = parseInt(rVo.value,10);
+    var credits = Math.round(stills*4 + clips*4.5*9 + vo*1);
+    var dollars = Math.round(credits/21.1);
+    rStillsVal.textContent = stills + (stills===1?' still':' stills');
+    rClipsVal.textContent = clips + (clips===1?' clip':' clips');
+    rVoVal.textContent = vo + (vo===1?' take':' takes');
+    outCredits.textContent = credits.toLocaleString();
+    outDollars.textContent = '$' + dollars;
+    outPack.textContent = packFor(credits);
+  }
+  [rStills, rClips, rVo].forEach(function(el){ el.addEventListener('input', recompute); });
+  recompute();
+})();
+</script>
+
+</body>
+</html>
