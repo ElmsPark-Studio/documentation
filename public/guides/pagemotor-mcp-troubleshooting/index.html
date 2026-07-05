@@ -148,7 +148,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li><a href="#slash">The trailing slash and the redirect trap</a></li>
       <li><a href="#access">&ldquo;Claude says it has no access&rdquo; (it does)</a></li>
       <li><a href="#plugins">Why &ldquo;disable all plugins&rdquo; works</a></li>
-      <li><a href="#hosting">Four hosting-environment killers</a></li>
+      <li><a href="#hosting">Five hosting-environment killers</a></li>
       <li><a href="#core">For core developers: the confirmed defects</a></li>
       <li><a href="#ruledout">Checked and ruled out</a></li>
     </ol>
@@ -258,7 +258,7 @@ x-redirect-by: PageMotor
   </section>
 
   <section class="step" id="hosting">
-    <h2><span class="num">6</span><span class="t">Four hosting-environment killers</span></h2>
+    <h2><span class="num">6</span><span class="t">Five hosting-environment killers</span></h2>
 
     <h3>a. Apache shared hosting eats your Authorization header</h3>
     <p>On Apache running PHP as CGI/FastCGI (the default on most shared hosting), the Authorization header is not passed to PHP unless the configuration says so, and PageMotor's generated <code>.htaccess</code> does not yet include that rule. Result on 0.10.x: a perpetual 401 with a perfectly valid token, and disabling plugins changes nothing because the header dies in the web server before PageMotor runs. On 0.9.x, which accepts anonymous connections, the symptom is quieter: the connection works but silently drops to read-only tier, and you only notice when admin actions are missing (see <a href="#access">section 4</a>).</p>
@@ -300,6 +300,57 @@ location ^~ /.well-known/ {
     <p>That is the standard PageMotor-on-CloudPanel case, where PHP runs through php-fpm, so the <code>/index.php</code> hand-off inherits the site's own PHP handler and there is no port to set. If your site instead reverse-proxies (Varnish, or a Node or app backend), replace the second block's <code>try_files</code> line with <code>proxy_pass</code> pointing at whatever your existing <code>location /</code> already targets (do not assume a port), and add <code>proxy_set_header X-Forwarded-Proto https;</code> so PageMotor builds its discovery URLs as https rather than http.</p>
     <div class="note">
       <strong>Do not proxy the whole block.</strong> Forwarding all of <code>/.well-known/</code> to the app without the <code>acme-challenge</code> line in front sends Let's Encrypt's HTTP-01 challenge to PageMotor, which cannot answer it, and your certificate then silently stops renewing until it expires around 90 days later. Keep the <code>acme-challenge</code> block, and on CloudPanel make the change through the Vhost Editor so a renewal cannot revert it. After applying, confirm both things: the discovery URL now returns JSON, and your next certificate renewal succeeds.</div>
+
+    <h3>e. nginx HTTP Basic Auth (gating a preview or staging site) breaks MCP in stages</h3>
+    <p>Put a whole PageMotor site behind nginx HTTP Basic Auth, the usual way to keep a preview or client-review build private, and the MCP connection breaks in a sequence that looks like three different bugs but is one theme: the gate, and then the exceptions you cut in it, sit in the path of the machine-to-machine endpoints. You fix one symptom and meet the next. It is not the server coming apart.</p>
+    <p>The cascade, in the order you meet it:</p>
+    <ul class="sub">
+      <li><strong>Stage one, the connection dies.</strong> With <code>auth_basic</code> covering everything, every MCP call to <code>/mcp/</code> gets a 401 challenge the client cannot answer, and any existing connection is invalidated. Same 401 as <a href="#hosting">section 6a</a>, self-inflicted at the web server.</li>
+      <li><strong>Stage two, &ldquo;Couldn&rsquo;t connect&rdquo; during sign-in.</strong> Exempt <code>/mcp/</code> alone and the browser OAuth flow still fails before it starts, because the client fetches <code>/.well-known/oauth-authorization-server</code> and <code>/.well-known/oauth-protected-resource</code> to discover the authorize and token endpoints, and those are still walled off. Same mechanism as <a href="#hosting">section 6d</a>, triggered by basic auth rather than a filesystem block. Exempt <code>/.well-known/</code> and <code>/oauth/</code> and sign-in completes (register 201, authorize 200 then 302, token 200 in the access log).</li>
+      <li><strong>Stage three, &ldquo;authorized but returned an error when connecting.&rdquo;</strong> OAuth now succeeds and the handshake still fails, and this is the trap that hides inside the exception you just wrote. The MCP client POSTs to <code>/mcp</code> with no trailing slash. An exception block written as <code>location ^~ /mcp/</code> (slash in the pattern) does not match <code>/mcp</code>, so the request falls through to <code>try_files</code> and nginx issues its own automatic trailing-slash 301. Per <a href="#slash">section 3</a>, a redirect turns the POST into a body-less GET, the JSON-RPC <code>initialize</code> is lost, and PageMotor answers the GET with its short orientation blurb instead of a handshake. The gate has reintroduced the section 3 redirect on a root 0.10.x install that handles the slash-less POST perfectly well without it.</li>
+    </ul>
+    <p>Who is affected: anyone gating a PageMotor site with nginx <code>auth_basic</code> (preview, staging, client-review boxes) and driving it over MCP, from Claude Code or a claude.ai / Cowork connector. The slash-less POST is what claude.ai and Cowork send, so stage three bites connector users specifically.</p>
+    <p>The diagnostic. The access log is definitive. A broken stage-three handshake shows a <code>POST /mcp</code> 301 followed by a <code>GET /mcp/</code> 200. A working one, after the fix, shows the POST reaching PageMotor directly:</p>
+    <div class="codewrap">
+      <pre><code>160.79.106.36 - - [05/Jul/2026:14:49:13 +0000] "POST /mcp HTTP/1.1" 200 3285 "-" "Claude-User"</code></pre>
+    </div>
+    <p>Tell nginx from PageMotor by the fingerprint: nginx's redirect is a 301 carrying its own ~178-byte HTML page; PageMotor's own reserved-slug redirect (section 3) is a 302 with an empty body. Reproduce without a browser:</p>
+    <div class="codewrap">
+      <pre id="cmd-basicauth-probe"><code>curl -sS -D - -o /dev/null -X POST https://your-site.com/mcp \
+  -H "Authorization: Bearer anything" -H "Content-Type: application/json" \
+  --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}'
+<span class="tok-c"># A 301 here is the bug. You want PageMotor's JSON-RPC 401 (for a fake token) instead.</span></code></pre>
+      <button class="copy" onclick="copy(this,'cmd-basicauth-probe')">Copy</button>
+    </div>
+    <p>The fix. Match both <code>/mcp</code> and <code>/mcp/</code> with a regex location and route straight to <code>index.php</code>, so nginx never emits the slash redirect. Do the same for the discovery and oauth paths, and leave the site root gated:</p>
+    <div class="codewrap">
+      <pre id="cfg-basicauth"><code>location / {
+    auth_basic "Restricted";
+    auth_basic_user_file /etc/nginx/.htpasswd-yoursite;
+    try_files $uri $uri/ /index.php?$args;
+}
+
+location ^~ /.well-known/acme-challenge/ {
+    auth_basic off;
+    allow all;
+    try_files $uri =404;
+}
+
+location ~ ^/mcp(/|$) {
+    auth_basic off;
+    try_files $uri /index.php?$args;
+    fastcgi_param HTTP_AUTHORIZATION $http_authorization;
+}
+
+location ^~ /.well-known/ { auth_basic off; try_files $uri $uri/ /index.php?$args; }
+location ^~ /oauth/       { auth_basic off; try_files $uri $uri/ /index.php?$args; }</code></pre>
+      <button class="copy" onclick="copy(this,'cfg-basicauth')">Copy</button>
+    </div>
+    <p>Mind the nginx precedence: an exact <code>^~</code> prefix outranks a regex <code>location</code>, and regex locations are tried in file order, so keep the <code>acme-challenge</code> prefix block above and make sure no earlier regex block also matches <code>/mcp</code>. After reloading, the same POST that gave a 301 must now reach PageMotor as a real POST (a JSON-RPC 401 for a fake token, a full <code>initialize</code> for a real one), while <code>GET /</code> still returns 401 Basic.</p>
+    <div class="note">
+      <strong>On the header hypothesis, for the record.</strong> The obvious first guess on stage three is a stripped <code>Authorization</code> header (section 6a). On this case it was tested with a throwaway probe behind the exact <code>/mcp/</code> routing and disproven: nginx was already forwarding <code>HTTP_AUTHORIZATION</code> to PHP with and without an explicit <code>fastcgi_param</code>, and the token always reached PageMotor. The 401 that looked like a header strip was PageMotor returning its identical &ldquo;authentication required&rdquo; for an invalid token as for a missing one. Keep the <code>fastcgi_param</code> line as harmless insurance, but the fix that matters is the slash-tolerant location.
+    </div>
+    <p>Two traps worth stating. The <code>^~</code> acme-challenge block must stay above so certificate renewal keeps serving from disk (do not proxy the whole <code>/.well-known/</code>, see <a href="#hosting">section 6d</a>). And a connector added while the site was broken can hold its failed state: remove it, restart the client, add it fresh (<a href="#client">section 2</a>, trap four).</p>
   </section>
 
   <section class="step" id="core">
