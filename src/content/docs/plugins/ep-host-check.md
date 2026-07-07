@@ -43,17 +43,18 @@ This replicates what PageMotor does when it compiles your design: it writes a te
 - **Object cache** (Redis / Memcached): informational, never required.
 - **PHP opcode cache** (opcache): on is faster; off is a gentle warning.
 
-### MCP / Claude connection (v1.2.0)
+### MCP / Claude connection (v1.2.0, extended in v1.3.0)
 
-Five checks that answer "why won't my site connect to Claude?" in one panel, each mapped to a section of the [PageMotor MCP troubleshooting guide](/guides/pagemotor-mcp-troubleshooting/):
+Six checks that answer "why won't my site connect to Claude?" in one panel, each mapped to a section of the [PageMotor MCP troubleshooting guide](/guides/pagemotor-mcp-troubleshooting/):
 
 - **Claude sign-in clock (OAuth timezone).** PageMotor stamps the 60-second sign-in code's expiry in UTC but reads it back in server-local time. A server ahead of UTC therefore treats every code as expired the instant it is issued, and browser sign-in from Claude always fails while everything else looks healthy. Red if your server is ahead of UTC now; amber if daylight saving will push it ahead later in the year. The fix is one line: `date.timezone = UTC`.
 - **MCP token reaches PHP.** Some servers (typically Apache running PHP as CGI/FastCGI) strip the Authorization header before PHP sees it, so a perfectly valid token arrives as anonymous. When you run this report through the API or MCP with your token, that request is itself the definitive proof the header got through, and the check goes green. From the admin panel it reports what it can see and tells you how to get the definitive answer.
 - **HTTPS as PageMotor sees it.** Behind Cloudflare Flexible SSL or a TLS-terminating proxy, your visitors use https but PageMotor thinks it is on plain http, so every sign-in URL it advertises is built wrong and the connection dies. Red when the report can see that mismatch from your proxy's own headers.
 - **OAuth discovery reachable.** PageMotor serves its OAuth discovery documents as dynamic routes; a stock nginx/CloudPanel/Plesk `.well-known` block answers them from the filesystem with a 404 instead, and Claude never finds the sign-in. If your host blocks the self-test, the row stays neutral and gives you a one-line external check instead of crying wolf.
 - **MCP endpoint answers POST directly.** Connector clients POST to the slash-less MCP URL; a redirect turns that into an empty GET and the handshake dies even though the URL "works" in a browser. On PageMotor 0.9.x the redirect is expected platform behaviour, and the row tells you the fix is simply using the trailing-slash URL in your connector.
+- **No plugin intercepts MCP authentication** (new in 1.3.0, guide §6f). Pre-OAuth bridge plugins (the PageMotor Architect AI Claude bridge, the EP MCP Bridge) answer the MCP route themselves behind their own API key. Left active on a modern core, they hijack *authenticated* requests only: sign-in completes, Connected Apps rows appear, then every request dies with "Invalid or missing API key." — while anonymous probes, and the other five rows here, all look healthy. The check fingerprints every active plugin's own code (never just its name — PageMotor bundles a harmless core plugin with the identical "PageMotor Architect AI: Claude" name) and names the offender. Amber, with the fix: deactivate it unless you deliberately connect through it.
 
-These rows are version-aware: on PageMotor 0.9.x (which has no browser sign-in) the OAuth-only checks report as neutral "Info" rows rather than failures. Info rows never affect the overall verdict.
+These rows are version-aware: on PageMotor 0.9.x (which has no browser sign-in) the OAuth-only checks report as neutral "Info" rows rather than failures, and the bridge row's advice becomes "retire it when you upgrade" since a bridge may be a 0.9 site's intended connection path. Info rows never affect the overall verdict.
 
 ## Requirements
 
