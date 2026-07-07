@@ -92,6 +92,21 @@ That's it. You're in.
 
 ---
 
+## Connecting Claude from this host
+
+PageMotor speaks MCP natively: once the site is up I can connect Claude Code or Claude.ai to it and let Claude build pages, manage content and run plugins for me. The connection asks a little more of a host than serving pages does. Four things must be true:
+
+- The `Authorization` header must reach PHP intact
+- PageMotor must be allowed to answer its dynamic `/.well-known/` routes itself
+- PHP's clock must be on UTC
+- Nothing may redirect Claude's POST to `/mcp` (the trailing-slash trap)
+
+No need to test any of that by hand: install [EP Host Check](https://documentation.elmspark.com/plugins/ep-host-check/) and read its **MCP / Claude connection** rows — since v1.2.0 its five checks cover all of this from the admin panel, no working Claude connection required, each with a plain fix. If a row fails, or the connection misbehaves anyway, the [MCP troubleshooting guide](https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/) has the exact diagnostic and fix for every verified cause.
+
+**The usual offender on shared hosting** is the first item: Apache running PHP as FastCGI drops the `Authorization` header before PHP ever sees it. The fix is one line in `.htaccess`, ready to paste in [section 6 of the troubleshooting guide](https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting).
+
+---
+
 ## Troubleshooting
 
 **HTTP ERROR 500 or blank white page (most common)**  
