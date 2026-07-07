@@ -695,6 +695,7 @@
         <li><a href="#step14">Set up contact forms</a></li>
         <li><a href="#step15">Add breadcrumbs (optional)</a></li>
         <li><a href="#step16">Review and test</a></li>
+        <li style="list-style:none;margin-left:-1.1rem;margin-top:0.75rem"><a href="#claude">Connecting Claude from this host</a></li>
         <li class="toc-fix"><a href="#fix">Something wrong? Jump to troubleshooting →</a></li>
       </ol>
     </div>
@@ -972,6 +973,10 @@ php translate.php /path/to/your-export.json --verbose</code></pre>
         Products, orders, and customer accounts all need a separate migration. The translator does not handle these. Post in the <a href="https://forums.pagemotor.com">PageMotor forum</a> and describe your shop's size — the right approach depends on whether you are continuing to take orders or archiving the data.
       </div>
     </div>
+
+    <h2 class="stage-heading" id="claude">Connecting Claude from this host</h2>
+    <p>PageMotor speaks MCP natively, so once the migration has settled you can connect Claude Code or Claude.ai to the new site and let Claude build pages, manage content and run plugins for you. The connection asks a little more of a host than serving pages does. Four things must be true: the <code>Authorization</code> header must reach PHP intact, PageMotor must be allowed to answer its dynamic <code>/.well-known/</code> routes itself, PHP's clock must be on UTC, and nothing may redirect Claude's POST to <code>/mcp</code> (the trailing-slash trap).</p>
+    <p>You do not need to test any of that by hand. Install <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> and read its <strong>MCP / Claude connection</strong> rows: since v1.2.0 its five checks cover all of this from your admin panel, no working Claude connection required, each with a plain fix. If a row fails, or the connection misbehaves anyway, the <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">MCP troubleshooting guide</a> has the exact diagnostic and fix for every verified cause.</p>
 
     <hr class="section-divider">
 

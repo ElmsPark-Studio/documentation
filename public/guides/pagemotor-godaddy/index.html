@@ -172,6 +172,10 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li><a href="#s3">Fill in config.php</a></li>
       <li><a href="#s4">Finish in your browser</a></li>
     </ol>
+    <p style="margin-top:14px">After you are in</p>
+    <ol style="list-style:none;padding-left:0;margin:0">
+      <li><a href="#claude">Connecting Claude from this host →</a></li>
+    </ol>
     <p style="margin-top:14px">Something not working?</p>
     <ol style="list-style:none;padding-left:0;margin:0">
       <li><a href="#fix">Jump to troubleshooting →</a></li>
@@ -270,6 +274,11 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
   <div class="note"><strong>"Sent" is not the same as "delivered".</strong> Your GoDaddy box will happily report the mail as sent, but Gmail and Outlook quietly bin messages from a domain with no <strong>SPF</strong> and <strong>DKIM</strong> records. The mail does not bounce; it just disappears. Add those two DNS records for your domain and real inboxes will accept it. The DNS half of the <a href="https://documentation.elmspark.com/guides/mailgun-email/">Mailgun guide</a> shows exactly what they look like.</div>
 
   <div class="seealso">🚀 <strong>Want a proper external service like Mailgun, with the best possible deliverability?</strong> You need a host that does not block the SMTP ports. That means a small VPS rather than shared hosting. Our <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Hosting PageMotor on Vultr</a> guide takes you from empty box to live, with Mailgun working normally.</div>
+
+  <h2 class="plain" id="claude">Connecting Claude from this host</h2>
+  <p>PageMotor speaks MCP natively, so once your site is up you can connect Claude Code or Claude.ai to it and let Claude build pages, manage content and run plugins for you. The connection asks a little more of a host than serving pages does. Four things must be true: the <code>Authorization</code> header must reach PHP intact, PageMotor must be allowed to answer its dynamic <code>/.well-known/</code> routes itself, PHP's clock must be on UTC, and nothing may redirect Claude's POST to <code>/mcp</code> (the trailing-slash trap).</p>
+  <p>You do not need to test any of that by hand. Install <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> and read its <strong>MCP / Claude connection</strong> rows: since v1.2.0 its five checks cover all of this from your admin panel, no working Claude connection required, each with a plain fix. If a row fails, or the connection misbehaves anyway, the <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">MCP troubleshooting guide</a> has the exact diagnostic and fix for every verified cause.</p>
+  <div class="note">The usual offender on shared hosting is the first item: Apache running PHP as FastCGI drops the <code>Authorization</code> header before PHP ever sees it. The fix is one line in your <code>.htaccess</code>, ready to paste in <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">section 6 of the troubleshooting guide</a>.</div>
 
   <h2 class="plain" id="fix">If something is not working</h2>
   <p style="color:var(--soft);font-size:16.5px">Open these only if you hit them. Each one is quick.</p>
