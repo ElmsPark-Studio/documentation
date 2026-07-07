@@ -402,7 +402,7 @@
     <li><strong>Sign up for Vultr and provision the VPS</strong> via <a href="https://www.vultr.com/?ref=9892518-9J">our referral link</a> ($300 credit). Use the choices in the "Sign up" tab. Paste your SSH public key (<code>cat ~/.ssh/id_ed25519.pub | pbcopy</code>) into the SSH Keys field during signup.</li>
     <li><strong>Note the VPS IP address</strong> once provisioning finishes (30 to 60 seconds). You need it for the next step and the prompt.</li>
     <li><strong>Point your domain's A record at the VPS IP.</strong> Set it <strong>DNS only (grey cloud)</strong> if on Cloudflare, so certbot can issue SSL without obstruction. Quick check: <code>dig yoursite.com +short</code> should return the VPS IP. Claude Code can do this for you if it has Cloudflare API access.</li>
-    <li><strong>Download the PageMotor 0.8.3b core ZIP</strong> from the forum download area, unzip to somewhere easy like <code>~/Downloads/pagemotor-0.8.3b/</code>, and note the path. It should contain <code>pagemotor.php</code>, <code>index.php</code>, <code>lib/</code>, <code>config-sample.php</code> and <code>license.txt</code>.</li>
+    <li><strong>Download the current PageMotor core ZIP</strong> from the forum download area, unzip to somewhere easy like <code>~/Downloads/pagemotor/</code>, and note the path. It should contain <code>pagemotor.php</code>, <code>index.php</code>, <code>lib/</code>, <code>config-sample.php</code> and <code>license.txt</code>.</li>
   </ol>
 
   <h3>The prompt (copy, paste, edit three lines)</h3>
@@ -414,7 +414,7 @@ I can SSH as root using my ed25519 key at ~/.ssh/id_ed25519.
 
 My domain is [yoursite.com]. The A record already points at the VPS IP.
 
-My PageMotor 0.8.3b core files are in [~/Downloads/pagemotor-0.8.3b/].
+My PageMotor core files are in [~/Downloads/pagemotor/].
 The folder contains pagemotor.php, index.php, lib/, config-sample.php, license.txt.
 
 Please follow the "From empty box to live PageMotor" procedure at
@@ -432,7 +432,7 @@ Do this end-to-end:
 5. At an interactive mariadb prompt (never put the DB password on the
    shell command line), create the database and a dedicated DB user
    scoped to it
-6. Upload my PageMotor 0.8.3b core to /var/www/mysite on the VPS,
+6. Upload my PageMotor core to /var/www/mysite on the VPS,
    create user-content subfolders, set ownership to www-data,
    755 directories / 644 files (no 777 or 775; www-data owns the tree)
 7. Write config.php with my four database constants:
@@ -459,7 +459,7 @@ Rules:
 - No em dashes in any file you write. Use commas or full stops.
 - Ask before anything destructive</code></pre>
   </div>
-  <p><strong>What to edit:</strong> <code>[VPS_IP_FROM_VULTR]</code> with your VPS IP; <code>[yoursite.com]</code> with your domain (appears twice); <code>[~/Downloads/pagemotor-0.8.3b/]</code> with the path where you unzipped the core.</p>
+  <p><strong>What to edit:</strong> <code>[VPS_IP_FROM_VULTR]</code> with your VPS IP; <code>[yoursite.com]</code> with your domain (appears twice); <code>[~/Downloads/pagemotor/]</code> with the path where you unzipped the core.</p>
 
   <h3>After the prompt finishes</h3>
   <ol class="steps">
@@ -542,7 +542,7 @@ EXIT;</code></pre></div>
   </details>
 
   <details>
-    <summary>4. Drop PageMotor 0.8.3b into place</summary>
+    <summary>4. Drop PageMotor into place</summary>
     <div class="codewrap"><button class="copy" type="button" data-copy="drop">Copy</button>
 <pre id="drop"><code>mkdir -p /var/www/mysite
 cd /var/www/mysite
@@ -617,7 +617,7 @@ certbot renew --dry-run</code></pre></div>
   <details>
     <summary>8. First page load creates the tables</summary>
     <p>Load your domain in a browser. PageMotor's first front-end request auto-creates its database tables, so there is no SQL file to import. Then visit <code>/admin/</code> to reach Admin Registration; the first account becomes the administrator.</p>
-    <p>Blank page here? PageMotor 0.8.3b keeps PHP errors off the screen and writes them to <code>/var/www/mysite/user-content/logs/php-errors.log</code>. Read that file rather than turning <code>display_errors</code> on.</p>
+    <p>Blank page here? PageMotor keeps PHP errors off the screen and writes them to <code>/var/www/mysite/user-content/logs/php-errors.log</code>. Read that file rather than turning <code>display_errors</code> on.</p>
   </details>
 
   <details>

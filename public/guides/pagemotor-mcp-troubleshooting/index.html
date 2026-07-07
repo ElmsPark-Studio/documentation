@@ -160,6 +160,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <section class="step" id="diagnostic">
     <h2><span class="num">1</span><span class="t">Start here: the 60-second diagnostic</span></h2>
+    <p><strong>New, and worth doing first:</strong> <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> 1.2.0 now runs this guide&rsquo;s hosting checks automatically &mdash; the trailing-slash redirect (section 3) and all five hosting-environment killers (section 6) &mdash; from your PageMotor admin panel, with no working Claude connection required. Install it, read the &ldquo;MCP / Claude connection&rdquo; rows, then come back here for the fix detail on whichever row is red. The manual diagnostics below remain for when you want the wire truth yourself.</p>
     <p>One curl command tells you which failure family you are in. Replace the site and token, run it, and read the <em>first line</em> of the output.</p>
     <div class="codewrap">
       <pre id="cmd-curl"><code>curl -sS -D - -X POST https://your-site.com/mcp/ \

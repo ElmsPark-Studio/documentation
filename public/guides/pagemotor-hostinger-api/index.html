@@ -399,7 +399,7 @@ Use provision-pagemotor.sh if you need a reference for the exact commands.
   <div class="step">
     <h2 id="s9"><span class="num">9</span><span class="t">Verify with EP Host Check</span></h2>
     <p>Visit <code>https://mysite.com/admin/</code> and register your PageMotor admin account. Then install the <strong>EP Host Check</strong> plugin (available on the EP Suite updates channel) and run it.</p>
-    <p>You are looking for all 12 checks green, especially <em>PHP can save PageMotor&rsquo;s files</em>. That one goes red on a locked-down shared host &mdash; it should be green here because you are on a proper VPS with correct file ownership.</p>
+    <p>You are looking for all 17 checks green (v1.2.0 added a five-check <em>MCP / Claude connection</em> group, which is exactly what this guide cares about), especially <em>PHP can save PageMotor&rsquo;s files</em>. That one goes red on a locked-down shared host &mdash; it should be green here because you are on a proper VPS with correct file ownership.</p>
     <div class="note calm"><strong>You are done when:</strong> the EP Host Check plugin reports green on a Hostinger VPS, which means PageMotor can write its compiled CSS to disk. That is the thing that breaks on cheap shared hosting, and the whole reason this setup exists.</div>
   </div>
 
