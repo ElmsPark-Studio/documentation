@@ -43,6 +43,18 @@ This replicates what PageMotor does when it compiles your design: it writes a te
 - **Object cache** (Redis / Memcached): informational, never required.
 - **PHP opcode cache** (opcache): on is faster; off is a gentle warning.
 
+### MCP / Claude connection (v1.2.0)
+
+Five checks that answer "why won't my site connect to Claude?" in one panel, each mapped to a section of the [PageMotor MCP troubleshooting guide](/guides/pagemotor-mcp-troubleshooting/):
+
+- **Claude sign-in clock (OAuth timezone).** PageMotor stamps the 60-second sign-in code's expiry in UTC but reads it back in server-local time. A server ahead of UTC therefore treats every code as expired the instant it is issued, and browser sign-in from Claude always fails while everything else looks healthy. Red if your server is ahead of UTC now; amber if daylight saving will push it ahead later in the year. The fix is one line: `date.timezone = UTC`.
+- **MCP token reaches PHP.** Some servers (typically Apache running PHP as CGI/FastCGI) strip the Authorization header before PHP sees it, so a perfectly valid token arrives as anonymous. When you run this report through the API or MCP with your token, that request is itself the definitive proof the header got through, and the check goes green. From the admin panel it reports what it can see and tells you how to get the definitive answer.
+- **HTTPS as PageMotor sees it.** Behind Cloudflare Flexible SSL or a TLS-terminating proxy, your visitors use https but PageMotor thinks it is on plain http, so every sign-in URL it advertises is built wrong and the connection dies. Red when the report can see that mismatch from your proxy's own headers.
+- **OAuth discovery reachable.** PageMotor serves its OAuth discovery documents as dynamic routes; a stock nginx/CloudPanel/Plesk `.well-known` block answers them from the filesystem with a 404 instead, and Claude never finds the sign-in. If your host blocks the self-test, the row stays neutral and gives you a one-line external check instead of crying wolf.
+- **MCP endpoint answers POST directly.** Connector clients POST to the slash-less MCP URL; a redirect turns that into an empty GET and the handshake dies even though the URL "works" in a browser. On PageMotor 0.9.x the redirect is expected platform behaviour, and the row tells you the fix is simply using the trailing-slash URL in your connector.
+
+These rows are version-aware: on PageMotor 0.9.x (which has no browser sign-in) the OAuth-only checks report as neutral "Info" rows rather than failures. Info rows never affect the overall verdict.
+
 ## Requirements
 
 - **PageMotor 0.9 or later**
@@ -62,7 +74,9 @@ This replicates what PageMotor does when it compiles your design: it writes a te
 
 ## For developers and AI clients
 
-EP Host Check exposes a `host-report` action over the PageMotor API and MCP. An MCP client (or the `/api/` endpoint) can read a host's status headlessly and reason about it, returning the same verdict and per-check data the panel shows. Useful for checking a fleet of sites, or for an AI agent diagnosing a deployment.
+EP Host Check exposes a `host-report` action over the PageMotor API and MCP. An MCP client (or the `/api/` endpoint) can read a host's status headlessly and reason about it, returning the same verdict and per-check data the panel shows (statuses `pass`, `warn`, `fail`, and the neutral `info`). Useful for checking a fleet of sites, or for an AI agent diagnosing a deployment.
+
+Two details worth knowing from 1.2.0: calling `host-report` through the API or MCP with a Bearer token is itself the definitive Authorization-header pass-through test — if it answers at all, the token reached PHP, and the report says so. And other EP plugins can gate on MCP readiness via `EP_Host_Check_MCP::can_mcp_ready($checks)`, which is true unless any `mcp_*` check hard-failed.
 
 ## What EP Host Check cannot do
 
