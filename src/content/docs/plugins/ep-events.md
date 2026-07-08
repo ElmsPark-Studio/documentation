@@ -14,9 +14,9 @@ What you get end-to-end:
 1. You define **events** (sub-typed as conference, workshop, retreat, gala, meetup, seminar, summit, reunion, speed-dating, tournament, webinar, or neutral). Each event gets a body laid out with the matching sub-type's editorial stack.
 2. You define **tickets** as EP Ecommerce products attached to the event. Tiered pricing, member-only gating, and inventory caps are all available.
 3. You optionally add **speakers**, **sponsors**, **promo codes**, **payment plans**, and a **venue** (online, hybrid, or physical).
-4. Visitors browse upcoming events via the `[events]` listing page, land on an individual event, register through `[event-register]`, and pay via Stripe Connect.
+4. Visitors browse upcoming events via the `[ep-events]` listing page, land on an individual event, register through `[ep-event-register]`, and pay via Stripe Connect.
 5. On payment, the buyer becomes a customer, each ticket becomes an attendee with a unique QR token, a confirmation email goes out with ICS attachment, the newsletter list segment grows, and Zoom auto-creates the meeting where applicable.
-6. On the day, your organiser opens `[event-checkin]` on a phone or tablet at the gate. The page works offline as a PWA, snapshots attendees to local storage, validates QR codes against the snapshot, and syncs check-ins back to the server when the network returns.
+6. On the day, your organiser opens `[ep-event-checkin]` on a phone or tablet at the gate. The page works offline as a PWA, snapshots attendees to local storage, validates QR codes against the snapshot, and syncs check-ins back to the server when the network returns.
 7. After the event, automated thank-you emails and a recap newsletter campaign go out. Post-event reports and a no-show sweep run on cron.
 
 What EP Events is NOT: a one-off appointment scheduler (that is EP Booking), a course platform (EP Courses), or a generic calendar widget. It is for events with buyers, attendees, money, and operational depth.
@@ -35,7 +35,7 @@ Optional siblings (each unlocks specific features when present):
 - **EP Assistant 1.0.4+**: AI table allowlist + PII filter so the assistant can read aggregate event data without buyer PII
 - **EP MCP Bridge 0.18.0+**: three MCP tools registered: `events_list_upcoming`, `events_get_by_slug`, `events_get_stats`
 - **EP Newsletter**: auto-subscribe attendees with per-event segmentation, recap + next-year-invite campaigns
-- **EP Cards**: render the `[events]` listing through EP Cards' renderer
+- **EP Cards**: render the `[ep-events]` listing through EP Cards' renderer
 - **EP Affiliate**: capture referral attribution at registration, fire conversion tracking on confirmation
 - **EP Membership**: prefill member identity on the registration form, optionally auto-apply a member promo code
 - **EP Booking Zoom**: auto-create Zoom meetings for online events
@@ -50,7 +50,7 @@ EP Events installs like any PageMotor plugin.
 3. **Go to Plugins, then Manage Plugins.**
 4. **Upload the zip.** Use the plugin upload interface to upload `ep-events.zip`.
 5. **Activate in your Theme.** Enable EP Events in your active Theme's plugin configuration. On first activation:
-    - 17 database tables are created (`pm_ep_events_meta`, `pm_ep_events_registrations`, `pm_ep_events_attendees`, and so on).
+    - 18 database tables are created (`pm_ep_events_meta`, `pm_ep_events_registrations`, `pm_ep_events_attendees`, and so on).
     - The Event template is cloned from your active theme's Page template.
     - A sample event is seeded at `/ep-events-sample/`.
     - An Events listing page is auto-created at `/events/` (or your configured slug).
@@ -62,7 +62,7 @@ EP Events installs like any PageMotor plugin.
 EP Events settings are split into sections you can collapse and expand:
 
 - **Quick Start**: sample event, listing URL, hint for creating your next event.
-- **Configuration**: listing slug, timezone, default sub-type, currency, payment provider routing.
+- **Configuration**: listing slug, timezone, default sub-type, currency, payment provider routing, and a **Default Event Body** textarea (see below).
 - **Stripe Connect**: onboard your platform Stripe account so payments route correctly.
 - **VAT and tax**: EU rate table (27 countries plus UK) with VIES B2B reverse-charge validation.
 - **Email reminders**: pre-event 7-day, 24-hour, 1-hour windows; post-event thank-you. Idempotent via the email_sends log.
@@ -71,6 +71,16 @@ EP Events settings are split into sections you can collapse and expand:
 - **AI Organiser Suite**: 11 bundled `ep-agent` skills for event-from-brief, pricing, promo copy, schedule, speaker outreach, sponsor outreach, FAQ, follow-up, attendance prediction, anomaly detection, recap.
 - **AI Schema**: export an event as Markdown, import a full event definition (event + tickets + speakers + sponsors + promos + email sequence + theme) atomically.
 - **Shortcodes reference**: every shortcode the plugin registers, with the key arguments. Useful while authoring event bodies.
+
+### Default Event Body
+
+By default, a new event's body is seeded from one of twelve built-in editorial stacks, chosen by the event's sub-type (conference, workshop, retreat, gala, meetup, seminar, summit, reunion, speed-dating, tournament, webinar, or a neutral default). If your events are simpler than that — a single venue running the same kind of event every time, for example — fill in **Default Event Body** in Configuration and every new event, regardless of sub-type, starts from that HTML instead.
+
+- Applies to: a brand-new event, the empty-body backfill pass, and the **Insert default layout** recovery panel (see [Recovery panels](#recovery-panels)) — all three share the same seeding logic, so setting this once covers all of them.
+- Your HTML is wrapped in `<div class="text page-content">` automatically, unless it already contains one.
+- Nothing is added to it — no event-block shortcodes are injected, no headings are rewritten. It is used exactly as typed.
+- **AI Schema imports bypass this setting.** An imported event always arrives with its own complete body, so there is nothing for the default to seed.
+- Leave it blank to keep using the built-in per-sub-type stacks.
 
 ### Stripe Connect
 
@@ -91,43 +101,49 @@ For events sold to EU customers, the plugin handles VAT automatically:
 
 ## Shortcodes
 
-EP Events registers 17 shortcodes, grouped by purpose. The Shortcodes Reference panel inside Settings shows the full list with arguments.
+EP Events registers 18 shortcodes, grouped by purpose. Every shortcode is `ep-` prefixed; a bare, unprefixed alias also works for every one of them except `[ep-event-add-to-calendar]` (added in 1.0.44, so there is no pre-existing bare name to stay compatible with). The `ep-` prefixed form is canonical — it can never collide with a same-named shortcode from a sibling plugin, since PageMotor's shortcode registry is first-wins. The bare aliases are kept only for back-compat with content authored before the suite-wide `ep-` namespace migration; new content should use the `ep-` forms below. The Shortcodes Reference panel inside Settings shows the full list with arguments.
 
 ### Listings (use on any page)
 
 | Shortcode | What it does |
 |---|---|
-| `[events]` | Upcoming-events listing, paginated. Renders through EP Cards when present, falls back to a native grid. |
-| `[event-calendar]` | Month/week/day/list calendar view of events. |
+| `[ep-events]` | Upcoming-events listing. Args: `view` (`list` default, `grid`, `month`, `week`, `day`, `agenda`), `columns` (grid column count), `category`, `audience`, `event_mode`, `sub_type` (filter), `from` / `to` (date range), `limit` (default 50). `view="month"` (optionally with `year` / `month` args) renders a full calendar grid — there is no separate calendar shortcode. Renders through EP Cards when present for `list`/`grid` views, falls back to a native grid. |
 
 ### Single event (use inside an Event content row)
 
 | Shortcode | What it does |
 |---|---|
-| `[event-hero]` | Hero section with title, dates, location, hero image. |
-| `[event-schedule]` | Schedule of talks, sessions, breaks. |
-| `[event-speakers]` | Speaker grid for this event. |
-| `[event-sponsors]` | Sponsor tiers and logos. |
-| `[event-location]` | Map and address for physical events, virtual-meeting block for online. |
-| `[event-faq]` | FAQ section configured per event. |
-| `[event-register]` | Registration form with ticket selection, promo codes, payment plan toggle. |
-| `[event-countdown]` | Live countdown to event start. |
-| `[event-attendees-count]` | Live attendee count (with privacy threshold). |
+| `[ep-event-hero]` | Hero section: title (hidden by default; opt in with `show_title="1"`), dates, location, hero image, live attendance counter, Register CTA, and an Add to calendar control (folded into the facts list). Args: `poster="true"` (the image IS designed artwork — shown uncropped, facts/counter/CTA hidden by default), `show_facts`, `show_counter`, `show_cta`, `show_title` (each overrides the poster default individually), `cta_label` (default "Register"), `cta_dual="true"` (promotes Add to calendar to a second full CTA button beside Register, instead of folding it into the facts list). |
+| `[ep-event-add-to-calendar]` | Add to calendar menu: Google Calendar, iCalendar (`.ics` download), Outlook 365, Outlook Live — matching the option set on The Events Calendar's own dropdown. Rendered automatically inside every `[ep-event-hero]`; use this shortcode directly when your event body has no hero block at all. |
+| `[ep-event-schedule]` | Start/end date-time block for the event. (Per-session agenda rows are a planned future addition, not yet built.) |
+| `[ep-event-speakers]` | Speaker grid for this event: photo, name, role, title, bio, social links. Optional `heading="false"` suppresses the built-in "Speakers" heading. |
+| `[ep-event-sponsors]` | Sponsor logos grouped by tier (platinum, gold, silver, bronze, standard, supporter). Optional `heading="false"` and `show_tier_labels="false"`. |
+| `[ep-event-location]` | Map (OpenStreetMap embed) and address for physical events, an online/hybrid join-link notice for virtual events. Optional `heading="false"`. Renders nothing for an in-person event with no venue on record. |
+| `[ep-event-register]` | Registration form with ticket selection, quantity, buyer details (prefilled when a member is signed in), promo code, GDPR/marketing consents, and order summary. Optional `heading="false"` suppresses the built-in "Register" heading — useful when your own body already has one above the shortcode. |
+| `[ep-event-countdown]` | Live countdown to event start (or to a ticket's sales-end with `target="sales_end" product_id="…"`). |
 
 ### Buyer and organiser tools
 
 | Shortcode | What it does |
 |---|---|
-| `[event-attendee-dashboard]` | "My tickets" view for logged-in buyers: download tickets, cancel, request refund-to-credit. |
-| `[event-checkin]` | Organiser check-in screen with QR scanner, offline mode, attendee list. |
-| `[event-speaker-portal]` | Token-gated self-serve portal for speakers to update their bio and headshot. |
-| `[event-submit]` | Community event submission form (moderation required). |
-| `[event-ics-feed]` | Renders a button or link to subscribe to the per-organiser ICS feed. |
-| `[event-recap]` | Post-event recap block (highlights, photos, links). |
+| `[ep-event-tickets-mine]` | "My tickets" view, resolved by an `order_token` (arg or `?order=` query param) rather than login: registration status, one QR code per attendee, Add to calendar link, and Cancel registration. |
+| `[ep-event-checkin]` | Admin-only organiser check-in screen: QR scanner, manual name/email search, live checked-in/registered counter. With no event resolvable, shows an event picker instead. |
+| `[ep-event-feed]` | A link to subscribe to calendar feeds: the single event's `.ics` when an event resolves, otherwise a link to the all-upcoming-events `.ics` feed (`format` arg reserved for future formats; only `ics` is implemented). |
+| `[ep-event-speaker-portal]` | Token-gated self-serve portal (`token` arg or `?portal=` query param) for a speaker to update their own bio and headshot. |
+| `[ep-event-submit]` | Community event submission form (goes to moderation if the "Require approval" setting is enabled). |
+| `[ep-event-recording]` | Embeds a past event's recording. Requires a `url` arg (YouTube link, or any URL as a plain "Watch the recording" fallback). Renders nothing without one. |
+| `[ep-event-gallery]` | Delegates to the sibling EP Gallery plugin's `[gallery]` shortcode for this event's photo album (`album` arg, defaults to `event-{id}-photos`). No-op without EP Gallery active. |
+| `[ep-event-credits]` | Shows a signed-in (or emailed-in via `email` arg / `?email=` query param) customer's account credit balance, applied automatically at their next checkout. |
+
+Two names that sound like shortcodes are something else: **FAQ** and **recap** are two of the eleven bundled AI Organiser Suite prompt skills (see [Configuration](#configuration)) — `event-faq` and `event-recap` generate content for you to paste into the event body, but EP Events does not register `[event-faq]` or `[event-recap]` shortcodes itself. A per-event FAQ block is authored using the sibling EP FAQ plugin's own `[ep-faq]` (or bare `[faq]`) shortcode inside the event body, the same way the seeded editorial stacks do it.
+
+## Duplicating an event
+
+Open any event in **Admin > Content > Events**, and its edit screen has a **Duplicate this event** button below the event details editor. It creates a new draft event with the same title (suffixed " (copy)"), body, tickets configuration, dates, venue, and organiser settings — no registrations carry over. Useful for a recurring one-off booking or "run the same event again next year" without rebuilding it from scratch.
 
 ## The check-in PWA
 
-When you place `[event-checkin]` on a page and pin that page to a phone or tablet at your venue, it becomes a Progressive Web App. The first time the page loads online, it pulls a snapshot of confirmed attendees into local storage. From then on:
+When you place `[ep-event-checkin]` on a page and pin that page to a phone or tablet at your venue, it becomes a Progressive Web App. The first time the page loads online, it pulls a snapshot of confirmed attendees into local storage. From then on:
 
 - Scans are validated against the local snapshot, not against the server. The server is contacted only to record the check-in.
 - If the network drops mid-event, scans queue locally. A status row at the top shows online/offline state and the pending-queue count.
