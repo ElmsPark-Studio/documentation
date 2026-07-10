@@ -280,7 +280,27 @@ x-redirect-by: PageMotor
     <p>PageMotor detects HTTPS only from the local server environment. Behind Cloudflare Flexible SSL the origin never sees HTTPS, so every OAuth URL the site advertises is built as <code>http://</code> while your client connected over <code>https://</code>, and the flow dies on the mismatch. Test: fetch <code>https://your-site.com/.well-known/oauth-protected-resource</code> and look at the <code>resource</code> field. If it starts <code>http://</code>, switch Cloudflare to Full (strict) with an origin certificate, or pass HTTPS through to PHP (<code>fastcgi_param HTTPS on;</code>).</p>
 
     <h3>d. The nginx <code>.well-known</code> block swallows OAuth discovery (0.10.x only)</h3>
-    <p>PageMotor serves the OAuth discovery documents as dynamic routes at <code>/.well-known/oauth-protected-resource</code> and <code>/.well-known/oauth-authorization-server</code>. A stock <code>location ~ /.well-known</code> block (CloudPanel, Plesk and many hand-rolled vhosts ship one for Let's Encrypt) serves that whole path from the filesystem instead, so the client follows PageMotor's 401 pointer straight into a 404 and gives up. A PageMotor developer confirmed exactly this on CloudPanel. Test it with <code>curl -sI https://your-site.com/.well-known/oauth-protected-resource</code>: a 404 while the endpoint itself is healthy is this problem.</p>
+    <p>PageMotor serves the OAuth discovery documents as dynamic routes at <code>/.well-known/oauth-protected-resource</code> and <code>/.well-known/oauth-authorization-server</code>. A stock <code>location ~ /.well-known</code> block (CloudPanel, Plesk and many hand-rolled vhosts ship one for Let's Encrypt) serves that whole path from the filesystem instead, so the client follows PageMotor's 401 pointer into a document PageMotor never wrote, and gives up. A PageMotor developer confirmed exactly this on CloudPanel.</p>
+    <p>Test it with <code>curl -sI https://your-site.com/.well-known/oauth-protected-resource</code> and <strong>read the <code>content-type</code>, not the status code</strong>. Exactly one answer is healthy:</p>
+    <div class="codewrap">
+      <pre id="cfg-wellknown-test"><code><span class="tok-c"># Healthy: PageMotor answered. No ETag, no Last-Modified.</span>
+HTTP/2 200
+content-type: application/json
+
+<span class="tok-c"># Broken, variant 1: filesystem block, no file there.</span>
+HTTP/2 404
+
+<span class="tok-c"># Broken, variant 2: filesystem block, and a real file IS there.</span>
+HTTP/2 200
+content-type: application/octet-stream
+last-modified: Fri, 03 Jul 2026 20:15:09 GMT
+etag: "6a48184d-7b"
+accept-ranges: bytes</code></pre>
+      <button class="copy" onclick="copy(this,'cfg-wellknown-test')">Copy</button>
+    </div>
+    <div class="note">
+      <strong>The 200 that lies.</strong> If a previous attempt to fix MCP involved hand-creating <code>.well-known/oauth-protected-resource</code> or <code>oauth-authorization-server</code> as files on disk, nginx finds them, has no MIME type for an extensionless filename, and falls back to <code>default_type</code>, which is <code>application/octet-stream</code>. Every MCP client rejects that content-type, so the handshake dies in the same place a 404 would have killed it, while <code>curl -sI</code> reports a reassuring <code>200</code>. The giveaway is the <code>etag</code>, <code>last-modified</code> and <code>accept-ranges</code> trio: those come from nginx serving a file off disk, and never appear on a response PHP generated. Delete the hand-made files, apply the config below, and re-test until the <code>content-type</code> reads <code>application/json</code>. Confirmed in the wild on nginx, 2026-07-10.
+    </div>
     <p>The fix keeps the Let's Encrypt challenge served from disk while routing the rest of <code>/.well-known/</code> to PageMotor. Order does not matter here because <code>^~</code> is a prefix match that outranks the <code>~</code> regex block, and the longer prefix (<code>acme-challenge</code>) always claims its own requests:</p>
     <div class="codewrap">
       <pre id="cfg-wellknown"><code><span class="tok-c"># Keep Let's Encrypt HTTP-01 renewal working (served from disk)</span>
