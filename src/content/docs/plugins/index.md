@@ -92,6 +92,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Audit Log](/plugins/ep-audit-log/)**. Activity log for content, users, and plugin events.
 - **[EP Connect](/plugins/ep-connect/)**. Outbound webhooks for Zapier, Make, Slack, or any URL.
 - **[EP Diagnostics](/plugins/ep-diagnostics/)**. System report for support requests.
+- **[EP Flows](/plugins/ep-flows/)**. The EP Suite automation engine. Trigger, conditions, actions, authored by talking to your site over MCP instead of a drag-and-drop builder.
 - **[EP Helpdesk](/plugins/ep-helpdesk/)**. Support ticket system with AI-drafted replies.
 - **[EP Host Check](/plugins/ep-host-check/)**. Read-only host diagnostics. A green/amber/red report of what your hosting can and cannot do for PageMotor: file writes, outbound HTTPS and SMTP, PHP version, extensions and limits, each with a plain fix.
 - **[EP Maintenance](/plugins/ep-maintenance/)**. Coming-soon and maintenance-mode overlays.
