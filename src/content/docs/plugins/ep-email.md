@@ -391,6 +391,53 @@ public function construct() {
 
 For the complete Extension API reference, including every hook, method and example, see the EP Email Extension Developer Guide bundled with the plugin ZIP.
 
+## Sending email from your own plugin
+
+*(supported surface as of 1.10.37)* Any plugin on the same site can send one transactional email through EP Email — the same pipeline EP Password Reset and EP Newsletter use in production. Resolve the active `EP_Email` plugin instance and call its public `send()` method:
+
+```php
+private function send_via_ep_email($to, $subject, $html) {
+    global $motor;
+    $ep_email = null;
+    foreach (array('theme', 'admin') as $ctx) {
+        if (!isset($motor->$ctx) || !is_object($motor->$ctx))
+            continue;
+        if (empty($motor->$ctx->_plugins) || !is_object($motor->$ctx->_plugins))
+            continue;
+        foreach ($motor->$ctx->_plugins->active as $plugin) {
+            if ($plugin->_class === 'EP_Email') {
+                $ep_email = $plugin;
+                break 2;
+            }
+        }
+    }
+    if ($ep_email && method_exists($ep_email, 'send'))
+        return $ep_email->send(array(
+            'to' => $to,
+            'subject' => $subject,
+            'body' => $html
+        ));
+    return array('error' => 'EP Email is not active on this site.');
+}
+```
+
+The contract:
+
+- **Arguments.** `to` (one address or a comma-separated list), `subject`, and `body` (HTML) are required. `from_name`, `from_email`, `reply_to` and `template` are optional and default from the site's EP Email settings — pass them only to override. If the site sets a default email template, your body is rendered inside it; pass `'template' => ''` to send bare HTML. `headers` and `attachments` arrays are also accepted.
+- **Return.** Strict `true` on success (sent, or queued when the site's Email Queue is enabled), or `array('error' => '...')` with a clear message on failure. A missing sender address returns an actionable error rather than an opaque provider failure.
+- **Routing.** The send goes through whatever transport the site has configured (SMTP or an API provider extension). PHP `mail()` is only used when a site has no transport configured at all.
+- **Logging.** With delivery logging enabled, every send lands in the Email Log with its status and any error text.
+- **The `method_exists` guard matters.** It keeps your plugin safe on a site running an older EP Email.
+
+## Managing EP Email over the PM API
+
+EP Email registers PM API actions under the `EP_Email` class. Browse them with `list-actions`, inspect one with `describe-action`, then invoke with `call-action`.
+
+| Action | Access | Purpose |
+|---|---|---|
+| `send` | admin | *(new in 1.10.37)* Send one transactional email through the site's configured transport — same validation, queueing and delivery logging as every other EP Email send. Sender fields default from settings. |
+| `list-log` | admin | *(new in 1.10.36)* Read the delivery log, newest first, paginated. Requires Enable Delivery Logging. |
+
 ## Troubleshooting
 
 Common issues and fixes.

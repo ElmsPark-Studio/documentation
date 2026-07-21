@@ -172,7 +172,7 @@ Access tiers follow the data each action touches: reads are `read-only` so an ag
 | `list-campaigns` | read-only | Campaigns with open and click counts. |
 | `list-autoresponders` | read-only | Autoresponder series with their email steps. |
 | `get-campaign-stats` | read-only | Open and click stats for one campaign. |
-| `subscribe` | producer | Subscribe a contact. Skips double opt-in and the public abuse checks, like the internal sign-up path. |
+| `subscribe` | producer | Subscribe a contact. Default: trusted caller, active immediately (skips double opt-in and the public abuse checks). Pass `double_optin: true` *(new in 1.5.3)* to create the contact as pending and send the confirmation email instead. |
 | `unsubscribe` | admin | Unsubscribe by email and cancel pending autoresponder emails. |
 | `create-list` | admin | Create a mailing list. |
 | `delete-list` | admin | Delete a list. Subscribers are kept. |
@@ -191,6 +191,8 @@ Access tiers follow the data each action touches: reads are `read-only` so an ag
 | `list-send-log` | admin | Read the unified send log, newest first, filterable by `send_type`. |
 
 The API `subscribe` deliberately bypasses the per-domain cap and disposable-email blocklist that guard the public `[newsletter-form]`, because an authenticated API caller is trusted. This is the same reasoning as the `subscribe_external()` PHP path that EP Booking uses for checkout-time sign-ups.
+
+*(new in 1.5.3)* When your integration captures its own opt-in and needs the consent trail, pass `double_optin: true` to `subscribe`: the contact is created (or moved back to) `pending` with a fresh token, the confirmation email is sent through the standard flow, and they only become active when they click the confirmation link — which also fires the welcome email and autoresponders, exactly like a form signup. An already-active contact is never demoted to pending. The response reports `status` and `confirmation_sent` alongside `subscriber_id`; if the confirmation email fails to send, the action returns the failure with the pending `subscriber_id` so you can retry.
 
 ## Delivery log
 
