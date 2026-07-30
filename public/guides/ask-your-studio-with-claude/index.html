@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Ask your PageMotor studio about its business in plain English, using your own Claude Pro or Max subscription. No API key, via a custom connector.">
-  <meta property="og:title" content="Talk to your studio with your own Claude subscription">
-  <meta property="og:description" content="Ask your PageMotor studio about its business in plain English, on your own Claude Pro or Max plan. No API key, via a custom connector.">
+  <meta name="description" content="Ask your PageMotor studio about its business in plain English, using your own Claude account, free plan included. No API key, via a custom connector.">
+  <meta property="og:title" content="Talk to your studio with your own Claude account">
+  <meta property="og:description" content="Ask your PageMotor studio about its business in plain English, on your own Claude account, free plan included. No API key, via a custom connector.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://documentation.elmspark.com/guides/ask-your-studio-with-claude/">
   <meta property="og:image" content="https://documentation.elmspark.com/og/guides-hub.png">
@@ -465,22 +465,22 @@
 
     <span class="category-chip">PageMotor &middot; AI</span>
 
-    <h1>Talk to your studio with your own Claude subscription</h1>
-    <p class="guide-hook">Ask your PageMotor site about its business in plain English, on your own Claude Pro or Max plan. No API key, no extra cost, nothing new to install.</p>
+    <h1>Talk to your studio with your own Claude account</h1>
+    <p class="guide-hook">Ask your PageMotor site about its business in plain English, on your own Claude account. No API key, no extra cost, nothing new to install. The free plan can do this too.</p>
 
     <div class="meta-chips">
       <span>&#9201; <strong>5 minutes</strong> to connect</span>
-      <span>&#128179; Uses your <strong>Claude Pro / Max</strong> plan</span>
+      <span>&#128179; Uses your <strong>own Claude plan, Free included</strong></span>
       <span>&#128274; <strong>Read-only</strong></span>
-      <span>&#129513; Works in <strong>claude.ai, Desktop, Code</strong></span>
+      <span>&#129513; Works in <strong>claude.ai, Desktop, Cowork</strong></span>
       <span>June 2026</span>
     </div>
 
-    <p class="lead">Your PageMotor site can answer questions about your business in plain English, using your own Claude subscription. It works because your site already speaks Claude&rsquo;s connector language. You point Claude at your site once, sign in as the studio admin, and then you just ask.</p>
+    <p class="lead">Your PageMotor site can answer questions about your business in plain English, using your own Claude account. It works because your site already speaks Claude&rsquo;s connector language. You point Claude at your site once, sign in as the studio admin, and then you just ask.</p>
 
     <h2>What you need</h2>
     <ul>
-      <li>A Claude <strong>Pro</strong> or <strong>Max</strong> plan (Team and Enterprise work too).</li>
+      <li>A Claude account. <strong>Free, Pro, Max, Team and Enterprise all work.</strong> On the <strong>free</strong> plan you may hold only <strong>one</strong> custom connector, so your studio would be it. On Team and Enterprise an Owner adds the connector for the organisation, then each member switches it on for themselves.</li>
       <li>Your PageMotor studio site (running the EP studio suite), on <strong>PageMotor 0.10 or later</strong>.</li>
       <li>Your PageMotor <strong>admin</strong> login for that site.</li>
     </ul>
@@ -497,7 +497,7 @@
       <li>Save. Claude sends you to a <strong>sign-in</strong> page. Log in with your PageMotor <strong>admin</strong> account and approve access. That is what lets Claude read your studio data on your behalf.</li>
       <li>Start a new chat, turn the <strong>My Studio</strong> connector <strong>on</strong> for that chat, and ask away.</li>
     </ol>
-    <p>It is the same in <strong>Claude Desktop</strong> (Settings &rarr; Connectors &rarr; add custom connector) and in <strong>Claude Code</strong> (add it as an MCP server). Use whichever Claude you already use.</p>
+    <p>It is the same in <strong>Claude Desktop</strong> and <strong>Cowork</strong> (Settings &rarr; Connectors &rarr; add custom connector), and in <strong>Claude Code</strong> you add it as an MCP server instead. Use whichever Claude you already use, with one plan note: claude.ai, Desktop and Cowork all work on the free plan, but <strong>Claude Code needs a paid plan</strong> (Pro, Max, a Team or Enterprise premium seat, or a Console account).</p>
 
     <p style="background:var(--bg-warn);border-left:4px solid var(--warn);border-radius:10px;padding:14px 18px;box-shadow:0 1px 3px rgba(35,33,28,.06);margin:1.5rem 0">
       <strong>If sign-in fails, it is almost always the URL, not your site.</strong> claude.ai remembers a connector address per domain and can quietly substitute an older one for the address you just typed, often with a capital <code>/MCP</code>. PageMotor treats that as a different, non-existent page, and sign-in dies on an <em>&ldquo;Invalid resource&rdquo;</em> page whose <code>Received</code> value is empty. The quickest fix is to connect on the <strong>www</strong> form of your address instead, <code>https://www.YOUR-SITE/mcp/</code>, which the stale entry cannot attach to. Full explanation and the options for sites with no <code>www</code>: <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#client">why it will not connect, trap five</a>.
@@ -521,7 +521,7 @@
 
     <h2>Good to know</h2>
     <ul>
-      <li><strong>It is your subscription doing the work.</strong> No API key, no per-question charge beyond your normal Claude plan.</li>
+      <li><strong>It is your own Claude account doing the work.</strong> No API key and no per-question charge. Questions come out of the usage allowance your plan already gives you, so on the free plan expect to run out sooner on a long session of questions.</li>
       <li><strong>It is your data, your account.</strong> You sign in as your own admin, so Claude only sees what you would see.</li>
       <li><strong>You stay in control.</strong> Disconnect any time from your site&rsquo;s Settings &rarr; Connected Apps, or from Claude&rsquo;s own connector settings.</li>
     </ul>
