@@ -481,19 +481,27 @@
     <h2>What you need</h2>
     <ul>
       <li>A Claude <strong>Pro</strong> or <strong>Max</strong> plan (Team and Enterprise work too).</li>
-      <li>Your PageMotor studio site (running the EP studio suite).</li>
+      <li>Your PageMotor studio site (running the EP studio suite), on <strong>PageMotor 0.10 or later</strong>.</li>
       <li>Your PageMotor <strong>admin</strong> login for that site.</li>
     </ul>
+    <p style="background:var(--bg-warn);border-left:4px solid var(--warn);border-radius:10px;padding:14px 18px;box-shadow:0 1px 3px rgba(35,33,28,.06);margin:1.5rem 0">
+      <strong>Check your version first.</strong> The sign-in step below arrived in PageMotor 0.10. On 0.9.x there is no sign-in flow to complete, and worse, the connection appears to succeed: your site answers anonymously at read-only tier with no error, so you get a connector that looks fine and can see almost nothing. If you are on 0.9.x, upgrade before following this guide.
+    </p>
 
     <h2>Connect it (claude.ai, in a browser)</h2>
     <ol>
       <li>Open <strong>claude.ai</strong> and go to <strong>Settings &rarr; Connectors</strong>.</li>
       <li>Choose <strong>Add custom connector</strong>.</li>
-      <li>Give it a name like <strong>My Studio</strong>, and for the URL enter your site&rsquo;s connector address: <code>https://YOUR-SITE/mcp/</code>. For the demo site that is <code>https://sundial.solasyogastudio.com/mcp/</code>.</li>
+      <li>Give it a name like <strong>My Studio</strong>, and for the URL enter your site&rsquo;s connector address: <code>https://YOUR-SITE/mcp/</code>, all lower case, trailing slash included. For the demo site that is <code>https://sundial.solasyogastudio.com/mcp/</code>.</li>
+      <li><strong>Look at the saved tile before you go further.</strong> It should show exactly the address you typed. If it shows a different one, see the box below.</li>
       <li>Save. Claude sends you to a <strong>sign-in</strong> page. Log in with your PageMotor <strong>admin</strong> account and approve access. That is what lets Claude read your studio data on your behalf.</li>
       <li>Start a new chat, turn the <strong>My Studio</strong> connector <strong>on</strong> for that chat, and ask away.</li>
     </ol>
     <p>It is the same in <strong>Claude Desktop</strong> (Settings &rarr; Connectors &rarr; add custom connector) and in <strong>Claude Code</strong> (add it as an MCP server). Use whichever Claude you already use.</p>
+
+    <p style="background:var(--bg-warn);border-left:4px solid var(--warn);border-radius:10px;padding:14px 18px;box-shadow:0 1px 3px rgba(35,33,28,.06);margin:1.5rem 0">
+      <strong>If sign-in fails, it is almost always the URL, not your site.</strong> claude.ai remembers a connector address per domain and can quietly substitute an older one for the address you just typed, often with a capital <code>/MCP</code>. PageMotor treats that as a different, non-existent page, and sign-in dies on an <em>&ldquo;Invalid resource&rdquo;</em> page whose <code>Received</code> value is empty. The quickest fix is to connect on the <strong>www</strong> form of your address instead, <code>https://www.YOUR-SITE/mcp/</code>, which the stale entry cannot attach to. Full explanation and the options for sites with no <code>www</code>: <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#client">why it will not connect, trap five</a>.
+    </p>
 
     <h2>What you can ask</h2>
     <p>Anything the dashboard knows, in your own words:</p>
