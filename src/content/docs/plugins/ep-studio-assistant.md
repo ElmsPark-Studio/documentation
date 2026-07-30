@@ -35,9 +35,9 @@ Accessed under the **EP Suite nav → Assistant**.
 - **Model.** Claude Sonnet (recommended), Opus, or Haiku.
 - **Studio context (optional).** Anything the assistant should always know about your studio, added to every conversation.
 
-## Use it on your own Claude subscription
+## Use it on your own Claude account
 
-The same studio data also works from your own Claude Pro or Max plan, with no API key, by connecting your site to Claude as a custom connector. See the guide: [Talk to your studio with Claude](https://documentation.elmspark.com/guides/ask-your-studio-with-claude/).
+The same studio data also works from your own Claude account, with no API key, by connecting your site to Claude as a custom connector. Any plan can do it, free included, though free accounts may hold only one custom connector. See the guide: [Ask your studio with Claude](https://documentation.elmspark.com/guides/ask-your-studio-with-claude/).
 
 ## Changelog
 
