@@ -90,6 +90,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Agent](/plugins/ep-agent/)**. Claude Code CLI in your admin panel for server-side work.
 - **[EP Assistant](/plugins/ep-assistant/)**. Customer-facing AI website manager. Chat interface with nine LLM providers.
 - **[EP Audit Log](/plugins/ep-audit-log/)**. Activity log for content, users, and plugin events.
+- **[EP Concierge](/plugins/ep-concierge/)**. Visitor-facing AI chat bubble. Answers questions from your knowledge plus live booking data, captures enquiries. *Currently supplied and updated by ElmsPark directly.*
 - **[EP Connect](/plugins/ep-connect/)**. Outbound webhooks for Zapier, Make, Slack, or any URL.
 - **[EP Diagnostics](/plugins/ep-diagnostics/)**. System report for support requests.
 - **[EP Flows](/plugins/ep-flows/)**. The EP Suite automation engine. Trigger, conditions, actions, authored by talking to your site over MCP instead of a drag-and-drop builder.
