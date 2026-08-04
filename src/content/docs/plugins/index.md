@@ -60,6 +60,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Gallery](/plugins/ep-gallery/)**. Album-based image gallery with drag-and-drop upload, lightbox, EXIF display.
 - **[EP Gallery EXIF](/plugins/ep-gallery-exif/)**. Enhanced EXIF extraction and display (lens, GPS, shooting mode).
 - **[EP Gallery Presentation](/plugins/ep-gallery-presentation/)**. Master crop, aspect-ratio frames, focal-point picker.
+- **[EP Media Storage](/plugins/ep-media-storage/)**. Serves paid video, audio and downloads from your own S3-compatible bucket behind links that expire. Automatic for EP Courses lessons.
 - **[EP Sidebar](/plugins/ep-sidebar/)**. Sidebar layout activation with manageable widget blocks.
 - **[EP Testimonials](/plugins/ep-testimonials/)**. Collect and display customer testimonials with star ratings.
 - **[EP YouTube](/plugins/ep-youtube/)**. GDPR-friendly YouTube embeds for PageMotor. Click-to-load thumbnails so no Google cookies fire on page load, no-cookie iframe host by default, optional thumbnail self-hosting.
@@ -80,7 +81,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 
 ### Privacy, security, auth
 
-- **[EP Bunny Fonts](/plugins/ep-bunny-fonts/)**. GDPR-compliant font delivery. Replaces Google Fonts with Bunny Fonts.
+- **[EP Bunny Fonts](/plugins/ep-bunny-fonts/)**. *Retired — built into PageMotor 0.10+ core (Site Settings → Google Fonts Delivery Service).*
 - **[EP GDPR](/plugins/ep-gdpr/)**. Cookie consent, data subject requests, consent logging across EP Suite.
 - **[EP Passkeys](/plugins/ep-passkeys/)**. Passwordless login via WebAuthn. *Not yet available, awaiting a PageMotor core change.*
 - **[EP Password Reset](/plugins/ep-password-reset/)**. Email-based password reset for admin accounts. *Not yet available, awaiting a PageMotor core change.*
