@@ -11,7 +11,11 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Status
 
-**Version 0.1.0, in beta.** The link signing is tested against a live bucket and the plugin has been proven end to end alongside [EP Courses](/plugins/ep-courses/) on a PageMotor site, but it has not yet been through a wide release. It is supplied directly by ElmsPark rather than through your Updates screen for now. Ask at [help.elmspark.com](https://help.elmspark.com) if you want it.
+**Version 0.1.0, released 4 August 2026.** The link signing is tested against a live bucket and the plugin has been proven end to end alongside [EP Courses](/plugins/ep-courses/) on a PageMotor site. It is on the same licence tier as EP Courses, so if you have that, this is covered.
+
+Because it is new rather than an update, the first copy has to be uploaded by hand: ask at [help.elmspark.com](https://help.elmspark.com) and we will send the zip. After that it updates through your **Updates** screen like everything else.
+
+You also need **EP Courses 0.4.12 or later** for protected lesson videos. That one arrives in your Updates screen on its own.
 
 ## The problem it solves
 
@@ -54,10 +58,11 @@ Optional but the obvious pairing:
 
 ## Installation
 
-1. Upload the zip via **Plugins, then Manage Plugins, then Upload**, and activate.
-2. Open **EP Media Storage** in your admin settings.
-3. Fill in your bucket details and keys, as below.
-4. Tick **Enable protected media** and save.
+1. Upload the zip via **Plugins, then Manage Plugins, then Upload**.
+2. **Tick it in the plugin list, then press Save Plugins.** There is no Activate button in PageMotor: the tick box is the switch, and it only takes effect when you save.
+3. Open **EP Media Storage** in your admin settings.
+4. Fill in your bucket details and keys, as below.
+5. Tick **Enable protected media** and save.
 
 Until you tick that box, every link is served exactly as entered, so you can install and configure without changing what your visitors see.
 
