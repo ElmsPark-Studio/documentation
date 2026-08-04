@@ -438,6 +438,9 @@ code=202 type=text/html</code></pre>
     </div>
     <p>Wording that saves a round trip: <em>these are API discovery documents that must be readable by automated clients; requests to them currently receive an HTTP 202 CAPTCHA challenge page instead of the JSON the application serves, which stops an external service from authenticating.</em> Naming the 202 matters, because a support agent who hears &ldquo;404&rdquo; will go looking for a missing file and find nothing wrong.</p>
     <p>Re-run the loop above when they say it is done. All three must read <code>application/json</code>, with no vendor challenge header. If any still returns <code>text/html</code>, the exemption has not taken.</p>
+    <div class="note">
+      <strong>Check for it automatically, but do not trust a green.</strong> <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> 1.3.1&rsquo;s &ldquo;OAuth discovery reachable&rdquo; row now tells this apart from <a href="#hosting">6d</a> and gives the host-ticket fix rather than an nginx block you cannot apply: a <code>2xx</code> carrying an HTML body, with a <code>202</code> status or a captcha marker, reports as a bot wall, while a <code>404</code> or the hand-made-file <code>200</code> keeps the 6d diagnosis. <strong>The caveat matters more than the check.</strong> Those probes run from the server itself, so a host that trusts its own machines answers them with clean JSON and the row goes green while Claude is still challenged from outside. A red row here is reliable; a green one is not proof. If a site reports green and still cannot connect, run the <code>curl</code> loop above from a machine that is not the server, and believe that instead.
+    </div>
   </section>
 
   <section class="step" id="core">
