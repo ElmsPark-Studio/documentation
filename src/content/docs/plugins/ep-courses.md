@@ -13,7 +13,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## What EP Courses does
 
-- **Course catalogue** with title, slug, description, learning outcomes, level (beginner / intermediate / advanced), price, status.
+- **Course catalogue** with title, slug, description, learning outcomes, level, price, status. **Level is the free / premium switch**, not a difficulty scale: the edit form offers **Free** and **Intermediate**, and only a Free course can be enrolled in today (see below).
 - **Lessons** attached to courses, with ordered sequence and translatable content.
 - **Enrolment tracking** — which student is in which course.
 - **Progress tracking** — which lessons has the student completed.
@@ -27,6 +27,7 @@ This plugin deliberately has a narrow scope. It does not:
 - **Host videos**. Embed from YouTube, Vimeo, or an MP4 file you host yourself. If that file lives in your own S3-compatible bucket, [EP Media Storage](/plugins/ep-media-storage/) will serve it behind a link that expires.
 - **Issue certificates** — not currently built in.
 - **Run quizzes inside lessons** — not currently built in.
+- **Sell paid courses yet.** Any course whose level isn't Free renders in the catalogue as a **Premium Course** with a disabled "Coming Soon" button, and the enrol handler refuses it with "Paid courses are coming soon". Set the level to Free if you want students in a course today.
 
 For a full learning management system, combine EP Courses with EP Membership (for login and access control) and EP Ecommerce Subscriptions (for paid course access).
 
@@ -52,7 +53,7 @@ Optional but commonly paired:
 
 | Shortcode | Purpose |
 |---|---|
-| `[ep-courses]` | Course catalogue grid. Shows every active course with lesson count, duration, and whether it's free or paid. Links each course to its first lesson. |
+| `[ep-courses]` | Course catalogue grid. Shows every published course with lesson count, duration, and whether it's free or paid. Links each course to its first lesson. |
 | `[ep-course-viewer]` | Lesson viewer. Renders the current lesson with navigation to previous and next. Place on a single page — the viewer URL is shared across all lessons. |
 
 ## Database tables
@@ -63,25 +64,26 @@ Optional but commonly paired:
 
 ## Multilingual content
 
-Each course and lesson stores its title and body as a JSON map:
+Each course and lesson stores its translations as a JSON map keyed by language **name**, exactly as the language appears in settings — not by language code:
 
 ```json
 {
-  "en": { "title": "Introduction", "body": "..." },
-  "cy": { "title": "Cyflwyniad", "body": "..." },
-  "ga": { "title": "Réamhrá", "body": "..." }
+  "Welsh": { "title": "Cyflwyniad", "content": "...", "video_url": "..." },
+  "Irish": { "title": "Réamhrá", "content": "...", "video_url": "..." }
 }
 ```
 
-The viewer picks the correct translation based on the active site language. Missing translations fall back to the site's default language.
+Lessons translate title, content, and video URL (so each language can carry its own cut of the video). Courses translate title, description, and outcome. English isn't in the map: the English text lives on the course or lesson itself, and it is also the fallback wherever a translation is missing.
 
-The 24 supported languages are configured in settings. Welsh, Irish, Scots Gaelic, and multiple South African languages (Afrikaans, isiZulu, Xhosa, Sesotho) are supported alongside the usual European set.
+The language a student reads is stored on their **enrolment**, chosen at enrol time — the language of the catalogue they enrolled from — and the viewer renders every lesson in that language from then on. The catalogue's own language comes from the shortcode, `[ep-courses language="Welsh"]`, defaulting to the default language in settings. The site language plays no part.
+
+The 24 supported languages are ticked on and off in settings. Welsh, Irish, Scots Gaelic, and a full set of South African languages (Afrikaans, isiZulu, isiXhosa, Sepedi, Setswana, Sesotho, Xitsonga, siSwati, Tshivenda, isiNdebele) are available alongside the usual European set.
 
 ## Typical setup flow
 
 1. Create a course with title, description, outcome, level, and price.
 2. Add lessons to the course. Each lesson has a title, body, and sort order.
-3. (Optional) Enable translations on a course and add translated title / body per language.
+3. (Optional) Tick the languages you need in settings, then fill in each language's fields in the **Translations** accordion on the course and lesson edit forms.
 4. Create a page with the viewer slug, add `[ep-course-viewer]`.
 5. Create a catalogue page, add `[ep-courses]`.
 6. If paid, configure EP Ecommerce Subscriptions to sell access to the course.
@@ -101,7 +103,7 @@ Worth being honest with your own students about what this is: expiring links sto
 
 ### “The course catalogue is empty”
 
-Only **active** courses appear. Check your courses have status = Active, not Draft.
+Only **published** courses appear. Check your courses have status = Published, not Draft.
 
 ### “Clicking a course goes to a 404”
 
@@ -109,7 +111,7 @@ The viewer page must exist at the slug configured in **Settings → Viewer slug*
 
 ### “Translations aren't appearing”
 
-The viewer uses the active site language. Check your translation JSON has the exact language code your site uses (e.g. `en-GB` vs `en`). Missing translations fall back to the default language.
+The viewer renders the language stored on the student's **enrolment**, set when they enrolled — not the site language. Check the student enrolled from a catalogue in the right language, and that the translation keys are full language names exactly as they appear in settings (`Welsh`, not `cy`). Anything missing falls back to the untranslated English content.
 
 ### “I want to restrict a course to paid subscribers only”
 

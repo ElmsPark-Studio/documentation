@@ -15,3 +15,5 @@ Format: one bullet per finding, with plugin and file:line reference where releva
 - **ep-documents** — Version 0.1.0, self-described as a scaffold. Own README says "everything past 'scaffold and create the content table' is on the roadmap" and "not yet available for install, wait for v1.0". Skipped writing a public user guide. Worth its own guide when v1.0 ships.
 
 ## Observations
+
+- **ep-courses** — the plugin header's `Docs:` URL (`plugin.php`, file header) points at `https://elmspark.com/plugins/ep-courses/`, which 404s. Note it doesn't match the deliberate `elmspark.com/ep-<slug>/` licensing-placeholder shape (Kenn's 2026-07-10 ruling), so it looks like a stray rather than a placeholder. Next ep-courses release: repoint it at `https://documentation.elmspark.com/plugins/ep-courses/`. Header comment only — nothing renders it to users, so nothing to hotfix. Surfaced by tester DelBeca, forum topic 588; docs page corrected against shipped v0.4.12 on 2026-08-08.
