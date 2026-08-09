@@ -9,11 +9,11 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Status
 
-**Work in progress** (version 0.4.12). The core structure is stable but some features are still being built. This guide describes what is currently shipping. Expect changes in subsequent versions.
+**Work in progress** (version 0.4.13). The core structure is stable but some features are still being built. This guide describes what is currently shipping. Expect changes in subsequent versions.
 
 ## What EP Courses does
 
-- **Course catalogue** with title, slug, description, learning outcomes, level, price, status. **Level is the free / premium switch**, not a difficulty scale: the edit form offers **Free** and **Intermediate**, and only a Free course can be enrolled in today (see below).
+- **Course catalogue** with title, slug, description, learning outcomes, access, price, status. **Access is the free / premium switch**: the edit form offers **Free** and **Premium**, and only a Free course can be enrolled in today (see below). Before 0.4.13 this field was labelled Level, with Premium labelled Intermediate. Same switch, clearer name.
 - **Lessons** attached to courses, with ordered sequence and translatable content.
 - **Enrolment tracking** — which student is in which course.
 - **Progress tracking** — which lessons has the student completed.
@@ -27,7 +27,7 @@ This plugin deliberately has a narrow scope. It does not:
 - **Host videos**. Embed from YouTube, Vimeo, or an MP4 file you host yourself. If that file lives in your own S3-compatible bucket, [EP Media Storage](/plugins/ep-media-storage/) will serve it behind a link that expires.
 - **Issue certificates** — not currently built in.
 - **Run quizzes inside lessons** — not currently built in.
-- **Sell paid courses yet.** Any course whose level isn't Free renders in the catalogue as a **Premium Course** with a disabled "Coming Soon" button, and the enrol handler refuses it with "Paid courses are coming soon". Set the level to Free if you want students in a course today.
+- **Sell paid courses yet.** Any course whose Access setting isn't Free renders in the catalogue as a **Premium Course** with a disabled "Coming Soon" button, and the enrol handler refuses it with "Paid courses are coming soon". Set it to Free if you want students in a course today.
 
 For a full learning management system, combine EP Courses with EP Membership (for login and access control) and EP Ecommerce Subscriptions (for paid course access).
 
@@ -81,7 +81,7 @@ The 24 supported languages are ticked on and off in settings. Welsh, Irish, Scot
 
 ## Typical setup flow
 
-1. Create a course with title, description, outcome, level, and price.
+1. Create a course with title, description, outcome, access, and price.
 2. Add lessons to the course. Each lesson has a title, body, and sort order.
 3. (Optional) Tick the languages you need in settings, then fill in each language's fields in the **Translations** accordion on the course and lesson edit forms.
 4. Create a page with the viewer slug, add `[ep-course-viewer]`.
