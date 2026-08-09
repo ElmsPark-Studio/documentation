@@ -189,11 +189,14 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 
   <div class="note calm">
-    <strong>Before you start:</strong> EP Courses uploaded and activated, plus your PageMotor admin login. A reminder on activating, because it catches everyone once: there is no Activate button in PageMotor. Tick the box next to the plugin and press <strong>Save Plugins</strong>. That is the whole ceremony. EP Membership can stay switched off until you take real students (Step 9).
+    <p style="margin:0 0 10px"><strong>Before you start:</strong> EP Courses uploaded and activated, plus your PageMotor admin login. EP Membership can stay switched off until you take real students (Step 9).</p>
+    <p style="margin:0">On activating, because it catches everyone once: there is no Activate button in PageMotor. Tick the box next to the plugin, press <strong>Save Plugins</strong>, done.</p>
   </div>
 
   <div class="note">
-    <strong>The one idea that makes everything else obvious: courses are not pages.</strong> Your courses live in a catalogue inside the plugin, the way products live inside a shop. The course viewer page you create in Step 2 is a television set, and every course is a channel: one page, and the link someone clicks decides which course it shows. So you never create a page per course, and never a page per lesson. You create list pages, one viewer page, and the plugin writes every link between them itself.
+    <p style="margin:0 0 10px"><strong>The one idea that makes everything else obvious: courses are not pages.</strong> Courses live in a catalogue inside the plugin, the way products live inside a shop.</p>
+    <p style="margin:0 0 10px">The viewer page you create in Step 2 is a television set. Every course is a channel: one page, and the link someone clicks decides which course it shows.</p>
+    <p style="margin:0">So you never create a page per course, or per lesson. You create list pages and one viewer page, and the plugin writes every link between them itself.</p>
   </div>
 
   <nav class="toc">
@@ -216,8 +219,9 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <!-- STEP 1 -->
   <section class="step" id="s1">
     <h2><span class="num">1</span><span class="t">Update EP Courses first</span></h2>
-    <p>Open your site&rsquo;s <strong>Updates</strong> screen and take EP Courses to <strong>0.4.13</strong> or later. Two things in that release matter for this guide: the course form&rsquo;s Category box now starts empty (earlier versions pre-filled it with a leftover example, which made it look like a fixed list), and the switch that controls free versus paid is now honestly labelled <strong>Access</strong> rather than Level.</p>
-    <p>If the update is not showing yet, refresh the Updates screen once. Your site checks the ElmsPark channel on a schedule, so a just-released version can take a little while to appear on its own.</p>
+    <p>Open your site&rsquo;s <strong>Updates</strong> screen and take EP Courses to <strong>0.4.13</strong> or later.</p>
+    <p>Two changes in that release matter here. The Category box now starts empty (older versions pre-filled an example that looked like a fixed list). And the free-versus-paid switch is now honestly labelled <strong>Access</strong>, not Level.</p>
+    <p>Not showing yet? Refresh the Updates screen once. Sites check the ElmsPark channel on a schedule, so a fresh release can take a little while to appear on its own.</p>
   </section>
 
   <!-- STEP 2 -->
@@ -225,8 +229,9 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <h2><span class="num">2</span><span class="t">Create the course viewer page</span></h2>
     <p>Create one new page with the slug <code>course-viewer</code> and put this on it:</p>
     <p><code>[ep-course-viewer]</code></p>
-    <p>This is the single page where <em>every</em> course on your site is watched. Each course gets its own web address, like <code>/course-viewer/?course=taiji-ruler</code>, but they are all that same page showing a different channel. Every Enrol and Continue button the plugin renders points here, which is why EP Courses nags you in its settings until the page exists. Without it, those buttons lead to a 404.</p>
-    <p>Prefer a different slug? Set it in the plugin&rsquo;s settings under <strong>Course Viewer Page Slug</strong>, and make the page slug match exactly.</p>
+    <p>This is the single page where <em>every</em> course is watched. Each course gets its own address, like <code>/course-viewer/?course=taiji-ruler</code>, but they are all this one page showing a different channel.</p>
+    <p>Every Enrol and Continue button the plugin renders points here. That is why EP Courses nags you in its settings until the page exists: without it, those buttons lead to a 404.</p>
+    <p>Prefer a different slug? Change <strong>Course Viewer Page Slug</strong> in the plugin&rsquo;s settings, and keep the page&rsquo;s slug matching it exactly.</p>
   </section>
 
   <!-- STEP 3 -->
@@ -234,16 +239,23 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <h2><span class="num">3</span><span class="t">Create the courses catalogue page</span></h2>
     <p>Create a second page with the slug <code>courses</code> and put this on it:</p>
     <p><code>[ep-courses]</code></p>
-    <p>That shortcode renders every published course as a card: title, outcome, lesson count, duration, a Free or Premium badge, and the right button for whoever is looking at it. This page is your complete catalogue, and it earns its keep even if you plan fancier landing pages later, because a couple of the plugin&rsquo;s own fallback links point to <code>/courses/</code> when someone reaches the viewer without picking a course.</p>
+    <p>That one shortcode renders every published course as a card: title, outcome, lesson count, duration, a Free or Premium badge, and the right button for whoever is looking.</p>
+    <p>Keep this page even once you build fancier landing pages. A couple of the plugin&rsquo;s own fallback links point to <code>/courses/</code> when someone reaches the viewer without picking a course.</p>
   </section>
 
   <!-- STEP 4 -->
   <section class="step" id="s4">
     <h2><span class="num">4</span><span class="t">Test-drive the sample course</span></h2>
-    <p>EP Courses planted a sample course called <strong>Getting Started</strong> the first time it ran. It exists precisely for this moment: seeing the machine work before you feed it your own material.</p>
-    <p>Logged in to your site, open <code>/courses/</code> and click <strong>Enrol Free</strong> on the Getting Started card. You will land in the viewer: the lesson on screen, the full lesson list beside it, <strong>Mark as Complete</strong> under the content, and a progress bar filling as you go. Click through all three lessons.</p>
-    <p>Two things worth noticing while you are in there. The lesson list shows a tick beside anything finished, and if you leave and come back, the card&rsquo;s button has become <strong>Continue Learning</strong> and drops you at your next unfinished lesson. Enrolment and progress are being tracked per student, and you just watched it happen. The plugin&rsquo;s <strong>Enrolments</strong> tab in settings now shows the numbers, too.</p>
-    <p>Keep the sample around as a reference while you build, and delete it whenever you are done with it.</p>
+    <p>EP Courses planted a sample course called <strong>Getting Started</strong> the first time it ran. It exists for this exact moment: seeing the machine work before you feed it your own material.</p>
+    <p>Logged in to your site, open <code>/courses/</code> and click <strong>Enrol Free</strong> on the Getting Started card. You land in the viewer. Click through all three lessons.</p>
+    <p>While you are in there, notice:</p>
+    <ul>
+      <li>The lesson list beside the content, with a tick on anything finished.</li>
+      <li><strong>Mark as Complete</strong> under each lesson, and the progress bar filling as you go.</li>
+      <li>Leave and come back: the card&rsquo;s button is now <strong>Continue Learning</strong>, and it drops you at your next unfinished lesson.</li>
+      <li>The <strong>Enrolments</strong> tab in the plugin&rsquo;s settings, now showing your numbers.</li>
+    </ul>
+    <p>Enrolment and progress are tracked per student, and you just watched it happen. Keep the sample as a reference while you build; delete it whenever you are done with it.</p>
   </section>
 
   <!-- STEP 5 -->
@@ -251,20 +263,21 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <h2><span class="num">5</span><span class="t">Create your course</span></h2>
     <p>In the plugin&rsquo;s settings, open <strong>Manage Courses</strong> and press <strong>+ Add Course</strong>. What each field actually does:</p>
     <ul>
-      <li><strong>Title.</strong> The course name. The slug fills itself in as you type, and that slug becomes the course&rsquo;s address in viewer links.</li>
+      <li><strong>Title.</strong> The course name. The slug fills itself in as you type, and becomes the course&rsquo;s address in viewer links.</li>
       <li><strong>Description and Outcome.</strong> The outcome is the line shown on the course card, so write it for a student deciding whether to enrol.</li>
-      <li><strong>Category.</strong> Free text, and yours to invent: <code>taiji</code>, <code>qigong</code>, <code>watercolours</code>, whatever your areas are. Use lowercase with hyphens and spell it identically on every course in that area, because Step 8 filters on an exact match.</li>
-      <li><strong>Access.</strong> The free versus paid switch. <strong>Free</strong> means anyone with an account can enrol. <strong>Premium</strong> shows the card as a Premium Course with a Coming Soon button, and nobody can enrol in it yet. Keep everything on Free while you build and test.</li>
-      <li><strong>Price and Currency.</strong> Only meaningful for Premium courses, so ignore them for now.</li>
+      <li><strong>Category.</strong> Free text, yours to invent: <code>taiji</code>, <code>qigong</code>, <code>watercolours</code>. Lowercase with hyphens, spelt identically on every course in that area. Step 8 filters on an exact match.</li>
+      <li><strong>Access.</strong> The free-versus-paid switch. Free: anyone with an account can enrol. Premium: the card says Coming Soon and nobody can enrol yet. Keep everything Free while you build.</li>
+      <li><strong>Price and Currency.</strong> Only meaningful for Premium courses. Ignore for now.</li>
       <li><strong>Duration.</strong> Total minutes, shown on the card.</li>
-      <li><strong>Status.</strong> Published means visible in the catalogue. Draft hides it, which is the polite state for a course mid-build.</li>
+      <li><strong>Status.</strong> Published is visible in the catalogue. Draft is hidden, the polite state for a course mid-build.</li>
     </ul>
   </section>
 
   <!-- STEP 6 -->
   <section class="step" id="s6">
     <h2><span class="num">6</span><span class="t">Write the lessons, in plain HTML</span></h2>
-    <p>On the course&rsquo;s row, press <strong>Lessons</strong>, then <strong>+ Add Lesson</strong>. The <strong>Content (HTML)</strong> box is exactly what it says: what you type is what the page renders. Tags are the formatting. Students only ever see the formatted result, never the tags themselves.</p>
+    <p>On the course&rsquo;s row, press <strong>Lessons</strong>, then <strong>+ Add Lesson</strong>.</p>
+    <p>The <strong>Content (HTML)</strong> box is exactly what it says: what you type is what the page renders. Tags are the formatting. Students only ever see the formatted result, never the tags.</p>
     <p>Four tags cover an entire course:</p>
     <pre><code>&lt;p&gt;Each paragraph wrapped like this.&lt;/p&gt;
 
@@ -276,37 +289,48 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 &lt;/ul&gt;
 
 &lt;p&gt;Something &lt;strong&gt;bold&lt;/strong&gt; mid-sentence.&lt;/p&gt;</code></pre>
-    <p>The sample course&rsquo;s lessons use exactly these, so open one in the editor any time you want a crib sheet. Sort Order controls lesson sequence, Duration shows in the viewer, and a lesson set to Draft is hidden from students while you work on it.</p>
+    <p>The sample course&rsquo;s lessons use exactly these. Open one whenever you want a crib sheet.</p>
+    <p>Sort Order controls the sequence. Duration shows in the viewer. A Draft lesson stays hidden while you work on it.</p>
     <div class="note calm">
-      <strong>Let Claude write the HTML.</strong> If you use Claude (or Claude Code), hand it your raw notes and ask: <em>&ldquo;Turn this into lesson HTML: paragraphs in &lt;p&gt; tags, one &lt;h3&gt; per section, lists as &lt;ul&gt;.&rdquo;</em> Paste the result into the Content box and save. Writing course material is work; wrapping it in tags should not be.
+      <p style="margin:0 0 10px"><strong>Let Claude write the HTML.</strong> Hand it your raw notes and ask: <em>&ldquo;Turn this into lesson HTML: paragraphs in &lt;p&gt; tags, one &lt;h3&gt; per section, lists as &lt;ul&gt;.&rdquo;</em></p>
+      <p style="margin:0">Paste the result into the Content box and save. Writing course material is work; wrapping it in tags should not be.</p>
     </div>
   </section>
 
   <!-- STEP 7 -->
   <section class="step" id="s7">
     <h2><span class="num">7</span><span class="t">Add video, including S3</span></h2>
-    <p>Each lesson has a <strong>Video Type</strong> and a <strong>Video URL</strong>. Three types are supported: <strong>YouTube</strong> and <strong>Vimeo</strong> take the embed URL of the video, and <strong>MP4</strong> takes a direct link to a video file, which is how you use files hosted in your own Amazon S3 or S3-compatible bucket. Choose MP4, paste the file link, and the lesson shows a normal video player streaming straight from your bucket. The video never passes through your website.</p>
+    <p>Each lesson has a <strong>Video Type</strong> and a <strong>Video URL</strong>:</p>
+    <ul>
+      <li><strong>YouTube</strong> or <strong>Vimeo</strong>: paste the video&rsquo;s embed URL.</li>
+      <li><strong>MP4</strong>: paste a direct link to a video file, including one in your own Amazon S3 (or S3-compatible) bucket.</li>
+    </ul>
+    <p>An MP4 lesson shows a normal player streaming straight from your bucket. The video never passes through your website.</p>
     <div class="note">
-      <strong>Selling the course? Protect the file, not just the page.</strong> Enrolment gates the lesson page, but a plain bucket link in the player can be copied and shared, and it keeps working for anyone, forever. <a href="https://documentation.elmspark.com/plugins/ep-media-storage/">EP Media Storage</a> fixes that: it serves each course video through a link that expires (two hours by default), so a copied link is dead by the time it travels. Students notice nothing. It is on the same licence tier as EP Courses, and you keep authoring lessons exactly as above.
+      <p style="margin:0 0 10px"><strong>Selling the course? Protect the file, not just the page.</strong> Enrolment gates the lesson page, but a plain bucket link can be copied, shared, and it keeps working for anyone, forever.</p>
+      <p style="margin:0"><a href="https://documentation.elmspark.com/plugins/ep-media-storage/">EP Media Storage</a> serves each course video through a link that expires, two hours by default. A copied link is dead by the time it travels, and students notice nothing. Same licence tier as EP Courses, and you author lessons exactly as above.</p>
     </div>
   </section>
 
   <!-- STEP 8 -->
   <section class="step" id="s8">
     <h2><span class="num">8</span><span class="t">Category pages for your course areas</span></h2>
-    <p>The catalogue page from Step 3 shows everything. When your site has areas, give each area its own list page by filtering the same shortcode. A Taiji page carries:</p>
+    <p>The catalogue page from Step 3 shows everything. When your site has areas, give each area its own list page with a filtered copy of the same shortcode. A Taiji page carries:</p>
     <p><code>[ep-courses category="taiji"]</code></p>
-    <p>and shows only courses whose Category box says <code>taiji</code>. A Qigong page carries the same shortcode with <code>qigong</code>, and so on. One category per list page, and the category typed on each course must match the shortcode&rsquo;s exactly.</p>
-    <p>Landing pages that just point at your areas (a martial arts page linking to Taiji and Qigong, say) need no shortcode at all. They are ordinary pages with ordinary links; only the pages that list courses carry the shortcode.</p>
-    <p>One typing note: the quote marks must be the plain straight kind, <code>"</code>. Forums and word processors curl them into typographic quotes, which the shortcode cannot read. Copying from the code boxes on this page is safe.</p>
+    <p>That shows only courses whose Category box says <code>taiji</code>. A Qigong page does the same with <code>qigong</code>. One category per list page.</p>
+    <p>The category typed on each course must match the shortcode&rsquo;s exactly, hyphens and all.</p>
+    <p>Landing pages that just point at your areas (a martial arts page linking to Taiji and Qigong, say) need no shortcode. Only pages that list courses carry one.</p>
+    <p>One typing note: the quote marks must be the plain straight kind, <code>"</code>. Word processors and forums curl them into typographic quotes the shortcode cannot read. Copying from the code boxes on this page is safe.</p>
   </section>
 
   <!-- STEP 9 -->
   <section class="step" id="s9">
     <h2><span class="num">9</span><span class="t">Before real students arrive</span></h2>
-    <p>Watching a lesson requires being logged in, even on a free course, because progress is tracked per student. So a real student needs an account, and accounts, registration and login are <a href="https://documentation.elmspark.com/plugins/ep-membership/">EP Membership</a>&rsquo;s department. The Enrol button sends logged-out visitors to <code>/register/</code>, so that page needs to exist by launch day, set up per the Membership docs.</p>
-    <p>Two switches in EP Membership&rsquo;s settings deserve a warning label: <strong>Welcome Email</strong> and <strong>Require Email Verification</strong>. Both send mail through your site&rsquo;s own email plumbing. If that is not set up yet, the emails silently go nowhere, and with verification on, new members end up waiting forever for a link that never arrives. Leave both off until your site&rsquo;s email delivery is wired up properly, which is its own short job: <a href="https://documentation.elmspark.com/guides/mailgun-email/">Set up reliable email with Mailgun</a>.</p>
-    <p>And when you are ready to charge for a course, that is done by gating access with EP Membership rather than by the Premium setting alone. The <a href="https://documentation.elmspark.com/plugins/ep-courses/">EP Courses reference docs</a> cover the current state of paid access.</p>
+    <p>Watching a lesson requires a login, even on a free course, because progress is tracked per student.</p>
+    <p>Accounts, registration and login are <a href="https://documentation.elmspark.com/plugins/ep-membership/">EP Membership</a>&rsquo;s department. The Enrol button sends logged-out visitors to <code>/register/</code>, so that page needs to exist by launch day, set up per the Membership docs.</p>
+    <p>Two switches in Membership&rsquo;s settings deserve a warning label: <strong>Welcome Email</strong> and <strong>Require Email Verification</strong>. Both send through your site&rsquo;s own email plumbing. If that is not wired up yet, the emails silently go nowhere, and verification leaves new members waiting for a link that never arrives.</p>
+    <p>So leave both off until email delivery is set up. That is its own short job: <a href="https://documentation.elmspark.com/guides/mailgun-email/">Set up reliable email with Mailgun</a>.</p>
+    <p>Ready to charge for a course? That is done by gating access with EP Membership rather than by the Premium setting alone. The <a href="https://documentation.elmspark.com/plugins/ep-courses/">EP Courses reference docs</a> cover the current state of paid access.</p>
   </section>
 
   <h2 class="plain" id="fix">Troubleshooting</h2>
