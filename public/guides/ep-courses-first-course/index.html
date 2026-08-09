@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="From an empty PageMotor site to a course a student can enrol in and finish: the two pages you need, categories, lessons in HTML, and video from YouTube or your own S3 bucket.">
+<title>Your first course with EP Courses | ElmsPark Guide</title>
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400|inter-tight:400,500,700&display=swap">
+<style>
+:root{
+  --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
+  --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
+  --warn:#9a4b2e; --danger:#b5290f; --codebg:#1f1d17; --radius:14px; --maxw:800px;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  line-height:1.65; font-size:18px; -webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:28px 20px 80px}
+nav.crumbs{font-family:'Inter Tight',system-ui,sans-serif;font-size:.875rem}
+.crumbs-inner{max-width:var(--maxw); margin:0 auto; padding:18px 20px 0; display:flex; align-items:center; gap:.5rem; color:#605647}
+.crumbs a{color:#605647; text-decoration:none; border-bottom:1px solid transparent; transition:color .15s,border-color .15s}
+.crumbs a:hover,.crumbs a:focus-visible{color:#3a5140; border-bottom-color:#3a5140}
+.crumbs .sep{color:#b5ab97}
+.crumbs [aria-current="page"]{color:#181411; font-weight:500}
+h1{font-size:34px; line-height:1.15; margin:.4em 0 .15em; color:var(--pine-deep); letter-spacing:-.01em}
+.lede{font-size:20px; color:var(--soft); margin:0 0 18px}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; font-family:system-ui,sans-serif; font-size:13.5px}
+.chip{background:var(--card); border:1px solid var(--line); color:var(--soft); padding:5px 11px; border-radius:999px}
+.chip b{color:var(--pine)}
+/* Note / callout variants */
+.note{background:#fbf6e8; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; margin:22px 0; font-size:16.5px}
+.note.calm{border-left-color:var(--pine)}
+.note.danger{background:#fff2f0; border-color:#f5c5bc; border-left-color:var(--danger)}
+.note.danger strong,.note.danger .label{color:var(--danger)}
+.note.warn{background:#fff8ee; border-color:#f5dec5; border-left-color:var(--accent)}
+.note.warn strong{color:#7a4a0f}
+.note strong{color:var(--pine-deep)}
+/* TOC */
+nav.toc{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 20px; margin:8px 0 30px; font-family:system-ui,sans-serif; font-size:16px}
+nav.toc p{margin:0 0 8px; font-weight:600; color:var(--soft); font-size:13px; text-transform:uppercase; letter-spacing:.05em}
+nav.toc ol{margin:0; padding-left:20px}
+nav.toc li{margin:5px 0}
+nav.toc a{color:var(--pine); text-decoration:none}
+nav.toc a:hover{text-decoration:underline}
+/* Step cards */
+.step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:6px 24px 22px; margin:18px 0}
+.step h2{display:flex; align-items:center; gap:12px; font-size:23px; color:var(--pine-deep); margin:22px 0 6px}
+.num{flex:none; width:38px; height:38px; border-radius:50%; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:18px}
+.step h2 .t{line-height:1.2}
+ol.sub,ul.sub{padding-left:22px; margin:10px 0}
+ol.sub li,ul.sub li{margin:8px 0}
+code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+/* Screenshots */
+.screenshot{margin:20px 0; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#e9e4d8}
+.screenshot img{display:block; width:100%; height:auto; border-radius:10px 10px 0 0}
+.screenshot figcaption{font-family:system-ui,sans-serif; font-size:13px; color:var(--soft); padding:8px 14px; background:#f0ece2; border-top:1px solid var(--line)}
+.screenshot-placeholder{min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:repeating-linear-gradient(45deg,#f0ede4,#f0ede4 10px,#e8e3d6 10px,#e8e3d6 20px); padding:30px 20px; border-radius:10px}
+.screenshot-placeholder .sp-label{font-family:system-ui,sans-serif; font-size:13px; color:#8a7d65; font-weight:600; text-align:center; letter-spacing:.02em; text-transform:uppercase}
+.screenshot-placeholder .sp-desc{font-family:system-ui,sans-serif; font-size:13px; color:#a39785; text-align:center; max-width:400px; line-height:1.5}
+/* Field table for the Add Domain form */
+.field-table{width:100%; border-collapse:collapse; margin:16px 0; font-size:16px}
+.field-table th{text-align:left; font-family:system-ui,sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--soft); padding:8px 12px; border-bottom:2px solid var(--line); background:#f4f0e6}
+.field-table td{padding:11px 12px; vertical-align:top; border-bottom:1px solid #ede7d6}
+.field-table tr:last-child td{border-bottom:none}
+.field-table .fname{font-family:system-ui,sans-serif; font-size:15px; font-weight:600; color:var(--ink); white-space:nowrap; width:38%}
+.field-table .fval{width:62%}
+.field-table .pick{display:inline-flex; align-items:center; gap:6px; font-family:system-ui,sans-serif; font-size:14px; background:var(--card); border:1.5px solid var(--line); border-radius:6px; padding:5px 10px; margin:3px 0}
+.field-table .pick.correct{border-color:#2f7a54; background:#edf7f2; color:#1e5238; font-weight:600}
+.field-table .pick.wrong{border-color:#cc4a2e; background:#fff2f0; color:#8a2010; text-decoration:line-through; opacity:.75}
+.pick-icon{font-size:15px}
+/* Choice comparison block */
+.choice-compare{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0}
+.choice{border:2px solid var(--line); border-radius:12px; padding:16px 18px; background:var(--card)}
+.choice.correct{border-color:#2f7a54; background:#edf7f2}
+.choice.wrong{border-color:#cc4a2e; background:#fff4f3; opacity:.9}
+.choice-title{font-family:system-ui,sans-serif; font-weight:700; font-size:15px; margin:0 0 8px; display:flex; align-items:center; gap:8px}
+.choice-title .badge{font-size:11px; padding:2px 8px; border-radius:999px; font-weight:600}
+.correct .badge{background:#d0f0df; color:#1a5c35}
+.wrong .badge{background:#ffd8d0; color:#7a1c0f}
+.choice p{font-family:system-ui,sans-serif; font-size:14px; margin:0; line-height:1.5; color:var(--soft)}
+.choice ul{font-family:system-ui,sans-serif; font-size:14px; padding-left:18px; margin:8px 0 0; line-height:1.5; color:var(--soft)}
+/* DNS record table */
+.dns-table{width:100%; border-collapse:collapse; margin:16px 0; font-size:15px; font-family:system-ui,sans-serif}
+.dns-table th{text-align:left; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--soft); padding:8px 10px; border-bottom:2px solid var(--line); background:#f4f0e6}
+.dns-table td{padding:10px 10px; vertical-align:top; border-bottom:1px solid #ede7d6; word-break:break-all}
+.dns-table tr:last-child td{border-bottom:none}
+.dns-table .type{width:15%; font-weight:600; font-size:13px; white-space:nowrap}
+.dns-table .host{width:34%}
+.dns-table .value{width:51%}
+.dns-table code{font-size:.8em}
+/* Substep counter */
+.substep{display:flex; gap:14px; margin:14px 0}
+.substep-num{flex:none; width:28px; height:28px; border-radius:50%; background:#d8d0bf; color:#5d574c; display:flex; align-items:center; justify-content:center; font-family:system-ui,sans-serif; font-weight:700; font-size:14px; margin-top:2px}
+.substep-body{flex:1}
+/* Section headers */
+h2.plain{font-size:24px; color:var(--pine-deep); margin:38px 0 4px}
+details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:12px 0; padding:2px 18px}
+details[open]{padding-bottom:14px}
+summary{cursor:pointer; font-weight:600; padding:14px 0; color:var(--pine-deep); font-family:system-ui,sans-serif; font-size:16.5px; list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"＋"; color:var(--accent); margin-right:10px}
+details[open] summary::before{content:"－"}
+.seealso{background:var(--card); border:1px dashed var(--pine); border-radius:12px; padding:14px 18px; margin:26px 0 0; font-family:system-ui,sans-serif; font-size:16px}
+.seealso a{color:var(--pine); font-weight:600}
+footer{margin-top:30px; padding-top:22px; border-top:1px solid var(--line); color:var(--soft); font-family:system-ui,sans-serif; font-size:14.5px}
+footer a{color:var(--pine)}
+.kicker{font-family:system-ui,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#a35a20; font-weight:600}
+/* Verified badge */
+.verified-badge{display:inline-flex; align-items:center; gap:5px; font-family:system-ui,sans-serif; font-size:13px; font-weight:600; color:#1e5238; background:#d0f0df; border:1px solid #8fcfab; padding:3px 10px; border-radius:999px}
+/* Numbered annotation */
+.annot{display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--danger); color:#fff; font-family:system-ui,sans-serif; font-weight:700; font-size:12px; vertical-align:middle; margin:0 2px; flex-shrink:0}
+/* Video slot */
+.video-slot{background:#1f1d17; border-radius:12px; overflow:hidden; margin:20px 0; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; position:relative}
+.video-slot .vs-inner{text-align:center; color:#c8bfa8}
+.video-slot .vs-play{width:56px; height:56px; border:3px solid #c8bfa8; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-size:20px}
+.video-slot .vs-text{font-family:system-ui,sans-serif; font-size:14px; opacity:.7}
+@media (max-width:560px){
+  .choice-compare{grid-template-columns:1fr}
+  body{font-size:17px} h1{font-size:28px} .wrap{padding:22px 15px 64px}
+  .step{padding:4px 17px 18px} .step h2{font-size:20px}
+  .field-table .fname{width:45%}
+  .dns-table{font-size:13px}
+}
+/* ES header */
+header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
+.es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
+.es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
+.es-wordmark .es-mark svg{width:100%;height:100%;display:block}
+.es-wordmark .es-accent{color:#3a5140}
+.es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:0.75rem;margin-left:-0.35rem;line-height:1}
+.es-nav{display:flex;gap:clamp(0.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:0.9375rem;font-weight:500}
+.es-nav a{color:#181411;text-decoration:none;padding:0.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
+.es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
+.es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
+.es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
+@media(max-width:640px){
+  .es-header .es-inner{padding:1rem 18px;gap:.75rem}
+  .es-sub{display:none}
+  .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
+}
+</style>
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ElmsPark Guides">
+  <meta property="og:title" content="Your first course with EP Courses">
+  <meta property="og:description" content="From empty site to a course a student can enrol in and finish: two pages, one sample walkthrough, then your own.">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/ep-courses-first-course/">
+</head>
+<body>
+<header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="currentColor" aria-hidden="true" focusable="false"><defs><filter id="ink-wobble-mark" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink-wobble-mark)"><g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455 -1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97 -132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241 -293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928 919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70 464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50 -320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483 -529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489 -460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8 -1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99 -445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921 -28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280 91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23 -61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50 -544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82 -67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221 -163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482 58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539 0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35 180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25 -100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19 102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11 267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73 -19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354 -274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52 2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50 208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133 38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417 172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50 -971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43 134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25 515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24 1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68 -18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316 145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64 -336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16 -609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4 926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508 554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289 139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0 -454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351 -659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653 -710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28 78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72 22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19 -98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7 -44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234 -567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72 535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253 335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23 145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366 -246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12 -27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694 -206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58 -9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150 331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66 420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167 149 -4 -1 -19 -7 -33 -15z"/></g></g></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+    </a>
+    <span class="es-sub">Guides</span>
+    <nav class="es-nav" aria-label="Documentation">
+      <a href="/guides/">Guides</a>
+      <a href="/learn/">Learn</a>
+      <a href="/plugins/">Plugin docs</a>
+      <a href="/hosting/hosting-options/">Hosting</a>
+      <a class="es-cta" href="https://elmspark.com/">elmspark.com &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <div class="crumbs-inner">
+    <a href="https://documentation.elmspark.com/guides/">Guides</a>
+    <span class="sep" aria-hidden="true">&rsaquo;</span>
+    <span aria-current="page">Your first course with EP Courses</span>
+  </div>
+</nav>
+
+<div class="wrap">
+  <span class="kicker">EP Courses Guide</span>
+  <h1>Your first course with EP Courses</h1>
+  <p class="lede">From an empty PageMotor site to a course a student can enrol in and finish. Two pages, one ten-minute test drive, then your own material.</p>
+  <div class="chips">
+    <span class="chip">&#x23F1; About <b>20 minutes</b> hands-on</span>
+    <span class="chip">&#x1F9E9; <b>EP Courses 0.4.13</b> or later</span>
+    <span class="chip">&#x1F4C4; You create just <b>2 pages</b></span>
+    <span class="chip">&#x1F3AC; <b>YouTube, Vimeo, MP4/S3</b> video</span>
+  </div>
+
+  <div class="note calm">
+    <strong>Before you start:</strong> EP Courses uploaded and activated, plus your PageMotor admin login. A reminder on activating, because it catches everyone once: there is no Activate button in PageMotor. Tick the box next to the plugin and press <strong>Save Plugins</strong>. That is the whole ceremony. EP Membership can stay switched off until you take real students (Step 9).
+  </div>
+
+  <div class="note">
+    <strong>The one idea that makes everything else obvious: courses are not pages.</strong> Your courses live in a catalogue inside the plugin, the way products live inside a shop. The course viewer page you create in Step 2 is a television set, and every course is a channel: one page, and the link someone clicks decides which course it shows. So you never create a page per course, and never a page per lesson. You create list pages, one viewer page, and the plugin writes every link between them itself.
+  </div>
+
+  <nav class="toc">
+    <p>Nine steps to a working course</p>
+    <ol>
+      <li><a href="#s1">Update EP Courses first</a></li>
+      <li><a href="#s2">Create the course viewer page</a> &middot; <em>the important one</em></li>
+      <li><a href="#s3">Create the courses catalogue page</a></li>
+      <li><a href="#s4">Test-drive the sample course</a></li>
+      <li><a href="#s5">Create your course</a></li>
+      <li><a href="#s6">Write the lessons, in plain HTML</a></li>
+      <li><a href="#s7">Add video, including S3</a></li>
+      <li><a href="#s8">Category pages for your course areas</a></li>
+      <li><a href="#s9">Before real students arrive</a></li>
+    </ol>
+    <p style="margin-top:14px">Something wrong?</p>
+    <ol style="list-style:none;padding-left:0;margin:0"><li><a href="#fix">Jump to troubleshooting &rarr;</a></li></ol>
+  </nav>
+
+  <!-- STEP 1 -->
+  <section class="step" id="s1">
+    <h2><span class="num">1</span><span class="t">Update EP Courses first</span></h2>
+    <p>Open your site&rsquo;s <strong>Updates</strong> screen and take EP Courses to <strong>0.4.13</strong> or later. Two things in that release matter for this guide: the course form&rsquo;s Category box now starts empty (earlier versions pre-filled it with a leftover example, which made it look like a fixed list), and the switch that controls free versus paid is now honestly labelled <strong>Access</strong> rather than Level.</p>
+    <p>If the update is not showing yet, refresh the Updates screen once. Your site checks the ElmsPark channel on a schedule, so a just-released version can take a little while to appear on its own.</p>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step" id="s2">
+    <h2><span class="num">2</span><span class="t">Create the course viewer page</span></h2>
+    <p>Create one new page with the slug <code>course-viewer</code> and put this on it:</p>
+    <p><code>[ep-course-viewer]</code></p>
+    <p>This is the single page where <em>every</em> course on your site is watched. Each course gets its own web address, like <code>/course-viewer/?course=taiji-ruler</code>, but they are all that same page showing a different channel. Every Enrol and Continue button the plugin renders points here, which is why EP Courses nags you in its settings until the page exists. Without it, those buttons lead to a 404.</p>
+    <p>Prefer a different slug? Set it in the plugin&rsquo;s settings under <strong>Course Viewer Page Slug</strong>, and make the page slug match exactly.</p>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step" id="s3">
+    <h2><span class="num">3</span><span class="t">Create the courses catalogue page</span></h2>
+    <p>Create a second page with the slug <code>courses</code> and put this on it:</p>
+    <p><code>[ep-courses]</code></p>
+    <p>That shortcode renders every published course as a card: title, outcome, lesson count, duration, a Free or Premium badge, and the right button for whoever is looking at it. This page is your complete catalogue, and it earns its keep even if you plan fancier landing pages later, because a couple of the plugin&rsquo;s own fallback links point to <code>/courses/</code> when someone reaches the viewer without picking a course.</p>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="step" id="s4">
+    <h2><span class="num">4</span><span class="t">Test-drive the sample course</span></h2>
+    <p>EP Courses planted a sample course called <strong>Getting Started</strong> the first time it ran. It exists precisely for this moment: seeing the machine work before you feed it your own material.</p>
+    <p>Logged in to your site, open <code>/courses/</code> and click <strong>Enrol Free</strong> on the Getting Started card. You will land in the viewer: the lesson on screen, the full lesson list beside it, <strong>Mark as Complete</strong> under the content, and a progress bar filling as you go. Click through all three lessons.</p>
+    <p>Two things worth noticing while you are in there. The lesson list shows a tick beside anything finished, and if you leave and come back, the card&rsquo;s button has become <strong>Continue Learning</strong> and drops you at your next unfinished lesson. Enrolment and progress are being tracked per student, and you just watched it happen. The plugin&rsquo;s <strong>Enrolments</strong> tab in settings now shows the numbers, too.</p>
+    <p>Keep the sample around as a reference while you build, and delete it whenever you are done with it.</p>
+  </section>
+
+  <!-- STEP 5 -->
+  <section class="step" id="s5">
+    <h2><span class="num">5</span><span class="t">Create your course</span></h2>
+    <p>In the plugin&rsquo;s settings, open <strong>Manage Courses</strong> and press <strong>+ Add Course</strong>. What each field actually does:</p>
+    <ul>
+      <li><strong>Title.</strong> The course name. The slug fills itself in as you type, and that slug becomes the course&rsquo;s address in viewer links.</li>
+      <li><strong>Description and Outcome.</strong> The outcome is the line shown on the course card, so write it for a student deciding whether to enrol.</li>
+      <li><strong>Category.</strong> Free text, and yours to invent: <code>taiji</code>, <code>qigong</code>, <code>watercolours</code>, whatever your areas are. Use lowercase with hyphens and spell it identically on every course in that area, because Step 8 filters on an exact match.</li>
+      <li><strong>Access.</strong> The free versus paid switch. <strong>Free</strong> means anyone with an account can enrol. <strong>Premium</strong> shows the card as a Premium Course with a Coming Soon button, and nobody can enrol in it yet. Keep everything on Free while you build and test.</li>
+      <li><strong>Price and Currency.</strong> Only meaningful for Premium courses, so ignore them for now.</li>
+      <li><strong>Duration.</strong> Total minutes, shown on the card.</li>
+      <li><strong>Status.</strong> Published means visible in the catalogue. Draft hides it, which is the polite state for a course mid-build.</li>
+    </ul>
+  </section>
+
+  <!-- STEP 6 -->
+  <section class="step" id="s6">
+    <h2><span class="num">6</span><span class="t">Write the lessons, in plain HTML</span></h2>
+    <p>On the course&rsquo;s row, press <strong>Lessons</strong>, then <strong>+ Add Lesson</strong>. The <strong>Content (HTML)</strong> box is exactly what it says: what you type is what the page renders. Tags are the formatting. Students only ever see the formatted result, never the tags themselves.</p>
+    <p>Four tags cover an entire course:</p>
+    <pre><code>&lt;p&gt;Each paragraph wrapped like this.&lt;/p&gt;
+
+&lt;h3&gt;A heading inside the lesson&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A list item&lt;/li&gt;
+  &lt;li&gt;Another one&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Something &lt;strong&gt;bold&lt;/strong&gt; mid-sentence.&lt;/p&gt;</code></pre>
+    <p>The sample course&rsquo;s lessons use exactly these, so open one in the editor any time you want a crib sheet. Sort Order controls lesson sequence, Duration shows in the viewer, and a lesson set to Draft is hidden from students while you work on it.</p>
+    <div class="note calm">
+      <strong>Let Claude write the HTML.</strong> If you use Claude (or Claude Code), hand it your raw notes and ask: <em>&ldquo;Turn this into lesson HTML: paragraphs in &lt;p&gt; tags, one &lt;h3&gt; per section, lists as &lt;ul&gt;.&rdquo;</em> Paste the result into the Content box and save. Writing course material is work; wrapping it in tags should not be.
+    </div>
+  </section>
+
+  <!-- STEP 7 -->
+  <section class="step" id="s7">
+    <h2><span class="num">7</span><span class="t">Add video, including S3</span></h2>
+    <p>Each lesson has a <strong>Video Type</strong> and a <strong>Video URL</strong>. Three types are supported: <strong>YouTube</strong> and <strong>Vimeo</strong> take the embed URL of the video, and <strong>MP4</strong> takes a direct link to a video file, which is how you use files hosted in your own Amazon S3 or S3-compatible bucket. Choose MP4, paste the file link, and the lesson shows a normal video player streaming straight from your bucket. The video never passes through your website.</p>
+    <div class="note">
+      <strong>Selling the course? Protect the file, not just the page.</strong> Enrolment gates the lesson page, but a plain bucket link in the player can be copied and shared, and it keeps working for anyone, forever. <a href="https://documentation.elmspark.com/plugins/ep-media-storage/">EP Media Storage</a> fixes that: it serves each course video through a link that expires (two hours by default), so a copied link is dead by the time it travels. Students notice nothing. It is on the same licence tier as EP Courses, and you keep authoring lessons exactly as above.
+    </div>
+  </section>
+
+  <!-- STEP 8 -->
+  <section class="step" id="s8">
+    <h2><span class="num">8</span><span class="t">Category pages for your course areas</span></h2>
+    <p>The catalogue page from Step 3 shows everything. When your site has areas, give each area its own list page by filtering the same shortcode. A Taiji page carries:</p>
+    <p><code>[ep-courses category="taiji"]</code></p>
+    <p>and shows only courses whose Category box says <code>taiji</code>. A Qigong page carries the same shortcode with <code>qigong</code>, and so on. One category per list page, and the category typed on each course must match the shortcode&rsquo;s exactly.</p>
+    <p>Landing pages that just point at your areas (a martial arts page linking to Taiji and Qigong, say) need no shortcode at all. They are ordinary pages with ordinary links; only the pages that list courses carry the shortcode.</p>
+    <p>One typing note: the quote marks must be the plain straight kind, <code>"</code>. Forums and word processors curl them into typographic quotes, which the shortcode cannot read. Copying from the code boxes on this page is safe.</p>
+  </section>
+
+  <!-- STEP 9 -->
+  <section class="step" id="s9">
+    <h2><span class="num">9</span><span class="t">Before real students arrive</span></h2>
+    <p>Watching a lesson requires being logged in, even on a free course, because progress is tracked per student. So a real student needs an account, and accounts, registration and login are <a href="https://documentation.elmspark.com/plugins/ep-membership/">EP Membership</a>&rsquo;s department. The Enrol button sends logged-out visitors to <code>/register/</code>, so that page needs to exist by launch day, set up per the Membership docs.</p>
+    <p>Two switches in EP Membership&rsquo;s settings deserve a warning label: <strong>Welcome Email</strong> and <strong>Require Email Verification</strong>. Both send mail through your site&rsquo;s own email plumbing. If that is not set up yet, the emails silently go nowhere, and with verification on, new members end up waiting forever for a link that never arrives. Leave both off until your site&rsquo;s email delivery is wired up properly, which is its own short job: <a href="https://documentation.elmspark.com/guides/mailgun-email/">Set up reliable email with Mailgun</a>.</p>
+    <p>And when you are ready to charge for a course, that is done by gating access with EP Membership rather than by the Premium setting alone. The <a href="https://documentation.elmspark.com/plugins/ep-courses/">EP Courses reference docs</a> cover the current state of paid access.</p>
+  </section>
+
+  <h2 class="plain" id="fix">Troubleshooting</h2>
+  <p style="color:var(--soft);font-size:16.5px">Open these only if you hit them.</p>
+
+  <details>
+    <summary>The catalogue page says &ldquo;No courses available at the moment&rdquo;</summary>
+    <p>Only <strong>Published</strong> courses appear, so check the course&rsquo;s Status field first. If the page uses a category filter, check the spelling matches the course&rsquo;s Category box exactly, hyphens and all.</p>
+  </details>
+
+  <details>
+    <summary>The Enrol button leads to a 404</summary>
+    <p>The viewer page from Step 2 is missing, or its slug does not match the <strong>Course Viewer Page Slug</strong> setting. Create the page, or make the two match, and the buttons come back to life.</p>
+  </details>
+
+  <details>
+    <summary>The course card says Coming Soon and the button does nothing</summary>
+    <p>That course&rsquo;s <strong>Access</strong> is set to Premium. Premium courses cannot take enrolments yet, so set it to Free while you build.</p>
+  </details>
+
+  <details>
+    <summary>The shortcode is showing as plain text on the page</summary>
+    <p>Either a typo in the shortcode name, or curly quote marks around the category. Retype it by hand with straight quotes, or copy it from this page.</p>
+  </details>
+
+  <details>
+    <summary>My lesson renders as one solid block of text</summary>
+    <p>The lesson body is HTML, so line breaks alone do not make paragraphs. Wrap each paragraph in <code>&lt;p&gt;</code> tags as in Step 6, or ask Claude to do the wrapping.</p>
+  </details>
+
+  <details>
+    <summary>I changed the viewer page&rsquo;s slug and every button broke</summary>
+    <p>The buttons are built from the <strong>Course Viewer Page Slug</strong> setting, so update the setting to the new slug (or rename the page back). The two must always match.</p>
+  </details>
+
+  <div class="seealso">
+    &#x1F4DA; <strong>Keep going:</strong> the <a href="https://documentation.elmspark.com/plugins/ep-courses/">EP Courses reference docs</a> for every setting &middot; <a href="https://documentation.elmspark.com/plugins/ep-media-storage/">EP Media Storage</a> for expiring video links &middot; <a href="https://documentation.elmspark.com/guides/mailgun-email/">reliable email with Mailgun</a> before launch &middot; <a href="https://documentation.elmspark.com/guides/ask-your-studio-with-claude/">connect Claude to your site</a> when you want it building the pages for you.
+  </div>
+
+  <footer>
+    <p><strong>Stuck, or found a confusing screen?</strong> Post where you got to in the PageMotor Developers forum and say which step number you reached. The step number points straight at the fix, and confusing screens have a habit of getting renamed in the next release.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> &middot; an ElmsPark guide for the PageMotor community &middot; <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+  </footer>
+
+  <style>
+    .step h2 .num{cursor:pointer}
+    .step h2 .num.done{background:var(--pine);color:#fffdf8;box-shadow:inset 0 0 0 2px var(--pine)}
+    .tickhint{margin-top:14px;font-size:14.5px;color:var(--soft)}
+  </style>
+  <script>
+    (function(){
+      try{
+        var key='es-guide-ticks:'+location.pathname;
+        var done=JSON.parse(localStorage.getItem(key)||'{}');
+        var nums=document.querySelectorAll('.step > h2 .num');
+        if(!nums.length)return;
+        nums.forEach(function(n){
+          var id=n.closest('.step').id;
+          if(done[id])n.classList.add('done');
+          n.setAttribute('title','Click to tick this step off');
+          n.addEventListener('click',function(){
+            done[id]=!done[id];
+            n.classList.toggle('done',!!done[id]);
+            localStorage.setItem(key,JSON.stringify(done));
+          });
+        });
+        var toc=document.querySelector('nav.toc');
+        if(toc){
+          var hint=document.createElement('p');
+          hint.className='tickhint';
+          hint.innerHTML='Tip: click a step&rsquo;s number circle to tick it off. This page remembers your progress.';
+          toc.appendChild(hint);
+        }
+      }catch(e){}
+    })();
+  </script>
+</div>
+</body>
+</html>
