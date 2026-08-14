@@ -38,6 +38,7 @@ export default defineConfig({
 					label: 'Start here',
 					items: [
 						{ label: 'Welcome', slug: 'index' },
+						{ label: 'Supported PageMotor version', slug: 'supported-versions' },
 					],
 				},
 				{
