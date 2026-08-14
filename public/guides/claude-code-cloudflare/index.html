@@ -210,6 +210,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li><a href="#wrangler">Deploys, and the token gotcha &rarr;</a></li>
       <li><a href="#tokens">Access without OAuth: scoped API tokens &rarr;</a></li>
       <li><a href="#security">Security: sensible habits with tokens &rarr;</a></li>
+      <li><a href="#dns">August 2026: where DNS hosting fits &rarr;</a></li>
       <li><a href="#verify">Check it actually works &rarr;</a></li>
       <li><a href="#fix">Troubleshooting &rarr;</a></li>
     </ol>
@@ -386,6 +387,11 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </ul>
 
   <!-- DEEPER: VERIFY -->
+  <h2 class="plain" id="dns">August 2026 update: where DNS hosting fits</h2>
+  <p>Everything in this guide is about driving <em>Cloudflare</em> with Claude Code, and if you use Cloudflare&rsquo;s proxy, Workers, or firewall, Cloudflare remains exactly the right place for your domains. Nothing here changes.</p>
+  <p>One recommendation has moved, though. For domains that only need <strong>plain DNS hosting</strong> (a website, email, a handful of records, none of the orange-cloud features), our default recommendation is now <strong>Bunny DNS</strong>: free for up to 500 domains since June 2026, run by an EU company under GDPR, with DNSSEC, health-checked failover and geo routing all included. It is the same Bunny whose fonts PageMotor already serves.</p>
+  <p>The full reasoning, an honest pros-and-cons analysis (including every case where Cloudflare is still the right answer), and a zero-downtime migration walkthrough are in the companion guide: <a href="/guides/bunny-dns/">Bunny DNS, and why we now recommend it</a>.</p>
+
   <h2 class="plain" id="verify">Check it actually works</h2>
   <p class="sub-lede">Four quick proofs that the connection is real, not just configured.</p>
   <ul class="check">
