@@ -5,7 +5,7 @@ description: "Online appointment scheduling for PageMotor. Timezone-correct book
 
 EP Booking is a full appointment-scheduling system. Services, staff, availability schedules, a multi-step booking form your customers fill out on your site (in their own timezone), Stripe payments, calendar invites, self-serve rescheduling, a multi-tier reminder ladder, public per-service booking pages, an embeddable widget for any website, signed webhooks, an admin calendar, and (via the companion add-on) automatic Zoom meeting creation.
 
-This page documents EP Booking **2.4.0**. If you are on a 1.x version, take the update from your admin Updates screen; the [upgrading section](#upgrading-from-1x) covers the one setting to check first.
+This page documents EP Booking **2.4.1**. If you are on a 1.x version, take the update from your admin Updates screen; the [upgrading section](#upgrading-from-1x) covers the one setting to check first.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
