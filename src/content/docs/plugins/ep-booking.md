@@ -27,7 +27,7 @@ What EP Booking is NOT: a calendar app, a resource scheduler for rooms, or a cla
 
 ## Requirements
 
-- **PageMotor 0.8.2b or later**
+- **PageMotor 0.10.3b or later** (the 2.x line relies on 0.10 core plugin APIs; 1.x supported 0.8.2b+)
 - **EP Suite base class** (bundled)
 - **EP Email** (required for notifications)
 
