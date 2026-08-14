@@ -61,16 +61,14 @@
   .badge b{color:var(--pine)}
 
   nav.tabs{position:sticky;top:0;z-index:50;background:rgba(247,243,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-bottom:28px}
-  .tabrow{display:flex;gap:4px;overflow-x:auto;padding:10px 0;scrollbar-width:none;max-width:900px;margin:0 auto;padding-left:22px;padding-right:22px}
-  .tabrow::-webkit-scrollbar{display:none}
-  .tab{appearance:none;border:1px solid transparent;background:transparent;font:inherit;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:600;color:var(--soft);padding:8px 14px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+  .tabrow{display:flex;flex-wrap:wrap;gap:4px;padding:10px 0;max-width:900px;margin:0 auto;padding-left:22px;padding-right:22px}
+  .tab{appearance:none;border:1px solid transparent;background:transparent;text-decoration:none;font:inherit;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:600;color:var(--soft);padding:8px 14px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
   .tab:hover{color:var(--ink);background:#efe9da}
-  .tab[aria-selected="true"]{background:var(--pine);color:#fff}
+  
 
-  section.panel{display:none;animation:fade .25s ease}
-  section.panel.active{display:block}
+  section.panel{display:block;scroll-margin-top:74px;border-top:1px solid var(--line);padding-top:30px;margin-top:34px}
+  section.panel:first-of-type{border-top:0;padding-top:0;margin-top:0}
   @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion: reduce){section.panel{animation:none}}
 
   h2{font-family:Fraunces,Georgia,serif;font-size:24px;font-weight:600;letter-spacing:-.01em;margin:6px 0 14px;color:var(--pine-deep)}
   h3{font-size:16.5px;font-weight:700;margin:22px 0 8px}
@@ -213,20 +211,20 @@
   </div>
 </div>
 
-<nav class="tabs"><div class="tabrow" role="tablist">
-  <button class="tab" id="tab-dns" role="tab" aria-selected="true" aria-controls="p-dns" tabindex="0" data-panel="p-dns">DNS in plain English</button>
-  <button class="tab" id="tab-what" role="tab" aria-selected="false" aria-controls="p-what" tabindex="-1" data-panel="p-what">What Bunny DNS is</button>
-  <button class="tab" id="tab-pros" role="tab" aria-selected="false" aria-controls="p-pros" tabindex="-1" data-panel="p-pros">Why we recommend it</button>
-  <button class="tab" id="tab-cons" role="tab" aria-selected="false" aria-controls="p-cons" tabindex="-1" data-panel="p-cons">When we don&rsquo;t</button>
-  <button class="tab" id="tab-pick" role="tab" aria-selected="false" aria-controls="p-pick" tabindex="-1" data-panel="p-pick">Which should you use?</button>
-  <button class="tab" id="tab-move" role="tab" aria-selected="false" aria-controls="p-move" tabindex="-1" data-panel="p-move">Move your DNS</button>
-  <button class="tab" id="tab-faq" role="tab" aria-selected="false" aria-controls="p-faq" tabindex="-1" data-panel="p-faq">FAQ</button>
+<nav class="tabs" aria-label="On this page"><div class="tabrow">
+  <a class="tab" href="#p-dns">DNS in plain English</a>
+  <a class="tab" href="#p-what">What Bunny DNS is</a>
+  <a class="tab" href="#p-pros">Why we recommend it</a>
+  <a class="tab" href="#p-cons">When we don&rsquo;t</a>
+  <a class="tab" href="#p-pick">Which should you use?</a>
+  <a class="tab" href="#p-move">Move your DNS</a>
+  <a class="tab" href="#p-faq">FAQ</a>
 </div></nav>
 
 <main class="wrap">
 
 <!-- ============ DNS PRIMER ============ -->
-<section class="panel active" id="p-dns" role="tabpanel" aria-labelledby="tab-dns" tabindex="0">
+<section class="panel" id="p-dns">
   <h2>DNS in plain English</h2>
 
   <p>When someone types your domain into a browser, their device asks the internet&rsquo;s address book where to go. DNS is that address book. It answers with the numeric address of your web server, your mail server, and a few proofs of ownership.</p>
@@ -252,7 +250,7 @@
 </section>
 
 <!-- ============ WHAT ============ -->
-<section class="panel" id="p-what" role="tabpanel" aria-labelledby="tab-what" tabindex="0">
+<section class="panel" id="p-what">
   <h2>What Bunny DNS is</h2>
 
   <p>Bunny (bunny.net) is a European content-delivery company based in Slovenia, inside the EU. If you run PageMotor you already use them: the fonts on your site are served by Bunny Fonts, the GDPR-safe mirror of the Google Fonts catalogue that PageMotor uses precisely because Bunny is under EU law.</p>
@@ -273,7 +271,7 @@
 </section>
 
 <!-- ============ PROS ============ -->
-<section class="panel" id="p-pros" role="tabpanel" aria-labelledby="tab-pros" tabindex="0">
+<section class="panel" id="p-pros">
   <h2>Why we recommend it</h2>
 
   <p>We audited this properly before changing our recommendation, including against our own estate of 71 Cloudflare zones. Here is the case for Bunny, in order of weight.</p>
@@ -302,7 +300,7 @@
 </section>
 
 <!-- ============ CONS ============ -->
-<section class="panel" id="p-cons" role="tabpanel" aria-labelledby="tab-cons" tabindex="0">
+<section class="panel" id="p-cons">
   <h2>When we don&rsquo;t recommend it</h2>
 
   <p>An honest recommendation names its losing cases. Here is every reason to stay where you are, in order of weight.</p>
@@ -331,7 +329,7 @@
 </section>
 
 <!-- ============ PICK ============ -->
-<section class="panel" id="p-pick" role="tabpanel" aria-labelledby="tab-pick" tabindex="0">
+<section class="panel" id="p-pick">
   <h2>Which should you use?</h2>
 
   <p>Find your row. The first one that matches you is your answer.</p>
@@ -354,7 +352,7 @@
 </section>
 
 <!-- ============ MOVE ============ -->
-<section class="panel" id="p-move" role="tabpanel" aria-labelledby="tab-move" tabindex="0">
+<section class="panel" id="p-move">
   <h2>Move your DNS to Bunny, safely</h2>
 
   <p>Twenty minutes of work, zero downtime if you follow the order. Or download the LLM prompt at the top and let Claude walk you through it interactively.</p>
@@ -374,7 +372,7 @@
 </section>
 
 <!-- ============ FAQ ============ -->
-<section class="panel" id="p-faq" role="tabpanel" aria-labelledby="tab-faq" tabindex="0">
+<section class="panel" id="p-faq">
   <h2>FAQ</h2>
 
   <h3>Will moving DNS move or break my website?</h3>
@@ -408,30 +406,5 @@
 
 </main>
 
-<script>
-(function(){
-  var tabs=Array.prototype.slice.call(document.querySelectorAll('.tab')),
-      panels=document.querySelectorAll('.panel');
-  function selectTab(t,focus){
-    tabs.forEach(function(x){x.setAttribute('aria-selected','false');x.setAttribute('tabindex','-1')});
-    panels.forEach(function(p){p.classList.remove('active')});
-    t.setAttribute('aria-selected','true');t.setAttribute('tabindex','0');
-    document.getElementById(t.dataset.panel).classList.add('active');
-    if(focus){t.focus();}
-    window.scrollTo({top:0});
-  }
-  tabs.forEach(function(t,i){
-    t.addEventListener('click',function(){selectTab(t,false)});
-    t.addEventListener('keydown',function(e){
-      var k=e.key,j=null;
-      if(k==='ArrowRight'||k==='ArrowDown'){j=(i+1)%tabs.length;}
-      else if(k==='ArrowLeft'||k==='ArrowUp'){j=(i-1+tabs.length)%tabs.length;}
-      else if(k==='Home'){j=0;}
-      else if(k==='End'){j=tabs.length-1;}
-      if(j!==null){e.preventDefault();selectTab(tabs[j],true);}
-    });
-  });
-})();
-</script>
 </body>
 </html>
