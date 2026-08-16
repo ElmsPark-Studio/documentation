@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Put your site on the web address you already own. Nothing transfers, your domain stays in your name, and your email is never touched. Two records, then we do the rest.">
-<title>Use your own web address | ElmsPark Guide</title>
+<meta name="description" content="Add the two records at IONOS, step by step. The three-dots Actions menu, the Points to field, and how quickly the change takes.">
+<title>Point your IONOS domain at your site | ElmsPark Guide</title>
 <style>
   :root{
     --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
@@ -97,13 +97,13 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="ElmsPark Guides">
-  <meta property="og:title" content="Use your own web address">
-  <meta property="og:description" content="Put your site on the address you already own. Nothing transfers, your domain stays in your name, and your email is never touched.">
-  <meta property="og:url" content="https://documentation.elmspark.com/guides/use-your-own-web-address/">
+  <meta property="og:title" content="Point your IONOS domain at your site">
+  <meta property="og:description" content="Add the two records at IONOS, step by step, including where the DNS screen hides.">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/use-your-own-web-address/ionos/">
   <meta property="og:image" content="https://documentation.elmspark.com/og/guides-hub.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Use your own web address, an ElmsPark guide">
+  <meta property="og:image:alt" content="Point your IONOS domain at your site, an ElmsPark guide">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://documentation.elmspark.com/og/guides-hub.png">
 </head>
@@ -129,120 +129,110 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <div class="crumbs-inner">
     <a href="https://documentation.elmspark.com/guides/">Guides</a>
     <span class="sep" aria-hidden="true">&rsaquo;</span>
-    <span aria-current="page">Use your own web address</span>
+    <a href="https://documentation.elmspark.com/guides/use-your-own-web-address/">Use your own web address</a>
+    <span class="sep" aria-hidden="true">&rsaquo;</span>
+    <span aria-current="page">IONOS</span>
   </div>
 </nav>
 
 <div class="wrap">
   <span class="kicker">Going Live Guide</span>
-  <h1>Use your own web address</h1>
-  <p class="lede">Your site is live right now at the temporary address we gave you. When you are ready, you can put it on the address you already own, like yourbusiness.com.</p>
-  <div class="chips">
-    <span class="chip">⏱ <b>About five minutes</b> of your time</span>
-    <span class="chip">✉️ Your <b>email is not affected</b></span>
-    <span class="chip">↩️ <b>Reversible</b></span>
-  </div>
+  <h1>Point your IONOS domain at your site</h1>
+  <p class="lede">IONOS hides the DNS screen behind a small three-dots menu, which is the only genuinely confusing part.</p>
+  <div class="chips"><span class="chip">🔑 Your <b>IONOS login</b></span>
+    <span class="chip">⏱ <b>About five minutes</b></span>
+    <span class="chip">📍 Page: <b>Domains &amp; SSL</b></span></div>
+
+  <p class="backlink"><a href="https://documentation.elmspark.com/guides/use-your-own-web-address/">&larr; Back to the main guide</a></p>
 
   <div class="note calm">
-    <strong>You do not transfer anything.</strong> Your domain stays exactly where you bought it, in your name, with nothing unlocked or moved. You are only telling it where to point.
+    <strong>You do not transfer anything.</strong> Your domain stays with IONOS, in your name, with nothing unlocked or moved. You are adding two settings, and your email is not affected by either of them.
   </div>
 
-  <h2 class="plain">Before you start, the reassuring part</h2>
-  <ul class="sub">
-    <li><strong>Your email will not be affected.</strong> We only change the setting that controls your website. The settings that carry your email are separate, and we do not touch them.</li>
-    <li><strong>Your old address keeps working</strong>, so nothing disappears while you are switching.</li>
-    <li><strong>It can be undone</strong> by changing the same setting back.</li>
-  </ul>
 
-  <nav class="toc">
-    <p>The three steps</p>
-    <ol>
-      <li><a href="#s1">Tell us the address</a></li>
-      <li><a href="#s2">Add two records where you bought the domain</a></li>
-      <li><a href="#s3">That is your part done</a></li>
-    </ol>
-    <p style="margin-top:14px">Special cases</p>
-    <ol style="list-style:none;padding-left:0;margin:0">
-      <li><a href="#live">I already have a website at this address &rarr;</a></li>
-      <li><a href="#fix">Something looks stuck &rarr;</a></li>
-    </ol>
-  </nav>
+  <p>Both records are type <strong>A</strong>, and both point to the same place:</p>
+
+  <div class="codewrap">
+    <pre id="ip-value"><code>88.208.226.236</code></pre>
+    <button class="copy" data-copy="ip-value" type="button">Copy</button>
+  </div>
+
+  <table class="dnstable">
+    <thead><tr><th>Type</th><th>Host name</th><th>Points to</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td><code>@</code> <span class="muted">(IONOS uses @ for the address itself)</span></td><td><code>88.208.226.236</code></td></tr>
+      <tr><td>A</td><td><code>www</code></td><td><code>88.208.226.236</code></td></tr>
+    </tbody>
+  </table>
+
 
   <section class="step" id="s1">
-    <h2><span class="num">1</span><span class="t">Tell us the address</span></h2>
-    <p>Type it into the box on your dashboard and press <strong>Save</strong>.</p>
-    <p>Just the address itself, <code>yourbusiness.com</code>. No <code>https://</code> needed.</p>
+    <h2><span class="num">1</span><span class="t">Open your DNS screen</span></h2>
+    <!-- SCREENSHOT SLOT ionos-1: drop <figure class="screenshot"><img src="img/ionos-1.webp" alt="..."><figcaption>...</figcaption></figure> here -->
+    <ol class="sub">
+      <li>Sign in to IONOS and open the <strong>Domains &amp; SSL</strong> page.</li>
+      <li>Find your domain, then select the <strong>three-dots menu</strong> in the <strong>Actions</strong> column.</li>
+      <li>Choose <strong>DNS</strong>.</li>
+    </ol>
   </section>
 
   <section class="step" id="s2">
-    <h2><span class="num">2</span><span class="t">Add two records where you bought the domain</span></h2>
-    <p>Sign in to whoever you bought the domain from and find the <strong>DNS settings</strong>. Add two records. Both are type <strong>A</strong>, and both point to the same place:</p>
-
-    <div class="codewrap">
-      <pre id="ip-value"><code>88.208.226.236</code></pre>
-      <button class="copy" data-copy="ip-value" type="button">Copy</button>
-    </div>
-
-    <table class="dnstable">
-      <thead>
-        <tr><th>Type</th><th>Name / Host</th><th>Points to</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>A</td><td><code>@</code> <span class="muted">(means the address itself)</span></td><td><code>88.208.226.236</code></td></tr>
-        <tr><td>A</td><td><code>www</code></td><td><code>88.208.226.236</code></td></tr>
-      </tbody>
-    </table>
-
-    <div class="note">
-      <strong>If records already exist for <code>@</code> or <code>www</code> pointing somewhere else</strong>, change those rather than adding duplicates.
-    </div>
-
-    <h3 style="font-size:19px;color:#234a3b;margin:26px 0 6px">Where to find it, by provider</h3>
-    <p>Each of these opens a short page showing the exact screens at that provider.</p>
-    <ul class="sub">
-      <li><a href="/guides/use-your-own-web-address/godaddy/"><strong>GoDaddy</strong></a>: Domain Portfolio, then DNS</li>
-      <li><a href="/guides/use-your-own-web-address/namecheap/"><strong>Namecheap</strong></a>: Domain List, Manage, then Advanced DNS</li>
-      <li><a href="/guides/use-your-own-web-address/ionos/"><strong>IONOS</strong></a>: Domains &amp; SSL, then the three-dots Actions menu</li>
-      <li><a href="/guides/use-your-own-web-address/squarespace/"><strong>Squarespace</strong></a>: the domain, then DNS Settings and Custom Records</li>
-      <li><a href="/guides/use-your-own-web-address/wix/"><strong>Wix</strong></a>: Domains, then Manage DNS Records</li>
-      <li><strong>Cloudflare</strong>: your domain, then DNS, then Add record, leaving the cloud icon on</li>
-      <li><strong>Someone else, or not sure:</strong> reply to us with who you bought it from and we will send you the exact screens</li>
-    </ul>
+    <h2><span class="num">2</span><span class="t">Add the first record</span></h2>
+    <!-- SCREENSHOT SLOT ionos-2: drop <figure class="screenshot"><img src="img/ionos-2.webp" alt="..."><figcaption>...</figcaption></figure> here -->
+    <ol class="sub">
+      <li>Select <strong>Add Record</strong>, then select the row for <strong>A</strong> records.</li>
+      <li>In <strong>Host name</strong> type <code>@</code> for the address itself.</li>
+      <li>In <strong>Points to</strong> paste <code>88.208.226.236</code>.</li>
+      <li>Leave <strong>TTL</strong> alone unless you have a reason to change it.</li>
+      <li>Select <strong>Save</strong>.</li>
+    </ol>
   </section>
 
   <section class="step" id="s3">
-    <h2><span class="num">3</span><span class="t">That is your part done</span></h2>
-    <p>We watch for the change and do everything else automatically: the secure padlock, making sure search engines see the right address, and setting up email from your own domain.</p>
-    <p>It usually takes a few minutes once your provider has published the change, though some providers take longer to publish it than others.</p>
-    <p>Your dashboard shows the progress and tells you the moment it is finished. You do not need to keep the page open.</p>
+    <h2><span class="num">3</span><span class="t">Add the second record</span></h2>
+    <!-- SCREENSHOT SLOT ionos-3: drop <figure class="screenshot"><img src="img/ionos-3.webp" alt="..."><figcaption>...</figcaption></figure> here -->
+    <ol class="sub">
+      <li>Select <strong>Add Record</strong> again, choose <strong>A</strong>.</li>
+      <li>This time put <code>www</code> in <strong>Host name</strong>, with the same <strong>Points to</strong> value.</li>
+      <li>Select <strong>Save</strong>.</li>
+    </ol>
   </section>
 
-  <h2 class="plain" id="live">I already have a website at this address</h2>
+
+  <h2 class="plain">Things IONOS does differently</h2>
+  <details>
+    <summary>If a record already exists</summary>
+    <p>Edit rather than duplicate. Select the existing A record, choose the <strong>pencil icon</strong> under <strong>Actions</strong>, then <strong>Edit record</strong>, and change <strong>Points to</strong> to <code>88.208.226.236</code>.</p>
+  </details>
+  <details>
+    <summary>How long it takes</summary>
+    <p>IONOS applies the change immediately at their end. It can still take up to an hour to be visible everywhere else, which is normal and nothing to fix.</p>
+  </details>
+
+  <h2 class="plain" id="live">If you already have a website at this address</h2>
   <div class="note">
-    <strong>Get in touch and we will schedule it with you.</strong> Everything above assumes the address is not currently serving a site. If you are replacing a website that is already live, we would rather do the switch together at a quiet time than have you follow a page on your own.
+    <strong>Stop here and get in touch.</strong> These steps assume the address is not currently serving a site. If you are replacing a website that is already live, we would rather schedule the switch with you at a quiet time than have you do it alone.
   </div>
-  <p>The reason is honest and worth knowing. While the change spreads across the internet, some visitors reach your old site and some reach the new one. Both work, so nothing is lost. There is also a brief window while your security certificate is being issued when the address may not load properly.</p>
-  <p>That window is short, but we would rather be watching it with you than have you discover it during business hours.</p>
 
-  <h2 class="plain" id="fix">Something looks stuck</h2>
-  <p>The most common reason is that only one of the two records was added, or your provider has not published the change yet. Both are normal, and neither breaks anything.</p>
-  <p>If the dashboard still looks unfinished after a few hours, reply to us and we will look at it.</p>
-
-  <h2 class="plain">What we never touch</h2>
-  <p>The settings that carry your email are separate from the setting that carries your website. We change the website one and leave the email ones exactly as they are, which is why an existing mailbox cannot break during the switch.</p>
-  <p>If you do not have email on your domain yet and you would like it, that is a separate job we can do afterwards.</p>
+  <h2 class="plain">When you are done</h2>
+  <p>That is your part finished. We watch for the change and handle the rest: the secure padlock, making sure search engines see the right address, and email from your own domain.</p>
+  <p>Your dashboard shows the progress and tells you the moment it is complete. You do not need to keep the page open, and you do not need to check anything at IONOS again.</p>
 
   <div class="seealso">
-    <strong>Related guides:</strong>
-    <a href="https://documentation.elmspark.com/guides/bunny-dns/">Bunny DNS, and why we now recommend it</a> ·
-    <a href="https://documentation.elmspark.com/guides/website-email-spam/">Why your website's email lands in spam</a>
+    <strong>Other providers:</strong>
+    <a href="https://documentation.elmspark.com/guides/use-your-own-web-address/godaddy/">GoDaddy</a> ·
+    <a href="https://documentation.elmspark.com/guides/use-your-own-web-address/namecheap/">Namecheap</a> ·
+    <a href="https://documentation.elmspark.com/guides/use-your-own-web-address/ionos/">IONOS</a> ·
+    <a href="https://documentation.elmspark.com/guides/use-your-own-web-address/squarespace/">Squarespace</a> ·
+    <a href="https://documentation.elmspark.com/guides/use-your-own-web-address/wix/">Wix</a>
   </div>
 
   <footer>
-    <p><strong>Not sure which of these is your situation?</strong> Reply with the address you own and who you bought it from. That is enough for us to tell you exactly which of the two paths above applies.</p>
-    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+    <p><strong>Stuck on any screen?</strong> Reply and tell us what you can see. A description of the page is enough for us to work out where you are.</p>
+    <p><a href="https://documentation.elmspark.com/guides/use-your-own-web-address/">Use your own web address</a> · <a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
   </footer>
 </div>
+
 
 <style>
   .dnstable{width:100%;border-collapse:collapse;margin:16px 0;font-size:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -250,8 +240,10 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .dnstable td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
   .dnstable tr:last-child td{border-bottom:0}
   .dnstable .muted{color:var(--soft);font-size:14px}
+  .backlink{font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;margin:0 0 22px}
   @media (max-width:520px){ .dnstable{font-size:15px} .dnstable th,.dnstable td{padding:9px 10px} }
 </style>
+
 
 <script>
   document.querySelectorAll('.copy').forEach(function(btn){
