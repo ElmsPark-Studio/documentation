@@ -318,8 +318,12 @@
   <h3>4. Ecosystem maturity</h3>
   <p>Cloudflare is the default everywhere: every tutorial, every tool, every certificate-automation plugin knows it. Bunny&rsquo;s API is clean and DNSControl supports it, but some tooling (for example wildcard TLS certificates via DNS validation with certbot) relies on community plugins rather than first-party ones. If your workflow leans on Cloudflare-specific automation, weigh the porting cost.</p>
 
-  <h3>5. DNSSEC depends on your registrar&rsquo;s cooperation</h3>
-  <p>Turning DNSSEC on requires your <em>registrar</em> to publish one small record (the DS). Some registrars make that a two-minute form; some make it a support ticket. IONOS, for instance, only accepts it by email for domains on external nameservers; we have been through that queue ourselves. DNSSEC is optional, so this only matters if you want it.</p>
+  <h3>5. DNSSEC needs your registrar to play along</h3>
+  <p>Turning DNSSEC on is two halves. Your DNS host signs the zone, which Bunny does with one toggle. Then your <em>registrar</em> must publish one small record, called the DS, in the registry above your domain. Only a registrar can do that half. No DNS host can do it for them, whether that is Bunny, Cloudflare or anyone else.</p>
+  <p>Some registrars make it a two-minute form. Others make it a support ticket, and a few are simply not up to it.</p>
+  <p><strong>IONOS is the cautionary tale, and we have first-hand evidence.</strong> For domains on external nameservers, their own help page tells you to email the request in. We did exactly that in August 2026, in their documented format, and first-line support declined, replying that the record must be added at the external host instead. That is not possible: a DS record lives in the registry above your domain, not in your zone, so no external host can publish it. Public forum reports show others escalating the same request for weeks without ever getting it published.</p>
+  <p>The practical advice: <strong>if DNSSEC matters to you, ask your registrar whether they can publish a DS record before you count on it.</strong> And if you do get stuck there, nothing is broken. A signed zone with no DS in the registry behaves exactly like an unsigned one, so your site and your email carry on as normal.</p>
+  <div class="note"><p><strong>If your domain is registered at IONOS and uses external nameservers,</strong> treat DNSSEC as unlikely rather than pending, whichever DNS host you choose. Everything else in this guide works normally; this one optional step is the only part that depends on them.</p></div>
 
   <h3>6. Small print</h3>
   <p>The $1/month account minimum means Bunny is not literally free. And one standards footnote: Bunny&rsquo;s wildcard-record handling deviates slightly from the DNS RFCs in an edge case (empty non-terminals get the wildcard answer). It affects almost nobody, but we would rather tell you than not.</p>
@@ -365,7 +369,7 @@
     <li><strong>Switch nameservers at your registrar.</strong> Replace the current nameservers with the two Bunny gives you. This is the actual move, and it is one form at your registrar.</li>
     <li><strong>Wait, without deleting anything.</strong> The change reaches the whole internet within 48 hours. Both old and new hosts keep answering identically during that window, which is why nothing goes down. Leave the old zone in place for a week as a safety net.</li>
     <li><strong>Verify.</strong> Load the site. Send an email to yourself and reply to it. If you use Mailgun or similar, check its dashboard still shows your domain verified (SPF and DKIM are TXT records; they moved with the import).</li>
-    <li><strong>Optional: turn on DNSSEC.</strong> One toggle at Bunny, then give the DS record it shows you to your registrar. If your registrar makes that awkward, it can wait; everything else works without it.</li>
+    <li><strong>Optional, and worth checking first: DNSSEC.</strong> Signing is one toggle at Bunny. The other half is your registrar publishing the DS record Bunny then shows you, which only they can do. Ask them whether they support DS records before you rely on it, and read the IONOS cautionary tale in &ldquo;When we don&rsquo;t recommend it&rdquo; above. If your registrar will not do it, simply leave it: a signed zone with no DS behaves exactly like an unsigned one, so nothing breaks either way.</li>
   </ol>
 
   <div class="note"><p><strong>Rollback:</strong> point the nameservers back at the old host at your registrar. That is the whole procedure, which is exactly why step 6 says not to delete the old zone.</p></div>
@@ -389,6 +393,9 @@
 
   <h3>Can I change my mind later?</h3>
   <p>Yes. Export the zone from Bunny as a BIND file, import it at the next host, switch nameservers back. Twenty minutes, same procedure in reverse.</p>
+
+  <h3>Do I need DNSSEC?</h3>
+  <p>No. It is a good thing to have rather than a requirement, and most small sites run perfectly well without it. It guards visitors against a rare attack where someone forges DNS answers for your domain. Turn it on if your registrar makes it easy, and skip it without guilt if they do not: the rest of your DNS works identically either way.</p>
 
   <h3>Is this the same Bunny as Bunny Fonts?</h3>
   <p>Yes, the same Slovenian company. PageMotor already serves your fonts through them for the GDPR reasons this guide leans on.</p>

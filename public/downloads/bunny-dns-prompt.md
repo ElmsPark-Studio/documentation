@@ -48,6 +48,13 @@ and ask for an explicit "go".
    returns; any email service dashboard (e.g. Mailgun) still shows the domain
    verified.
 7. Optional: enable DNSSEC at Bunny and give the DS record to my registrar.
-   Warn me some registrars only accept DS records by support ticket or email.
+   Before I rely on it, tell me to confirm my registrar can publish a DS record
+   at all. Only a registrar can publish it; no DNS host can do that half.
+   IONOS specifically: for domains on external nameservers their documented
+   route is an email to transfer@ionos.com, and in a real August 2026 attempt
+   first-line support declined, wrongly saying the record must be added at the
+   external host. Treat IONOS + external nameservers as unlikely to succeed.
+   If the registrar will not do it, reassure me: a signed zone with no DS in
+   the registry behaves exactly like an unsigned one, so nothing is broken.
 
 Full guide: https://documentation.elmspark.com/guides/bunny-dns/
