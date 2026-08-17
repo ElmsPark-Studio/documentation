@@ -9,7 +9,15 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Overview
 
-PageMotor core has no built-in password reset for admin accounts. If an admin forgets their password, they need database access to reset it. This plugin adds the email-based flow users expect from any modern system.
+PageMotor 0.10 and earlier have no built-in password reset for admin accounts. If an admin forgets their password, they need database access to reset it. This plugin adds the email-based flow users expect from any modern system.
+
+## Status
+
+**Version 1.0.10.** Available now for PageMotor 0.9 and 0.10.
+
+PageMotor 0.11 brings password reset into core, with its own request and confirm screens reached from the "Lost Password?" link on the login page. This plugin retires at that point: keep it while you are on 0.10 or earlier, and drop it when you move to 0.11.
+
+Core's flow sends through PageMotor's own email layer, which defaults to PHP mail. That is rarely reliable on real hosting, so pair it with EP Email Mailgun or another transport — you also get every reset recorded in PageMotor's email log, which this plugin's own sends do not appear in.
 
 Flow:
 

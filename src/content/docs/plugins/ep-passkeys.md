@@ -18,7 +18,7 @@ Why passkeys:
 
 ## Status
 
-**Version 0.4.0.** Available now. Migrated to PageMotor 0.9's open-tier AJAX. Passwordless sign-in is served from a dedicated page at `/?ep_passkey_login=1`.
+**Version 0.4.2.** Available now. Runs on PageMotor 0.9 and 0.10. Passwordless sign-in is served from a dedicated page at `/?ep_passkey_login=1`, because the PageMotor login screen is built from fixed markup and accepts nothing from a plugin.
 
 ## Requirements
 

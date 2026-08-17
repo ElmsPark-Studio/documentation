@@ -21,11 +21,16 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Email Advanced Forms](/plugins/ep-email-advanced-forms/)**. Adds name, address, section, HTML, email confirmation, and rating field types to EP Email forms.
 - **[EP Email AI Reply](/plugins/ep-email-ai-reply/)**. AI-drafted replies to form submissions — review and send.
 - **[EP Email AI Triage](/plugins/ep-email-ai-triage/)**. AI-powered spam triage. Classifies every submission, blocks confirmed spam silently, holds it in quarantine for review.
+- **[EP Email Brevo](/plugins/ep-email-brevo/)**. Brevo transactional transport for EP Email. 300/day free tier, no card required.
 - **[EP Email ElmsPark](/plugins/ep-email-elmspark/)** / **[EP SendIt](/plugins/ep-sendit/)**. Managed delivery transport drivers for EP Email via send.elmspark.com.
 - **[EP Email File Uploads](/plugins/ep-email-file-uploads/)**. Drag-and-drop file upload fields for EP Email forms.
 - **[EP Email Inbox](/plugins/ep-email-inbox/)**. AI-powered IMAP inbox handler with auto-reply.
+- **[EP Email Leads](/plugins/ep-email-leads/)**. Turns contact-form submissions into a workable leads ledger with an always-current dashboard page.
+- **[EP Email Mailgun](/plugins/ep-email-mailgun/)**. Mailgun transactional transport for EP Email, with EU region support for GDPR-clean routing.
 - **[EP Email Quiz](/plugins/ep-email-quiz/)**. Quiz field types with scoring and grading for EP Email forms.
 - **[EP Newsletter](/plugins/ep-newsletter/)**. Subscribers, lists, campaigns, autoresponders, content digests.
+- **[EP Newsletter Brevo](/plugins/ep-newsletter-brevo/)**. Brevo delivery driver for EP Newsletter. Forever-free 300/day tier, batch sending, signed webhooks.
+- **[EP Newsletter Mailgun](/plugins/ep-newsletter-mailgun/)**. Mailgun delivery driver for EP Newsletter. EU region, batch sending, HMAC-signed bounce handling. Our recommended provider.
 - **[EP Newsletter SendGrid](/plugins/ep-newsletter-sendgrid/)**. Legacy SendGrid delivery driver. For new sites use EP Newsletter Mailgun (our recommended provider) instead.
 - **[EP Voice Messages](/plugins/ep-voice-messages/)**. Record-in-browser voice messages with auto-transcription.
 
@@ -37,16 +42,31 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Ecommerce Products](/plugins/ep-ecommerce-products/)**. Styled checkout UI for EP Ecommerce.
 - **[EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/)**. Stripe payment provider.
 - **[EP Ecommerce Subscriptions](/plugins/ep-ecommerce-subscriptions/)**. Recurring billing with dunning, grace periods, and UK/EU compliance.
+- **[EP Ecommerce — Gelato](/plugins/ep-ecommerce-gelato/)**. Gelato connector for EP Ecommerce — POD.
+- **[EP Ecommerce — POD](/plugins/ep-ecommerce-pod/)**. Provider-agnostic print-on-demand. Sell physical products with live shipping quotes at checkout.
+- **[EP Ecommerce — Printful](/plugins/ep-ecommerce-printful/)**. Printful connector for EP Ecommerce — POD.
+- **[EP Ecommerce — Printify](/plugins/ep-ecommerce-printify/)**. Printify connector for EP Ecommerce — POD.
+- **[EP Ecommerce — Prodigi](/plugins/ep-ecommerce-prodigi/)**. Prodigi connector for EP Ecommerce — POD. Products listed by SKU, as Prodigi has no catalogue API.
 - **[EP Reviews](/plugins/ep-reviews/)**. Product reviews with star ratings, verified-purchase badges, Schema.org markup.
 
 ### Bookings, membership, courses
 
+- **[EP Boarding](/plugins/ep-boarding/)**. Date-range accommodation booking — check-in and check-out on a live availability calendar, per-night rates and half-day capacity. Hotels, B&Bs, holiday lets and pet boarding.
 - **[EP Booking](/plugins/ep-booking/)**. Appointment scheduling with services, staff, availability, Stripe payments.
 - **[EP Booking Zoom](/plugins/ep-booking-zoom/)**. Auto-created Zoom meetings for confirmed bookings.
 - **[EP Courses](/plugins/ep-courses/)**. Course and lesson management with multilingual content and progress tracking.
 - **[EP Events](/plugins/ep-events/)**. Full event platform with tickets, registrations, check-in PWA, Stripe Connect, Zoom, Schema.org, six EU languages, and depth EP Suite integration.
+- **[EP Events Recurring](/plugins/ep-events-recurring/)**. Recurring class and event templates for EP Events — weekly, fortnightly and Nth-weekday series on a rolling timetable.
 - **[EP Holiday Bookings](/plugins/ep-holiday-bookings/)**. Holiday packages, enquiry-first booking, deposit/balance for independent travel agents.
 - **[EP Membership](/plugins/ep-membership/)**. Public registration, login, member levels, content gating.
+
+### Studio operations
+
+- **[EP Class Passes](/plugins/ep-class-passes/)**. Pre-paid class credit packs, tracked in an append-only ledger with shelf-life expiry and auto-deduct at booking.
+- **[EP Instructors](/plugins/ep-instructors/)**. Instructors as first-class records: roster, public bio pages, pay-rate rules and a payroll CSV.
+- **[EP Studio Assistant](/plugins/ep-studio-assistant/)**. An Ask box in the admin. Ask about the business in plain English; Claude answers from live data.
+- **[EP Studio Dashboard](/plugins/ep-studio-dashboard/)**. The owner's operations command centre for a multi-location studio. Revenue, members, bookings, attendance, passes, waivers, payroll.
+- **[EP Waivers](/plugins/ep-waivers/)**. Versioned liability waivers and health declarations, e-signed and kept as immutable legal records.
 
 ### Content and UX
 
@@ -68,6 +88,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 ### SEO, discoverability, analytics
 
 - **[EP Analytics](/plugins/ep-analytics/)**. Privacy-respecting server-side page view analytics. No cookies, no pixel.
+- **[EP IndexNow](/plugins/ep-indexnow/)**. Real-time URL submission to IndexNow. Tells Bing, Yandex, Seznam and Naver the moment a page changes.
 - **[EP Local Business](/plugins/ep-local-business/)**. Schema.org LocalBusiness emission for single-location businesses on PageMotor. Address, hours, geo, payment methods, areas served, and a coexistence handshake with EP SEO.
 - **[EP Locations](/plugins/ep-locations/)**. Multi-location LocalBusiness schema for PageMotor with built-in store finder. MapLibre + MapTiler tiles, postcode search, GDPR consent gating, six EU languages.
 - **[EP Redirects](/plugins/ep-redirects/)**. URL redirect manager with wildcards and 404 log.
@@ -83,8 +104,8 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 
 - **[EP Bunny Fonts](/plugins/ep-bunny-fonts/)**. *Retired — built into PageMotor 0.10+ core (Site Settings → Google Fonts Delivery Service).*
 - **[EP GDPR](/plugins/ep-gdpr/)**. Cookie consent, data subject requests, consent logging across EP Suite.
-- **[EP Passkeys](/plugins/ep-passkeys/)**. Passwordless login via WebAuthn. *Not yet available, awaiting a PageMotor core change.*
-- **[EP Password Reset](/plugins/ep-password-reset/)**. Email-based password reset for admin accounts. *Not yet available, awaiting a PageMotor core change.*
+- **[EP Passkeys](/plugins/ep-passkeys/)**. Passwordless login via WebAuthn. Sign-in is served from a dedicated page, since the PageMotor login screen takes no plugin markup.
+- **[EP Password Reset](/plugins/ep-password-reset/)**. Email-based password reset for admin accounts. *For PageMotor 0.10 and earlier — 0.11 brings password reset into core, so this plugin retires at that point.*
 
 ### Operations, AI, admin
 
@@ -93,6 +114,8 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Audit Log](/plugins/ep-audit-log/)**. Activity log for content, users, and plugin events.
 - **[EP Concierge](/plugins/ep-concierge/)**. Visitor-facing AI chat bubble. Answers questions from your knowledge plus live booking data, captures enquiries. *Currently supplied and updated by ElmsPark directly.*
 - **[EP Connect](/plugins/ep-connect/)**. Outbound webhooks for Zapier, Make, Slack, or any URL.
+- **[EP Cron](/plugins/ep-cron/)**. One secure, observable background-task scheduler for the whole EP Suite. A single heartbeat drains every due task exactly once.
+- **[EP Dashboard](/plugins/ep-dashboard/)**. A branded Command Centre for the PageMotor admin. Every active EP Suite plugin contributes its own panel.
 - **[EP Diagnostics](/plugins/ep-diagnostics/)**. System report for support requests.
 - **[EP Flows](/plugins/ep-flows/)**. The EP Suite automation engine. Trigger, conditions, actions, authored by talking to your site over MCP instead of a drag-and-drop builder.
 - **[EP Helpdesk](/plugins/ep-helpdesk/)**. Support ticket system with AI-drafted replies.

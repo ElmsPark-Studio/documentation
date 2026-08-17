@@ -1,80 +1,51 @@
 ---
 title: "EP Bunny Fonts"
-description: "GDPR-compliant font delivery for PageMotor. Redirects Google Fonts requests to Bunny Fonts at the server level so visitor data never reaches Google."
+description: "Retired. PageMotor 0.10 and later has Bunny Fonts delivery built into core — switch it on in Site Settings. This page remains for sites still running the plugin."
 ---
 
-EP Bunny Fonts replaces Google Fonts with Bunny Fonts on your site. Same fonts, same coverage, zero tracking. The swap happens server-side before any HTML reaches the browser, so you don't need to hunt through your theme and edit every font link by hand.
+:::caution[Retired — now built into PageMotor]
+**EP Bunny Fonts was retired on 22 July 2026.** PageMotor 0.10 and later includes the same GDPR-compliant font switch in core: open **Site Settings**, find **Google Fonts Delivery Service**, and select **Bunny Fonts**. That one setting swaps both the fonts API URL and the preconnect host site-wide — exactly what this plugin did.
+
+The plugin is no longer distributed and no longer receives updates. Existing installs keep working, but the recommended path is to update PageMotor to 0.10 or later, use the core setting, and deactivate the plugin.
+:::
+
+EP Bunny Fonts replaced Google Fonts with Bunny Fonts on your site. Same fonts, same coverage, zero tracking. The swap happened server-side before any HTML reached the browser.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
-## Overview
+## Why the swap matters
 
-Why this matters: the 2022 EU ruling on Google Fonts concluded that loading fonts from Google's CDN transmits the visitor's IP to Google, which is personal data under GDPR. Websites using Google Fonts without explicit consent have been sued.
+The 2022 EU ruling on Google Fonts concluded that loading fonts from Google's CDN transmits the visitor's IP to Google, which is personal data under GDPR. Websites using Google Fonts without explicit consent have been sued.
 
 [Bunny Fonts](https://fonts.bunny.net) is a drop-in GDPR-compliant mirror of the Google Fonts catalogue. Identical URL shape, identical fonts, hosted in the EU, zero tracking, no cookies.
 
-EP Bunny Fonts does the swap for you site-wide:
+This need has not gone away — it is simply served by PageMotor core now.
 
-- Every reference to Google's Fonts API host becomes `fonts.bunny.net`.
-- The `preconnect` link to Google's font-asset host becomes the Bunny Fonts equivalent.
-- Font selector labels in the admin change from `(G)` (Google) to `(B)` (Bunny) so you can see the switch took effect.
+## If you're on PageMotor 0.10 or later
 
-No visitor data ever reaches Google servers.
+1. Open **Site Settings**.
+2. Under **Google Fonts Delivery Service**, select **Bunny Fonts**.
+3. Save, then reload your site. View source and search for the Google Fonts hostname — you should find nothing.
+4. If the plugin is still installed, deactivate it. While active it forces Bunny delivery regardless of the core setting, which is harmless but makes the core selector misleading.
 
-## Requirements
+## If you're on PageMotor 0.9 or earlier
 
-- **PageMotor 0.8.2b or later**
-- **EP Suite base class** (bundled)
-
-## Installation
-
-1. Download `ep-bunny-fonts.zip` from the [EP Suite downloads page](https://updates.elmspark.com/download.php?plugin=ep-bunny-fonts).
-2. Upload via **Plugins → Manage Plugins**. Activate.
-3. Open **Plugin Settings → EP Bunny Fonts**.
-4. Toggle **Enable Bunny Fonts** on.
-5. Reload your site. View source and search for the Google Fonts hostname — you should find nothing.
-
-## Settings
-
-- **Enable Bunny Fonts.** On/off toggle. Off makes the plugin inert so the swap stops happening, useful for debugging without uninstalling.
-
-The settings page also shows a status dashboard with:
-
-- Current font provider in use (should say "Bunny Fonts" when enabled).
-- GDPR compliance status (green tick when Bunny is active).
-- EP GDPR integration status (if EP GDPR is installed, shows the coordination).
-- Count of available fonts in the catalogue.
-
-## How the swap works
-
-PageMotor emits font links via the standard theme head. EP Bunny Fonts registers a filter that runs after the head is built but before it is sent to the browser. The filter:
-
-1. Searches the head output for the Google Fonts API host and replaces with `fonts.bunny.net`.
-2. Searches for `preconnect` tags pointing to Google's font-asset host and swaps the host.
-3. Returns the modified head.
-
-This happens server-side. The browser never sees the Google URLs.
-
-## Coordination with EP GDPR
-
-If [EP GDPR](/plugins/ep-gdpr/) is installed, EP Bunny Fonts tells it that the site is compliant on the font front. This surfaces in EP GDPR's compliance dashboard as a green tick, so your overall GDPR status is easy to audit.
+An existing install of the plugin keeps working as before: toggle **Enable Bunny Fonts** in **Plugin Settings → EP Bunny Fonts**. There will be no further updates, so plan to move to PageMotor 0.10+ and the core setting.
 
 ## Troubleshooting
 
-### “Google Fonts URLs are still appearing in my page source”
+### "Google Fonts URLs are still appearing in my page source"
 
-A theme or plugin is hardcoding the Google Fonts hostname in a way that bypasses PageMotor's head pipeline (e.g. inline `<style>` with `@import`, or a plugin that echoes its own `<link>` directly). Find the culprit with a recursive grep for `googleapis` across `user-content/`, and patch the offending code to use `fonts.bunny.net` directly. EP Bunny Fonts cannot swap URLs that are injected outside the filter chain.
+A theme or plugin is hardcoding the Google Fonts hostname outside PageMotor's head pipeline (e.g. inline `<style>` with `@import`, or a plugin that echoes its own `<link>` directly). Find the culprit with a recursive grep for `googleapis` across `user-content/`, and patch the offending code to use `fonts.bunny.net` directly. Neither the core setting nor the plugin can swap URLs injected outside the head pipeline.
 
-### “A specific font loads fine from Google but looks wrong on Bunny”
+### "A specific font loads fine from Google but looks wrong on Bunny"
 
 Bunny Fonts maintains parity with the Google catalogue, but occasionally lags on brand-new additions. If you hit a missing font, either use a close alternative, or self-host with `@fontsource/<family>` npm packages.
 
-### “Is Bunny Fonts really GDPR-compliant?”
+### "Is Bunny Fonts really GDPR-compliant?"
 
 Bunny Fonts is operated by Bunny.net, a Slovenian company with EU-hosted infrastructure. No cookies, no tracking, no logs tied to identifiable users. Terms and DPA are on [fonts.bunny.net](https://fonts.bunny.net/). Read them and make your own judgement.
 
 ## Feedback and corrections
 
-For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
-
-For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+For anything this page doesn't answer — including help moving from the plugin to the core setting — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours.
