@@ -355,7 +355,7 @@ Then tell me the IP and confirm when DNS is set.
         </tbody>
       </table>
       <p style="font-size:15px;margin:10px 0 4px">Swap <code>-1m</code> for <code>-1y</code> or <code>-2y</code> for annual billing, which is cheaper per month.</p>
-      <div class="note calm" style="font-size:14.5px;margin:12px 0 4px"><strong>Bonus template:</strong> Hostinger also has template <code>1189</code> — "Ubuntu 24.04 with Claude Code" — which pre-installs the CC CLI on your server. If you want to use Claude Code directly on the VPS itself, swap <code>template_id: 1096</code> for <code>1189</code> and tell CC that in your prompt.</div>
+      <div class="note" style="font-size:14.5px;margin:12px 0 4px"><strong>Do not swap this template.</strong> Hostinger ships <code>1189</code>, "Ubuntu 24.04 with Claude Code", as a <em>separate</em> image with no control panel on it. Every <code>clpctl</code> step below needs CloudPanel, so <code>1189</code> would break site creation, the database and the certificate. If you want Claude Code on the server itself, take <code>1096</code> and install the CLI afterwards. And do not trust the number: template IDs change, so ask Claude Code to list the available templates through the Hostinger MCP and pick "Ubuntu 24.04 with CloudPanel" by name before it creates anything.</div>
     </details>
 
     <p>Claude Code will use the <code>hostinger-vps</code> MCP to create the server and <code>hostinger-dns</code> to set the DNS record. Provisioning takes three to six minutes. CC polls the API and tells you when the VPS is running.</p>
@@ -372,7 +372,7 @@ Good. Now SSH into [IP] as root using ~/.ssh/id_ed25519 and:
 1. Create a PHP 8.3 site in CloudPanel for mysite.com
    (site user: mysite, generate a password)
 2. Add a database: mysite-db / user mysite-user / strong random password
-3. Upload ~/Downloads/pagemotor-0.9.4b.zip to /tmp/pagemotor.zip on the server,
+3. Upload the current PageMotor release zip from ~/Downloads to /tmp/pagemotor.zip on the server,
    then extract it into /home/mysite/htdocs/mysite.com/
 4. Write config.php with the database credentials
    (DB_HOST is 127.0.0.1, prefix pm_, error logs on)
