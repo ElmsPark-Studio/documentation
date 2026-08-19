@@ -397,6 +397,15 @@
       "entries": [
         {
           "slugs": [
+            "ep-attribution"
+          ],
+          "titles": [
+            "EP Attribution"
+          ],
+          "blurb": "A small \"Built on PageMotor. Designed by ElmsPark.\" credit line in your site footer. One toggle, theme-agnostic."
+        },
+        {
+          "slugs": [
             "ep-blog"
           ],
           "titles": [

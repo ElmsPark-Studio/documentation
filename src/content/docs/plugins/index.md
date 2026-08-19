@@ -70,6 +70,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 
 ### Content and UX
 
+- **[EP Attribution](/plugins/ep-attribution/)**. A small "Built on PageMotor. Designed by ElmsPark." credit line in your site footer. One toggle, theme-agnostic.
 - **[EP Blog](/plugins/ep-blog/)**. A blog for PageMotor: Post content type, chronological index with excerpts and pagination, categories, tags, bylines, and previous/next navigation.
 - **[EP Breadcrumbs](/plugins/ep-breadcrumbs/)**. Breadcrumb navigation with Schema.org structured data.
 - **[EP Cards](/plugins/ep-cards/)**. Native card groups and grids with LLM-driven import. Thesis Focus Cards migration via add-on.
