@@ -300,6 +300,7 @@ RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]</code></pre>
     <h3>b. The timezone bug that breaks OAuth sign-in entirely (0.10.x only)</h3>
     <p>If you connect by browser sign-in (OAuth) rather than a pasted token, and your server's PHP timezone is ahead of UTC (Europe/Berlin, Europe/Paris and most European shared hosts), the sign-in <em>always</em> fails with an &ldquo;Unknown or used code&rdquo; style error. PageMotor writes token expiry times in UTC but reads them back in server-local time, so on a UTC+ host the 60-second authorisation code is judged expired at the moment it is issued. Servers at or behind UTC are immune, which is why the same PageMotor build works for one person and not another.</p>
     <p>Workarounds today: set <code>date.timezone = UTC</code> in the site's php.ini or .user.ini, or skip sign-in and use a minted Bearer token (personal tokens carry no expiry and are immune).</p>
+    <p><strong>CloudPanel ships this cause armed, everywhere.</strong> A clean CloudPanel image sets <code>date.timezone = Europe/Berlin</code> in php.ini for every PHP version it carries, whatever region the box is in &mdash; verified on a fresh Hostinger KVM in Manchester, August 2026. Fix it <em>before</em> creating any site, because CloudPanel bakes the value into each site's <code>PHP_VALUE</code> at creation time: edit <code>/etc/php/&lt;version&gt;/fpm/php.ini</code>, then restart that <code>php-fpm</code>. A site created before the fix is still recoverable per site, under Settings &rarr; PHP Settings &rarr; Additional Configuration Directives, where the baked <code>date.timezone</code> is an editable field. One testing trap: the bare <code>php</code> CLI on that image may be a different version than your site runs, so verify with the versioned binary (<code>php8.3 -r 'echo date_default_timezone_get();'</code>) or a real request, not with <code>php -r</code>.</p>
 
     <h3>c. Cloudflare Flexible SSL and other TLS-terminating proxies (OAuth on 0.10.x)</h3>
     <p>PageMotor detects HTTPS only from the local server environment. Behind Cloudflare Flexible SSL the origin never sees HTTPS, so every OAuth URL the site advertises is built as <code>http://</code> while your client connected over <code>https://</code>, and the flow dies on the mismatch. Test: fetch <code>https://your-site.com/.well-known/oauth-protected-resource</code> and look at the <code>resource</code> field. If it starts <code>http://</code>, switch Cloudflare to Full (strict) with an origin certificate, or pass HTTPS through to PHP (<code>fastcgi_param HTTPS on;</code>).</p>
@@ -343,7 +344,27 @@ location ^~ /.well-known/ {
 }</code></pre>
       <button class="copy" onclick="copy(this,'cfg-wellknown')">Copy</button>
     </div>
-    <p>That is the standard PageMotor-on-CloudPanel case, where PHP runs through php-fpm, so the <code>/index.php</code> hand-off inherits the site's own PHP handler and there is no port to set. If your site instead reverse-proxies (Varnish, or a Node or app backend), replace the second block's <code>try_files</code> line with <code>proxy_pass</code> pointing at whatever your existing <code>location /</code> already targets (do not assume a port), and add <code>proxy_set_header X-Forwarded-Proto https;</code> so PageMotor builds its discovery URLs as https rather than http.</p>
+    <p>That block is right when the PHP handler lives in the <em>same</em> server block, which is the hand-rolled nginx and Vultr-guide case. <strong>Current CloudPanel is not that case.</strong> Its rendered vhost is two server blocks: a front one on 80/443 that terminates TLS and proxies everything to a PHP backend on <code>127.0.0.1:8080</code>, and the backend itself, which holds the root, the <code>try_files</code> and the FastCGI handler. The stock <code>location ~ /.well-known</code> block sits in the <em>front</em> server, where there is no PHP to hand anything to, so the <code>try_files &hellip; /index.php</code> fix routes nowhere there. On CloudPanel, proxy the path to the backend instead (field-verified on a clean box, August 2026: <code>404 text/html</code> before, PageMotor-generated <code>application/json</code> after, acme-challenge still served from disk):</p>
+    <div class="codewrap">
+      <pre id="cfg-wellknown-clp"><code><span class="tok-c"># CloudPanel (two-server vhost): front server blocks</span>
+location ^~ /.well-known/acme-challenge/ {
+    auth_basic off;
+    allow all;
+    try_files $uri =404;
+}
+
+location ^~ /.well-known/ {
+    auth_basic off;
+    allow all;
+    proxy_pass http://127.0.0.1:8080;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}</code></pre>
+      <button class="copy" onclick="copy(this,'cfg-wellknown-clp')">Copy</button>
+    </div>
+    <p>Keep <code>auth_basic off; allow all;</code> on the acme-challenge block. The stock template carries both so Let's Encrypt can renew on sites gated by Basic Auth or IP restrictions; drop them and renewal on a gated site breaks silently, about 90 days later. For any other reverse-proxied stack (Varnish, a Node or app backend), the same shape applies: <code>proxy_pass</code> to whatever your existing <code>location /</code> already targets, do not assume a port, and add <code>proxy_set_header X-Forwarded-Proto https;</code> if the backend does not already assert HTTPS the way CloudPanel's does.</p>
     <div class="note">
       <strong>Do not proxy the whole block.</strong> Forwarding all of <code>/.well-known/</code> to the app without the <code>acme-challenge</code> line in front sends Let's Encrypt's HTTP-01 challenge to PageMotor, which cannot answer it, and your certificate then silently stops renewing until it expires around 90 days later. Keep the <code>acme-challenge</code> block, and on CloudPanel make the change through the Vhost Editor so a renewal cannot revert it. After applying, confirm both things: the discovery URL now returns JSON, and your next certificate renewal succeeds.</div>
 

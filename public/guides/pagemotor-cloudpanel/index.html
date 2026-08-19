@@ -143,12 +143,13 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 
   <div class="note">
-    <strong>Tested on Hostinger, June 2026, four small traps to dodge:</strong>
+    <strong>Tested on Hostinger, June 2026, and re-verified on a clean box in August 2026. Five traps to dodge:</strong>
     <ol>
       <li><strong>Pick CloudPanel inside the order wizard.</strong> On the "Choose what to install" screen, open the <strong>Control panel</strong> tab and choose CloudPanel on Ubuntu 24.04, not a plain OS.</li>
       <li><strong>No underscores in the database name or user.</strong> CloudPanel rejects them ("this value is not valid"). Use hyphens, for example <code>pagemotor-db</code> and <code>pagemotor-user</code>.</li>
       <li><strong>Choose PHP 8.3.</strong> The new-site form may default to a newer version. PageMotor needs 8.2 or newer, and 8.3 is the safe choice.</li>
       <li><strong>Uploading with File Manager? Extract makes a subfolder.</strong> Let it extract into a folder such as <code>pagemotor</code>, then point the site at it: open the site, Settings, set Root Directory to <code>yourdomain.com/pagemotor</code>, Save.</li>
+      <li><strong>Fix the PHP timezone before creating any site.</strong> CloudPanel images default <code>date.timezone</code> to <code>Europe/Berlin</code> in every PHP version they ship, whatever region the box is in, and PageMotor 0.10's browser sign-in fails on any timezone ahead of UTC (<a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">cause 6b</a>). Set <code>date.timezone = UTC</code> in <code>/etc/php/8.3/fpm/php.ini</code> and restart <code>php8.3-fpm</code> first, because CloudPanel bakes the value into each site at creation time. Forgot? It is editable per site under Settings &rarr; PHP Settings &rarr; Additional Configuration Directives.</li>
     </ol>
   </div>
 
@@ -206,15 +207,14 @@ sudo bash install.sh</code></pre>
     <li>Copy <code>config-sample.php</code> to <code>config.php</code> and fill in the database name, user and password from step 4.</li>
   </ul>
   <div class="note">Because the files are uploaded as the site user, they are owned by the same user PHP runs as. That is the whole game: PageMotor can write its compiled theme CSS to disk, which is exactly what a locked-down shared host won't let it do.</div>
+  <div class="note"><strong>Extracted the zip over SSH as root instead?</strong> Everything lands owned <code>root:root</code> with no group write, PHP cannot save a thing, and it looks exactly like a PageMotor fault. Run <code>chown -R &lt;site-user&gt;:&lt;site-user&gt; .</code> in the docroot after extracting and the problem never existed.</div>
   </div>
 
   <div class="step">
   <h2 id="rewrite"><span class="num">6</span><span class="t">The one PageMotor tweak</span></h2>
-  <p>PageMotor routes every request through <code>index.php</code>, so the vhost needs the standard front-controller rewrite. Open the site's <strong>Vhost</strong> tab in CloudPanel and make sure the main location block reads:</p>
-  <pre><code>location / {
-    try_files $uri $uri/ /index.php?$query_string;
-}</code></pre>
-  <p>Save, and CloudPanel reloads Nginx for you. That single line is the difference between clean PageMotor URLs and a wall of 404s.</p>
+  <p>PageMotor routes every request through <code>index.php</code>, so the vhost needs the standard front-controller rewrite. Current CloudPanel renders <em>two</em> server blocks per site: a front one on 80/443 that terminates TLS and proxies to a PHP backend on port 8080, and the backend itself. The rewrite already ships in the backend block on current builds, so open the site's <strong>Vhost</strong> tab and check the <strong>8080</strong> server block carries:</p>
+  <pre><code>try_files $uri $uri/ /index.php?$args;</code></pre>
+  <p>If it is there, leave it alone. On an older single-server vhost (one server block, with the <code>location ~ \.php$</code> handler in it), make sure the main location block reads <code>location / { try_files $uri $uri/ /index.php?$query_string; }</code>. Either way, that line is the difference between clean PageMotor URLs and a wall of 404s.</p>
   </div>
 
   <div class="step">
@@ -229,12 +229,13 @@ sudo bash install.sh</code></pre>
   <h2 class="plain" id="claude">Connecting Claude from this host</h2>
   <p>PageMotor speaks MCP natively, so once your site is up you can connect Claude Code or Claude.ai to it and let Claude build pages, manage content and run plugins for you. The connection asks a little more of a host than serving pages does. Four things must be true: the <code>Authorization</code> header must reach PHP intact, PageMotor must be allowed to answer its dynamic <code>/.well-known/</code> routes itself, PHP's clock must be on UTC, and nothing may redirect Claude's POST to <code>/mcp</code> (the trailing-slash trap).</p>
   <p>You do not need to test any of that by hand. Install <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> and read its <strong>MCP / Claude connection</strong> rows: since v1.2.0 its five checks cover all of this from your admin panel, no working Claude connection required, each with a plain fix. If a row fails, or the connection misbehaves anyway, the <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">MCP troubleshooting guide</a> has the exact diagnostic and fix for every verified cause.</p>
-  <div class="note">The one to watch on this stack: CloudPanel's stock vhost serves <code>/.well-known/</code> from the filesystem for Let's Encrypt, which swallows the OAuth discovery routes Claude follows to sign in. <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">Section 6 of the troubleshooting guide</a> has the vhost fix that hands those routes to PageMotor while keeping certificate renewal working.</div>
+  <div class="note">The one to watch on this stack: CloudPanel's stock vhost lets <code>/.well-known/</code> fall through to the filesystem for Let's Encrypt, which swallows the OAuth discovery routes Claude follows to sign in. And because that block sits in the front server, where there is no PHP at all, the fix on CloudPanel must <code>proxy_pass</code> the rest of <code>/.well-known/</code> to the site's 8080 backend rather than <code>try_files</code> it. <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">Section 6d of the troubleshooting guide</a> has the exact blocks, verified on a clean box; apply them through the site's Vhost tab so renewal cannot revert them.</div>
+  <div class="note calm"><strong>Three more field notes from a clean CloudPanel box (August 2026).</strong> The backend hardcodes <code>fastcgi_param HTTPS "on"</code>, so PageMotor builds its URLs as https through the internal proxy hop with nothing to configure; if you later put Cloudflare in front, set its SSL/TLS mode to <strong>Full (strict)</strong>, never Flexible, because the front server 301s every plain-HTTP fetch and Flexible loops on it. Varnish ships installed but is <em>off per site</em> by default; if you enable it for a PageMotor site, add explicit passes for <code>/api/</code>, <code>/mcp/</code>, <code>/oauth/</code> and <code>/.well-known/</code>, because the stock VCL only bypasses <code>/admin/</code>. And CloudPanel stores vhost templates as rows in its own database, not as files, so a custom template is added in Admin Area &rarr; Vhost Templates, not by editing something in <code>/etc</code>.</div>
 
   <div class="seealso">&#128736; <strong>Prefer the command line, or want no panel at all?</strong> The <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Vultr guide</a> builds the same Nginx + PHP 8.3 + MariaDB stack by hand, no panel involved.</div>
 
   <footer>
-    <p>Steps current for CloudPanel CE&nbsp;v2, June&nbsp;2026. CloudPanel is a free, Nginx-based control panel for Ubuntu and Debian.</p>
+    <p>Steps current for CloudPanel CE&nbsp;v2, August&nbsp;2026, with field verification on a clean Hostinger KVM box. CloudPanel is a free, Nginx-based control panel for Ubuntu and Debian.</p>
     <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> &middot; an ElmsPark guide for the PageMotor community &middot; <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
   </footer>
 </div>
