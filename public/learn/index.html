@@ -7,7 +7,7 @@
 <meta name="description" content="The ElmsPark guides that go deeper: opt-in retrieval practice, worked examples and short self-tests, so what you read sticks. Eight lessons on email, payments, plugins, AI tools and more.">
 <title>Learn with ElmsPark, lessons that stick</title>
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600,700|inter-tight:400,500,700|outfit:400,500,600&display=swap">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,400i,600,700|inter-tight:400,400i,500,700&display=swap">
 <!--
   To add a guide to this page:
   1. Copy one <article class="gcard"> block in the "Available now" grid and edit it.
@@ -18,42 +18,373 @@
   2. If the guide replaces a "Coming next" card, remove that card from the planned grid.
   3. Deploy per the elmspark-guides-hub-publishing-pattern memory note, then re-probe.
 -->
+<!-- ElmsPark brand kit, inlined: renders correctly with no network dependency. -->
+<style>
+/* ==========================================================================
+   ElmsPark brand kit
+   --------------------------------------------------------------------------
+   Canonical source: the live elmspark.com PageMotor theme
+     https://elmspark.com/user-content/themes/elmspark/css.css
+   Every value in the TOKENS block below is copied from that compiled theme.
+   Do NOT hand-edit the tokens. Re-derive with brand/refresh-brand.sh, which
+   re-reads the live theme and rewrites this block plus tokens.json.
+
+   Hosted at https://elmspark.com/brand/elmspark-brand.css
+   Kit home:  <workspace>/brand/  (see README.md before using any of this)
+
+   HYBRID USE (the house pattern):
+     1. Inline this whole file in a <style> block in <head>.
+     2. Immediately after it, add
+        <link rel="stylesheet" href="https://elmspark.com/brand/elmspark-brand.css">
+     The inline copy means the page renders correctly with zero network
+     dependency. The hosted link comes later in the cascade, so a central
+     rebrand reaches every page that carries it. Identical files in normal
+     operation, so nothing repaints.
+
+   Everything is namespaced es- / --es- so it can never collide with a
+   page's own classes.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   TOKENS — generated from the live theme. Do not hand-edit.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colour — surfaces */
+  --es-paper:        #F6F2EA;   /* theme --bg1  : page background */
+  --es-paper-warm:   #EFEAE0;   /* theme --bg2  : alt bands, footer */
+  --es-card:         #FFFDF8;   /* kit-owned    : raised card on paper */
+
+  /* Colour — text */
+  --es-ink:          #181411;   /* theme --c1   : primary text */
+  --es-ink-soft:     #2A231C;   /* theme --ink-soft : wordmark, display text */
+  --es-muted:        #605647;   /* theme --c2   : secondary text */
+
+  /* Colour — accent */
+  --es-accent:       #3A5140;   /* theme --ca   : ElmsPark pine */
+  --es-accent-hover: #2A3D2F;   /* theme --accent-hover */
+  --es-warm:         #B66C2E;   /* theme        : secondary warm accent */
+
+  /* Colour — lines and state */
+  --es-rule:         #DDD6C6;   /* theme --rule */
+  --es-good:         #3A5140;   /* pine doubles as success */
+  --es-bad:          #B54040;   /* theme */
+  --es-bad-deep:     #5A1212;   /* theme */
+  --es-bad-bg:       #F8E6E6;   /* theme */
+
+  /* Type families */
+  --es-font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --es-font-body:    "Inter Tight", system-ui, -apple-system, sans-serif;
+  --es-font-alt:     "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+  --es-font-code:    ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale (theme --f1..--f6, golden-ratio derived) */
+  --es-f1: 47px; --es-f2: 37px; --es-f3: 29px;
+  --es-f4: 23px; --es-f5: 18px; --es-f6: 14px;
+
+  /* Space scale (theme --g1..--g6 macro, --x1..--x6 micro) */
+  --es-g1: 75px; --es-g2: 61px; --es-g3: 49px;
+  --es-g4: 40px; --es-g5: 33px; --es-g6: 27px;
+  --es-x1: 53px; --es-x2: 33px; --es-x3: 20px;
+  --es-x4: 12px; --es-x5: 7px;  --es-x6: 4px;
+
+  /* Measure */
+  --es-w-content: 940px;        /* theme --w-content : reading column */
+  --es-w-total:   1152px;       /* theme --w-total   : chrome width */
+  --es-gutter:    33px;         /* theme --gutter-full */
+  --es-gutter-mobile: 20px;     /* theme --gutter-mobile */
+  --es-pad-x: clamp(var(--es-gutter-mobile), 5vw, var(--es-gutter));
+  --es-phi: 1.6180339887;
+
+  /* Kit-owned document furniture (standalone pages only, not in the theme) */
+  --es-radius: 14px;
+  --es-radius-sm: 6px;
+  --es-shadow: 0 1px 3px rgba(24,20,17,.06), 0 5px 16px rgba(24,20,17,.05);
+
+  /* Kit-owned success tints, mixed from the pine accent toward paper. Used for
+     "new"/"done" pills and positive panels. */
+  --es-good-bg:   #D0D2C8;
+  --es-good-line: #ABB1A6;
+  --es-good-deep: #24382B;
+
+  /* Kit-owned CATEGORICAL palette. Not from the theme — for colour-coding a set
+     of topics (guide categories, tags, chart series). Authored once here so no
+     page invents its own. Same lightness register as the pine, so they read as a
+     family. Extend this list rather than adding a colour to a page. */
+  --es-cat-pagemotor: var(--es-accent);   /* #3A5140 pine */
+  --es-cat-email:     var(--es-warm);     /* #B66C2E warm */
+  --es-cat-ai:        #3A5A78;            /* slate blue */
+  --es-cat-security:  #9A4B2E;            /* rust */
+  --es-cat-privacy:   #6B5B8A;            /* muted violet */
+  --es-cat-hosting:   #4A6D7C;            /* slate teal */
+}
+
+/* --------------------------------------------------------------------------
+   DARK MODE — kit-owned. The theme defines no dark palette, so these are
+   authored here ONCE rather than per page.
+
+   Only token VALUES change; not a single rule below is duplicated. That works
+   because the tokens are semantic, so e.g. `.es-btn { background: var(--es-ink);
+   color: var(--es-paper) }` inverts on its own: --es-ink becomes the light text
+   colour and --es-paper the dark surface.
+
+   Every pair below was checked against WCAG AA (4.5:1 body, 3:1 UI) — the
+   weakest is 5.93:1. If you change a value, re-check it; do not eyeball it.
+   -------------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Surfaces — warm near-blacks, keyed off the brand ink, never pure #000 */
+    --es-paper:        #171310;
+    --es-paper-warm:   #201B16;
+    --es-card:         #221D18;
+
+    /* Text */
+    --es-ink:          #F1ECE1;   /* body            15.68:1 on paper */
+    --es-ink-soft:     #F8F4EA;   /* headings        16.81:1 */
+    --es-muted:        #A79C8B;   /* secondary        6.83:1 */
+
+    /* Accent — the pine lifted until it carries on a dark surface */
+    --es-accent:       #86A791;   /*                  6.99:1 */
+    --es-accent-hover: #A3BFAC;   /*                  9.33:1 */
+    --es-warm:         #D6924F;   /*                  7.11:1 */
+
+    /* Lines and state */
+    --es-rule:         #3A332B;
+    --es-good:         #86A791;
+    --es-bad:          #E08A8A;
+    --es-bad-deep:     #F3C4C4;   /* on bad-bg       10.40:1 */
+    --es-bad-bg:       #2E1C1C;
+
+    --es-good-bg:      #232C25;
+    --es-good-line:    #3F5545;
+    --es-good-deep:    #C3D6C9;   /* on good-bg       9.45:1 */
+
+    /* Categorical — pagemotor and email inherit the accent/warm above */
+    --es-cat-ai:       #7E9DBE;   /* on card          5.93:1 */
+    --es-cat-security: #D08A66;   /*                  5.97:1 */
+    --es-cat-privacy:  #A899C4;   /*                  6.38:1 */
+    --es-cat-hosting:  #8AAEBE;   /*                  7.06:1 */
+
+    /* Shadows need to be blacker and deeper to read on a dark surface */
+    --es-shadow: 0 1px 3px rgba(0,0,0,.45), 0 5px 16px rgba(0,0,0,.35);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   BASE — opt in by putting class="es" on <body>
+   -------------------------------------------------------------------------- */
+.es {
+  margin: 0;
+  background: var(--es-paper);
+  color: var(--es-ink);
+  font-family: var(--es-font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.es * { box-sizing: border-box; }
+
+.es h1, .es h2, .es h3 {
+  font-family: var(--es-font-display);
+  font-weight: 700;
+  color: var(--es-ink-soft);
+  letter-spacing: -.01em;
+  line-height: 1.15;
+  margin: 0 0 .4em;
+}
+.es h1 { font-size: clamp(32px, 5vw, var(--es-f1)); color: var(--es-accent); }
+.es h2 { font-size: clamp(24px, 3.4vw, var(--es-f3)); }
+.es h3 { font-size: var(--es-f4); }
+.es p  { margin: 0 0 1rem; }
+.es a  { color: var(--es-accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.es a:hover, .es a:focus-visible { color: var(--es-accent-hover); }
+.es :focus-visible { outline: 2px solid var(--es-accent); outline-offset: 2px; }
+.es code, .es kbd {
+  font-family: var(--es-font-code); font-size: .9em;
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius-sm); padding: .1rem .35rem;
+}
+.es pre {
+  font-family: var(--es-font-code); font-size: 14px; line-height: 1.55;
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius-sm); padding: var(--es-x3); overflow-x: auto;
+}
+.es pre code { background: none; border: 0; padding: 0; }
+.es hr { border: 0; border-top: 1px solid var(--es-rule); margin: var(--es-g5) 0; }
+.es table { border-collapse: collapse; width: 100%; font-size: 15px; }
+.es th, .es td { text-align: left; padding: var(--es-x4) var(--es-x3); border-bottom: 1px solid var(--es-rule); }
+.es th { font-weight: 600; color: var(--es-muted); font-size: var(--es-f6); text-transform: uppercase; letter-spacing: .08em; }
+
+/* Layout helpers */
+.es-wrap   { max-width: var(--es-w-total);   margin: 0 auto; padding: 0 var(--es-pad-x); }
+.es-narrow { max-width: var(--es-w-content); margin: 0 auto; padding: 0 var(--es-pad-x); }
+.es-kicker {
+  font-size: 13px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--es-warm); font-weight: 600; margin: 0 0 .3em;
+}
+.es-lede { font-size: var(--es-f5); color: var(--es-muted); max-width: 40rem; }
+
+/* --------------------------------------------------------------------------
+   HEADER — mirrors elmspark.com .site-header, portable (no theme dependency)
+   -------------------------------------------------------------------------- */
+.es-header { background: var(--es-paper); border-bottom: 1px solid var(--es-rule); }
+.es-header .es-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1.5rem; flex-wrap: wrap;
+  max-width: var(--es-w-total); margin: 0 auto; padding: 1.5rem var(--es-pad-x);
+}
+.es-wordmark {
+  color: var(--es-ink-soft); text-decoration: none;
+  font-family: var(--es-font-display); font-weight: 400;
+  font-size: clamp(1.25rem, 2.25vw, 1.625rem); line-height: 1;
+  display: inline-flex; align-items: center; gap: .5rem; white-space: nowrap;
+}
+.es-wordmark .es-mark {
+  display: inline-flex; align-items: center;
+  width: 2.25rem; height: 2.25rem; color: var(--es-accent); flex-shrink: 0;
+}
+.es-wordmark .es-mark svg { width: 100%; height: 100%; display: block; }
+.es-wordmark .es-accent { color: var(--es-accent); }
+.es-sub {
+  font-family: var(--es-font-display); font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--es-muted); border-left: 1px solid var(--es-rule);
+  padding-left: .75rem; margin-left: -.35rem; line-height: 1;
+}
+.es-nav {
+  display: flex; align-items: center; gap: clamp(.875rem, 2vw, 1.75rem);
+  font-family: var(--es-font-body); font-size: .9375rem; font-weight: 500;
+}
+.es-nav a {
+  color: var(--es-ink); text-decoration: none; white-space: nowrap;
+  padding: .25rem 0; border-bottom: 1px solid transparent;
+  transition: border-color .15s ease, color .15s ease;
+}
+.es-nav a:hover, .es-nav a:focus-visible { color: var(--es-accent); border-bottom-color: var(--es-accent); }
+.es-nav .es-cta {
+  color: var(--es-ink); border: 1px solid var(--es-ink);
+  padding: .5rem 1rem; border-radius: 1.75rem;
+  transition: background-color .2s ease, color .2s ease;
+}
+.es-nav .es-cta:hover, .es-nav .es-cta:focus-visible {
+  background: var(--es-ink); color: var(--es-paper); border-bottom-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   HERO
+   -------------------------------------------------------------------------- */
+.es-hero {
+  padding: var(--es-g4) 0 var(--es-g6);
+  border-bottom: 1px solid var(--es-rule);
+  background: linear-gradient(180deg, var(--es-paper-warm) 0%, var(--es-paper) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   CARDS / BUTTONS / NOTES
+   -------------------------------------------------------------------------- */
+.es-card {
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius); padding: var(--es-x2);
+  box-shadow: var(--es-shadow);
+}
+.es-grid { display: grid; gap: var(--es-x2); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+/* Scoped `.es .es-btn` (0,2,0) so it outranks `.es a` (0,1,1). Without the
+   extra class the link colour wins and a primary button renders pine-on-ink. */
+.es .es-btn {
+  display: inline-block; font-family: var(--es-font-body); font-weight: 500;
+  font-size: 1rem; line-height: 1; cursor: pointer;
+  padding: .7rem 1.4rem; border-radius: var(--es-radius-sm);
+  border: 1px solid var(--es-ink); background: var(--es-ink);
+  color: var(--es-paper); text-decoration: none;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.es .es-btn:hover, .es .es-btn:focus-visible {
+  background: var(--es-accent); border-color: var(--es-accent); color: var(--es-paper);
+}
+.es .es-btn-ghost { background: transparent; color: var(--es-ink); }
+.es .es-btn-ghost:hover, .es .es-btn-ghost:focus-visible { background: var(--es-ink); color: var(--es-paper); }
+
+.es-note { border-left: 3px solid var(--es-accent); background: var(--es-paper-warm);
+  padding: var(--es-x4) var(--es-x3); border-radius: 0 var(--es-radius-sm) var(--es-radius-sm) 0; }
+.es-note-bad { border-left-color: var(--es-bad); background: var(--es-bad-bg); color: var(--es-bad-deep); }
+
+/* --------------------------------------------------------------------------
+   FORMS
+   -------------------------------------------------------------------------- */
+.es label { display: block; font-weight: 500; margin: 1.1rem 0 .3rem; }
+.es .es-hint { display: block; font-weight: 400; color: var(--es-muted); font-size: .875rem; margin-top: .15rem; }
+.es input[type=text], .es input[type=email], .es input[type=url],
+.es input[type=password], .es input[type=search], .es textarea, .es select {
+  width: 100%; padding: .6rem .7rem; font: inherit; color: inherit;
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius-sm);
+}
+.es input:focus-visible, .es textarea:focus-visible, .es select:focus-visible {
+  outline: 2px solid var(--es-accent); outline-offset: 1px; border-color: var(--es-accent);
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER — mirrors elmspark.com .site-footer
+   -------------------------------------------------------------------------- */
+.es-footer {
+  border-top: 1px solid var(--es-rule); background: var(--es-paper-warm);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding: clamp(3rem, 6vw, 5rem) var(--es-pad-x) clamp(2rem, 4vw, 3rem);
+}
+.es-footer .es-inner { max-width: var(--es-w-total); margin: 0 auto; }
+.es-footer .es-mark { display: inline-flex; width: 3.5rem; height: 3.5rem; color: var(--es-accent); }
+.es-footer .es-mark svg { width: 100%; height: 100%; display: block; }
+.es-footer .es-logo {
+  font-family: var(--es-font-display); font-size: 1.25rem;
+  color: var(--es-ink-soft); margin: .5rem 0 .75rem;
+}
+.es-footer .es-accent { color: var(--es-accent); }
+.es-footer p { margin: 0 0 .25rem; font-size: .9375rem; line-height: 1.55; color: var(--es-muted); max-width: 24rem; }
+.es-footer a { color: var(--es-ink); text-decoration: none; font-size: .9375rem; }
+.es-footer a:hover, .es-footer a:focus-visible { color: var(--es-accent); }
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE + MOTION + PRINT
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .es-header .es-inner { padding: 1rem var(--es-gutter-mobile); gap: .75rem; }
+  .es-sub { display: none; }
+  .es-nav { font-size: .875rem; gap: .75rem; flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+@media (prefers-reduced-motion: reduce) { .es * { transition: none; animation: none; } }
+@media print {
+  .es { background: #fff; }
+  .es-header, .es-footer, .es-nav { display: none; }
+}
+</style>
+
+<!-- ElmsPark brand kit, hosted: later in the cascade, so a central rebrand
+     reaches this page without redeploying it. https://elmspark.com/brand/ -->
+<link rel="stylesheet" href="https://elmspark.com/brand/elmspark-brand.css">
+
+<!-- Page-local only. Every colour below resolves to a kit token. -->
 <style>
   :root{
-    --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
-    --pine:#2f5d4a; --pine-deep:#234a3b; --line:#e4ddcd; --accent:#c97a3c;
-    --radius:14px; --maxw:1020px;
-    --shadow:0 1px 3px rgba(35,33,28,.06),0 5px 16px rgba(35,33,28,.05);
+    /* Every value below is a brand-kit token. Do not put a hex code here;
+       change it in brand/elmspark-brand.css so every page moves together. */
+    --paper:var(--es-paper); --card:var(--es-card); --ink:var(--es-ink); --soft:var(--es-muted);
+    --pine:var(--es-accent); --pine-deep:var(--es-accent-hover);
+    --line:var(--es-rule); --accent:var(--es-warm);
+    --radius:var(--es-radius); --maxw:1020px;
+    --shadow:var(--es-shadow);
   }
   *{box-sizing:border-box}
   @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
   body{margin:0; background:var(--paper); color:var(--ink);
-    font-family:Outfit,system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-family:var(--es-font-body);
     line-height:1.6; font-size:17px; -webkit-font-smoothing:antialiased}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
 
-  /* ElmsPark brand header (matches elmspark.com site chrome) */
-  header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
-  .es-header .es-inner{max-width:1100px;margin:0 auto;padding:1.5rem 24px;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
-  .es-wordmark{color:#2a231c;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:clamp(1.25rem,2.25vw,1.625rem);line-height:1;display:inline-flex;align-items:center;gap:0.5rem;white-space:nowrap}
-  .es-wordmark .es-mark{display:inline-flex;align-items:center;width:2.25rem;height:2.25rem;color:#3a5140;flex-shrink:0}
-  .es-wordmark .es-mark svg{width:100%;height:100%;display:block}
-  .es-wordmark .es-accent{color:#3a5140}
-  .es-sub{font-family:Fraunces,Georgia,serif;font-size:clamp(1.1rem,2vw,1.4rem);color:#605647;border-left:1px solid #d8cfba;padding-left:0.75rem;margin-left:-0.35rem;line-height:1}
-  .es-nav{display:flex;gap:clamp(0.875rem,2vw,1.75rem);align-items:center;font-family:'Inter Tight',sans-serif;font-size:0.9375rem;font-weight:500}
-  .es-nav a{color:#181411;text-decoration:none;padding:0.25rem 0;border-bottom:1px solid transparent;white-space:nowrap;transition:border-color .15s,color .15s}
-  .es-nav a:hover,.es-nav a:focus-visible{color:#3a5140;border-bottom-color:#3a5140}
-  .es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
-  .es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
-  @media(max-width:640px){
-    .es-header .es-inner{padding:1rem 18px;gap:.75rem}
-    .es-sub{display:none}
-    .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
-  }
+  /* Header chrome now comes from the brand kit above. */
 
   .hero{padding:46px 0 30px; border-bottom:1px solid var(--line);
-    background:linear-gradient(180deg,#f2ecdf 0%,var(--paper) 100%)}
-  .kicker{font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:#a35a20; font-weight:600}
+    background:linear-gradient(180deg,var(--es-paper-warm) 0%,var(--paper) 100%)}
+  .kicker{font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--es-warm); font-weight:600}
   h1{font-family:Fraunces,Georgia,serif; font-size:clamp(32px,5vw,46px); line-height:1.1;
     color:var(--pine-deep); margin:.25em 0 .2em; letter-spacing:-.01em; font-weight:700}
   .lede{font-size:19px; color:var(--soft); max-width:640px; margin:0 0 18px}
@@ -101,14 +432,14 @@
   .gmeta{margin-top:auto; display:flex; flex-wrap:wrap; gap:6px; font-size:12.5px; color:var(--soft);
     border-top:1px solid var(--line); padding-top:12px}
   .gmeta span{background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:2px 8px}
-  .gmeta .lesson-pill{background:#d0f0df; border-color:#8fcfab; color:#1a5c35; font-weight:700; letter-spacing:.03em}
+  .gmeta .lesson-pill{background:var(--es-good-bg); border-color:var(--es-good-line); color:var(--es-good-deep); font-weight:700; letter-spacing:.03em}
 
-  .cat-pagemotor{--cat:#2f5d4a}
-  .cat-email{--cat:#a35a20}
-  .cat-ai{--cat:#3a5a78}
-  .cat-security{--cat:#9a4b2e}
-  .cat-privacy{--cat:#6b5b8a}
-  .cat-hosting{--cat:#4a6d7c}
+  .cat-pagemotor{--cat:var(--es-cat-pagemotor)}
+  .cat-email{--cat:var(--es-cat-email)}
+  .cat-ai{--cat:var(--es-cat-ai)}
+  .cat-security{--cat:var(--es-cat-security)}
+  .cat-privacy{--cat:var(--es-cat-privacy)}
+  .cat-hosting{--cat:var(--es-cat-hosting)}
 
   .rcard{background:var(--card); border:1px dashed var(--line); border-radius:var(--radius);
     padding:16px 18px; display:flex; flex-direction:column}
@@ -239,10 +570,13 @@
   <p style="margin:34px 0 0; color:var(--soft); font-size:15.5px">Prefer to read it straight through? Every lesson has a full <a href="/guides/" style="color:var(--pine); font-weight:600">written guide</a>.</p>
 
 
-  <footer role="contentinfo">
+<footer class="es-footer" role="contentinfo">
+  <div class="es-inner">
+    <div class="es-logo">Elms<span class="es-accent">Park</span></div>
     <p>ElmsPark Documentation · guides from real production work · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a> · <a href="https://elmspark.com">elmspark.com</a></p>
     <p>Made in Wexford, Ireland.</p>
-  </footer>
+  </div>
+</footer>
 
 </main>
 

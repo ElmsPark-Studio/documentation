@@ -63,7 +63,7 @@ Offer self-hosting with Fontsource: `npm install @fontsource/outfit`, then `impo
 
 ## If I am on PageMotor
 
-Point me at the **EP Bunny Fonts** plugin: it emits the Bunny stylesheet and preconnect on every page through PageMotor's head valet, so it survives theme updates. I pick families and weights in its settings.
+Point me at the built-in switch (PageMotor 0.10 and later): **Site Settings → Google Fonts Delivery Service → Bunny Fonts**. One setting swaps the fonts API URL and the preconnect host site-wide, and it survives theme updates. If I am on an older PageMotor, tell me to update to 0.10+ — the old EP Bunny Fonts plugin was retired in July 2026 and is no longer distributed.
 
 ## Reassure me
 

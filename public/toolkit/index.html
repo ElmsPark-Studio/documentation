@@ -1,503 +1,1287 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ElmsPark CC Toolkit — interactive guide</title>
+<meta name="robots" content="noindex, nofollow">
+<title>ElmsPark CC Toolkit — every command and skill</title>
+<meta name="description" content="Generated catalogue of every custom Claude Code slash command and skill in the ElmsPark workspace.">
+
+<!-- Bunny Fonts. Google Fonts is banned house-wide; a hook blocks it. -->
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-<link rel="stylesheet" href="https://fonts.bunny.net/css?family=outfit:400,500,600,700|inter:400,500,600|jetbrains-mono:400,500&display=swap">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,400i,600,700|inter-tight:400,400i,500,700&display=swap">
+
+<!-- 1. Brand kit, inlined: the page renders correctly with no network dependency. -->
 <style>
-  :root{
-    --bg:#f6f5f1; --surface:#ffffff; --surface-2:#fbfaf7;
-    --ink:#1b1c1e; --muted:#6c6c75; --line:#e7e5df;
-    --accent:#0e7c6b; --accent-ink:#0a5a4d; --accent-soft:#e3f3ef;
-    --solid:#16a34a; --fix:#d97706; --dup:#64748b; --broken:#dc2626; --new:#2563eb; --spec:#7c3aed;
-    --shadow:0 1px 2px rgba(20,20,30,.05), 0 8px 24px rgba(20,20,30,.06);
-    --radius:14px;
+/* ==========================================================================
+   ElmsPark brand kit
+   --------------------------------------------------------------------------
+   Canonical source: the live elmspark.com PageMotor theme
+     https://elmspark.com/user-content/themes/elmspark/css.css
+   Every value in the TOKENS block below is copied from that compiled theme.
+   Do NOT hand-edit the tokens. Re-derive with brand/refresh-brand.sh, which
+   re-reads the live theme and rewrites this block plus tokens.json.
+
+   Hosted at https://elmspark.com/brand/elmspark-brand.css
+   Kit home:  <workspace>/brand/  (see README.md before using any of this)
+
+   HYBRID USE (the house pattern):
+     1. Inline this whole file in a <style> block in <head>.
+     2. Immediately after it, add
+        <link rel="stylesheet" href="https://elmspark.com/brand/elmspark-brand.css">
+     The inline copy means the page renders correctly with zero network
+     dependency. The hosted link comes later in the cascade, so a central
+     rebrand reaches every page that carries it. Identical files in normal
+     operation, so nothing repaints.
+
+   Everything is namespaced es- / --es- so it can never collide with a
+   page's own classes.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   TOKENS — generated from the live theme. Do not hand-edit.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colour — surfaces */
+  --es-paper:        #F6F2EA;   /* theme --bg1  : page background */
+  --es-paper-warm:   #EFEAE0;   /* theme --bg2  : alt bands, footer */
+  --es-card:         #FFFDF8;   /* kit-owned    : raised card on paper */
+
+  /* Colour — text */
+  --es-ink:          #181411;   /* theme --c1   : primary text */
+  --es-ink-soft:     #2A231C;   /* theme --ink-soft : wordmark, display text */
+  --es-muted:        #605647;   /* theme --c2   : secondary text */
+
+  /* Colour — accent */
+  --es-accent:       #3A5140;   /* theme --ca   : ElmsPark pine */
+  --es-accent-hover: #2A3D2F;   /* theme --accent-hover */
+  --es-warm:         #B66C2E;   /* theme        : secondary warm accent */
+
+  /* Colour — lines and state */
+  --es-rule:         #DDD6C6;   /* theme --rule */
+  --es-good:         #3A5140;   /* pine doubles as success */
+  --es-bad:          #B54040;   /* theme */
+  --es-bad-deep:     #5A1212;   /* theme */
+  --es-bad-bg:       #F8E6E6;   /* theme */
+
+  /* Type families */
+  --es-font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --es-font-body:    "Inter Tight", system-ui, -apple-system, sans-serif;
+  --es-font-alt:     "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+  --es-font-code:    ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale (theme --f1..--f6, golden-ratio derived) */
+  --es-f1: 47px; --es-f2: 37px; --es-f3: 29px;
+  --es-f4: 23px; --es-f5: 18px; --es-f6: 14px;
+
+  /* Space scale (theme --g1..--g6 macro, --x1..--x6 micro) */
+  --es-g1: 75px; --es-g2: 61px; --es-g3: 49px;
+  --es-g4: 40px; --es-g5: 33px; --es-g6: 27px;
+  --es-x1: 53px; --es-x2: 33px; --es-x3: 20px;
+  --es-x4: 12px; --es-x5: 7px;  --es-x6: 4px;
+
+  /* Measure */
+  --es-w-content: 940px;        /* theme --w-content : reading column */
+  --es-w-total:   1152px;       /* theme --w-total   : chrome width */
+  --es-gutter:    33px;         /* theme --gutter-full */
+  --es-gutter-mobile: 20px;     /* theme --gutter-mobile */
+  --es-pad-x: clamp(var(--es-gutter-mobile), 5vw, var(--es-gutter));
+  --es-phi: 1.6180339887;
+
+  /* Kit-owned document furniture (standalone pages only, not in the theme) */
+  --es-radius: 14px;
+  --es-radius-sm: 6px;
+  --es-shadow: 0 1px 3px rgba(24,20,17,.06), 0 5px 16px rgba(24,20,17,.05);
+
+  /* Kit-owned success tints, mixed from the pine accent toward paper. Used for
+     "new"/"done" pills and positive panels. */
+  --es-good-bg:   #D0D2C8;
+  --es-good-line: #ABB1A6;
+  --es-good-deep: #24382B;
+
+  /* Kit-owned CATEGORICAL palette. Not from the theme — for colour-coding a set
+     of topics (guide categories, tags, chart series). Authored once here so no
+     page invents its own. Same lightness register as the pine, so they read as a
+     family. Extend this list rather than adding a colour to a page. */
+  --es-cat-pagemotor: var(--es-accent);   /* #3A5140 pine */
+  --es-cat-email:     var(--es-warm);     /* #B66C2E warm */
+  --es-cat-ai:        #3A5A78;            /* slate blue */
+  --es-cat-security:  #9A4B2E;            /* rust */
+  --es-cat-privacy:   #6B5B8A;            /* muted violet */
+  --es-cat-hosting:   #4A6D7C;            /* slate teal */
+}
+
+/* --------------------------------------------------------------------------
+   DARK MODE — kit-owned. The theme defines no dark palette, so these are
+   authored here ONCE rather than per page.
+
+   Only token VALUES change; not a single rule below is duplicated. That works
+   because the tokens are semantic, so e.g. `.es-btn { background: var(--es-ink);
+   color: var(--es-paper) }` inverts on its own: --es-ink becomes the light text
+   colour and --es-paper the dark surface.
+
+   Every pair below was checked against WCAG AA (4.5:1 body, 3:1 UI) — the
+   weakest is 5.93:1. If you change a value, re-check it; do not eyeball it.
+   -------------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Surfaces — warm near-blacks, keyed off the brand ink, never pure #000 */
+    --es-paper:        #171310;
+    --es-paper-warm:   #201B16;
+    --es-card:         #221D18;
+
+    /* Text */
+    --es-ink:          #F1ECE1;   /* body            15.68:1 on paper */
+    --es-ink-soft:     #F8F4EA;   /* headings        16.81:1 */
+    --es-muted:        #A79C8B;   /* secondary        6.83:1 */
+
+    /* Accent — the pine lifted until it carries on a dark surface */
+    --es-accent:       #86A791;   /*                  6.99:1 */
+    --es-accent-hover: #A3BFAC;   /*                  9.33:1 */
+    --es-warm:         #D6924F;   /*                  7.11:1 */
+
+    /* Lines and state */
+    --es-rule:         #3A332B;
+    --es-good:         #86A791;
+    --es-bad:          #E08A8A;
+    --es-bad-deep:     #F3C4C4;   /* on bad-bg       10.40:1 */
+    --es-bad-bg:       #2E1C1C;
+
+    --es-good-bg:      #232C25;
+    --es-good-line:    #3F5545;
+    --es-good-deep:    #C3D6C9;   /* on good-bg       9.45:1 */
+
+    /* Categorical — pagemotor and email inherit the accent/warm above */
+    --es-cat-ai:       #7E9DBE;   /* on card          5.93:1 */
+    --es-cat-security: #D08A66;   /*                  5.97:1 */
+    --es-cat-privacy:  #A899C4;   /*                  6.38:1 */
+    --es-cat-hosting:  #8AAEBE;   /*                  7.06:1 */
+
+    /* Shadows need to be blacker and deeper to read on a dark surface */
+    --es-shadow: 0 1px 3px rgba(0,0,0,.45), 0 5px 16px rgba(0,0,0,.35);
   }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3{font-family:'Outfit',sans-serif; line-height:1.15; margin:0;}
-  code,kbd,.mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
-  a{color:var(--accent-ink);}
+}
 
-  header.top{
-    position:sticky; top:0; z-index:50; background:rgba(246,245,241,.86);
-    backdrop-filter:saturate(140%) blur(10px); border-bottom:1px solid var(--line);
-  }
-  .wrap{max-width:1120px; margin:0 auto; padding:0 22px;}
-  .hero{padding:26px 22px 14px;}
-  .hero .wrap{padding:0;}
-  .eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); font-weight:600;}
-  .hero h1{font-size:30px; font-weight:700; margin:6px 0 4px; letter-spacing:-.01em;}
-  .hero p{margin:0; color:var(--muted); max-width:62ch;}
+/* --------------------------------------------------------------------------
+   BASE — opt in by putting class="es" on <body>
+   -------------------------------------------------------------------------- */
+.es {
+  margin: 0;
+  background: var(--es-paper);
+  color: var(--es-ink);
+  font-family: var(--es-font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.es * { box-sizing: border-box; }
 
-  .controls{padding:12px 0 14px;}
-  .searchbar{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
-  .search{
-    flex:1 1 320px; display:flex; align-items:center; gap:9px; background:var(--surface);
-    border:1px solid var(--line); border-radius:11px; padding:10px 13px; box-shadow:var(--shadow);
-  }
-  .search input{border:0; outline:0; font:inherit; width:100%; background:transparent; color:var(--ink);}
-  .search .hint{font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:1px 6px;}
-  .count{font-size:13px; color:var(--muted); white-space:nowrap;}
+.es h1, .es h2, .es h3 {
+  font-family: var(--es-font-display);
+  font-weight: 700;
+  color: var(--es-ink-soft);
+  letter-spacing: -.01em;
+  line-height: 1.15;
+  margin: 0 0 .4em;
+}
+.es h1 { font-size: clamp(32px, 5vw, var(--es-f1)); color: var(--es-accent); }
+.es h2 { font-size: clamp(24px, 3.4vw, var(--es-f3)); }
+.es h3 { font-size: var(--es-f4); }
+.es p  { margin: 0 0 1rem; }
+.es a  { color: var(--es-accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.es a:hover, .es a:focus-visible { color: var(--es-accent-hover); }
+.es :focus-visible { outline: 2px solid var(--es-accent); outline-offset: 2px; }
+.es code, .es kbd {
+  font-family: var(--es-font-code); font-size: .9em;
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius-sm); padding: .1rem .35rem;
+}
+.es pre {
+  font-family: var(--es-font-code); font-size: 14px; line-height: 1.55;
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius-sm); padding: var(--es-x3); overflow-x: auto;
+}
+.es pre code { background: none; border: 0; padding: 0; }
+.es hr { border: 0; border-top: 1px solid var(--es-rule); margin: var(--es-g5) 0; }
+.es table { border-collapse: collapse; width: 100%; font-size: 15px; }
+.es th, .es td { text-align: left; padding: var(--es-x4) var(--es-x3); border-bottom: 1px solid var(--es-rule); }
+.es th { font-weight: 600; color: var(--es-muted); font-size: var(--es-f6); text-transform: uppercase; letter-spacing: .08em; }
 
-  .chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
-  .chip{
-    border:1px solid var(--line); background:var(--surface); color:var(--ink);
-    border-radius:999px; padding:7px 14px; font-size:13.5px; font-weight:500; cursor:pointer;
-    transition:all .14s ease;
-  }
-  .chip:hover{border-color:var(--accent); color:var(--accent-ink);}
-  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff;}
+/* Layout helpers */
+.es-wrap   { max-width: var(--es-w-total);   margin: 0 auto; padding: 0 var(--es-pad-x); }
+.es-narrow { max-width: var(--es-w-content); margin: 0 auto; padding: 0 var(--es-pad-x); }
+.es-kicker {
+  font-size: 13px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--es-warm); font-weight: 600; margin: 0 0 .3em;
+}
+.es-lede { font-size: var(--es-f5); color: var(--es-muted); max-width: 40rem; }
 
-  .task{padding:20px 0 6px;}
-  .task h2{font-size:15px; color:var(--muted); font-weight:600; margin-bottom:10px;}
-  .task-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px;}
-  .task-btn{
-    text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:12px;
-    padding:13px 15px; cursor:pointer; box-shadow:var(--shadow); transition:transform .12s ease, border-color .12s;
-  }
-  .task-btn:hover{transform:translateY(-2px); border-color:var(--accent);}
-  .task-btn .t-em{font-size:20px; display:block; margin-bottom:5px;}
-  .task-btn .t-lbl{font-weight:600; font-family:'Outfit',sans-serif; font-size:14.5px;}
-  .task-btn .t-sub{font-size:12.5px; color:var(--muted);}
+/* --------------------------------------------------------------------------
+   HEADER — mirrors elmspark.com .site-header, portable (no theme dependency)
+   -------------------------------------------------------------------------- */
+.es-header { background: var(--es-paper); border-bottom: 1px solid var(--es-rule); }
+.es-header .es-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1.5rem; flex-wrap: wrap;
+  max-width: var(--es-w-total); margin: 0 auto; padding: 1.5rem var(--es-pad-x);
+}
+.es-wordmark {
+  color: var(--es-ink-soft); text-decoration: none;
+  font-family: var(--es-font-display); font-weight: 400;
+  font-size: clamp(1.25rem, 2.25vw, 1.625rem); line-height: 1;
+  display: inline-flex; align-items: center; gap: .5rem; white-space: nowrap;
+}
+.es-wordmark .es-mark {
+  display: inline-flex; align-items: center;
+  width: 2.25rem; height: 2.25rem; color: var(--es-accent); flex-shrink: 0;
+}
+.es-wordmark .es-mark svg { width: 100%; height: 100%; display: block; }
+.es-wordmark .es-accent { color: var(--es-accent); }
+.es-sub {
+  font-family: var(--es-font-display); font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--es-muted); border-left: 1px solid var(--es-rule);
+  padding-left: .75rem; margin-left: -.35rem; line-height: 1;
+}
+.es-nav {
+  display: flex; align-items: center; gap: clamp(.875rem, 2vw, 1.75rem);
+  font-family: var(--es-font-body); font-size: .9375rem; font-weight: 500;
+}
+.es-nav a {
+  color: var(--es-ink); text-decoration: none; white-space: nowrap;
+  padding: .25rem 0; border-bottom: 1px solid transparent;
+  transition: border-color .15s ease, color .15s ease;
+}
+.es-nav a:hover, .es-nav a:focus-visible { color: var(--es-accent); border-bottom-color: var(--es-accent); }
+.es-nav .es-cta {
+  color: var(--es-ink); border: 1px solid var(--es-ink);
+  padding: .5rem 1rem; border-radius: 1.75rem;
+  transition: background-color .2s ease, color .2s ease;
+}
+.es-nav .es-cta:hover, .es-nav .es-cta:focus-visible {
+  background: var(--es-ink); color: var(--es-paper); border-bottom-color: transparent;
+}
 
-  main{padding:18px 0 70px;}
-  .section-h{display:flex; align-items:baseline; gap:12px; margin:26px 0 12px;}
-  .section-h h2{font-size:20px; font-weight:600;}
-  .section-h .s-sub{font-size:13px; color:var(--muted);}
+/* --------------------------------------------------------------------------
+   HERO
+   -------------------------------------------------------------------------- */
+.es-hero {
+  padding: var(--es-g4) 0 var(--es-g6);
+  border-bottom: 1px solid var(--es-rule);
+  background: linear-gradient(180deg, var(--es-paper-warm) 0%, var(--es-paper) 100%);
+}
 
-  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:16px;}
-  .card{
-    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
-    box-shadow:var(--shadow); padding:16px 16px 14px; display:flex; flex-direction:column; gap:9px;
-    transition:border-color .14s, transform .14s;
-  }
-  .card:hover{border-color:#d8d5cc;}
-  .card.hidden{display:none;}
-  .card-top{display:flex; align-items:flex-start; gap:10px;}
-  .name{font-family:'JetBrains Mono',monospace; font-size:15.5px; font-weight:500; color:var(--accent-ink); word-break:break-word;}
-  .star{margin-left:auto; cursor:pointer; font-size:18px; line-height:1; color:#cfcdc4; background:none; border:0; padding:2px;}
-  .star.on{color:#e0a93b;}
-  .kind{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; font-weight:600; padding:2px 7px; border-radius:6px; background:var(--accent-soft); color:var(--accent-ink);}
-  .kind.skill{background:#eef1fb; color:#3742a8;}
-  .what{font-size:14.5px; color:var(--ink);}
-  .when{font-size:13px; color:var(--muted);}
-  .when b{color:#4a4a52; font-weight:600;}
+/* --------------------------------------------------------------------------
+   CARDS / BUTTONS / NOTES
+   -------------------------------------------------------------------------- */
+.es-card {
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius); padding: var(--es-x2);
+  box-shadow: var(--es-shadow);
+}
+.es-grid { display: grid; gap: var(--es-x2); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 
-  .badges{display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
-  .badge{font-size:11px; font-weight:600; padding:2px 8px; border-radius:999px; border:1px solid;}
-  .b-solid{color:var(--solid); border-color:#bfe6c8; background:#effaf1;}
-  .b-fix{color:var(--fix); border-color:#f3dcae; background:#fdf6e9;}
-  .b-dup{color:var(--dup); border-color:#d6dbe2; background:#f1f3f6;}
-  .b-broken{color:var(--broken); border-color:#f3c4c4; background:#fdeeee;}
-  .b-new{color:var(--new); border-color:#c2d4f7; background:#eef3fd;}
-  .b-spec{color:var(--spec); border-color:#dbcaf4; background:#f4eefd;}
-  .tier{font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:2px 8px;}
+/* Scoped `.es .es-btn` (0,2,0) so it outranks `.es a` (0,1,1). Without the
+   extra class the link colour wins and a primary button renders pine-on-ink. */
+.es .es-btn {
+  display: inline-block; font-family: var(--es-font-body); font-weight: 500;
+  font-size: 1rem; line-height: 1; cursor: pointer;
+  padding: .7rem 1.4rem; border-radius: var(--es-radius-sm);
+  border: 1px solid var(--es-ink); background: var(--es-ink);
+  color: var(--es-paper); text-decoration: none;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.es .es-btn:hover, .es .es-btn:focus-visible {
+  background: var(--es-accent); border-color: var(--es-accent); color: var(--es-paper);
+}
+.es .es-btn-ghost { background: transparent; color: var(--es-ink); }
+.es .es-btn-ghost:hover, .es .es-btn-ghost:focus-visible { background: var(--es-ink); color: var(--es-paper); }
 
-  .ex{display:flex; align-items:center; gap:8px; background:var(--surface-2); border:1px solid var(--line); border-radius:9px; padding:8px 10px;}
-  .ex code{font-size:12.5px; color:#3a3a42; flex:1; word-break:break-all;}
-  .copy{cursor:pointer; border:1px solid var(--line); background:#fff; border-radius:7px; font-size:11.5px; padding:4px 9px; color:var(--muted); white-space:nowrap;}
-  .copy:hover{border-color:var(--accent); color:var(--accent-ink);}
-  .copy.done{color:var(--solid); border-color:#bfe6c8;}
+.es-note { border-left: 3px solid var(--es-accent); background: var(--es-paper-warm);
+  padding: var(--es-x4) var(--es-x3); border-radius: 0 var(--es-radius-sm) var(--es-radius-sm) 0; }
+.es-note-bad { border-left-color: var(--es-bad); background: var(--es-bad-bg); color: var(--es-bad-deep); }
 
-  .more{font-size:12.5px; color:var(--accent-ink); cursor:pointer; user-select:none; font-weight:500; align-self:flex-start;}
-  .detail{display:none; font-size:13.5px; color:#4a4a52; border-top:1px dashed var(--line); padding-top:9px; margin-top:2px;}
-  .detail.open{display:block;}
-  .detail .note{margin:0 0 6px;}
-  .detail .note b{color:var(--ink);}
+/* --------------------------------------------------------------------------
+   FORMS
+   -------------------------------------------------------------------------- */
+.es label { display: block; font-weight: 500; margin: 1.1rem 0 .3rem; }
+.es .es-hint { display: block; font-weight: 400; color: var(--es-muted); font-size: .875rem; margin-top: .15rem; }
+.es input[type=text], .es input[type=email], .es input[type=url],
+.es input[type=password], .es input[type=search], .es textarea, .es select {
+  width: 100%; padding: .6rem .7rem; font: inherit; color: inherit;
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius-sm);
+}
+.es input:focus-visible, .es textarea:focus-visible, .es select:focus-visible {
+  outline: 2px solid var(--es-accent); outline-offset: 1px; border-color: var(--es-accent);
+}
 
-  .builtin .card{background:var(--surface-2);}
-  .legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin-top:10px;}
-  .legend span{display:inline-flex; align-items:center; gap:6px;}
-  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+/* --------------------------------------------------------------------------
+   FOOTER — mirrors elmspark.com .site-footer
+   -------------------------------------------------------------------------- */
+.es-footer {
+  border-top: 1px solid var(--es-rule); background: var(--es-paper-warm);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding: clamp(3rem, 6vw, 5rem) var(--es-pad-x) clamp(2rem, 4vw, 3rem);
+}
+.es-footer .es-inner { max-width: var(--es-w-total); margin: 0 auto; }
+.es-footer .es-mark { display: inline-flex; width: 3.5rem; height: 3.5rem; color: var(--es-accent); }
+.es-footer .es-mark svg { width: 100%; height: 100%; display: block; }
+.es-footer .es-logo {
+  font-family: var(--es-font-display); font-size: 1.25rem;
+  color: var(--es-ink-soft); margin: .5rem 0 .75rem;
+}
+.es-footer .es-accent { color: var(--es-accent); }
+.es-footer p { margin: 0 0 .25rem; font-size: .9375rem; line-height: 1.55; color: var(--es-muted); max-width: 24rem; }
+.es-footer a { color: var(--es-ink); text-decoration: none; font-size: .9375rem; }
+.es-footer a:hover, .es-footer a:focus-visible { color: var(--es-accent); }
 
-  .empty{padding:40px; text-align:center; color:var(--muted); display:none;}
-  footer{border-top:1px solid var(--line); padding:22px; text-align:center; color:var(--muted); font-size:12.5px;}
-  .toggle-starred{margin-left:auto;}
-  @media(max-width:560px){ .hero h1{font-size:24px} .grid{grid-template-columns:1fr} }
+/* --------------------------------------------------------------------------
+   RESPONSIVE + MOTION + PRINT
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .es-header .es-inner { padding: 1rem var(--es-gutter-mobile); gap: .75rem; }
+  .es-sub { display: none; }
+  .es-nav { font-size: .875rem; gap: .75rem; flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+@media (prefers-reduced-motion: reduce) { .es * { transition: none; animation: none; } }
+@media print {
+  .es { background: #fff; }
+  .es-header, .es-footer, .es-nav { display: none; }
+}
+</style>
+
+<!-- 2. Brand kit, hosted: later in the cascade, so a central rebrand reaches
+        this page. Identical bytes in normal operation, so nothing repaints.
+        If elmspark.com is unreachable the inline copy above still holds. -->
+<link rel="stylesheet" href="https://elmspark.com/brand/elmspark-brand.css">
+<style>
+/* Page-local layout only. Every colour comes from a kit token; no new hex.
+   TRAP: the kit's scales run LARGEST FIRST. --es-x1 is 53px and --es-x6 is 4px;
+   --es-f1 is 47px and --es-f6 is 14px; --es-g1 is 75px and --es-g6 is 27px.
+   Reaching for x1 as "the small one" turns every pill into a balloon. */
+.tk-bar { position: sticky; top: 0; z-index: 5; background: var(--es-paper);
+  border-bottom: 1px solid var(--es-rule); padding: var(--es-x4) 0;
+  margin-bottom: var(--es-g5); }
+.tk-bar-row { display: flex; flex-wrap: wrap; gap: var(--es-x4); align-items: center; }
+.tk-search { flex: 1 1 16rem; font: inherit; color: var(--es-ink);
+  background: var(--es-card); border: 1px solid var(--es-rule);
+  border-radius: var(--es-radius-sm); padding: var(--es-x5) var(--es-x4); }
+.tk-search:focus-visible { outline: 2px solid var(--es-accent); outline-offset: 2px; }
+.tk-pills { display: flex; flex-wrap: wrap; gap: var(--es-x6); list-style: none;
+  margin: 0; padding: 0; }
+.tk-pill { display: inline-block; font: inherit; font-size: var(--es-f6);
+  line-height: 1.9; letter-spacing: .02em;
+  border: 1px solid var(--es-rule); border-radius: 999px;
+  padding: 0 var(--es-x4); color: var(--es-muted);
+  background: var(--es-card); text-decoration: none; cursor: pointer; }
+.tk-pill:hover, .tk-pill[aria-pressed="true"] { color: var(--es-paper);
+  background: var(--es-accent); border-color: var(--es-accent); }
+.tk-count { font-size: var(--es-f6); color: var(--es-muted); font-weight: 400; }
+.tk-grid { display: grid; gap: var(--es-x4);
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); }
+.tk-card { background: var(--es-card); border: 1px solid var(--es-rule);
+  border-left: 3px solid var(--es-cat); border-radius: var(--es-radius);
+  padding: var(--es-x3); box-shadow: var(--es-shadow); }
+.tk-name { font-family: var(--es-font-code);
+  font-size: var(--es-f5); font-weight: 700; color: var(--es-ink);
+  margin: 0 0 var(--es-x5); word-break: break-word; }
+.tk-alias { font-size: var(--es-f6); color: var(--es-muted); font-weight: 400; }
+.tk-sum { margin: 0 0 var(--es-x5); font-size: var(--es-f6); line-height: 1.55; }
+.tk-meta { display: flex; flex-wrap: wrap; gap: var(--es-x6);
+  font-size: var(--es-f6); line-height: 1.8; margin-bottom: var(--es-x5); }
+.tk-tag { border: 1px solid var(--es-rule); border-radius: var(--es-radius-sm);
+  padding: 0 var(--es-x5); color: var(--es-muted); background: var(--es-paper-warm); }
+.tk-tag-cat { color: var(--es-cat); border-color: var(--es-cat); background: none; }
+.tk-macs { display: flex; flex-wrap: wrap; gap: var(--es-x6);
+  font-size: var(--es-f6); line-height: 1.8;
+  color: var(--es-muted); margin-top: var(--es-x5);
+  padding-top: var(--es-x5); border-top: 1px solid var(--es-rule); }
+.tk-mac-yes { color: var(--es-good-deep); background: var(--es-good-bg);
+  border-radius: var(--es-radius-sm); padding: 0 var(--es-x5); }
+.tk-mac-no { color: var(--es-muted); background: var(--es-paper-warm);
+  border-radius: var(--es-radius-sm); padding: 0 var(--es-x5);
+  text-decoration: line-through; }
+.tk-card details { margin-top: var(--es-x5); font-size: var(--es-f6); }
+.tk-card summary { cursor: pointer; color: var(--es-accent); }
+.tk-card details p { margin: var(--es-x5) 0 0; color: var(--es-muted);
+  line-height: 1.55; }
+.tk-src { display: block; margin-top: var(--es-x5); font-size: var(--es-f6);
+  color: var(--es-muted); font-family: var(--es-font-code); }
+.tk-sec { margin-top: var(--es-g4); }
+.tk-sec > h2 { margin-bottom: var(--es-x5); }
+.tk-table { width: 100%; border-collapse: collapse; font-size: var(--es-f6); }
+.tk-table th, .tk-table td { text-align: left; padding: var(--es-x4);
+  border-bottom: 1px solid var(--es-rule); vertical-align: top; }
+.tk-table td code { word-break: break-all; }
+/* A 375px gate that only checks the document misses a child clipped inside its
+   own section. Long paths and one-liners must wrap or scroll, never overhang. */
+.tk-sec pre { overflow-x: auto; max-width: 100%; }
+.tk-sec p code, .es-hint code { overflow-wrap: anywhere; }
+/* A three-column table cannot compress below ~344px, so it must scroll inside its
+   own box rather than push the section wider than the phone. */
+.tk-scroll { overflow-x: auto; max-width: 100%; }
+.tk-scroll .tk-table { min-width: 22rem; }
+/* The `hidden` attribute loses to any display rule, so restate it where one exists. */
+.tk-pills[hidden], .tk-grid[hidden], .tk-card[hidden], .tk-sec[hidden] { display: none; }
+@media (max-width: 40rem) { .tk-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
-<body>
-<header class="top">
-  <div class="hero"><div class="wrap">
-    <div class="eyebrow">ElmsPark · Claude Code</div>
-    <h1>Your toolkit, all in one place</h1>
-    <p>Every custom command and skill you have built, what each one is for, when to reach for it, and how to fire it. Search it, filter it, or pick a task below. Star the ones you want to keep handy.</p>
-    <p class="hq-uplink" style="margin:1rem 0 0;padding:.7rem 1.1rem;background:rgba(58,81,64,.08);border:1px solid rgba(58,81,64,.24);border-radius:10px;font-size:.95rem;">&#128506;&#65039; This is the <strong>tools</strong> slice of <strong>ElmsPark HQ</strong>, the master atlas of <em>every</em> asset you build (sites, docs, secrets, repos, memory). <a href="/hq/" style="font-weight:600;color:#3A5140;">Open the full HQ atlas &rarr;</a></p>
-  </div></div>
-  <div class="wrap controls">
-    <div class="searchbar">
-      <label class="search">
-        <span>🔍</span>
-        <input id="q" type="search" placeholder="Search tools (name, what it does, tags)…" autocomplete="off">
-        <span class="hint">/</span>
-      </label>
-      <button class="chip toggle-starred" id="starredOnly">★ Starred only</button>
-      <span class="count" id="count"></span>
-    </div>
-    <div class="chips" id="chips"></div>
-    <div class="legend">
-      <span><i class="dot" style="background:var(--solid)"></i>Solid</span>
-      <span><i class="dot" style="background:var(--fix)"></i>Works, upgrade queued</span>
-      <span><i class="dot" style="background:var(--new)"></i>New</span>
-      <span><i class="dot" style="background:var(--dup)"></i>Duplicate</span>
-      <span><i class="dot" style="background:var(--broken)"></i>Broken right now</span>
-      <span><i class="dot" style="background:var(--spec)"></i>Spec only</span>
-    </div>
+<body class="es">
+
+<!-- ElmsPark mark, defined once. Paste immediately after <body>.
+     Header and footer reference it with <use href="#es-mark">. -->
+<svg aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="es-mark" viewBox="0 0 2048 2048">
+  <title>ElmsPark tree</title>
+  <defs>
+    <filter id="elmspark-ink-wobble" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <g filter="url(#elmspark-ink-wobble)">
+<g transform="translate(0.000000,2048.000000) scale(0.100000,-0.100000)"
+fill="currentColor" stroke="none">
+<path d="M10209 16525 c-27 -15 -212 -230 -331 -385 -297 -387 -441 -725 -455
+-1066 -12 -296 61 -533 242 -784 87 -121 175 -227 258 -312 40 -41 77 -92 97
+-132 30 -61 32 -72 27 -136 -9 -106 -85 -320 -176 -495 -76 -145 -133 -241
+-293 -485 -233 -358 -331 -611 -353 -912 -4 -54 -11 -98 -16 -98 -17 0 -928
+919 -983 992 -92 122 -101 176 -64 388 16 96 21 169 22 310 1 207 -11 288 -70
+464 -130 387 -447 673 -932 841 -178 62 -275 86 -557 141 -247 47 -296 50
+-320 17 -28 -38 -40 -146 -39 -363 2 -482 89 -911 242 -1190 168 -308 483
+-529 847 -595 56 -10 180 -19 326 -23 l236 -7 56 -30 c44 -23 153 -126 489
+-460 710 -705 893 -912 1075 -1212 242 -401 370 -885 414 -1563 12 -193 8
+-1248 -6 -1282 -5 -12 -25 18 -69 106 -192 375 -519 723 -983 1043 -144 99
+-445 294 -628 406 -495 303 -941 708 -1181 1072 -156 236 -357 678 -420 921
+-28 106 -29 114 -25 314 9 437 7 540 -13 620 -94 375 -379 638 -857 794 -280
+91 -440 119 -475 84 -23 -22 -33 -85 -34 -203 -1 -255 53 -572 134 -782 23
+-61 117 -239 161 -307 17 -25 16 -26 -1 -26 -48 0 -205 -22 -321 -45 -254 -50
+-544 -149 -591 -202 -33 -36 -26 -61 49 -174 154 -233 319 -426 468 -548 82
+-67 228 -165 300 -201 l56 -29 -35 -12 c-109 -38 -414 -212 -562 -321 -221
+-163 -448 -375 -448 -419 0 -31 111 -140 269 -264 314 -246 632 -414 910 -482
+58 -14 110 -29 115 -34 10 -8 -7 -34 -111 -167 -152 -194 -333 -488 -333 -539
+0 -10 9 -32 19 -49 16 -26 34 -36 107 -59 151 -47 223 -65 404 -103 171 -35
+180 -36 401 -37 l227 0 -29 -55 c-95 -184 -149 -453 -149 -740 0 -68 3 -79 25
+-100 21 -20 31 -22 77 -17 69 7 249 66 397 128 399 171 610 417 677 793 19
+102 23 297 11 428 l-9 87 42 26 c102 64 317 128 540 161 88 12 154 15 285 11
+267 -9 379 -43 572 -170 87 -57 163 -126 163 -148 0 -15 -127 -56 -230 -73
+-19 -3 -98 -10 -175 -16 -411 -31 -708 -162 -892 -395 -129 -163 -200 -354
+-274 -745 -5 -25 -12 -128 -15 -230 l-7 -186 25 -28 c21 -25 31 -29 75 -28 52
+2 266 44 337 67 23 7 82 25 131 41 50 15 126 43 170 62 44 18 98 41 120 50
+208 85 420 278 515 470 82 165 109 282 120 518 9 205 20 250 62 278 36 24 133
+38 202 31 60 -7 62 -8 142 -88 141 -143 269 -331 343 -505 91 -213 146 -417
+172 -642 13 -111 8 -455 -10 -850 -6 -113 -15 -315 -21 -450 -29 -673 -50
+-971 -96 -1365 -36 -310 -59 -471 -94 -659 -27 -150 -27 -179 6 -205 55 -43
+134 -18 148 46 14 65 97 632 115 788 23 198 46 503 61 800 5 116 17 347 25
+515 8 168 19 442 25 610 6 168 13 311 16 319 9 27 44 1171 51 1646 10 755 -24
+1189 -126 1608 -88 364 -201 627 -391 912 -109 165 -181 291 -196 347 -18 68
+-18 288 0 389 32 180 97 339 223 552 68 114 153 227 172 227 14 0 105 -316
+145 -509 14 -64 43 -251 66 -415 22 -164 57 -380 76 -480 19 -100 48 -251 64
+-336 16 -85 45 -238 65 -340 106 -543 118 -690 135 -1695 6 -308 13 -582 16
+-609 11 -86 73 -122 129 -73 14 12 30 39 35 60 5 22 4 257 -2 543 -15 757 -4
+926 92 1329 66 278 170 533 330 810 143 248 277 403 845 975 254 256 503 508
+554 562 72 74 107 102 154 124 60 28 68 29 287 35 328 10 461 35 645 123 289
+139 485 350 606 651 115 288 163 588 164 1020 0 353 -13 405 -100 405 -38 0
+-454 -81 -583 -114 -372 -94 -647 -236 -863 -447 -186 -181 -290 -377 -351
+-659 -28 -132 -28 -364 1 -553 27 -178 27 -268 0 -326 -38 -86 -109 -163 -653
+-710 l-411 -413 -12 38 c-37 122 -2 210 121 313 195 163 314 322 379 509 28
+78 31 101 35 235 5 183 -11 285 -78 487 -58 175 -152 388 -181 413 -41 33 -72
+22 -177 -62 -173 -139 -327 -289 -420 -409 -171 -221 -246 -511 -198 -764 19
+-98 72 -259 109 -333 16 -33 57 -105 90 -160 124 -206 157 -308 137 -431 -7
+-44 -21 -75 -52 -119 -128 -181 -231 -346 -295 -470 -67 -132 -207 -470 -234
+-567 -12 -42 -13 -39 -70 237 -32 154 -88 446 -124 649 -58 322 -67 390 -72
+535 -9 248 7 360 97 681 39 139 71 221 153 393 67 140 170 313 245 412 253
+335 657 683 1252 1080 161 107 307 213 352 255 127 117 215 271 239 418 23
+145 11 345 -32 515 -39 156 -156 453 -193 490 -36 36 -90 15 -256 -96 -366
+-246 -577 -503 -621 -754 -17 -97 -6 -358 19 -453 21 -76 63 -196 101 -283 12
+-27 21 -65 21 -85 0 -45 -33 -77 -251 -246 -331 -257 -557 -471 -732 -694
+-206 -263 -388 -616 -462 -902 -18 -73 -36 -134 -38 -136 -2 -3 -12 24 -22 58
+-9 35 -44 148 -77 253 -34 109 -59 208 -60 235 0 35 12 72 57 165 91 191 150
+331 190 455 68 207 81 225 290 400 268 224 432 433 513 655 56 152 67 222 66
+420 0 149 -4 196 -23 275 -85 365 -259 668 -632 1101 -95 110 -140 150 -167
+149 -4 -1 -19 -7 -33 -15z m252 -467 c203 -269 329 -496 368 -665 12 -49 11
+-53 -14 -91 -15 -22 -87 -96 -162 -163 -74 -68 -175 -165 -224 -217 -79 -84
+-89 -91 -93 -70 -3 13 -7 168 -10 344 -4 213 -9 331 -17 347 -14 31 -60 50
+-92 38 -51 -20 -50 -8 -53 -534 -2 -463 -12 -728 -34 -911 -5 -44 -12 -82 -15
+-85 -9 -8 -160 146 -239 244 -202 250 -279 446 -280 720 -1 150 15 238 75 420
+70 211 258 510 515 819 l57 70 48 -52 c26 -28 103 -125 170 -214z m435 -964
+c4 -14 4 -83 1 -152 -10 -265 -110 -467 -346 -703 -69 -69 -155 -147 -190
+-174 l-64 -48 7 109 c15 227 34 350 64 417 32 68 117 191 193 277 57 64 309
+300 321 300 4 0 11 -12 14 -26z m-4198 -425 c322 -59 663 -182 765 -277 34
+-32 34 -47 7 -293 -11 -101 -21 -246 -23 -321 -1 -76 -5 -137 -8 -135 -4 1
+-40 43 -80 92 -142 174 -301 360 -325 383 -53 48 -134 17 -134 -52 0 -42 18
+-68 172 -253 178 -213 281 -344 274 -350 -3 -3 -81 4 -173 16 -92 11 -247 26
+-343 31 -96 6 -187 15 -202 21 -20 8 -34 29 -57 83 -57 138 -89 286 -116 545
+-15 146 -21 532 -8 545 8 8 29 5 251 -35z m7346 -200 c-1 -347 -48 -660 -127
+-854 -37 -90 -43 -93 -247 -105 -96 -6 -233 -18 -305 -26 -71 -9 -154 -18
+-184 -21 l-54 -6 48 64 c27 35 97 122 155 193 269 328 269 329 256 381 -6 24
+-51 55 -79 55 -27 0 -69 -44 -258 -271 -105 -126 -195 -229 -199 -229 -4 0
+-10 73 -13 163 -3 89 -15 247 -27 350 -19 172 -20 191 -6 212 39 60 331 189
+551 244 165 41 446 92 480 86 6 -1 10 -87 9 -236z m-1206 -304 c37 -179 42
+-605 8 -712 -22 -68 -92 -172 -209 -310 -96 -112 -114 -129 -123 -120 -13 13
+-43 293 -44 398 0 132 17 239 62 379 50 156 114 265 222 378 66 69 67 68 84
+-13z m-5108 19 c111 -104 201 -275 257 -487 25 -92 27 -119 27 -277 0 -203
+-27 -390 -57 -390 -15 0 -160 171 -240 282 -70 98 -86 146 -97 287 -16 202 19
+631 52 631 5 0 31 -21 58 -46z m3753 -814 c60 -144 106 -303 123 -427 15 -109
+16 -129 2 -224 -24 -167 -81 -284 -201 -414 -56 -61 -154 -145 -169 -145 -15
+0 32 402 63 522 23 93 24 117 1 143 -36 43 -48 48 -81 30 -52 -26 -79 -104
+-111 -312 -16 -110 -50 -411 -50 -452 0 -29 -27 10 -73 106 -59 123 -107 307
+-107 406 0 40 9 110 20 156 42 173 98 277 232 429 82 93 299 285 309 274 3 -4
+22 -45 42 -92z m-4451 -36 c191 -19 399 -59 452 -86 23 -11 56 -32 74 -45 37
+-28 226 -251 255 -302 l18 -31 -140 0 c-243 0 -436 37 -586 113 -179 90 -314
+209 -399 355 -10 17 135 16 326 -4z m6752 4 c-50 -85 -170 -211 -254 -268
+-158 -107 -299 -160 -485 -184 -126 -17 -385 -22 -385 -8 0 12 96 139 183 241
+62 73 87 94 139 119 117 55 442 106 706 110 80 2 102 -1 96 -10z m-8080 -1349
+c134 -32 310 -100 491 -189 194 -97 263 -143 290 -192 19 -36 19 -38 2 -55
+-16 -16 -37 -18 -170 -17 -171 1 -303 24 -527 90 -158 47 -195 52 -220 29 -30
+-27 -27 -88 5 -113 60 -47 390 -142 585 -168 58 -7 171 -14 252 -14 147 0 148
+0 176 -27 17 -16 50 -75 77 -138 65 -152 186 -384 250 -480 30 -44 96 -134
+149 -200 52 -66 92 -122 89 -125 -3 -3 -42 35 -87 85 -208 231 -419 410 -568
+483 -182 89 -301 114 -563 118 -187 2 -205 4 -268 28 -139 52 -365 200 -488
+319 -63 61 -184 210 -279 342 -47 68 -59 90 -48 96 19 13 190 66 289 89 267
+62 417 73 563 39z m439 -1094 c177 -31 332 -103 490 -230 98 -79 317 -298 317
+-318 0 -4 -104 -7 -232 -5 l-233 3 -67 32 c-101 47 -237 145 -344 246 -103 97
+-244 251 -244 266 0 5 8 12 18 14 40 11 216 6 295 -8z m-405 -167 c135 -146
+294 -299 357 -344 30 -21 55 -42 55 -45 0 -3 -148 -11 -328 -17 -181 -6 -342
+-17 -359 -23 -60 -20 -66 -111 -10 -136 14 -6 162 -8 387 -5 l365 5 -116 -120
+c-120 -124 -267 -300 -295 -355 l-16 -31 -72 6 c-137 10 -418 133 -646 284
+-139 92 -370 276 -370 295 0 6 6 16 14 22 7 6 65 54 127 107 176 148 394 296
+559 379 71 36 196 79 229 80 18 0 49 -26 119 -102z m1199 -574 c9 -26 -266
+-289 -392 -375 -68 -46 -202 -102 -316 -133 -98 -26 -249 -39 -256 -21 -6 19
+71 123 167 227 116 124 263 248 344 288 l60 30 195 -2 c125 -2 196 -7 198 -14z
+m442 -14 c22 -11 72 -48 113 -83 186 -162 425 -337 692 -508 l210 -134 -170
+-12 c-292 -20 -407 -45 -679 -148 -139 -53 -156 -57 -229 -56 -43 0 -131 8
+-195 18 -288 42 -744 -1 -864 -81 -38 -26 -47 -68 -21 -97 21 -24 79 -25 190
+-5 163 30 276 39 447 33 95 -2 183 -9 197 -14 23 -10 20 -13 -70 -80 -271
+-201 -419 -268 -654 -298 -109 -14 -144 -15 -225 -5 -125 15 -348 62 -484 101
+-87 26 -107 35 -102 47 3 9 48 80 100 157 101 152 199 270 313 377 77 72 99
+82 247 108 39 7 117 28 175 47 206 67 325 150 597 418 112 110 222 210 245
+223 50 27 103 25 167 -8z m1134 -1664 c-259 -265 -393 -432 -393 -488 0 -50
+53 -82 104 -62 9 4 77 74 150 158 166 188 417 446 435 446 15 0 8 -143 -14
+-280 -71 -431 -344 -664 -969 -824 -76 -20 -145 -36 -154 -36 -13 0 -14 16 -9
+113 11 199 82 516 142 638 146 295 354 436 729 494 169 27 171 38 -21 -159z"/>
+<path d="M8159 16019 c-38 -38 -141 -295 -188 -469 -83 -304 -64 -574 56 -774
+78 -131 150 -197 383 -352 154 -102 197 -141 231 -210 39 -80 33 -168 -29
+-404 -151 -575 -137 -859 57 -1102 74 -94 163 -174 275 -250 163 -109 236
+-133 276 -92 21 22 44 122 59 266 12 103 2 243 -24 369 -17 80 -69 233 -90
+266 -31 47 -109 41 -133 -10 -12 -25 -10 -41 22 -150 50 -177 56 -214 56 -360
+0 -137 -5 -177 -23 -177 -23 0 -175 120 -243 193 -77 82 -124 163 -149 257
+-22 80 -19 271 5 415 32 191 106 445 129 445 3 0 58 -42 121 -93 63 -51 179
+-139 257 -195 185 -134 237 -192 313 -349 47 -97 65 -124 84 -129 69 -17 94
+26 79 132 -27 185 -136 317 -444 534 -169 119 -309 252 -346 329 -41 83 -39
+167 9 286 88 218 109 279 124 347 21 100 29 316 15 405 -23 148 -119 334 -238
+463 -148 160 -527 430 -603 430 -11 0 -30 -10 -41 -21z"/>
+<path d="M15039 13510 c-200 -41 -467 -129 -599 -195 -189 -96 -370 -252 -460
+-397 -125 -205 -165 -408 -138 -713 18 -206 14 -348 -12 -470 -53 -242 -276
+-735 -443 -978 -286 -414 -647 -730 -1295 -1132 -150 -93 -457 -296 -568 -375
+-264 -189 -488 -414 -657 -663 -172 -252 -326 -657 -386 -1018 -74 -437 -77
+-675 -21 -1604 59 -968 60 -983 156 -1669 40 -288 47 -320 77 -341 30 -21 90
+-19 118 3 28 24 28 37 -10 272 -101 621 -133 985 -187 2080 -22 469 -24 560
+-15 737 24 458 68 686 199 1039 108 291 338 619 447 640 55 10 150 -2 186 -23
+64 -37 69 -51 73 -238 8 -319 67 -513 218 -712 101 -134 276 -268 430 -329 35
+-14 77 -31 93 -38 149 -66 302 -113 489 -151 256 -52 276 -36 262 209 -22 383
+-122 747 -260 940 -93 130 -251 254 -411 323 -152 65 -300 95 -615 123 -112
+10 -272 49 -285 70 -13 20 39 82 109 131 94 67 228 134 317 159 161 44 473 51
+672 15 182 -33 401 -112 458 -166 29 -27 31 -33 25 -77 -4 -26 -9 -108 -12
+-182 -9 -204 27 -392 103 -545 121 -243 338 -419 663 -540 41 -15 84 -31 95
+-35 49 -19 145 -50 199 -64 52 -13 62 -13 87 0 16 8 32 26 35 40 11 42 -3 351
+-20 451 -18 103 -61 239 -111 348 l-33 74 172 -6 c182 -6 240 -1 471 43 125
+25 322 76 415 109 126 44 119 103 -44 365 -70 112 -108 165 -264 367 -23 31
+-41 60 -39 66 2 6 59 25 128 43 328 86 630 258 1006 572 62 51 122 105 133
+119 34 44 26 77 -32 140 -59 62 -255 228 -364 309 -172 127 -419 274 -547 324
+l-68 27 93 56 c296 176 482 363 709 709 106 163 105 184 -11 237 -190 85 -544
+175 -772 196 -43 4 -78 9 -78 10 0 2 23 41 52 87 73 117 122 227 157 348 61
+214 91 432 91 656 0 241 -15 259 -181 224z m193 -1534 c194 -38 408 -104 408
+-125 0 -10 -81 -127 -160 -232 -162 -215 -449 -437 -665 -513 -63 -22 -89 -25
+-270 -29 -258 -6 -385 -34 -560 -123 -146 -74 -377 -259 -478 -382 -31 -37
+-84 -94 -118 -127 l-62 -60 34 47 c19 26 74 99 122 163 121 157 263 411 357
+637 19 47 44 88 62 103 28 24 34 25 171 25 223 0 439 37 679 116 160 53 209
+96 180 158 -17 38 -55 43 -147 17 -326 -90 -501 -122 -653 -120 -108 2 -136 9
+-140 37 -6 38 24 70 121 134 164 106 445 229 652 284 79 21 106 24 215 20 75
+-3 176 -15 252 -30z m-604 -1072 c12 -4 22 -12 22 -18 0 -19 -149 -184 -241
+-269 -149 -137 -262 -212 -376 -252 -64 -23 -81 -25 -286 -25 l-218 0 16 22
+c31 45 242 251 318 311 140 111 315 192 476 221 79 15 249 20 289 10z m340
+-100 c95 -31 212 -94 359 -190 191 -126 475 -350 471 -370 -4 -20 -204 -182
+-327 -266 -160 -110 -306 -189 -447 -246 -130 -51 -270 -87 -298 -76 -9 3 -41
+42 -72 86 -66 94 -164 209 -283 331 l-86 89 371 -4 c354 -3 373 -2 393 16 28
+25 29 86 2 110 -24 22 -133 32 -470 42 -133 4 -240 10 -239 15 2 4 29 28 61
+52 76 59 196 175 330 320 83 89 115 117 134 117 13 0 59 -12 101 -26z m-1698
+-655 c32 -14 97 -73 220 -197 179 -181 314 -292 449 -369 90 -52 254 -107 383
+-129 51 -9 109 -23 128 -32 44 -20 240 -217 319 -321 32 -42 89 -125 125 -184
+l66 -107 -24 -10 c-123 -47 -419 -113 -577 -130 -181 -19 -401 20 -559 100
+-69 35 -305 193 -365 243 l-39 34 86 13 c122 18 421 8 553 -20 129 -26 180
+-28 205 -5 29 27 25 69 -9 97 -51 43 -278 91 -496 103 -105 7 -151 3 -499 -34
+-48 -6 -102 -7 -120 -4 -17 3 -101 33 -186 65 -253 97 -419 131 -695 146
+l-140 7 215 139 c238 155 451 309 640 465 126 104 204 151 250 151 14 0 45
+-10 70 -21z m708 3 c92 -35 223 -143 366 -299 93 -103 184 -229 173 -240 -4
+-3 -55 -1 -113 5 -118 13 -268 59 -382 116 -120 60 -276 191 -426 355 -58 64
+-59 66 -35 72 13 4 102 7 196 8 145 1 181 -2 221 -17z m-1923 -1537 c253 -50
+420 -155 546 -342 28 -42 65 -106 82 -142 66 -146 128 -425 143 -643 6 -86 5
+-98 -9 -98 -9 0 -87 18 -174 40 -617 157 -885 394 -957 846 -9 56 -16 136 -16
+178 0 70 2 76 18 67 28 -15 279 -274 417 -429 146 -165 161 -177 209 -168 47
+9 64 49 42 100 -30 71 -205 276 -413 484 -73 74 -133 136 -133 138 0 9 122 -7
+245 -31z"/>
+<path d="M12680 12339 c-278 -30 -553 -197 -801 -485 -94 -111 -119 -149 -119
+-187 0 -38 20 -54 110 -90 231 -93 435 -132 645 -124 169 6 246 26 388 99 131
+67 238 148 362 272 184 185 240 290 182 344 -55 51 -390 154 -562 172 -100 11
+-99 11 -205 -1z"/>
+<path d="M7592 12340 c-92 -10 -187 -32 -327 -77 -214 -68 -267 -104 -251
+-167 18 -71 266 -346 396 -438 100 -71 246 -144 345 -174 73 -21 117 -27 230
+-31 212 -8 356 21 660 130 66 24 92 56 82 99 -15 59 -188 259 -322 373 -213
+181 -377 258 -611 285 -97 11 -96 11 -202 0z"/>
+<path d="M12825 11324 c-201 -87 -390 -239 -493 -397 -57 -87 -87 -159 -109
+-262 -28 -132 -3 -540 39 -618 5 -10 25 -25 44 -33 44 -18 72 -7 209 83 136
+91 313 269 376 378 93 160 124 289 124 515 0 222 -33 347 -94 363 -11 3 -54
+-10 -96 -29z"/>
+<path d="M7531 11324 c-74 -94 -78 -500 -8 -700 24 -65 66 -144 112 -209 88
+-123 327 -330 450 -390 43 -21 55 -23 87 -14 44 12 61 38 77 119 36 184 39
+453 6 575 -65 246 -280 474 -580 617 -77 36 -117 37 -144 2z"/>
+<path d="M8756 10859 c-15 -18 -40 -76 -60 -142 -132 -425 -137 -675 -21 -923
+57 -122 108 -194 196 -281 99 -96 146 -133 264 -213 124 -83 156 -100 193
+-100 58 0 94 75 149 308 25 106 27 134 27 307 0 178 -2 196 -27 280 -44 144
+-124 296 -222 417 -94 117 -237 255 -342 329 -83 59 -119 63 -157 18z m161
+-237 c119 -95 263 -272 332 -409 85 -170 114 -384 77 -588 -18 -98 -41 -194
+-50 -203 -13 -13 -187 118 -276 208 -98 98 -144 165 -187 270 -79 197 -71 392
+33 743 8 24 16 22 71 -21z"/>
+<path d="M11567 10834 c-199 -138 -387 -348 -473 -529 -29 -60 -65 -150 -81
+-200 -26 -85 -27 -101 -28 -290 0 -218 7 -264 67 -463 57 -185 91 -193 278
+-69 323 216 475 407 541 684 26 108 28 285 4 418 -15 87 -79 327 -110 416 -38
+106 -84 113 -198 33z m106 -311 c20 -82 41 -186 48 -232 27 -192 -19 -384
+-133 -549 -64 -93 -287 -289 -361 -318 -11 -4 -19 13 -35 73 -33 123 -43 195
+-43 311 -1 186 54 367 156 523 48 73 300 339 321 339 5 0 27 -66 47 -147z"/>
+</g>
+  </g>
+</symbol>
+</svg>
+<!-- ============================================================
+Minimal header for utility pages (forms, gates, receipts).
+     Set the es-sub text to name the page's context.
+     ============================================================ -->
+<header class="es-header">
+  <div class="es-inner">
+    <a class="es-wordmark" href="https://elmspark.com/" aria-label="ElmsPark, home">
+      <span class="es-mark"><svg class="es-mark-svg" aria-hidden="true" focusable="false"><use href="#es-mark"></use></svg></span>
+      <span>Elms<span class="es-accent">Park</span></span>
+      <span class="es-sub">CC Toolkit</span>
+    </a>
   </div>
 </header>
 
-<div class="wrap task">
-  <h2>What do you want to do?</h2>
-  <div class="task-grid" id="tasks"></div>
+<main class="es-wrap" style="padding-top:var(--es-g4);padding-bottom:var(--es-g3)">
+
+<p class="es-kicker">CLAUDE CODE</p>
+<h1>The ElmsPark toolkit</h1>
+<p class="es-lede">Every slash command and skill Kenn has built, read straight off
+disk. Search it instead of asking Claude to go looking.</p>
+
+<div class="tk-bar">
+  <div class="tk-bar-row">
+    <input class="tk-search" id="tk-q" type="search" hidden
+           aria-label="Search commands and skills"
+           placeholder="Search commands and skills, e.g. ship, audit, video">
+    <ul class="tk-pills" id="tk-pills" hidden><li><button type="button" class="tk-pill" data-filter="" aria-pressed="true">All</button></li><li><button type="button" class="tk-pill" data-filter="pm" aria-pressed="false">PageMotor &amp; sites</button></li><li><button type="button" class="tk-pill" data-filter="ep" aria-pressed="false">EP plugins &amp; shipping</button></li><li><button type="button" class="tk-pill" data-filter="review" aria-pressed="false">Review &amp; QA</button></li><li><button type="button" class="tk-pill" data-filter="media" aria-pressed="false">Media &amp; AI generation</button></li><li><button type="button" class="tk-pill" data-filter="infra" aria-pressed="false">Infra &amp; ops</button></li><li><button type="button" class="tk-pill" data-filter="session" aria-pressed="false">Session &amp; workflow</button></li><li><button type="button" class="tk-pill" data-filter="design" aria-pressed="false">Web design technique</button></li></ul>
+    <span class="tk-count" id="tk-count" hidden></span>
+  </div>
 </div>
 
-<main class="wrap">
-  <div class="section-h"><h2 id="yoursH">Your tools</h2><span class="s-sub" id="yoursSub"></span></div>
-  <div class="grid" id="grid"></div>
-  <div class="empty" id="empty">No tools match that. Clear the search or filters.</div>
+<section class="tk-sec" id="commands">
+  <h2>Slash commands <span class="tk-count">16</span></h2>
+  <p class="es-hint">Type these at the Claude Code prompt. Source lives in
+  <code>cc-commands/</code> in the iCloud workspace and is symlinked into
+  <code>~/.claude/commands/</code> on each Mac.</p>
+  <div class="tk-grid"><article class="tk-card" data-cat="pm" data-search="/add-layout add-layout stage 3 of the site pipeline /ds → /da → /add-layout. add or refresh a showcase site on the elmspark.com/layouts/ gallery via the layouts-add-site skill. never hand-edit the generated /layouts/ page. /da reaches this automatically; run it alone to add or refresh a site that already exists. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">/add-layout</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span><span class="tk-tag">args: &lt;domain, or &#x27;the site we just built&#x27;&gt;</span></div>
+<p class="tk-sum">STAGE 3 of the site pipeline /DS → /DA → /add-layout.</p>
+<details><summary>When it fires, and the caveats</summary><p>Add or refresh a showcase site on the elmspark.com/layouts/ gallery via the layouts-add-site skill. Never hand-edit the generated /layouts/ page. /DA reaches this automatically; run it alone to add or refresh a site that already exists.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/add-layout.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="/brand brand build or fix an elmspark-branded html page from the canonical brand kit, then gate it with brand-check.  pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">/brand</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span><span class="tk-tag">args: new &lt;path&gt; | fix &lt;file-or-url&gt; | check &lt;file-or-url&gt; | show</span><span class="tk-tag">model: sonnet</span></div>
+<p class="tk-sum">Build or fix an ElmsPark-branded HTML page from the canonical brand kit, then gate it with brand-check.</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/brand.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="/da da stage 2 of the site pipeline /ds → /da → /add-layout. graduate static designs into live pagemotor sites and gallery-list each on /layouts/: canary one design end-to-end, then fan out parallel agents (design-to-pm-batch skill). /ds auto-continues into this; step 4 hands off to /add-layout. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">/DA</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span><span class="tk-tag">args: [designs or paths; default: the six brand prototypes]</span></div>
+<p class="tk-sum">STAGE 2 of the site pipeline /DS → /DA → /add-layout.</p>
+<details><summary>When it fires, and the caveats</summary><p>Graduate static designs into live PageMotor sites and gallery-list each on /layouts/: canary one design end-to-end, then fan out parallel agents (design-to-pm-batch skill). /DS auto-continues into this; step 4 hands off to /add-layout.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/DA.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="/ds ds stage 1 of the site pipeline /ds → /da → /add-layout. design a distinctive pagemotor site for a domain: 3-4 concept directions, build the pick on a preview subdomain, graduate to pm and /layouts/ on green (distinctive-pm-site skill). start here for a new site; jump to /da if a static design already exists. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">/DS</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span><span class="tk-tag">args: &lt;domain&gt;</span></div>
+<p class="tk-sum">STAGE 1 of the site pipeline /DS → /DA → /add-layout.</p>
+<details><summary>When it fires, and the caveats</summary><p>Design a distinctive PageMotor site for a domain: 3-4 concept directions, build the pick on a preview subdomain, graduate to PM and /layouts/ on green (distinctive-pm-site skill). Start here for a NEW site; jump to /DA if a static design already exists.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/DS.md</code>
+</article>
+<article class="tk-card" data-cat="review" data-search="/eps eps ep security expert persona for the session: senior application security engineer for the ep security plugin (threat modelling, design, implementation, customer docs).  review &amp; qa" style="--es-cat:var(--es-cat-security)">
+<h3 class="tk-name">/EPS</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Review &amp; QA</span><span class="tk-tag">args: (none: loads the persona for the rest of the session)</span></div>
+<p class="tk-sum">EP Security expert persona for the session: senior application security engineer for the EP Security plugin (threat modelling, design, implementation, customer docs).</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/EPS.md</code>
+</article>
+<article class="tk-card" data-cat="session" data-search="/h h print a live cheat sheet of kenn&#x27;s custom slash commands, generated from ~/.claude/commands at run time so it can never go stale.  session &amp; workflow" style="--es-cat:var(--es-cat-privacy)">
+<h3 class="tk-name">/h</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Session &amp; workflow</span><span class="tk-tag">args: [optional case-insensitive filter, e.g. qa]</span><span class="tk-tag">model: haiku</span></div>
+<p class="tk-sum">Print a live cheat sheet of Kenn&#x27;s custom slash commands, generated from ~/.claude/commands at run time so it can never go stale.</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/h.md</code>
+</article>
+<article class="tk-card" data-cat="session" data-search="/handoff-portable handoff-portable session-boundary handoff (portable): capture session state, decisions and failed paths to disk, update the session-resume index, verify cheaply, print the resume prompt. the cross-session bridge that survives when the live context does not. repo-agnostic export of /handoff. session &amp; workflow" style="--es-cat:var(--es-cat-privacy)">
+<h3 class="tk-name">/Handoff-portable</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Session &amp; workflow</span><span class="tk-tag">args: [optional focus thread]</span><span class="tk-tag">model: sonnet</span></div>
+<p class="tk-sum">Session-boundary handoff (portable): capture session state, decisions and failed paths to disk, update the session-resume index, verify cheaply, print the resume prompt.</p>
+<details><summary>When it fires, and the caveats</summary><p>The cross-session bridge that survives when the live context does not. Repo-agnostic export of /Handoff.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/Handoff-portable.md</code>
+</article>
+<article class="tk-card" data-cat="session" data-search="/handoff handoff session-boundary handoff: capture session state, decisions and failed paths to disk, update both indexes and tasks.md, verify cheaply, print the resume prompt. the cross-session, cross-mac bridge that survives when the live context does not. session &amp; workflow" style="--es-cat:var(--es-cat-privacy)">
+<h3 class="tk-name">/Handoff</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Session &amp; workflow</span><span class="tk-tag">args: [optional focus thread]</span><span class="tk-tag">model: sonnet</span></div>
+<p class="tk-sum">Session-boundary handoff: capture session state, decisions and failed paths to disk, update both indexes and TASKS.md, verify cheaply, print the resume prompt.</p>
+<details><summary>When it fires, and the caveats</summary><p>The cross-session, cross-Mac bridge that survives when the live context does not.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/Handoff.md</code>
+</article>
+<article class="tk-card" data-cat="review" data-search="/nuggets nuggets deep-read third-party github repos and report what is worth stealing for the estate: one full-context agent per repo run sequentially, licence-gated, every claimed gap proven by a grep of the real ep source, delivered as ranked html on guides.elmspark.com (repo-deep-dive skill).  review &amp; qa" style="--es-cat:var(--es-cat-security)">
+<h3 class="tk-name">/nuggets</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Review &amp; QA</span><span class="tk-tag">args: &lt;repo-url&gt; [repo-url ...]  |  &lt;path-to-list-file&gt;</span></div>
+<p class="tk-sum">Deep-read third-party GitHub repos and report what is worth stealing for the estate: one full-context agent per repo run sequentially, licence-gated, every claimed gap proven by a grep of the real EP source, delivered as ranked HTML on guides.elmspark.com (repo-deep-dive skill).</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-no">Mini</span><span class="tk-mac-no">M1 MBP</span></div>
+<code class="tk-src">cc-commands/nuggets.md</code>
+</article>
+<article class="tk-card" data-cat="ep" data-search="/qa-plugin qa-plugin ep plugin qa manager mode: adopt the canonical ep-plugin-qa-prompt.md as full operating instructions for one plugin slug.  ep plugins &amp; shipping" style="--es-cat:var(--es-cat-email)">
+<h3 class="tk-name">/qa-plugin</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">EP plugins &amp; shipping</span><span class="tk-tag">args: &lt;plugin-slug&gt;</span></div>
+<p class="tk-sum">EP Plugin QA Manager mode: adopt the canonical ep-plugin-qa-prompt.md as full operating instructions for one plugin slug.</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/qa-plugin.md</code>
+</article>
+<article class="tk-card" data-cat="ep" data-search="/qa-site qa-site ep site qa manager mode: adopt the canonical ep-site-qa-prompt.md as full operating instructions for one pagemotor site; every run ends with the interactive lesson-based audit report published to audits.elmspark.com/qa/&lt;slug&gt;/.  ep plugins &amp; shipping" style="--es-cat:var(--es-cat-email)">
+<h3 class="tk-name">/qa-site</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">EP plugins &amp; shipping</span><span class="tk-tag">args: &lt;domain or subdomain&gt;</span></div>
+<p class="tk-sum">EP Site QA Manager mode: adopt the canonical ep-site-qa-prompt.md as full operating instructions for one PageMotor site; every run ends with the interactive lesson-based Audit Report published to audits.elmspark.com/qa/&lt;slug&gt;/.</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/qa-site.md</code>
+</article>
+<article class="tk-card" data-cat="review" data-search="/rc rc technical and architectural review (ep review prompt 2): plugin specs, api docs, system design, code handoff docs. verifies factual claims on disk, checks ep/pm footguns, severity-ranked issues plus rewrite. modes: full (default), review-only, rewrite-only, targeted-fixes. review &amp; qa" style="--es-cat:var(--es-cat-security)">
+<h3 class="tk-name">/RC <span class="tk-alias">also /cx</span></h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Review &amp; QA</span><span class="tk-tag">args: [mode] &lt;content, or empty to review the latest in this conversation&gt;</span><span class="tk-tag">model: opus</span></div>
+<p class="tk-sum">Technical and architectural review (EP review prompt 2): plugin specs, API docs, system design, code handoff docs.</p>
+<details><summary>When it fires, and the caveats</summary><p>Verifies factual claims on disk, checks EP/PM footguns, severity-ranked issues plus rewrite. Modes: full (default), review-only, rewrite-only, targeted-fixes.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/RC.md</code>
+</article>
+<article class="tk-card" data-cat="review" data-search="/rp rp content and communication review (ep review prompt 1): forum posts, emails, announcements, docs, blog posts. kenn-voice house rules, severity-ranked issues, rewrite. modes: full (default), review-only, rewrite-only, targeted-fixes. review &amp; qa" style="--es-cat:var(--es-cat-security)">
+<h3 class="tk-name">/RP <span class="tk-alias">also /c</span></h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Review &amp; QA</span><span class="tk-tag">args: [mode] &lt;draft, or empty to review the latest draft in this conversation&gt;</span><span class="tk-tag">model: sonnet</span></div>
+<p class="tk-sum">Content and communication review (EP review prompt 1): forum posts, emails, announcements, docs, blog posts.</p>
+<details><summary>When it fires, and the caveats</summary><p>Kenn-voice house rules, severity-ranked issues, rewrite. Modes: full (default), review-only, rewrite-only, targeted-fixes.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/RP.md</code>
+</article>
+<article class="tk-card" data-cat="review" data-search="/rs rs qa review of a support response before it goes to the customer: accuracy, evidence, voice, round-trip economy, verification gate, rewrite ready to send.  review &amp; qa" style="--es-cat:var(--es-cat-security)">
+<h3 class="tk-name">/rs</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Review &amp; QA</span><span class="tk-tag">args: &lt;reply draft, or empty to review the latest in this conversation&gt;</span><span class="tk-tag">model: sonnet</span></div>
+<p class="tk-sum">QA review of a support response before it goes to the customer: accuracy, evidence, voice, round-trip economy, verification gate, rewrite ready to send.</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/rs.md</code>
+</article>
+<article class="tk-card" data-cat="ep" data-search="/sj sj generate a sample json file for an ep plugin that doubles as an llm prompt. schema read from plugin source (file:line cited), jq-validated before being called ready. ep plugins &amp; shipping" style="--es-cat:var(--es-cat-email)">
+<h3 class="tk-name">/sj</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">EP plugins &amp; shipping</span><span class="tk-tag">args: &lt;plugin-slug&gt;</span><span class="tk-tag">model: sonnet</span></div>
+<p class="tk-sum">Generate a sample JSON file for an EP plugin that doubles as an LLM prompt.</p>
+<details><summary>When it fires, and the caveats</summary><p>Schema read from plugin source (file:line cited), jq-validated before being called ready.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/sj.md</code>
+</article>
+<article class="tk-card" data-cat="review" data-search="/ultra ultra adversarial senior-peer review of a question, plan or claim: 11-point discipline, evidence-labelled verification, reversibility checks. mode tags: [quick] [arch] [debug] [ship]. review &amp; qa" style="--es-cat:var(--es-cat-security)">
+<h3 class="tk-name">/Ultra</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Review &amp; QA</span><span class="tk-tag">args: [quick|arch|debug|ship] &lt;question&gt;</span><span class="tk-tag">model: opus</span></div>
+<p class="tk-sum">Adversarial senior-peer review of a question, plan or claim: 11-point discipline, evidence-labelled verification, reversibility checks.</p>
+<details><summary>When it fires, and the caveats</summary><p>Mode tags: [quick] [arch] [debug] [ship].</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-commands/Ultra.md</code>
+</article></div>
+</section>
 
-  <div class="section-h"><h2>Also available (Anthropic built-ins)</h2><span class="s-sub">Not yours, but powerful and worth remembering</span></div>
-  <div class="grid builtin" id="builtinGrid"></div>
+<section class="tk-sec" id="skills">
+  <h2>Skills <span class="tk-count">26</span></h2>
+  <p class="es-hint">Claude loads these itself when the work matches, or you can
+  name one. Source lives in <code>cc-skills/</code> and is symlinked into
+  <code>~/.claude/skills/</code>. Edit the skill there, nowhere else.</p>
+  <div class="tk-grid"><article class="tk-card" data-cat="media" data-search="ai-prompt-builder ai-prompt-builder write high-quality ai prompt text for the user to paste into an external image or video generator — midjourney, flux, stable diffusion, firefly, veo, kling, runway, seedance, sora, hailuo, or any other tool. this skill produces the words, not the picture. trigger on phrases like &quot;write me a prompt&quot;, &quot;image prompt&quot;, &quot;video prompt&quot;, &quot;multi-shot sequence&quot;, &quot;shot list&quot;, &quot;scene breakdown&quot;, &quot;timestamp prompting&quot;, &quot;storyboard prompts&quot;, &quot;ingredients to video&quot;, &quot;first and last frame&quot;, or any time the user describes what they want to see and needs it translated into generation-ready instructions to paste elsewhere. also trigger when the user describes a vibe, visual style, character, or scenario and seems to want prompt text for an image or video — even if they haven&#x27;t said &quot;write a prompt&quot; explicitly. do not trigger when the user wants the asset generated in-session: requests to &quot;generate an image&quot;, &quot;make a video&quot;, &quot;animate this photo&quot;, &quot;create an ad&quot;, &quot;product photo&quot;, or &quot;marketplace card&quot; belong to the higgsfield-* skills, which own their own prompt assembly. when in doubt between writing prompt text and generating an asset, ask which the user wants before proceeding. media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">ai-prompt-builder</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">Write high-quality AI prompt TEXT for the user to paste into an external image or video generator — Midjourney, Flux, Stable Diffusion, Firefly, Veo, Kling, Runway, Seedance, Sora, Hailuo, or any other tool. This skill produces the words, not the picture.</p>
+<details><summary>When it fires, and the caveats</summary><p>Trigger on phrases like &quot;write me a prompt&quot;, &quot;image prompt&quot;, &quot;video prompt&quot;, &quot;multi-shot sequence&quot;, &quot;shot list&quot;, &quot;scene breakdown&quot;, &quot;timestamp prompting&quot;, &quot;storyboard prompts&quot;, &quot;ingredients to video&quot;, &quot;first and last frame&quot;, or any time the user describes what they want to see and needs it translated into generation-ready instructions to paste elsewhere. Also trigger when the user describes a vibe, visual style, character, or scenario and seems to want prompt text for an image or video — even if they haven&#x27;t said &quot;write a prompt&quot; explicitly. DO NOT trigger when the user wants the asset generated in-session: requests to &quot;generate an image&quot;, &quot;make a video&quot;, &quot;animate this photo&quot;, &quot;create an ad&quot;, &quot;product photo&quot;, or &quot;marketplace card&quot; belong to the higgsfield-* skills, which own their own prompt assembly. When in doubt between writing prompt text and generating an asset, ask which the user wants before proceeding.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/ai-prompt-builder/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="media" data-search="cwtm-weekly-show cwtm-weekly-show &gt; publish the weekly conversations with tony mobley show on conversationswithtonymobley.com end to end, triggered from discord: read the #cwtm channel in kenn&#x27;s web lab for tony&#x27;s show drop (the show-card image plus the youtube live link), feature it on the homepage, rotate the previous shows down, set the social/og card, build the episode page, then post a confirmation back to #cwtm. trigger on &quot;check the cwtm discord&quot;, &quot;did tony drop the show&quot;, &quot;publish this week&#x27;s cwtm show&quot;, &quot;new cwtm show&quot;, &quot;feature this week&#x27;s show&quot;, or when run on a schedule. the promo copy is claude-generated. date is always the upcoming wednesday, time is always 8:00-9:00 pm et. media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">cwtm-weekly-show</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">&gt; Publish the weekly Conversations with Tony Mobley show on conversationswithtonymobley.com end to end, triggered from Discord: read the #cwtm channel in Kenn&#x27;s Web Lab for Tony&#x27;s show drop (the show-card image plus the YouTube live link), feature it on the homepage, rotate the previous shows down, set the social/OG card, build the episode page, then post a confirmation back to #cwtm.</p>
+<details><summary>When it fires, and the caveats</summary><p>Trigger on &quot;check the cwtm Discord&quot;, &quot;did Tony drop the show&quot;, &quot;publish this week&#x27;s CWTM show&quot;, &quot;new CWTM show&quot;, &quot;feature this week&#x27;s show&quot;, or when run on a schedule. The promo copy is Claude-generated. Date is always the upcoming Wednesday, time is always 8:00-9:00 PM ET.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/cwtm-weekly-show/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="design-conversion pagemotor-design convert web designs into pagemotor theme import files. translates html/css designs (including tailwind, bootstrap, etc.) into pagemotor&#x27;s data model with grt typography, design options integration, and full template support. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">design-conversion</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span></div>
+<p class="tk-sum">Convert web designs into PageMotor Theme import files.</p>
+<details><summary>When it fires, and the caveats</summary><p>Translates HTML/CSS designs (including Tailwind, Bootstrap, etc.) into PageMotor&#x27;s data model with GRT typography, Design Options integration, and full template support.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/design-conversion/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="design-to-pm-batch design-to-pm-batch convert one or more static/html web designs into live pagemotor sites and add each to the elmspark.com/layouts/ gallery, by firing off parallel agents (&quot;cc instances&quot;) — one per design — that each run the full design-conversion pipeline, stand the site up on pagemotor, verify it, and publish it to /layouts/. invoked as /da. use when kenn says &quot;convert these designs/sites to pagemotor&quot;, &quot;add my brand sites to layouts&quot;, &quot;fire off cc instances to add more to the layout&quot;, or right after building static first-cut designs with /ds (distinctive-pm-site). this is the graduation step: /ds designs a site fast as static, /da converts it to a real pagemotor site and gallery-lists it. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">design-to-pm-batch</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span></div>
+<p class="tk-sum">Convert one or more static/HTML web designs into LIVE PageMotor sites and add each to the elmspark.com/layouts/ gallery, by firing off parallel agents (&quot;CC instances&quot;) — one per design — that each run the full design-conversion pipeline, stand the site up on PageMotor, verify it, and publish it to /layouts/.</p>
+<details><summary>When it fires, and the caveats</summary><p>Invoked as /DA. Use when Kenn says &quot;convert these designs/sites to PageMotor&quot;, &quot;add my brand sites to layouts&quot;, &quot;fire off CC instances to add more to the layout&quot;, or right after building static first-cut designs with /DS (distinctive-pm-site). This is the graduation step: /DS designs a site fast as static, /DA converts it to a real PageMotor site and gallery-lists it.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/design-to-pm-batch/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="infra" data-search="discovery-ab-round discovery-ab-round run a complete blind discovery ai a/b round end to end - author or reuse a deep niche pack, stand up n fresh arm rigs per tester, configure engines (including reasoning-budget coverage for new models), gate every step with live probes, keep the blind airtight, decode tester verdicts against db ground truth, protect evidence sites, and publish results to the shoot-out page. use when kenn says &quot;round three&quot;, &quot;new a/b round&quot;, &quot;add &lt;model&gt; to the mix&quot;, &quot;set up n test rigs for &lt;tester&gt;&quot;, or &quot;seed rigs with &lt;niche&gt;&quot;. distilled from rounds one and two (2026-07-21 to 07-24). runs on sonnet - script-first with hard gates; escalate on any gate failure. infra &amp; ops" style="--es-cat:var(--es-cat-hosting)">
+<h3 class="tk-name">discovery-ab-round</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Infra &amp; ops</span></div>
+<p class="tk-sum">Run a complete blind Discovery AI A/B round end to end - author or reuse a deep niche pack, stand up N fresh arm rigs per tester, configure engines (including reasoning-budget coverage for new models), gate every step with live probes, keep the blind airtight, decode tester verdicts against DB ground truth, protect evidence sites, and publish results to the shoot-out page.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;round three&quot;, &quot;new A/B round&quot;, &quot;add &lt;model&gt; to the mix&quot;, &quot;set up N test rigs for &lt;tester&gt;&quot;, or &quot;seed rigs with &lt;niche&gt;&quot;. Distilled from rounds one and two (2026-07-21 to 07-24). Runs on Sonnet - script-first with hard gates; escalate on any gate failure.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/discovery-ab-round/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="infra" data-search="discovery-rig discovery-rig stand up, re-slug, provision, health-check and retire pagemotor discovery ai test rigs on ionos-ts (the kimi k3 vs claude a/b cluster and any future discovery site). use when kenn says &quot;build another discovery rig&quot;, &quot;add a site to the a/b&quot;, &quot;check the discovery fleet&quot;, &quot;provision capabilities on &lt;site&gt;&quot;, &quot;retire discovery from &lt;site&gt;&quot;, &quot;give me the key intake&quot;, or names one of the cluster&#x27;s slugs. script-first with hard gates; runs on sonnet. infra &amp; ops" style="--es-cat:var(--es-cat-hosting)">
+<h3 class="tk-name">discovery-rig</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Infra &amp; ops</span></div>
+<p class="tk-sum">Stand up, re-slug, provision, health-check and retire PageMotor Discovery AI test rigs on ionos-ts (the Kimi K3 vs Claude A/B cluster and any future Discovery site).</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;build another discovery rig&quot;, &quot;add a site to the A/B&quot;, &quot;check the discovery fleet&quot;, &quot;provision capabilities on &lt;site&gt;&quot;, &quot;retire discovery from &lt;site&gt;&quot;, &quot;give me the key intake&quot;, or names one of the cluster&#x27;s slugs. Script-first with hard gates; runs on Sonnet.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/discovery-rig/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="distinctive-pm-site distinctive-pm-site build a distinctive, gallery-grade pagemotor design site from scratch, using the method proven on the makeclear family and the elmspark.com/layouts/ showcases. presents 3-4 concept directions (genuinely distinct expressions of one idea), provisions a candidate subdomain per expression so kenn can see them live and pick, builds the pick with the fast bespoke-theme recipe, deepens the keeper with design-led depth, measures every render, then graduates the keeper to a live pagemotor site in /layouts/ (publish on green). use when kenn says &quot;make a distinctive site for &lt;domain&gt;&quot;, &quot;design a standout pm site&quot;, &quot;make &lt;domain&gt; worthy of /layouts/&quot;, &quot;build me some design directions / samples for &lt;domain&gt;&quot;, &quot;3-4 concept directions&quot;, when a great domain he owns has a boring or placeholder site he wants made characterful, or when building a family of genuinely distinct expressions of one concept. not for converting an existing html/css design (use design-conversion), a single-plugin showcase (use pagemotor-plugin-showcase-site), or a live wordpress migration (use wp-to-pm-migration). pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">distinctive-pm-site</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span></div>
+<p class="tk-sum">Build a distinctive, gallery-grade PageMotor design site from scratch, using the method proven on the MakeClear family and the elmspark.com/layouts/ showcases. Presents 3-4 concept directions (genuinely distinct expressions of one idea), provisions a candidate subdomain per expression so Kenn can see them live and pick, builds the pick with the fast bespoke-theme recipe, deepens the keeper with design-led depth, measures every render, then graduates the keeper to a live PageMotor site in /layouts/ (publish on green).</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;make a distinctive site for &lt;domain&gt;&quot;, &quot;design a standout PM site&quot;, &quot;make &lt;domain&gt; worthy of /layouts/&quot;, &quot;build me some design directions / samples for &lt;domain&gt;&quot;, &quot;3-4 concept directions&quot;, when a great domain he owns has a boring or placeholder site he wants made characterful, or when building a family of genuinely distinct expressions of one concept. Not for converting an existing HTML/CSS design (use design-conversion), a single-plugin showcase (use pagemotor-plugin-showcase-site), or a live WordPress migration (use wp-to-pm-migration).</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/distinctive-pm-site/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="ep" data-search="ep-requires-floor ep-requires-floor decide and verify the `requires:` value in an ep plugin header — the minimum pagemotor version a plugin needs. use whenever a plugin&#x27;s requires looks stale, whenever someone proposes bumping it &quot;to match the current pm floor&quot;, when a customer reports &quot;requires pagemotor x&quot; blocking their update button, or before shipping a release that gains a new core dependency. answers bump/don&#x27;t-bump from evidence, then hands the bump (if any) to ship-ep-plugin and verifies via the live manifest&#x27;s requires value. ep plugins &amp; shipping" style="--es-cat:var(--es-cat-email)">
+<h3 class="tk-name">ep-requires-floor</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">EP plugins &amp; shipping</span></div>
+<p class="tk-sum">Decide and verify the `Requires:` value in an EP plugin header — the minimum PageMotor version a plugin needs.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use whenever a plugin&#x27;s Requires looks stale, whenever someone proposes bumping it &quot;to match the current PM floor&quot;, when a customer reports &quot;Requires PageMotor X&quot; blocking their update button, or before shipping a release that gains a new core dependency. Answers bump/don&#x27;t-bump from evidence, then hands the bump (if any) to ship-ep-plugin and verifies via the live manifest&#x27;s requires value.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/ep-requires-floor/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="media" data-search="fal-video fal-video generate video on fal.ai — single clips or a whole plan-driven multi-shot cut — using kenn&#x27;s own fal_key, with a plan validator, a spend floor, resume, and a duration gate before anything is called done. the higgsfield-independent video route, which matters because the higgsfield mcp dies with the claude.ai account while a fal key is just a key. use when kenn says &quot;make a clip on fal&quot;, &quot;animate this frame&quot;, &quot;render the shot plan&quot;, &quot;image-to-video&quot;, &quot;first-last-frame&quot;, &quot;assemble the cut&quot;, &quot;how much will these clips cost&quot;, or when a video job needs an engine and higgsfield is unavailable, out of credits, or the wrong tool. also use for the money question alone — what a plan will cost, what the balance is. not for higgsfield-specific work (use higgsfield-generate or higgsfield-still-to-clip), not for a finished music video end to end (use youtube-music-video, which owns concept, lyric timing, thumbnails and metadata and can call this skill for the rendering), not for a 30-second website advert (use website-advert), and not for still images (use gen-image-cli or the fal-image cli at ~/developer/elmspark/tools/fal/). media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">fal-video</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">Generate video on fal.ai — single clips or a whole plan-driven multi-shot cut — using Kenn&#x27;s own FAL_KEY, with a plan validator, a spend floor, resume, and a duration gate before anything is called done. The Higgsfield-independent video route, which matters because the Higgsfield MCP dies with the claude.ai account while a fal key is just a key.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;make a clip on fal&quot;, &quot;animate this frame&quot;, &quot;render the shot plan&quot;, &quot;image-to-video&quot;, &quot;first-last-frame&quot;, &quot;assemble the cut&quot;, &quot;how much will these clips cost&quot;, or when a video job needs an engine and Higgsfield is unavailable, out of credits, or the wrong tool. Also use for the money question alone — what a plan will cost, what the balance is. NOT for Higgsfield-specific work (use higgsfield-generate or higgsfield-still-to-clip), NOT for a finished music video end to end (use youtube-music-video, which owns concept, lyric timing, thumbnails and metadata and can call this skill for the rendering), NOT for a 30-second website advert (use website-advert), and NOT for still images (use gen-image-cli or the fal-image CLI at ~/Developer/elmspark/tools/fal/).</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/fal-video/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="media" data-search="gen-image-cli gen-image-cli from within claude code, call the local codex cli via bash to generate images using openai&#x27;s gpt-image model, exposed by the codex desktop app. saves pngs to ./images/ in the current project folder. requires the codex desktop app installed and signed in with a chatgpt account; the bare codex cli alone cannot generate images. no openai api key. triggers: &quot;generate an image&quot;, &quot;generate me an image&quot;, &quot;draw me a picture&quot;, &quot;create an image&quot;, &quot;make an image of&quot;, &quot;render an image&quot;, &quot;generate an og card&quot;, &quot;generate a cover image&quot;, &quot;image of x&quot;, &quot;picture of x&quot;. media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">gen-image-cli</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">From within Claude Code, call the local Codex CLI via Bash to generate images using OpenAI&#x27;s gpt-image model, exposed by the Codex DESKTOP app.</p>
+<details><summary>When it fires, and the caveats</summary><p>Saves PNGs to ./images/ in the current project folder. Requires the Codex desktop app installed and signed in with a ChatGPT account; the bare codex CLI alone CANNOT generate images. No OpenAI API key. Triggers: &quot;generate an image&quot;, &quot;generate me an image&quot;, &quot;draw me a picture&quot;, &quot;create an image&quot;, &quot;make an image of&quot;, &quot;render an image&quot;, &quot;generate an OG card&quot;, &quot;generate a cover image&quot;, &quot;image of X&quot;, &quot;picture of X&quot;.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/gen-image-cli/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="media" data-search="higgsfield-still-to-clip higgsfield-still-to-clip generate a short cinematic video clip with higgsfield using the two-step still-then-animate pipeline — gpt image 2 makes a high-fidelity start frame, then seedance 2.0 animates it image-to-video — and save both files (the still and the .mp4) into a named project folder. use when kenn wants a vertical/landscape video clip from a described subject (animal, product, character, scene), an &quot;image then animate it&quot; workflow, an &quot;image-to-video&quot; clip, or says things like &quot;make me a 9:16 clip of x&quot;, &quot;animate a still of y&quot;, &quot;do the still-then-video thing&quot;. defaults: 9:16, 5s, still at 2k. handles the seedance nsfw false-positive by retrying once with softened motion wording, and never claims success without both files verified on disk. media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">higgsfield-still-to-clip</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">Generate a short cinematic video clip with Higgsfield using the two-step still-then-animate pipeline — GPT Image 2 makes a high-fidelity start frame, then Seedance 2.0 animates it image-to-video — and save BOTH files (the still and the .mp4) into a named project folder.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn wants a vertical/landscape video clip from a described subject (animal, product, character, scene), an &quot;image then animate it&quot; workflow, an &quot;image-to-video&quot; clip, or says things like &quot;make me a 9:16 clip of X&quot;, &quot;animate a still of Y&quot;, &quot;do the still-then-video thing&quot;. Defaults: 9:16, 5s, still at 2k. Handles the Seedance NSFW false-positive by retrying once with softened motion wording, and never claims success without both files verified on disk.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/higgsfield-still-to-clip/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="infra" data-search="imessage-send imessage-send send an imessage from kenn&#x27;s mac via messages.app to a contact resolved by name from contacts.app. use when kenn asks to send / text / imessage someone, or confirms a draft with &quot;send it&quot;. infra &amp; ops" style="--es-cat:var(--es-cat-hosting)">
+<h3 class="tk-name">imessage-send</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Infra &amp; ops</span></div>
+<p class="tk-sum">Send an iMessage from Kenn&#x27;s Mac via Messages.app to a contact resolved by name from Contacts.app.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn asks to send / text / iMessage someone, or confirms a draft with &quot;send it&quot;.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/imessage-send/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="layouts-add-site layouts-add-site add (or refresh) a pagemotor showcase site on the public elmspark.com/layouts/ gallery the proper way — author a showcase manifest, capture canonical screenshots, host both on the site, append the registry entry, regenerate via the python generator, and verify the live card. use when kenn says &quot;add &lt;site&gt; to layouts&quot;, &quot;add the showcase to the gallery&quot;, &quot;put this on elmspark.com/layouts/&quot;, &quot;add another layout&quot;, or right after building a site with pagemotor-plugin-showcase-site. never hand-edit the /layouts/ page — it is generated. encodes the gotchas (dead `ionos` alias, load_file blanking the live row, the canonical_routes tile whitelist, per-site manifest hosting, the placeholder-content check) so the gallery is never bodged again. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">layouts-add-site</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span></div>
+<p class="tk-sum">Add (or refresh) a PageMotor showcase site on the public elmspark.com/layouts/ gallery the proper way — author a showcase manifest, capture canonical screenshots, host both on the site, append the registry entry, regenerate via the Python generator, and verify the live card.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;add &lt;site&gt; to layouts&quot;, &quot;add the showcase to the gallery&quot;, &quot;put this on elmspark.com/layouts/&quot;, &quot;add another layout&quot;, or right after building a site with pagemotor-plugin-showcase-site. NEVER hand-edit the /layouts/ page — it is generated. Encodes the gotchas (dead `ionos` alias, LOAD_FILE blanking the live row, the CANONICAL_ROUTES tile whitelist, per-site manifest hosting, the placeholder-content check) so the gallery is never bodged again.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/layouts-add-site/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="infra" data-search="mailgun-setup mailgun-setup walk a user through setting up mailgun email delivery on their site (wordpress, pagemotor, or both) end-to-end. covers mailgun signup with eu region selection, adding a verified custom sending subdomain (mg.&lt;domain&gt;), dns configuration at any provider (cloudflare, ionos, godaddy, namecheap, route 53), dmarc, sending key creation, and platform integration. includes inbox-placement verification. use when the user wants to &quot;set up mailgun&quot;, &quot;configure email delivery&quot;, &quot;fix emails going to spam&quot;, &quot;set up email for my site&quot;, &quot;stop emails landing in junk&quot;, or any request involving getting email working on a new or existing site. distilled from the production setup of mg.elmspark.com (may 2026), including all dead ends encountered. infra &amp; ops" style="--es-cat:var(--es-cat-hosting)">
+<h3 class="tk-name">mailgun-setup</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Infra &amp; ops</span></div>
+<p class="tk-sum">Walk a user through setting up Mailgun email delivery on their site (WordPress, PageMotor, or both) end-to-end. Covers Mailgun signup with EU region selection, adding a verified custom sending subdomain (mg.&lt;domain&gt;), DNS configuration at any provider (Cloudflare, IONOS, GoDaddy, Namecheap, Route 53), DMARC, sending key creation, and platform integration. Includes inbox-placement verification.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when the user wants to &quot;set up Mailgun&quot;, &quot;configure email delivery&quot;, &quot;fix emails going to spam&quot;, &quot;set up email for my site&quot;, &quot;stop emails landing in junk&quot;, or any request involving getting email working on a new or existing site. Distilled from the production setup of mg.elmspark.com (May 2026), including all dead ends encountered.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/mailgun-setup/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="media" data-search="makeclear-lens-vertical makeclear-lens-vertical &gt;- build or extend the makeclear lens ai photo-enhancement saas for a new niche (&quot;vertical&quot;) on its own makeclear.co.uk subdomain. the engine (cloudflare worker + r2 + d1 + stripe + magic-link accounts + turnstile + gpt-image-2) is shared and proven on car.makeclear.co.uk / lens.makeclear.co.uk; a vertical is the niche-specific layer: presets, preserve-clause, brand copy, before/after demo images, og card, hostname, and the seo/sitemap/gsc pipeline. use when kenn says &quot;make a version for products / property / &lt;niche&gt;&quot;, &quot;spin up a new makeclear lens site&quot;, or &quot;save/extend the photo-enhancement model&quot;. media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">makeclear-lens-vertical</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">&gt;- Build or extend the MakeClear Lens AI photo-enhancement SaaS for a new niche (&quot;vertical&quot;) on its own makeclear.co.uk subdomain. The engine (Cloudflare Worker + R2 + D1 + Stripe + magic-link accounts + Turnstile + gpt-image-2) is shared and proven on car.makeclear.co.uk / lens.makeclear.co.uk; a vertical is the niche-specific layer: presets, preserve-clause, brand copy, before/after demo images, OG card, hostname, and the SEO/sitemap/GSC pipeline.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;make a version for products / property / &lt;niche&gt;&quot;, &quot;spin up a new MakeClear Lens site&quot;, or &quot;save/extend the photo-enhancement model&quot;.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/makeclear-lens-vertical/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="pagemotor-plugin-showcase-site pagemotor-plugin-showcase-site build a fully branded showcase website on pagemotor that demonstrates a single featured ep suite plugin in real-world editorial use. mirrors the thinkprofessionally.com build pattern (ep-events as featured plugin). use when the user wants to create a showcase / demo / marketing site for any ep plugin, typically each new plugin release gets one. output is a live vps site with a bespoke 8-pass-designed theme, identity-matched imagery, editorial-grade content, working forms, legal pages, and stripe checkout (test mode). trigger phrases include &quot;build a showcase site for&quot;, &quot;create a demo website for&quot;, &quot;plugin showcase&quot;, &quot;thinkprofessionally pattern&quot;, &quot;next featured plugin site&quot;. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">pagemotor-plugin-showcase-site</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span></div>
+<p class="tk-sum">Build a fully branded showcase website on PageMotor that demonstrates a single featured EP Suite plugin in real-world editorial use. Mirrors the thinkprofessionally.com build pattern (ep-events as featured plugin).</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when the user wants to create a showcase / demo / marketing site for any EP plugin, typically each new plugin release gets one. Output is a live VPS site with a bespoke 8-pass-designed theme, identity-matched imagery, editorial-grade content, working forms, legal pages, and Stripe Checkout (test mode). Trigger phrases include &quot;build a showcase site for&quot;, &quot;create a demo website for&quot;, &quot;plugin showcase&quot;, &quot;thinkprofessionally pattern&quot;, &quot;next featured plugin site&quot;.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/pagemotor-plugin-showcase-site/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="pm-site-mcp pm-site-mcp &gt; operate any of our own pagemotor sites (ionos vps estate or vultr rig) through its mcp endpoint the sanctioned way — find the right connector, read and edit live content, host image bytes, and verify with real probes. use whenever a task says &quot;fix/edit/update &lt;our-pm-site&gt;&quot;, &quot;change the nav/css/image on &lt;domain&gt;&quot;, or any content/settings op on a *.elmspark.com rig, a discovery site, or a customer domain we host (e.g. tylertaxservice.com). never improvise this flow and never reach for raw db edits first — the mcp is the front door. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">pm-site-mcp</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span></div>
+<p class="tk-sum">&gt; Operate any of our own PageMotor sites (IONOS VPS estate or Vultr rig) through its MCP endpoint the sanctioned way — find the right connector, read and edit live content, host image bytes, and verify with real probes.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use whenever a task says &quot;fix/edit/update &lt;our-pm-site&gt;&quot;, &quot;change the nav/CSS/image on &lt;domain&gt;&quot;, or any content/settings op on a *.elmspark.com rig, a Discovery site, or a customer domain we host (e.g. tylertaxservice.com). Never improvise this flow and never reach for raw DB edits first — the MCP is the front door.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/pm-site-mcp/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="pm-verify-before-done pm-verify-before-done run an end-to-end visual + structural + accessibility verification of a pagemotor site change before claiming &quot;done&quot; / &quot;shipped&quot; / &quot;deployed&quot; / &quot;live&quot;. mirrors the human verification kenn currently does after every change — opens the page, looks at the layout, clicks the form, spots the broken thing. this skill does that work first and reports back with proof. use before writing any &quot;✓ done&quot; / &quot;shipped&quot; / &quot;complete&quot; message about a thinkprofessionally.com / dev.elmspark.com / elmspark.com / pm-site css, content, plugin, form, image, or layout change. trigger phrases include &quot;verify&quot;, &quot;before i say done&quot;, &quot;before shipping&quot;, &quot;before claiming&quot;, &quot;is this actually right&quot;, &quot;did that work&quot;, &quot;double-check&quot;, &quot;audit my last change&quot;, &quot;smoke this&quot;, &quot;qa this change&quot;. also trigger proactively before any message that contains &quot;done&quot;, &quot;shipped&quot;, &quot;live&quot;, &quot;complete&quot;, &quot;verified&quot;, &quot;✓&quot; for a change touching a pm site url. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">pm-verify-before-done</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span></div>
+<p class="tk-sum">Run an end-to-end visual + structural + accessibility verification of a PageMotor site change BEFORE claiming &quot;done&quot; / &quot;shipped&quot; / &quot;deployed&quot; / &quot;live&quot;.</p>
+<details><summary>When it fires, and the caveats</summary><p>Mirrors the human verification Kenn currently does after every change — opens the page, looks at the layout, clicks the form, spots the broken thing. This skill does that work first and reports back with proof. Use BEFORE writing any &quot;✓ done&quot; / &quot;shipped&quot; / &quot;complete&quot; message about a thinkprofessionally.com / dev.elmspark.com / elmspark.com / PM-site CSS, content, plugin, form, image, or layout change. Trigger phrases include &quot;verify&quot;, &quot;before I say done&quot;, &quot;before shipping&quot;, &quot;before claiming&quot;, &quot;is this actually right&quot;, &quot;did that work&quot;, &quot;double-check&quot;, &quot;audit my last change&quot;, &quot;smoke this&quot;, &quot;QA this change&quot;. Also trigger PROACTIVELY before any message that contains &quot;done&quot;, &quot;shipped&quot;, &quot;live&quot;, &quot;complete&quot;, &quot;verified&quot;, &quot;✓&quot; for a change touching a PM site URL.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/pm-verify-before-done/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="media" data-search="rc-add-track rc-add-track add a new song to the roguecanon.com /music/ playlist end-to-end, with a verification gate. hosts the mp3 url-safely on the vps, edits the pagemotor blank_slate_instances theme blob in place (pdo, never the mysql cli) to add the playlist track row to both the music page and the home mini-player plus an optional story card on the music page, then probes the live result. use when kenn says &quot;add a track to rogue canon&quot;, &quot;add &lt;song&gt; to the rc music page&quot;, &quot;put this mp3 on roguecanon.com&quot;, &quot;new rc single&quot;, or hands over an mp3 destined for the band site. floors the duration so the static label matches the player&#x27;s own readout (the proven manual run shipped a rounded 3:37 for a 3:36 file - do not replicate that). refuses to claim done/shipped/live until three real probes are pasted: the mp3 returns http 200 with the right content-length, /music/ shows the track count incremented by one with the new slug, and a playwright play test confirms the new track actually plays. step-success (scp ok, update ran) is never the done signal. media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">rc-add-track</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">Add a new song to the roguecanon.com /music/ playlist end-to-end, with a verification gate. Hosts the mp3 URL-safely on the VPS, edits the PageMotor Blank_Slate_instances theme blob in place (PDO, never the mysql CLI) to add the playlist track row to BOTH the Music page and the home mini-player plus an optional story card on the Music page, then probes the live result.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;add a track to Rogue Canon&quot;, &quot;add &lt;song&gt; to the RC music page&quot;, &quot;put this mp3 on roguecanon.com&quot;, &quot;new RC single&quot;, or hands over an mp3 destined for the band site. Floors the duration so the static label matches the player&#x27;s own readout (the proven manual run shipped a rounded 3:37 for a 3:36 file - do NOT replicate that). Refuses to claim done/shipped/live until three real probes are pasted: the mp3 returns HTTP 200 with the right content-length, /music/ shows the track count incremented by one with the new slug, and a Playwright play test confirms the new track actually plays. Step-success (scp ok, UPDATE ran) is never the done signal.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/rc-add-track/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="review" data-search="readiness-audit readiness-audit run an elmspark readiness audit end-to-end — the £1,800 commission sold at elmspark.com/readiness-audit/ — or re-run an existing one as a delta report. a deep, evidence-led review of a live site across six dimensions (conversion, privacy/gdpr, accessibility, seo + ai-readiness, performance, security), every finding reproduced on the real site and adversarially double-checked, delivered as a private interactive report on audits.elmspark.com behind the email-otp gate. use when kenn says &quot;run a readiness audit on &lt;site&gt;&quot;, &quot;audit &lt;client&gt;&#x27;s site&quot;, &quot;re-run the &lt;client&gt; audit&quot;, &quot;growth os report for &lt;client&gt;&quot;, or a readiness audit commission lands. the proven reference implementation is the pagemotor growth os report (workspace `pagemotor audit 2026-06-28/`, live at audits.elmspark.com/pagemotor/). do not use for quick informal look-overs (just probe and answer inline) or for pm-plugin qa (use /qa-plugin). review &amp; qa" style="--es-cat:var(--es-cat-security)">
+<h3 class="tk-name">readiness-audit</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Review &amp; QA</span></div>
+<p class="tk-sum">Run an ElmsPark Readiness Audit end-to-end — the £1,800 commission sold at elmspark.com/readiness-audit/ — or re-run an existing one as a delta report. A deep, evidence-led review of a live site across six dimensions (conversion, privacy/GDPR, accessibility, SEO + AI-readiness, performance, security), every finding reproduced on the real site and adversarially double-checked, delivered as a private interactive report on audits.elmspark.com behind the email-OTP gate.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;run a readiness audit on &lt;site&gt;&quot;, &quot;audit &lt;client&gt;&#x27;s site&quot;, &quot;re-run the &lt;client&gt; audit&quot;, &quot;Growth OS report for &lt;client&gt;&quot;, or a Readiness Audit commission lands. The proven reference implementation is the PageMotor Growth OS report (workspace `PageMotor Audit 2026-06-28/`, live at audits.elmspark.com/pagemotor/). Do NOT use for quick informal look-overs (just probe and answer inline) or for PM-plugin QA (use /qa-plugin).</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/readiness-audit/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="review" data-search="repo-deep-dive repo-deep-dive deep-read one or more third-party github repos and report what is worth stealing for the elmspark estate. sequential, one dedicated full-context agent per repo, licence-gated, with every &quot;the estate lacks this&quot; claim proven by a grep of the real plugin source before it is allowed into the report. use when kenn says &quot;deep dive these repos&quot;, &quot;any nuggets worth stealing&quot;, &quot;look at this project for ideas&quot;, &quot;should we fork/use/harvest x&quot;, or hands over a list of github urls. produces a per-repo evidence page plus one ranked cross-repo harvest page on guides.elmspark.com, and a ledger row so the next dive on the same repo runs as a diff. review &amp; qa" style="--es-cat:var(--es-cat-security)">
+<h3 class="tk-name">repo-deep-dive</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Review &amp; QA</span></div>
+<p class="tk-sum">Deep-read one or more third-party GitHub repos and report what is worth stealing for the ElmsPark estate. Sequential, one dedicated full-context agent per repo, licence-gated, with every &quot;the estate lacks this&quot; claim proven by a grep of the real plugin source before it is allowed into the report.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;deep dive these repos&quot;, &quot;any nuggets worth stealing&quot;, &quot;look at this project for ideas&quot;, &quot;should we fork/use/harvest X&quot;, or hands over a list of GitHub URLs. Produces a per-repo evidence page plus one ranked cross-repo harvest page on guides.elmspark.com, and a ledger row so the next dive on the same repo runs as a diff.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-no">Mini</span><span class="tk-mac-no">M1 MBP</span></div>
+<code class="tk-src">cc-skills/repo-deep-dive/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="session" data-search="route route &gt;- name the right elmspark command or skill for a task before starting it. use at the start of any ep plugin, pagemotor site, site-design, review, media, discovery ai, or comms task when the correct entrypoint is not obvious, when a task might span several skills, or when kenn asks &quot;which skill/command for x&quot; or types /route. reads the task, names one primary entrypoint with a one-line reason, resolves the known overlaps (qa-site vs pm-verify-before-done, ds vs da vs design-conversion, rp vs rc vs rs vs ultra), lists any compose chain, and points to /h and the toolkit guide for the live inventory. it routes; it does not do the work. it hands off to the entrypoint it names. session &amp; workflow" style="--es-cat:var(--es-cat-privacy)">
+<h3 class="tk-name">route</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Session &amp; workflow</span></div>
+<p class="tk-sum">&gt;- Name the right ElmsPark command or skill for a task BEFORE starting it.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use at the start of any EP plugin, PageMotor site, site-design, review, media, Discovery AI, or comms task when the correct entrypoint is not obvious, when a task might span several skills, or when Kenn asks &quot;which skill/command for X&quot; or types /route. Reads the task, names ONE primary entrypoint with a one-line reason, resolves the known overlaps (qa-site vs pm-verify-before-done, DS vs DA vs design-conversion, RP vs RC vs rs vs Ultra), lists any compose chain, and points to /h and the toolkit guide for the live inventory. It routes; it does not do the work. It hands off to the entrypoint it names.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/route/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="ep" data-search="ship-ep-plugin ship-ep-plugin ship an ep plugin update end-to-end with a verification gate. rebuilds the zip from current source first (so the uploaded bytes can never be a stale leftover), then bundles the four real ship steps (upload zip to ep-suite-downloads release, run ingest.php on updates.elmspark.com, run a customer-shape post probe against the live update endpoint, download the zip via the customer path and confirm its sha256 matches the manifest&#x27;s announced checksum). refuses to declare &quot;shipped&quot; until all six gate booleans pass. use this for every ep plugin release, every time. replaces ad-hoc `gh release upload` invocations because uploading the zip alone is invisible to customers without the manifest refresh; a successful upload + manifest refresh is still not proof until the post probe is read; and even the post probe is not proof until the customer download path is fetched and its bytes hashed (the manifest&#x27;s checksum is computed against the vps copy, not the github release the customer actually downloads from — they can silently diverge). ep plugins &amp; shipping" style="--es-cat:var(--es-cat-email)">
+<h3 class="tk-name">ship-ep-plugin</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">EP plugins &amp; shipping</span></div>
+<p class="tk-sum">Ship an EP plugin update end-to-end with a verification gate. Rebuilds the zip from current source first (so the uploaded bytes can never be a stale leftover), then bundles the four real ship steps (upload zip to ep-suite-downloads release, run ingest.php on updates.elmspark.com, run a customer-shape POST probe against the live update endpoint, download the zip via the customer path and confirm its SHA256 matches the manifest&#x27;s announced checksum).</p>
+<details><summary>When it fires, and the caveats</summary><p>Refuses to declare &quot;shipped&quot; until all six gate booleans pass. Use this for EVERY EP plugin release, every time. Replaces ad-hoc `gh release upload` invocations because uploading the zip alone is invisible to customers without the manifest refresh; a successful upload + manifest refresh is still not proof until the POST probe is read; and even the POST probe is not proof until the customer download path is fetched and its bytes hashed (the manifest&#x27;s checksum is computed against the VPS copy, not the GitHub release the customer actually downloads from — they can silently diverge).</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/ship-ep-plugin/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="media" data-search="website-advert website-advert make a 30-second ai video advert for any website, storyboard first, then the full cut. two phases with a hard approval gate between them. phase 1 researches the live site, agrees a concept and style with kenn, writes an 8-shot timestamped storyboard (vo script, audio map, motion prompts), generates the frames on higgsfield (gpt image 2 for narrative stills, nano tier for text-bearing frames), verifies every frame for garbled lettering and anatomy errors, and delivers an interactive html storyboard with a timed animatic player. phase 2, only on kenn&#x27;s approval, animates each approved frame image-to-video (seedance), generates the voiceover, assembles the exact 30 seconds in ffmpeg, and verifies from inside the finished file. use when kenn says &quot;make an advert for &lt;site&gt;&quot;, &quot;storyboard a youtube ad&quot;, &quot;video advert for &lt;brand&gt;&quot;, &quot;do the advert thing for x&quot;, or wants the still-then-animate pipeline scaled from one clip to a finished commercial. built from the working 2026-07-03 a box for your business run. media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">website-advert</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">Make a 30-second AI video advert for any website, storyboard first, then the full cut. Two phases with a hard approval gate between them. Phase 1 researches the live site, agrees a concept and style with Kenn, writes an 8-shot timestamped storyboard (VO script, audio map, motion prompts), generates the frames on Higgsfield (GPT Image 2 for narrative stills, nano tier for text-bearing frames), verifies every frame for garbled lettering AND anatomy errors, and delivers an interactive HTML storyboard with a timed animatic player. Phase 2, only on Kenn&#x27;s approval, animates each approved frame image-to-video (Seedance), generates the voiceover, assembles the exact 30 seconds in ffmpeg, and verifies from inside the finished file.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;make an advert for &lt;site&gt;&quot;, &quot;storyboard a YouTube ad&quot;, &quot;video advert for &lt;brand&gt;&quot;, &quot;do the advert thing for X&quot;, or wants the still-then-animate pipeline scaled from one clip to a finished commercial. Built from the working 2026-07-03 A Box For Your Business run.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/website-advert/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="pm" data-search="wp-to-pm-migration wp-to-pm-migration migrate a live wordpress site to pagemotor on a target vps. handles thesis/focus, divi page-builder, gutenberg, and recipe-blog source themes. for thesis/focus sources on an existing pm install where preserving the original focus skin appearance is desired, defers to the official `pagemotor-migrator translate.php` cli + focus bridge theme; otherwise drives the full stack itself. strips theme-builder shortcodes to clean html, ports simple gravity forms to ep email, replaces complex stripe/pdf order flows with contact-to-order notices, performs cloudflare dns cutover with ipv6 aaaa deletion, issues let&#x27;s encrypt certs via http-01, applies a coherent editorial design pass (vollkorn/cormorant + inter tight + warm cream or twilight purple or memorial palette), wires chatgpt images 2.0 illustration sets with alpha extraction, and exhaustively verifies every internal link via playwright with --host-rules to bypass dns cache. importers are idempotent (upsert by slug) and emit `*-pagemap.md` for human review. use when the user wants to migrate, convert, replace, port, or move a wordpress site to pagemotor. triggers on phrases like &quot;migrate x to pagemotor&quot;, &quot;wp→pm&quot;, &quot;convert wordpress site&quot;, &quot;move this site off wp&quot;, &quot;pagemotor migration&quot;, &quot;replace this wp with pm&quot;. pagemotor &amp; sites" style="--es-cat:var(--es-cat-pagemotor)">
+<h3 class="tk-name">wp-to-pm-migration</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">PageMotor &amp; sites</span></div>
+<p class="tk-sum">Migrate a live WordPress site to PageMotor on a target VPS. Handles Thesis/Focus, Divi page-builder, Gutenberg, and recipe-blog source themes. For Thesis/Focus sources on an existing PM install where preserving the original Focus skin appearance is desired, defers to the official `pagemotor-migrator translate.php` CLI + Focus Bridge theme; otherwise drives the full stack itself. Strips theme-builder shortcodes to clean HTML, ports simple Gravity Forms to EP Email, replaces complex Stripe/PDF order flows with contact-to-order notices, performs Cloudflare DNS cutover with IPv6 AAAA deletion, issues Let&#x27;s Encrypt certs via HTTP-01, applies a coherent editorial design pass (Vollkorn/Cormorant + Inter Tight + warm cream OR twilight purple OR memorial palette), wires ChatGPT Images 2.0 illustration sets with alpha extraction, and exhaustively verifies every internal link via Playwright with --host-rules to bypass DNS cache. Importers are idempotent (UPSERT by slug) and emit `*-pagemap.md` for human review.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when the user wants to migrate, convert, replace, port, or move a WordPress site to PageMotor. Triggers on phrases like &quot;migrate X to PageMotor&quot;, &quot;WP→PM&quot;, &quot;convert WordPress site&quot;, &quot;move this site off WP&quot;, &quot;PageMotor migration&quot;, &quot;replace this WP with PM&quot;.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/wp-to-pm-migration/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="media" data-search="youtube-music-video youtube-music-video &gt; build a full youtube music video from a finished track end to end: karaoke frame-timing, named concept + lyric-anchored shot plan, gpt_image_2 stills board gated on kenn&#x27;s approval, kling 3.0 image-to-video clips, line-locked ffmpeg edl assembly muxing the untouched master audio, verification gate (exact duration + audio levels + frame spot-checks), captions .srt, youtube metadata, and a 3-way thumbnail+title a/b set. use when kenn says &quot;make a music video for &lt;track&gt;&quot;, &quot;do the video thing for &lt;song&gt;&quot;, &quot;build &lt;track&gt;&#x27;s video like the pit&quot;, or hands over a track with a karaoke mp4 wanting visuals. distilled from the proven underdog (hardcore remix) &quot;the pit&quot; run (2026-07-09, ~420 credits, zero failed generations) and the wdb/bd/pmw pipeline before it. not for adverts (use website-advert), single clips (use higgsfield-still-to-clip), or lyric-video-only karaoke reskins. media &amp; ai generation" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">youtube-music-video</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Media &amp; AI generation</span></div>
+<p class="tk-sum">&gt; Build a full YouTube music video from a finished track end to end: karaoke frame-timing, named concept + lyric-anchored shot plan, gpt_image_2 stills board gated on Kenn&#x27;s approval, Kling 3.0 image-to-video clips, line-locked ffmpeg EDL assembly muxing the untouched master audio, verification gate (exact duration + audio levels + frame spot-checks), captions .srt, YouTube metadata, and a 3-way thumbnail+title A/B set.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when Kenn says &quot;make a music video for &lt;track&gt;&quot;, &quot;do the video thing for &lt;song&gt;&quot;, &quot;build &lt;track&gt;&#x27;s video like The Pit&quot;, or hands over a track with a karaoke mp4 wanting visuals. Distilled from the proven Underdog (Hardcore Remix) &quot;The Pit&quot; run (2026-07-09, ~420 credits, zero failed generations) and the WDB/BD/PMW pipeline before it. NOT for adverts (use website-advert), single clips (use higgsfield-still-to-clip), or lyric-video-only karaoke reskins.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/youtube-music-video/SKILL.md</code>
+</article></div>
+</section>
+
+<section class="tk-sec" id="vendored">
+  <h2>Vendored design skills <span class="tk-count">14</span></h2>
+  <div class="es-note">
+    <p><strong>The edit rule inverts for these.</strong> They are upstream copies from
+    <a href="https://github.com/MengTo/Skills">MengTo/Skills</a> (MIT). A re-vendor
+    overwrites the folder wholesale, so a local edit disappears without a diff to
+    notice. Fix upstream, or fork the technique into a first-party skill with its
+    own name. A folder is vendored if it carries an <code>UPSTREAM.md</code>.</p>
+  </div>
+  <div class="tk-grid"><article class="tk-card" data-cat="design" data-search="animation-on-scroll animation-on-scroll create an on-scroll animation trigger using intersectionobserver with tailwind-friendly animation classes and keyframes. use when asked for scroll-reveal, animate-on-scroll, or sequencing element animations when they enter the viewport. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">animation-on-scroll</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Create an on-scroll animation trigger using IntersectionObserver with Tailwind-friendly animation classes and keyframes.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when asked for scroll-reveal, animate-on-scroll, or sequencing element animations when they enter the viewport.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/animation-on-scroll/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="atmosphere-background atmosphere-background create a dark atmospheric background with drifting vertical light folds, screen-blended glow, and a concentrated luminous corner or lower-edge bloom.  web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">atmosphere-background</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Create a dark atmospheric background with drifting vertical light folds, screen-blended glow, and a concentrated luminous corner or lower-edge bloom.</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/atmosphere-background/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="build-awwwards-quality-sites build-awwwards-quality-sites art-direct and implement distinctive, motion-rich marketing, editorial, portfolio, and landing websites with original reference-inspired imagery, standout heroes, gsap choreography, one smooth-scroll engine, optional three.js shaders, honest icon and logo sourcing, photo avatars, accessibility, and performance safeguards. use when a user asks for an awwwards-quality, premium, cinematic, interactive, high-concept, or motion-led website, or explicitly requests this visual and motion system. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">build-awwwards-quality-sites</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Art-direct and implement distinctive, motion-rich marketing, editorial, portfolio, and landing websites with original reference-inspired imagery, standout heroes, GSAP choreography, one smooth-scroll engine, optional Three.js shaders, honest icon and logo sourcing, photo avatars, accessibility, and performance safeguards.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when a user asks for an Awwwards-quality, premium, cinematic, interactive, high-concept, or motion-led website, or explicitly requests this visual and motion system.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/build-awwwards-quality-sites/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="build-threejs-scroll-worlds build-threejs-scroll-worlds build rich, scroll-controlled real-time three.js experiences as one persistent 3d world whose camera, lighting, atmosphere, materials, objects, dom story, and interactions evolve across authored chapters. use for 3d scrollytelling, scroll-driven webgl worlds, camera journeys, interactive portfolios, product stories, exhibitions, explainers, game or film microsites, spatial narratives, and multi-scene websites where native scroll should travel through one continuous place. not limited to landing pages. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">build-threejs-scroll-worlds</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Build rich, scroll-controlled real-time Three.js experiences as one persistent 3D world whose camera, lighting, atmosphere, materials, objects, DOM story, and interactions evolve across authored chapters.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use for 3D scrollytelling, scroll-driven WebGL worlds, camera journeys, interactive portfolios, product stories, exhibitions, explainers, game or film microsites, spatial narratives, and multi-scene websites where native scroll should travel through one continuous place. Not limited to landing pages.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/build-threejs-scroll-worlds/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="cinematic-scroll-storytelling cinematic-scroll-storytelling create cinematic scroll-driven landing pages with lenis smooth scrolling, gsap scrolltrigger, scroll-linked progression, staggered text reveals, sticky card stacks, parallax backgrounds, scroll-scrubbed transitions, footer reveals, and immersive preloaders. use when analyzing or building premium editorial scroll experiences, sticky project stacks, kinetic typography, or section-by-section storytelling. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">cinematic-scroll-storytelling</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Create cinematic scroll-driven landing pages with Lenis smooth scrolling, GSAP ScrollTrigger, scroll-linked progression, staggered text reveals, sticky card stacks, parallax backgrounds, scroll-scrubbed transitions, footer reveals, and immersive preloaders.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when analyzing or building premium editorial scroll experiences, sticky project stacks, kinetic typography, or section-by-section storytelling.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/cinematic-scroll-storytelling/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="falling-leaves falling-leaves build falling leaves that read as leaves, with each one tumbling on its own axis so it presents a face, thins to an edge, and opens out again, and with its sideways slip driven by that same tumble. covers the 2-d canvas build and the instanced-3-d variant, where leaves are recycled from, density-versus-count maths, depth layering, colour under a tone-mapped composite, reduced motion, and visibility pausing. use for autumn maple, sakura petals, blossom, ash, snowfall shapes, or any drifting foliage where a generic particle field reads as confetti. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">falling-leaves</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Build falling leaves that read as leaves, with each one tumbling on its own axis so it presents a face, thins to an edge, and opens out again, and with its sideways slip driven by that same tumble. Covers the 2-D canvas build and the instanced-3-D variant, where leaves are recycled from, density-versus-count maths, depth layering, colour under a tone-mapped composite, reduced motion, and visibility pausing.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use for autumn maple, sakura petals, blossom, ash, snowfall shapes, or any drifting foliage where a generic particle field reads as confetti.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/falling-leaves/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="session" data-search="grilling grilling grill the user relentlessly about a plan, decision, or idea. use when the user wants to stress-test their thinking, or uses any &#x27;grill&#x27; trigger phrases. session &amp; workflow" style="--es-cat:var(--es-cat-privacy)">
+<h3 class="tk-name">grilling</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Session &amp; workflow</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Grill the user relentlessly about a plan, decision, or idea.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when the user wants to stress-test their thinking, or uses any &#x27;grill&#x27; trigger phrases.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/grilling/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="masked-reveal masked-reveal create masked staggered word reveals on scroll with gsap scrolltrigger. use when headings, hero copy, section titles, or editorial text should reveal word-by-word through an overflow mask as they enter the viewport. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">masked-reveal</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Create masked staggered word reveals on scroll with GSAP ScrollTrigger.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when headings, hero copy, section titles, or editorial text should reveal word-by-word through an overflow mask as they enter the viewport.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/masked-reveal/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="pointer-trail-emitter pointer-trail-emitter build a cursor trail whose spacing stays constant at any hand speed, by emitting motes per unit of distance travelled rather than on a timer, so a flick draws the same continuous ribbon as a crawl instead of breaking into scattered dots. covers sub-segment placement, the ring-buffer ordering trap, the idle breath a distance emitter needs, anchoring the trail to the screen in a 3-d scene, scaling scatter against the plane it hangs on, coasting instead of stopping dead, touch and reduced-motion fallbacks, and why moving the emitter to a dom overlay to raise its z-index costs more than it buys. use for cursor wisps, pointer sparks, embers, magic trails, comet tails, plankton, dust, or any mote trail that must stay legible however fast the hand moves. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">pointer-trail-emitter</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Build a cursor trail whose spacing stays constant at any hand speed, by emitting motes per unit of distance travelled rather than on a timer, so a flick draws the same continuous ribbon as a crawl instead of breaking into scattered dots. Covers sub-segment placement, the ring-buffer ordering trap, the idle breath a distance emitter needs, anchoring the trail to the screen in a 3-D scene, scaling scatter against the plane it hangs on, coasting instead of stopping dead, touch and reduced-motion fallbacks, and why moving the emitter to a DOM overlay to raise its z-index costs more than it buys.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use for cursor wisps, pointer sparks, embers, magic trails, comet tails, plankton, dust, or any mote trail that must stay legible however fast the hand moves.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/pointer-trail-emitter/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="progressive-blur progressive-blur create a layered css progressive blur (top or bottom) using multiple backdrop-filter masks for depth and softness. use when asked for “progressive blur”, “gradient blur overlay”, or stepped blur masks that fade from an edge of the viewport. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">progressive-blur</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Create a layered CSS progressive blur (top or bottom) using multiple backdrop-filter masks for depth and softness.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when asked for “progressive blur”, “gradient blur overlay”, or stepped blur masks that fade from an edge of the viewport.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/progressive-blur/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="scroll-world-storytelling scroll-world-storytelling turn an article, case study, brand narrative, product journey, or long-form story into a cinematic scroll-driven landing page using one of three renderers: scrubbed video, a real-time three.js world, or semantic html/svg data and typography. use when the user asks for a scroll world, fly-through landing page, article-to-website transformation, animated planet, data scrollytelling, video-scrubbed page, connected visual journey, or story-led alternative to ordinary stacked sections. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">scroll-world-storytelling</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Turn an article, case study, brand narrative, product journey, or long-form story into a cinematic scroll-driven landing page using one of three renderers: scrubbed video, a real-time Three.js world, or semantic HTML/SVG data and typography.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when the user asks for a scroll world, fly-through landing page, article-to-website transformation, animated planet, data scrollytelling, video-scrubbed page, connected visual journey, or story-led alternative to ordinary stacked sections.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/scroll-world-storytelling/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="staggered-word-reveal staggered-word-reveal create subtle editorial word-by-word text reveal animations where each word fades and rises into place once it enters the viewport. use for premium portfolio headlines, hero copy, section intros, and short marketing text that needs a cinematic staggered reveal with intersectionobserver or in-view detection. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">staggered-word-reveal</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Create subtle editorial word-by-word text reveal animations where each word fades and rises into place once it enters the viewport.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use for premium portfolio headlines, hero copy, section intros, and short marketing text that needs a cinematic staggered reveal with IntersectionObserver or in-view detection.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/staggered-word-reveal/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="design" data-search="threejs-landscape threejs-landscape build a live three.js landscape that stays quiet behind a subject — a noise heightfield on a polar grid so resolution follows the lens, ground coloured by slope and moisture rather than by texture, instanced gpu grass whose wind costs nothing on the cpu, scattered stones, a gradient sky dome, a star field you can actually see, and a time-of-day system that cross-fades instead of cutting. use for hero backdrops, product stages, scroll worlds, or any scene where a building, object, or figure has to sit in a place rather than float on a gradient. web design technique" style="--es-cat:var(--es-cat-ai)">
+<h3 class="tk-name">threejs-landscape</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Web design technique</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Build a live Three.js landscape that stays quiet behind a subject — a noise heightfield on a polar grid so resolution follows the lens, ground coloured by slope and moisture rather than by texture, instanced GPU grass whose wind costs nothing on the CPU, scattered stones, a gradient sky dome, a star field you can actually see, and a time-of-day system that cross-fades instead of cutting.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use for hero backdrops, product stages, scroll worlds, or any scene where a building, object, or figure has to sit in a place rather than float on a gradient.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/threejs-landscape/SKILL.md</code>
+</article>
+<article class="tk-card" data-cat="session" data-search="writing-for-agents writing-for-agents writing documents for agents. use when creating or editing skills, or modifying agents.md or claude.md.  session &amp; workflow" style="--es-cat:var(--es-cat-privacy)">
+<h3 class="tk-name">writing-for-agents</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Session &amp; workflow</span><span class="tk-tag">vendored, do not edit</span></div>
+<p class="tk-sum">Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md.</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">cc-skills/writing-for-agents/SKILL.md</code>
+</article></div>
+</section>
+
+<section class="tk-sec" id="macs">
+  <h2>Where things are installed</h2>
+  <p class="es-hint">Probed live over ssh when this page was generated. A struck-out
+  Mac on a card means that skill or command is missing there and needs its one-line
+  symlink.</p>
+  <div class="tk-scroll"><table class="tk-table">
+    <thead><tr><th>Mac</th><th>Host</th><th>State at generation</th></tr></thead>
+    <tbody><tr><td><strong>M5 MacBook Pro</strong></td><td>local</td><td>53 skills, 18 commands</td></tr><tr><td><strong>M1 Mac Mini</strong></td><td>mini-ts</td><td>39 skills, 17 commands</td></tr><tr><td><strong>M1 MacBook Pro</strong></td><td>mbp-ts</td><td>39 skills, 17 commands</td></tr></tbody>
+  </table></div>
+  <p class="es-hint">Install one:</p>
+  <pre><code>ln -sf "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/cc-skills/&lt;name&gt;" "$HOME/.claude/skills/&lt;name&gt;"</code></pre>
+</section>
+
+<section class="tk-sec" id="third-party">
+  <h2>Third-party skills on this Mac <span class="tk-count">13</span></h2>
+  <p class="es-hint">Not Kenn's, and not in <code>cc-skills/</code>. Listed so the
+  catalogue matches what Claude can actually load.</p>
+  <div class="tk-scroll"><table class="tk-table">
+    <thead><tr><th>Skill</th><th>What it does</th><th>Origin</th></tr></thead>
+    <tbody><tr><td><code>agents-sdk</code></td><td>Build AI agents on Cloudflare Workers using the Agents SDK.</td><td><code>installed directory</code></td></tr><tr><td><code>cloudflare</code></td><td>Comprehensive Cloudflare platform skill covering Workers, Pages, storage (KV, D1, R2), AI (Workers AI, Vectorize, Agents SDK), feature flags (Flagship), networking (Tunnel, Spectrum), security (WAF, DDoS), and infrastructure-as-code (Terraform, Pulumi).</td><td><code>installed directory</code></td></tr><tr><td><code>cloudflare-email-service</code></td><td>Send and receive transactional emails with Cloudflare Email Service (Email Sending + Email Routing).</td><td><code>installed directory</code></td></tr><tr><td><code>durable-objects</code></td><td>Create and review Cloudflare Durable Objects.</td><td><code>installed directory</code></td></tr><tr><td><code>find-skills</code></td><td>Helps users discover and install agent skills when they ask questions like &quot;how do I do X&quot;, &quot;find a skill for X&quot;, &quot;is there a skill that can...&quot;, or express interest in extending capabilities.</td><td><code>../../.agents/skills/find-skills</code></td></tr><tr><td><code>higgsfield-generate</code></td><td>| Generate images/videos via Higgsfield AI. Default: GPT Image 2 for images/design/text, Seedance 2.0 for video, Nano Banana 2/Pro for character/reference image work, Marketing Studio for ads with avatars/products/hooks, settings, plus Soul V2/Cinema/Cast/Location and Kling 3.0.</td><td><code>../../.agents/skills/higgsfield-generate</code></td></tr><tr><td><code>higgsfield-marketplace-cards</code></td><td>| Generate marketplace product image cards through Higgsfield: compliant main image, secondary product images, and A+ style content modules.</td><td><code>../../.agents/skills/higgsfield-marketplace-cards</code></td></tr><tr><td><code>higgsfield-product-photoshoot</code></td><td>| Generate brand-quality product images through Higgsfield product-photoshoot prompt enhancement on GPT Image 2 / gpt_image_2. Entry point for professional brand/product visuals.</td><td><code>../../.agents/skills/higgsfield-product-photoshoot</code></td></tr><tr><td><code>sandbox-sdk</code></td><td>Build sandboxed applications for secure code execution.</td><td><code>installed directory</code></td></tr><tr><td><code>turnstile-spin</code></td><td>Set up Cloudflare Turnstile end-to-end in a project — scan the codebase, create the widget via the Cloudflare API, deploy the managed siteverify Worker, write the frontend snippets, validate, and persist the skill.</td><td><code>installed directory</code></td></tr><tr><td><code>web-perf</code></td><td>Analyzes web performance using Chrome DevTools MCP. Measures Core Web Vitals (LCP, INP, CLS) and supplementary metrics (FCP, TBT, Speed Index), identifies render-blocking resources, network dependency chains, layout shifts, caching issues, and accessibility gaps.</td><td><code>installed directory</code></td></tr><tr><td><code>workers-best-practices</code></td><td>Reviews and authors Cloudflare Workers code against production best practices.</td><td><code>installed directory</code></td></tr><tr><td><code>wrangler</code></td><td>Cloudflare Workers CLI for deploying, developing, and managing Workers, KV, R2, D1, Vectorize, Hyperdrive, Workers AI, Containers, Queues, Workflows, Pipelines, and Secrets Store.</td><td><code>installed directory</code></td></tr></tbody>
+  </table></div>
+</section>
+
+<section class="tk-sec" id="regenerate">
+  <h2>This page is generated</h2>
+  <div class="es-note-bad">
+    <p><strong>Never hand-edit it.</strong> The previous version was maintained by hand
+    and drifted 23 skills out of date between June and August 2026. Change the source
+    or the generator, then re-run it.</p>
+  </div>
+  <pre><code>python3 cc-tools/toolkit-guide/generate-toolkit-guide.py</code></pre>
+  <p class="es-hint">Writes the workspace copy and the Astro
+  <code>public/toolkit/index.html</code> mirror. Deploy with
+  <code>bash cc-tools/toolkit-guide/deploy.sh</code>. For a command list with no
+  page at all, <code>/h</code> prints one from disk on Haiku.</p>
+</section>
+
+<p class="es-hint">Generated 18 August 2026 at 23:05 on KNJ-M5-MBP from
+16 command files and 40 skill folders.</p>
+
 </main>
 
-<footer>
-  Generated 1 June 2026 from a live audit of your <span class="mono">cc-commands/</span> and <span class="mono">cc-skills/</span>.
-  Statuses reflect <span class="mono">toolkit-audit-2026-06-01.md</span>. Re-open any time — it is a plain file, no build step.
+<!-- ============================================================
+     ElmsPark footer. Paste directly before 
+<script>
+(function () {
+  var q = document.getElementById('tk-q'),
+      pills = document.getElementById('tk-pills'),
+      count = document.getElementById('tk-count'),
+      cards = Array.prototype.slice.call(document.querySelectorAll('.tk-card')),
+      cat = '';
+  [q, pills, count].forEach(function (el) { if (el) el.hidden = false; });
+
+  function apply() {
+    var term = (q.value || '').trim().toLowerCase(), shown = 0;
+    cards.forEach(function (c) {
+      var ok = (!cat || c.dataset.cat === cat) &&
+               (!term || c.dataset.search.indexOf(term) !== -1);
+      c.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = shown + ' of ' + cards.length + ' shown';
+    document.querySelectorAll('.tk-sec').forEach(function (sec) {
+      var grid = sec.querySelector('.tk-grid');
+      if (grid) sec.hidden = !grid.querySelector('.tk-card:not([hidden])');
+    });
+  }
+
+  q.addEventListener('input', apply);
+  pills.addEventListener('click', function (ev) {
+    var b = ev.target.closest('.tk-pill');
+    if (!b) return;
+    cat = b.dataset.filter;
+    pills.querySelectorAll('.tk-pill').forEach(function (p) {
+      p.setAttribute('aria-pressed', p === b ? 'true' : 'false');
+    });
+    apply();
+  });
+  apply();
+})();
+</script>
+
+</body>.
+     ============================================================ -->
+<footer class="es-footer">
+  <div class="es-inner">
+    <span class="es-mark"><svg class="es-mark-svg" aria-hidden="true" focusable="false"><use href="#es-mark"></use></svg></span>
+    <div class="es-logo">Elms<span class="es-accent">Park</span></div>
+    <p>Kenn Jordan. Personal practice.</p>
+    <p>Carrickbyrne, County Wexford.</p>
+    <p><a href="https://elmspark.com/">elmspark.com</a></p>
+  </div>
 </footer>
 
+
 <script>
-const CATS = [
-  {id:"review", label:"Review & QA"},
-  {id:"plugin", label:"Plugin dev & shipping"},
-  {id:"site", label:"Sites & migration"},
-  {id:"verify", label:"Verify before done"},
-  {id:"session", label:"Sessions & meta"},
-  {id:"comms", label:"Comms & media"},
-];
+(function () {
+  var q = document.getElementById('tk-q'),
+      pills = document.getElementById('tk-pills'),
+      count = document.getElementById('tk-count'),
+      cards = Array.prototype.slice.call(document.querySelectorAll('.tk-card')),
+      cat = '';
+  [q, pills, count].forEach(function (el) { if (el) el.hidden = false; });
 
-const TASKS = [
-  {em:"✍️", lbl:"Review a draft or reply", sub:"Forum post, email, support reply", cat:"review"},
-  {em:"🚀", lbl:"Ship a plugin", sub:"Release, sample data, security", cat:"plugin"},
-  {em:"🌐", lbl:"Build or migrate a site", sub:"Theme, showcase, WP→PM", cat:"site"},
-  {em:"✅", lbl:"Verify before I say done", sub:"Catch the broken thing first", cat:"verify"},
-  {em:"📓", lbl:"Close a session", sub:"Handoff, cheat sheet", cat:"session"},
-  {em:"🎨", lbl:"Make media or email", sub:"Images, video prompts, Mailgun", cat:"comms"},
-];
-
-const TOOLS = [
-  // ---------- Review & QA ----------
-  {name:"/RP", kind:"command", cat:"review", status:"solid", tier:"Sonnet",
-   what:"Rigorous review of a piece of writing for clarity, structure and persuasiveness. Flags the failure points before you publish.",
-   when:"A Kenn-voice or customer-facing draft: forum post, email, announcement, docs.",
-   ex:"/RP [paste your draft]",
-   tags:["review","writing","forum","email","content","prompt 1"],
-   detail:"<p class='note'>The canonical content reviewer (= ep-review-prompts.md Prompt 1).</p><p class='note'><b>Upgraded 2026-06-01:</b> add a house-rules pass — voice-conditional em-dash check, docs-link-on-first-mention, British English, PM 0.9 NDA, and flag shipped/fixed/done/live unless a probe is pasted.</p>"},
-  {name:"/RC", kind:"command", cat:"review", status:"solid", tier:"Opus",
-   what:"Senior technical and architectural review of anything that will be implemented, with implementation-risk analysis.",
-   when:"Plugin specs, API docs, system design, code, handoff docs.",
-   ex:"/RC [paste code or spec]",
-   tags:["review","code","technical","architecture","spec","prompt 2"],
-   detail:"<p class='note'>A superset of /RP (adds Implementation Risk). Use /RC for code and specs, /RP for prose.</p><p class='note'><b>Upgraded 2026-06-01:</b> verification gate (strip 'production-ready with no hidden weaknesses'), a tool mandate (Grep/Read the source before judging a claim), and EP/PM footgun vocabulary.</p>"},
-  {name:"/c", kind:"command", cat:"review", status:"dup",
-   what:"Older local copy of /RP. Same content reviewer.",
-   when:"Don't. Use /RP instead.",
-   ex:"/RP [paste your draft]",
-   tags:["review","duplicate","content"],
-   detail:"<p class='note'><b>Duplicate of /RP</b>, and already drifted (ASCII vs Unicode glyphs). It is a local-only file, so it never reaches your other Macs. Being merged into a symlink of /RP so there is one source.</p>"},
-  {name:"/cx", kind:"command", cat:"review", status:"dup",
-   what:"Older local copy of /RC. Same code reviewer.",
-   when:"Don't. Use /RC instead.",
-   ex:"/RC [paste code or spec]",
-   tags:["review","duplicate","code"],
-   detail:"<p class='note'><b>Duplicate of /RC</b>. Local-only and drifting. Being merged into a symlink of /RC.</p>"},
-  {name:"/rs", kind:"command", cat:"review", status:"solid", tier:"Sonnet",
-   what:"QA-checks a customer support response before it goes out in your voice.",
-   when:"Right before you send a support reply to a customer.",
-   ex:"/rs [paste response]",
-   tags:["review","support","customer","reply"],
-   detail:"<p class='note'>Its output goes to customers as you, yet it has no hook into the verification gate, voice rules or docs-link rule — and it has a US-spelling slip ('patronizing') inside a tool meant to police English.</p><p class='note'><b>Upgraded 2026-06-01:</b> de-fork to canonical, add the gate + voice block, fix the spelling.</p>"},
-  {name:"/Ultra", kind:"command", cat:"review", status:"solid", tier:"Opus",
-   what:"A senior peer who would rather flag a problem than ship a half-baked answer. Tool-first, uses parallel sub-agents, checks reversibility.",
-   when:"You want an honest, adversarial gut-check on a plan or an answer before you commit.",
-   ex:"/Ultra [the plan or answer to pressure-test]",
-   tags:["review","second opinion","adversarial","gut-check"],
-   detail:"<p class='note'>The least-broken of the older commands — already well aligned to 4.8. Only soft verification language and no model-tier note (its name implies Opus).</p>"},
-
-  // ---------- Plugin dev & shipping ----------
-  {name:"ship-ep-plugin", kind:"skill", cat:"plugin", status:"solid", tier:"Sonnet",
-   what:"Ships an EP plugin update end to end with a five-boolean gate: upload zip → ingest.php → POST probe → download the customer copy and SHA256-match it. Refuses to say 'shipped' until all five pass.",
-   when:"Every single plugin release, every time.",
-   ex:"Use it for any EP plugin release (say: ship ep-faq)",
-   tags:["ship","release","plugin","ingest","gate","update"],
-   detail:"<p class='note'>Strong bones, but <b>broken as written:</b> all three calls use the dead <span class='mono'>ssh ionos</span> alias (port 22 closed since 27 May; <span class='mono'>ionos-ts</span> is the only path). <b>Upgraded 2026-06-01:</b> alias sweep + a feature-probe gate (the artefact gate proves customers can download, not that the feature works).</p>"},
-  {name:"/qa-plugin", kind:"command", cat:"plugin", status:"new", tier:"Opus",
-   what:"Turns CC into a deep QA Manager for one EP plugin: reconstructs it from source, posts a readiness report, then triages tickets and never claims fixed without a probe.",
-   when:"A customer reports an issue with a specific plugin and you want an expert on just that plugin.",
-   ex:"/qa-plugin ep-gdpr",
-   tags:["qa","plugin","support","triage","bug","gold standard"],
-   detail:"<p class='note'>Built today to the 4.8 standard. A thin command that loads <span class='mono'>ep-plugin-qa-prompt.md</span> for the slug you pass. This is the gold standard the older tools are being brought up to.</p>"},
-  {name:"/sj", kind:"command", cat:"plugin", status:"solid", tier:"Sonnet",
-   what:"Generates a sample JSON import file for a plugin that doubles as an LLM prompt.",
-   when:"You need seed data or a sample import for a plugin.",
-   ex:"/sj EP Testimonials",
-   tags:["json","sample","import","seed","plugin"],
-   detail:"<p class='note'>Sound idea matching a real shipped pattern, but it tells the model to invent the import schema from priors when the authoritative shape exists in source (<span class='mono'>generate_sample_json</span>). <b>Upgraded 2026-06-01:</b> read the real schema + a jq validity gate.</p>"},
-  {name:"/EPS", kind:"command", cat:"plugin", status:"solid", tier:"Opus",
-   what:"Loads the EP Security expert persona for threat-modelling and security review of an EP plugin.",
-   when:"Security-reviewing an EP plugin, especially the auth-adjacent ones.",
-   ex:"/EPS then describe the plugin/target",
-   tags:["security","review","threat model","auth","persona"],
-   detail:"<p class='note'>Good threat model, but three dead startup paths (ep-pagemotor, HANDOFF.md) and no verification gate — risky for a security persona. <b>Upgraded 2026-06-01:</b> fix paths + add gate.</p>"},
-
-  // ---------- Sites & migration ----------
-  {name:"design-conversion", kind:"skill", cat:"site", status:"solid", tier:"Opus",
-   what:"Converts an HTML/CSS design (Tailwind, Bootstrap, etc.) into a PageMotor Theme import file, with GRT typography, Design Options and full template support.",
-   when:"You have a design and want it as a working PM theme.",
-   ex:"Point it at a design (say: convert this design to a PM theme)",
-   tags:["design","theme","convert","css","tailwind","pagemotor"],
-   detail:"<p class='note'><b>Needs your eyes:</b> 29 references to Google Fonts across its docs — could be a real GDPR breach in what it emits, or just family-name mapping for Bunny. I will read it before touching it. Also its 'Pass 6' verification never actually compiles or renders, so it can ship a silently-broken theme. <b>Upgraded 2026-06-01:</b> confirm/kill the Google path (EP Bunny Fonts prerequisite) + a real live compile+import+probe pass.</p>"},
-  {name:"/DS", kind:"command", cat:"site", status:"new", tier:"Opus",
-   what:"Designs a distinctive, gallery-grade site for a domain (the MakeClear method): proposes 3-4 genuinely different directions, builds the one you pick, then auto-graduates it to a live PageMotor site in /layouts/ (publish-on-green).",
-   when:"A great domain deserves a bespoke site 'worthy of /layouts/', or you want design directions to choose from.",
-   ex:"/DS voidarchitect.site",
-   tags:["design","distinctive","pagemotor","layouts","brand","site","DS"],
-   detail:"<p class='note'>Applies the <span class='mono'>distinctive-pm-site</span> skill (built 2026-06-05). <b>Combined 2026-06-06 (publish-on-green):</b> once you pick a direction it auto-flows into /DA — convert to PageMotor (fonts via the EP Bunny Fonts plugin), stand up a <span class='mono'>pm-*</span> preview, verify (render-match, 0 broken images, 0 console errors), and only then cut the domain over and add the /layouts/ card. If verification fails it pauses for you rather than publishing to the public gallery. The pick is the only human gate.</p>"},
-  {name:"/DA", kind:"command", cat:"site", status:"new", tier:"Opus",
-   what:"Converts one or more static/HTML designs into LIVE PageMotor sites and publishes each to /layouts/, by firing off parallel agents ('CC instances') — one per design.",
-   when:"You have existing static designs to graduate to PageMotor (e.g. the six brand-site prototypes), or as the engine /DS chains into after a pick.",
-   ex:"/DA   (or  /DA aboxforyourbusiness.com)",
-   tags:["convert","pagemotor","layouts","batch","parallel","design","DA"],
-   detail:"<p class='note'>Applies the <span class='mono'>design-to-pm-batch</span> skill (built 2026-06-06). Canary-first, then fans out. <b>Concurrency-safe by design:</b> conversions run in parallel, but the shared-resource steps (certbot, nginx reload, the single /layouts/ publish) are serialized because the VPS is shared. Fonts via the EP Bunny Fonts plugin — never the conversion skill's own font plugin.</p>"},
-  {name:"pagemotor-plugin-showcase-site", kind:"skill", cat:"site", status:"solid", tier:"Opus",
-   what:"Builds a fully branded showcase site that demonstrates one EP plugin in real editorial use: bespoke theme, matched imagery, real content, working forms, legal pages, Stripe test checkout.",
-   when:"A new plugin release wants a demo/marketing site (the thinkprofessionally pattern).",
-   ex:"Build a showcase site for ep-events",
-   tags:["showcase","demo","site","marketing","stripe","theme"],
-   detail:"<p class='note'>Deep, irreplaceable gotcha knowledge, but operationally dead: 15+ <span class='mono'>ssh ionos</span> calls fail, and its class-ep-suite 'cp fix' is now a data-loss footgun against the new symlinks. <b>Upgraded 2026-06-01:</b> alias sweep + symlink-safe rewrite + ship gate.</p>"},
-  {name:"layouts-add-site", kind:"skill", cat:"site", status:"new", tier:"Opus",
-   what:"Adds (or refreshes) a PageMotor showcase site on the public elmspark.com/layouts/ gallery the proper way: author a manifest, capture canonical screenshots, host both on the site, append the registry entry, regenerate via the Python generator, verify the live card.",
-   when:"Right after building a showcase site (the publish-to-gallery follow-on), or any time you add/refresh a site on /layouts/.",
-   ex:"/add-layout picsbay.com",
-   tags:["layouts","gallery","showcase","manifest","generator","elmspark","add-layout"],
-   detail:"<p class='note'>Built 2026-06-03 after the PicsBay add was done the hard way. <b>Never hand-edit /layouts/</b> — it is generated from per-site manifests. Encodes the gotchas: the dead <span class='mono'>ionos</span> alias (use <span class='mono'>ionos-ts</span>), <span class='mono'>LOAD_FILE</span> blanking the live row, the <span class='mono'>CANONICAL_ROUTES</span> tile whitelist, per-site manifest hosting, and a placeholder-content check. Shortcut: <span class='mono'>/add-layout &lt;site&gt;</span>.</p>"},
-  {name:"wp-to-pm-migration", kind:"skill", cat:"site", status:"solid", tier:"Opus",
-   what:"Migrates a live WordPress site to PageMotor on a VPS — Thesis/Focus, Divi, Gutenberg, recipe blogs — with DNS cutover, LE certs, a coherent design pass and exhaustive link verification.",
-   when:"Moving or converting a WordPress site to PageMotor.",
-   ex:"Migrate example.com to PageMotor",
-   tags:["migration","wordpress","wp","convert","dns","vps"],
-   detail:"<p class='note'><b>Live data bug:</b> its provision default rsyncs from the now-contaminated dev3 (18 plugins) instead of <span class='mono'>/var/www/holiday/</span>, dragging junk into every new site. Plus the dead alias and a phantom 'EP WP Exporter' plugin. <b>Upgraded 2026-06-01:</b> fix the contaminating default first.</p>"},
-  {name:"/qa-site", kind:"command", cat:"site", status:"new", tier:"Opus",
-   what:"EP Site QA Manager mode for one PageMotor site you built. Triages a user-reported issue against the live site and the build.",
-   when:"Someone reports a problem on a site you built and shipped.",
-   ex:"/qa-site thinkprofessionally.com",
-   tags:["qa","site","triage","pagemotor","issue"],
-   detail:"<p class='note'>Added 1 June (a sibling of /qa-plugin for whole sites). Not yet in the audit set — likely overlaps pm-verify-before-done; a clean lane will be drawn between them.</p>"},
-  {name:"/qa", kind:"command", cat:"site", status:"solid",
-   what:"Bootstraps a local PageMotor dev server at localhost:8001 to test EP plugins.",
-   when:"You want a throwaway local PM to poke at plugins.",
-   ex:"/qa test the EP Booking calendar",
-   tags:["qa","local","dev server","testing","localhost"],
-   detail:"<p class='note'><b>Fixed 2026-06-01:</b> now self-checks whether the local <span class='mono'>ep-pagemotor</span> rig is present (often absent, e.g. on this Mac) and falls back to dev.elmspark.com instead of failing on dead paths. For deep single-plugin QA prefer /qa-plugin.</p>"},
-
-  // ---------- Verify before done ----------
-  {name:"pm-verify-before-done", kind:"skill", cat:"verify", status:"solid",
-   what:"Runs an end-to-end visual, structural and accessibility check of a PageMotor site change BEFORE you claim done. Opens the page, checks the layout, clicks the form, spots the broken thing — the human pass you do, done first.",
-   when:"Before any 'done / shipped / live' message about a PM-site change.",
-   ex:"verify this change before I say done",
-   tags:["verify","qa","accessibility","screenshot","before done","gate"],
-   detail:"<p class='note'>Your most evidence-driven tool. One dead <span class='mono'>ssh ionos</span> silently breaks its server-side checks, and it has no reachability pre-flight (a degraded run can still say 'safe to claim done'). <b>Upgraded 2026-06-01:</b> alias fix + a Step 0 reachability gate + 4.8 parallel screenshots.</p>"},
-
-  // ---------- Sessions & meta ----------
-  {name:"/Handoff", kind:"command", cat:"session", status:"solid",
-   what:"Writes the end-of-session handoff artefact before you /compact, so the next session resumes cleanly.",
-   when:"Closing a session where meaningful progress was made.",
-   ex:"/Handoff",
-   tags:["handoff","session","resume","compact","memory"],
-   detail:"<p class='note'>High usage, two real defects: STEP 1 fires git in a non-git workspace, and STEP 3 contradicts the 3-bullet + handoff-index protocol in CLAUDE.md. <b>Upgraded 2026-06-01:</b> fold in Handoff-portable's git guard + dir resolution, fix the index protocol, remove the phantom 'resume via SendMessage'.</p>"},
-  {name:"/Handoff-portable", kind:"command", cat:"session", status:"spec",
-   what:"A generic, repo-agnostic version of /Handoff with better engineering (dir resolution, git guard, index auto-detect).",
-   when:"Not installed — inert today.",
-   ex:"(folded into /Handoff)",
-   tags:["handoff","portable","session","generic"],
-   detail:"<p class='note'>No symlink, so it cannot fire. Its best engineering is being folded into /Handoff; then it is retired or kept as a labelled generic export.</p>"},
-  {name:"/h", kind:"command", cat:"session", status:"solid",
-   what:"Prints a cheat sheet of your custom commands.",
-   when:"You want a quick in-terminal list of commands.",
-   ex:"/h",
-   tags:["help","cheat sheet","index","commands"],
-   detail:"<p class='note'>Its one job is to be an accurate index, and it still misses the synced commands (/RP, /RC, /EPS, /Ultra, /Handoff, /log-build). <b>Upgraded 2026-06-01:</b> make it self-generate from the commands directory so it can never go stale. This HTML guide is the richer companion.</p>"},
-  {name:"/log-build", kind:"command", cat:"session", status:"spec",
-   what:"A plan-mode spec for a Chronicle-style session-history index. Never actually built.",
-   when:"Not a working command yet — a design waiting on your green light.",
-   ex:"(spec only)",
-   tags:["log","history","chronicle","spec","build"],
-   detail:"<p class='note'>A specification, not a shipped command. Has stale model pins (Sonnet 4.6 / Opus 4.7) that get fixed at build time. Refresh and build only if you want it.</p>"},
-
-  // ---------- Comms & media ----------
-  {name:"imessage-send", kind:"skill", cat:"comms", status:"solid",
-   what:"Sends an iMessage from your Mac via Messages.app to a contact resolved by name from Contacts.app.",
-   when:"You ask to text/iMessage someone, or you confirm a draft with 'send it'.",
-   ex:"text Tony the show graphic is ready",
-   tags:["imessage","text","message","contacts","send"],
-   detail:"<p class='note'>Tight and well-scoped, every fact clean. Minor: it trusts the send succeeded (step-success) on an irreversible action. <b>Upgraded 2026-06-01:</b> a delivery-state check after sending.</p>"},
-  {name:"mailgun-setup", kind:"skill", cat:"comms", status:"solid",
-   what:"Walks you through Mailgun email delivery end to end: EU region, mg. sending subdomain, DNS at any provider, DMARC, sending key, and an inbox-placement check.",
-   when:"Setting up email for a site, or fixing mail landing in spam.",
-   ex:"set up Mailgun for worlebury.co.uk",
-   tags:["email","mailgun","dns","deliverability","spam","dmarc"],
-   detail:"<p class='note'>Recently maintained, every fact verifies clean. Pure uplift available: it could drive the whole DNS+verify loop itself (the cloudflare/mailgun env files exist) rather than coaching you through clicks, and add a hard inbox-placement done-gate.</p>"},
-  {name:"ai-prompt-builder", kind:"skill", cat:"comms", status:"solid",
-   what:"Generates high-quality prompts for AI image and video tools (Midjourney, Flux, Veo, Kling, Sora, and others): shot lists, multi-shot sequences, timestamp prompting.",
-   when:"You need a generation-ready prompt to paste into an image/video tool.",
-   ex:"write me a video prompt for a 3-shot product reveal",
-   tags:["prompt","image","video","midjourney","veo","media"],
-   detail:"<p class='note'>Ownership to confirm (installed in your skills dir). Minor issues: two dangling references to a non-existent 'video-prompt-builder' (this skill is it), a drifting model roster, and a trigger that overlaps the higgsfield-* skills. <b>Upgraded 2026-06-01:</b> delete dead refs + add a hand-off boundary (defer to higgsfield-* when generation is wanted in-session).</p>"},
-  {name:"higgsfield-still-to-clip", kind:"skill", cat:"comms", status:"solid",
-   what:"Makes a short cinematic video clip the reliable way: GPT Image 2 renders a high-fidelity start frame, then Seedance 2.0 animates it image-to-video. Saves both the still and the .mp4 into a project folder you name.",
-   when:"You want a vertical (or any aspect) clip of a described subject: 'make me a 9:16 clip of X', 'animate a still of Y'.",
-   ex:"make me a 9:16 clip of an Italian Greyhound at full gallop",
-   tags:["higgsfield","video","image-to-video","seedance","gpt image 2","clip","9:16","animate"],
-   detail:"<p class='note'>Built and verified end to end 2026-06-13 (the Italian Greyhound gallop run). The opinionated two-step pipeline, distinct from the broad higgsfield-generate: it handles the Seedance NSFW false-positive by retrying once with softened motion wording, and will not claim done until both files are verified on disk. Auth token lives in <span class='mono'>~/.config/elmspark/higgsfield.env</span>.</p>"},
-];
-
-const BUILTINS = [
-  {name:"/code-review", what:"Reviews the current diff for bugs and cleanups at a chosen effort level; ultra runs a deep multi-agent cloud review. --comment posts inline; --fix applies.", ex:"/code-review high"},
-  {name:"/verify", what:"Verifies a code change actually works by running the app and observing behaviour. Generic sibling of pm-verify-before-done.", ex:"/verify"},
-  {name:"/deep-research", what:"Fan-out web research with adversarial fact-checking and a cited report. Ask 2-3 scoping questions first if the topic is broad.", ex:"/deep-research [your question]"},
-  {name:"/security-review", what:"Full security review of the pending changes on the current branch.", ex:"/security-review"},
-  {name:"/simplify", what:"Reviews changed code for reuse, simplification and efficiency, then applies the fixes. Quality only, not bug-hunting.", ex:"/simplify"},
-  {name:"/run", what:"Launches and drives the project's app so you can see a change actually working.", ex:"/run"},
-  {name:"/schedule", what:"Creates or manages scheduled remote agents (cron routines), or a one-time future run.", ex:"/schedule [task] at 3pm"},
-  {name:"/loop", what:"Runs a prompt or command on a recurring interval, or self-paced. Good for polling a deploy.", ex:"/loop 5m /code-review"},
-  {name:"/update-config", what:"Configures the CC harness via settings.json: hooks, permissions, env vars. Use for any 'from now on, whenever X' automation.", ex:"/update-config allow npm commands"},
-  {name:"claude-api", what:"Build, debug and optimise Claude API / SDK apps, with prompt caching, and migrate code between model versions.", ex:"(triggers on anthropic SDK work)"},
-  {name:"find-skills", what:"Helps you discover and install new agent skills when you want functionality you don't have yet.", ex:"is there a skill for X?"},
-  {name:"/fewer-permission-prompts", what:"Scans your transcripts and adds a sensible allowlist to settings.json so you get fewer permission prompts.", ex:"/fewer-permission-prompts"},
-];
-
-const STAR_KEY = "ep-toolkit-stars-v1";
-let stars = new Set(JSON.parse(localStorage.getItem(STAR_KEY) || "[]"));
-let activeCat = null;
-let starredOnly = false;
-
-const badgeClass = {solid:"b-solid", fix:"b-fix", dup:"b-dup", broken:"b-broken", new:"b-new", spec:"b-spec"};
-const badgeText  = {solid:"Solid", fix:"Upgrade queued", dup:"Duplicate", broken:"Broken now", new:"New", spec:"Spec only"};
-
-function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
-
-function cardNode(t){
-  const c = el("div","card"); c.dataset.cat=t.cat;
-  c.dataset.hay = (t.name+" "+t.what+" "+t.when+" "+(t.tags||[]).join(" ")+" "+t.cat).toLowerCase();
-  c.dataset.name = t.name;
-
-  const top = el("div","card-top");
-  top.append(el("span","name",t.name));
-  top.append(el("span","kind"+(t.kind==="skill"?" skill":""), t.kind));
-  const star = el("button","star"+(stars.has(t.name)?" on":""), stars.has(t.name)?"★":"☆");
-  star.title="Star for quick reference";
-  star.onclick=()=>{ if(stars.has(t.name)){stars.delete(t.name); star.textContent="☆"; star.classList.remove("on");} else {stars.add(t.name); star.textContent="★"; star.classList.add("on");} localStorage.setItem(STAR_KEY, JSON.stringify([...stars])); apply(); };
-  top.append(star);
-  c.append(top);
-
-  const badges = el("div","badges");
-  badges.append(el("span","badge "+badgeClass[t.status], badgeText[t.status]));
-  if(t.tier) badges.append(el("span","tier", t.tier));
-  c.append(badges);
-
-  c.append(el("div","what", t.what));
-  c.append(el("div","when", "<b>Use when:</b> "+t.when));
-
-  const ex = el("div","ex");
-  ex.append(el("code",null, t.ex));
-  const cp = el("button","copy","Copy");
-  cp.onclick=()=>{ navigator.clipboard && navigator.clipboard.writeText(t.ex); cp.textContent="Copied"; cp.classList.add("done"); setTimeout(()=>{cp.textContent="Copy"; cp.classList.remove("done");},1200); };
-  ex.append(cp);
-  c.append(ex);
-
-  if(t.detail){
-    const more = el("span","more","Details & status ▾");
-    const det = el("div","detail", t.detail);
-    more.onclick=()=>{ det.classList.toggle("open"); more.textContent = det.classList.contains("open")?"Hide details ▴":"Details & status ▾"; };
-    c.append(more); c.append(det);
+  function apply() {
+    var term = (q.value || '').trim().toLowerCase(), shown = 0;
+    cards.forEach(function (c) {
+      var ok = (!cat || c.dataset.cat === cat) &&
+               (!term || c.dataset.search.indexOf(term) !== -1);
+      c.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = shown + ' of ' + cards.length + ' shown';
+    document.querySelectorAll('.tk-sec').forEach(function (sec) {
+      var grid = sec.querySelector('.tk-grid');
+      if (grid) sec.hidden = !grid.querySelector('.tk-card:not([hidden])');
+    });
   }
-  return c;
-}
 
-function buildtinNode(t){
-  const c = el("div","card");
-  c.dataset.hay=(t.name+" "+t.what).toLowerCase(); c.dataset.cat="builtin"; c.dataset.name=t.name;
-  const top=el("div","card-top"); top.append(el("span","name",t.name)); top.append(el("span","kind","built-in")); c.append(top);
-  c.append(el("div","what",t.what));
-  const ex=el("div","ex"); ex.append(el("code",null,t.ex));
-  const cp=el("button","copy","Copy"); cp.onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(t.ex); cp.textContent="Copied"; cp.classList.add("done"); setTimeout(()=>{cp.textContent="Copy";cp.classList.remove("done");},1200);};
-  ex.append(cp); c.append(ex);
-  return c;
-}
-
-// chips
-const chipsBox=document.getElementById("chips");
-const allChip=el("button","chip active","All");
-allChip.onclick=()=>{activeCat=null; document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active")); allChip.classList.add("active"); apply();};
-chipsBox.append(allChip);
-CATS.forEach(cat=>{
-  const ch=el("button","chip",cat.label);
-  ch.dataset.cat=cat.id;
-  ch.onclick=()=>{ activeCat=cat.id; document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active")); ch.classList.add("active"); apply(); };
-  chipsBox.append(ch);
-});
-
-// tasks
-const tasksBox=document.getElementById("tasks");
-TASKS.forEach(tk=>{
-  const b=el("button","task-btn");
-  b.innerHTML="<span class='t-em'>"+tk.em+"</span><span class='t-lbl'>"+tk.lbl+"</span><br><span class='t-sub'>"+tk.sub+"</span>";
-  b.onclick=()=>{ activeCat=tk.cat; document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active", x.dataset.cat===tk.cat)); allChip.classList.remove("active"); document.getElementById("q").value=""; apply(); document.getElementById("yoursH").scrollIntoView({behavior:"smooth", block:"start"}); };
-  tasksBox.append(b);
-});
-
-// grids
-const grid=document.getElementById("grid");
-TOOLS.forEach(t=>grid.append(cardNode(t)));
-const bgrid=document.getElementById("builtinGrid");
-BUILTINS.forEach(t=>bgrid.append(buildtinNode(t)));
-
-const q=document.getElementById("q");
-const countEl=document.getElementById("count");
-const emptyEl=document.getElementById("empty");
-const starBtn=document.getElementById("starredOnly");
-starBtn.onclick=()=>{ starredOnly=!starredOnly; starBtn.classList.toggle("active", starredOnly); apply(); };
-
-function apply(){
-  const term=q.value.trim().toLowerCase();
-  let shown=0;
-  document.querySelectorAll("#grid .card").forEach(c=>{
-    const okCat = !activeCat || c.dataset.cat===activeCat;
-    const okTerm = !term || c.dataset.hay.includes(term);
-    const okStar = !starredOnly || stars.has(c.dataset.name);
-    const vis = okCat && okTerm && okStar;
-    c.classList.toggle("hidden", !vis);
-    if(vis) shown++;
+  q.addEventListener('input', apply);
+  pills.addEventListener('click', function (ev) {
+    var b = ev.target.closest('.tk-pill');
+    if (!b) return;
+    cat = b.dataset.filter;
+    pills.querySelectorAll('.tk-pill').forEach(function (p) {
+      p.setAttribute('aria-pressed', p === b ? 'true' : 'false');
+    });
+    apply();
   });
-  emptyEl.style.display = shown? "none":"block";
-  countEl.textContent = shown + " of " + TOOLS.length + " tools";
-  document.getElementById("yoursSub").textContent = (activeCat? (CATS.find(c=>c.id===activeCat)||{}).label : "All categories") + (starredOnly? " · starred":"");
-}
-
-q.addEventListener("input", ()=>{
-  // typing searches across everything: clear any active category so results are never trapped
-  if(q.value.trim()){ activeCat=null; document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active")); allChip.classList.add("active"); }
   apply();
-});
-document.addEventListener("keydown", e=>{ if(e.key==="/" && document.activeElement!==q){ e.preventDefault(); q.focus(); } if(e.key==="Escape"){ q.value=""; apply(); } });
-apply();
+})();
 </script>
+
 </body>
 </html>
