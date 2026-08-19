@@ -1,0 +1,382 @@
+{
+  "ep-affiliate": {
+    "tier": "professional",
+    "version": "0.1.11"
+  },
+  "ep-agent-jobs": {
+    "tier": "professional",
+    "version": "0.1.2"
+  },
+  "ep-analytics": {
+    "tier": "foundation",
+    "version": "1.2.11"
+  },
+  "ep-assistant": {
+    "tier": "foundation",
+    "version": "1.0.10"
+  },
+  "ep-audit-log": {
+    "tier": "professional",
+    "version": "1.1.7"
+  },
+  "ep-blog": {
+    "tier": "foundation",
+    "version": "1.0.0"
+  },
+  "ep-boarding": {
+    "tier": "commerce",
+    "version": "1.9.2"
+  },
+  "ep-boarding-commerce": {
+    "tier": "commerce",
+    "version": "1.0.0"
+  },
+  "ep-boarding-services": {
+    "tier": "professional",
+    "version": "1.1.0"
+  },
+  "ep-booking": {
+    "tier": "professional",
+    "version": "2.4.1"
+  },
+  "ep-booking-zoom": {
+    "tier": "professional",
+    "version": "1.0.15"
+  },
+  "ep-breadcrumbs": {
+    "tier": "foundation",
+    "version": "1.3.4"
+  },
+  "ep-cards": {
+    "tier": "business",
+    "version": "1.0.19"
+  },
+  "ep-cards-importer": {
+    "tier": "business",
+    "version": "1.0.8"
+  },
+  "ep-class-passes": {
+    "tier": "professional",
+    "version": "1.2.7"
+  },
+  "ep-comments": {
+    "tier": "business",
+    "version": "1.1.15"
+  },
+  "ep-concierge": {
+    "tier": "professional",
+    "version": "1.3.3"
+  },
+  "ep-connect": {
+    "tier": "professional",
+    "version": "1.1.0"
+  },
+  "ep-courses": {
+    "tier": "add-on",
+    "version": "0.4.13"
+  },
+  "ep-cron": {
+    "tier": "foundation",
+    "version": "0.2.1"
+  },
+  "ep-dashboard": {
+    "tier": "foundation",
+    "version": "0.2.4"
+  },
+  "ep-diagnostics": {
+    "tier": "foundation",
+    "version": "1.2.8"
+  },
+  "ep-documents": {
+    "tier": "foundation",
+    "version": "0.3.12"
+  },
+  "ep-ecommerce": {
+    "tier": "commerce",
+    "version": "0.1.34"
+  },
+  "ep-ecommerce-gelato": {
+    "tier": "commerce",
+    "version": "1.0.5"
+  },
+  "ep-ecommerce-paypal": {
+    "tier": "professional",
+    "version": "0.1.11"
+  },
+  "ep-ecommerce-pod": {
+    "tier": "commerce",
+    "version": "1.3.11"
+  },
+  "ep-ecommerce-printful": {
+    "tier": "commerce",
+    "version": "1.0.5"
+  },
+  "ep-ecommerce-printify": {
+    "tier": "commerce",
+    "version": "1.1.5"
+  },
+  "ep-ecommerce-prodigi": {
+    "tier": "commerce",
+    "version": "1.0.5"
+  },
+  "ep-ecommerce-products": {
+    "tier": "commerce",
+    "version": "0.1.13"
+  },
+  "ep-ecommerce-stripe": {
+    "tier": "commerce",
+    "version": "0.1.16"
+  },
+  "ep-ecommerce-subscriptions": {
+    "tier": "commerce",
+    "version": "0.2.11"
+  },
+  "ep-editor": {
+    "tier": "professional",
+    "version": "0.1.13"
+  },
+  "ep-email": {
+    "tier": "foundation",
+    "version": "1.10.39"
+  },
+  "ep-email-advanced-forms": {
+    "tier": "professional",
+    "version": "1.0.5"
+  },
+  "ep-email-ai-reply": {
+    "tier": "professional",
+    "version": "1.0.7"
+  },
+  "ep-email-ai-triage": {
+    "tier": "professional",
+    "version": "0.1.10"
+  },
+  "ep-email-brevo": {
+    "tier": "add-on",
+    "version": "1.0.3"
+  },
+  "ep-email-elmspark": {
+    "tier": "foundation",
+    "version": "1.0.4"
+  },
+  "ep-email-file-uploads": {
+    "tier": "professional",
+    "version": "1.0.16"
+  },
+  "ep-email-inbox": {
+    "tier": "foundation",
+    "version": "1.1.6"
+  },
+  "ep-email-leads": {
+    "tier": "professional",
+    "version": "0.1.1"
+  },
+  "ep-email-mailgun": {
+    "tier": "add-on",
+    "version": "1.0.8"
+  },
+  "ep-email-quiz": {
+    "tier": "professional",
+    "version": "1.0.8"
+  },
+  "ep-events": {
+    "tier": "foundation",
+    "version": "1.0.48"
+  },
+  "ep-events-recurring": {
+    "tier": "foundation",
+    "version": "1.2.4"
+  },
+  "ep-faq": {
+    "tier": "professional",
+    "version": "1.1.7"
+  },
+  "ep-flows": {
+    "tier": "professional",
+    "version": "0.3.0"
+  },
+  "ep-gallery": {
+    "tier": "professional",
+    "version": "1.3.20"
+  },
+  "ep-gallery-exif": {
+    "tier": "add-on",
+    "version": "1.1.4"
+  },
+  "ep-gallery-presentation": {
+    "tier": "add-on",
+    "version": "1.0.9"
+  },
+  "ep-gdpr": {
+    "tier": "foundation",
+    "version": "1.1.41"
+  },
+  "ep-helpdesk": {
+    "tier": "business",
+    "version": "1.2.12"
+  },
+  "ep-holiday-bookings": {
+    "tier": "professional",
+    "version": "0.3.10"
+  },
+  "ep-host-check": {
+    "tier": "foundation",
+    "version": "1.3.2"
+  },
+  "ep-indexnow": {
+    "tier": "foundation",
+    "version": "1.0.3"
+  },
+  "ep-instructors": {
+    "tier": "professional",
+    "version": "1.1.11"
+  },
+  "ep-local-business": {
+    "tier": "foundation",
+    "version": "1.1.13"
+  },
+  "ep-locations": {
+    "tier": "foundation",
+    "version": "1.2.17"
+  },
+  "ep-maintenance": {
+    "tier": "professional",
+    "version": "1.0.10"
+  },
+  "ep-media-storage": {
+    "tier": "add-on",
+    "version": "0.1.1"
+  },
+  "ep-membership": {
+    "tier": "add-on",
+    "version": "0.5.1"
+  },
+  "ep-newsletter": {
+    "tier": "business",
+    "version": "1.7.1"
+  },
+  "ep-newsletter-brevo": {
+    "tier": "add-on",
+    "version": "1.0.3"
+  },
+  "ep-newsletter-mailgun": {
+    "tier": "add-on",
+    "version": "1.0.9"
+  },
+  "ep-newsletter-sendgrid": {
+    "tier": "professional",
+    "version": "1.0.14"
+  },
+  "ep-passkeys": {
+    "tier": "add-on",
+    "version": "0.4.2"
+  },
+  "ep-password-reset": {
+    "tier": "foundation",
+    "version": "1.0.10"
+  },
+  "ep-provisioning": {
+    "tier": "foundation",
+    "version": "1.5.9"
+  },
+  "ep-redirects": {
+    "tier": "foundation",
+    "version": "1.0.7"
+  },
+  "ep-reviews": {
+    "tier": "professional",
+    "version": "1.0.16"
+  },
+  "ep-rss": {
+    "tier": "foundation",
+    "version": "1.1.6"
+  },
+  "ep-scheduled-content": {
+    "tier": "professional",
+    "version": "1.2.4"
+  },
+  "ep-search": {
+    "tier": "business",
+    "version": "1.8.6"
+  },
+  "ep-security": {
+    "tier": "foundation",
+    "version": "0.0.3"
+  },
+  "ep-sendit": {
+    "tier": "foundation",
+    "version": "1.0.4"
+  },
+  "ep-seo": {
+    "tier": "foundation",
+    "version": "1.6.5"
+  },
+  "ep-sidebar": {
+    "tier": "foundation",
+    "version": "1.5.8"
+  },
+  "ep-sitemap": {
+    "tier": "foundation",
+    "version": "1.2.0"
+  },
+  "ep-social-share": {
+    "tier": "professional",
+    "version": "1.1.6"
+  },
+  "ep-stripe-coupons": {
+    "tier": "commerce",
+    "version": "0.1.1"
+  },
+  "ep-studio-assistant": {
+    "tier": "professional",
+    "version": "1.0.4"
+  },
+  "ep-studio-dashboard": {
+    "tier": "professional",
+    "version": "2.1.5"
+  },
+  "ep-support": {
+    "tier": "professional",
+    "version": "1.1.21"
+  },
+  "ep-testimonials": {
+    "tier": "professional",
+    "version": "1.0.22"
+  },
+  "ep-tracking": {
+    "tier": "professional",
+    "version": "0.1.8"
+  },
+  "ep-txt-files": {
+    "tier": "foundation",
+    "version": "1.1.0"
+  },
+  "ep-voice-messages": {
+    "tier": "add-on",
+    "version": "1.1.8"
+  },
+  "ep-waivers": {
+    "tier": "professional",
+    "version": "1.2.5"
+  },
+  "ep-youtube": {
+    "tier": "foundation",
+    "version": "1.0.10"
+  },
+  "tibaai-companion": {
+    "tier": "private",
+    "version": "1.0"
+  },
+  "tibaai-dashboard": {
+    "tier": "private",
+    "version": "0.9.5"
+  },
+  "tibaai-discovery": {
+    "tier": "private",
+    "version": "1.11.19-wiredforms"
+  },
+  "tibaai-editor": {
+    "tier": "private",
+    "version": "0.2.8"
+  }
+}

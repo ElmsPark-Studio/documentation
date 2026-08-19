@@ -70,6 +70,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 
 ### Content and UX
 
+- **[EP Blog](/plugins/ep-blog/)**. A blog for PageMotor: Post content type, chronological index with excerpts and pagination, categories, tags, bylines, and previous/next navigation.
 - **[EP Breadcrumbs](/plugins/ep-breadcrumbs/)**. Breadcrumb navigation with Schema.org structured data.
 - **[EP Cards](/plugins/ep-cards/)**. Native card groups and grids with LLM-driven import. Thesis Focus Cards migration via add-on.
 - **[EP Cards Importer](/plugins/ep-cards-importer/)**. Migration add-on for EP Cards — imports from WordPress Thesis.

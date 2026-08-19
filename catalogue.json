@@ -1,0 +1,861 @@
+{
+  "_comment": "Membership of the catalogue is driven by the update registry; this file supplies grouping and editorial copy only. A registry plugin missing from here fails the build — see tools/build-catalogue.py.",
+  "categories": [
+    {
+      "name": "Email, newsletters, messaging",
+      "entries": [
+        {
+          "slugs": [
+            "ep-email"
+          ],
+          "titles": [
+            "EP Email"
+          ],
+          "blurb": "SMTP delivery, JSON-defined contact forms, delivery logging, and a developer extension API."
+        },
+        {
+          "slugs": [
+            "ep-email-advanced-forms"
+          ],
+          "titles": [
+            "EP Email Advanced Forms"
+          ],
+          "blurb": "Adds name, address, section, HTML, email confirmation, and rating field types to EP Email forms."
+        },
+        {
+          "slugs": [
+            "ep-email-ai-reply"
+          ],
+          "titles": [
+            "EP Email AI Reply"
+          ],
+          "blurb": "AI-drafted replies to form submissions — review and send."
+        },
+        {
+          "slugs": [
+            "ep-email-ai-triage"
+          ],
+          "titles": [
+            "EP Email AI Triage"
+          ],
+          "blurb": "AI-powered spam triage. Classifies every submission, blocks confirmed spam silently, holds it in quarantine for review."
+        },
+        {
+          "slugs": [
+            "ep-email-elmspark",
+            "ep-sendit"
+          ],
+          "titles": [
+            "EP Email ElmsPark",
+            "EP SendIt"
+          ],
+          "blurb": "Managed delivery transport drivers for EP Email via send.elmspark.com."
+        },
+        {
+          "slugs": [
+            "ep-email-file-uploads"
+          ],
+          "titles": [
+            "EP Email File Uploads"
+          ],
+          "blurb": "Drag-and-drop file upload fields for EP Email forms."
+        },
+        {
+          "slugs": [
+            "ep-email-inbox"
+          ],
+          "titles": [
+            "EP Email Inbox"
+          ],
+          "blurb": "AI-powered IMAP inbox handler with auto-reply."
+        },
+        {
+          "slugs": [
+            "ep-email-quiz"
+          ],
+          "titles": [
+            "EP Email Quiz"
+          ],
+          "blurb": "Quiz field types with scoring and grading for EP Email forms."
+        },
+        {
+          "slugs": [
+            "ep-newsletter"
+          ],
+          "titles": [
+            "EP Newsletter"
+          ],
+          "blurb": "Subscribers, lists, campaigns, autoresponders, content digests."
+        },
+        {
+          "slugs": [
+            "ep-newsletter-sendgrid"
+          ],
+          "titles": [
+            "EP Newsletter SendGrid"
+          ],
+          "blurb": "Legacy SendGrid delivery driver. For new sites use EP Newsletter Mailgun (our recommended provider) instead."
+        },
+        {
+          "slugs": [
+            "ep-voice-messages"
+          ],
+          "titles": [
+            "EP Voice Messages"
+          ],
+          "blurb": "Record-in-browser voice messages with auto-transcription."
+        },
+        {
+          "slugs": [
+            "ep-email-brevo"
+          ],
+          "titles": [
+            "EP Email Brevo"
+          ],
+          "blurb": "Brevo transactional transport for EP Email. 300/day free tier, no card required."
+        },
+        {
+          "slugs": [
+            "ep-email-leads"
+          ],
+          "titles": [
+            "EP Email Leads"
+          ],
+          "blurb": "Turns contact-form submissions into a workable leads ledger with an always-current dashboard page."
+        },
+        {
+          "slugs": [
+            "ep-email-mailgun"
+          ],
+          "titles": [
+            "EP Email Mailgun"
+          ],
+          "blurb": "Mailgun transactional transport for EP Email, with EU region support for GDPR-clean routing."
+        },
+        {
+          "slugs": [
+            "ep-newsletter-brevo"
+          ],
+          "titles": [
+            "EP Newsletter Brevo"
+          ],
+          "blurb": "Brevo delivery driver for EP Newsletter. Forever-free 300/day tier, batch sending, signed webhooks."
+        },
+        {
+          "slugs": [
+            "ep-newsletter-mailgun"
+          ],
+          "titles": [
+            "EP Newsletter Mailgun"
+          ],
+          "blurb": "Mailgun delivery driver for EP Newsletter. EU region, batch sending, HMAC-signed bounce handling. Our recommended provider."
+        }
+      ]
+    },
+    {
+      "name": "Ecommerce",
+      "entries": [
+        {
+          "slugs": [
+            "ep-affiliate"
+          ],
+          "titles": [
+            "EP Affiliate"
+          ],
+          "blurb": "Full affiliate programme with referral tracking, tiers, payouts, coupons."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce"
+          ],
+          "titles": [
+            "EP Ecommerce"
+          ],
+          "blurb": "Information product ecommerce base — memberships, downloads, licenses, bundles, subscriptions."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-paypal"
+          ],
+          "titles": [
+            "EP Ecommerce PayPal"
+          ],
+          "blurb": "PayPal payment provider."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-products"
+          ],
+          "titles": [
+            "EP Ecommerce Products"
+          ],
+          "blurb": "Styled checkout UI for EP Ecommerce."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-stripe"
+          ],
+          "titles": [
+            "EP Ecommerce Stripe"
+          ],
+          "blurb": "Stripe payment provider."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-subscriptions"
+          ],
+          "titles": [
+            "EP Ecommerce Subscriptions"
+          ],
+          "blurb": "Recurring billing with dunning, grace periods, and UK/EU compliance."
+        },
+        {
+          "slugs": [
+            "ep-reviews"
+          ],
+          "titles": [
+            "EP Reviews"
+          ],
+          "blurb": "Product reviews with star ratings, verified-purchase badges, Schema.org markup."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-pod"
+          ],
+          "titles": [
+            "EP Ecommerce — POD"
+          ],
+          "blurb": "Provider-agnostic print-on-demand. Sell physical products with live shipping quotes at checkout."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-gelato"
+          ],
+          "titles": [
+            "EP Ecommerce — Gelato"
+          ],
+          "blurb": "Gelato connector for EP Ecommerce — POD."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-printful"
+          ],
+          "titles": [
+            "EP Ecommerce — Printful"
+          ],
+          "blurb": "Printful connector for EP Ecommerce — POD."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-printify"
+          ],
+          "titles": [
+            "EP Ecommerce — Printify"
+          ],
+          "blurb": "Printify connector for EP Ecommerce — POD."
+        },
+        {
+          "slugs": [
+            "ep-ecommerce-prodigi"
+          ],
+          "titles": [
+            "EP Ecommerce — Prodigi"
+          ],
+          "blurb": "Prodigi connector for EP Ecommerce — POD. Products listed by SKU, as Prodigi has no catalogue API."
+        }
+      ]
+    },
+    {
+      "name": "Bookings, membership, courses",
+      "entries": [
+        {
+          "slugs": [
+            "ep-booking"
+          ],
+          "titles": [
+            "EP Booking"
+          ],
+          "blurb": "Appointment scheduling with services, staff, availability, Stripe payments."
+        },
+        {
+          "slugs": [
+            "ep-booking-zoom"
+          ],
+          "titles": [
+            "EP Booking Zoom"
+          ],
+          "blurb": "Auto-created Zoom meetings for confirmed bookings."
+        },
+        {
+          "slugs": [
+            "ep-courses"
+          ],
+          "titles": [
+            "EP Courses"
+          ],
+          "blurb": "Course and lesson management with multilingual content and progress tracking."
+        },
+        {
+          "slugs": [
+            "ep-events"
+          ],
+          "titles": [
+            "EP Events"
+          ],
+          "blurb": "Full event platform with tickets, registrations, check-in PWA, Stripe Connect, Zoom, Schema.org, six EU languages, and depth EP Suite integration."
+        },
+        {
+          "slugs": [
+            "ep-holiday-bookings"
+          ],
+          "titles": [
+            "EP Holiday Bookings"
+          ],
+          "blurb": "Holiday packages, enquiry-first booking, deposit/balance for independent travel agents."
+        },
+        {
+          "slugs": [
+            "ep-membership"
+          ],
+          "titles": [
+            "EP Membership"
+          ],
+          "blurb": "Public registration, login, member levels, content gating."
+        },
+        {
+          "slugs": [
+            "ep-events-recurring"
+          ],
+          "titles": [
+            "EP Events Recurring"
+          ],
+          "blurb": "Recurring class and event templates for EP Events — weekly, fortnightly and Nth-weekday series on a rolling timetable."
+        },
+        {
+          "slugs": [
+            "ep-boarding"
+          ],
+          "titles": [
+            "EP Boarding"
+          ],
+          "blurb": "Date-range accommodation booking — check-in and check-out on a live availability calendar, per-night rates and half-day capacity. Hotels, B&Bs, holiday lets and pet boarding."
+        }
+      ]
+    },
+    {
+      "name": "Studio operations",
+      "entries": [
+        {
+          "slugs": [
+            "ep-class-passes"
+          ],
+          "titles": [
+            "EP Class Passes"
+          ],
+          "blurb": "Pre-paid class credit packs, tracked in an append-only ledger with shelf-life expiry and auto-deduct at booking."
+        },
+        {
+          "slugs": [
+            "ep-instructors"
+          ],
+          "titles": [
+            "EP Instructors"
+          ],
+          "blurb": "Instructors as first-class records: roster, public bio pages, pay-rate rules and a payroll CSV."
+        },
+        {
+          "slugs": [
+            "ep-studio-assistant"
+          ],
+          "titles": [
+            "EP Studio Assistant"
+          ],
+          "blurb": "An Ask box in the admin. Ask about the business in plain English; Claude answers from live data."
+        },
+        {
+          "slugs": [
+            "ep-studio-dashboard"
+          ],
+          "titles": [
+            "EP Studio Dashboard"
+          ],
+          "blurb": "The owner's operations command centre for a multi-location studio. Revenue, members, bookings, attendance, passes, waivers, payroll."
+        },
+        {
+          "slugs": [
+            "ep-waivers"
+          ],
+          "titles": [
+            "EP Waivers"
+          ],
+          "blurb": "Versioned liability waivers and health declarations, e-signed and kept as immutable legal records."
+        }
+      ]
+    },
+    {
+      "name": "Content and UX",
+      "entries": [
+        {
+          "slugs": [
+            "ep-blog"
+          ],
+          "titles": [
+            "EP Blog"
+          ],
+          "blurb": "A blog for PageMotor: Post content type, chronological index with excerpts and pagination, categories, tags, bylines, and previous/next navigation."
+        },
+        {
+          "slugs": [
+            "ep-breadcrumbs"
+          ],
+          "titles": [
+            "EP Breadcrumbs"
+          ],
+          "blurb": "Breadcrumb navigation with Schema.org structured data."
+        },
+        {
+          "slugs": [
+            "ep-cards"
+          ],
+          "titles": [
+            "EP Cards"
+          ],
+          "blurb": "Native card groups and grids with LLM-driven import. Thesis Focus Cards migration via add-on."
+        },
+        {
+          "slugs": [
+            "ep-cards-importer"
+          ],
+          "titles": [
+            "EP Cards Importer"
+          ],
+          "blurb": "Migration add-on for EP Cards — imports from WordPress Thesis."
+        },
+        {
+          "slugs": [
+            "ep-comments"
+          ],
+          "titles": [
+            "EP Comments"
+          ],
+          "blurb": "Comment system with moderation, threaded replies, WordPress import."
+        },
+        {
+          "slugs": [
+            "ep-documents"
+          ],
+          "titles": [
+            "EP Documents"
+          ],
+          "blurb": "Hierarchical documentation site for PageMotor. Author docs in HTML or Markdown, organise by section, draft / improve / translate with Claude, six EU languages."
+        },
+        {
+          "slugs": [
+            "ep-editor"
+          ],
+          "titles": [
+            "EP Editor"
+          ],
+          "blurb": "Visual inline page editor (work in progress)."
+        },
+        {
+          "slugs": [
+            "ep-faq"
+          ],
+          "titles": [
+            "EP FAQ"
+          ],
+          "blurb": "FAQ management with accordion, search, Schema.org markup, voting."
+        },
+        {
+          "slugs": [
+            "ep-gallery"
+          ],
+          "titles": [
+            "EP Gallery"
+          ],
+          "blurb": "Album-based image gallery with drag-and-drop upload, lightbox, EXIF display."
+        },
+        {
+          "slugs": [
+            "ep-gallery-exif"
+          ],
+          "titles": [
+            "EP Gallery EXIF"
+          ],
+          "blurb": "Enhanced EXIF extraction and display (lens, GPS, shooting mode)."
+        },
+        {
+          "slugs": [
+            "ep-gallery-presentation"
+          ],
+          "titles": [
+            "EP Gallery Presentation"
+          ],
+          "blurb": "Master crop, aspect-ratio frames, focal-point picker."
+        },
+        {
+          "slugs": [
+            "ep-media-storage"
+          ],
+          "titles": [
+            "EP Media Storage"
+          ],
+          "blurb": "Serves paid video, audio and downloads from your own S3-compatible bucket behind links that expire. Automatic for EP Courses lessons."
+        },
+        {
+          "slugs": [
+            "ep-sidebar"
+          ],
+          "titles": [
+            "EP Sidebar"
+          ],
+          "blurb": "Sidebar layout activation with manageable widget blocks."
+        },
+        {
+          "slugs": [
+            "ep-testimonials"
+          ],
+          "titles": [
+            "EP Testimonials"
+          ],
+          "blurb": "Collect and display customer testimonials with star ratings."
+        },
+        {
+          "slugs": [
+            "ep-youtube"
+          ],
+          "titles": [
+            "EP YouTube"
+          ],
+          "blurb": "GDPR-friendly YouTube embeds for PageMotor. Click-to-load thumbnails so no Google cookies fire on page load, no-cookie iframe host by default, optional thumbnail self-hosting."
+        }
+      ]
+    },
+    {
+      "name": "SEO, discoverability, analytics",
+      "entries": [
+        {
+          "slugs": [
+            "ep-analytics"
+          ],
+          "titles": [
+            "EP Analytics"
+          ],
+          "blurb": "Privacy-respecting server-side page view analytics. No cookies, no pixel."
+        },
+        {
+          "slugs": [
+            "ep-local-business"
+          ],
+          "titles": [
+            "EP Local Business"
+          ],
+          "blurb": "Schema.org LocalBusiness emission for single-location businesses on PageMotor. Address, hours, geo, payment methods, areas served, and a coexistence handshake with EP SEO."
+        },
+        {
+          "slugs": [
+            "ep-locations"
+          ],
+          "titles": [
+            "EP Locations"
+          ],
+          "blurb": "Multi-location LocalBusiness schema for PageMotor with built-in store finder. MapLibre + MapTiler tiles, postcode search, GDPR consent gating, six EU languages."
+        },
+        {
+          "slugs": [
+            "ep-redirects"
+          ],
+          "titles": [
+            "EP Redirects"
+          ],
+          "blurb": "URL redirect manager with wildcards and 404 log."
+        },
+        {
+          "slugs": [
+            "ep-rss"
+          ],
+          "titles": [
+            "EP RSS"
+          ],
+          "blurb": "RSS 2.0 and Atom 1.0 feed generation."
+        },
+        {
+          "slugs": [
+            "ep-search"
+          ],
+          "titles": [
+            "EP Search"
+          ],
+          "blurb": "Site search with results page, form shortcode, basic analytics."
+        },
+        {
+          "slugs": [
+            "ep-seo"
+          ],
+          "titles": [
+            "EP SEO"
+          ],
+          "blurb": "Open Graph, Twitter Card, favicon, Schema.org. Per-page overrides."
+        },
+        {
+          "slugs": [
+            "ep-sitemap"
+          ],
+          "titles": [
+            "EP Sitemap"
+          ],
+          "blurb": "Dynamic XML sitemap with image references."
+        },
+        {
+          "slugs": [
+            "ep-social-share"
+          ],
+          "titles": [
+            "EP Social Share"
+          ],
+          "blurb": "Share buttons for X/Twitter, Facebook, LinkedIn, email."
+        },
+        {
+          "slugs": [
+            "ep-tracking"
+          ],
+          "titles": [
+            "EP Tracking"
+          ],
+          "blurb": "Tracked short URLs with click analytics and conversion attribution."
+        },
+        {
+          "slugs": [
+            "ep-txt-files"
+          ],
+          "titles": [
+            "EP Txt Files"
+          ],
+          "blurb": "Dynamic robots.txt and llms.txt served from admin settings."
+        },
+        {
+          "slugs": [
+            "ep-indexnow"
+          ],
+          "titles": [
+            "EP IndexNow"
+          ],
+          "blurb": "Real-time URL submission to IndexNow. Tells Bing, Yandex, Seznam and Naver the moment a page changes."
+        }
+      ]
+    },
+    {
+      "name": "Privacy, security, auth",
+      "entries": [
+        {
+          "slugs": [
+            "ep-bunny-fonts"
+          ],
+          "titles": [
+            "EP Bunny Fonts"
+          ],
+          "blurb": "*Retired — built into PageMotor 0.10+ core (Site Settings → Google Fonts Delivery Service).*"
+        },
+        {
+          "slugs": [
+            "ep-gdpr"
+          ],
+          "titles": [
+            "EP GDPR"
+          ],
+          "blurb": "Cookie consent, data subject requests, consent logging across EP Suite."
+        },
+        {
+          "slugs": [
+            "ep-passkeys"
+          ],
+          "titles": [
+            "EP Passkeys"
+          ],
+          "blurb": "Passwordless login via WebAuthn. Sign-in is served from a dedicated page, since the PageMotor login screen takes no plugin markup."
+        },
+        {
+          "slugs": [
+            "ep-password-reset"
+          ],
+          "titles": [
+            "EP Password Reset"
+          ],
+          "blurb": "Email-based password reset for admin accounts. *For PageMotor 0.10 and earlier — 0.11 brings password reset into core, so this plugin retires at that point.*"
+        }
+      ]
+    },
+    {
+      "name": "Operations, AI, admin",
+      "entries": [
+        {
+          "slugs": [
+            "ep-agent"
+          ],
+          "titles": [
+            "EP Agent"
+          ],
+          "blurb": "Claude Code CLI in your admin panel for server-side work."
+        },
+        {
+          "slugs": [
+            "ep-assistant"
+          ],
+          "titles": [
+            "EP Assistant"
+          ],
+          "blurb": "Customer-facing AI website manager. Chat interface with nine LLM providers."
+        },
+        {
+          "slugs": [
+            "ep-audit-log"
+          ],
+          "titles": [
+            "EP Audit Log"
+          ],
+          "blurb": "Activity log for content, users, and plugin events."
+        },
+        {
+          "slugs": [
+            "ep-concierge"
+          ],
+          "titles": [
+            "EP Concierge"
+          ],
+          "blurb": "Visitor-facing AI chat bubble. Answers questions from your knowledge plus live booking data, captures enquiries. *Currently supplied and updated by ElmsPark directly.*"
+        },
+        {
+          "slugs": [
+            "ep-connect"
+          ],
+          "titles": [
+            "EP Connect"
+          ],
+          "blurb": "Outbound webhooks for Zapier, Make, Slack, or any URL."
+        },
+        {
+          "slugs": [
+            "ep-diagnostics"
+          ],
+          "titles": [
+            "EP Diagnostics"
+          ],
+          "blurb": "System report for support requests."
+        },
+        {
+          "slugs": [
+            "ep-flows"
+          ],
+          "titles": [
+            "EP Flows"
+          ],
+          "blurb": "The EP Suite automation engine. Trigger, conditions, actions, authored by talking to your site over MCP instead of a drag-and-drop builder."
+        },
+        {
+          "slugs": [
+            "ep-helpdesk"
+          ],
+          "titles": [
+            "EP Helpdesk"
+          ],
+          "blurb": "Support ticket system with AI-drafted replies."
+        },
+        {
+          "slugs": [
+            "ep-host-check"
+          ],
+          "titles": [
+            "EP Host Check"
+          ],
+          "blurb": "Read-only host diagnostics. A green/amber/red report of what your hosting can and cannot do for PageMotor: file writes, outbound HTTPS and SMTP, PHP version, extensions and limits, each with a plain fix."
+        },
+        {
+          "slugs": [
+            "ep-maintenance"
+          ],
+          "titles": [
+            "EP Maintenance"
+          ],
+          "blurb": "Coming-soon and maintenance-mode overlays."
+        },
+        {
+          "slugs": [
+            "ep-mcp-bridge"
+          ],
+          "titles": [
+            "EP MCP Bridge"
+          ],
+          "blurb": "JSON-RPC API for remote PageMotor management via MCP clients."
+        },
+        {
+          "slugs": [
+            "ep-provisioning"
+          ],
+          "titles": [
+            "EP Provisioning"
+          ],
+          "blurb": "Remote provisioning receiver for automated site setup."
+        },
+        {
+          "slugs": [
+            "ep-scheduled-content"
+          ],
+          "titles": [
+            "EP Scheduled Content"
+          ],
+          "blurb": "Publish pages at a scheduled future time."
+        },
+        {
+          "slugs": [
+            "ep-support"
+          ],
+          "titles": [
+            "EP Support"
+          ],
+          "blurb": "AI support chatbot for admins. Knows every EP Suite plugin."
+        },
+        {
+          "slugs": [
+            "ep-wp-exporter"
+          ],
+          "titles": [
+            "EP WP Exporter"
+          ],
+          "blurb": "WordPress companion plugin. Install on a WordPress source site to produce a JSON snapshot for migration to PageMotor. Read-only."
+        },
+        {
+          "slugs": [
+            "ep-cron"
+          ],
+          "titles": [
+            "EP Cron"
+          ],
+          "blurb": "One secure, observable background-task scheduler for the whole EP Suite. A single heartbeat drains every due task exactly once."
+        },
+        {
+          "slugs": [
+            "ep-dashboard"
+          ],
+          "titles": [
+            "EP Dashboard"
+          ],
+          "blurb": "A branded Command Centre for the PageMotor admin. Every active EP Suite plugin contributes its own panel."
+        }
+      ]
+    }
+  ],
+  "extra": {
+    "ep-agent": "Operations, AI, admin",
+    "ep-mcp-bridge": "Operations, AI, admin",
+    "ep-bunny-fonts": "Privacy, security, auth",
+    "ep-wp-exporter": "Operations, AI, admin"
+  },
+  "pending": {
+    "ep-agent-jobs": "shipped on the channel, no doc page written yet",
+    "ep-security": "shipped 0.0.3; early scaffold, controls render but are not wired to anything yet",
+    "ep-stripe-coupons": "shipped on the channel, no doc page written yet",
+    "ep-boarding-commerce": "shipped 1.0.0 alongside EP Boarding, no doc page written yet",
+    "ep-boarding-services": "shipped 1.1.0 alongside EP Boarding, no doc page written yet"
+  }
+}
