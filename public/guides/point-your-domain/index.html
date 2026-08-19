@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Put your site on the web address you already own. Nothing transfers, your domain stays in your name, and your email is never touched. Two records, then we do the rest.">
-<title>Use your own web address | ElmsPark Guide</title>
+<meta name="description" content="Point a domain at your own PageMotor server: A records for @ and www, clearing stale AAAA records, and the Cloudflare grey-cloud-first path so Let's Encrypt can issue before you switch the proxy on.">
+<title>Point your domain at your own PageMotor server | ElmsPark Guide</title>
 <style>
   :root{
     --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
@@ -97,13 +97,13 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="ElmsPark Guides">
-  <meta property="og:title" content="Use your own web address">
-  <meta property="og:description" content="Put your site on the address you already own. Nothing transfers, your domain stays in your name, and your email is never touched.">
-  <meta property="og:url" content="https://documentation.elmspark.com/guides/use-your-own-web-address/">
+  <meta property="og:title" content="Point your domain at your own PageMotor server">
+  <meta property="og:description" content="A records for @ and www, clearing stale AAAA records, and the Cloudflare grey-cloud-first path so Let's Encrypt can issue before you switch the proxy on.">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/point-your-domain/">
   <meta property="og:image" content="https://documentation.elmspark.com/og/guides-hub.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Use your own web address, an ElmsPark guide">
+  <meta property="og:image:alt" content="Point your domain at your own PageMotor server, an ElmsPark guide">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://documentation.elmspark.com/og/guides-hub.png">
 </head>
@@ -125,124 +125,160 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 </header>
 
+
 <nav class="crumbs" aria-label="Breadcrumb">
   <div class="crumbs-inner">
     <a href="https://documentation.elmspark.com/guides/">Guides</a>
     <span class="sep" aria-hidden="true">&rsaquo;</span>
-    <span aria-current="page">Use your own web address</span>
+    <span aria-current="page">Point your domain at your own PageMotor server</span>
   </div>
 </nav>
 
 <div class="wrap">
-  <span class="kicker">Going Live Guide</span>
-  <h1>Use your own web address</h1>
-  <p class="lede">Your site is live right now at the temporary address we gave you. When you are ready, you can put it on the address you already own, like yourbusiness.com.</p>
+  <span class="kicker">Self-Hosting Guide</span>
+  <h1>Point your domain at your own PageMotor server</h1>
+  <p class="lede">You have PageMotor running on your own VPS and a domain sitting at a registrar. This is the DNS side of connecting the two: the records to add, the stale ones to delete, and the order that keeps Let's Encrypt happy if Cloudflare is in front.</p>
   <div class="chips">
-    <span class="chip">⏱ <b>About five minutes</b> of your time</span>
-    <span class="chip">✉️ Your <b>email is not affected</b></span>
+    <span class="chip">⏱ <b>About ten minutes</b> at the DNS panel</span>
+    <span class="chip">🛠 <b>Any registrar</b>, Cloudflare steps included</span>
     <span class="chip">↩️ <b>Reversible</b></span>
   </div>
 
   <div class="note calm">
-    <strong>You do not transfer anything.</strong> Your domain stays exactly where you bought it, in your name, with nothing unlocked or moved. You are only telling it where to point.
+    <strong>On ElmsPark hosting instead of your own server?</strong> This guide is for developers running their own box. If we host your site, the version written for you is <a href="/guides/use-your-own-web-address/">Use your own web address</a>: two records, and we handle the certificate and everything else.
   </div>
 
-  <h2 class="plain">Before you start, the reassuring part</h2>
-  <ul class="sub">
-    <li><strong>Your email will not be affected.</strong> We only change the setting that controls your website. The settings that carry your email are separate, and we do not touch them.</li>
-    <li><strong>Your old address keeps working</strong>, so nothing disappears while you are switching.</li>
-    <li><strong>It can be undone</strong> by changing the same setting back.</li>
-  </ul>
-
   <nav class="toc">
-    <p>The three steps</p>
+    <p>The five steps</p>
     <ol>
-      <li><a href="#s1">Tell us the address</a></li>
-      <li><a href="#s2">Add two records where you bought the domain</a></li>
-      <li><a href="#s3">That is your part done</a></li>
+      <li><a href="#s1">Get your server's real IPv4 address</a></li>
+      <li><a href="#s2">Add A records for @ and www</a></li>
+      <li><a href="#s3">Delete stale AAAA records</a></li>
+      <li><a href="#s4">On Cloudflare: grey cloud first, then issue the certificate</a></li>
+      <li><a href="#s5">Optionally turn the proxy on, Full (strict) only</a></li>
     </ol>
-    <p style="margin-top:14px">Special cases</p>
+    <p style="margin-top:14px">Also on this page</p>
     <ol style="list-style:none;padding-left:0;margin:0">
-      <li><a href="#live">I already have a website at this address &rarr;</a></li>
-      <li><a href="#fix">Something looks stuck &rarr;</a></li>
+      <li><a href="#cf-registrar">Domain registered through Cloudflare Registrar? Read this first &rarr;</a></li>
+      <li><a href="#verify">Checking it worked &rarr;</a></li>
+      <li><a href="#fix">When it does not work &rarr;</a></li>
     </ol>
   </nav>
 
+  <div class="note" id="cf-registrar">
+    <strong>Bought the domain through Cloudflare Registrar? You cannot change its nameservers.</strong> That is by design, not a missing setting: Cloudflare Registrar only sells at cost, and the trade-off is that the domain must stay on your Cloudflare account's nameservers for as long as it is registered there. There is no override, no support ticket that unlocks it, and no plan that adds it. Your DNS records live in the Cloudflare dashboard, full stop. That is fine for this guide, every step below works from the Cloudflare DNS panel. But if you need the zone hosted somewhere else entirely, the only route is to <strong>transfer the domain out</strong> to another registrar, and ICANN rules block transfers for 60 days after registration or a previous transfer. Plan around that lock rather than fighting it.
+  </div>
+
   <section class="step" id="s1">
-    <h2><span class="num">1</span><span class="t">Tell us the address</span></h2>
-    <p>Type it into the box on your dashboard and press <strong>Save</strong>.</p>
-    <p>Just the address itself, <code>yourbusiness.com</code>. No <code>https://</code> needed.</p>
+    <h2><span class="num">1</span><span class="t">Get your server's real IPv4 address</span></h2>
+    <p>SSH in and ask the server itself, rather than trusting a hosting panel that may show an internal or floating address:</p>
+    <div class="codewrap">
+      <pre id="ip-check"><code>curl -4 icanhazip.com</code></pre>
+      <button class="copy" data-copy="ip-check" type="button">Copy</button>
+    </div>
+    <p>The address it prints is the one every record below points to. Throughout this guide the example <code>203.0.113.10</code> stands in for it.</p>
   </section>
 
   <section class="step" id="s2">
-    <h2><span class="num">2</span><span class="t">Add two records where you bought the domain</span></h2>
-    <p>Sign in to whoever you bought the domain from and find the <strong>DNS settings</strong>. Add two records. Both are type <strong>A</strong>, and both point to the same place:</p>
-
-    <div class="codewrap">
-      <pre id="ip-value"><code>88.208.226.236</code></pre>
-      <button class="copy" data-copy="ip-value" type="button">Copy</button>
-    </div>
+    <h2><span class="num">2</span><span class="t">Add A records for @ and www</span></h2>
+    <p>Sign in at your registrar (or wherever the domain's DNS is hosted, if you have moved it) and open the <strong>DNS settings</strong> for the domain. Add two records of type <strong>A</strong>:</p>
 
     <table class="dnstable">
       <thead>
         <tr><th>Type</th><th>Name / Host</th><th>Points to</th></tr>
       </thead>
       <tbody>
-        <tr><td>A</td><td><code>@</code> <span class="muted">(means the address itself)</span></td><td><code>88.208.226.236</code></td></tr>
-        <tr><td>A</td><td><code>www</code></td><td><code>88.208.226.236</code></td></tr>
+        <tr><td>A</td><td><code>@</code> <span class="muted">(the bare domain itself)</span></td><td><code>203.0.113.10</code></td></tr>
+        <tr><td>A</td><td><code>www</code></td><td><code>203.0.113.10</code></td></tr>
       </tbody>
     </table>
 
     <div class="note">
-      <strong>If records already exist for <code>@</code> or <code>www</code> pointing somewhere else</strong>, change those rather than adding duplicates.
+      <strong>If A records already exist for <code>@</code> or <code>www</code></strong>, pointing at an old host or a parking page, edit those rather than adding duplicates. Two A records with different addresses on the same name means visitors are split between the two servers at random.
     </div>
-
-    <h3 style="font-size:19px;color:#234a3b;margin:26px 0 6px">Where to find it, by provider</h3>
-    <p>Each of these opens a short page showing the exact screens at that provider.</p>
-    <ul class="sub">
-      <li><a href="/guides/use-your-own-web-address/godaddy/"><strong>GoDaddy</strong></a>: Domain Portfolio, then DNS</li>
-      <li><a href="/guides/use-your-own-web-address/namecheap/"><strong>Namecheap</strong></a>: Domain List, Manage, then Advanced DNS</li>
-      <li><a href="/guides/use-your-own-web-address/ionos/"><strong>IONOS</strong></a>: Domains &amp; SSL, then the three-dots Actions menu</li>
-      <li><a href="/guides/use-your-own-web-address/squarespace/"><strong>Squarespace</strong></a>: the domain, then DNS Settings and Custom Records</li>
-      <li><a href="/guides/use-your-own-web-address/wix/"><strong>Wix</strong></a>: Domains, then Manage DNS Records</li>
-      <li><strong>Cloudflare</strong>: your domain, then DNS, then Add record, leaving the cloud icon on</li>
-      <li><strong>Someone else, or not sure:</strong> reply to us with who you bought it from and we will send you the exact screens</li>
-    </ul>
+    <p>Leave the TTL at the panel's default, or drop it to 300 seconds if you expect to move the site again soon. Do not touch MX, TXT or any other record types: those carry email and verification, and this job does not involve them.</p>
   </section>
 
   <section class="step" id="s3">
-    <h2><span class="num">3</span><span class="t">That is your part done</span></h2>
-    <p>We watch for the change and do everything else automatically: the secure padlock, making sure search engines see the right address, and setting up email from your own domain.</p>
-    <p>It usually takes a few minutes once your provider has published the change, though some providers take longer to publish it than others.</p>
-    <p>Your dashboard shows the progress and tells you the moment it is finished. You do not need to keep the page open.</p>
+    <h2><span class="num">3</span><span class="t">Delete stale AAAA records, unless your server really does IPv6</span></h2>
+    <p>While you are in the panel, look for <strong>AAAA</strong> records on <code>@</code> and <code>www</code>. These are the IPv6 equivalents of A records, and previous hosts, parking pages and site builders love to leave them behind.</p>
+    <p>They matter more than they look. A modern browser that sees both an AAAA and an A record will usually <strong>try the IPv6 address first</strong>. If that AAAA still points at the old host, a chunk of your visitors quietly land on the old site, or on a connection error, while your own tests over IPv4 look perfect. Let's Encrypt does the same thing: its validation servers <strong>prefer IPv6 when an AAAA record exists</strong>, so a stale AAAA can fail certificate issuance even though the A record is correct.</p>
+    <ul class="sub">
+      <li><strong>Your server has no IPv6 configured</strong> (the common case on a basic VPS setup): delete every AAAA on <code>@</code> and <code>www</code>.</li>
+      <li><strong>Your server does serve the site over IPv6</strong> and you know its address (<code>curl -6 icanhazip.com</code> answers, and nginx listens on <code>[::]:443</code>): keep or add AAAA records pointing at that address. Wrong is worse than missing here, so only keep an AAAA you have verified yourself.</li>
+    </ul>
   </section>
 
-  <h2 class="plain" id="live">I already have a website at this address</h2>
-  <div class="note">
-    <strong>Make the change at a quiet time of day.</strong> That is the whole of the advice, and it is worth taking.
+  <section class="step" id="s4">
+    <h2><span class="num">4</span><span class="t">On Cloudflare: grey cloud first, then issue the certificate</span></h2>
+    <p>Skip this step if Cloudflare is nowhere in your DNS chain. If it is, each record in the Cloudflare DNS panel has a cloud toggle: <strong>orange means proxied</strong> through Cloudflare's network, <strong>grey means DNS only</strong>, pointing straight at your server.</p>
+    <p>Set both records to the <strong>grey cloud (DNS only)</strong> before you request a certificate. Let's Encrypt's HTTP-01 challenge works by fetching a file from <code>http://yourdomain.com/.well-known/acme-challenge/&hellip;</code> on the machine the domain resolves to. With the proxy on, that request lands on Cloudflare's edge instead of your server, and edge-side rules, especially an Always Use HTTPS redirect, can break the challenge before your server ever sees it. Grey cloud removes the whole class of problem.</p>
+    <p>With the records grey and resolving (see <a href="#verify">checking it worked</a>), issue the certificate on the server for both names. With certbot and nginx that is:</p>
+    <div class="codewrap">
+      <pre id="certbot-cmd"><code>sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com</code></pre>
+      <button class="copy" data-copy="certbot-cmd" type="button">Copy</button>
+    </div>
+    <p>Running CloudPanel instead? It issues Let's Encrypt certificates from its own interface, and the same rule applies: grey cloud first. The <a href="/guides/pagemotor-cloudpanel/">CloudPanel guide</a> covers where that button lives.</p>
+    <p>Renewals reuse the same challenge, so if you stay grey-clouded there is nothing more to do. If you move on to step 5, certbot's nginx installation keeps renewals working through the proxy in most setups, but check the first renewal (<code>sudo certbot renew --dry-run</code>) rather than assuming.</p>
+  </section>
+
+  <section class="step" id="s5">
+    <h2><span class="num">5</span><span class="t">Optionally turn the proxy on, Full (strict) only</span></h2>
+    <p>Once the certificate is installed and the site loads over HTTPS, you can flip both records back to the <strong>orange cloud</strong> if you want Cloudflare's caching and DDoS protection in front. One setting decides whether that works or loops: <strong>SSL/TLS mode</strong>, under SSL/TLS in the Cloudflare dashboard.</p>
+    <ul class="sub">
+      <li><strong>Full (strict)</strong>: Cloudflare connects to your server over HTTPS and verifies your certificate. This is the correct setting, and the reason step 4 came first: you now have a real certificate for it to verify.</li>
+      <li><strong>Flexible</strong>: Cloudflare serves HTTPS to visitors but connects to your server over plain HTTP. Your server, correctly configured to redirect HTTP to HTTPS, bounces the request back, Cloudflare fetches over HTTP again, and the browser dies with <code>ERR_TOO_MANY_REDIRECTS</code>. Never use Flexible on a server that has its own certificate, which after step 4 is your server.</li>
+    </ul>
+    <div class="note">
+      <strong>The redirect loop is the most-reported symptom of this whole process</strong>, and it is nearly always Flexible mode meeting a normal HTTP-to-HTTPS redirect. The fix is one dropdown: SSL/TLS &rarr; Full (strict).
+    </div>
+    <p>Perfectly happy without the proxy? Grey cloud is a complete, production-fine end state. Plenty of PageMotor sites run DNS-only forever.</p>
+  </section>
+
+  <h2 class="plain" id="verify">Checking it worked</h2>
+  <p>From your own machine, not the server:</p>
+  <div class="codewrap">
+    <pre id="verify-cmds"><code>dig +short yourdomain.com A
+dig +short www.yourdomain.com A
+dig +short yourdomain.com AAAA
+curl -I https://yourdomain.com</code></pre>
+    <button class="copy" data-copy="verify-cmds" type="button">Copy</button>
   </div>
-  <p>While the change spreads across the internet, some visitors reach your old site and some reach the new one. Both work, so nothing is lost in that period.</p>
-  <p>There is also a short window while your security certificate is being issued, when the address may not load properly for some visitors. It is brief, but it is the reason to start in the evening rather than at ten in the morning. Your dashboard tells you the moment the certificate is in place.</p>
-  <p>If your site takes bookings or orders, pick your quietest hour of the week. If anything still looks wrong an hour after you added the records, tell us and we will look at it.</p>
+  <p>The first two should print your server's address (or Cloudflare edge addresses once the proxy is on). The AAAA query should print nothing, unless you deliberately kept an IPv6 record in step 3. The <code>curl</code> should return <code>HTTP/2 200</code> or a sensible redirect to your canonical address, not a certificate error and not a chain of redirects.</p>
+  <p>DNS changes are not instant: your registrar has to publish them and resolvers cache the old answer until the TTL runs out. Minutes is typical, a few hours is possible. <code>dig</code> against a public resolver (<code>dig @1.1.1.1 yourdomain.com</code>) shows you the published state rather than your machine's cache.</p>
 
-  <h2 class="plain" id="fix">Something looks stuck</h2>
-  <p>The most common reason is that only one of the two records was added, or your provider has not published the change yet. Both are normal, and neither breaks anything.</p>
-  <p>If the dashboard still looks unfinished after a few hours, reply to us and we will look at it.</p>
+  <h2 class="plain" id="fix">When it does not work</h2>
 
-  <h2 class="plain">What we never touch</h2>
-  <p>The settings that carry your email are separate from the setting that carries your website. We change the website one and leave the email ones exactly as they are, which is why an existing mailbox cannot break during the switch.</p>
-  <p>If you do not have email on your domain yet and you would like it, that is a separate job we can do afterwards.</p>
+  <details>
+    <summary><span class="tag err">ERR_TOO_MANY_REDIRECTS</span> The site loops instead of loading</summary>
+    <p>Cloudflare SSL/TLS mode is on Flexible while your server redirects HTTP to HTTPS. Set it to <strong>Full (strict)</strong>. If you have no certificate on the server yet, that is the real problem: grey-cloud the records and do step 4 first.</p>
+  </details>
+
+  <details>
+    <summary><span class="tag err">Issuance failed</span> Let's Encrypt cannot validate the domain</summary>
+    <p>Three usual causes, in order of likelihood. A stale <strong>AAAA record</strong> is still published, so validation went to the wrong machine over IPv6: back to step 3. The record is <strong>orange-clouded</strong>, so the challenge hit Cloudflare's edge instead of your server: grey cloud, retry, then flip back. Or DNS simply <strong>has not propagated yet</strong>: confirm with <code>dig @1.1.1.1</code> before retrying, because failed attempts count against Let's Encrypt's rate limits.</p>
+  </details>
+
+  <details>
+    <summary><span class="tag err">Wrong site</span> The old host or a parking page still shows</summary>
+    <p>Either the old A record was left in place alongside the new one, so visitors are split between two servers, or a stale AAAA is winning over your correct A record, or your resolver is still serving the cached old answer. Check all three with the <code>dig</code> commands above; the published records must show only your server.</p>
+  </details>
+
+  <details>
+    <summary><span class="tag err">Works bare, not www</span> One of the two names fails</summary>
+    <p>Usually the certificate covers only one name. Step 4's certbot command requests both <code>-d</code> names deliberately; reissue with both if you only asked for one. If the failure is DNS rather than TLS, the <code>www</code> A record is missing or still pointing elsewhere.</p>
+  </details>
 
   <div class="seealso">
     <strong>Related guides:</strong>
-    <a href="https://documentation.elmspark.com/guides/bunny-dns/">Bunny DNS, and why we now recommend it</a> ·
-    <a href="https://documentation.elmspark.com/guides/website-email-spam/">Why your website's email lands in spam</a> ·
-    <a href="https://documentation.elmspark.com/guides/point-your-domain/">Point your domain at your own PageMotor server</a> (the self-hosted version of this job)
+    <a href="/guides/use-your-own-web-address/">Use your own web address</a> (the ElmsPark-hosted version of this job) ·
+    <a href="/guides/bunny-dns/">Bunny DNS, and why we now recommend it</a> ·
+    <a href="/guides/pagemotor-cloudpanel/">PageMotor on CloudPanel</a>
   </div>
 
   <footer>
-    <p><strong>Not sure which of these is your situation?</strong> Reply with the address you own and who you bought it from. That is enough for us to tell you exactly which of the two paths above applies.</p>
-    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+    <p><strong>Stuck on a step?</strong> Post the domain and your <code>dig</code> output in the PageMotor developers forum and someone will spot it quickly; nine times out of ten the answer is already in the published records.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a> · August 2026</p>
   </footer>
 </div>
 
