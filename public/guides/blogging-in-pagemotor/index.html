@@ -560,11 +560,16 @@
     <ul>
       <li><strong>A Post content type</strong> with its own screens under Content, so posts stop mingling with your real pages.</li>
       <li><strong>The automatic index:</strong> <code>[ep-blog]</code> on a page renders every live post, newest first, with excerpts, category badges, bylines and pagination. Publishing becomes one edit, not two.</li>
-      <li><strong>Categories and tags</strong>, defined once in settings, picked per post from a dropdown, filterable on the index.</li>
+      <li><strong>Nested categories and tags</strong>, defined once in settings, picked per post from a dropdown. Indent a category to nest it, and filtering a parent includes everything beneath it.</li>
+      <li><strong>Category archive URLs</strong>, optional: each category gets its own real page at <code>/journal/category/news/</code>, with its own title and description for search engines.</li>
       <li><strong>Bylines and post navigation:</strong> date and author on each post, older/newer links between posts.</li>
       <li><strong>BlogPosting structured data</strong> on every post, automatically.</li>
       <li><strong>A posts-only feed</strong> at <code>/feed/rss/post</code> when EP RSS is active.</li>
     </ul>
+
+    <div class="callout info">
+      <p><strong>On category archives being real pages.</strong> That is deliberate, and it is the same idea Chris describes: everything is a Page. Because each archive is an ordinary PageMotor page rather than a URL conjured by routing code, it carries its own title, meta description and social card, lands in your sitemap, works with breadcrumbs, and can take an introduction of your own above the list. The URLs stay flat however deep the nesting goes, so re-parenting a category never breaks a link you have already published.</p>
+    </div>
 
     <h3>Setting it up</h3>
     <ol class="step-actions">
@@ -590,7 +595,8 @@
         <tbody>
           <tr><td><strong>Front page of posts</strong></td><td class="status-partial">Hand-curated</td><td class="status-yes">Automatic, newest first</td></tr>
           <tr><td><strong>Effort per post</strong></td><td class="status-partial">Two edits</td><td class="status-yes">One edit</td></tr>
-          <tr><td><strong>Categories and tags</strong></td><td class="status-no">None</td><td class="status-yes">Yes, filterable</td></tr>
+          <tr><td><strong>Categories and tags</strong></td><td class="status-no">None</td><td class="status-yes">Nested, filterable, rolled up</td></tr>
+          <tr><td><strong>Category archive URLs</strong></td><td class="status-no">Build them by hand</td><td class="status-yes">A real page each, optional</td></tr>
           <tr><td><strong>Bylines, older/newer links</strong></td><td class="status-no">Hand-written if at all</td><td class="status-yes">Automatic</td></tr>
           <tr><td><strong>Editorial control of the index</strong></td><td class="status-yes">Total</td><td class="status-partial">Chronological by design</td></tr>
           <tr><td><strong>Feed</strong> (EP RSS)</td><td class="status-yes">/feed</td><td class="status-yes">/feed plus /feed/rss/post</td></tr>
