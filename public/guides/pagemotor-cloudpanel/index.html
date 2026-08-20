@@ -204,7 +204,7 @@ sudo bash install.sh</code></pre>
   <h2 id="upload"><span class="num">5</span><span class="t">Upload PageMotor</span></h2>
   <ul class="sub">
     <li>Put the PageMotor files into the site's document root (<code>/home/&lt;site-user&gt;/htdocs/&lt;domain&gt;/</code>) using CloudPanel's <strong>File Manager</strong>, or SFTP with the site-user login.</li>
-    <li>Copy <code>config-sample.php</code> to <code>config.php</code> and fill in the database name, user and password from step 4.</li>
+    <li>Copy <code>config-sample.php</code> to <code>config.php</code> and fill in the database name, user and password from step 4. (From PageMotor 0.11 you can skip this: browse to the site's <code>/admin/</code> and the Install Wizard asks for the values and writes <code>config.php</code> itself.) Either way, make <code>/admin/</code> the first page you open on a brand-new install.</li>
   </ul>
   <div class="note">Because the files are uploaded as the site user, they are owned by the same user PHP runs as. That is the whole game: PageMotor can write its compiled theme CSS to disk, which is exactly what a locked-down shared host won't let it do.</div>
   <div class="note"><strong>Extracted the zip over SSH as root instead?</strong> Everything lands owned <code>root:root</code> with no group write, PHP cannot save a thing, and it looks exactly like a PageMotor fault. Run <code>chown -R &lt;site-user&gt;:&lt;site-user&gt; .</code> in the docroot after extracting and the problem never existed.</div>

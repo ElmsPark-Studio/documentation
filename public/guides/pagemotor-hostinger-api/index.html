@@ -378,7 +378,8 @@ Good. Now SSH into [IP] as root using ~/.ssh/id_ed25519 and:
    (DB_HOST is 127.0.0.1, prefix pm_, error logs on)
 5. Fix file ownership: chown -R mysite:www-data
 6. Once DNS resolves, run: clpctl lets-encrypt:install:certificate --domainName=mysite.com
-7. Confirm the site is live at https://mysite.com/
+7. Open https://mysite.com/admin/ FIRST (a brand-new install expects the
+   admin to be its first visitor), then confirm the front page at https://mysite.com/
 
 Use provision-pagemotor.sh if you need a reference for the exact commands.
     </div>

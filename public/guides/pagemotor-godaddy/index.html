@@ -220,6 +220,8 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <section class="step" id="s3">
     <h2><span class="num">3</span><span class="t">Fill in config.php</span></h2>
     <p>This is the file that connects PageMotor to the database you just made.</p>
+    <div class="note calm"><strong>On current PageMotor releases there is an easier way.</strong> From 0.11 the Install Wizard does this step for you: skip straight to <code>yoursite.com/admin/</code> in your browser and it asks for the three database values and writes <code>config.php</code> itself. If the wizard appears, use it and jump to step 4. The hand-edit below still works on every release.</div>
+
     <ol class="sub">
       <li>In <strong>File Manager</strong>, find <code>config-sample.php</code> next to <code>pagemotor.php</code>.</li>
       <li>Right-click it and choose <strong>Rename</strong>. Rename it to exactly <code>config.php</code>. <em>This rename is the step that switches PageMotor on.</em></li>
@@ -245,8 +247,8 @@ define(<span class="tok-s">'PM_HTML_CHARSET'</span>, <span class="tok-s">''</spa
   <section class="step" id="s4">
     <h2><span class="num">4</span><span class="t">Finish in your browser</span></h2>
     <ol class="sub">
-      <li>Visit your website. On this first visit PageMotor quietly sets up its content for you.</li>
-      <li>Now go to <code>yoursite.com/admin/</code> and create your admin user.</li>
+      <li>Go straight to <code>yoursite.com/admin/</code> first. On this first visit PageMotor sets up its content and walks you into creating your admin user. Make the admin the first page you open on a brand-new install; current releases expect it, and it never hurts on older ones.</li>
+      <li>Then visit your website to see the front of the site.</li>
     </ol>
     <div class="note calm"><strong>That is it.</strong> You are in, and you can start building pages.</div>
   </section>
