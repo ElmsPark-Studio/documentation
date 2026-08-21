@@ -71,3 +71,11 @@ EP WhatsApp exposes two sending methods other EP plugins can call, `send_text()`
 **Messages send but replies never arrive.** The webhook is not configured, or its signature check is failing because the app secret does not match the app the messages are going through.
 
 **Nothing sends and the log mentions a token.** Meta access tokens expire. Regenerate in the Meta dashboard and paste the new one in.
+
+## Changelog
+
+### 0.1.3
+
+First release on the ElmsPark update channel; earlier 0.1.x builds were internal only.
+
+Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11, which affected the admin settings screen. The CSRF header was being attached twice — once by the plugin, as PageMotor 0.10 required for raw requests, and once by 0.11's new automatic attachment — and because attaching appends rather than overwrites, the token went out doubled and never matched. The plugin now attaches it only when the core has not already done so.

@@ -77,3 +77,9 @@ Disabling a code stops it being accepted at checkout without deleting anything, 
 **The code works in test but not live.** It was only created in Test. Create it again in Live.
 
 **The code is rejected at an EP checkout.** That checkout session probably does not have promotion codes enabled. Check the paying plugin's settings, not this one.
+
+## Changelog
+
+### 0.1.2
+
+Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11, which affected the discount codes panel in admin. The CSRF header was being attached twice — once by the plugin, as PageMotor 0.10 required for raw requests, and once by 0.11's new automatic attachment — and because attaching appends rather than overwrites, the token went out doubled and never matched. The plugin now attaches it only when the core has not already done so.

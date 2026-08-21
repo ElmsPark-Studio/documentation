@@ -868,6 +868,15 @@
             "EP Dashboard"
           ],
           "blurb": "A branded Command Centre for the PageMotor admin. Every active EP Suite plugin contributes its own panel."
+        },
+        {
+          "slugs": [
+            "ep-agent-jobs"
+          ],
+          "titles": [
+            "EP Agent Jobs"
+          ],
+          "blurb": "Scheduled AI agent runs that live on the site, not a laptop. Rides the EP Cron heartbeat; results by email, Telegram or Buzz."
         }
       ]
     }
@@ -879,8 +888,7 @@
     "ep-wp-exporter": "Operations, AI, admin"
   },
   "pending": {
-    "ep-agent-jobs": "shipped on the channel, no doc page written yet",
-    "ep-security": "shipped 0.0.3; early scaffold, controls render but are not wired to anything yet",
+    "ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet",
     "ep-boarding-commerce": "shipped 1.0.0 alongside EP Boarding, no doc page written yet",
     "ep-boarding-services": "shipped 1.1.0 alongside EP Boarding, no doc page written yet"
   },
@@ -962,7 +970,6 @@
     "ep-sidebar": "none",
     "ep-sitemap": "none",
     "ep-social-share": "none",
-    "ep-stripe-coupons": "none",
     "ep-studio-assistant": "1.0.0",
     "ep-studio-dashboard": "2.1.1",
     "ep-support": "none",
@@ -971,7 +978,6 @@
     "ep-txt-files": "none",
     "ep-voice-messages": "none",
     "ep-waivers": "1.2.5",
-    "ep-whatsapp": "none",
     "ep-youtube": "none"
   }
 }

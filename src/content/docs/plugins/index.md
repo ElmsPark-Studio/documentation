@@ -114,6 +114,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 ### Operations, AI, admin
 
 - **[EP Agent](/plugins/ep-agent/)**. Claude Code CLI in your admin panel for server-side work.
+- **[EP Agent Jobs](/plugins/ep-agent-jobs/)**. Scheduled AI agent runs that live on the site, not a laptop. Rides the EP Cron heartbeat; results by email, Telegram or Buzz.
 - **[EP Assistant](/plugins/ep-assistant/)**. Customer-facing AI website manager. Chat interface with nine LLM providers.
 - **[EP Audit Log](/plugins/ep-audit-log/)**. Activity log for content, users, and plugin events.
 - **[EP Concierge](/plugins/ep-concierge/)**. Visitor-facing AI chat bubble. Answers questions from your knowledge plus live booking data, captures enquiries. *Currently supplied and updated by ElmsPark directly.*
