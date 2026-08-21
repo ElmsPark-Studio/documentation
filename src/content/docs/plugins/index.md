@@ -33,6 +33,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Newsletter Mailgun](/plugins/ep-newsletter-mailgun/)**. Mailgun delivery driver for EP Newsletter. EU region, batch sending, HMAC-signed bounce handling. Our recommended provider.
 - **[EP Newsletter SendGrid](/plugins/ep-newsletter-sendgrid/)**. Legacy SendGrid delivery driver. For new sites use EP Newsletter Mailgun (our recommended provider) instead.
 - **[EP Voice Messages](/plugins/ep-voice-messages/)**. Record-in-browser voice messages with auto-transcription.
+- **[EP WhatsApp](/plugins/ep-whatsapp/)**. Two-way WhatsApp through Meta's Business Cloud API: send notifications, take replies in an admin inbox.
 
 ### Ecommerce
 

@@ -53,7 +53,7 @@
   },
   "ep-cards": {
     "tier": "business",
-    "version": "1.0.20"
+    "version": "1.0.21"
   },
   "ep-cards-importer": {
     "tier": "business",
@@ -61,7 +61,7 @@
   },
   "ep-class-passes": {
     "tier": "professional",
-    "version": "1.2.7"
+    "version": "1.2.8"
   },
   "ep-comments": {
     "tier": "business",
@@ -137,11 +137,11 @@
   },
   "ep-editor": {
     "tier": "professional",
-    "version": "0.1.13"
+    "version": "0.1.14"
   },
   "ep-email": {
     "tier": "foundation",
-    "version": "1.10.40"
+    "version": "1.10.41"
   },
   "ep-email-advanced-forms": {
     "tier": "professional",
@@ -217,7 +217,7 @@
   },
   "ep-helpdesk": {
     "tier": "business",
-    "version": "1.2.12"
+    "version": "1.2.13"
   },
   "ep-holiday-bookings": {
     "tier": "professional",
@@ -233,7 +233,7 @@
   },
   "ep-instructors": {
     "tier": "professional",
-    "version": "1.1.11"
+    "version": "1.1.12"
   },
   "ep-local-business": {
     "tier": "foundation",
@@ -289,7 +289,7 @@
   },
   "ep-reviews": {
     "tier": "professional",
-    "version": "1.0.16"
+    "version": "1.0.17"
   },
   "ep-rss": {
     "tier": "foundation",
@@ -329,15 +329,15 @@
   },
   "ep-stripe-coupons": {
     "tier": "commerce",
-    "version": "0.1.1"
+    "version": "0.1.2"
   },
   "ep-studio-assistant": {
     "tier": "professional",
-    "version": "1.0.4"
+    "version": "1.0.5"
   },
   "ep-studio-dashboard": {
     "tier": "professional",
-    "version": "2.1.5"
+    "version": "2.1.6"
   },
   "ep-support": {
     "tier": "professional",
@@ -345,7 +345,7 @@
   },
   "ep-testimonials": {
     "tier": "professional",
-    "version": "1.0.22"
+    "version": "1.0.23"
   },
   "ep-tracking": {
     "tier": "professional",
@@ -361,7 +361,11 @@
   },
   "ep-waivers": {
     "tier": "professional",
-    "version": "1.2.5"
+    "version": "1.2.6"
+  },
+  "ep-whatsapp": {
+    "tier": "professional",
+    "version": "0.1.3"
   },
   "ep-youtube": {
     "tier": "foundation",
