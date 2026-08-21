@@ -49,6 +49,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Ecommerce — Printify](/plugins/ep-ecommerce-printify/)**. Printify connector for EP Ecommerce — POD.
 - **[EP Ecommerce — Prodigi](/plugins/ep-ecommerce-prodigi/)**. Prodigi connector for EP Ecommerce — POD. Products listed by SKU, as Prodigi has no catalogue API.
 - **[EP Reviews](/plugins/ep-reviews/)**. Product reviews with star ratings, verified-purchase badges, Schema.org markup.
+- **[EP Stripe — Discount Codes](/plugins/ep-stripe-coupons/)**. Stripe promotion codes from the PageMotor admin: create, cap, time-limit, switch off.
 
 ### Bookings, membership, courses
 
