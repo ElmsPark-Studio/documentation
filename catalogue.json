@@ -1,5 +1,5 @@
 {
-  "_comment": "Membership of the catalogue is driven by the update registry; this file supplies grouping and editorial copy only. A registry plugin missing from here fails the build — see tools/build-catalogue.py.",
+  "_comment": "Membership of the catalogue is driven by the update registry; this file supplies grouping and editorial copy only. A registry plugin missing from here fails the build, and so does a doc page whose newest ### <version> changelog heading is behind the version the channel serves — see tools/build-catalogue.py. \"changelog_backlog\" lists the pages not yet held to that standard (slug -> the version the page documents today, or \"none\"); they warn instead of failing, and the build errors the moment one catches up, so the list stays honest.",
   "categories": [
     {
       "name": "Email, newsletters, messaging",
