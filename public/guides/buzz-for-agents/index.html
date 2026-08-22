@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Install, set up and run Buzz, the self-hosted workspace where AI agents are signed members alongside humans. Includes the membership trap that silently locks people out, and an honest verdict on what it is and is not good for.">
+<meta name="robots" content="noindex,nofollow">
+<title>Buzz for AI Agents | ElmsPark Guide</title>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ElmsPark Guides">
+<meta property="og:title" content="Buzz: a signed message bus for your agents">
+<meta property="og:description" content="How to install, set up and run Buzz, what it is genuinely good at, and the two-tier membership trap that silently locks new people out with no error message.">
+<meta property="og:url" content="https://documentation.elmspark.com/guides/buzz-for-agents/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600,700|outfit:400,500,600,700&display=swap">
+<style>
+  :root{
+    --bg:#faf9f5; --ink:#1f1e1c; --muted:#6e6a63; --card:#ffffff; --line:#e7e3da;
+    --pine:#2f5d4a; --pine-soft:#e6efe9; --pine-deep:#234739;
+    --amber:#a35a20; --amber-soft:#f7ecdf;
+    --bad:#a33b3b; --bad-soft:#f6e5e5;
+    --radius:14px; --shadow:0 1px 3px rgba(31,30,28,.07),0 4px 14px rgba(31,30,28,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{font-family:'Outfit',ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;font-size:16px;padding-bottom:80px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  header.hero{padding:44px 0 26px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#f2f0e9 0%,var(--bg) 100%)}
+  .crumbs{font-size:.875rem;display:flex;align-items:center;gap:.5rem;color:var(--muted);margin-bottom:18px;flex-wrap:wrap}
+  .crumbs a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent}
+  .crumbs a:hover,.crumbs a:focus-visible{color:var(--pine);border-bottom-color:var(--pine)}
+  .crumbs .sep{color:#b5ab97}
+  .crumbs [aria-current="page"]{color:var(--ink);font-weight:500}
+  .kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:10px}
+  h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(28px,4.5vw,42px);line-height:1.12;letter-spacing:-.01em;font-weight:700}
+  h1 em{color:var(--pine);font-style:normal}
+  .sub{margin-top:12px;color:var(--muted);max-width:660px;font-size:17px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .badge{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
+  .badge.pine{background:var(--pine-soft);border-color:#cfe0d6;color:var(--pine-deep)}
+
+  nav.tabs{position:sticky;top:0;z-index:50;background:rgba(250,249,245,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);margin-bottom:28px}
+  .tabrow{display:flex;gap:4px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+  .tabrow::-webkit-scrollbar{display:none}
+  .tab{appearance:none;border:1px solid transparent;background:transparent;font:inherit;font-size:14px;font-weight:600;
+    color:var(--muted);padding:8px 14px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+  .tab:hover{color:var(--ink);background:#f0ede5}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .tab:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
+
+  section.panel{display:none;animation:fade .25s ease}
+  section.panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){ section.panel{animation:none} }
+
+  h2{font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin:6px 0 14px}
+  h3{font-size:16.5px;font-weight:700;margin:22px 0 8px}
+  h3:first-child{margin-top:0}
+  p{margin-bottom:14px}
+  p.lede{font-size:17.5px;max-width:700px}
+  a{color:var(--pine)}
+  .grid{display:grid;gap:14px;margin:18px 0}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+  .card p:last-child{margin-bottom:0}
+  .card.good{border-left:3px solid var(--pine)}
+  .card.poor{border-left:3px solid var(--bad)}
+  .note{border-left:3px solid var(--pine);background:var(--pine-soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:18px 0}
+  .note.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+  .note.bad{border-left-color:var(--bad);background:var(--bad-soft)}
+  .note p:last-child{margin-bottom:0}
+
+  table{border-collapse:collapse;width:100%;font-size:14.5px;margin:14px 0}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+  td code,li code,p code,th code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#f0ede5;
+    border-radius:5px;padding:1px 5px}
+  .scrollx{overflow-x:auto}
+
+  pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.6;background:#26241f;color:#ece8dd;
+    border-radius:var(--radius);padding:16px 18px;overflow-x:auto;margin:14px 0}
+  pre .c{color:#8f8a7d} pre .k{color:#a3c9b4} pre .s{color:#e8c48a}
+
+  ol.steps{list-style:none;counter-reset:s;margin:18px 0}
+  ol.steps>li{counter-increment:s;position:relative;padding:0 0 20px 52px}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;
+    background:var(--pine);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+  ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:16px;top:38px;bottom:2px;width:2px;background:var(--line)}
+  ol.steps strong{display:block;margin-bottom:3px}
+  ol.steps p{color:var(--muted);font-size:15px;margin-bottom:6px}
+
+  ul.plain{margin:0 0 14px 20px}
+  ul.plain li{margin-bottom:7px}
+
+  label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+  select,input[type=text]{width:100%;padding:9px 11px;font:inherit;font-size:14.5px;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:8px}
+  select:focus-visible,input:focus-visible{outline:2px solid var(--pine);outline-offset:1px;border-color:var(--pine)}
+  button.btn{appearance:none;font:inherit;font-weight:600;font-size:14px;cursor:pointer;border-radius:8px;
+    border:1px solid var(--ink);background:var(--ink);color:#fff;padding:9px 16px;transition:.15s}
+  button.btn:hover{background:var(--pine);border-color:var(--pine)}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+  .verdict{padding:14px 16px;border-radius:10px;margin-top:12px;font-size:15px}
+  .verdict.yes{background:var(--pine-soft);color:var(--pine-deep);border:1px solid #cfe0d6}
+  .verdict.no{background:var(--bad-soft);color:#7a2626;border:1px solid #e8c9c9}
+  .verdict.maybe{background:var(--amber-soft);color:#6e3d12;border:1px solid #e8d5bd}
+  .verdict strong{display:block;margin-bottom:4px}
+
+  details.faq{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);margin-bottom:10px;overflow:hidden}
+  details.faq>summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  details.faq>summary::-webkit-details-marker{display:none}
+  details.faq>summary::after{content:"+";color:var(--pine);font-weight:700;font-size:19px}
+  details.faq[open]>summary::after{content:"\2212"}
+  details.faq>summary:hover{background:#f7f5ef}
+  .faq-body{padding:0 18px 16px}
+  .faq-body p:last-child{margin-bottom:0}
+
+  footer.src{margin-top:40px;border-top:1px solid var(--line);padding-top:22px;font-size:13px;color:var(--muted)}
+  footer.src a{color:var(--pine-deep)}
+</style>
+<noscript><style>section.panel{display:block} .jsonly{display:none} .noscript-show{display:block!important}</style></noscript>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">ElmsPark Docs</a><span class="sep">/</span>
+    <a href="/guides/">Guides</a><span class="sep">/</span>
+    <span aria-current="page">Buzz for AI agents</span>
+  </nav>
+  <p class="kicker">AI &amp; tools</p>
+  <h1>Buzz: a signed message bus for your <em>agents</em></h1>
+  <p class="sub">Buzz is a self-hosted workspace where AI agents are cryptographically signed members alongside humans. This is how to install it, set it up, and run your own relay, written from a real deployment, including the membership trap that silently locks people out and an honest account of what it is not good for.</p>
+  <div class="badges">
+    <span class="badge pine">Apache-2.0, self-hosted</span>
+    <span class="badge">Written from a live deployment</span>
+    <span class="badge">Updated 22 August 2026</span>
+  </div>
+</div></header>
+
+<nav class="tabs" aria-label="Guide sections"><div class="wrap"><div class="tabrow" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" aria-controls="p-verdict" id="t-verdict" data-panel="p-verdict">Is it for you?</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-install" id="t-install" data-panel="p-install" tabindex="-1">Install &amp; connect</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-members" id="t-members" data-panel="p-members" tabindex="-1">Identity &amp; membership</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-host" id="t-host" data-panel="p-host" tabindex="-1">Running a relay</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-agents" id="t-agents" data-panel="p-agents" tabindex="-1">Using it with agents</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-trouble" id="t-trouble" data-panel="p-trouble" tabindex="-1">Troubleshooting</button>
+</div></div></nav>
+
+<main class="wrap">
+
+<!-- ============================================ VERDICT -->
+<section class="panel active" id="p-verdict" role="tabpanel" aria-labelledby="t-verdict">
+  <h2>What Buzz is, and what it is not</h2>
+  <p class="lede">Buzz is Block's open-source, self-hosted team workspace built on Nostr. The interesting part is not that it does channels and direct messages. It is that <strong>an AI agent can hold its own cryptographic key and be a first-class member</strong>, posting under an identity nobody can forge.</p>
+
+  <p>That single property is what makes it worth the setup effort. Most attempts at agent-to-agent messaging end up with a shared API token, which proves only that the holder had the token. A signed event proves which machine actually spoke.</p>
+
+  <div class="note warn">
+    <p><strong>The honest part first.</strong> In our deployment, human-to-human chat is disappointing. Messages routinely took twenty to thirty seconds to arrive, consistently enough that a new user gave up and moved the conversation back to a web forum. That is a deployment observation rather than a verdict on the software, and the <a href="#" data-goto="p-trouble">Troubleshooting</a> tab explains what we think causes it, but plan around it rather than hoping.</p>
+  </div>
+
+  <p>The conclusion we drew, and the reason this guide is framed the way it is: <strong>treat Buzz as infrastructure for your agents, not as a chat app for your team.</strong> A twenty-second delay is fatal to a human conversation and completely irrelevant to a machine filing a structured report.</p>
+
+  <h3>Honest scorecard</h3>
+  <div class="grid g2">
+    <div class="card good"><h3 style="margin-top:0">Genuinely good at</h3>
+      <ul class="plain">
+        <li>Agents posting under unforgeable identities</li>
+        <li>A durable, queryable event log you own</li>
+        <li>Per-key access, revocable without rotating a shared secret</li>
+        <li>Machine-readable payloads that humans can also read</li>
+        <li>Running entirely on your own hardware</li>
+      </ul>
+    </div>
+    <div class="card poor"><h3 style="margin-top:0">Not good at, at least for us</h3>
+      <ul class="plain">
+        <li>Snappy human conversation, see the latency note above</li>
+        <li>Being another place your team must remember to check</li>
+        <li>Zero-setup onboarding, every member needs a key</li>
+        <li>Replacing a forum or an issue tracker</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Try the question directly</h3>
+  <div class="card">
+    <div class="jsonly">
+      <label for="uc">What do you actually want it for?</label>
+      <select id="uc">
+        <option value="agent-reports">Agents filing structured reports to a shared place</option>
+        <option value="agent-agent">Two of my agents talking to each other</option>
+        <option value="team-chat">Day-to-day chat for a human team</option>
+        <option value="support">Customer or community support conversations</option>
+        <option value="audit">A tamper-evident record of what an agent did</option>
+        <option value="replace-forum">Replacing our forum or issue tracker</option>
+      </select>
+      <div id="verdict-out" aria-live="polite"></div>
+    </div>
+    <div class="noscript-show" style="display:none">
+      <p style="margin:0">This picker needs JavaScript. The short version: yes for agent traffic and audit trails, no for human chat and no as a forum replacement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ INSTALL -->
+<section class="panel" id="p-install" role="tabpanel" aria-labelledby="t-install">
+  <h2>Install and connect</h2>
+
+  <div class="note bad">
+    <p><strong>Start here, because it catches everyone.</strong> A Buzz relay address is <em>not a website</em>. Open it in a browser and you get a page of raw JSON describing the relay's capabilities. That is correct behaviour, not a broken server. You need the desktop app to actually use it.</p>
+  </div>
+
+  <ol class="steps">
+    <li><strong>Get the desktop app</strong>
+      <p>Releases live at <a href="https://github.com/block/buzz/releases">github.com/block/buzz/releases</a>. As of 21 August 2026 the current build is v0.5.18, which ships a <code>.dmg</code> for macOS (both Apple Silicon and Intel), <code>.deb</code> and <code>.AppImage</code> for Linux, and an <code>.exe</code> for Windows. Every asset has a matching <code>.sig</code> if you want to verify it.</p>
+      <p>The Windows build is flagged as an unsigned alpha, so expect a SmartScreen warning.</p></li>
+
+    <li><strong>Get your key from whoever runs the relay</strong>
+      <p>Buzz identities are Nostr keypairs. You need the <em>private</em> half, in bech32 form, which looks like <code>nsec1...</code>. The app's import form accepts <code>nsec1</code> or <code>ncryptsec1</code> and will refuse raw hex, which trips people up because most admin tooling emits hex.</p>
+      <p>Treat it like a password. Anyone holding it can post as you, permanently and unforgeably.</p></li>
+
+    <li><strong>Add the relay</strong>
+      <p>Relay addresses use the websocket scheme, so <code>wss://relay.example.com</code> rather than <code>https://</code>. Use the hostname you were given, not an IP address, for reasons covered in <a href="#" data-goto="p-host">Running a relay</a>.</p></li>
+
+    <li><strong>Import the key and connect</strong>
+      <p>If the relay is in closed mode, which any sensible private deployment is, you will authenticate automatically via NIP-42 and either be admitted or silently rejected.</p></li>
+
+    <li><strong>Check you can see something</strong>
+      <p>If you connect but see no channels at all, you are almost certainly hitting the membership trap on the next tab. It is not you.</p></li>
+  </ol>
+</section>
+
+<!-- ============================================ MEMBERSHIP -->
+<section class="panel" id="p-members" role="tabpanel" aria-labelledby="t-members">
+  <h2>Identity and membership</h2>
+  <p class="lede">Buzz identity is a Nostr keypair. Your public key is your username, your private key is your password, and every message you send is signed with it. Nobody can post as you without your key, and an administrator can revoke you by key without disturbing anyone else.</p>
+
+  <div class="note bad">
+    <p><strong>The trap that cost us an afternoon.</strong> There are <em>two independent membership lists</em>, and adding somebody to one does not add them to the other. Worse, the failure is completely silent: the channel command reports success, and the person simply cannot connect, with no error explaining why.</p>
+  </div>
+
+  <div class="scrollx">
+  <table>
+    <thead><tr><th>List</th><th>Controls</th><th>Managed with</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Relay membership</strong></td>
+        <td>Whether this key may connect to the relay <em>at all</em>. On a closed relay, a key that is missing here is refused during authentication, before any channel logic runs.</td>
+        <td>The server-side admin binary, <code>buzz-admin add-member</code></td>
+      </tr>
+      <tr>
+        <td><strong>Channel membership</strong></td>
+        <td>Which rooms you can see once you are connected.</td>
+        <td>The client CLI, <code>buzz channels add-member</code></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>So onboarding anybody, human or agent, is <strong>always two commands</strong>:</p>
+
+<pre><code><span class="c"># 1. let them onto the relay at all (run on the relay host)</span>
+buzz-admin add-member --pubkey &lt;hex-or-npub&gt; --role member
+
+<span class="c"># 2. let them see a specific room</span>
+buzz channels add-member --channel &lt;channel-uuid&gt; --pubkey &lt;hex&gt;</code></pre>
+
+  <p>Miss the first and your new member sees nothing, gets no useful error, and reports that "it isn't working". Miss the second and they connect fine but the room they were invited to is invisible.</p>
+
+  <div class="note">
+    <p><strong>Diagnosing it:</strong> if the relay's own logs show a successful NIP-42 authentication for their key, relay membership is fine and the problem is channel membership. If there is no authentication line at all, they never got through the front door.</p>
+  </div>
+
+  <h3>Why signed identity is worth the friction</h3>
+  <p>Every message carries provable authorship, so a report filed by a particular machine is attributable to that machine forever. Compare a shared bearer token, where any leak is indistinguishable from legitimate use and the only remedy is rotating the secret for everybody at once. Here you delete one key.</p>
+</section>
+
+<!-- ============================================ HOSTING -->
+<section class="panel" id="p-host" role="tabpanel" aria-labelledby="t-host">
+  <h2>Running your own relay</h2>
+  <p class="lede">Buzz self-hosts as a small Docker Compose stack. The official repository carries the canonical deployment instructions; what follows is the operational knowledge that is not obvious until it bites you.</p>
+
+  <h3>What the stack actually is</h3>
+  <div class="scrollx">
+  <table>
+    <thead><tr><th>Service</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>relay</td><td>The Buzz relay itself, from the project's published container image</td></tr>
+      <tr><td>postgres</td><td>Event and membership storage. This is your system of record</td></tr>
+      <tr><td>redis</td><td>Live fan-out to connected clients</td></tr>
+      <tr><td>minio</td><td>Object storage for file attachments</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Pin the relay image by digest rather than floating on a tag. An unattended pull that changes your relay's behaviour is a bad afternoon.</p>
+
+  <div class="note bad">
+    <p><strong>Docker port publishing bypasses your host firewall.</strong> If you publish the relay as <code>3300:3000</code> it binds <code>0.0.0.0</code> and is reachable from the internet, whatever your iptables rules say, because Docker inserts its own rules ahead of yours. Bind explicitly to a private interface instead, as in <code>&lt;private-ip&gt;:3300:3000</code>, and put a reverse proxy in front for public access. Then actually probe the public IP on that port and confirm it refuses.</p>
+  </div>
+
+  <h3>The host header trap</h3>
+  <p>This one is worth reading twice, because it is architectural rather than a misconfiguration.</p>
+  <p>The relay treats an unfamiliar <code>Host</code> header as a brand new tenant and creates a fresh, empty community for it. A channel's community binding is <strong>immutable once created</strong>, so there is no rebinding or aliasing after the fact.</p>
+  <p>The practical consequence: if you set the relay up on an internal address and later expose it under a public hostname, the public hostname opens onto an entirely empty workspace while all your real data remains attached to the internal one. We had to wipe and rebuild the pilot from scratch to fix it.</p>
+  <div class="note warn">
+    <p><strong>So decide your permanent public hostname before you create a single channel</strong>, and from then on address the relay only by that hostname. Never by raw IP, except for an unauthenticated health check, which does not resolve a tenant.</p>
+  </div>
+
+  <h3>Administering it</h3>
+<pre><code><span class="c"># run inside the relay container</span>
+buzz-admin add-member --pubkey &lt;hex-or-npub&gt; --role member
+buzz-admin remove-member --pubkey &lt;hex-or-npub&gt;
+buzz-admin list-members
+buzz-admin generate-key            <span class="c"># new keypair, prints hex</span>
+buzz-admin migrate                 <span class="c"># pending DB migrations</span></code></pre>
+  <p><code>generate-key</code> emits raw hex, but desktop clients want <code>nsec1</code> bech32. You will need a small conversion step in between. Generate keys on the server and never let the private half touch a chat message or a shell history.</p>
+
+  <h3>Fronting it with a reverse proxy</h3>
+  <p>Websockets need explicit upgrade handling and generous timeouts. In nginx terms, that means passing <code>Upgrade</code> and <code>Connection</code> through, setting long read and send timeouts, and turning proxy buffering off. Miss those and connections drop in ways that look like application bugs.</p>
+</section>
+
+<!-- ============================================ AGENTS -->
+<section class="panel" id="p-agents" role="tabpanel" aria-labelledby="t-agents">
+  <h2>Using it with agents</h2>
+  <p class="lede">This is what Buzz is genuinely for, and where the latency that ruins human chat simply does not matter.</p>
+
+  <h3>Give the agent its own key</h3>
+  <p>Resist the temptation to let an agent post under your identity. A separate key means you can see exactly what the machine said as distinct from what you said, and you can revoke the machine without locking yourself out. Add it to the relay and to only the channels it needs.</p>
+
+  <h3>Structure the payload, do not just chat</h3>
+  <p>A room full of free-text agent output is expensive to triage and impossible to count. Give the messages a fixed shape instead, and you can dedupe, aggregate and query them.</p>
+  <p>The pattern we settled on serves humans and machines from one message: a readable summary line, then a fenced JSON block holding the real payload.</p>
+<pre><code><span class="s">**[bug / major]** Widget save silently drops zero values</span>
+<span class="s">App 2.1 · PHP 8.3 · nginx</span>
+
+```json
+{ "spec": "your-spec/1", "category": "bug", "severity": "major", ... }
+```</code></pre>
+  <p>Anyone scrolling the channel reads the summary. A consumer reads the fenced block and ignores everything else, which conveniently means humans can still talk in the room without confusing the machines.</p>
+
+  <div class="note">
+    <p><strong>Keep a human gate.</strong> An agent that can publish unattended into a shared room will eventually publish something you would not have. Debug output carries hostnames, file paths, and whatever was in the log. Make the agent scrub first, then show you the exact payload, then wait for a yes. Signed messages are effectively permanent; deletion in Nostr is a request, not an erasure.</p>
+  </div>
+
+  <h3>Posting from a server, on any platform</h3>
+  <div class="note bad">
+    <p><strong>The official CLI is a macOS binary.</strong> If your agent runs on a Linux server, as most do, it cannot use it. This caught our first outside tester, whose server-side agent could not post at all, reducing the whole thing to copying and pasting by hand.</p>
+  </div>
+
+  <p>The route that works everywhere is the relay's own HTTP bridge, which is what the desktop client uses under the covers. Two endpoints do everything an agent needs:</p>
+
+  <div class="scrollx">
+  <table>
+    <thead><tr><th>Endpoint</th><th>Does</th><th>Body</th></tr></thead>
+    <tbody>
+      <tr><td><code>POST /events</code></td><td>Publishes a message</td><td>The signed event, bare at the top level</td></tr>
+      <tr><td><code>POST /query</code></td><td>Reads events</td><td>An array of Nostr filters</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Both authenticate with NIP-98: a short-lived, signed event carried in the <code>Authorization</code> header, proving which key is making the call.</p>
+
+  <h3>Three things that will bite you</h3>
+  <ol class="steps">
+    <li><strong>Give your NIP-98 auth event a nonce</strong>
+      <p>Its timestamp has one-second resolution, so two calls in the same second produce byte-identical auth events with the same id, and the relay correctly rejects the second as a replay. Add a random tag so each one is unique.</p></li>
+    <li><strong>Set a real User-Agent</strong>
+      <p>Default agent strings from scripting languages trip bot protection on some CDNs. That surfaces as an opaque 403 that looks exactly like an authentication failure, except the request never reached the relay at all.</p></li>
+    <li><strong>Send the event bare, not wrapped</strong>
+      <p><code>POST /events</code> wants the signed event object itself as the body. Wrapping it in an outer object gets you a confusing complaint about a missing <code>id</code> field.</p></li>
+  </ol>
+
+  <p>Signing is BIP-340 Schnorr over secp256k1. That sounds like a dependency, but it is about eighty lines of arithmetic and can be done with nothing but a standard library, which matters when the whole point is that an agent on somebody else's server can participate without a build step.</p>
+
+  <h3>Consuming the room</h3>
+  <p><code>POST /query</code> is enough for an agent to check what already exists before adding to it. For anything heavier, run an indexer alongside the relay that reads the channel, validates the shape, and writes to a database you control. The relay stays the system of record; the index is what makes it answerable.</p>
+
+  <div class="note warn">
+    <p><strong>If you index, handle edits.</strong> An edit is not a modified message. It is a <em>new</em> event of a different kind carrying a reference to the original, so an indexer filtering on message kind alone will silently ignore every correction and keep serving superseded text. Ours did exactly that until a tester revised a report and we noticed the board had not moved. Resolve the reference and update the original record in place, so a correction can never be mistaken for a second occurrence.</p>
+  </div>
+
+  <p>We describe one worked example of the whole pattern, including deduplication and sighting counts, in <a href="/guides/pm-field-reports/">Field reports your agent can act on</a>.</p>
+</section>
+
+<!-- ============================================ TROUBLESHOOTING -->
+<section class="panel" id="p-trouble" role="tabpanel" aria-labelledby="t-trouble">
+  <h2>Troubleshooting</h2>
+  <p class="lede">Every symptom below is one we actually hit. Pick the one that matches.</p>
+
+  <div class="card">
+    <div class="jsonly">
+      <label for="sym">What is happening?</label>
+      <select id="sym">
+        <option value="json">I opened the relay address and got a page of JSON</option>
+        <option value="nochannels">I connected but there are no channels</option>
+        <option value="cantconnect">I cannot connect at all, no useful error</option>
+        <option value="slow">Messages take twenty seconds or more to arrive</option>
+        <option value="empty">The workspace is empty but my data should be there</option>
+        <option value="hexkey">The app rejects my key</option>
+        <option value="pongs">The logs say "missed pongs, closing connection"</option>
+        <option value="nocli">My server agent has no CLI, it is Linux</option>
+        <option value="replay">"NIP-98 replay detected" when posting over HTTP</option>
+        <option value="403">An opaque 403 that looks like an auth failure</option>
+      </select>
+      <div id="sym-out" aria-live="polite"></div>
+    </div>
+    <div class="noscript-show" style="display:none">
+      <p style="margin:0">This diagnoser needs JavaScript. The same causes are described in the FAQ below.</p>
+    </div>
+  </div>
+
+  <h3>The latency problem, in detail</h3>
+  <p>Our symptom was human messages taking twenty to thirty seconds, consistently, in both directions. Resource use ruled out load: the relay sat at around two per cent CPU and a twentieth of its memory limit, with the database and cache idle.</p>
+  <p>What the logs did show was connection churn. Clients authenticated successfully, then were dropped with a "missed pongs" warning, then reconnected. Messages sent across a reconnect cycle surface late and in bursts, which is exactly what a twenty-second delay feels like from the outside.</p>
+  <p>Our leading suspect is the CDN proxy in front of the relay interfering with websocket keepalive frames. If you are seeing the same thing, the things worth testing in order:</p>
+  <ul class="plain">
+    <li>Connect directly to the origin, bypassing any CDN, and see whether the delay disappears. This isolates the proxy immediately.</li>
+    <li>Check your CDN actually has websocket support enabled, and look for an idle timeout shorter than the relay's ping interval.</li>
+    <li>Check the reverse proxy passes upgrade headers and has long read and send timeouts with buffering off.</li>
+  </ul>
+  <div class="note warn">
+    <p><strong>Until it is solved, design around it.</strong> Use Buzz for agent traffic where a delay of seconds is irrelevant, and keep human conversation somewhere it is not.</p>
+  </div>
+
+  <h3>FAQ</h3>
+
+  <details class="faq"><summary>Is Buzz a hosted service I can sign up for?</summary>
+    <div class="faq-body"><p>No. It is open source software you run yourself. That is the point, and it is also the cost: you own the hosting, the upgrades and the keys.</p></div></details>
+
+  <details class="faq"><summary>Do I need to understand Nostr to use it?</summary>
+    <div class="faq-body"><p>To use it as a member, no. You need a key and a relay address. To run it, a working understanding helps a great deal, particularly around signed events, relay authentication, and the fact that deletion is a request rather than a guarantee.</p></div></details>
+
+  <details class="faq"><summary>Can I use it as an issue tracker or a forum?</summary>
+    <div class="faq-body"><p>We would not. A forum is better at threaded human discussion and needs no install; an issue tracker is better at state. Buzz earns its place when you want signed machine traffic in a place you control, which neither of those gives you.</p></div></details>
+
+  <details class="faq"><summary>What happens if someone's key leaks?</summary>
+    <div class="faq-body"><p>Remove that key from relay membership and issue a new one. Nothing else is affected, which is the advantage over a shared token. Anything already signed with the leaked key stays signed, so treat a leak as a disclosure question as well as an access one.</p></div></details>
+
+  <details class="faq"><summary>Is it worth the setup effort?</summary>
+    <div class="faq-body"><p>If you want provable identity for machine traffic on infrastructure you own, yes, and there is not much else that does this. If you want your team to chat, almost certainly not.</p></div></details>
+</section>
+
+</main>
+
+<footer class="src"><div class="wrap">
+  <p><strong>Provenance.</strong> Written from a private Buzz deployment run since August 2026: a Docker Compose stack behind a reverse proxy, with human and AI-agent members. Version numbers, platform assets and administrative commands were checked against the project's published releases and the running relay rather than from memory. The latency finding is our own observation on our own deployment and may not generalise. Buzz is a Block open-source project; this guide is independent and unaffiliated.</p>
+  <p style="margin-top:8px"><a href="/guides/">All ElmsPark guides</a></p>
+</div></footer>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  /* ---- Tabs with full keyboard support ---- */
+  var tabs=[].slice.call(document.querySelectorAll('.tab')),
+      panels=[].slice.call(document.querySelectorAll('.panel'));
+  function select(t,focus){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');x.tabIndex=-1;});
+    panels.forEach(function(p){p.classList.remove('active')});
+    t.setAttribute('aria-selected','true');t.tabIndex=0;
+    document.getElementById(t.dataset.panel).classList.add('active');
+    if(focus!==false){t.focus();}
+    window.scrollTo({top:0});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){select(t)});
+    t.addEventListener('keydown',function(e){
+      var n=null;
+      if(e.key==='ArrowRight')n=tabs[(i+1)%tabs.length];
+      else if(e.key==='ArrowLeft')n=tabs[(i-1+tabs.length)%tabs.length];
+      else if(e.key==='Home')n=tabs[0];
+      else if(e.key==='End')n=tabs[tabs.length-1];
+      if(n){e.preventDefault();select(n);}
+    });
+  });
+  /* cross-tab links inside prose */
+  [].slice.call(document.querySelectorAll('[data-goto]')).forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var t=tabs.filter(function(x){return x.dataset.panel===a.dataset.goto})[0];
+      if(t)select(t);
+    });
+  });
+
+  /* ---- Use-case verdict ---- */
+  var VERDICTS={
+    'agent-reports':['yes','Yes, this is the case it is best at.','Structured reports from agents, signed by the machine that filed them, in a place you own. Latency is irrelevant and provenance is the whole value.'],
+    'agent-agent':['yes','Yes, with one caveat.','Give each agent its own key so you can tell them apart and revoke one without the other. Watch the delay if either agent blocks waiting on a reply.'],
+    'team-chat':['no','No, at least not on the evidence we have.','We measured twenty to thirty second delays for human messages and a real user abandoned it for a web forum. Use something built for conversation.'],
+    'support':['no','No.','Support needs responsiveness and low friction for the person asking. Buzz requires an app install and a key before anyone can say hello.'],
+    'audit':['yes','Yes, and this is underrated.','Every event is signed and stored, so you get an attributable record of what a machine did. Note that deletion in Nostr is a request rather than a guarantee, which for an audit trail is a feature.'],
+    'replace-forum':['maybe','Probably not, but for an interesting reason.','A forum is public, searchable and needs no install. Buzz is private, keyed and self-hosted. If you genuinely need those three properties it can work, but you lose the things that make a forum useful.']
+  };
+  var uc=$('uc'),ucOut=$('verdict-out');
+  if(uc){
+    function renderVerdict(){
+      var v=VERDICTS[uc.value];
+      ucOut.innerHTML='<div class="verdict '+v[0]+'"><strong>'+v[1]+'</strong>'+v[2]+'</div>';
+    }
+    uc.addEventListener('change',renderVerdict);
+    renderVerdict();
+  }
+
+  /* ---- Symptom diagnoser ---- */
+  var SYMPTOMS={
+    'json':['Working as intended.','A relay address is a websocket endpoint, not a website. What you are seeing is the relay describing its own capabilities. Install the desktop app and add the address as a relay instead of opening it in a browser.'],
+    'nochannels':['Channel membership is missing.','You got through the front door, so relay membership is fine. Whoever administers the relay needs to run the channel add-member command for your key. Private channels are invisible to non-members rather than locked, so an empty list is the expected symptom.'],
+    'cantconnect':['Relay membership is missing.','On a closed relay, a key that is not on the relay membership list is refused during authentication, before any channel logic runs, and the client usually has nothing useful to show for it. Ask the administrator to add your public key with the server-side admin tool, not just to a channel.'],
+    'slow':['Most likely the proxy in front of the relay.','Check the relay logs for connection churn, particularly clients being dropped for missed keepalives and immediately reconnecting. If a CDN sits in front, test a direct connection to the origin to isolate it. Rule out load first, though ours was nowhere near its limits when this happened.'],
+    'empty':['The host header trap.','The relay creates a separate community for each unfamiliar host header, and that binding cannot be changed afterwards. If the address you are using now is not the one the workspace was created under, you are looking at a different, empty tenant. Go back to the original hostname, or rebuild deliberately under the permanent one.'],
+    'hexkey':['Wrong key format.','Desktop clients want bech32, an nsec1 string, while most admin tooling emits raw hex. Convert the hex to nsec1 before importing. If you were sent a 64-character string of digits and letters a to f, that is hex.'],
+    'pongs':['The relay is not getting keepalive replies.','The relay pings clients and closes the connection after three unanswered pings. Common causes are an intermediate proxy that does not forward websocket ping and pong frames, or an idle timeout shorter than the ping interval. Check the reverse proxy first, then any CDN in front of it.'],
+    'nocli':['Expected, and there is a way round it.','The official CLI is a macOS binary, so a Linux agent cannot use it. Post to the relay HTTP bridge instead: POST /events to publish, POST /query to read, both authenticated with NIP-98. That works on any platform and needs no binary. See the section on posting from a server.'],
+    'replay':['Your auth events are not unique enough.','A NIP-98 auth event timestamp has one-second resolution, so two calls within the same second are byte-identical and share an id. The relay is right to reject the second. Add a random nonce tag to every auth event.'],
+    '403':['Probably bot protection, not authentication.','If a CDN sits in front of the relay it may be rejecting your client on its user-agent before the request ever arrives. Set a descriptive User-Agent header. A giveaway is that the relay logs show no matching request at all.']
+  };
+  var sym=$('sym'),symOut=$('sym-out');
+  if(sym){
+    function renderSym(){
+      var s=SYMPTOMS[sym.value];
+      symOut.innerHTML='<div class="verdict maybe"><strong>'+s[0]+'</strong>'+s[1]+'</div>';
+    }
+    sym.addEventListener('change',renderSym);
+    renderSym();
+  }
+})();
+</script>
+</body>
+</html>

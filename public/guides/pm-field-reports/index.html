@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How to file a PageMotor field report an AI agent can act on: the fixed report shape, the scrub rules, the human gate, and a live builder that assembles one as you type.">
+<meta name="robots" content="noindex,nofollow">
+<title>PageMotor Field Reports | ElmsPark Guide</title>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ElmsPark Guides">
+<meta property="og:title" content="Field reports your agent can act on">
+<meta property="og:description" content="The fixed report shape that turns AI debugging findings into something another machine can dedupe and count. Field-by-field spec, a live report builder with a real fingerprint, a scrub checker, and copy-paste agent instructions.">
+<meta property="og:url" content="https://documentation.elmspark.com/guides/pm-field-reports/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=fraunces:400,600,700|outfit:400,500,600,700&display=swap">
+<style>
+  :root{
+    --bg:#faf9f5; --ink:#1f1e1c; --muted:#6e6a63; --card:#ffffff; --line:#e7e3da;
+    --pine:#2f5d4a; --pine-soft:#e6efe9; --pine-deep:#234739;
+    --amber:#a35a20; --amber-soft:#f7ecdf;
+    --bad:#a33b3b; --bad-soft:#f6e5e5;
+    --radius:14px; --shadow:0 1px 3px rgba(31,30,28,.07),0 4px 14px rgba(31,30,28,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  body{font-family:'Outfit',ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;font-size:16px;padding-bottom:80px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  header.hero{padding:44px 0 26px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#f2f0e9 0%,var(--bg) 100%)}
+  .crumbs{font-size:.875rem;display:flex;align-items:center;gap:.5rem;color:var(--muted);margin-bottom:18px}
+  .crumbs a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent}
+  .crumbs a:hover,.crumbs a:focus-visible{color:var(--pine);border-bottom-color:var(--pine)}
+  .crumbs .sep{color:#b5ab97}
+  .crumbs [aria-current="page"]{color:var(--ink);font-weight:500}
+  .kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:10px}
+  h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(28px,4.5vw,42px);line-height:1.12;letter-spacing:-.01em;font-weight:700}
+  h1 em{color:var(--pine);font-style:normal}
+  .sub{margin-top:12px;color:var(--muted);max-width:660px;font-size:17px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .badge{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
+  .badge.pine{background:var(--pine-soft);border-color:#cfe0d6;color:var(--pine-deep)}
+
+  nav.tabs{position:sticky;top:0;z-index:50;background:rgba(250,249,245,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);margin-bottom:28px}
+  .tabrow{display:flex;gap:4px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+  .tabrow::-webkit-scrollbar{display:none}
+  .tab{appearance:none;border:1px solid transparent;background:transparent;font:inherit;font-size:14px;font-weight:600;
+    color:var(--muted);padding:8px 14px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+  .tab:hover{color:var(--ink);background:#f0ede5}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .tab:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
+
+  section.panel{display:none;animation:fade .25s ease}
+  section.panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){ section.panel{animation:none} }
+
+  h2{font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin:6px 0 14px}
+  h3{font-size:16.5px;font-weight:700;margin-bottom:8px}
+  p{margin-bottom:14px}
+  p.lede{font-size:17.5px;max-width:700px}
+  a{color:var(--pine)}
+  .grid{display:grid;gap:14px;margin:18px 0}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+  .card p:last-child{margin-bottom:0}
+  .note{border-left:3px solid var(--pine);background:var(--pine-soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:18px 0}
+  .note.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+  .note.bad{border-left-color:var(--bad);background:var(--bad-soft)}
+  .note p:last-child{margin-bottom:0}
+
+  table{border-collapse:collapse;width:100%;font-size:14.5px;margin:14px 0}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+  td code,li code,p code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#f0ede5;
+    border-radius:5px;padding:1px 5px}
+  .scrollx{overflow-x:auto}
+  .req{color:var(--pine-deep);font-weight:700;font-size:12px}
+  .opt{color:var(--muted);font-size:12px}
+
+  pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.6;background:#26241f;color:#ece8dd;
+    border-radius:var(--radius);padding:16px 18px;overflow-x:auto;margin:14px 0}
+  pre .k{color:#a3c9b4} pre .s{color:#e8c48a} pre .c{color:#8f8a7d}
+
+  ol.steps{list-style:none;counter-reset:s;margin:18px 0}
+  ol.steps>li{counter-increment:s;position:relative;padding:0 0 18px 52px}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;
+    background:var(--pine);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+  ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:16px;top:38px;bottom:2px;width:2px;background:var(--line)}
+  ol.steps strong{display:block;margin-bottom:3px}
+  ol.steps p{color:var(--muted);font-size:15px;margin-bottom:6px}
+
+  ul.plain{margin:0 0 14px 20px}
+  ul.plain li{margin-bottom:7px}
+
+  label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+  input[type=text],textarea,select{width:100%;padding:9px 11px;font:inherit;font-size:14.5px;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:8px}
+  input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--pine);outline-offset:1px;border-color:var(--pine)}
+  textarea{resize:vertical;min-height:70px}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .fieldrow{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  button.btn{appearance:none;font:inherit;font-weight:600;font-size:14px;cursor:pointer;border-radius:8px;
+    border:1px solid var(--ink);background:var(--ink);color:#fff;padding:9px 16px;transition:.15s}
+  button.btn:hover{background:var(--pine);border-color:var(--pine)}
+  button.btn.ghost{background:transparent;color:var(--ink)}
+  button.btn.ghost:hover{background:var(--ink);color:#fff}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .fp{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;word-break:break-all;background:#f0ede5;
+    border-radius:8px;padding:10px 12px;margin-top:8px}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:3px 9px;border-radius:99px;margin-right:6px}
+  .pill.ok{background:var(--pine-soft);color:var(--pine-deep)}
+  .pill.no{background:var(--bad-soft);color:var(--bad)}
+  .pill.warn{background:var(--amber-soft);color:var(--amber)}
+  .scrub-hit{font-size:14px;padding:8px 12px;border-radius:8px;margin-top:8px}
+  .scrub-hit.red{background:var(--bad-soft);color:#7a2626}
+  .scrub-hit.amber{background:var(--amber-soft);color:#6e3d12}
+  .scrub-hit.green{background:var(--pine-soft);color:var(--pine-deep)}
+
+  details.faq{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);margin-bottom:10px;overflow:hidden}
+  details.faq>summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  details.faq>summary::-webkit-details-marker{display:none}
+  details.faq>summary::after{content:"+";color:var(--pine);font-weight:700;font-size:19px}
+  details.faq[open]>summary::after{content:"\2212"}
+  details.faq>summary:hover{background:#f7f5ef}
+  .faq-body{padding:0 18px 16px}
+  .faq-body p:last-child{margin-bottom:0}
+
+  footer.src{margin-top:40px;border-top:1px solid var(--line);padding-top:22px;font-size:13px;color:var(--muted)}
+  footer.src a{color:var(--pine-deep)}
+</style>
+<noscript><style>section.panel{display:block} .jsonly{display:none}</style></noscript>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">ElmsPark Docs</a><span class="sep">/</span>
+    <a href="/guides/">Guides</a><span class="sep">/</span>
+    <span aria-current="page">PageMotor field reports</span>
+  </nav>
+  <p class="kicker">AI &amp; tools</p>
+  <h1>Field reports your <em>agent</em> can act on</h1>
+  <p class="sub">More and more PageMotor debugging is done by AI agents, and their findings die in chat transcripts. This guide is the fix: one fixed report shape, the scrub that keeps your secrets at home, the human gate that keeps you in charge, and a live builder that assembles a report as you type.</p>
+  <div class="badges">
+    <span class="badge pine">Fixed shape, spec pm-field-report/1</span>
+    <span class="badge">Nothing on this page phones home</span>
+    <span class="badge">Updated 22 August 2026</span>
+  </div>
+</div></header>
+
+<nav class="tabs" aria-label="Guide sections"><div class="wrap"><div class="tabrow" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" aria-controls="p-why" id="t-why" data-panel="p-why">Why this exists</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-shape" id="t-shape" data-panel="p-shape" tabindex="-1">The report shape</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-file" id="t-file" data-panel="p-file" tabindex="-1">Filing one</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-read" id="t-read" data-panel="p-read" tabindex="-1">Reading them</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-try" id="t-try" data-panel="p-try" tabindex="-1">Try it live</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p-faq" id="t-faq" data-panel="p-faq" tabindex="-1">FAQ</button>
+</div></div></nav>
+
+<main class="wrap">
+
+<!-- ================================================== WHY -->
+<section class="panel active" id="p-why" role="tabpanel" aria-labelledby="t-why">
+  <h2>Why this exists</h2>
+  <p class="lede">The idea came out of a discussion among PageMotor developers: as AI agents do more of the debugging, could their findings feed a shared pool instead of evaporating? The instinct was a watercooler, a place for agents to talk. The thing that actually works is quieter than that.</p>
+
+  <div class="grid g3">
+    <div class="card"><h3>Chat silts up</h3><p>Free-text output from an agent is cheap to generate and expensive to triage. A channel full of it fills faster than any human, or any AI, can drain it.</p></div>
+    <div class="card"><h3>Prose cannot be counted</h3><p>Three people hitting one bug produce three well-written paragraphs in three threads. Nothing connects them, so the one fact that drives triage, how many, is destroyed on arrival.</p></div>
+    <div class="card"><h3>Nobody signs chatter</h3><p>A finding is only as useful as its provenance. Which install, which environment, which version, filed by whom? A chat message carries none of that reliably.</p></div>
+  </div>
+
+  <p>The fix for all three is the same move: stop exchanging conversation and start exchanging a <strong>structured report</strong>. A fixed set of fields another machine can validate, deduplicate and count. When two installs file the same finding, it should read as one finding seen twice, not two unrelated posts.</p>
+
+  <div class="note">
+    <p><strong>The count is the point.</strong> Triage is mostly the question &ldquo;how many people does this actually hit, and where?&rdquo;. A sightings count across different environments answers it in one glance. No volume of well-written prose reports can produce that number.</p>
+  </div>
+
+  <h3>Does this actually run anywhere?</h3>
+  <p>Yes. A working pilot exists: reports are filed as cryptographically signed events into a private channel, an indexer validates and fingerprints each one, and a board shows one row per finding with a sightings count on it. The pilot is deliberately closed while it is proven out, and it is not official PageMotor infrastructure. What is public, and useful today without any access to anything, is the report shape itself and the filing discipline around it. That is what the rest of this guide covers.</p>
+</section>
+
+<!-- ================================================== SHAPE -->
+<section class="panel" id="p-shape" role="tabpanel" aria-labelledby="t-shape">
+  <h2>The report shape</h2>
+  <p class="lede">One report is one finding, expressed as one JSON object. The spec name is <code>pm-field-report/1</code>. Eleven fields, three of which do the heavy lifting.</p>
+
+  <div class="scrollx">
+  <table>
+    <thead><tr><th>Field</th><th></th><th>What goes in it</th></tr></thead>
+    <tbody>
+      <tr><td><code>spec</code></td><td class="req">required</td><td>Always <code>pm-field-report/1</code>. Lets a reader reject shapes it does not understand.</td></tr>
+      <tr><td><code>category</code></td><td class="req">required</td><td>One of <code>bug</code>, <code>docs-gap</code>, <code>environment</code>, <code>idea</code>. A fixed list, so filtering means something.</td></tr>
+      <tr><td><code>severity</code></td><td class="req">required</td><td>One of <code>blocker</code>, <code>major</code>, <code>minor</code>, <code>note</code>. Resist inflation: a report that cries blocker for a cosmetic nit costs you credibility on every future filing.</td></tr>
+      <tr><td><code>title</code></td><td class="req">required</td><td>One line that <strong>names the mechanism, not the symptom</strong>. The title drives deduplication, so two people describing the same fault need to converge on the same words. &ldquo;Options set to zero are dropped on save&rdquo; is findable next year. &ldquo;Settings broke after upgrade&rdquo; names your Tuesday.</td></tr>
+      <tr><td><code>pm_core</code></td><td class="req">required</td><td>The PageMotor core version the finding was reproduced on, exactly as your admin screen reports it. Every finding is anchored to a core version; it is the axis every useful question runs along.</td></tr>
+      <tr><td><code>php</code></td><td class="opt">optional</td><td>PHP version, e.g. from <code>php -v</code>.</td></tr>
+      <tr><td><code>plugins</code></td><td class="opt">optional</td><td>An object of the plugins that matter to the finding: <code>{"slug": "version"}</code>. Not your whole install, just the cast of this story.</td></tr>
+      <tr><td><code>environment</code></td><td class="opt">optional</td><td>One line: web server, database engine, OS. This is what turns a second sighting into information, same bug on a different stack.</td></tr>
+      <tr><td><code>repro</code></td><td class="req">required*</td><td>An array of steps, not a paragraph. If a finding has no repro it is a hunch, and hunches are what silt a channel up. (*Required for <code>bug</code>; for an <code>idea</code> it may be empty.)</td></tr>
+      <tr><td><code>expected</code></td><td class="opt">optional</td><td>What should have happened.</td></tr>
+      <tr><td><code>observed</code></td><td class="req">required</td><td>What did happen. The one field that must always carry weight.</td></tr>
+      <tr><td><code>evidence</code></td><td class="opt">optional</td><td>The two to five lines that prove it. Not the log. The excerpt that would convince a sceptical colleague.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>A complete example</h3>
+<pre><code>{
+  <span class="k">"spec"</span>:     <span class="s">"pm-field-report/1"</span>,
+  <span class="k">"category"</span>: <span class="s">"bug"</span>,
+  <span class="k">"severity"</span>: <span class="s">"minor"</span>,
+  <span class="k">"title"</span>:    <span class="s">"Options set to zero are silently dropped on save"</span>,
+  <span class="k">"pm_core"</span>:  <span class="s">"X.Y"</span>,          <span class="c">// the version from your admin screen</span>
+  <span class="k">"php"</span>:      <span class="s">"8.3.6"</span>,
+  <span class="k">"plugins"</span>:  { <span class="k">"example-plugin"</span>: <span class="s">"1.2.0"</span> },
+  <span class="k">"environment"</span>: <span class="s">"nginx 1.24, MySQL 8, Ubuntu 24.04"</span>,
+  <span class="k">"repro"</span>: [
+    <span class="s">"Set any numeric plugin option to 0"</span>,
+    <span class="s">"Save the settings page"</span>,
+    <span class="s">"Reload it"</span>
+  ],
+  <span class="k">"expected"</span>: <span class="s">"The option shows 0"</span>,
+  <span class="k">"observed"</span>: <span class="s">"The option has reverted to its default; zero was never stored"</span>,
+  <span class="k">"evidence"</span>: <span class="s">"Reproduced three times on a clean install; a non-zero value round-trips fine"</span>
+}</code></pre>
+
+  <h3>How reports become findings</h3>
+  <p>Every report gets a fingerprint:</p>
+  <pre><code>sha256( category + "|" + pm_core + "|" + normalised_title )</code></pre>
+  <p>Normalising strips punctuation, lowercases, and collapses runs of spaces. Reports sharing a fingerprint are one finding with several sightings. That is the entire dedupe mechanism, and it is deliberately dumb: an exact rule you can predict beats a clever one you cannot, which matters when an agent is deciding whether to file.</p>
+
+  <div class="note warn">
+    <p><strong>The honest weakness:</strong> reword the same finding and the fingerprint changes, silently, splitting one finding into two. Nothing warns you. This is why title discipline matters, and you can watch it happen yourself in the <strong>Try it live</strong> tab.</p>
+  </div>
+</section>
+
+<!-- ================================================== FILING -->
+<section class="panel" id="p-file" role="tabpanel" aria-labelledby="t-file">
+  <h2>Filing one</h2>
+  <p class="lede">The shape is a quarter of the job. The discipline around it is the rest, and it holds whatever the transport is: a shared channel, a forum post with a tag, or an email into a parser. Six steps, two of which are non-negotiable.</p>
+
+  <ol class="steps">
+    <li><strong>Assemble from what was actually proved</strong>
+      <p>A report describes something reproduced, not suspected. If your agent could not make the fault happen on demand, the filing is a hunch and it stays home.</p></li>
+    <li><strong>Scrub it</strong>
+      <p>Everything below happens on your machine, before anything is sent anywhere. Hostnames become roles (&ldquo;customer site&rdquo;, &ldquo;test rig&rdquo;). Absolute paths become tails relative to the docroot. Keys, tokens, passwords, auth headers and credentials in URLs come out. Email addresses that are not yours come out. Evidence is cut to the few lines that prove the point.</p></li>
+    <li><strong>Check for a twin</strong>
+      <p>Search wherever reports live before filing. Finding a twin is not a reason to stop: an independent sighting is the most valuable thing you can file. But it should be a choice, and your title should match the existing finding word for word so the two group.</p></li>
+    <li><strong>The human gate</strong>
+      <p>Your agent shows you the exact, final payload and asks one question: send this, yes or no. A general &ldquo;yes, debug this&rdquo; from an hour ago does not count. No answer, no send. What the world learns about your server is your decision, never your agent&rsquo;s.</p></li>
+    <li><strong>File it</strong>
+      <p>On the pilot this means the payload is signed with the filing machine&rsquo;s own key and published, so the report carries provable authorship. Without pilot access, the same payload posted to the PageMotor developers&rsquo; forum in a code block, under an agreed tag, is machine-readable to anyone who cares to parse it. The shape is portable on purpose.</p></li>
+    <li><strong>Confirm</strong>
+      <p>Note what came back: an id, a fingerprint, any twins it grouped with. If a server-side secret scan rejects the payload, that is a bug in your scrub, not an obstacle. Fix the scrub; do not argue with the backstop.</p></li>
+  </ol>
+
+  <div class="note bad">
+    <p><strong>Why the gate is absolute.</strong> A signed, published report cannot be quietly unsent, and debug output is exactly where credentials go to hide. One leaked secret inside a stack trace would end any shared reporting effort overnight. The scrub protects your sites; the gate protects everyone&rsquo;s trust in the pool.</p>
+  </div>
+
+  <h3>Hand this to your agent</h3>
+  <p>A transport-neutral instruction block you can drop into any agent&rsquo;s custom instructions or skill file. It encodes the whole contract above:</p>
+<pre id="agentBlock"><code>When I ask you to file a PM field report:
+
+1. Build a JSON object with spec "pm-field-report/1" and fields:
+   category (bug|docs-gap|environment|idea), severity
+   (blocker|major|minor|note), title, pm_core, php, plugins,
+   environment, repro[], expected, observed, evidence.
+2. Only describe what this session actually reproduced.
+3. Title names the MECHANISM, not the symptom. Before writing one,
+   search existing reports; if a twin exists, reuse its title verbatim.
+4. Scrub before showing me anything: hostnames to roles, absolute
+   paths to tails, strip keys/tokens/passwords/auth headers,
+   credentials in URLs, and email addresses that are not mine.
+   Evidence is 2 to 5 lines maximum.
+5. Show me the exact final payload and ask: "File this report,
+   yes or no?" Then STOP. Do not send without an explicit yes
+   given after seeing the payload. Never treat earlier general
+   consent as approval.
+6. One finding per report. Two findings, two reports, two approvals.</code></pre>
+  <div class="btnrow jsonly"><button class="btn" data-copy="agentBlock">Copy the agent instructions</button></div>
+</section>
+
+<!-- ================================================== READING -->
+<section class="panel" id="p-read" role="tabpanel" aria-labelledby="t-read">
+  <h2>Reading them</h2>
+  <p class="lede">A pool of structured reports is only worth its keep if it answers questions faster than reading threads would. These are the questions it exists to answer.</p>
+
+  <div class="grid g2">
+    <div class="card"><h3>&ldquo;Is this just me?&rdquo;</h3><p>The first question anyone asks mid-debugging. With fingerprint grouping it is one lookup: a matching finding with sightings on other environments means it is not your server, and each sighting&rsquo;s environment line tells you what the fault does and does not depend on.</p></div>
+    <div class="card"><h3>&ldquo;What is the new core doing to people?&rdquo;</h3><p>Every report is anchored to a core version, so release week reads as a filter, not a trawl. Findings sorted by sightings under the new version are a triage list that wrote itself.</p></div>
+    <div class="card"><h3>&ldquo;Which docs gaps keep recurring?&rdquo;</h3><p>The <code>docs-gap</code> category is quietly the highest-value one. Every entry is a place where a real person, or their agent, went looking for an answer that was not there. That is a documentation to-do list ranked by evidence.</p></div>
+    <div class="card"><h3>&ldquo;Same bug, or new bug?&rdquo;</h3><p>Two reports, one fingerprint: same finding, more evidence. Two reports, two fingerprints, similar words: possibly a rewording split. Titles that name mechanisms keep this honest; sloppy titles quietly undercount real problems.</p></div>
+  </div>
+
+  <h3>Reading a sightings count responsibly</h3>
+  <p>A count of one means little on its own: one environment, one config, one possible local quirk. The signal starts at two, because two independent machines rarely share the same local accident. And a difference between sightings is often worth more than the count itself. One sighting on MySQL and one on MariaDB tells you the database engine is not the variable. That elimination is free; nobody had to run the experiment on purpose.</p>
+
+  <div class="note">
+    <p><strong>Agents are readers too.</strong> The shape exists so a machine can consume it: validate, dedupe, count, summarise. An agent that checks the pool before debugging starts an hour ahead. An agent that checks it before <em>filing</em> keeps the pool clean. Both directions matter equally.</p>
+  </div>
+</section>
+
+<!-- ================================================== TRY IT -->
+<section class="panel" id="p-try" role="tabpanel" aria-labelledby="t-try">
+  <h2>Try it live</h2>
+  <p class="lede">Two working tools, both running entirely in this page. Nothing you type here is sent anywhere, stored anywhere, or seen by anyone.</p>
+
+  <div class="card" style="margin-bottom:22px">
+    <h3>The report builder</h3>
+    <p style="color:var(--muted);font-size:14.5px">Fill the fields; the payload and its fingerprint assemble live. Then press <em>Reword the title</em> and watch the fingerprint abandon the grouping, which is the one weakness worth understanding before you file anything.</p>
+    <div class="jsonly">
+      <div class="fieldrow">
+        <div><label for="b-cat">category</label>
+          <select id="b-cat"><option>bug</option><option>docs-gap</option><option>environment</option><option>idea</option></select></div>
+        <div><label for="b-sev">severity</label>
+          <select id="b-sev"><option>blocker</option><option selected>minor</option><option>major</option><option>note</option></select></div>
+        <div><label for="b-core">pm_core</label>
+          <input type="text" id="b-core" value="X.Y" autocomplete="off">
+          <p class="hint">Use the version your admin screen shows.</p></div>
+      </div>
+      <label for="b-title">title <span style="font-weight:400;color:var(--muted)">(drives the fingerprint)</span></label>
+      <input type="text" id="b-title" value="Options set to zero are silently dropped on save" autocomplete="off">
+      <label for="b-obs">observed</label>
+      <textarea id="b-obs">The option has reverted to its default; zero was never stored</textarea>
+      <label for="b-repro">repro <span style="font-weight:400;color:var(--muted)">(one step per line)</span></label>
+      <textarea id="b-repro">Set any numeric plugin option to 0
+Save the settings page
+Reload it</textarea>
+
+      <p style="margin:14px 0 0;font-weight:600;font-size:14px">Payload <span id="b-valid"></span></p>
+      <pre style="margin-top:6px"><code id="b-json"></code></pre>
+      <p style="font-weight:600;font-size:14px">Fingerprint <span id="fp-verdict"></span></p>
+      <div class="fp" id="b-fp" aria-live="polite"></div>
+      <div class="btnrow">
+        <button class="btn ghost" id="rewordBtn" type="button">Reword the title</button>
+        <button class="btn" data-copy="b-json" type="button">Copy payload</button>
+      </div>
+    </div>
+    <noscript><p>The live builder needs JavaScript; with it off, the complete example on <strong>The report shape</strong> tab is the same payload in static form.</p></noscript>
+  </div>
+
+  <div class="card">
+    <h3>The scrub checker</h3>
+    <p style="color:var(--muted);font-size:14.5px">Paste a candidate <code>evidence</code> excerpt. The same pattern families a filing pipeline should refuse are checked here, client-side: hard stops for secret shapes, warnings for things that identify you or your client.</p>
+    <div class="jsonly">
+      <label for="s-in">Candidate evidence</label>
+      <textarea id="s-in" rows="5" spellcheck="false">[error] /var/www/clientsite.example/lib/plugins/example-plugin/class.php:88
+request to https://clientsite.example/admin/?token=a1b2c3d4e5f6 failed</textarea>
+      <div id="s-out" aria-live="polite"></div>
+    </div>
+    <noscript><p>The checker needs JavaScript. The rules it applies are the scrub list on the <strong>Filing one</strong> tab.</p></noscript>
+  </div>
+</section>
+
+<!-- ================================================== FAQ -->
+<section class="panel" id="p-faq" role="tabpanel" aria-labelledby="t-faq">
+  <h2>FAQ</h2>
+
+  <details class="faq"><summary>Is this official PageMotor infrastructure?</summary>
+    <div class="faq-body"><p>No. The report shape is a community convention, and the running pilot is one developer&rsquo;s independent build, deliberately closed while it is proven out. Nothing here speaks for PageMotor, and nothing should depend on the pilot. Whether something like it should exist officially, and where it should live, is a decision for PageMotor, not for this guide.</p></div></details>
+
+  <details class="faq"><summary>Why not just use chat channels for this?</summary>
+    <div class="faq-body"><p>Because conversation cannot be counted. A channel of free-text agent output fills faster than anyone can triage it, and the one number that matters, how many installs a finding actually hits, never emerges from prose. Channels are excellent for humans talking. Reports are for machines counting. The two do not substitute for each other.</p></div></details>
+
+  <details class="faq"><summary>Why are pilot reports signed?</summary>
+    <div class="faq-body"><p>Provenance. A signed event proves which machine filed a report, cannot be forged in someone else&rsquo;s name, and lets access be revoked per key rather than by rotating a secret that everyone shares. A report whose authorship is provable is worth strictly more than the same words without it.</p></div></details>
+
+  <details class="faq"><summary>Can my agent file automatically, without asking me?</summary>
+    <div class="faq-body"><p>It must not, and a pipeline worth trusting will treat any automated filing as a defect. A published report can carry information about your server, your client&rsquo;s site, or your mistakes, and once signed and published it cannot be quietly unsent. The approval is for the exact payload bytes, given after seeing them. Every time.</p></div></details>
+
+  <details class="faq"><summary>What stops a secret leaking inside a report?</summary>
+    <div class="faq-body"><p>Two layers, honestly ranked. The one that actually protects you is the client-side scrub, because it runs before anything leaves your machine. Behind it, a receiving pipeline should refuse payloads matching known secret shapes, private key blocks, cloud and payment tokens, auth headers, credentials in URLs. Treat a rejection as a bug in your scrub and fix it there. The backstop existing is not a reason to lean on it.</p></div></details>
+
+  <details class="faq"><summary>Severity feels subjective. Any rules of thumb?</summary>
+    <div class="faq-body"><p><code>blocker</code>: an install or a core workflow is unusable. <code>major</code>: something real breaks and there is no clean workaround. <code>minor</code>: real but routable-around. <code>note</code>: worth a row, not worth anyone&rsquo;s afternoon. When torn, round down and let the sightings count argue for you; an undersold report that groups with five others speaks louder than an oversold one alone.</p></div></details>
+
+  <details class="faq"><summary>How do I get access to the pilot?</summary>
+    <div class="faq-body"><p>The pilot is closed while the loop is proven, and there is no signup. Interest is best registered in the PageMotor developers&rsquo; forum, in the thread where this idea started. Meanwhile the shape costs nothing to adopt: a report in this format, posted in a forum code block, is already machine-readable and already groups by fingerprint the day anyone points a parser at it.</p></div></details>
+
+  <details class="faq"><summary>Who made this guide?</summary>
+    <div class="faq-body"><p>ElmsPark, the PageMotor plugin studio behind the EP Suite, from a working pilot built and probed end to end in August 2026. Every mechanism described here, the shape, the fingerprint, the scrub, the gate, the sightings count, is running, not proposed.</p></div></details>
+</section>
+
+</main>
+
+<footer class="src"><div class="wrap">
+  <p><strong>Provenance.</strong> Spec <code>pm-field-report/1</code> as implemented in the running pilot, August 2026. The fingerprint shown by the builder is the real rule: SHA-256 of <code>category|pm_core|normalised title</code>, computed in your browser. Scrub pattern families mirror the pilot&rsquo;s server-side backstop. Nothing on this page transmits, stores, or logs anything you type.</p>
+  <p style="margin-top:8px"><a href="/guides/">All ElmsPark guides</a></p>
+</div></footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ----- Tabs: full keyboard pattern (click + roving tabindex + arrows) ----- */
+  var tabs=[].slice.call(document.querySelectorAll('.tab')),
+      panels=[].slice.call(document.querySelectorAll('.panel'));
+  function select(t){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');x.tabIndex=-1;});
+    panels.forEach(function(p){p.classList.remove('active')});
+    t.setAttribute('aria-selected','true');t.tabIndex=0;
+    document.getElementById(t.dataset.panel).classList.add('active');
+    t.focus();window.scrollTo({top:0});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){select(t)});
+    t.addEventListener('keydown',function(e){
+      var n=null;
+      if(e.key==='ArrowRight')n=tabs[(i+1)%tabs.length];
+      else if(e.key==='ArrowLeft')n=tabs[(i-1+tabs.length)%tabs.length];
+      else if(e.key==='Home')n=tabs[0];
+      else if(e.key==='End')n=tabs[tabs.length-1];
+      if(n){e.preventDefault();select(n);}
+    });
+  });
+
+  /* ----- Copy buttons ----- */
+  [].slice.call(document.querySelectorAll('[data-copy]')).forEach(function(b){
+    b.addEventListener('click',function(){
+      var el=document.getElementById(b.dataset.copy),txt=el.innerText||el.textContent;
+      function done(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1400);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+      else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();
+        try{document.execCommand('copy')}catch(e){}document.body.removeChild(ta);done();}
+    });
+  });
+
+  /* ----- Report builder ----- */
+  var $=function(id){return document.getElementById(id)};
+  var bCat=$('b-cat'),bSev=$('b-sev'),bCore=$('b-core'),bTitle=$('b-title'),
+      bObs=$('b-obs'),bRepro=$('b-repro'),bJson=$('b-json'),bFp=$('b-fp'),
+      bValid=$('b-valid'),fpVerdict=$('fp-verdict'),rewordBtn=$('rewordBtn');
+  if(bCat&&window.crypto&&crypto.subtle){
+    var ORIGINAL='Options set to zero are silently dropped on save';
+    var REWORDED='Zero values vanish when you save settings!';
+    var baseFp=null;
+    function norm(s){return s.replace(/[^a-z0-9 ]/gi,'').toLowerCase().trim().replace(/\s+/g,' ');}
+    function sha(msg,cb){
+      crypto.subtle.digest('SHA-256',new TextEncoder().encode(msg)).then(function(buf){
+        cb([].map.call(new Uint8Array(buf),function(x){return x.toString(16).padStart(2,'0')}).join(''));
+      });
+    }
+    function payload(){
+      return {spec:'pm-field-report/1',category:bCat.value,severity:bSev.value,
+        title:bTitle.value.trim(),pm_core:bCore.value.trim(),
+        repro:bRepro.value.split('\n').map(function(s){return s.trim()}).filter(Boolean),
+        observed:bObs.value.trim()};
+    }
+    function render(){
+      var p=payload();
+      bJson.textContent=JSON.stringify(p,null,2);
+      var missing=[];
+      if(!p.title)missing.push('title');
+      if(!p.pm_core)missing.push('pm_core');
+      if(!p.observed)missing.push('observed');
+      if(p.category==='bug'&&!p.repro.length)missing.push('repro');
+      bValid.innerHTML=missing.length
+        ? '<span class="pill no">invalid</span> <span style="font-weight:400;color:var(--muted);font-size:13px">missing: '+missing.join(', ')+'</span>'
+        : '<span class="pill ok">valid</span>';
+      sha(p.category+'|'+p.pm_core+'|'+norm(p.title),function(hex){
+        bFp.textContent=hex;
+        if(baseFp===null){baseFp=hex;}
+        fpVerdict.innerHTML=(hex===baseFp)
+          ? '<span class="pill ok">groups</span> <span style="font-weight:400;color:var(--muted);font-size:13px">matches the original filing</span>'
+          : '<span class="pill no">separate</span> <span style="font-weight:400;color:var(--muted);font-size:13px">files as a brand-new finding; nothing warns you it is the same bug</span>';
+      });
+    }
+    [bCat,bSev,bCore,bTitle,bObs,bRepro].forEach(function(el){el.addEventListener('input',render)});
+    rewordBtn.addEventListener('click',function(){
+      var rewording=bTitle.value===ORIGINAL;
+      bTitle.value=rewording?REWORDED:ORIGINAL;
+      rewordBtn.textContent=rewording?'Put the title back':'Reword the title';
+      render();
+    });
+    render();
+  }
+
+  /* ----- Scrub checker ----- */
+  var sIn=$('s-in'),sOut=$('s-out');
+  if(sIn){
+    var HARD=[
+      [/-----BEGIN [A-Z ]*PRIVATE KEY-----/,'a private key block'],
+      [/AKIA[0-9A-Z]{16}/,'an AWS access key'],
+      [/sk_live_[0-9A-Za-z]{20,}/,'a Stripe live secret'],
+      [/xox[baprs]-[0-9A-Za-z-]{10,}/,'a Slack token'],
+      [/ghp_[0-9A-Za-z]{36}/,'a GitHub token'],
+      [/Authorization:\s*Bearer\s+[A-Za-z0-9._-]{20,}/i,'a bearer token'],
+      [/[?&](password|passwd|secret|api_key|apikey|token)=[^&\s"']{6,}/i,'a credential in a URL']
+    ];
+    var SOFT=[
+      [/https?:\/\/(?!(?:www\.)?example\.)[a-z0-9.-]+\.[a-z]{2,}/i,'a real-looking hostname; replace it with a role like "customer site"'],
+      [/\/(?:var|home|Users)\/[^\s"']+/,'an absolute server path; cut it to a tail relative to the docroot'],
+      [/[a-zA-Z0-9._%+-]+@(?!example\.)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/,'an email address; remove it unless it is your own'],
+      [/\b(?:\d{1,3}\.){3}\d{1,3}\b/,'an IP address; usually identifies a machine']
+    ];
+    function scan(){
+      var v=sIn.value,rows=[],i;
+      for(i=0;i<HARD.length;i++){if(HARD[i][0].test(v)){rows.push('<div class="scrub-hit red"><strong>Refuse:</strong> this looks like '+HARD[i][1]+'. A filing pipeline should reject the whole payload.</div>');}}
+      for(i=0;i<SOFT.length;i++){if(SOFT[i][0].test(v)){rows.push('<div class="scrub-hit amber"><strong>Scrub:</strong> found '+SOFT[i][1]+'.</div>');}}
+      sOut.innerHTML=rows.length?rows.join(''):'<div class="scrub-hit green"><strong>Clean</strong> against every pattern family this page checks. The scrub list on the Filing tab still applies; patterns catch shapes, not judgement.</div>';
+    }
+    sIn.addEventListener('input',scan);
+    scan();
+  }
+})();
+</script>
+</body>
+</html>
