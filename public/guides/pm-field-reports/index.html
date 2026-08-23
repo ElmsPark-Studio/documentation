@@ -232,8 +232,9 @@
 
   <h3>How reports become findings</h3>
   <p>Every report gets a fingerprint:</p>
-  <pre><code>sha256( category + "|" + pm_core + "|" + normalised_title )</code></pre>
+  <pre><code>sha256( category + "|" + normalised_title )</code></pre>
   <p>Normalising strips punctuation, lowercases, and collapses runs of spaces. Reports sharing a fingerprint are one finding with several sightings. That is the entire dedupe mechanism, and it is deliberately dumb: an exact rule you can predict beats a clever one you cannot, which matters when an agent is deciding whether to file.</p>
+  <p><strong>Note what is deliberately absent: the core version.</strong> An earlier version of this hashed the version in too, which meant the same fault reported on two different releases became two findings rather than one seen twice. That defeats the only question worth asking. The version is a property of a sighting, so it stays on the report as a filterable facet and out of what makes a finding that finding.</p>
 
   <div class="note warn">
     <p><strong>The honest weakness:</strong> reword the same finding and the fingerprint changes, silently, splitting one finding into two. Nothing warns you. This is why title discipline matters, and you can watch it happen yourself in the <strong>Try it live</strong> tab.</p>
@@ -391,7 +392,7 @@ request to https://clientsite.example/admin/?token=a1b2c3d4e5f6 failed</textarea
 </main>
 
 <footer class="src"><div class="wrap">
-  <p><strong>Provenance.</strong> Spec <code>pm-field-report/1</code> as implemented in the running pilot, August 2026. The fingerprint shown by the builder is the real rule: SHA-256 of <code>category|pm_core|normalised title</code>, computed in your browser. Scrub pattern families mirror the pilot&rsquo;s server-side backstop. Nothing on this page transmits, stores, or logs anything you type.</p>
+  <p><strong>Provenance.</strong> Spec <code>pm-field-report/1</code> as implemented in the running pilot, August 2026. The fingerprint shown by the builder is the real rule: SHA-256 of <code>category|normalised title</code>, computed in your browser. Scrub pattern families mirror the pilot&rsquo;s server-side backstop. Nothing on this page transmits, stores, or logs anything you type.</p>
   <p style="margin-top:8px"><a href="/guides/">All ElmsPark guides</a></p>
 </div></footer>
 
@@ -464,7 +465,7 @@ request to https://clientsite.example/admin/?token=a1b2c3d4e5f6 failed</textarea
       bValid.innerHTML=missing.length
         ? '<span class="pill no">invalid</span> <span style="font-weight:400;color:var(--muted);font-size:13px">missing: '+missing.join(', ')+'</span>'
         : '<span class="pill ok">valid</span>';
-      sha(p.category+'|'+p.pm_core+'|'+norm(p.title),function(hex){
+      sha(p.category+'|'+norm(p.title),function(hex){
         bFp.textContent=hex;
         if(baseFp===null){baseFp=hex;}
         fpVerdict.innerHTML=(hex===baseFp)
