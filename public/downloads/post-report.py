@@ -110,18 +110,59 @@ def schnorr_sign(msg32, sk_bytes):
 CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 
 
-def _bech32_decode(s):
+_BECH32_GEN = [0x3B6A57B2, 0x26508E6D, 0x1EA119FA, 0x3D4233DD, 0x2A1462B3]
+
+
+def _bech32_polymod(values):
+    chk = 1
+    for v in values:
+        top = chk >> 25
+        chk = ((chk & 0x1FFFFFF) << 5) ^ v
+        for i in range(5):
+            chk ^= _BECH32_GEN[i] if ((top >> i) & 1) else 0
+    return chk
+
+
+def _hrp_expand(hrp):
+    return [ord(c) >> 5 for c in hrp] + [0] + [ord(c) & 31 for c in hrp]
+
+
+def _bech32_decode(s, expected_hrp):
+    """
+    Decode a bech32 string, verifying BOTH the checksum and the human-readable
+    prefix.
+
+    Both checks matter more than they look. A mistyped key does not decode to
+    something invalid: it decodes to a different, perfectly valid 32-byte
+    scalar, which then signs perfectly valid events as an identity that is not
+    a member of anything. The relay rejects it as unauthorised, so the error
+    points at membership while the real fault is a typo. The checksum exists
+    to catch exactly that, six characters earlier and with a useful message.
+
+    The prefix check is belt and braces: the caller already screens for an
+    nsec1 prefix, but a decoder that silently accepts any prefix is one
+    refactor away from letting a public key be used as a private one.
+    """
     s = s.strip().lower()
     pos = s.rfind("1")
     if pos < 1:
         raise ValueError("not a bech32 string")
+
+    hrp = s[:pos]
+    if hrp != expected_hrp:
+        raise ValueError("expected a %s key, got %s" % (expected_hrp, hrp))
+
     data = [CHARSET.find(c) for c in s[pos + 1:]]
     if any(d == -1 for d in data):
         raise ValueError("bad bech32 character")
-    data = data[:-6]  # drop checksum; the relay rejects a bad key anyway
+    if len(data) < 6:
+        raise ValueError("bech32 string too short")
+    if _bech32_polymod(_hrp_expand(hrp) + data) != 1:
+        raise ValueError("checksum failed, the key is mistyped")
+
     acc = bits = 0
     out = bytearray()
-    for value in data:
+    for value in data[:-6]:
         acc = (acc << 5) | value
         bits += 5
         while bits >= 8:
@@ -132,8 +173,13 @@ def _bech32_decode(s):
 
 def load_privkey(raw):
     raw = raw.strip()
-    if raw.startswith("nsec1"):
-        key = _bech32_decode(raw)
+    if raw.lower().startswith("npub1"):
+        raise SystemExit("that is a PUBLIC key. BUZZ_PRIVATE_KEY needs the nsec1 half")
+    if raw.lower().startswith("nsec1"):
+        try:
+            key = _bech32_decode(raw, "nsec")
+        except ValueError as e:
+            raise SystemExit("BUZZ_PRIVATE_KEY: %s" % e)
     else:
         try:
             key = bytes.fromhex(raw)
@@ -216,6 +262,15 @@ def build_envelope(report):
     if report["severity"] not in SEVERITIES:
         raise SystemExit("bad severity: " + str(report["severity"]))
 
+    # A bug with no reproduction steps is a hunch, and hunches are what silt a
+    # shared pool up. The guide has always said so; the client now enforces it.
+    repro = report.get("repro")
+    if report["category"] == "bug":
+        if not isinstance(repro, list) or not [s for s in repro if str(s).strip()]:
+            raise SystemExit("category 'bug' needs repro: a non-empty array of steps")
+    if repro is not None and not isinstance(repro, list):
+        raise SystemExit("repro must be an array of steps")
+
     bits = ["PM " + str(report["pm_core"])]
     if report.get("php"):
         bits.append("PHP " + str(report["php"]))
@@ -243,6 +298,35 @@ def main():
         print("pubkey: " + pubkey_from_privkey(sk).hex())
         status, body = post(relay, "/query", sk, [{"kinds": [9], "limit": 1}])
         print("query:  HTTP {} {}".format(status, "ok" if status == 200 else body))
+        return
+
+    # Reading the channel is part of the filing discipline, not an extra. Two
+    # steps need it: checking for an existing twin BEFORE filing, so a sighting
+    # groups instead of silently splitting the finding, and confirming what came
+    # back afterwards. Reads only, never /events.
+    if "--search" in sys.argv:
+        if not channel:
+            raise SystemExit("set BUZZ_CHANNEL")
+        terms = [a for a in sys.argv[1:] if not a.startswith("-")]
+        needle = " ".join(terms).lower()
+        status, body = post(relay, "/query", sk,
+                            [{"kinds": [9], "#h": [channel], "limit": 200}])
+        if status != 200:
+            raise SystemExit("relay refused the read: HTTP {} {}".format(status, body))
+
+        events = body if isinstance(body, list) else body.get("events", [])
+        hits = 0
+        for ev in events:
+            content = ev.get("content", "")
+            head = content.split("\n", 1)[0].strip()
+            if needle and needle not in content.lower():
+                continue
+            hits += 1
+            print("{}  {}".format(ev.get("id", "")[:10], head[:100]))
+        print("\n{} of {} message(s){}".format(
+            hits, len(events), " matching " + repr(needle) if needle else ""))
+        print("Reuse an existing title VERBATIM if one of these is your finding, "
+              "or it files as a separate one.")
         return
 
     if not channel:
