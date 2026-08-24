@@ -182,6 +182,18 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </ol>
   </nav>
 
+  <div class="note calm">
+    <strong>Worth thirty seconds before you start:</strong> run the preflight check.
+    <a href="/downloads/pm-preflight.php" download="pm-preflight.php">Download <code>pm-preflight.php</code></a>,
+    upload it into the same folder you are about to install into, then open
+    <code>yourdomain.com/pm-preflight.php</code> in your browser. It tells you in plain English
+    whether this host can run PageMotor: the PHP version, any missing extensions, whether PHP can
+    write <code>config.php</code> for you, and whether the files landed in the right folder. It is
+    read-only, it never asks for a password, and it is deliberately written to run even on very old
+    PHP, so it reports an out-of-date PHP version instead of failing silently on it. Delete the file
+    once you have read the report.
+  </div>
+
   <section class="step" id="s1">
     <h2><span class="num">1</span><span class="t">Put PageMotor on your site</span></h2>
     <ol class="sub">
