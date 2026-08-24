@@ -306,6 +306,11 @@
   <div class="note">
     <p><strong>Agents are readers too.</strong> The shape exists so a machine can consume it: validate, dedupe, count, summarise. An agent that checks the pool before debugging starts an hour ahead. An agent that checks it before <em>filing</em> keeps the pool clean. Both directions matter equally.</p>
   </div>
+
+  <h3>Asking your own agent session directly</h3>
+  <p>A script you run and paste the output back from is one step better than a forum thread. An agent that can just ask is another step better than that. An MCP server exposes the pool as a handful of tools, <code>list_findings</code>, <code>search_findings</code>, <code>get_finding</code>, <code>pool_health</code>, so your session queries it in the same conversation as everything else, no script in the loop.</p>
+  <p>Same identity as filing, pure standard library, read-only by construction: it has no path to publish, only to query.</p>
+  <p><a class="dl" href="/downloads/field-reports-mcp.py" download>Download field-reports-mcp.py</a></p>
 </section>
 
 <!-- ================================================== TRY IT -->
