@@ -297,6 +297,12 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <figure><picture><source srcset="img/26-extracted-files.webp" type="image/webp"><img src="img/26-extracted-files.png" alt="Check the files" loading="lazy" width="1200"></picture></figure>
   </div>
   <p class="phase" id="ph-rename-config">Configure PageMotor</p>
+  <div class="callout">&#10004; <strong>On PageMotor 0.11 and later you can skip steps 27 and 28.</strong>
+  Finish step 29 first (point the site at the <code>pagemotor</code> folder), then open
+  <code>https://yourdomain.com/admin/</code> in your browser. The Install Wizard asks for the
+  same database details and writes <code>config.php</code> itself, which is quicker and
+  removes the chance of a typo in a file you edited by hand. The steps below are the manual
+  route, and still work on any version.</div>
   <div class="step">
   <h2 id="rename-config"><span class="num">27</span><span class="t">Rename the config file</span></h2>
   <p>Right-click <code>config-sample.php</code>, choose <strong>Rename</strong>, and change it to exactly <code>config.php</code>. PageMotor only reads <code>config.php</code>.</p>
