@@ -378,7 +378,10 @@ Good. Now SSH into [IP] as root using ~/.ssh/id_ed25519 and:
    (DB_HOST is 127.0.0.1, prefix pm_, error logs on)
 5. Fix file ownership: chown -R mysite:www-data
 6. Once DNS resolves, run: clpctl lets-encrypt:install:certificate --domainName=mysite.com
-7. Open https://mysite.com/admin/ FIRST (a brand-new install expects the
+7. AFTER the certificate is installed, fix /.well-known/ in the site's vhost so
+   PageMotor's OAuth discovery routes are reachable, or MCP sign-in will fail:
+   bash provision-pagemotor.sh --fix-wellknown mysite.com
+8. Open https://mysite.com/admin/ FIRST (a brand-new install expects the
    admin to be its first visitor), then confirm the front page at https://mysite.com/
 
 Use provision-pagemotor.sh if you need a reference for the exact commands.
@@ -393,6 +396,7 @@ Use provision-pagemotor.sh if you need a reference for the exact commands.
         <li>PHP version must be set to <strong>8.3</strong> &mdash; do not let it default to 8.5.</li>
         <li>PageMotor files go directly into the <strong>site root</strong>, not a subfolder, so no web root change is needed.</li>
         <li>SSL cert is requested <em>after</em> DNS resolves, not before &mdash; the script handles the wait loop.</li>
+        <li>CloudPanel's stock vhost serves <code>/.well-known/</code> from disk, which swallows PageMotor's OAuth discovery routes and breaks MCP sign-in. The script rewrites the site's own vhost <em>after</em> the certificate step (installing a certificate re-renders it), keeping <code>acme-challenge</code> served from disk so renewal still works. Already built a site without this? Run <code>bash provision-pagemotor.sh --fix-wellknown mysite.com</code>. Background: <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">troubleshooting section 6d</a>.</li>
       </ul>
     </div>
   </div>
