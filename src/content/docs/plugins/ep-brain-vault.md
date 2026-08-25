@@ -78,9 +78,10 @@ Point your agent at `vault-write` instead of `brain-write` and every edit keeps 
 | `vault-history` | Every version of a file: when it was captured, how big it was, and whether a snapshot or a write caught it. | Producer |
 | `vault-read-version` | The contents of one earlier version. Pass `current` to read the live file instead. | Producer |
 | `vault-restore` | Puts a file back to an earlier version, or restores every file in a whole snapshot. | Producer |
+| `vault-diff` | What actually changed between two versions, as a unified diff. Either version to version, or against the live file. | Producer |
 | `vault-snapshot` | Takes a snapshot immediately rather than waiting for the heartbeat. | Admin |
 
-There is no diff verb in this release. An agent that wants to compare two versions can fetch both and compare them itself.
+`vault-history` tells you which versions exist; `vault-diff` tells you what differs between them. Use the second before a restore, so you are confirming a version rather than guessing at it from timestamps.
 
 ### Access follows the Brain, not the plugin
 
@@ -103,6 +104,14 @@ A restore is itself recorded, before it overwrites anything. So restoring to Tue
 **Deleting a Brain leaves its history behind.** Known limitation in this release: `brain-destroy` removes the Brain but not the vault's copies of it, which stay on disk until removed by hand. They are unreachable through any verb and covered by the same protection as the rest of the store, but they do occupy space.
 
 ## Changelog
+
+### 0.2.0
+
+Adds `vault-diff`: what actually changed between two versions of a file, as a unified diff, either version to version or against the live file. It reports added and removed line counts alongside the diff text, so a caller can summarise a change without reading it. 0.1.0 shipped without one and left you comparing two versions by eye.
+
+Bounded deliberately, at 2MB and 20,000 lines per side. Past that it declines rather than trying, because a Brain file has no size limit and one oversized comparison should not be able to exhaust a request.
+
+Access is unchanged. `vault-diff` respects the brain's own policy exactly as the other verbs do, so a producer-tier caller cannot diff an admin-only brain or learn that one exists.
 
 ### 0.1.0
 
