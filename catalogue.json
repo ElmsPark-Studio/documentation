@@ -727,6 +727,15 @@
         },
         {
           "slugs": [
+            "ep-agent-jobs"
+          ],
+          "titles": [
+            "EP Agent Jobs"
+          ],
+          "blurb": "Scheduled AI agent runs that live on the site, not a laptop. Rides the EP Cron heartbeat; results by email, Telegram or Buzz."
+        },
+        {
+          "slugs": [
             "ep-assistant"
           ],
           "titles": [
@@ -745,6 +754,15 @@
         },
         {
           "slugs": [
+            "ep-brain-vault"
+          ],
+          "titles": [
+            "EP Brain Vault"
+          ],
+          "blurb": "Snapshots and version history for PageMotor Brains, with versioned write and restore verbs — core’s brain-write keeps no history at all."
+        },
+        {
+          "slugs": [
             "ep-concierge"
           ],
           "titles": [
@@ -760,6 +778,24 @@
             "EP Connect"
           ],
           "blurb": "Outbound webhooks for Zapier, Make, Slack, or any URL."
+        },
+        {
+          "slugs": [
+            "ep-cron"
+          ],
+          "titles": [
+            "EP Cron"
+          ],
+          "blurb": "One secure, observable background-task scheduler for the whole EP Suite. A single heartbeat drains every due task exactly once."
+        },
+        {
+          "slugs": [
+            "ep-dashboard"
+          ],
+          "titles": [
+            "EP Dashboard"
+          ],
+          "blurb": "A branded Command Centre for the PageMotor admin. Every active EP Suite plugin contributes its own panel."
         },
         {
           "slugs": [
@@ -850,33 +886,6 @@
             "EP WP Exporter"
           ],
           "blurb": "WordPress companion plugin. Install on a WordPress source site to produce a JSON snapshot for migration to PageMotor. Read-only."
-        },
-        {
-          "slugs": [
-            "ep-cron"
-          ],
-          "titles": [
-            "EP Cron"
-          ],
-          "blurb": "One secure, observable background-task scheduler for the whole EP Suite. A single heartbeat drains every due task exactly once."
-        },
-        {
-          "slugs": [
-            "ep-dashboard"
-          ],
-          "titles": [
-            "EP Dashboard"
-          ],
-          "blurb": "A branded Command Centre for the PageMotor admin. Every active EP Suite plugin contributes its own panel."
-        },
-        {
-          "slugs": [
-            "ep-agent-jobs"
-          ],
-          "titles": [
-            "EP Agent Jobs"
-          ],
-          "blurb": "Scheduled AI agent runs that live on the site, not a laptop. Rides the EP Cron heartbeat; results by email, Telegram or Buzz."
         }
       ]
     }
@@ -890,7 +899,8 @@
   "pending": {
     "ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet",
     "ep-boarding-commerce": "shipped 1.0.0 alongside EP Boarding, no doc page written yet",
-    "ep-boarding-services": "shipped 1.1.0 alongside EP Boarding, no doc page written yet"
+    "ep-boarding-services": "shipped 1.1.0 alongside EP Boarding, no doc page written yet",
+    "ep-finance-invoicing": "shipped 0.1.9, no doc page written yet"
   },
   "changelog_backlog": {
     "ep-affiliate": "none",

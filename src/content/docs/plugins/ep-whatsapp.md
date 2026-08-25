@@ -74,6 +74,12 @@ EP WhatsApp exposes two sending methods other EP plugins can call, `send_text()`
 
 ## Changelog
 
+### 0.1.4
+
+**The plugin could never deliver its own updates. Fixed.** PageMotor builds its update check from each plugin's `Updates:` header and skips any plugin that has none. This plugin's header block never carried that line, so 0.1.3 was invisible to the Updates screen from the moment it shipped — the plugin was excluded from every update check rather than up to date.
+
+**This fix cannot deliver itself.** An install on 0.1.3 has no `Updates:` header and so cannot be offered this release. Download 0.1.4 and upload it once through **Plugins → Manage Plugins**; from then on the Updates screen works normally.
+
 ### 0.1.3
 
 First release on the ElmsPark update channel; earlier 0.1.x builds were internal only.

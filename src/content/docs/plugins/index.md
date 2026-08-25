@@ -117,6 +117,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Agent Jobs](/plugins/ep-agent-jobs/)**. Scheduled AI agent runs that live on the site, not a laptop. Rides the EP Cron heartbeat; results by email, Telegram or Buzz.
 - **[EP Assistant](/plugins/ep-assistant/)**. Customer-facing AI website manager. Chat interface with nine LLM providers.
 - **[EP Audit Log](/plugins/ep-audit-log/)**. Activity log for content, users, and plugin events.
+- **[EP Brain Vault](/plugins/ep-brain-vault/)**. Snapshots and version history for PageMotor Brains, with versioned write and restore verbs — core’s brain-write keeps no history at all.
 - **[EP Concierge](/plugins/ep-concierge/)**. Visitor-facing AI chat bubble. Answers questions from your knowledge plus live booking data, captures enquiries. *Currently supplied and updated by ElmsPark directly.*
 - **[EP Connect](/plugins/ep-connect/)**. Outbound webhooks for Zapier, Make, Slack, or any URL.
 - **[EP Cron](/plugins/ep-cron/)**. One secure, observable background-task scheduler for the whole EP Suite. A single heartbeat drains every due task exactly once.

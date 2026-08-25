@@ -118,6 +118,16 @@ That is expected on many shared hosts: they block outbound SMTP. Use the host's 
 
 ## Changelog
 
+### 1.3.4
+
+**The plugin could never deliver its own updates. Fixed.** The Updates screen has never offered an EP Host Check update to anyone, 1.3.3 included. The update channel was serving it correctly the whole time; the plugin was the problem.
+
+PageMotor builds its update check from each plugin's `Updates:` header and skips any plugin whose header does not carry one. This plugin's header block never had that line, so core excluded it from every update check ever made. It was invisible to the update system rather than up to date. The header is now present, matching the rest of the suite.
+
+**This fix cannot deliver itself.** An install already on 1.3.3 or earlier has no `Updates:` header, so it still cannot see this release. Download 1.3.4 and upload it once through **Plugins → Manage Plugins**; from then on the Updates screen works normally.
+
+Reported by mikozoid, who checked the Updates screen repeatedly after 1.3.3 and correctly refused to accept that it was propagation delay.
+
 ### 1.3.3
 
 Fixes the "Your session has expired" loop on PageMotor 0.11: the CSRF token header was being set twice — once by the plugin, once by 0.11's new automatic injection — and arrived carrying the token twice over, so core rejected the request before the check ran. The plugin now sets the header only when core has not already done so, with no version sniffing to go stale. Verified end to end on a real 0.11 site: before, 31 alerts in nine seconds and a panel stuck on "Running checks against your host…"; after, no alerts and the full report renders. What the plugin checks and reports is unchanged from 1.3.2.

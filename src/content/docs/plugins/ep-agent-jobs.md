@@ -70,6 +70,12 @@ Each job carries a monthly budget, and the settings page shows the month's spend
 
 ## Changelog
 
+### 0.1.3
+
+Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11, which affected this plugin's admin screens through the shared suite header's language selector and brand-colour picker. Anonymous visitors were never affected.
+
+The cause was one header attached twice rather than a real session problem. PageMotor 0.10 attached the CSRF header automatically for `fetch` and jQuery but not for a raw `XMLHttpRequest`, so the suite attached it by hand; 0.11 added a patch that attaches it for raw requests too. Attaching appends rather than overwrites, so the token went out doubled and never matched, and core answered before the handler ran. The fix reads core's own marker on the request instead of comparing version strings, so the header is attached exactly once on either core. Nothing else changed.
+
 ### 0.1.2
 
 PageMotor 0.11 hardening for the job action ceiling. Scheduled runs inject a token whose access tier comes from the action-ceiling setting, stored using the old `read-only` name. PageMotor 0.11 renamed that floor tier to `open` with no alias, and although 0.11 fails closed by coercing an unrecognised tier to `open`, jobs were working by coercion rather than by contract.
