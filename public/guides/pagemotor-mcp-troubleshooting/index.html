@@ -148,7 +148,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li><a href="#slash">The trailing slash and the redirect trap</a></li>
       <li><a href="#access">&ldquo;Claude says it has no access&rdquo; (it does)</a></li>
       <li><a href="#plugins">Why &ldquo;disable all plugins&rdquo; works</a></li>
-      <li><a href="#hosting">Seven hosting-environment killers</a></li>
+      <li><a href="#hosting">Eight hosting-environment killers</a></li>
       <li><a href="#core">For core developers: the confirmed defects</a></li>
       <li><a href="#ruledout">Checked and ruled out</a></li>
     </ol>
@@ -200,7 +200,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <p>Claude Code does not hot-reload MCP configuration. After any <code>claude mcp add</code> or config edit, close the session and open a fresh one before judging whether the connection works.</p>
 
     <h3>Trap four: the connector you already had</h3>
-    <p>This one bites people <em>re</em>-connecting a site. claude.ai and the Claude desktop app keep their connector list keyed by URL, so if a site was ever connected before (for example by an older token method), adding it again is refused with &ldquo;A server with this URL already exists&rdquo;. Nothing is wrong with the site. Remove the existing connector (Settings, then Connectors, then the menu next to the entry, Remove), fully close and reopen the tab or app (the old entry can linger in cache until a proper restart), then add it fresh and sign in again. Claude Code is different: it dedupes by <em>name</em>, not URL, so there it is just <code>claude mcp remove</code> then re-add.</p>
+    <p>This one bites people <em>re</em>-connecting a site. claude.ai and the Claude desktop app keep their connector list keyed by URL, so if a site was ever connected before (for example by an older token method), adding it again is refused with &ldquo;A server with this URL already exists&rdquo;. Nothing is wrong with the site. Remove the existing connector (Customize, then Connectors, then the menu next to the entry, Remove), fully close and reopen the tab or app (the old entry can linger in cache until a proper restart), then add it fresh and sign in again. Claude Code is different: it dedupes by <em>name</em>, not URL, so there it is just <code>claude mcp remove</code> then re-add.</p>
     <p>The same treatment applies after you fix a server-side fault from this guide: a connector that was added while the server was broken can hold on to its failed state. If the curl diagnostic now passes but the client still shows no tools, remove the connector, restart, and add it again.</p>
     <p><strong>Two lifecycle facts to plan around</strong> (observed August 2026). claude.ai allows one connector per URL <em>per organisation</em>, and disconnecting does not release the claim &mdash; only deleting does &mdash; so you cannot stand a second connector up against the same endpoint to prove a new tier or account before dropping the old one; it is a swap in place, with a gap. And <strong>deleting the connector in claude.ai is not a revocation</strong>: the OAuth grant stays live on the PageMotor side, listed in the site's Connected Apps with its 30-day expiry, an orphaned credential attached to nothing you can see from the client. Revoke on both sides: delete the connector <em>and</em> remove the grant from Connected Apps in the PageMotor admin.</p>
     <p><strong>Related, and the reason trap five below exists:</strong> removing the connector does not always clear what claude.ai remembers about that domain.</p>
@@ -285,7 +285,7 @@ x-redirect-by: PageMotor
   </section>
 
   <section class="step" id="hosting">
-    <h2><span class="num">6</span><span class="t">Seven hosting-environment killers</span></h2>
+    <h2><span class="num">6</span><span class="t">Eight hosting-environment killers</span></h2>
 
     <h3>a. Apache shared hosting eats your Authorization header</h3>
     <p>On Apache running PHP as CGI/FastCGI (the default on most shared hosting), the Authorization header is not passed to PHP unless the configuration says so, and PageMotor's generated <code>.htaccess</code> does not yet include that rule. Result on 0.10.x: a perpetual 401 with a perfectly valid token, and disabling plugins changes nothing because the header dies in the web server before PageMotor runs. On 0.9.x, which accepts anonymous connections, the symptom is quieter: the connection works but silently drops to read-only tier, and you only notice when admin actions are missing (see <a href="#access">section 4</a>).</p>
@@ -487,6 +487,11 @@ code=202 type=text/html</code></pre>
     <div class="note">
       <strong>Check for it automatically, but do not trust a green.</strong> <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> 1.3.1&rsquo;s &ldquo;OAuth discovery reachable&rdquo; row now tells this apart from <a href="#hosting">6d</a> and gives the host-ticket fix rather than an nginx block you cannot apply: a <code>2xx</code> carrying an HTML body, with a <code>202</code> status or a captcha marker, reports as a bot wall, while a <code>404</code> or the hand-made-file <code>200</code> keeps the 6d diagnosis. <strong>The caveat matters more than the check.</strong> Those probes run from the server itself, so a host that trusts its own machines answers them with clean JSON and the row goes green while Claude is still challenged from outside. A red row here is reliable; a green one is not proof. If a site reports green and still cannot connect, run the <code>curl</code> loop above from a machine that is not the server, and believe that instead.
     </div>
+
+    <h3>h. The site is not reachable from the public internet at all</h3>
+    <p>Worth ruling out first on any private, internal or staging site, because it is the one cause on this list that no amount of header or vhost work will fix. <strong>Claude connects to your MCP server from Anthropic&rsquo;s own cloud infrastructure, not from the machine you are sitting at.</strong> A site behind a corporate network, a VPN, or a firewall that only admits known addresses will never connect, however perfectly it answers for you.</p>
+    <p><strong>The misconception that costs the most time is about Cowork and Claude Desktop.</strong> Both run on your computer, so it is natural to assume they reach your server the way your browser does. They do not. Remote connectors are configured and brokered through your Claude account, so the request still originates from Anthropic&rsquo;s servers. A <code>localhost</code> address, a LAN address, or a hostname that only resolves inside your network cannot work in any of the clients, Cowork and Desktop included. Local MCP servers in Claude Desktop&rsquo;s <code>claude_desktop_config.json</code> are a separate mechanism that genuinely does use your own network, and that mechanism is not available in Cowork or claude.ai.</p>
+    <p>The tell is the same shape as the ModSecurity case in <a href="#hosting">6a</a>: everything passes from your machine and nothing works from Claude. Test from somewhere that is not your network and not the server, a phone on mobile data being the quickest honest check. If the site is genuinely meant to stay private, allowlist Anthropic&rsquo;s published IP ranges inbound rather than opening the host up.</p>
   </section>
 
   <section class="step" id="core">

@@ -490,14 +490,14 @@
 
     <h2>Connect it (claude.ai, in a browser)</h2>
     <ol>
-      <li>Open <strong>claude.ai</strong> and go to <strong>Settings &rarr; Connectors</strong>.</li>
-      <li>Choose <strong>Add custom connector</strong>.</li>
+      <li>Open <strong>claude.ai</strong> and go to <strong>Customize &rarr; Connectors</strong> (straight there: <a href="https://claude.ai/customize/connectors">claude.ai/customize/connectors</a>).</li>
+      <li>Click <strong>+</strong>, then choose <strong>Add custom connector</strong>.</li>
       <li>Give it a name like <strong>My Studio</strong>, and for the URL enter your site&rsquo;s connector address: <code>https://YOUR-SITE/mcp/</code>, all lower case, trailing slash included. For the demo site that is <code>https://sundial.solasyogastudio.com/mcp/</code>.</li>
       <li><strong>Look at the saved tile before you go further.</strong> It should show exactly the address you typed. If it shows a different one, see the box below.</li>
       <li>Save. Claude sends you to a <strong>sign-in</strong> page. Log in with your PageMotor <strong>admin</strong> account and approve access. That is what lets Claude read your studio data on your behalf.</li>
-      <li>Start a new chat, turn the <strong>My Studio</strong> connector <strong>on</strong> for that chat, and ask away.</li>
+      <li>Start a new chat, click the <strong>+</strong> at the lower left of the message box, hover <strong>Connectors</strong>, and switch <strong>My Studio</strong> <strong>on</strong> for that chat. Then ask away.</li>
     </ol>
-    <p>It is the same in <strong>Claude Desktop</strong> and <strong>Cowork</strong> (Settings &rarr; Connectors &rarr; add custom connector), and in <strong>Claude Code</strong> you add it as an MCP server instead. Use whichever Claude you already use, with one plan note: claude.ai, Desktop and Cowork all work on the free plan, but <strong>Claude Code needs a paid plan</strong> (Pro, Max, a Team or Enterprise premium seat, or a Console account).</p>
+    <p>It is the same in <strong>Claude Desktop</strong> and <strong>Cowork</strong> (Customize &rarr; Connectors &rarr; add custom connector), and in <strong>Claude Code</strong> you add it as an MCP server instead. Use whichever Claude you already use, with one plan note: claude.ai, Desktop and Cowork all work on the free plan, but <strong>Claude Code needs a paid plan</strong> (Pro, Max, a Team or Enterprise premium seat, or a Console account).</p>
 
     <p style="background:var(--bg-warn);border-left:4px solid var(--warn);border-radius:10px;padding:14px 18px;box-shadow:0 1px 3px rgba(35,33,28,.06);margin:1.5rem 0">
       <strong>If sign-in fails, it is almost always the URL, not your site.</strong> claude.ai remembers a connector address per domain and can quietly substitute an older one for the address you just typed, often with a capital <code>/MCP</code>. PageMotor treats that as a different, non-existent page, and sign-in dies on an <em>&ldquo;Invalid resource&rdquo;</em> page whose <code>Received</code> value is empty. The quickest fix is to connect on the <strong>www</strong> form of your address instead, <code>https://www.YOUR-SITE/mcp/</code>, which the stale entry cannot attach to. Full explanation and the options for sites with no <code>www</code>: <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#client">why it will not connect, trap five</a>.
