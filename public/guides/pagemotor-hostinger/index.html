@@ -353,7 +353,17 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
   <h2 class="plain" id="claude">Connecting Claude from this host</h2>
   <p>PageMotor speaks MCP natively, so once your site is up you can connect Claude Code or Claude.ai to it and let Claude build pages, manage content and run plugins for you. The connection asks a little more of a host than serving pages does. Four things must be true: the <code>Authorization</code> header must reach PHP intact, PageMotor must be allowed to answer its dynamic <code>/.well-known/</code> routes itself, PHP's clock must be on UTC, and nothing may redirect Claude's POST to <code>/mcp</code> (the trailing-slash trap).</p>
-  <p>You do not need to test any of that by hand. Install <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> and read its <strong>MCP / Claude connection</strong> rows: since v1.2.0 its five checks cover all of this from your admin panel, no working Claude connection required, each with a plain fix. If a row fails, or the connection misbehaves anyway, the <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">MCP troubleshooting guide</a> has the exact diagnostic and fix for every verified cause.</p>
+
+  <p><strong>In practice, connecting takes about a minute.</strong> In a browser at claude.ai:</p>
+  <ol class="sub">
+    <li>Go to <strong>Customize &rarr; Connectors</strong> (straight there: <a href="https://claude.ai/customize/connectors">claude.ai/customize/connectors</a>).</li>
+    <li>Click <strong>+</strong>, then <strong>Add custom connector</strong>.</li>
+    <li>Give it any name you like. For the URL, use your site&rsquo;s connector address: <code>https://your-site.com/mcp/</code>, all lower case, <strong>trailing slash included</strong>.</li>
+    <li>Click <strong>Add</strong>. Claude sends you to a sign-in page on your own site. Log in with your PageMotor <strong>admin</strong> account and approve it.</li>
+    <li>Start a new chat, click the <strong>+</strong> at the lower left of the message box, hover <strong>Connectors</strong>, and switch yours on.</li>
+  </ol>
+  <p>Then simply talk to it: &ldquo;what pages do I have&rdquo;, or &ldquo;create a contact page&rdquo;. A free Claude account is enough and allows one custom connector; Pro, Max, Team and Enterprise allow more.</p>
+  <p>You do not need to test any of those requirements by hand. Install <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> and read its <strong>MCP / Claude connection</strong> rows: since v1.2.0 its five checks cover all of this from your admin panel, no working Claude connection required, each with a plain fix. If a row fails, or the connection misbehaves anyway, the <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">MCP troubleshooting guide</a> has the exact diagnostic and fix for every verified cause.</p>
   <div class="callout">&#9888; The one to watch on this stack: CloudPanel's stock vhost serves <code>/.well-known/</code> from the filesystem for Let's Encrypt, which swallows the OAuth discovery routes Claude follows to sign in. <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">Section 6 of the troubleshooting guide</a> has the vhost fix that hands those routes to PageMotor while keeping certificate renewal working.</div>
 
   <h2 style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">Who looks after this server?</h2>
