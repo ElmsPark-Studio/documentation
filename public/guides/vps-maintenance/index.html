@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="The no-terminal way to run PageMotor on a VPS with CloudPanel: install the free panel with one paste, then create the site, database and SSL from a GUI. PageMotor gets the writable filesystem it needs.">
-<title>PageMotor on a VPS the easy way, with CloudPanel | ElmsPark Guide</title>
+<meta name="description" content="Your VPS is self-managed, so the operating system, security patches and software on it are yours to maintain. The fifteen minutes a month that keeps it safe, plus a ready-made Claude Code prompt that does the work and proves your site still loads.">
+<title>Keeping your PageMotor VPS healthy | ElmsPark Guide</title>
 <style>
   :root{
     --paper:#f7f3ea; --card:#fffdf8; --ink:#23211c; --soft:#5d574c;
@@ -97,10 +97,15 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="ElmsPark Guides">
-  <meta property="og:title" content="PageMotor on a VPS the easy way, with CloudPanel">
-  <meta property="og:description" content="The no-terminal route onto a proper VPS: install CloudPanel with one paste, then create the site, database and SSL from a GUI. PageMotor gets the writable filesystem it needs.">
-  <meta property="og:url" content="https://documentation.elmspark.com/guides/pagemotor-cloudpanel/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:title" content="Point your domain at your own PageMotor server">
+  <meta property="og:description" content="A records for @ and www, clearing stale AAAA records, and the Cloudflare grey-cloud-first path so Let's Encrypt can issue before you switch the proxy on.">
+  <meta property="og:url" content="https://documentation.elmspark.com/guides/point-your-domain/">
+  <meta property="og:image" content="https://documentation.elmspark.com/og/guides-hub.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Point your domain at your own PageMotor server, an ElmsPark guide">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://documentation.elmspark.com/og/guides-hub.png">
 </head>
 <body>
 <header class="es-header">
@@ -124,142 +129,393 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <div class="crumbs-inner">
     <a href="https://documentation.elmspark.com/guides/">Guides</a>
     <span class="sep" aria-hidden="true">&rsaquo;</span>
-    <span aria-current="page">PageMotor on a VPS with CloudPanel</span>
+    <span aria-current="page">Keeping your PageMotor VPS healthy</span>
   </div>
 </nav>
 
 <div class="wrap">
-  <span class="kicker">PageMotor &middot; Hosting</span>
-  <h1>PageMotor on a VPS the easy way, with CloudPanel</h1>
-  <p class="lede">A point-and-click way onto a proper VPS. CloudPanel gives you a clean web panel, and PageMotor gets the writable, correctly-owned filesystem it needs. One paste in the terminal to install the panel, then everything else is clicks.</p>
-  <div class="chips">
-    <span class="chip">&#128421; <b>GUI, not the terminal</b></span>
-    <span class="chip">&#9989; <b>Free panel</b></span>
-    <span class="chip">&#9201; <b>about 20 minutes</b></span>
-  </div>
+  <span class="kicker">Hosting Guide</span>
+  <h1>Keeping your PageMotor VPS healthy</h1>
+  <p class="lede">Your VPS is self-managed, which means the operating system, the security patches and the software on it are yours to look after. This is the fifteen minutes a month that keeps it safe, and a ready-made prompt that does most of the work for you.</p>
 
-  <div class="note calm">
-    <strong>Why this route:</strong> our <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Vultr guide</a> builds the same stack by hand on the command line. This one does it through a panel instead, for people who would rather click than type. You still get a real VPS with a writable, properly-owned filesystem, which is the thing PageMotor needs and a locked-down shared host  <strong>On Hostinger?</strong> Follow the <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger/">picture-by-picture Hostinger guide</a>, every step shown as a screenshot.
+  <div class="chips">
+    <span class="chip"><b>15 minutes</b> a month</span>
+    <span class="chip">Works on <b>any VPS</b></span>
+    <span class="chip"><b>Claude Code</b> prompt included</span>
+    <span class="chip">No prior sysadmin experience</span>
   </div>
 
   <div class="note">
-    <strong>Tested on Hostinger, June 2026, and re-verified on a clean box in August 2026. Five traps to dodge:</strong>
-    <ol>
-      <li><strong>Pick CloudPanel inside the order wizard.</strong> On the "Choose what to install" screen, open the <strong>Control panel</strong> tab and choose CloudPanel on Ubuntu 24.04, not a plain OS.</li>
-      <li><strong>No underscores in the database name or user.</strong> CloudPanel rejects them ("this value is not valid"). Use hyphens, for example <code>pagemotor-db</code> and <code>pagemotor-user</code>.</li>
-      <li><strong>Choose PHP 8.3.</strong> The new-site form may default to a newer version. PageMotor needs 8.2 or newer, and 8.3 is the safe choice.</li>
-      <li><strong>Uploading with File Manager? Extract makes a subfolder.</strong> Let it extract into a folder such as <code>pagemotor</code>, then point the site at it: open the site, Settings, set Root Directory to <code>yourdomain.com/pagemotor</code>, Save.</li>
-      <li><strong>Fix the PHP timezone before creating any site.</strong> CloudPanel images default <code>date.timezone</code> to <code>Europe/Berlin</code> in every PHP version they ship, whatever region the box is in, and PageMotor 0.10's browser sign-in fails on any timezone ahead of UTC (<a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">cause 6b</a>). Set <code>date.timezone = UTC</code> in <code>/etc/php/8.3/fpm/php.ini</code> and restart <code>php8.3-fpm</code> first, because CloudPanel bakes the value into each site at creation time. Forgot? It is editable per site under Settings &rarr; PHP Settings &rarr; Additional Configuration Directives.</li>
-    </ol>
+    <strong>Start here if you have just built a server.</strong> Run the one-time hardening pass in step 3 first. It turns on automatic security patching, which does the urgent half of this job for you from then on.
   </div>
 
-  <nav class="toc">
+  <div style="display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#fffdf8;border:1px solid #e4ddcd;border-radius:14px;padding:18px 20px;margin:24px 0">
+    <div style="flex:1 1 260px;min-width:0">
+      <p style="margin:0 0 4px;font-weight:600;font-size:16px;color:#234a3b">Hand this whole guide to your AI assistant</p>
+      <p style="margin:0;font-size:14.5px;line-height:1.5;color:#5d574c">Download it as a prompt file, paste it into Claude Code, ChatGPT, Gemini or any LLM, and it will run the checks, tell you what it found, and prove your site still works afterwards.</p>
+    </div>
+    <a href="/downloads/vps-maintenance-prompt.md" download="vps-maintenance-prompt.md" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#2f5d4a;color:#fff;text-decoration:none;border-radius:8px;font-size:14.5px;font-weight:600;white-space:nowrap;flex-shrink:0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download as LLM prompt
+    </a>
+  </div>
+
+  <nav class="toc" aria-label="On this page">
     <p>On this page</p>
     <ol>
-      <li><a href="#vps">Step 1: a VPS with plain Ubuntu</a></li>
-      <li><a href="#install">Step 2: install CloudPanel (one paste)</a></li>
-      <li><a href="#site">Step 3: create the site</a></li>
-      <li><a href="#db">Step 4: create the database</a></li>
-      <li><a href="#upload">Step 5: upload PageMotor</a></li>
-      <li><a href="#rewrite">Step 6: the one PageMotor tweak</a></li>
-      <li><a href="#ssl">Step 7: turn on SSL</a></li>
-      <li><a href="#why">Why this fixes the &ldquo;design won't save&rdquo; problem</a></li>
-      <li><a href="#claude">Connecting Claude from this host</a></li>
+      <li><a href="#who">Who looks after this server</a></li>
+      <li><a href="#layers">The four things that need updating</a></li>
+      <li><a href="#harden">Turn on automatic security patching, once</a></li>
+      <li><a href="#monthly">The monthly run</a></li>
+      <li><a href="#remember">How to actually remember</a></li>
+      <li><a href="#stop">When to stop doing this yourself</a></li>
     </ol>
   </nav>
 
+  <h2 class="plain" id="who">Who looks after this server</h2>
+
+  <p><strong>You do.</strong> Every mainstream VPS is sold self-managed. Hostinger put it plainly on their own VPS page:</p>
+
+  <blockquote style="margin:18px 0;padding:14px 18px;background:#fffdf8;border:1px solid #e4ddcd;border-left:4px solid #2f5d4a;border-radius:10px;font-size:17px;color:#23211c">
+    As our VPS solutions are self-managed, you will get full freedom to configure and manage the virtual server.
+  </blockquote>
+
+  <p>That freedom is the entire reason a VPS fixes what shared hosting does to PageMotor. On a cheap shared host you cannot raise the PHP execution limit, so AI plugins and busy forms time out. On a VPS the limits are yours. So is everything else.</p>
+
+  <p>Here is where the line falls.</p>
+
+  <table class="dnstable">
+    <thead>
+      <tr><th>Your hosting provider looks after</th><th>You look after</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>The physical hardware and the hypervisor</td>
+        <td>Operating system security patches and the kernel</td>
+      </tr>
+      <tr>
+        <td>The network, and DDoS filtering at the edge</td>
+        <td>Your control panel, for example CloudPanel</td>
+      </tr>
+      <tr>
+        <td>Whatever backups or snapshots your plan includes</td>
+        <td>The web server, PHP and the database</td>
+      </tr>
+      <tr>
+        <td>Dashboard tools: firewall controls, malware scanner, monitoring</td>
+        <td>Your TLS certificate, SSH access and firewall rules</td>
+      </tr>
+      <tr>
+        <td>Keeping the machine powered on and reachable</td>
+        <td>PageMotor core and every plugin you install</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>The left column is a set of tools, not a service.</strong> A malware scanner in a dashboard nobody opens has never caught anything. Your provider will keep the machine running perfectly while the software on it goes quietly out of date.
+  </div>
+
+  <p>Nobody emails you when a patch is published. A server left alone for a year is running a year of known, catalogued, publicly indexed vulnerabilities, and the scanning that finds them is automated and constant. This is the most common way a small self-hosted site gets compromised, and it is almost entirely preventable.</p>
+
+  <p>If your site collects any personal data at all, and a contact form counts, then in the UK and EU this stops being only good practice. UK GDPR and EU GDPR Article 32 require appropriate technical and organisational measures to keep that data secure. An unpatched server is difficult to argue as appropriate.</p>
+
+  <h2 class="plain" id="layers">The four things that need updating</h2>
+
+  <p>People often patch one of these and assume they are covered. They are four separate jobs with four separate update mechanisms.</p>
+
+  <table class="dnstable">
+    <thead>
+      <tr><th>Layer</th><th>How it updates</th><th>How often</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Operating system</strong><br><span class="muted">Ubuntu, the kernel, OpenSSL, everything underneath</span></td>
+        <td>Can be fully automatic once you turn it on</td>
+        <td>Continuously, then a reboot when the kernel changes</td>
+      </tr>
+      <tr>
+        <td><strong>Control panel</strong><br><span class="muted">CloudPanel, if you use it</span></td>
+        <td>Manual, by running <code>clp-update</code></td>
+        <td>Monthly</td>
+      </tr>
+      <tr>
+        <td><strong>PageMotor core</strong></td>
+        <td>The Updates screen in your PageMotor admin</td>
+        <td>When a release appears</td>
+      </tr>
+      <tr>
+        <td><strong>Your plugins</strong></td>
+        <td>The same Updates screen</td>
+        <td>When a release appears</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>A fully patched Ubuntu with an out-of-date CMS is still an out-of-date CMS.</strong> The operating system and the application are different attack surfaces. Both need attention.
+  </div>
+
+  <p>There is a fifth thing that is not an update but fails the same way: your TLS certificate. Renewal is normally automatic, and it normally keeps working, right up until something changes the web server configuration and quietly breaks the renewal path. You find out ten weeks later when the certificate expires. The monthly run below checks it.</p>
+
   <div class="step">
-  <h2 id="vps"><span class="num">1</span><span class="t">A VPS with plain Ubuntu</span></h2>
-  <p>Spin up a VPS at any provider, Hetzner, DigitalOcean, Vultr or Hostinger, with at least 2&nbsp;GB of RAM and a plain <strong>Ubuntu 22.04 or 24.04</strong> image. CloudPanel wants a fresh box, so don't install anything else on it first.</p>
-  <p>On <strong>Hostinger</strong> you can skip the next step: at setup, choose the <strong>CloudPanel</strong> template instead of plain Ubuntu and the panel is installed for you. On any other host, do step 2.</p>
+    <h2 id="harden"><span class="num">1</span><span class="t">Turn on automatic security patching, once</span></h2>
+
+    <p>This is the highest-value thing on the page. Operating system security updates can install themselves, and once they do, the gap between a fix being published and your server having it drops from months to about a day.</p>
+
+    <p>It is not on by default on most control-panel server images, including CloudPanel ones. Do not assume it is running. The prompt below checks rather than guesses.</p>
+
+    <p>Paste this into Claude Code, edit the bracketed lines, and press Enter.</p>
+
+    <div class="codewrap">
+      <button class="copy" data-copy="prompt-a" type="button">Copy</button>
+<pre id="prompt-a"><code>I have a PageMotor site on a self-managed VPS and I want you to harden it
+and set up automatic security patching.
+
+MY DETAILS
+- Server IP: [YOUR_VPS_IP]
+- I SSH in as: root
+- My SSH key: ~/.ssh/id_ed25519
+- My site domain: [yoursite.com]
+- Control panel: [CloudPanel / none / other]
+- Provider: [Hostinger / Vultr / other]
+
+HOW I WANT YOU TO WORK
+- Take a snapshot or backup through my provider's dashboard BEFORE you change
+  anything. If you cannot do that yourself, stop and tell me how to do it,
+  and wait until I confirm it is done.
+- Show me what you plan to change before you change it.
+- Never restart the web server, PHP, the database or the machine itself
+  without telling me first and getting a yes.
+- If something is already correctly configured, say so and move on. Do not
+  reconfigure things that are fine.
+
+WHAT TO DO
+1. Report the current state first: OS version, kernel, uptime, free disk,
+   free memory, and which of the things below are already in place. Do not
+   change anything yet. Wait for me to say go.
+
+2. Automatic security updates. Check whether unattended-upgrades is
+   installed and actually enabled. If it is not, install and enable it for
+   SECURITY updates only. Do not enable automatic reboots. Show me the
+   resulting config and confirm the timer is active.
+
+3. Firewall. Confirm only the ports I actually need are open, normally
+   22, 80 and 443, plus my control panel port if I use one. Tell me every
+   other listening service you find before closing anything.
+
+4. SSH. Confirm key-based login works for me RIGHT NOW before you touch
+   anything, then disable password authentication and set root login to
+   key-only. Getting locked out of my own server is the worst outcome here,
+   so verify first, change second.
+
+5. fail2ban. Install it if missing and enable an sshd jail. On many
+   distributions the package installs inactive, so confirm it is actually
+   running, not just installed.
+
+6. Backups. Tell me exactly what backup my provider plan includes, how
+   often it runs, how many copies it keeps, and how I would restore one.
+   If my plan has no backups, say so plainly and tell me what it costs to
+   add them.
+
+7. TLS certificate. Confirm the certificate is valid, tell me its expiry
+   date, and confirm automatic renewal is scheduled and working. If my site
+   runs PageMotor behind CloudPanel, confirm that /.well-known/acme-challenge
+   is still served from disk, because PageMotor MCP fixes to /.well-known/
+   can break certificate renewal if they are applied carelessly.
+
+8. Write me a plain-text summary at /root/server-notes.md recording what
+   this server runs, what you changed today, and what needs checking monthly.
+
+FINISH BY PROVING IT WORKS
+Fetch https://[yoursite.com]/ over the public internet and show me the HTTP
+status and the first part of the response. Then fetch the admin page and
+confirm it loads. Do not tell me the server is hardened until you have
+pasted that output. A command exiting successfully is not proof the site
+still works.</code></pre>
+    </div>
+
+    <div class="note calm">
+      <strong>Why it verifies your key before disabling passwords.</strong> Turning off password login while your key is misconfigured locks you out of your own server. Recovering means the provider's rescue console, which is a bad afternoon. The order in step 4 is deliberate.
+    </div>
   </div>
 
   <div class="step">
-  <h2 id="install"><span class="num">2</span><span class="t">Install CloudPanel (one paste)</span></h2>
-  <p>SSH into the box as root and run these three lines. The install takes five to ten minutes, and it is the only time you touch the command line.</p>
-  <pre><code>apt update &amp;&amp; apt upgrade -y
-curl -sS https://installer.cloudpanel.io/ce/v2/install.sh -o install.sh
-sudo bash install.sh</code></pre>
-  <p>When it finishes, open <code>https://YOUR-SERVER-IP:8443</code> in your browser (expect a certificate warning the first time, that is normal on a raw IP) and create your admin account. From here on it is all panel.</p>
+    <h2 id="monthly"><span class="num">2</span><span class="t">The monthly run</span></h2>
+
+    <p>This is the routine one. Most months it finds very little, which is exactly the point. Paste it in, read what it reports, and tell it to go.</p>
+
+    <div class="codewrap">
+      <button class="copy" data-copy="prompt-b" type="button">Copy</button>
+<pre id="prompt-b"><code>Monthly maintenance run on my PageMotor VPS. Work carefully and report
+before you act.
+
+MY DETAILS
+- Server IP: [YOUR_VPS_IP]
+- I SSH in as: root
+- My SSH key: ~/.ssh/id_ed25519
+- My site domain: [yoursite.com]
+- Control panel: [CloudPanel / none / other]
+- Provider: [Hostinger / Vultr / other]
+
+GROUND RULES, THESE MATTER MORE THAN SPEED
+- Snapshot or back up through my provider BEFORE any change. If you cannot
+  trigger it, stop and tell me how, and wait for my confirmation.
+- This is a live production site. Report first, act second. I want to see
+  the list of what would change before it changes.
+- Never upgrade a MAJOR version of PHP, MySQL, MariaDB or the operating
+  system as part of routine maintenance. Those are planned projects with a
+  rollback plan, not a Tuesday job. Flag them and stop.
+- Never reboot without asking. If a reboot is genuinely required, tell me
+  why, and let me pick the time.
+- If anything looks wrong or ambiguous, stop and ask. Leaving a job half
+  done and telling me is far better than guessing.
+
+STEP 1: REPORT, CHANGE NOTHING
+Give me a short status report:
+- Uptime, and whether /var/run/reboot-required exists
+- Free disk and free memory, and flag anything over 80 per cent used
+- Everything in `apt list --upgradable`, split into security updates and
+  everything else
+- Whether unattended-upgrades is enabled and when it last ran successfully
+- TLS certificate expiry date for my domain
+- fail2ban status and how many bans in the last month
+- Any service that failed to start (`systemctl --failed`)
+- The last 20 authentication failures, so I can see if I am being probed
+- Current PageMotor core version and whether the Updates screen shows one
+  available
+Then stop and wait for me.
+
+STEP 2: AFTER I SAY GO
+- Apply the operating system SECURITY updates.
+- Apply non-security updates too, unless any of them touch PHP, the
+  database, or the kernel, in which case list those separately and ask.
+- If I am on CloudPanel, update it with `clp-update`. CloudPanel's own
+  documentation says to snapshot first, so confirm the snapshot from the
+  ground rules actually exists before you run it.
+- Clear out old kernels and package cache if disk is tight, and tell me how
+  much you freed.
+
+STEP 3: THE APPLICATION LAYER
+- Check my PageMotor admin Updates screen for a core update and tell me
+  what is available and what changed. Do not install a core update without
+  asking me.
+- Check my installed plugins for updates the same way.
+- These are separate from the operating system. A fully patched Ubuntu with
+  an outdated CMS is still an outdated CMS.
+
+STEP 4: PROVE THE SITE STILL WORKS
+This is the part that matters, so do not skip it or summarise it.
+- Fetch https://[yoursite.com]/ over the public internet. Paste the HTTP
+  status code and enough of the response body to show the real page came
+  back, not an error page or a holding page.
+- Fetch the admin login page and confirm it loads.
+- Submit nothing, but confirm my contact form page renders.
+- Confirm the TLS certificate is still valid and shows the expected expiry.
+- If any of those fail, tell me immediately and tell me how to roll back to
+  the snapshot.
+
+STEP 5: WRITE IT DOWN
+Append today's run to /root/server-notes.md: the date, what you updated,
+anything you deliberately did not update and why, and anything I should
+watch next month.
+
+Then give me a five-line summary I can read on my phone. Do not use the
+words "done", "fixed" or "all good" unless you have pasted the live site
+response from step 4.</code></pre>
+    </div>
+
+    <div class="note">
+      <strong>That last line is the most important sentence in the prompt.</strong> AI assistants have a well-documented habit of reporting success because a command exited without an error, which is not the same thing as your site still loading. Making it paste the live response is the only reliable check.
+    </div>
   </div>
 
-  <div class="step">
-  <h2 id="site"><span class="num">3</span><span class="t">Create the site</span></h2>
-  <p>In CloudPanel go to <strong>Sites &rarr; Add Site &rarr; Create a PHP Site</strong>, and set:</p>
+  <h2 class="plain" id="remember">How to actually remember</h2>
+
+  <p>Monthly is the right rhythm for the run above, with automatic security patching covering the urgent things in between. That combination means critical fixes land within about a day, and your monthly pass catches everything automation cannot safely do alone: reboots, the control panel, the CMS, the plugins, and a human actually looking at the thing.</p>
+
+  <p>On scheduling, be realistic. You can ask an AI assistant to run on a schedule, but it runs on your computer, and your computer is asleep in a bag most of the time. A calendar reminder on the first of the month that you actually action beats automation you assume is running. If you want it genuinely unattended, that belongs on a machine that is always on, not a laptop.</p>
+
+  <p>The one thing worth automating properly is the security patching, because that is where the delay between a fix existing and you having it is the whole risk. Step 1 sets it up.</p>
+
+  <details>
+    <summary>What if I skip a month, or six?</summary>
+    <p>Nothing dramatic happens the day you miss one. The risk accumulates rather than arriving. If you are coming back to a server you have ignored for a long time, do not simply run everything at once on a Friday afternoon. Take a snapshot, run the report step, and read it. A long-neglected server sometimes needs an operating system release upgrade, which is a planned job, not routine maintenance.</p>
+  </details>
+
+  <details>
+    <summary>Will updates break my site?</summary>
+    <p>Security patches are specifically designed not to. They are backported fixes that keep the same version numbers and behaviour, which is exactly why they are safe to automate. The things that genuinely can break a site are major version upgrades of PHP, the database, or the operating system, which is why both prompts refuse to do those as part of routine work and tell you to plan them separately.</p>
+  </details>
+
+  <details>
+    <summary>Do I need to reboot? I do not want downtime.</summary>
+    <p>Only kernel and a few core library updates need a reboot, and the server tells you by creating a file at <code>/var/run/reboot-required</code>. A reboot on a small VPS is typically well under a minute. The prompts deliberately never reboot on their own so you can pick the moment.</p>
+  </details>
+
+  <details>
+    <summary>My provider takes weekly backups. Is that enough?</summary>
+    <p>It is a good safety net and much better than nothing, but check three things: how many copies are kept, whether they include your database, and whether you have ever actually restored one. A backup nobody has tested is a hope, not a backup. The hardening prompt asks your assistant to find out and tell you.</p>
+  </details>
+
+  <h2 class="plain" id="stop">When to stop doing this yourself</h2>
+
+  <p>There is no shame in deciding you do not want to be a systems administrator. Reasonable signs it is time to hand it over:</p>
+
   <ul class="sub">
-    <li><strong>Application:</strong> Generic / PHP.</li>
-    <li><strong>PHP version:</strong> 8.3 (PageMotor needs 8.2 or newer; 8.4 is fine too).</li>
-    <li><strong>Domain:</strong> your site's domain.</li>
-    <li><strong>Site user and password:</strong> set them and write them down. This is the user that owns the files and that PHP runs as.</li>
+    <li>The site earns money, and an outage costs more than a support plan</li>
+    <li>You store customer personal data and want the compliance question answered properly rather than hopefully</li>
+    <li>You have skipped the monthly run three times running, which is most people</li>
+    <li>You are looking after more than three or four servers</li>
   </ul>
-  <p>CloudPanel creates the Nginx vhost, the PHP-FPM pool, and the document root at <code>/home/&lt;site-user&gt;/htdocs/&lt;domain&gt;/</code>.</p>
+
+  <p>At that point the honest options are a managed hosting plan, a managed VPS from a provider that sells one, or a maintenance retainer with someone who does this for a living. All three cost less than the incident.</p>
+
+  <div class="note calm">
+    <strong>Related guides:</strong>
+    <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger-api/">PageMotor on Hostinger with Claude Code</a> ·
+    <a href="https://documentation.elmspark.com/guides/pagemotor-cloudpanel/">Why the CloudPanel approach fixes the hosting problem</a> ·
+    <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Hosting PageMotor on Vultr</a> ·
+    <a href="https://documentation.elmspark.com/guides/point-your-domain/">Point your domain at your own PageMotor server</a>
   </div>
-
-  <div class="step">
-  <h2 id="db"><span class="num">4</span><span class="t">Create the database</span></h2>
-  <p>Go to <strong>Databases &rarr; Add Database</strong>. Give it a name, a database user and a password, and note all three, PageMotor needs them in a moment. CloudPanel runs MySQL / MariaDB, which PageMotor is happy with.</p>
-  </div>
-
-  <div class="step">
-  <h2 id="upload"><span class="num">5</span><span class="t">Upload PageMotor</span></h2>
-  <ul class="sub">
-    <li>Put the PageMotor files into the site's document root (<code>/home/&lt;site-user&gt;/htdocs/&lt;domain&gt;/</code>) using CloudPanel's <strong>File Manager</strong>, or SFTP with the site-user login.</li>
-    <li>Copy <code>config-sample.php</code> to <code>config.php</code> and fill in the database name, user and password from step 4. (From PageMotor 0.11 you can skip this: browse to the site's <code>/admin/</code> and the Install Wizard asks for the values and writes <code>config.php</code> itself.) Either way, make <code>/admin/</code> the first page you open on a brand-new install.</li>
-  </ul>
-  <div class="note">Because the files are uploaded as the site user, they are owned by the same user PHP runs as. That is the whole game: PageMotor can write its compiled theme CSS to disk, which is exactly what a locked-down shared host won't let it do.</div>
-  <div class="note"><strong>Extracted the zip over SSH as root instead?</strong> Everything lands owned <code>root:root</code> with no group write, PHP cannot save a thing, and it looks exactly like a PageMotor fault. Run <code>chown -R &lt;site-user&gt;:&lt;site-user&gt; .</code> in the docroot after extracting and the problem never existed.</div>
-  </div>
-
-  <div class="step">
-  <h2 id="rewrite"><span class="num">6</span><span class="t">The one PageMotor tweak</span></h2>
-  <p>PageMotor routes every request through <code>index.php</code>, so the vhost needs the standard front-controller rewrite. Current CloudPanel renders <em>two</em> server blocks per site: a front one on 80/443 that terminates TLS and proxies to a PHP backend on port 8080, and the backend itself. The rewrite already ships in the backend block on current builds, so open the site's <strong>Vhost</strong> tab and check the <strong>8080</strong> server block carries:</p>
-  <pre><code>try_files $uri $uri/ /index.php?$args;</code></pre>
-  <p>If it is there, leave it alone. On an older single-server vhost (one server block, with the <code>location ~ \.php$</code> handler in it), make sure the main location block reads <code>location / { try_files $uri $uri/ /index.php?$query_string; }</code>. Either way, that line is the difference between clean PageMotor URLs and a wall of 404s.</p>
-  </div>
-
-  <div class="step">
-  <h2 id="ssl"><span class="num">7</span><span class="t">Turn on SSL</span></h2>
-  <p>Point your domain's DNS at the server's IP first (an A record) and wait for it to resolve. Then in the site go to <strong>SSL/TLS &rarr; Actions &rarr; New Let's Encrypt Certificate</strong>, add your domain, and <strong>Create and Install</strong>. CloudPanel issues and renews the certificate for you.</p>
-  </div>
-
-  <h2 class="plain" id="why">Why this fixes the &ldquo;design won't save&rdquo; problem</h2>
-  <p>The most common PageMotor &ldquo;bug&rdquo; is a design that won't apply: you save it, nothing changes, no error. Nine times out of ten that is a host refusing to let PHP write the compiled stylesheet to disk (more on what hosts block in the <a href="https://documentation.elmspark.com/guides/ep-suite-shared-hosting/">shared-hosting guide</a>).</p>
-  <p>On a CloudPanel VPS that is gone by construction. It is a real server with a normal, writable filesystem, the site files are owned by the user PHP runs as, and nothing firewalls PHP from doing its job. PageMotor compiles its CSS, writes it, and serves it, exactly as it is meant to.</p>
-
-  <h2 class="plain" id="claude">Connecting Claude from this host</h2>
-  <p>PageMotor speaks MCP natively, so once your site is up you can connect Claude Code or Claude.ai to it and let Claude build pages, manage content and run plugins for you. The connection asks a little more of a host than serving pages does. Four things must be true: the <code>Authorization</code> header must reach PHP intact, PageMotor must be allowed to answer its dynamic <code>/.well-known/</code> routes itself, PHP's clock must be on UTC, and nothing may redirect Claude's POST to <code>/mcp</code> (the trailing-slash trap).</p>
-  <p>You do not need to test any of that by hand. Install <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> and read its <strong>MCP / Claude connection</strong> rows: since v1.2.0 its five checks cover all of this from your admin panel, no working Claude connection required, each with a plain fix. If a row fails, or the connection misbehaves anyway, the <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">MCP troubleshooting guide</a> has the exact diagnostic and fix for every verified cause.</p>
-  <div class="note">The one to watch on this stack: CloudPanel's stock vhost lets <code>/.well-known/</code> fall through to the filesystem for Let's Encrypt, which swallows the OAuth discovery routes Claude follows to sign in. And because that block sits in the front server, where there is no PHP at all, the fix on CloudPanel must <code>proxy_pass</code> the rest of <code>/.well-known/</code> to the site's 8080 backend rather than <code>try_files</code> it. <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">Section 6d of the troubleshooting guide</a> has the exact blocks, verified on a clean box; apply them through the site's Vhost tab so renewal cannot revert them.</div>
-  <div class="note calm"><strong>Three more field notes from a clean CloudPanel box (August 2026).</strong> The backend hardcodes <code>fastcgi_param HTTPS "on"</code>, so PageMotor builds its URLs as https through the internal proxy hop with nothing to configure; if you later put Cloudflare in front, set its SSL/TLS mode to <strong>Full (strict)</strong>, never Flexible, because the front server 301s every plain-HTTP fetch and Flexible loops on it. Varnish ships installed but is <em>off per site</em> by default; if you enable it for a PageMotor site, add explicit passes for <code>/api/</code>, <code>/mcp/</code>, <code>/oauth/</code> and <code>/.well-known/</code>, because the stock VCL only bypasses <code>/admin/</code>. And CloudPanel stores vhost templates as rows in its own database, not as files, so a custom template is added in Admin Area &rarr; Vhost Templates, not by editing something in <code>/etc</code>.</div>
-
-  <h2 style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">Who looks after this server?</h2>
-
-  <p style="margin:0 0 14px"><strong>You do.</strong> Every mainstream VPS is sold self-managed. Hostinger word it most plainly, and it holds across the board: <em>&ldquo;As our VPS solutions are self-managed, you will get full freedom to configure and manage the virtual server.&rdquo;</em></p>
-
-  <p style="margin:0 0 14px">Your provider looks after the hardware, the network, DDoS filtering at
-  the edge, and whatever backups your plan includes. Everything from Ubuntu upwards is yours: security
-  patches, your control panel, PHP, the database, your TLS certificate, and PageMotor itself.</p>
-
-  <p style="margin:0 0 14px">That is not a catch. It is the same freedom that makes a VPS fix the
-  problems shared hosting gives PageMotor. But nobody emails you when a patch is published, and a
-  server left alone for a year is running a year of known, catalogued, publicly indexed
-  vulnerabilities. Budget about fifteen minutes a month.</p>
-
-  <div class="note" style="background:#fbf6e8;border:1px solid var(--line);border-left:4px solid #c97a3c;border-radius:10px;padding:14px 16px;margin:22px 0;font-size:16.5px">
-    <strong style="color:var(--pine-deep)">Keeping your PageMotor VPS healthy</strong> covers the routine
-    in full, and includes a ready-made Claude Code prompt that turns on automatic security patching, runs
-    the monthly checks, and proves your site still loads afterwards.
-    <a href="https://documentation.elmspark.com/guides/vps-maintenance/">Read the maintenance guide</a>.
-  </div>
-
-
-  <div class="seealso">&#128736; <strong>Prefer the command line, or want no panel at all?</strong> The <a href="https://documentation.elmspark.com/guides/vultr-hosting/">Vultr guide</a> builds the same Nginx + PHP 8.3 + MariaDB stack by hand, no panel involved.</div>
 
   <footer>
-    <p>Steps current for CloudPanel CE&nbsp;v2, August&nbsp;2026, with field verification on a clean Hostinger KVM box. CloudPanel is a free, Nginx-based control panel for Ubuntu and Debian.</p>
-    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> &middot; an ElmsPark guide for the PageMotor community &middot; <a href="https://documentation.elmspark.com">documentation.elmspark.com</a></p>
+    <p><strong>Not sure what your server is running?</strong> Paste the report from step 1 of the monthly prompt into the PageMotor developers forum and someone will tell you what matters and what does not. Most of what looks alarming in a server report is routine.</p>
+    <p><a href="https://documentation.elmspark.com/guides/">ElmsPark Guides</a> · an ElmsPark guide for the PageMotor community · <a href="https://documentation.elmspark.com">documentation.elmspark.com</a> · August 2026</p>
   </footer>
 </div>
 
+<style>
+  .dnstable{width:100%;border-collapse:collapse;margin:16px 0;font-size:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .dnstable th{text-align:left;font-family:'Inter Tight',system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);padding:11px 14px;border-bottom:1px solid var(--line);background:#fbf6e8}
+  .dnstable td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .dnstable tr:last-child td{border-bottom:0}
+  .dnstable .muted{color:var(--soft);font-size:14px}
+  .tablewrap{overflow-x:auto}
+  @media (max-width:520px){ .dnstable{font-size:15px} .dnstable th,.dnstable td{padding:9px 10px} }
+</style>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.getAttribute('data-copy'));
+      function flash(msg, ok){
+        var old = 'Copy'; btn.textContent = msg; if (ok) btn.classList.add('done');
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1600);
+      }
+      function fallback(){
+        try {
+          var range = document.createRange(); range.selectNodeContents(el);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+          var copied = document.execCommand('copy'); sel.removeAllRanges();
+          flash(copied ? 'Copied' : 'Press Ctrl/Cmd+C', copied);
+        } catch (e) { flash('Press Ctrl/Cmd+C', false); }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(el.innerText).then(function(){ flash('Copied', true); }, fallback);
+      } else { fallback(); }
+    });
+  });
+</script>
 </body>
 </html>

@@ -355,6 +355,27 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <p>PageMotor speaks MCP natively, so once your site is up you can connect Claude Code or Claude.ai to it and let Claude build pages, manage content and run plugins for you. The connection asks a little more of a host than serving pages does. Four things must be true: the <code>Authorization</code> header must reach PHP intact, PageMotor must be allowed to answer its dynamic <code>/.well-known/</code> routes itself, PHP's clock must be on UTC, and nothing may redirect Claude's POST to <code>/mcp</code> (the trailing-slash trap).</p>
   <p>You do not need to test any of that by hand. Install <a href="https://documentation.elmspark.com/plugins/ep-host-check/">EP Host Check</a> and read its <strong>MCP / Claude connection</strong> rows: since v1.2.0 its five checks cover all of this from your admin panel, no working Claude connection required, each with a plain fix. If a row fails, or the connection misbehaves anyway, the <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">MCP troubleshooting guide</a> has the exact diagnostic and fix for every verified cause.</p>
   <div class="callout">&#9888; The one to watch on this stack: CloudPanel's stock vhost serves <code>/.well-known/</code> from the filesystem for Let's Encrypt, which swallows the OAuth discovery routes Claude follows to sign in. <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">Section 6 of the troubleshooting guide</a> has the vhost fix that hands those routes to PageMotor while keeping certificate renewal working.</div>
+
+  <h2 style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">Who looks after this server?</h2>
+
+  <p style="margin:0 0 14px"><strong>You do.</strong> Hostinger sell a self-managed VPS, and say so plainly on their own VPS page: <em>&ldquo;As our VPS solutions are self-managed, you will get full freedom to configure and manage the virtual server.&rdquo;</em></p>
+
+  <p style="margin:0 0 14px">Hostinger looks after the hardware, the network, DDoS filtering at
+  the edge, and whatever backups your plan includes. Everything from Ubuntu upwards is yours: security
+  patches, your control panel, PHP, the database, your TLS certificate, and PageMotor itself.</p>
+
+  <p style="margin:0 0 14px">That is not a catch. It is the same freedom that makes a VPS fix the
+  problems shared hosting gives PageMotor. But nobody emails you when a patch is published, and a
+  server left alone for a year is running a year of known, catalogued, publicly indexed
+  vulnerabilities. Budget about fifteen minutes a month.</p>
+
+  <div class="note" style="background:#fbf6e8;border:1px solid var(--line);border-left:4px solid #c97a3c;border-radius:10px;padding:14px 16px;margin:22px 0;font-size:16.5px">
+    <strong style="color:var(--pine-deep)">Keeping your PageMotor VPS healthy</strong> covers the routine
+    in full, and includes a ready-made Claude Code prompt that turns on automatic security patching, runs
+    the monthly checks, and proves your site still loads afterwards.
+    <a href="https://documentation.elmspark.com/guides/vps-maintenance/">Read the maintenance guide</a>.
+  </div>
+
   <div class="seealso">&#128161; <strong>Remember:</strong> roughly nine out of ten PageMotor &ldquo;bugs&rdquo; are really the host, not PageMotor. On this stack it just works. Background reading: the <a href="https://documentation.elmspark.com/guides/pagemotor-cloudpanel/">CloudPanel guide</a> and <a href="https://documentation.elmspark.com/guides/ep-suite-shared-hosting/">what shared hosts block</a>.</div>
   <footer>
     <p>Every step shown on a real Hostinger KVM 2 VPS with CloudPanel, June&nbsp;2026. Companion to the <a href="https://documentation.elmspark.com/guides/pagemotor-cloudpanel/">CloudPanel concept guide</a>.</p>

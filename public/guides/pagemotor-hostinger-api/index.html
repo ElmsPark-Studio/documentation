@@ -408,6 +408,27 @@ Use provision-pagemotor.sh if you need a reference for the exact commands.
     <div class="note calm"><strong>You are done when:</strong> the EP Host Check plugin reports green on a Hostinger VPS, which means PageMotor can write its compiled CSS to disk. That is the thing that breaks on cheap shared hosting, and the whole reason this setup exists.</div>
   </div>
 
+  <h2 style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">Who looks after this server?</h2>
+
+  <p style="margin:0 0 14px"><strong>You do.</strong> Hostinger sell a self-managed VPS, and say so plainly on their own VPS page: <em>&ldquo;As our VPS solutions are self-managed, you will get full freedom to configure and manage the virtual server.&rdquo;</em></p>
+
+  <p style="margin:0 0 14px">Hostinger looks after the hardware, the network, DDoS filtering at
+  the edge, and whatever backups your plan includes. Everything from Ubuntu upwards is yours: security
+  patches, your control panel, PHP, the database, your TLS certificate, and PageMotor itself.</p>
+
+  <p style="margin:0 0 14px">That is not a catch. It is the same freedom that makes a VPS fix the
+  problems shared hosting gives PageMotor. But nobody emails you when a patch is published, and a
+  server left alone for a year is running a year of known, catalogued, publicly indexed
+  vulnerabilities. Budget about fifteen minutes a month.</p>
+
+  <div class="note" style="background:#fbf6e8;border:1px solid var(--line);border-left:4px solid #c97a3c;border-radius:10px;padding:14px 16px;margin:22px 0;font-size:16.5px">
+    <strong style="color:var(--pine-deep)">Keeping your PageMotor VPS healthy</strong> covers the routine
+    in full, and includes a ready-made Claude Code prompt that turns on automatic security patching, runs
+    the monthly checks, and proves your site still loads afterwards.
+    <a href="https://documentation.elmspark.com/guides/vps-maintenance/">Read the maintenance guide</a>.
+  </div>
+
+
   <div class="seealso">
     <strong>Related guides:</strong>
     <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger/">Picture-by-picture manual guide</a> (34 screenshots, for people who prefer to click) &middot;
