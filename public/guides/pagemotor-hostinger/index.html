@@ -320,8 +320,13 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <figure><picture><source srcset="img/29-root-directory.webp" type="image/webp"><img src="img/29-root-directory.png" alt="Point the site at the PageMotor folder" loading="lazy" width="1200"></picture></figure>
   </div>
   <div class="step">
-  <h2 id="vhost"><span class="num">30</span><span class="t">The web server is already set up</span></h2>
-  <p>Good news: nothing to do here. On the <strong>Vhost</strong> tab you can see CloudPanel already routes every address through <code>index.php</code> (the <code>try_files</code> line), exactly what PageMotor needs for clean links.</p>
+  <h2 id="vhost"><span class="num">30</span><span class="t">The web server is nearly set up</span></h2>
+  <p>Good news first: the routing is already done. On the <strong>Vhost</strong> tab you can see CloudPanel already routes every address through <code>index.php</code> (the <code>try_files</code> line), exactly what PageMotor needs for clean links.</p>
+  <p>While you have the Vhost tab open, make one small addition. PageMotor keeps a few directories private (error logs, Skill state, and protected uploads including Brain files). On Apache hosting that privacy is automatic; this server runs nginx, which needs to be told. Paste these three lines on their own, directly <em>above</em> the line that begins <code>location /</code> (not inside its curly brackets), then <strong>Save</strong>:</p>
+  <pre><code>location ^~ /user-content/logs/              { deny all; }
+location ^~ /user-content/skills/            { deny all; }
+location ^~ /user-content/uploads/protected/ { deny all; }</code></pre>
+  <div class="callout">&#9888; Always make this edit on the Vhost tab in CloudPanel, never in a file on the server &mdash; the panel is what remembers it. If you skip this, the site still works, and PageMotor checks for the missing protection itself and shows a warning in the admin until it is in place. Bringing a site here from Apache hosting? Then do not skip it: your old <code>.htaccess</code> protection stopped working the moment nginx took over, silently.</div>
   <figure><picture><source srcset="img/30-vhost-rewrite.webp" type="image/webp"><img src="img/30-vhost-rewrite.png" alt="The web server is already set up" loading="lazy" width="1200"></picture></figure>
   </div>
   <p class="phase" id="ph-dns">Point your domain and add SSL</p>

@@ -379,12 +379,17 @@ Good. Now SSH into [IP] as root using ~/.ssh/id_ed25519 and:
 1. Create a PHP 8.3 site in CloudPanel for mysite.com
    (site user: mysite, generate a random password)
 2. Add a database: mysite-db / user mysite-user / strong random password
-3. Upload ~/Downloads/pagemotor-0.9.4b.zip to /tmp/pagemotor.zip on the server,
+3. Upload the current PageMotor release zip from ~/Downloads to /tmp/pagemotor.zip on the server,
    extract it into /home/mysite/htdocs/mysite.com/ (files go in the root, no subfolder)
 4. Write config.php (DB_HOST 127.0.0.1, prefix pm_, error logs true)
 5. Fix ownership: chown -R mysite:www-data
 6. Once DNS resolves, run: clpctl lets-encrypt:install:certificate --domainName=mysite.com
-7. Confirm the site loads at https://mysite.com/
+7. Add PageMotor's three nginx deny rules inside the server block of the
+   site's vhost via CloudPanel (Sites > mysite.com > Vhost), then save:
+   location ^~ /user-content/logs/              { deny all; }
+   location ^~ /user-content/skills/            { deny all; }
+   location ^~ /user-content/uploads/protected/ { deny all; }
+8. Confirm the site loads at https://mysite.com/
 
 Reference the provision-pagemotor.sh script for the exact clpctl commands.
     </div>
@@ -396,6 +401,7 @@ Reference the provision-pagemotor.sh script for the exact clpctl commands.
         <li>PHP version must be <strong>8.3</strong> &mdash; do not let it default to 8.5.</li>
         <li>PageMotor files go straight into the <strong>site root</strong>, not a subfolder.</li>
         <li>SSL is requested <em>after</em> DNS resolves &mdash; the script loops and waits.</li>
+        <li>nginx ignores PageMotor's <code>.htaccess</code> directory protection, so the deny rules in the prompt's step 7 are load-bearing, not optional. PageMotor probes for them itself and raises an admin warning if they are missing. Details, and why this bites hardest on migrations: <a href="#migrating">Migrating an existing site onto this VPS?</a> below.</li>
       </ul>
     </div>
   </div>
@@ -405,6 +411,28 @@ Reference the provision-pagemotor.sh script for the exact clpctl commands.
     <p>Visit <code>https://mysite.com/admin/</code> and register your PageMotor admin account. Then install <strong>EP Host Check</strong> from the EP Suite updates channel and run it.</p>
     <p>All 12 checks should be green. The key one is <em>PHP can save PageMotor&rsquo;s files</em>. That is the check that goes red on a locked-down shared host and green on a properly-owned VPS. When it is green, your designs will save, your theme will compile, and the &ldquo;9 out of 10 bugs are the host&rdquo; category is closed.</p>
     <div class="note calm"><strong>All green?</strong> You are done. Build something.</div>
+  </div>
+
+  <h2 id="migrating" style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">Migrating an existing site onto this VPS?</h2>
+
+  <p style="margin:0 0 14px">A fresh install can skip this section. If you are moving an existing PageMotor site here from another host, two things break silently on the way in. Both come from a real migration reported on the PageMotor developers forum, so this is field experience, not theory.</p>
+
+  <p style="margin:0 0 6px"><strong>1. Apache protection does not follow you to nginx.</strong> PageMotor guards its sensitive directories (error logs, Skill state, and protected uploads including Brain files) with per-directory <code>.htaccess</code> files, which is automatic on Apache and LiteSpeed. CloudPanel serves your site with nginx, and nginx ignores <code>.htaccess</code> entirely. So the moment nginx starts serving a migrated site those directories are publicly readable over the web, and nothing looks broken. Current PageMotor releases probe for this themselves and raise an admin warning with the exact paths for your install. The fix is three rules. In CloudPanel open <strong>Sites &rarr; your site &rarr; Vhost</strong>, add these inside the <code>server { }</code> block, and save:</p>
+  <div class="codewrap">
+    <button class="copy" onclick="copy(this,'nginx-deny')">Copy</button>
+    <pre id="nginx-deny"><code>location ^~ /user-content/logs/              { deny all; }
+location ^~ /user-content/skills/            { deny all; }
+location ^~ /user-content/uploads/protected/ { deny all; }</code></pre>
+  </div>
+  <p style="margin:0 0 14px">Always edit the vhost through the CloudPanel page, not the file on disk: the panel regenerates that file, and panel edits are what survive. To confirm the rules are live, request <code>https://yourdomain.com/user-content/logs/</code> in a browser. You want a 403, not a log file.</p>
+
+  <p style="margin:0 0 6px"><strong>2. Zip extraction can strip the write bits.</strong> If you carry the site over as a zip and extract it on the server, directories can come out as <code>555</code> (read and execute, no write) depending on what built the zip. Ownership then looks perfect, every file belongs to the site user, but PHP cannot write anywhere, and the first symptom is usually a plugin install failing with &ldquo;staging directory could not be created&rdquo;. The scripted provision this guide references sets the permission bits explicitly, so a from-scratch build never hits this; a hand-carried zip is the case it cannot see. The fix is one pass in a server terminal:</p>
+  <div class="codewrap">
+    <button class="copy" onclick="copy(this,'perm-fix')">Copy</button>
+    <pre id="perm-fix"><code>cd /home/SITEUSER/htdocs/yourdomain.com
+chown -R SITEUSER:www-data .
+find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;</code></pre>
   </div>
 
   <h2 style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">Who looks after this server?</h2>

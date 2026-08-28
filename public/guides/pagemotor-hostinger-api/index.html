@@ -381,7 +381,12 @@ Good. Now SSH into [IP] as root using ~/.ssh/id_ed25519 and:
 7. AFTER the certificate is installed, fix /.well-known/ in the site's vhost so
    PageMotor's OAuth discovery routes are reachable, or MCP sign-in will fail:
    bash provision-pagemotor.sh --fix-wellknown mysite.com
-8. Open https://mysite.com/admin/ FIRST (a brand-new install expects the
+8. Add PageMotor's three nginx deny rules inside the server block of the
+   site's vhost via CloudPanel (Sites > mysite.com > Vhost), then save:
+   location ^~ /user-content/logs/              { deny all; }
+   location ^~ /user-content/skills/            { deny all; }
+   location ^~ /user-content/uploads/protected/ { deny all; }
+9. Open https://mysite.com/admin/ FIRST (a brand-new install expects the
    admin to be its first visitor), then confirm the front page at https://mysite.com/
 
 Use provision-pagemotor.sh if you need a reference for the exact commands.
@@ -397,6 +402,7 @@ Use provision-pagemotor.sh if you need a reference for the exact commands.
         <li>PageMotor files go directly into the <strong>site root</strong>, not a subfolder, so no web root change is needed.</li>
         <li>SSL cert is requested <em>after</em> DNS resolves, not before &mdash; the script handles the wait loop.</li>
         <li>CloudPanel's stock vhost serves <code>/.well-known/</code> from disk, which swallows PageMotor's OAuth discovery routes and breaks MCP sign-in. The script rewrites the site's own vhost <em>after</em> the certificate step (installing a certificate re-renders it), keeping <code>acme-challenge</code> served from disk so renewal still works. Already built a site without this? Run <code>bash provision-pagemotor.sh --fix-wellknown mysite.com</code>. Background: <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#hosting">troubleshooting section 6d</a>.</li>
+        <li>nginx ignores PageMotor's <code>.htaccess</code> directory protection, so the deny rules in the prompt's step 8 are load-bearing, not optional. PageMotor probes for them itself and raises an admin warning if they are missing. Details, and why this bites hardest on migrations: <a href="#migrating">Migrating an existing site onto this VPS?</a> below.</li>
       </ul>
     </div>
   </div>
@@ -407,6 +413,32 @@ Use provision-pagemotor.sh if you need a reference for the exact commands.
     <p>You are looking for all 17 checks green (v1.2.0 added a five-check <em>MCP / Claude connection</em> group, which is exactly what this guide cares about), especially <em>PHP can save PageMotor&rsquo;s files</em>. That one goes red on a locked-down shared host &mdash; it should be green here because you are on a proper VPS with correct file ownership.</p>
     <div class="note calm"><strong>You are done when:</strong> the EP Host Check plugin reports green on a Hostinger VPS, which means PageMotor can write its compiled CSS to disk. That is the thing that breaks on cheap shared hosting, and the whole reason this setup exists.</div>
   </div>
+
+  <h2 id="migrating" style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">Migrating an existing site onto this VPS?</h2>
+
+  <p style="margin:0 0 14px">A fresh install can skip this section. If you are moving an existing PageMotor site here from another host, two things break silently on the way in. Both come from a real migration reported on the PageMotor developers forum, so this is field experience, not theory.</p>
+
+  <p style="margin:0 0 6px"><strong>1. Apache protection does not follow you to nginx.</strong> PageMotor guards its sensitive directories (error logs, Skill state, and protected uploads including Brain files) with per-directory <code>.htaccess</code> files, which is automatic on Apache and LiteSpeed. CloudPanel serves your site with nginx, and nginx ignores <code>.htaccess</code> entirely. So the moment nginx starts serving a migrated site those directories are publicly readable over the web, and nothing looks broken. Current PageMotor releases probe for this themselves and raise an admin warning with the exact paths for your install. The fix is three rules. In CloudPanel open <strong>Sites &rarr; your site &rarr; Vhost</strong>, add these inside the <code>server { }</code> block, and save:</p>
+  <div class="codewrap">
+    <button class="copy" onclick="copy(this,'nginx-deny')">Copy</button>
+    <pre id="nginx-deny"><code>location ^~ /user-content/logs/              { deny all; }
+location ^~ /user-content/skills/            { deny all; }
+location ^~ /user-content/uploads/protected/ { deny all; }</code></pre>
+  </div>
+  <p style="margin:0 0 14px">Always edit the vhost through the CloudPanel page, not the file on disk: the panel regenerates that file, and panel edits are what survive. To confirm the rules are live, request <code>https://yourdomain.com/user-content/logs/</code> in a browser. You want a 403, not a log file.</p>
+
+  <p style="margin:0 0 6px"><strong>2. Zip extraction can strip the write bits.</strong> If you carry the site over as a zip and extract it on the server, directories can come out as <code>555</code> (read and execute, no write) depending on what built the zip. Ownership then looks perfect, every file belongs to the site user, but PHP cannot write anywhere, and the first symptom is usually a plugin install failing with &ldquo;staging directory could not be created&rdquo;. The scripted provision on this page sets the permission bits explicitly, so a from-scratch build never hits this; a hand-carried zip is the case it cannot see. The fix is one pass in a server terminal:</p>
+  <div class="codewrap">
+    <button class="copy" onclick="copy(this,'perm-fix')">Copy</button>
+    <pre id="perm-fix"><code>cd /home/SITEUSER/htdocs/yourdomain.com
+chown -R SITEUSER:www-data .
+find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;</code></pre>
+  </div>
+
+  <h2 id="no-cli" style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">No Claude Code? There is still an AI path</h2>
+
+  <p style="margin:0 0 14px">This guide assumes Claude Code or Cursor, but the same job has been done end to end from plain browser chat at claude.ai, reported working on the forum. The recipe: connect your PageMotor site&rsquo;s own MCP connector to the chat (the <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger/#claude">manual guide</a> shows how), and when a step needs a real shell, open the browser terminal from your hPanel VPS overview, which is a root shell with no SSH keys to set up. You type the commands the AI gives you and paste the output back for it to read. Slower than the MCP setup on this page, where the two tools talk directly, but it reaches the same finish line: run EP Host Check at the end and look for green.</p>
 
   <h2 style="font-size:24px;color:var(--pine-deep);margin:38px 0 4px">Who looks after this server?</h2>
 
