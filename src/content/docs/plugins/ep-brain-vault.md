@@ -105,6 +105,14 @@ A restore is itself recorded, before it overwrites anything. So restoring to Tue
 
 ## Changelog
 
+### 0.2.1
+
+**Fixes a crash on PageMotor 0.11.2.** If your site is on core 0.11.2, every `vault-write` and every snapshot — including the automatic one on the EP Cron heartbeat — failed with an internal error. 0.11.2 moved one of the calls this plugin uses to write its deny file, and 0.2.0 was still calling it at the old address.
+
+The heartbeat was the worst of the three, because it fails quietly. A site that had taken 0.11.2 stopped taking automatic snapshots and nothing said so. If you are on 0.11.2, upgrade and check the settings screen shows a recent snapshot.
+
+Your vault contents are not affected, by the bug or by the fix. The failure happened while preparing the storage directory, before anything was written, so every existing version, snapshot and blob is exactly as it was. No settings change, no migration — upgrade and the vault resumes.
+
 ### 0.2.0
 
 Adds `vault-diff`: what actually changed between two versions of a file, as a unified diff, either version to version or against the live file. It reports added and removed line counts alongside the diff text, so a caller can summarise a change without reading it. 0.1.0 shipped without one and left you comparing two versions by eye.
