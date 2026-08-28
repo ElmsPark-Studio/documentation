@@ -342,6 +342,15 @@
         },
         {
           "slugs": [
+            "ep-membership-pages"
+          ],
+          "titles": [
+            "EP Membership Pages"
+          ],
+          "blurb": "Companion to EP Membership: themed, level-protected Members Pages whose refusal is your upgrade prompt, not a 404."
+        },
+        {
+          "slugs": [
             "ep-events-recurring"
           ],
           "titles": [
@@ -962,7 +971,6 @@
     "ep-locations": "none",
     "ep-maintenance": "none",
     "ep-media-storage": "0.1.0",
-    "ep-membership": "none",
     "ep-newsletter": "none",
     "ep-newsletter-brevo": "none",
     "ep-newsletter-mailgun": "none",

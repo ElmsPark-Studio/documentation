@@ -61,6 +61,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Events Recurring](/plugins/ep-events-recurring/)**. Recurring class and event templates for EP Events — weekly, fortnightly and Nth-weekday series on a rolling timetable.
 - **[EP Holiday Bookings](/plugins/ep-holiday-bookings/)**. Holiday packages, enquiry-first booking, deposit/balance for independent travel agents.
 - **[EP Membership](/plugins/ep-membership/)**. Public registration, login, member levels, content gating.
+- **[EP Membership Pages](/plugins/ep-membership-pages/)**. Companion to EP Membership: themed, level-protected Members Pages whose refusal is your upgrade prompt, not a 404.
 
 ### Studio operations
 

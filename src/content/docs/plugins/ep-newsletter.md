@@ -92,7 +92,7 @@ Four layers of defence against subscription form abuse, layered to catch differe
 ### Automated newsletters
 
 - **Frequency.** Daily, weekly, monthly.
-- **Send day and time.**
+- **Send day and time.** Read in your site's timezone — see [Timezone](#timezone).
 - **Target list.**
 - **Subject template.** Supports placeholders for date ranges.
 - **Email template.** Structure of the digest.
@@ -115,7 +115,7 @@ Four layers of defence against subscription form abuse, layered to catch differe
 2. **Preview.** Render the campaign as it will appear in common mail clients.
 3. **Test send.** Send just to your own address to check.
 4. **Choose recipients.** Pick one or more lists, or a segment.
-5. **Schedule or send now.**
+5. **Schedule or send now.** A scheduled time is read in your site's timezone — see [Timezone](#timezone).
 6. **Monitor.** Open and click rates, bounce count, complaint count all update as the campaign progresses.
 
 ## Autoresponders
@@ -156,6 +156,20 @@ The ready-made URL, with a crontab example, is under **Settings → Background P
 ```
 
 The token is generated once and checked with a timing-safe compare; a wrong or missing token returns HTTP 403 and does no work. Keep the URL private (anyone with it can trigger a send, though it exposes no subscriber data). The admin-page-load trigger still works as a fallback, and the `process-queue` API action below does the same job for an authenticated caller.
+
+## Timezone
+
+*(new in 1.8.0)* The times you enter — a campaign's schedule, the automated digest's send time and weekly send day — are read in **your site's timezone**, set under PageMotor's **Site Settings → Time Zone**. The schedule field on the campaign composer names that zone underneath it, so you can always see which clock you are typing in. Type 09:00 and the campaign goes out at 09:00 your time, whatever timezone the server happens to be on.
+
+Stored times are UTC underneath, converted back to your zone whenever they are shown to you. That is what makes the server's own setting irrelevant: you no longer need to ask your host to change `date.timezone`, and a server left on UTC is no longer a problem. Some hosting panels, CloudPanel among them, default new sites to UTC — that used to send a Central European site's campaigns two hours early. It no longer does.
+
+On PageMotor 0.10.3b, which has no **Site Settings → Time Zone** yet, times are read in the server's PHP timezone exactly as before. Nothing about what you type changes, and upgrading the core later moves you onto the site setting.
+
+### Upgrading from 1.7.x or earlier
+
+Times already in your database were stored on the server's local clock. The first admin page load, or the first background queue run, after the update converts them once, automatically. You do not need to do anything, and none of your existing dates should change on screen.
+
+If you have campaigns scheduled or autoresponder sequences in flight across the upgrade, glance at the campaign list afterwards and confirm the scheduled times still read as you intended.
 
 ## Managing EP Newsletter over the PM API
 
@@ -199,6 +213,14 @@ The API `subscribe` deliberately bypasses the per-domain cap and disposable-emai
 *(new in 1.2.0)* Every newsletter send is recorded in a single table, `ep_newsletter_send_log`, whichever delivery route it took (an external driver, EP Email, EP Email's SMTP class, or the PHP mail fallback). Each row carries a `send_type` column (campaign, autoresponder, welcome, confirmation, transactional), the recipient, status, the driver used, the provider message id, and the related campaign and subscriber ids. One place to diagnose deliverability, instead of piecing it together from the queue tables. Read it over the API with `list-send-log` (new in 1.2.1).
 
 ## Troubleshooting
+
+### “Scheduled campaigns go out at the wrong time”
+
+On 1.8.0 and later, check **Site Settings → Time Zone** is your zone. That is the clock the schedule field uses, and the field names the zone underneath it so you can confirm it at a glance.
+
+Before 1.8.0 the schedule was read on the server's clock, so a server left on UTC fired a Central European site's campaigns two hours late. If you are still on 1.7.x, updating is the fix. Changing `date.timezone` on the server was the old workaround and is no longer needed.
+
+If the times are right but the send is simply late, that is the queue runner rather than the clock — see [Background processing](#background-processing-scheduled-sending).
 
 ### “Campaign paused partway through sending”
 

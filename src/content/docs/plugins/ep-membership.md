@@ -17,6 +17,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 - **Member levels** (0.5.0): optional ordered tiers — Free, Pro, VIP or whatever fits your site.
 - **Level-gated content** (0.5.0): gate a span of content or a whole page by level.
 - **Purchase grants** (0.5.0): active EP Ecommerce membership purchases count towards a member's level automatically.
+- **Members Only documents** (0.6.0): a protected content type that PageMotor itself refuses to non-members, so the document stays out of the sitemap, the content API, site search and search-engine pings.
 - **Login gating** on any shortcode-wrapped content, and login-required settings for courses and lessons.
 - **Integration with EP GDPR** for consent capture and logging on registration.
 - **Integration with EP Newsletter** for an opt-in checkbox on the registration form.
@@ -25,13 +26,13 @@ Members are registered as a dedicated **Learner** user type. Learners have no ad
 
 ## Status
 
-**Version 0.5** — core flows and member levels are live and verified on PageMotor 0.10 and 0.11. Social login and bulk member import remain on the roadmap.
+**Version 0.6**: core flows, member levels and Members Only documents are live and verified on PageMotor 0.10 and 0.11. Social login and bulk member import remain on the roadmap.
 
 ## Requirements
 
 - **PageMotor 0.7 or later** (0.10 and 0.11 both verified)
 - **EP Suite base class**
-- **EP Email** — all transactional email (verification, welcome, password reset) is sent through EP Email. Without it active, those emails are not sent.
+- **EP Email**, or PageMotor 0.11's built-in mail. Transactional email (verification, welcome, password reset) goes through EP Email when it is active. Without it, 0.6.1 and later fall back to PageMotor's own mailer (0.11+), and those sends appear in core's email log attributed to EP Membership. On 0.6.0 and earlier, or on a 0.10 core with no EP Email, those emails are **not sent and the failure is silent**: each attempt is written to the PHP error log only.
 
 Optional:
 
@@ -92,6 +93,14 @@ With the **Purchase Grants** setting on and EP Ecommerce installed, an active me
 
 ## Gating content
 
+There are two kinds of gate in this plugin, and the difference matters if you are selling access.
+
+**Presentation gates** control what a visitor *sees*. The per-page Required membership level, the sitewide gate, and the `[ep-login-gate]` / `[ep-level-gate]` shortcodes all work by replacing the page body at render time. The prompt shows correctly in a browser, but the underlying document is still an ordinary public page as far as PageMotor is concerned: its text remains readable through the public content API, it stays listed in `sitemap.xml` and in site search, and saving it pings the search engines through IndexNow. Use these for soft gating, teasers, and members-only presentation of material you do not mind being readable.
+
+**Protection** is the Members Only content type (0.6.0). PageMotor refuses the document itself to anyone below the level, before any of those read paths sees the row. Use this for anything you are actually charging for.
+
+The two compose: put the document on the Members Only type for the hard gate, and keep a page's own Required membership level for the finer one.
+
 ### By level, in content
 
 Wrap the span in `[ep-level-gate]`:
@@ -112,6 +121,8 @@ A gate naming a level you haven't defined **fails open** (the content shows, wit
 
 With levels defined, every page's content options gain a **Membership** box with a **Required membership level** select. Visitors and members below the level see a prompt in place of the page body; the page chrome renders normally. Admins always see the page.
 
+This is a presentation gate, as described above. It changes what renders, not what the site will hand out. If the content must not be readable at all, put the document on the Members Only type as well.
+
 ### Sitewide (0.5.1)
 
 To gate the whole site at once, set **Sitewide Required Level** in the Member Levels settings to a level slug. Every page then requires that level, except:
@@ -120,6 +131,20 @@ To gate the whole site at once, set **Sitewide Required Level** in the Member Le
 - the login and registration pages, which are **always** public so members can never be locked out of signing in.
 
 A page's own Required membership level always overrides the sitewide gate. Blank the setting to switch the sitewide gate off; nothing else changes.
+
+### Members Only documents (0.6.0)
+
+This is the only gate that withholds the data itself.
+
+0.6.0 registers one content type, **Members Only**, which behaves exactly like a standalone HTML document (same renderer, same clean URL) except that PageMotor marks it protected. Core then refuses it to anyone who is not a signed-in member at or above the level you set, and the refusal happens at the content layer rather than at render time. The document is therefore absent from `sitemap.xml`, absent from `list-public-content`, returns `not_found` from `get-public-content` and from MCP, absent from site search and listings, never pushed to IndexNow, and any file attached to it is refused too.
+
+To use it, open the document in the admin and change its type to **Members Only**. The document itself is untouched, and moving it back is the same change in reverse.
+
+Set the minimum level under **Members Only Document Level** in the Member Levels settings. Blank means any signed-in member. This setting exists because a standalone document never renders through the per-page gate, so for these documents it is the gate.
+
+Admins always have access, as everywhere else in the plugin.
+
+**Why this exists.** Before 0.6.0 the only gating on offer was the render-time kind, which hides a page body and nothing else. Reported from the field in August 2026 with a full reproduction: a page gated to a level showed the prompt correctly in a browser while its complete text was still being served to anonymous callers through the public content API, and the URL stayed in the sitemap. Credit to andre for the report and for independently identifying the protected-content-type seam as the fix.
 
 ### Login-only
 
@@ -136,7 +161,7 @@ With EP Courses installed, the **Access Control** section in EP Membership's set
 - **Login** — login and registration page slugs, after-login and after-logout redirects, Remember Me duration in days, max login attempts, and lockout duration in minutes.
 - **Profile** — profile page on/off and its slug.
 - **Access Control** — the course and lesson login requirements above.
-- **Member Levels** (0.5.0) — the level definitions, default level, purchase grants switch, and (0.5.1) the sitewide gate with its public-paths list.
+- **Member Levels** (0.5.0): the level definitions, default level, purchase grants switch, (0.5.1) the sitewide gate with its public-paths list, and (0.6.0) the Members Only Document Level.
 - **Members** (0.5.0) — every learner account with registration date, verification state, and a level selector.
 
 ## Password reset
@@ -169,15 +194,35 @@ Check cookies are being set correctly. Common cause: session cookie's `Secure` f
 
 ### “Verification, welcome, or password reset emails aren't arriving”
 
-EP Email is required for all of these — check it is active and configured. Check EP Email's delivery log for the specific send. If EP Email is missing, EP Membership logs the failure to the PHP error log rather than sending.
+With EP Email active, check its delivery log for the specific send. Without EP Email, on 0.6.1+ on a 0.11 core, check PageMotor's own email log (sends appear as source EP Membership); if core mail is not configured either, the attempt is written to the PHP error log, which now names what was missing. On 0.6.0 and earlier there is no fallback: EP Email is required, and a missing EP Email means the email was never sent.
 
 ### “A member paid for a subscription but their level hasn't changed”
 
 Check the **Purchase Grants** switch is on, and that the product's `membership_level` matches one of your level slugs exactly. The grant's level string and your defined slug must be the same word.
 
+### “A gated page is still readable through the API, or still in the sitemap”
+
+Expected, if the page is gated only by its Required membership level, the sitewide gate, or a gate shortcode. Those are presentation gates: they change what renders, not what the site hands out, so the document stays public to the content API, site search and `sitemap.xml`.
+
+Put the document on the **Members Only** content type (0.6.0). That is the gate that withholds the data.
+
 ### “A level gate is showing its content to everyone”
 
 The gate names a level that isn't defined in settings — undefined levels fail open by design. Check the slug in the shortcode against the Member Levels box, and check the PHP error log for the breadcrumb.
+
+## Changelog
+
+### 0.6.2
+
+27 August 2026. PageMotor 0.11.2 compatibility: update this plugin before or with the core update. 0.11.2 scopes permission keys to the plugin that grants them, so bare keys stopped matching and Members Only documents locked out every member; accepted keys are now declared in both forms, one file serving both cores. Members Only documents also gain 0.11.2's Dynamic Denials: a refused visitor sees the login prompt, a below-level member the upgrade prompt naming the required level, where before 0.11.2 this was structurally impossible on documents. Rig-proven on both cores with real member sessions.
+
+### 0.6.1
+
+26 August 2026. Transactional email falls back to PageMotor's own mailer (0.11+) when EP Email is absent, with sends attributed in core's email log. Previously those sends failed silently to the PHP error log.
+
+### 0.6.0
+
+24 August 2026. The Members Only content type: standalone documents refused by PageMotor itself, closing the sitemap, content API, site search and attached-file read paths that render-time gating left open.
 
 ## Feedback and corrections
 

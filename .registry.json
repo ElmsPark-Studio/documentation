@@ -1,7 +1,7 @@
 {
   "ep-affiliate": {
     "tier": "professional",
-    "version": "0.1.12"
+    "version": "0.1.13"
   },
   "ep-agent-jobs": {
     "tier": "professional",
@@ -29,7 +29,7 @@
   },
   "ep-boarding": {
     "tier": "commerce",
-    "version": "1.9.3"
+    "version": "1.9.4"
   },
   "ep-boarding-commerce": {
     "tier": "commerce",
@@ -41,7 +41,7 @@
   },
   "ep-booking": {
     "tier": "professional",
-    "version": "2.4.17"
+    "version": "2.4.21"
   },
   "ep-booking-zoom": {
     "tier": "professional",
@@ -69,7 +69,7 @@
   },
   "ep-comments": {
     "tier": "business",
-    "version": "1.1.16"
+    "version": "1.1.17"
   },
   "ep-concierge": {
     "tier": "professional",
@@ -145,7 +145,7 @@
   },
   "ep-email": {
     "tier": "foundation",
-    "version": "1.10.43"
+    "version": "1.10.44"
   },
   "ep-email-advanced-forms": {
     "tier": "professional",
@@ -221,11 +221,11 @@
   },
   "ep-gdpr": {
     "tier": "foundation",
-    "version": "1.1.42"
+    "version": "1.1.43"
   },
   "ep-helpdesk": {
     "tier": "business",
-    "version": "1.2.13"
+    "version": "1.2.14"
   },
   "ep-holiday-bookings": {
     "tier": "professional",
@@ -261,11 +261,15 @@
   },
   "ep-membership": {
     "tier": "add-on",
-    "version": "0.6.0"
+    "version": "0.6.2"
+  },
+  "ep-membership-pages": {
+    "tier": "add-on",
+    "version": "0.2.0"
   },
   "ep-newsletter": {
     "tier": "business",
-    "version": "1.7.3"
+    "version": "1.8.1"
   },
   "ep-newsletter-brevo": {
     "tier": "add-on",
@@ -297,7 +301,7 @@
   },
   "ep-reviews": {
     "tier": "professional",
-    "version": "1.0.17"
+    "version": "1.0.18"
   },
   "ep-rss": {
     "tier": "foundation",
@@ -349,11 +353,11 @@
   },
   "ep-support": {
     "tier": "professional",
-    "version": "1.1.22"
+    "version": "1.1.23"
   },
   "ep-testimonials": {
     "tier": "professional",
-    "version": "1.0.23"
+    "version": "1.0.24"
   },
   "ep-tracking": {
     "tier": "professional",
@@ -393,6 +397,6 @@
   },
   "tibaai-editor": {
     "tier": "private",
-    "version": "0.2.8"
+    "version": "0.3.1"
   }
 }
