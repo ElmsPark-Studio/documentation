@@ -1,0 +1,130 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.118
+Field reports your agent can act on.
+
+00:00:03.118 --> 00:00:10.317
+More and more PageMotor debugging is done by AI agents, and their findings die in chat transcripts.
+
+00:00:10.317 --> 00:00:15.407
+This is the fix: one fixed report shape, and the discipline around it.
+
+00:00:16.807 --> 00:00:19.983
+Three things go wrong when agents talk in prose.
+
+00:00:19.983 --> 00:00:25.608
+Chat silts up, because free-text output is cheap to generate and expensive to triage.
+
+00:00:25.608 --> 00:00:27.196
+Prose cannot be counted:
+
+00:00:27.196 --> 00:00:34.540
+three people hitting one bug produce three well-written paragraphs in three threads, and nothing connects them.
+
+00:00:34.540 --> 00:00:41.885
+And nobody signs chatter, so which install, which environment, which version, and filed by whom all go missing.
+
+00:00:43.285 --> 00:00:46.073
+The fix for all three is the same move.
+
+00:00:46.073 --> 00:00:51.078
+Stop exchanging conversation and start exchanging a structured report:
+
+00:00:51.078 --> 00:00:56.369
+a fixed set of fields another machine can validate, deduplicate and count.
+
+00:00:56.369 --> 00:00:58.585
+Because the count is the point.
+
+00:00:58.585 --> 00:01:07.666
+Triage is mostly the question how many people does this actually hit, and no volume of well-written prose produces that number.
+
+00:01:09.066 --> 00:01:14.004
+One report is one observation about one finding, as one JSON object.
+
+00:01:14.004 --> 00:01:17.272
+Twelve fields, and four do the heavy lifting.
+
+00:01:17.272 --> 00:01:22.646
+Category and severity come from fixed lists, so filtering means something.
+
+00:01:22.646 --> 00:01:25.478
+The core version anchors every finding.
+
+00:01:25.478 --> 00:01:33.248
+And observed is the field that must always carry weight, with repro given as steps rather than a paragraph.
+
+00:01:33.248 --> 00:01:38.694
+A finding with no repro is a hunch, and hunches are what silt a channel up.
+
+00:01:40.094 --> 00:01:45.812
+The title does more work than any other field, because the title drives deduplication.
+
+00:01:45.812 --> 00:01:48.670
+So it names the mechanism, not the symptom.
+
+00:01:48.670 --> 00:01:57.047
+“Options set to zero are dropped on save” is findable next year, and two people describing the same fault will converge on it.
+
+00:01:57.047 --> 00:02:02.432
+“Settings broke after upgrade” names your Tuesday, and nobody will ever match it.
+
+00:02:03.832 --> 00:02:06.037
+Reports group by a fingerprint:
+
+00:02:06.037 --> 00:02:09.452
+a hash of the category and the normalised title.
+
+00:02:09.452 --> 00:02:15.641
+Deliberately dumb, because an exact rule you can predict beats a clever one you cannot.
+
+00:02:15.641 --> 00:02:18.344
+Note what is absent: the core version.
+
+00:02:18.344 --> 00:02:28.944
+Hashing that in would make the same fault on two releases into two findings rather than one seen twice, which defeats the only question worth asking.
+
+00:02:28.944 --> 00:02:36.201
+The honest weakness is that rewording a title silently splits a finding in two, and nothing warns you.
+
+00:02:37.601 --> 00:02:41.512
+Three kinds of observation, and only one of them counts.
+
+00:02:41.512 --> 00:02:46.471
+A sighting is a different install hitting it, and that moves the count.
+
+00:02:46.471 --> 00:02:53.456
+A confirmation is you re-testing and finding it still present, which re-dates it and counts nothing.
+
+00:02:53.456 --> 00:02:55.132
+A resolution retires it.
+
+00:02:55.132 --> 00:03:00.999
+The middle one is the one people leave out, and its absence is worse than it sounds:
+
+00:03:00.999 --> 00:03:12.384
+without it, re-testing an old finding and discovering it is still broken has nowhere to go, so silence becomes indistinguishable from the fault quietly going away.
+
+00:03:13.784 --> 00:03:15.831
+And one rule that is absolute.
+
+00:03:15.831 --> 00:03:19.515
+Your agent shows you the exact final payload and asks:
+
+00:03:19.515 --> 00:03:24.631
+file this report, yes or no. A general yes from an hour ago does not count.
+
+00:03:24.631 --> 00:03:31.590
+A published report cannot be quietly unsent, and debug output is exactly where credentials go to hide.
+
+00:03:31.590 --> 00:03:36.911
+The scrub protects your sites; the gate protects everyone's trust in the pool.
+
+00:03:38.311 --> 00:03:46.075
+None of this is official PageMotor infrastructure, and the running pilot is deliberately closed while it is proven out.
+
+00:03:46.075 --> 00:03:48.489
+But the shape costs nothing to adopt.
+
+00:03:48.489 --> 00:03:59.906
+A report in this format, posted in a forum code block, is already machine-readable, and the guide has a live builder and a scrub checker that run entirely in your own browser.

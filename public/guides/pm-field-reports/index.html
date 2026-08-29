@@ -153,6 +153,28 @@
   </div>
 </div></header>
 
+<div class="wrap" style="margin:26px auto 0">
+  <video controls preload="metadata" poster="pm-field-reports-poster.webp" width="1920" height="1080"
+         style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+    <source src="pm-field-reports.mp4" type="video/mp4">
+    <track kind="captions" src="pm-field-reports.vtt" srclang="en" label="English" default>
+    Your browser cannot play this video. <a href="pm-field-reports.mp4">Download it instead</a>.
+  </video>
+  <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole argument in 4 minutes, narrated, with captions. The tabs below carry the spec, the filing discipline and the live tools.</p>
+  <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+    <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+    <div style="margin-top:10px;color:#5d574c">
+      <p style="margin:0 0 10px"><strong>Why prose fails.</strong> Chat silts up, because free-text agent output is cheap to generate and expensive to triage. Prose cannot be counted: three people hitting one bug produce three paragraphs in three threads and nothing connects them. And nobody signs chatter, so which install, which environment, which version and filed by whom all go missing.</p>
+      <p style="margin:0 0 10px"><strong>The same move fixes all three.</strong> Stop exchanging conversation and start exchanging a structured report: a fixed set of fields another machine can validate, deduplicate and count. The count is the point, because triage is mostly &ldquo;how many people does this actually hit&rdquo;, and no volume of well-written prose produces that number.</p>
+      <p style="margin:0 0 10px"><strong>The shape.</strong> One report is one observation about one finding, as one JSON object. Category and severity come from fixed lists so filtering means something, the core version anchors every finding, <code>observed</code> must always carry weight, and <code>repro</code> is steps rather than a paragraph. A finding with no repro is a hunch.</p>
+      <p style="margin:0 0 10px"><strong>The title does the most work,</strong> because it drives deduplication. Name the mechanism, not the symptom. &ldquo;Options set to zero are dropped on save&rdquo; is findable next year; &ldquo;Settings broke after upgrade&rdquo; names your Tuesday.</p>
+      <p style="margin:0 0 10px"><strong>The fingerprint</strong> is a hash of category and normalised title, deliberately dumb because a rule you can predict beats a clever one you cannot. The core version is deliberately absent: hashing it in would turn the same fault on two releases into two findings rather than one seen twice. The honest weakness is that rewording a title splits a finding silently.</p>
+      <p style="margin:0 0 10px"><strong>Three observations, one number.</strong> A sighting is a different install and moves the count. A confirmation re-dates and counts nothing. A resolution retires. Without the middle one, re-testing an old finding and discovering it is still broken has nowhere to go, so silence becomes indistinguishable from the fault quietly going away.</p>
+      <p style="margin:0"><strong>The human gate is absolute.</strong> Your agent shows the exact final payload and asks &ldquo;file this report, yes or no?&rdquo;. A general yes from an hour ago does not count. A published report cannot be quietly unsent, and debug output is exactly where credentials go to hide.</p>
+    </div>
+  </details>
+</div>
+
 <nav class="tabs" aria-label="Guide sections"><div class="wrap"><div class="tabrow" role="tablist">
   <button class="tab" role="tab" aria-selected="true" aria-controls="p-why" id="t-why" data-panel="p-why">Why this exists</button>
   <button class="tab" role="tab" aria-selected="false" aria-controls="p-shape" id="t-shape" data-panel="p-shape" tabindex="-1">The report shape</button>
