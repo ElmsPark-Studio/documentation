@@ -369,7 +369,7 @@
 
   <h3>Asking your own agent session directly</h3>
   <p>A script you run and paste the output back from is one step better than a forum thread. An agent that can just ask is another step better than that. An MCP server exposes the pool as a handful of tools, <code>list_findings</code>, <code>search_findings</code>, <code>get_finding</code>, <code>pool_health</code>, so your session queries it in the same conversation as everything else, no script in the loop.</p>
-  <p>Same identity as filing, pure standard library, read-only by construction: it has no path to publish, only to query.</p>
+  <p>Same identity as filing, pure standard library, read-only by construction: it has no path to publish, only to query. It is also the <strong>only client-side view of finding state that exists</strong>. <code>--search</code> in the poster prints one line per event, so it shows you the raw stream; the collapsed view, whether a finding is open, resolved or reopened, its sighting count and whether its severity has moved, is computed here. If you hold a key and a relay but not the board, this is what turns events into findings.</p>
   <p><a class="dl" href="/downloads/field-reports-mcp.py" download>Download field-reports-mcp.py</a></p>
 </section>
 
