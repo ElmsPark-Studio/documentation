@@ -1,0 +1,126 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:11.162
+Keeping your PageMotor VPS healthy. Your VPS is self-managed, which means the operating system, the security patches and the software on it are yours to look after.
+
+2
+00:00:11.162 --> 00:00:18.733
+This is the fifteen minutes a month that keeps it safe, and the guide has a ready-made prompt that does most of the work.
+
+3
+00:00:19.433 --> 00:00:35.134
+Here is where the line falls. Your provider looks after the physical hardware and the hypervisor, the network and DDoS filtering at the edge, whatever backups your plan includes, and keeping the machine powered on and reachable.
+
+4
+00:00:35.134 --> 00:00:44.707
+You look after everything else: operating system security patches and the kernel, your control panel, the web server, PHP and the database,
+
+5
+00:00:44.707 --> 00:00:51.662
+your TLS certificate, SSH access and firewall rules, and PageMotor core and every plugin you install.
+
+6
+00:00:52.362 --> 00:00:57.819
+And here is the part people misread. That provider column is a set of tools, not a service.
+
+7
+00:00:57.819 --> 00:01:02.136
+A malware scanner in a dashboard nobody opens has never caught anything.
+
+8
+00:01:02.136 --> 00:01:11.310
+Your provider will keep the machine running perfectly while the software on it goes quietly out of date, and nobody emails you when a patch is published.
+
+9
+00:01:12.010 --> 00:01:21.706
+If your site collects any personal data at all, and a contact form counts, then in the UK and EU this stops being only good practice.
+
+10
+00:01:21.706 --> 00:01:27.611
+GDPR Article 32 requires appropriate technical measures to keep that data secure.
+
+11
+00:01:27.611 --> 00:01:38.620
+A server left alone for a year is running a year of known, catalogued, publicly indexed vulnerabilities, and that is difficult to argue as appropriate.
+
+12
+00:01:39.320 --> 00:01:46.564
+There are four things that need updating, and they are four separate jobs with four separate mechanisms.
+
+13
+00:01:46.564 --> 00:01:54.227
+The operating system, which can be fully automatic once you turn it on. Your control panel, manually, monthly.
+
+14
+00:01:54.227 --> 00:02:01.402
+PageMotor core, from the Updates screen when a release appears. And your plugins, from the same screen.
+
+15
+00:02:01.402 --> 00:02:06.626
+A fully patched Ubuntu with an out-of-date CMS is still an out-of-date CMS.
+
+16
+00:02:07.326 --> 00:02:13.336
+There is a fifth thing that is not an update but fails the same way: your TLS certificate.
+
+17
+00:02:13.336 --> 00:02:22.752
+Renewal is automatic and it keeps working, right up until something changes the web server configuration and quietly breaks the renewal path.
+
+18
+00:02:22.752 --> 00:02:26.692
+You find out ten weeks later, when the certificate expires.
+
+19
+00:02:27.392 --> 00:02:34.987
+The highest-value thing on the page is the one-time job. Operating system security updates can install themselves,
+
+20
+00:02:34.987 --> 00:02:42.649
+and once they do, the gap between a fix being published and your server having it drops from months to about a day.
+
+21
+00:02:42.649 --> 00:02:50.844
+Do not assume it is already running: it is not on by default on most control-panel server images, CloudPanel ones included.
+
+22
+00:02:51.544 --> 00:03:00.474
+Then the monthly run, and its rhythm is report first, act second. The prompt asks for a status report and then stops:
+
+23
+00:03:00.474 --> 00:03:11.465
+uptime, free disk, everything upgradable split into security and the rest, whether automatic upgrades actually ran, the certificate expiry date,
+
+24
+00:03:11.465 --> 00:03:19.937
+fail2ban bans, any failed service, and the last authentication failures so you can see if you are being probed.
+
+25
+00:03:19.937 --> 00:03:24.516
+Most months it finds very little. That is exactly the point.
+
+26
+00:03:25.216 --> 00:03:29.100
+Two things it will deliberately refuse to do on a routine run.
+
+27
+00:03:29.100 --> 00:03:39.058
+It will never upgrade a major version of PHP, the database or the operating system, because those are planned projects with a rollback plan, not a Tuesday job.
+
+28
+00:03:39.058 --> 00:03:41.563
+And it will never reboot without asking.
+
+29
+00:03:42.263 --> 00:03:47.575
+And the step that matters most is the last one: prove the site still works.
+
+30
+00:03:47.575 --> 00:03:56.994
+Fetch the live site over the public internet, and show the status code and enough of the page body to prove the real thing came back.
+
+31
+00:03:56.994 --> 00:03:59.260
+Not “updates applied”. Evidence.
+

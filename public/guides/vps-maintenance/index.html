@@ -160,6 +160,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole routine in 4 minutes, narrated, with captions &mdash; where the provider&rsquo;s job ends, the four separate things that need updating, and the one-time change that does the urgent half for you.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Your VPS is self-managed, which means the operating system, the security patches and the software on it are yours to look after. This is the fifteen minutes a month that keeps it safe.</p>
+          <p style="margin:0 0 10px"><strong>Where the line falls.</strong> Your provider looks after the physical hardware and the hypervisor, the network and DDoS filtering at the edge, whatever backups your plan includes, and keeping the machine powered on. You look after everything else: OS security patches and the kernel, your control panel, the web server, PHP and the database, your TLS certificate, SSH access and firewall rules, and PageMotor core and every plugin.</p>
+          <p style="margin:0 0 10px"><strong>The part people misread.</strong> That provider column is a set of tools, not a service. A malware scanner in a dashboard nobody opens has never caught anything. Your provider will keep the machine running perfectly while the software on it goes quietly out of date, and nobody emails you when a patch is published.</p>
+          <p style="margin:0 0 10px"><strong>Not only good practice.</strong> If your site collects any personal data at all, and a contact form counts, UK and EU GDPR Article 32 require appropriate technical measures to keep it secure. A server left alone for a year is running a year of known, catalogued, publicly indexed vulnerabilities, and that is difficult to argue as appropriate.</p>
+          <p style="margin:0 0 10px"><strong>Four jobs, not one.</strong> The operating system, which can be fully automatic once you turn it on. Your control panel, manually, monthly. PageMotor core, from the Updates screen when a release appears. And your plugins, from the same screen. A fully patched Ubuntu with an out-of-date CMS is still an out-of-date CMS.</p>
+          <p style="margin:0 0 10px"><strong>And a fifth thing that is not an update.</strong> Certificate renewal is automatic and keeps working, right up until something changes the web server configuration and quietly breaks the renewal path. You find out ten weeks later, when it expires.</p>
+          <p style="margin:0 0 10px"><strong>The highest-value job, done once.</strong> Operating system security updates can install themselves, and the gap between a fix being published and your server having it drops from months to about a day. Do not assume it is already running: it is <em>not</em> on by default on most control-panel server images, CloudPanel included.</p>
+          <p style="margin:0 0 10px"><strong>The monthly run</strong> is report first, act second. The prompt asks for a status report and then stops: uptime, free disk, what is upgradable split into security and the rest, whether unattended-upgrades actually ran, certificate expiry, fail2ban bans, failed services, and recent authentication failures. Most months it finds very little. That is exactly the point.</p>
+          <p style="margin:0 0 10px"><strong>Not a Tuesday job.</strong> It will never upgrade a major version of PHP, the database or the operating system on a routine run, because those are planned projects with a rollback plan. And it will never reboot without asking.</p>
+          <p style="margin:0"><strong>The step that matters most.</strong> Prove the site still works: fetch it over the public internet and show the status code and enough of the body to prove the real page came back. Not &ldquo;updates applied&rdquo;. Evidence.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc" aria-label="On this page">
     <p>On this page</p>
     <ol>
