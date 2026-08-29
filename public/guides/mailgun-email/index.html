@@ -175,6 +175,23 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <meta property="og:image:alt" content="Set up reliable email with Mailgun — ElmsPark Guides">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://documentation.elmspark.com/og/mailgun-email.png">
+<style>
+/* ---------------------------------------------------------------------------
+   Narrow-phone overflow guard (added 2026-08-29 after an estate-wide sweep).
+   At 320px these pages made the WHOLE DOCUMENT scroll sideways, because two
+   things cannot wrap on their own: long unbreakable tokens in prose (file
+   paths, URLs, inline JSON) and wide tables. Nothing was ever clipped - the
+   content stayed reachable - but the page shifting sideways on a small phone
+   is a real defect, and the house 380px gate never caught it because most of
+   these squeak inside 380px and only fail below it.
+   Code inside <pre> is deliberately left alone: those blocks already scroll.
+   --------------------------------------------------------------------------- */
+@media (max-width: 620px){
+  :not(pre) > code, p a, li a, td a { overflow-wrap: anywhere; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table thead, table tbody { display: table; width: 100%; min-width: max-content; }
+}
+</style>
 </head>
 <body>
 <header class="es-header">

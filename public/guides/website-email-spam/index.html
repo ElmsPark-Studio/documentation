@@ -138,6 +138,23 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <meta property="og:image:alt" content="Why your website's email lands in spam, an ElmsPark guide">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://documentation.elmspark.com/og/website-email-spam.png">
+<style>
+/* ---------------------------------------------------------------------------
+   Narrow-phone overflow guard (added 2026-08-29 after an estate-wide sweep).
+   At 320px these pages made the WHOLE DOCUMENT scroll sideways, because two
+   things cannot wrap on their own: long unbreakable tokens in prose (file
+   paths, URLs, inline JSON) and wide tables. Nothing was ever clipped - the
+   content stayed reachable - but the page shifting sideways on a small phone
+   is a real defect, and the house 380px gate never caught it because most of
+   these squeak inside 380px and only fail below it.
+   Code inside <pre> is deliberately left alone: those blocks already scroll.
+   --------------------------------------------------------------------------- */
+@media (max-width: 620px){
+  :not(pre) > code, p a, li a, td a { overflow-wrap: anywhere; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table thead, table tbody { display: table; width: 100%; min-width: max-content; }
+}
+</style>
 </head>
 <body>
 <header class="es-header">
@@ -263,7 +280,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <p>DMARC (Domain-based Message Authentication, Reporting and Conformance) is a TXT record that tells receiving servers what to do when a message fails SPF or DKIM, and where to send reports about what is happening.</p>
     <p>A DMARC record goes at a specific subdomain of your domain:</p>
     <pre class="term"><span class="c"># TXT record at:  _dmarc.yourdomain.com</span>
-<b>v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com</b></pre>
+<b>v=DMARC1; p=none; rua=mailto:<!--email_off-->dmarc@yourdomain.com<!--email_on--></b></pre>
     <p>The key parts:</p>
     <ul class="sub">
       <li><code>p=none</code> means &ldquo;monitor only, do not take action yet&rdquo;. This is the right starting point.</li>
@@ -292,7 +309,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <h2 class="plain" id="alignment">Alignment: why SPF or DKIM alone is not enough</h2>
   <p class="sub-lede">DMARC introduces a concept called alignment, which is why having one authentication method is often still not enough.</p>
   <p>For DMARC to pass, one of two conditions must be true. Either SPF passes and the domain in the SPF check (the envelope sender) aligns with the domain in the visible From header. Or DKIM passes and the <code>d=</code> domain in the DKIM signature aligns with the domain in the From header.</p>
-  <p>This matters because a provider&rsquo;s shared SPF record proves that the message came from their servers, but it does not prove it came from your domain. If you send from <code>hello@yourdomain.com</code> via a provider and only SPF is set up, the SPF check passes for the provider&rsquo;s domain, not yours. DMARC alignment fails.</p>
+  <p>This matters because a provider&rsquo;s shared SPF record proves that the message came from their servers, but it does not prove it came from your domain. If you send from <code><!--email_off-->hello@yourdomain.com<!--email_on--></code> via a provider and only SPF is set up, the SPF check passes for the provider&rsquo;s domain, not yours. DMARC alignment fails.</p>
   <p>DKIM sidesteps this cleanly. When the DKIM signature uses your domain (<code>d=yourdomain.com</code>), the signing domain and the From domain are the same, so alignment passes. This is why DKIM is the more reliable path to a DMARC pass for most shared-sending setups.</p>
 
   <!-- DEEPER: WEBSITE -->
@@ -346,7 +363,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
         <td class="nm">DMARC</td>
         <td><code>_dmarc.yourdomain.com</code></td>
         <td>TXT</td>
-        <td><code>v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com</code></td>
+        <td><code>v=DMARC1; p=none; rua=mailto:<!--email_off-->dmarc@yourdomain.com<!--email_on--></code></td>
         <td>What to do when SPF or DKIM fails, and where to send reports</td>
       </tr>
     </tbody>
