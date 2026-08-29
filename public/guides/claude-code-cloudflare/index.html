@@ -194,6 +194,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/claude-code-cloudflare-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole setup in 4 minutes 21 seconds, narrated, with captions &mdash; which of the three parts does what, and the Wrangler scope gotcha that OAuth alone will not cover.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Wire Claude Code into Cloudflare once, and it can read your account, change settings, deploy Workers and read live logs, all from the terminal. About fifteen minutes, and no API key to find to begin.</p>
+          <p style="margin:0 0 10px"><strong>What it actually gets you.</strong> List and edit DNS records, create and deploy Workers, manage R2 buckets, KV namespaces and D1 databases, read observability logs, adjust WAF and Zero Trust, and reach almost any other part of the Cloudflare API &mdash; by asking in plain English.</p>
+          <p style="margin:0 0 10px"><strong>Three parts, and which does what.</strong> <em>Skills</em> are on-demand knowledge of how Cloudflare actually works, so you are not re-explaining the platform every time. <em>MCP servers</em> are the live line into your account's API. <em>Wrangler</em> builds and deploys. One plugin install wires up the first two and keeps them matched.</p>
+          <p style="margin:0 0 10px"><strong>The install is two slash commands.</strong> The first points Claude Code at Cloudflare's official marketplace; the second installs the plugin, which adds the Skills <em>and</em> registers the API, docs, bindings, builds and observability MCP servers.</p>
+          <p style="margin:0 0 10px"><strong>Authorising.</strong> The first time it calls a Cloudflare tool, your browser opens and you sign in and approve. A standard OAuth handshake &mdash; no key to find, copy or store. Confirm with <code>/mcp</code> inside Claude Code, or <code>claude mcp list</code> from a shell.</p>
+          <p style="margin:0 0 10px"><strong>Read before you change.</strong> Ask it to list your zones and their plans. Then something small and safe: create a KV namespace, and show me how to delete it again. Or from a Workers folder: deploy this and give me the live URL. It tells you what it is about to do before it touches anything.</p>
+          <p style="margin:0 0 10px"><strong>The gotcha.</strong> The MCP servers cover the API, but deploys are Wrangler's job &mdash; and a browser <code>wrangler login</code> session does <em>not</em> include every permission scope. Some account-level actions and Turnstile need scopes OAuth will not grant. Export a scoped token as <code>CLOUDFLARE_API_TOKEN</code> and Wrangler picks it up automatically.</p>
+          <p style="margin:0 0 10px"><strong>Access without OAuth.</strong> For CI, a headless server, or tighter control, use a scoped API token: grant only what the job needs and scope it to a specific account or zone rather than &ldquo;all&rdquo;. Restrict by client IP and set a TTL for automation. Copy the secret immediately &mdash; Cloudflare shows it once.</p>
+          <p style="margin:0 0 10px"><strong>User tokens and account tokens.</strong> A user token is tied to you personally. An account token is tied to the account and keeps working even if a person leaves the team, which makes it the better choice for shared services and CI. Both are accepted by Wrangler and the MCP servers.</p>
+          <p style="margin:0"><strong>You are handing an agent live infrastructure.</strong> Least privilege, so a DNS-only token cannot deploy Workers. One token per purpose or machine, so revoking one does not break everything. Never commit a token. OAuth for you, tokens for machines. And roll it on any doubt.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>

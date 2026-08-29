@@ -1,0 +1,118 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:13.087
+Give Claude Code control of your Cloudflare account. Wire it in once, and it can read your account, change settings, deploy Workers and read live logs, all from the terminal.
+
+2
+00:00:13.087 --> 00:00:18.129
+About fifteen minutes, and you do not need to find any API key to begin.
+
+3
+00:00:18.829 --> 00:00:29.847
+Here is what it actually gets you. It can list and edit DNS records, create and deploy Workers, manage R2 buckets, KV namespaces and D1 databases,
+
+4
+00:00:29.847 --> 00:00:40.563
+read observability logs, adjust WAF and Zero Trust, and reach almost any other part of the Cloudflare API. All by you asking in plain English.
+
+5
+00:00:41.263 --> 00:00:49.973
+It does that through three things working together, and it is worth knowing which is which when something needs a nudge.
+
+6
+00:00:49.973 --> 00:00:58.538
+Skills are on-demand knowledge of how Cloudflare actually works, so you are not re-explaining the platform every time.
+
+7
+00:00:58.538 --> 00:01:07.030
+MCP servers are the live line into your account's API. And Wrangler is the command-line tool that builds and deploys.
+
+8
+00:01:07.030 --> 00:01:11.821
+One plugin install wires up the first two, and keeps them matched.
+
+9
+00:01:12.521 --> 00:01:21.466
+That install is two slash commands, one after the other. The first points Claude Code at Cloudflare's official plugin marketplace.
+
+10
+00:01:21.466 --> 00:01:33.233
+The second installs the plugin, which does two jobs at once: it adds the Cloudflare Skills, and it registers the API, docs, bindings, builds and observability MCP servers.
+
+11
+00:01:33.933 --> 00:01:42.250
+Then you authorise. The first time it calls a Cloudflare tool, your browser opens and you sign in and approve access.
+
+12
+00:01:42.250 --> 00:01:54.122
+It is a standard OAuth handshake: there is no API key to find, copy or store. You choose which permissions to grant, and which account, if you belong to more than one.
+
+13
+00:01:54.122 --> 00:02:01.657
+To confirm the servers are connected, run /mcp inside Claude Code, or claude mcp list from a normal shell.
+
+14
+00:02:02.357 --> 00:02:10.787
+For your first instruction, read something before you change something. Ask it to list the zones on your account and their plans.
+
+15
+00:02:10.787 --> 00:02:17.909
+Then something small and safe: create a KV namespace called scratch-test, and show me how to delete it again.
+
+16
+00:02:17.909 --> 00:02:23.333
+Or from a Workers folder, the classic: deploy this Worker and give me the live URL.
+
+17
+00:02:23.333 --> 00:02:30.128
+It tells you what it is about to do before it touches anything, and that review step is your safety net.
+
+18
+00:02:30.828 --> 00:02:40.371
+Now the gotcha, and it is worth knowing before you hit it. The MCP servers cover the API, but building and shipping Workers is Wrangler's job.
+
+19
+00:02:40.371 --> 00:02:51.458
+And a browser wrangler login session does not include every permission scope: some account-level actions, and Turnstile among them, need scopes OAuth will not grant.
+
+20
+00:02:51.458 --> 00:02:59.993
+When you hit that wall, create a scoped API token and expose it as an environment variable. Wrangler picks it up automatically.
+
+21
+00:03:00.693 --> 00:03:11.150
+For continuous integration, a headless server, or simply tighter control over what the agent can touch, a scoped API token is the right tool.
+
+22
+00:03:11.150 --> 00:03:19.457
+Grant only the permissions the job needs, and scope it to a specific account or zone rather than to all of them.
+
+23
+00:03:19.457 --> 00:03:30.879
+You can also restrict it by client IP and set a time to live, which is sensible for automation. And copy the secret immediately: Cloudflare shows it once.
+
+24
+00:03:31.579 --> 00:03:36.763
+There is one more distinction worth knowing. A user token is tied to you personally.
+
+25
+00:03:36.763 --> 00:03:47.626
+An account token is tied to the account, and it keeps working even if a person leaves the team, which makes it the better choice for shared services and continuous integration.
+
+26
+00:03:47.626 --> 00:03:50.898
+Both are accepted by Wrangler and by the MCP servers.
+
+27
+00:03:51.598 --> 00:04:00.109
+And remember what you are doing here: you are handing an agent the keys to live infrastructure. A few habits keep that safe.
+
+28
+00:04:00.109 --> 00:04:11.092
+Least privilege, so a token that only edits DNS cannot deploy Workers. One token per purpose or machine, so you can revoke one without breaking everything else.
+
+29
+00:04:11.092 --> 00:04:19.740
+Never commit a token. OAuth for you, tokens for machines. And roll it on any doubt, because the secret only shows once anyway.
+
