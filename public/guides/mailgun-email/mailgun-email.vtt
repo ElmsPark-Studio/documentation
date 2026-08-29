@@ -1,0 +1,100 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.143
+Setting up Mailgun, so your site's email actually arrives.
+
+00:00:04.143 --> 00:00:12.183
+Shared hosting sends mail by a basic method that Gmail and Outlook quietly distrust, so it lands in spam or vanishes altogether.
+
+00:00:12.183 --> 00:00:16.893
+Mailgun signs it properly, and the free plan covers a hundred emails a day.
+
+00:00:18.293 --> 00:00:21.345
+Before anything else, the region. EU or US.
+
+00:00:21.345 --> 00:00:25.673
+You choose it once, and it is locked to that domain for life.
+
+00:00:25.673 --> 00:00:33.479
+There is no moving a verified domain between regions afterwards, so pick the one your audience is actually in.
+
+00:00:34.879 --> 00:00:38.471
+Add your domain as a subdomain: mg. then your domain.
+
+00:00:38.471 --> 00:00:49.926
+That prefix creates a dedicated sending subdomain, which keeps every Mailgun record separate from the email you already receive, so your existing mailboxes cannot break.
+
+00:00:51.326 --> 00:00:54.529
+Now the one that costs people an afternoon.
+
+00:00:54.529 --> 00:00:59.445
+On the Add Domain form, Mailgun pre-selects Self-manage DKIM keys.
+
+00:00:59.445 --> 00:01:04.956
+That is the wrong choice here. Switch it to Use automatic sender security.
+
+00:01:04.956 --> 00:01:09.277
+The two options hand you completely different DNS records:
+
+00:01:09.277 --> 00:01:19.332
+automatic gives you two CNAME records that Mailgun rotates for you, self-manage gives you a single TXT key you have to rotate yourself.
+
+00:01:19.332 --> 00:01:22.907
+And if you pick the wrong one you cannot switch.
+
+00:01:22.907 --> 00:01:25.738
+You delete the domain and start again.
+
+00:01:27.138 --> 00:01:31.124
+With automatic security you get seven records.
+
+00:01:31.124 --> 00:01:37.624
+One SPF, two DKIM CNAMEs, a tracking CNAME, and two MX records for bounces.
+
+00:01:37.624 --> 00:01:41.610
+Copy the DKIM values straight from the screen:
+
+00:01:41.610 --> 00:01:47.850
+they carry a hash unique to your account, and you cannot construct them.
+
+00:01:49.250 --> 00:01:55.562
+If your DNS is on Cloudflare, every one of those records has to be grey cloud, DNS only.
+
+00:01:55.562 --> 00:02:04.529
+The orange proxy breaks email authentication, and it is the most common reason records verify happily while mail still fails.
+
+00:02:05.929 --> 00:02:08.576
+Then a pause that looks like a fault.
+
+00:02:08.576 --> 00:02:18.449
+Every record can be green while sending still fails, because Mailgun activates the DKIM keys on its own servers after the CNAMEs validate.
+
+00:02:18.449 --> 00:02:26.176
+A yellow unverified warning during that window is normal, and it clears itself, usually inside five minutes.
+
+00:02:27.576 --> 00:02:31.854
+Create a domain-scoped sending key, and copy it the moment it appears.
+
+00:02:31.854 --> 00:02:38.025
+Mailgun shows it exactly once, and if you miss it the only fix is to delete the key and make another.
+
+00:02:39.425 --> 00:02:41.599
+And then the part people skip.
+
+00:02:41.599 --> 00:02:50.513
+Mailgun saying the domain is active, and your plugin saying the connection succeeded, only prove the credentials are valid.
+
+00:02:50.513 --> 00:02:53.121
+Neither proves an email will arrive.
+
+00:02:53.121 --> 00:02:58.266
+Send a real one to Gmail and check it is in the inbox rather than spam.
+
+00:02:58.266 --> 00:03:02.179
+Run a mail-tester check and aim for 9 or 10 out of 10.
+
+00:03:02.179 --> 00:03:07.614
+And confirm Mailgun's own log says Delivered. All three, or it is not done.
+
+00:03:09.014 --> 00:03:14.355
+The full guide has every field, every provider, and a troubleshooting section for each symptom.

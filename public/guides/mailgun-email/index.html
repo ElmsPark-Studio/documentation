@@ -202,6 +202,29 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <strong>Why Mailgun instead of the built-in mail function?</strong> Shared hosting sends email via a basic method that Gmail and Outlook quietly distrust. The messages land in spam or disappear entirely. Mailgun sends your mail with proper cryptographic signatures (DKIM), a declared sender policy (SPF), and a reporting record (DMARC) &mdash; the three things big providers require before they&rsquo;ll put an email in the inbox. The free plan covers 100 emails a day, which is plenty for most sites.
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="mailgun-email-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="mailgun-email.mp4" type="video/mp4">
+      <track kind="captions" src="mailgun-email.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="mailgun-email.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The shape of the job and every trap in it, 3 minutes 15 seconds, narrated, with captions. The ten steps below have every field.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+        <p style="margin:0 0 10px"><strong>The region is locked for life.</strong> EU or US, chosen once, per domain. A verified domain cannot be moved between regions afterwards, so pick the one your audience is actually in.</p>
+        <p style="margin:0 0 10px"><strong>Add it as a subdomain.</strong> <code>mg.</code> then your domain. That keeps every Mailgun record separate from the email you already receive, so your existing mailboxes cannot break.</p>
+        <p style="margin:0 0 10px"><strong>The one that costs an afternoon.</strong> On the Add Domain form Mailgun pre-selects <em>Self-manage DKIM keys</em>. Switch it to <em>Use automatic sender security</em>. The two options hand you completely different DNS records: automatic gives two CNAMEs that Mailgun rotates for you, self-manage gives a single TXT key you rotate yourself. Pick wrong and you cannot switch, you delete the domain and start again.</p>
+        <p style="margin:0 0 10px"><strong>Seven records.</strong> One SPF, two DKIM CNAMEs, a tracking CNAME, and two MX for bounces. Copy the DKIM values from the screen: they carry a hash unique to your account and cannot be constructed.</p>
+        <p style="margin:0 0 10px"><strong>On Cloudflare, every record grey.</strong> The orange proxy breaks email authentication, and it is the most common reason records verify happily while mail still fails.</p>
+        <p style="margin:0 0 10px"><strong>A pause that looks like a fault.</strong> Every record can be green while sending still fails, because Mailgun activates the DKIM keys on its own servers after the CNAMEs validate. A yellow &ldquo;unverified domain settings&rdquo; warning during that window is normal and clears itself, usually inside five minutes.</p>
+        <p style="margin:0 0 10px"><strong>The sending key is shown once.</strong> Copy it the moment it appears. Miss it and the only fix is to delete the key and create another. Gravity SMTP on WordPress needs the account-level Private API key instead.</p>
+        <p style="margin:0"><strong>&ldquo;Connected&rdquo; is not &ldquo;delivered&rdquo;.</strong> Mailgun saying active and the plugin saying connected only prove the credentials are valid. Proof is three things together: a real test email in a Gmail inbox rather than spam, mail-tester.com at 9 or 10 out of 10, and Mailgun&rsquo;s own log showing Delivered.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>Ten steps to a working setup</p>
     <ol>
