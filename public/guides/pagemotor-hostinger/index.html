@@ -138,9 +138,24 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <div class="videowrap" style="margin:18px 0 4px">
     <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080" style="width:100%;height:auto;display:block;border:1px solid #e7e0d0;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.12);background:#2f5d4a">
       <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
       Your browser can&rsquo;t play this video. <a href="walkthrough.mp4">Download it here</a>.
     </video>
-    <p style="font:400 .85rem/1.4 'Inter Tight',system-ui,sans-serif;color:#8a7f6a;margin:6px 0 0">&#9654; Watch the whole setup (about 2&frac12; minutes), or follow the pictures step by step below.</p>
+    <p style="font:400 .85rem/1.4 'Inter Tight',system-ui,sans-serif;color:#8a7f6a;margin:6px 0 0">&#9654; Watch the whole setup (2 minutes 43 seconds), narrated, with captions. Or follow the pictures step by step below.</p>
+    <details style="margin:8px 0 0;font:400 .9rem/1.65 'Inter Tight',system-ui,sans-serif">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+        <p style="margin:0 0 10px"><strong>Buy the VPS.</strong> Start on the Hostinger dashboard and click Get VPS. Buy a KVM plan, never shared or web hosting. That is the whole point: a VPS lets PageMotor write its files to disk, and shared hosting blocks that, which is why designs never seem to save. Then choose CloudPanel, generate a panel password, and keep it somewhere safe.</p>
+        <p style="margin:0 0 10px"><strong>Build the server.</strong> Choose a location near your visitors and finish setup. Hostinger builds the server in about three to six minutes. You can close the page, it emails you. When it is ready, note the server&rsquo;s IP address.</p>
+        <p style="margin:0 0 10px"><strong>Log in to CloudPanel.</strong> Open CloudPanel on that IP. Your browser warns the connection is not private. On a brand new server that is normal, so click through and log in.</p>
+        <p style="margin:0 0 10px"><strong>Create the site.</strong> Add a site, choose a PHP site, and fill in your domain and a site user. CloudPanel creates the folders and the web server entry for you, then opens the new site in the list.</p>
+        <p style="margin:0 0 10px"><strong>Create the database.</strong> Here is the trap: CloudPanel rejects underscores in the name or the user, so use hyphens instead. Save the password, and note the host, <code>127.0.0.1</code>.</p>
+        <p style="margin:0 0 10px"><strong>Upload PageMotor.</strong> In the File Manager, open <code>htdocs</code> and then your domain folder. Delete any placeholder index file, because PageMotor brings its own. Upload the PageMotor zip, extract it, and give the extracted folder a name you will remember. Then check the files landed.</p>
+        <p style="margin:0 0 10px"><strong>Configure PageMotor.</strong> Rename <code>config-sample.php</code> to exactly <code>config.php</code>. Edit it, and set the four database lines to the values you just saved. Then, in Settings, point the site&rsquo;s root directory at the PageMotor folder.</p>
+        <p style="margin:0 0 10px"><strong>Point your domain and add SSL.</strong> Add an A record for your domain and for www, pointing at the server. On Cloudflare, leave it grey clouded for now. Then issue a Let&rsquo;s Encrypt certificate.</p>
+        <p style="margin:0"><strong>Finish.</strong> Visit <code>/admin/</code> and create your administrator account straight away, before you share the address. The first person to open that screen becomes the administrator.</p>
+      </div>
+    </details>
   </div>
 
   <nav class="toc">

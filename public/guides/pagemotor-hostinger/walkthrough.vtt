@@ -1,0 +1,85 @@
+WEBVTT
+
+00:00:00.600 --> 00:00:04.129
+PageMotor on Hostinger. The whole setup, start to finish.
+
+00:00:05.000 --> 00:00:08.867
+Start on the Hostinger dashboard and click Get VPS.
+
+00:00:08.867 --> 00:00:14.100
+Buy a KVM plan, never shared or web hosting. That is the whole point:
+
+00:00:14.100 --> 00:00:23.048
+a VPS lets PageMotor write its files to disk, and shared hosting blocks that, which is why designs never seem to save.
+
+00:00:23.048 --> 00:00:28.963
+Then choose CloudPanel, generate a panel password, and keep it somewhere safe.
+
+00:00:31.500 --> 00:00:35.230
+Choose a location near your visitors and finish setup.
+
+00:00:35.230 --> 00:00:39.236
+Hostinger builds the server in about three to six minutes.
+
+00:00:39.236 --> 00:00:41.861
+You can close the page, it emails you.
+
+00:00:41.861 --> 00:00:45.107
+When it is ready, note the server's IP address.
+
+00:00:49.200 --> 00:00:54.577
+Open CloudPanel on that IP. Your browser warns the connection is not private.
+
+00:00:54.577 --> 00:00:59.185
+On a brand new server that is normal, so click through and log in.
+
+00:01:02.500 --> 00:01:07.177
+Add a site, choose a PHP site, and fill in your domain and a site user.
+
+00:01:07.177 --> 00:01:13.831
+CloudPanel creates the folders and the web server entry for you, then opens the new site in the list.
+
+00:01:20.200 --> 00:01:23.789
+Now the database, and here is the trap.
+
+00:01:23.789 --> 00:01:31.060
+CloudPanel rejects underscores in the name or the user, so use hyphens instead.
+
+00:01:31.060 --> 00:01:35.386
+Save the password, and note the host: 127.0.0.1
+
+00:01:37.800 --> 00:01:42.767
+In the File Manager, open htdocs, and then your domain folder.
+
+00:01:42.767 --> 00:01:48.215
+Delete any placeholder index file, because PageMotor brings its own.
+
+00:01:48.215 --> 00:01:55.665
+Upload the PageMotor zip, extract it, and give the extracted folder a name you will remember.
+
+00:01:55.665 --> 00:01:57.908
+Then check the files landed.
+
+00:01:59.900 --> 00:02:03.617
+Rename config-sample.php to exactly config.php.
+
+00:02:03.617 --> 00:02:09.154
+Edit it, and set the four database lines to the values you just saved.
+
+00:02:09.154 --> 00:02:15.086
+Then, in Settings, point the site's root directory at the PageMotor folder.
+
+00:02:17.600 --> 00:02:22.212
+Add an A record for your domain and for www, pointing at the server.
+
+00:02:22.212 --> 00:02:25.265
+On Cloudflare, leave it grey clouded for now.
+
+00:02:25.265 --> 00:02:27.910
+Then issue a Let's Encrypt certificate.
+
+00:02:30.900 --> 00:02:37.198
+Finally, visit /admin/ and create your administrator account straight away, before you share the address.
+
+00:02:37.198 --> 00:02:40.977
+The first person to open that screen becomes the administrator.
