@@ -1,0 +1,146 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:04.296
+Chatbots for PageMotor: what ElmsPark has built.
+
+2
+00:00:04.296 --> 00:00:16.039
+Six shipped plugins that put AI to work on a PageMotor site, plus one route that needs no install at all. This is how to tell which one fits the job you have in mind.
+
+3
+00:00:16.739 --> 00:00:22.874
+The word chatbot covers a lot of ground, and that is where most of the confusion starts.
+
+4
+00:00:22.874 --> 00:00:31.170
+A bubble that answers your visitors' questions is a different animal from a box that answers your own how-to questions.
+
+5
+00:00:31.170 --> 00:00:39.744
+Different again from an assistant that can actually edit your site. And different again from AI quietly working your inbox.
+
+6
+00:00:39.744 --> 00:00:47.622
+They look alike from the outside, and are nothing alike underneath. So pick by the job you have, not by the word.
+
+7
+00:00:48.322 --> 00:01:04.004
+Start with the visitor-facing one. EP Concierge is the classic website chatbot, done properly: a floating chat bubble on the public site that knows the business from the services, prices and FAQs you configure, plus live booking data.
+
+8
+00:01:04.004 --> 00:01:13.654
+It answers visitor questions, points people at the booking page, and when a conversation turns into a lead the details are emailed to the owner.
+
+9
+00:01:13.654 --> 00:01:26.588
+It is the only bot in this line-up your site's public actually talks to, and it is read-only by design. It knows only what you give it, and it has no access to the site or its data beyond that.
+
+10
+00:01:27.288 --> 00:01:34.685
+EP Support points the other way: at you. It is a chat panel inside the PageMotor Admin, for the site owner.
+
+11
+00:01:34.685 --> 00:01:43.325
+Ask it how to do something, and it answers in context, with a curated knowledge base covering every EP Suite plugin built in.
+
+12
+00:01:43.325 --> 00:01:56.943
+It can see which plugins you actually have installed, so it tailors its answers rather than guessing, and it gives you code samples for customisations and will help you debug an error you paste in.
+
+13
+00:01:56.943 --> 00:02:03.233
+Think of it as the documentation site, but talk-to-able. It never appears to your visitors.
+
+14
+00:02:03.933 --> 00:02:13.662
+EP Assistant is the deep one. It puts a chat interface in the Admin and wires it to real server-side tools, so you can run the site in plain English.
+
+15
+00:02:13.662 --> 00:02:21.367
+Write a new page. Check today's enquiries. Send a follow-up email. Update the brand colours. All through conversation.
+
+16
+00:02:21.367 --> 00:02:29.333
+And because those are real tools, it has real safety gates around them. File read and write is sandboxed to the site root.
+
+17
+00:02:29.333 --> 00:02:38.670
+SQL runs against a whitelisted set of tables, with an automatic backup taken before any write. And every tool call is logged to an audit table.
+
+18
+00:02:39.370 --> 00:02:48.167
+Which brings us to the one line that decides between them. EP Support answers questions. EP Assistant takes actions.
+
+19
+00:02:48.167 --> 00:02:54.234
+That is the whole distinction, and it is the one people get wrong when choosing.
+
+20
+00:02:54.234 --> 00:03:10.160
+If what you want is a bot that can safely change the site, it is EP Assistant, and it needs VPS hosting rather than shared, plus EP Email for its send-email tool. If you want an expert to ask, it is EP Support.
+
+21
+00:03:10.860 --> 00:03:22.355
+EP Studio Assistant is a different question again: asking your own business data in plain English. It is an Ask box inside the Admin for sites running the studio suite.
+
+22
+00:03:22.355 --> 00:03:29.334
+How is revenue this month. Who is about to churn. Who has not signed a waiver before tomorrow's class.
+
+23
+00:03:29.334 --> 00:03:42.539
+It is deliberately read-only: the model is handed a fixed allowlist of query tools and cannot call anything outside it. It shows you what is happening and points you at the right screen to act.
+
+24
+00:03:42.539 --> 00:03:53.213
+The tool-use loop runs on your own server, so your API key is never sent to the browser, and your data never leaves the server except as the model's answer.
+
+25
+00:03:53.913 --> 00:04:00.851
+And there is a route that needs no plugin at all, which is worth knowing before you install anything.
+
+26
+00:04:00.851 --> 00:04:13.491
+If you already have a Claude account, the free plan included, you do not need a plugin or an API key to talk to your site's data. PageMotor speaks Claude's connector language natively.
+
+27
+00:04:13.491 --> 00:04:25.306
+So you add your site as a custom connector, sign in as your own admin, and ask away. Read-only, and about five minutes to set up. That one has its own separate walkthrough.
+
+28
+00:04:26.006 --> 00:04:30.650
+The last two point the same machinery at your inbox instead.
+
+29
+00:04:30.650 --> 00:04:49.768
+EP Email AI Reply extends the contact-form inbox: open a submission, click Draft reply with AI, and a proposed reply appears in the editor, answering what the customer actually asked. You review it, edit it, and send. A human presses send, always.
+
+30
+00:04:49.768 --> 00:05:02.075
+EP Email AI Triage is the bouncer. Every submission that survives the free heuristics is classified as real, spam, hostile or unclear, with a confidence score.
+
+31
+00:05:02.075 --> 00:05:11.053
+Confirmed spam gets exactly the same friendly thank-you as everyone else, so spammers cannot tune around the filter.
+
+32
+00:05:11.053 --> 00:05:22.431
+And it fails open: if the classifier errors or times out, the message is delivered with a review prefix. A real enquiry is never lost to an outage.
+
+33
+00:05:23.131 --> 00:05:29.150
+A few principles run through all of them, and they are usually the next questions people ask.
+
+34
+00:05:29.150 --> 00:05:41.836
+Every plugin uses your own API key, with the provider you choose. There is no metered middleman and no per-message fee to ElmsPark. Keys are stored on your server and never shipped to the browser.
+
+35
+00:05:41.836 --> 00:05:51.545
+Where a bot only needs to read, it gets a fixed read-only allowlist; where it can write, those writes are sandboxed, backed up first and audit-logged.
+
+36
+00:05:51.545 --> 00:05:58.146
+And the AI features degrade gracefully, so a missing or broken AI bundle can never take the site down.
+

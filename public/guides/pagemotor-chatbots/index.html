@@ -477,6 +477,31 @@
 
     <p class="lead">&ldquo;Chatbot&rdquo; covers a lot of ground. A bubble that answers your visitors&rsquo; questions is a different animal from a box that answers your own how-to questions, different again from an assistant that can actually edit your site, and different again from AI that quietly works your inbox. ElmsPark has built all four kinds for PageMotor. Here is the line-up, what each one actually does, and where to read more.</p>
 
+    <div style="margin:22px 0 6px">
+      <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+             style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+        <source src="walkthrough.mp4" type="video/mp4">
+        <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+        Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+      </video>
+      <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole line-up in 5 minutes 59 seconds, narrated, with captions &mdash; and the one line that decides between the two that look most alike.</p>
+      <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+        <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+        <div style="margin-top:10px;color:#5d574c">
+            <p style="margin:0 0 10px"><strong>The shape of it.</strong> Six shipped plugins that put AI to work on a PageMotor site, plus one route that needs no install at all &mdash; and how to tell which one fits the job you have in mind.</p>
+            <p style="margin:0 0 10px"><strong>Four different animals.</strong> A bubble that answers your visitors is a different thing from a box that answers <em>your</em> how-to questions; different again from an assistant that can edit your site; different again from AI working your inbox. They look alike from the outside and are nothing alike underneath. Pick by the job, not by the word.</p>
+            <p style="margin:0 0 10px"><strong>EP Concierge</strong> is the visitor-facing one: a floating bubble on the public site that knows the business from its settings plus live booking data, answers questions, points people at the booking page, and emails the owner when a conversation becomes a lead. The only bot your site's public talks to, and read-only by design &mdash; it knows only what you give it.</p>
+            <p style="margin:0 0 10px"><strong>EP Support</strong> points the other way, at you. A chat panel inside the Admin with a curated knowledge base covering the whole EP Suite. It can see which plugins you have installed, so it tailors answers rather than guessing, and it gives code samples and paste-an-error debugging. The documentation site, but talk-to-able. It never appears to visitors.</p>
+            <p style="margin:0 0 10px"><strong>EP Assistant</strong> is the deep one: a chat interface wired to real server-side tools, so you run the site in plain English. Write a page, check today's enquiries, send a follow-up, update the brand colours. Because they are real tools, they have real gates &mdash; file access sandboxed to the site root, SQL on whitelisted tables with an automatic backup before any write, and every tool call logged to an audit table.</p>
+            <p style="margin:0 0 10px"><strong>The line that decides it.</strong> EP Support answers questions. EP Assistant takes actions. That is the whole distinction, and it is the one people get wrong when choosing. If you want a bot that can safely <em>change</em> the site, it is EP Assistant &mdash; which needs VPS hosting rather than shared, plus EP Email for its send-email tool.</p>
+            <p style="margin:0 0 10px"><strong>EP Studio Assistant</strong> answers your business data in plain English: how is revenue this month, who is about to churn, who has not signed a waiver before tomorrow's class. Deliberately read-only &mdash; a fixed allowlist of query tools and nothing else. The loop runs on your own server, so your key never reaches the browser and your data never leaves except as the answer.</p>
+            <p style="margin:0 0 10px"><strong>Or no install at all.</strong> If you already have a Claude account, free plan included, you need neither a plugin nor an API key. PageMotor speaks Claude's connector language natively: add your site as a custom connector, sign in as your own admin, and ask. Read-only, about five minutes, and it has its own walkthrough.</p>
+            <p style="margin:0 0 10px"><strong>Drafts, and a bouncer.</strong> <strong>EP Email AI Reply</strong> drafts a reply to a contact-form submission in the editor, answering what was actually asked &mdash; you review, edit and send, and a human presses send always. <strong>EP Email AI Triage</strong> classifies what survives the free heuristics as real, spam, hostile or unclear. Confirmed spam gets the same friendly thank-you as everyone else, so spammers cannot tune around it, and it fails open: a classifier error or timeout delivers the message with a review prefix rather than losing it.</p>
+            <p style="margin:0"><strong>Your key, your server.</strong> Every one uses your own API key with the provider you choose &mdash; no metered middleman, no per-message fee. Keys stay server-side and never reach the browser. Read-only bots get a fixed allowlist; writing bots are sandboxed, backed up first and audit-logged. And the AI features degrade gracefully, so a missing or broken bundle can never take the site down.</p>
+        </div>
+      </details>
+    </div>
+
     <h2>Pick by job</h2>
     <div class="table-wrap">
       <table>
