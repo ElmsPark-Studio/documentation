@@ -477,6 +477,27 @@
 
     <p class="lead">A blog is really four things wearing one name: <strong>a place to write</strong> (posts with dates and authors), <strong>a front page for them</strong> (newest first, with excerpts), <strong>a way to group them</strong> (categories and tags), and <strong>the plumbing around them</strong> (feeds, comments, scheduling, search). PageMotor core covers the first almost completely, half-covers the second, and the plumbing is standard EP Suite territory. The only piece genuinely missing was the automatic front page, and that is what EP Blog adds.</p>
 
+    <div style="margin:22px 0 6px">
+      <video controls preload="metadata" poster="blogging-in-pagemotor-poster.webp" width="1920" height="1080"
+             style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+        <source src="blogging-in-pagemotor.mp4" type="video/mp4">
+        <track kind="captions" src="blogging-in-pagemotor.vtt" srclang="en" label="English" default>
+        Your browser cannot play this video. <a href="blogging-in-pagemotor.mp4">Download it instead</a>.
+      </video>
+      <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; Both routes and how to choose, in 3 minutes 42 seconds, narrated, with captions.</p>
+      <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+        <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+        <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>One honest gap.</strong> Core stores every piece of content with a publish date, a modified date and an author, and every page nests under a Parent. The data model is blog-shaped already. What it does not do is loop over that data: there is no screen that says <em>list everything under Journal, newest first, with an excerpt of each</em>. That missing organ is the index.</p>
+          <p style="margin:0 0 10px"><strong>Route one, plain pages.</strong> Make a page called Journal, write each post as its own page with Journal as its Parent so the URL nests underneath, and curate the Journal page by hand. Not a workaround: for a small, considered publication it is arguably the better tool.</p>
+          <p style="margin:0 0 10px"><strong>The hand-built index is a feature in disguise.</strong> You choose the order, so your best work sits on top forever instead of sliding off page three, and you write the blurbs. It starts to hurt when you publish often, because every post is two edits, and past twenty or thirty pieces the index becomes the chore you skip.</p>
+          <p style="margin:0 0 10px"><strong>Four plugins, none of them EP Blog.</strong> EP RSS serves the feed. EP Comments puts the conversation where the writing lives. EP Scheduled Content publishes a draft on a future date. EP Search is the archive key once the archive outgrows one screen. Each works identically either route, so nothing is wasted if you switch.</p>
+          <p style="margin:0 0 10px"><strong>Route two, EP Blog.</strong> Its shortcode renders every live post, newest first, with excerpts, category badges, bylines and pagination, so publishing becomes one edit instead of two. Plus nested categories and tags, structured data on every post, and optional category archives that are real pages with their own title, meta description and social card.</p>
+          <p style="margin:0"><strong>How to choose.</strong> A few deliberate pieces a year: plain pages plus a feed is a complete and elegant blog. Publishing as a habit rather than an event: install EP Blog and let the index keep itself. Nothing is lost either way, and the two live side by side.</p>
+        </div>
+      </details>
+    </div>
+
     <div class="toc">
       <h3>In this guide</h3>
       <ol>

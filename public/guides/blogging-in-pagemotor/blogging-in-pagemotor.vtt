@@ -1,0 +1,127 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:02.042
+Blogging in PageMotor.
+
+00:00:02.042 --> 00:00:07.297
+There is no blog button, and that surprises people arriving from WordPress.
+
+00:00:07.297 --> 00:00:12.203
+The surprise runs the other way too: most of a blog was already there.
+
+00:00:13.603 --> 00:00:16.837
+A blog is really four things wearing one name.
+
+00:00:16.837 --> 00:00:22.322
+A place to write, with dates and authors. A front page for them, newest first.
+
+00:00:22.322 --> 00:00:27.314
+A way to group them, categories and tags. And the plumbing around them:
+
+00:00:27.314 --> 00:00:29.845
+feeds, comments, scheduling, search.
+
+00:00:29.845 --> 00:00:35.259
+PageMotor core covers the first almost completely. It half-covers the second.
+
+00:00:35.259 --> 00:00:38.634
+And the plumbing is ordinary EP Suite territory.
+
+00:00:40.034 --> 00:00:42.700
+So there is exactly one honest gap.
+
+00:00:42.700 --> 00:00:52.071
+Core stores every piece of content with a publish date, a modified date and an author, and every page nests under a parent.
+
+00:00:52.071 --> 00:00:54.967
+The data model is blog-shaped already.
+
+00:00:54.967 --> 00:01:00.528
+What it does not do is loop over that data. There is no screen that says:
+
+00:01:00.528 --> 00:01:05.785
+list everything under Journal, newest first, with an excerpt of each.
+
+00:01:05.785 --> 00:01:08.223
+That missing organ is the index.
+
+00:01:09.623 --> 00:01:15.853
+Which means you can run a perfectly respectable blog today with nothing but pages.
+
+00:01:15.853 --> 00:01:17.904
+Make a page called Journal.
+
+00:01:17.904 --> 00:01:24.589
+Write each post as its own page with Journal as its parent, so the URL nests underneath.
+
+00:01:24.589 --> 00:01:30.591
+Then curate the Journal page by hand: a heading, a line about the post, a link.
+
+00:01:30.591 --> 00:01:32.490
+That is not a workaround.
+
+00:01:32.490 --> 00:01:37.580
+For a small, considered publication it is arguably the better tool.
+
+00:01:38.980 --> 00:01:42.051
+The hand-built index is a feature in disguise.
+
+00:01:42.051 --> 00:01:48.327
+You choose the order, so your best work sits on top forever instead of sliding off page three.
+
+00:01:48.327 --> 00:01:52.400
+You write the blurbs, so they read like an editor wrote them.
+
+00:01:52.400 --> 00:01:54.870
+And there are no moving parts at all.
+
+00:01:54.870 --> 00:02:05.218
+It starts to hurt when you publish often, because every post is two edits, and past twenty or thirty pieces the hand-kept index becomes the chore you skip.
+
+00:02:06.618 --> 00:02:14.104
+Four plugins cover what most people actually mean by blog features, and none of them needs EP Blog.
+
+00:02:14.104 --> 00:02:15.843
+EP RSS serves the feed.
+
+00:02:15.843 --> 00:02:20.229
+EP Comments puts the conversation where the writing lives.
+
+00:02:20.229 --> 00:02:24.464
+EP Scheduled Content publishes a draft on a future date.
+
+00:02:24.464 --> 00:02:30.135
+And EP Search becomes the archive key once the archive outgrows one screen.
+
+00:02:30.135 --> 00:02:38.755
+Each works identically with plain pages and with posts, so nothing you set up is wasted if you change route later.
+
+00:02:40.155 --> 00:02:42.343
+EP Blog adds the missing organ.
+
+00:02:42.343 --> 00:02:51.517
+Drop its shortcode on a page and it renders every live post, newest first, with excerpts, category badges, bylines and pagination.
+
+00:02:51.517 --> 00:02:54.552
+Publishing becomes one edit instead of two.
+
+00:02:54.552 --> 00:03:08.808
+You also get nested categories and tags, structured data on every post, and optional category archives that are real PageMotor pages, so each one carries its own title, meta description and social card.
+
+00:03:10.208 --> 00:03:11.830
+So the choice is simple.
+
+00:03:11.830 --> 00:03:21.560
+If you publish a few deliberate pieces a year and want to curate how they are presented, plain pages plus a feed is a complete and elegant blog.
+
+00:03:21.560 --> 00:03:28.723
+The moment publishing becomes a habit rather than an event, install EP Blog and let the index keep itself.
+
+00:03:28.723 --> 00:03:31.967
+Nothing from the pages route is lost either way:
+
+00:03:31.967 --> 00:03:34.264
+the two live happily side by side.
+
+00:03:35.664 --> 00:03:41.098
+The guide has both routes side by side, row by row, and the docs for every plugin mentioned.
