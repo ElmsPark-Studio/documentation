@@ -5,6 +5,14 @@ sidebar:
   order: 1
 ---
 
+> **SUPERSEDED — do not port from this file.**
+> This Starlight doc is no longer served: `/hosting/vultr/` 301-redirects to
+> `/guides/vultr-hosting/`. Its figures are the April 2026 originals and have
+> since diverged (regions 32 -> 36, VX1 repriced, Sao Paulo surcharge, Ubuntu
+> 26.04 / PHP 8.5). The live guide at `public/guides/vultr-hosting/index.html`
+> is the only maintained copy. Refreshed there 2026-08-29.
+
+
 A practical guide to running PageMotor on a VPS. Benchmarks, pricing comparisons, and the exact bootstrap we use to get PageMotor 0.8.3b live on a fresh box in about 30 minutes of hands-on work.
 
 Published by [ElmsPark Studio](https://elmspark.com). Updated April 2026.

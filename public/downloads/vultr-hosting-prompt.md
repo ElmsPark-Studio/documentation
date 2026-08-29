@@ -12,12 +12,14 @@ You are helping me set up PageMotor on a Vultr VPS. Use this guide as your refer
 
 **Time:** ~30 minutes hands-on  
 **Cost:** From $12/month  
-**Stack:** Ubuntu 24.04 + Nginx + PHP 8.3 FPM + MariaDB + Certbot  
+**Stack:** Ubuntu 24.04 LTS (not 26.04) + Nginx + PHP 8.3 FPM + MariaDB + Certbot  
 **Can be automated:** Yes — Claude Code can do the entire server build via SSH
 
 **Why a VPS instead of shared hosting:** Shared hosts cap PHP execution time (usually 30–60 seconds) and won't lift it. PageMotor with AI plugins, ecommerce, or a busy contact form will hit that ceiling. A VPS means the timeouts are yours to set. Also, Vultr blocks outbound port 25 — email goes through Mailgun's HTTPS API instead (covered in the Email section).
 
-### April 2026 benchmark results (Vultr vs DigitalOcean vs Linode)
+### Benchmark results, April 2026 (Vultr vs DigitalOcean vs Linode)
+
+A single dated run, not re-run since. Read the shape, not the individual figures. The monthly cost row is what those plans cost in April 2026, not today.
 
 | What | Vultr | DigitalOcean | Linode |
 |---|---|---|---|
@@ -37,12 +39,18 @@ You are helping me set up PageMotor on a Vultr VPS. Use this guide as your refer
 | Solo with AI plugins | High Performance | 2 vCPU / 4 GB / 100 GB | $24/mo |
 | SME, one busy site | High Performance | 2 vCPU / 4 GB / 100 GB | $24/mo |
 | SME, heavy traffic | High Performance | 4 vCPU / 8 GB / 180 GB | $48/mo |
-| Agency, 50-100 sites | VX1 | 2 vCPU / 8 GB / 50 GB | $60/mo |
-| Agency, 100-200 sites | VX1 | 4 vCPU / 16 GB / 80 GB | $120/mo |
+| Agency, 50-100 sites | VX1 | 2 vCPU / 8 GB / 120 GB | $55.48/mo |
+| Agency, 100-200 sites | VX1 | 4 vCPU / 16 GB / 240 GB | $111.69/mo |
 
-Auto Backups add 20% to the plan price. Enable them on production. Pricing verified April 2026.
+Auto Backups add 20% to the plan price. Enable them on production.
 
-**Agency cost per site example:** 100 sites on a VX1 ($60/mo) = $0.60 per site per month. Shared hosting charges $5–15 per site and AI plugins won't run on it.
+Prices re-verified 29 August 2026 against Vultr's public plans API (`api.vultr.com/v2/plans`). Vultr changes plans regularly, so cross-check vultr.com/pricing/ before signing up.
+
+**Pricing is flat across all 36 regions except São Paulo**, which carries a 50% surcharge (the $12 box is $18 there, the $24 box is $36).
+
+**VX1 comes in two shapes at each size:** the cheaper listing ships almost no local disk and expects separate Block Storage; the prices above are the local-storage variant, which is what you want for a box full of sites. VX1 is offered in about a dozen regions rather than all 36.
+
+**Agency cost per site example:** 100 sites on a VX1 ($55.48/mo) = $0.55 per site per month. Shared hosting charges $5–15 per site and AI plugins won't run on it.
 
 ---
 
@@ -51,13 +59,15 @@ Auto Backups add 20% to the plan price. Enable them on production. Pricing verif
 | Setting | Pick | Why |
 |---|---|---|
 | Server type | Shared CPU | Right shape for PageMotor at all but the very largest scale |
-| Location | Closest to visitors | Same price everywhere. Pick by audience latency. |
+| Location | Closest to visitors | Same price everywhere except São Paulo (+50%). Pick by audience latency. |
 | Plan | vc2-1c-2gb ($10/mo) to start | Handles a typical PageMotor site; resize up later without reinstalling |
-| Image | Ubuntu, latest LTS | Long-term support, ships PHP 8.3 |
+| Image | **Ubuntu 24.04 LTS** | Ships PHP 8.3, which is what every command here installs. Supported to 2029. Do NOT pick 26.04 — see the warning below |
 | Auto Backups | Enable for production | 20% on top of plan price |
 | SSH Keys | ed25519, before first boot | Most important security click on the page |
 | Hostname | Descriptive (e.g. pm-prod-01) | Readable in logs and dashboard |
 | Everything else | Default | No startup script, no VPC, no DDoS add-on at this scale |
+
+> **Important — pick Ubuntu 24.04 LTS, not 26.04.** Vultr now offers Ubuntu 26.04 LTS, which ships PHP 8.5 rather than 8.3. Every `apt install php8.3-*` command below fails on 26.04 because those packages are not in its repositories, and PageMotor is not yet verified against PHP 8.5. If the user has already deployed 26.04, tell them so plainly and either help them redeploy on 24.04 or substitute `php8.5-*` throughout and warn that PageMotor is untested there.
 
 **Region guide:**
 - UK & Europe: London, Frankfurt, Paris, Amsterdam, Madrid, Stockholm, Warsaw. London for most UK/Irish users; Frankfurt for central-European footprint.
@@ -79,7 +89,7 @@ Claude Code is a command-line tool from Anthropic that SSHes into your Vultr box
 4. **Sign up for Vultr and provision the VPS** using the settings above. Paste your SSH public key into the SSH Keys field during signup.
 5. **Note the VPS IP address** once provisioning finishes (30–60 seconds)
 6. **Point your domain's A record at the VPS IP.** Set DNS Only (grey cloud) if on Cloudflare. Check: `dig yoursite.com +short` should return the VPS IP.
-7. **Download the PageMotor 0.8.3b core ZIP**, unzip to somewhere easy like `~/Downloads/pagemotor-0.8.3b/`. Should contain: `pagemotor.php`, `index.php`, `lib/`, `config-sample.php`, `license.txt`.
+7. **Download the current PageMotor core ZIP**, unzip to somewhere easy like `~/Downloads/pagemotor/`. Should contain: `pagemotor.php`, `index.php`, `lib/`, `config-sample.php`, `license.txt`.
 
 ### The Claude Code prompt (copy, paste, edit 3 lines, hit Enter)
 
@@ -89,7 +99,7 @@ I can SSH as root using my ed25519 key at ~/.ssh/id_ed25519.
 
 My domain is [yoursite.com]. The A record already points at the VPS IP.
 
-My PageMotor 0.8.3b core files are in [~/Downloads/pagemotor-0.8.3b/].
+My PageMotor core files are in [~/Downloads/pagemotor/].
 The folder contains pagemotor.php, index.php, lib/, config-sample.php, license.txt.
 
 Please follow the "From empty box to live PageMotor" procedure at
@@ -103,7 +113,7 @@ Do this end-to-end:
 3. Run mysql_secure_installation and confirm MariaDB listens only on localhost
 4. Configure MariaDB to default to utf8mb4
 5. At an interactive mariadb prompt, create the database and a dedicated DB user
-6. Upload my PageMotor 0.8.3b core to /var/www/mysite, set ownership to www-data,
+6. Upload my PageMotor core to /var/www/mysite, set ownership to www-data,
    755 directories / 644 files (no 777 or 775)
 7. Write config.php with DB_NAME, DB_USER, DB_PASSWORD and DB_HOST (localhost)
 8. Create the Nginx vhost with fastcgi_read_timeout 600, client_max_body_size 64M
@@ -124,7 +134,7 @@ Rules:
 - Ask before anything destructive
 ```
 
-**Edit before running:** `[VPS_IP_FROM_VULTR]` → your VPS IP; `[yoursite.com]` → your domain (appears twice); `[~/Downloads/pagemotor-0.8.3b/]` → your path.
+**Edit before running:** `[VPS_IP_FROM_VULTR]` → your VPS IP; `[yoursite.com]` → your domain (appears twice); `[~/Downloads/pagemotor/]` → your path.
 
 ### After the prompt finishes
 
@@ -316,4 +326,4 @@ For the full walkthrough, use the [Mailgun LLM prompt](https://documentation.elm
 ---
 
 *Source: ElmsPark documentation — documentation.elmspark.com/guides/vultr-hosting/*  
-*Benchmarks and pricing: April 2026. Cross-check vultr.com/pricing/ before signing up.*
+*Plans, prices and regions re-verified 29 August 2026 against Vultr's public plans API. The three-way benchmark table is a dated April 2026 run and has not been repeated. Cross-check vultr.com/pricing/ before signing up.*
