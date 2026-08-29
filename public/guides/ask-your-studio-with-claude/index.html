@@ -543,6 +543,25 @@
     .ui-perm-set i { color: var(--faint); background: var(--bg); }
 
   </style>
+<style>
+/* ---------------------------------------------------------------------------
+   Narrow-phone overflow guard (added 2026-08-29 after an estate-wide sweep).
+   At 320px these pages pushed content past the viewport, because long
+   unbreakable tokens in prose (file paths, URLs, inline JSON) and wide tables
+   cannot wrap on their own. Content stayed reachable, but the page shifting
+   sideways on a small phone is a real defect, and the house 380px gate never
+   caught it because these squeak inside 380px and only fail below it.
+   Code inside <pre> is deliberately left alone: those blocks already scroll.
+   --------------------------------------------------------------------------- */
+@media (max-width: 620px){
+  :not(pre) > code, p a, li a, td a { overflow-wrap: anywhere; }
+  /* The header chips carry long labels held on one line by white-space:nowrap,
+     which overflow-wrap cannot override. Let them wrap on small phones. */
+  .meta-chips span { white-space: normal; overflow-wrap: anywhere; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table thead, table tbody { display: table; width: 100%; min-width: max-content; }
+}
+</style>
 </head>
 <body>
 

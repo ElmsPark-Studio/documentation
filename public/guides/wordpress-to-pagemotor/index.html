@@ -437,6 +437,22 @@
     .es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
     @media(max-width:640px){ .es-header .es-inner{padding:1rem 18px;gap:.75rem} .es-sub{display:none} .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap} }
   </style>
+<style>
+/* ---------------------------------------------------------------------------
+   Narrow-phone overflow guard (added 2026-08-29 after an estate-wide sweep).
+   At 320px these pages pushed content past the viewport, because long
+   unbreakable tokens in prose (file paths, URLs, inline JSON) and wide tables
+   cannot wrap on their own. Content stayed reachable, but the page shifting
+   sideways on a small phone is a real defect, and the house 380px gate never
+   caught it because these squeak inside 380px and only fail below it.
+   Code inside <pre> is deliberately left alone: those blocks already scroll.
+   --------------------------------------------------------------------------- */
+@media (max-width: 620px){
+  :not(pre) > code, p a, li a, td a { overflow-wrap: anywhere; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table thead, table tbody { display: table; width: 100%; min-width: max-content; }
+}
+</style>
 </head>
 <body>
 
