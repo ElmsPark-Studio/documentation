@@ -156,6 +156,30 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole install in 4 minutes 23 seconds, narrated, with captions &mdash; including the cache work that is unique to SiteGround, and the Anti-Bot blocker that stops Claude connecting.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+        <p style="margin:0 0 10px"><strong>The shape of it.</strong> SiteGround uses its own panel, Site Tools, rather than cPanel. And it asks one job of you that no other host does: taming its cache. Skip that one, and the install will feel haunted.</p>
+        <p style="margin:0 0 10px"><strong>The ordinary start.</strong> Run the preflight check, then in Site Tools open File Manager, go into <code>public_html</code>, upload the PageMotor zip and extract it there. You should end up with <code>pagemotor.php</code>, a <code>lib</code> folder, and <code>config-sample.php</code>. If you got a single folder called <code>pagemotor</code> instead, move everything inside it up one level.</p>
+        <p style="margin:0 0 10px"><strong>The SiteGround part.</strong> Every site runs a full-page cache called Dynamic Cache. It is on by default, there is no off switch in Site Tools, and its only built-in manners are for WordPress and Drupal. Everything else, PageMotor included, gets cached like an ordinary page for up to twelve hours. That includes the install screen, the admin area, and the login.</p>
+        <p style="margin:0 0 10px"><strong>The kill switch.</strong> In <code>public_html</code>, edit or create <code>.htaccess</code>, and set <code>Cache-Control</code> to <code>private</code> at the very top. Then flush the cache in Site Tools, under Speed, Caching, Dynamic Cache. The flush is not optional: SiteGround only applies <code>.htaccess</code> caching changes after one. To check it worked, load any page and look at the <code>x-proxy-cache</code> header. BYPASS or MISS is what you want. HIT means the cache is still answering.</p>
+        <p style="margin:0 0 10px"><strong>The database.</strong> SiteGround chooses the names for you: create the database and it generates one, create the user and that is generated too, with the password shown exactly once in a notice, so copy it now. And here is the step nearly everyone misses: a freshly created user has access to nothing. Go to Manage Access, pick your database, and give it all privileges, or PageMotor is turned away at the door.</p>
+        <p style="margin:0 0 10px"><strong>The rename.</strong> <code>config-sample.php</code> becomes exactly <code>config.php</code>, and that rename is what switches PageMotor on. Put the three generated values into <code>DB_NAME</code>, <code>DB_USER</code> and <code>DB_PASSWORD</code>. <code>DB_HOST</code> stays <code>localhost</code>.</p>
+        <p style="margin:0 0 10px"><strong>Finishing.</strong> Flush the cache, visit your site, then go to <code>/admin/</code> and create your admin user. And straight after creating it: flush the cache again, clear your browser's cookies for the site, and only then log in. That one-two is what prevents the login loop.</p>
+        <p style="margin:0 0 10px"><strong>&ldquo;The user login cookie was not created!&rdquo;</strong> Your browser really did get the cookie. The problem is the next page, which the cache answers with a copy saved before you logged in, so PageMotor never runs and never sees it. Break the loop in order: log out or close the tab, flush Dynamic Cache, delete the site's cookies, then log in again. On SiteGround, when in doubt, it is the cache.</p>
+        <p style="margin:0"><strong>SiteGround only.</strong> If you try to connect Claude to the site, SiteGround's Anti-Bot AI blocks the sign-in handshake, and you cannot fix it yourself. It parks a challenge under <code>/.well-known/</code>, which is exactly where PageMotor publishes the documents Claude has to read. Three things make it hard to spot. It answers 202, a success code, so error-hunting checks call the site healthy. It is keyed to the requesting IP, so your own browser sees the correct JSON while Claude is challenged. And it leaves <code>/mcp/</code> alone, which sends people hunting inside PageMotor for a fault that is not there. Only a SiteGround support ticket lifts it.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>The six steps</p>
     <ol>
