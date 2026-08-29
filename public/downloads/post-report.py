@@ -11,7 +11,9 @@ build step, nothing to vendor.
     export BUZZ_PRIVATE_KEY=<64-char hex, or nsec1...>
     export BUZZ_CHANNEL=<channel uuid>
 
-    cat report.json | ./post-report.py
+    cat report.json | ./post-report.py                    # file a sighting
+    cat report.json | ./post-report.py --confirm          # still present, re-dates it
+    cat report.json | ./post-report.py --resolve --fixed-in 0.11.3
     ./post-report.py --check          # verify credentials without posting
     ./post-report.py --dry-run < report.json   # print the envelope, send nothing
 
@@ -250,6 +252,12 @@ REQUIRED = ["spec", "category", "severity", "title", "pm_core", "observed"]
 CATEGORIES = ("bug", "docs-gap", "environment", "idea")
 SEVERITIES = ("blocker", "major", "minor", "note")
 
+# Only a sighting moves the count triage runs on. A confirmation says "re-tested
+# at this version, still present" and re-dates the finding without pretending to
+# be a second occurrence. A resolution retires it. Without the middle one, a
+# re-confirmed finding is indistinguishable from one that quietly went away.
+EVENTS = ("sighting", "confirmation", "resolution")
+
 
 def build_envelope(report):
     missing = [k for k in REQUIRED if not str(report.get(k, "")).strip()]
@@ -262,10 +270,19 @@ def build_envelope(report):
     if report["severity"] not in SEVERITIES:
         raise SystemExit("bad severity: " + str(report["severity"]))
 
+    event = str(report.get("event", "sighting")).strip() or "sighting"
+    if event not in EVENTS:
+        raise SystemExit("event must be one of: " + ", ".join(EVENTS))
+    if event == "resolution" and not str(report.get("fixed_in", "")).strip():
+        raise SystemExit("a resolution needs fixed_in (the version it was fixed in)")
+
     # A bug with no reproduction steps is a hunch, and hunches are what silt a
-    # shared pool up. The guide has always said so; the client now enforces it.
+    # shared pool up. But this applies to SIGHTINGS only: a confirmation or a
+    # resolution attaches to an existing finding that already carries the
+    # repro, and demanding it again would block the very workflow the three
+    # events exist to enable.
     repro = report.get("repro")
-    if report["category"] == "bug":
+    if report["category"] == "bug" and event == "sighting":
         if not isinstance(repro, list) or not [s for s in repro if str(s).strip()]:
             raise SystemExit("category 'bug' needs repro: a non-empty array of steps")
     if repro is not None and not isinstance(repro, list):
@@ -277,7 +294,12 @@ def build_envelope(report):
     if report.get("environment"):
         bits.append(str(report["environment"]))
 
-    head = "**[{} / {}]** {}".format(report["category"], report["severity"], report["title"])
+    if event == "sighting":
+        head = "**[{} / {}]** {}".format(report["category"], report["severity"], report["title"])
+    elif event == "confirmation":
+        head = "**[CONFIRMED still present on {}]** {}".format(report["pm_core"], report["title"])
+    else:
+        head = "**[RESOLVED in {}]** {}".format(report.get("fixed_in", "?"), report["title"])
     body = json.dumps(report, indent=2, ensure_ascii=False)
     return "{}\n\n{}\n\n```json\n{}\n```".format(head, " · ".join(bits), body)
 
@@ -337,6 +359,18 @@ def main():
         report = json.loads(raw)
     except json.JSONDecodeError as e:
         raise SystemExit("stdin is not valid JSON: " + str(e))
+
+    # Convenience flags. The payload can carry "event" itself; these just save
+    # editing the JSON for the two common cases. A confirmation or resolution
+    # must repeat the original finding's title verbatim, because that is what
+    # attaches it to the finding rather than starting a new one.
+    if "--confirm" in sys.argv:
+        report["event"] = "confirmation"
+    if "--resolve" in sys.argv:
+        report["event"] = "resolution"
+        for i, a in enumerate(sys.argv):
+            if a == "--fixed-in" and i + 1 < len(sys.argv):
+                report["fixed_in"] = sys.argv[i + 1]
 
     content = build_envelope(report)
 

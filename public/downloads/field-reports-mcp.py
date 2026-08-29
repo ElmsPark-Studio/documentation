@@ -254,25 +254,57 @@ def fetch_pool(relay, sk, channel):
 
 
 def group_findings(pool):
-    """(event, report) pairs -> one row per fingerprint, newest sighting's
-    fields as the headline, every sighting listed underneath."""
+    """
+    (event, report) pairs -> one row per fingerprint.
+
+    Mirrors fr_finding_state() in lib/store.php. The count is SIGHTINGS ONLY:
+    a confirmation re-dates a finding without being a second occurrence, and a
+    resolution retires it. Counting rows instead would let a re-confirmation
+    inflate the one number triage sorts on, which is the whole reason the three
+    events are distinct.
+    """
     groups = {}
     for ev, r in pool:
         fp = fingerprint(r.get("category", ""), r.get("title", ""))
         groups.setdefault(fp, []).append((ev, r))
+
     findings = []
-    for fp, sightings in groups.items():
-        sightings.sort(key=lambda pair: pair[0].get("created_at", 0), reverse=True)
-        head_ev, head_r = sightings[0]
+    for fp, entries in groups.items():
+        entries.sort(key=lambda pair: pair[0].get("created_at", 0), reverse=True)
+        head_ev, head_r = entries[0]
+
+        sightings = [p for p in entries if p[1].get("event", "sighting") == "sighting"]
+        confirms  = [p for p in entries if p[1].get("event") == "confirmation"]
+        resolves  = [p for p in entries if p[1].get("event") == "resolution"]
+
+        # Most recent evidence the fault is actually present.
+        present = sightings + confirms
+        present.sort(key=lambda pair: pair[0].get("created_at", 0), reverse=True)
+        last_ev, last_r = present[0] if present else (head_ev, head_r)
+
+        status, fixed_in = "open", None
+        if resolves:
+            res_ev, res_r = resolves[0]
+            fixed_in = res_r.get("fixed_in")
+            # A confirmation dated after the fix means it came back.
+            status = ("reopened"
+                      if present and present[0][0].get("created_at", 0) > res_ev.get("created_at", 0)
+                      else "resolved")
+
         findings.append({
             "fingerprint": fp,
             "title": head_r.get("title"),
             "category": head_r.get("category"),
             "severity": head_r.get("severity"),
+            "status": status,
+            "fixed_in": fixed_in,
             "sightings": len(sightings),
-            "cores_seen": sorted({r.get("pm_core") for _, r in sightings if r.get("pm_core")}),
-            "reporters": sorted({ev.get("pubkey", "")[:12] for ev, _ in sightings}),
-            "latest_observed": head_r.get("observed"),
+            "confirmations": len(confirms),
+            "last_seen_core": last_r.get("pm_core"),
+            "last_seen_at": last_ev.get("created_at"),
+            "cores_seen": sorted({r.get("pm_core") for _, r in entries if r.get("pm_core")}),
+            "reporters": sorted({ev.get("pubkey", "")[:12] for ev, _ in entries}),
+            "latest_observed": last_r.get("observed"),
             "latest_event_id": head_ev.get("id"),
         })
     findings.sort(key=lambda f: f["sightings"], reverse=True)
@@ -299,6 +331,8 @@ TOOLS = [
                 "category": {"type": "string", "enum": ["bug", "docs-gap", "environment", "idea"]},
                 "core": {"type": "string", "description": "PageMotor core version, e.g. 0.11.1"},
                 "q": {"type": "string", "description": "Free-text match against title and observed"},
+                "status": {"type": "string", "enum": ["open", "resolved", "reopened"],
+                            "description": "Only findings in this state. 'open' is what triage wants."},
             },
         },
     },
@@ -348,6 +382,7 @@ def call_tool(name, args, ctx):
             "channel": channel,
             "reports": len(pool),
             "findings": len(group_findings(pool)),
+            "open": len([f for f in group_findings(pool) if f["status"] != "resolved"]),
             "query_ms": round((time.time() - t0) * 1000),
         }
 
@@ -363,6 +398,8 @@ def call_tool(name, args, ctx):
             findings = [f for f in findings if f["category"] == args["category"]]
         if args.get("core"):
             findings = [f for f in findings if args["core"] in f["cores_seen"]]
+        if args.get("status"):
+            findings = [f for f in findings if f["status"] == args["status"]]
         return {"count": len(findings), "findings": findings}
 
     if name == "get_finding":
