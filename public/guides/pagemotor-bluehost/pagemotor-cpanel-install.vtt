@@ -1,0 +1,145 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.241
+Installing PageMotor on cPanel hosting.
+
+00:00:03.241 --> 00:00:11.955
+This one video covers Bluehost, HostGator and A2 Hosting, because the install is standard cPanel and identical on all three.
+
+00:00:11.955 --> 00:00:15.257
+Where your host differs, its own guide says so.
+
+00:00:15.257 --> 00:00:19.122
+About ten minutes, and you do not need to be technical.
+
+00:00:20.522 --> 00:00:22.858
+Thirty seconds well spent first.
+
+00:00:22.858 --> 00:00:30.082
+Upload pm-preflight.php into the folder you are about to install into, and open it in your browser.
+
+00:00:30.082 --> 00:00:34.899
+It tells you in plain English whether this host can run PageMotor:
+
+00:00:34.899 --> 00:00:44.459
+the PHP version, any missing extensions, whether PHP can write config.php for you, and whether the files landed in the right place.
+
+00:00:44.459 --> 00:00:45.554
+Then delete it.
+
+00:00:46.954 --> 00:00:47.658
+Step one.
+
+00:00:47.658 --> 00:00:54.079
+Open cPanel, open File Manager, and go to your site's folder, usually public_html.
+
+00:00:54.079 --> 00:00:59.169
+Upload the PageMotor zip, then right-click it and choose Extract.
+
+00:00:59.169 --> 00:01:07.077
+You should end up with pagemotor.php, a lib folder, and config-sample.php sitting in the site folder.
+
+00:01:07.077 --> 00:01:17.882
+If instead you got a single folder called pagemotor, open it, move everything inside up into the site folder, and delete the empty folder.
+
+00:01:19.282 --> 00:01:20.916
+Step two, the database.
+
+00:01:20.916 --> 00:01:26.951
+cPanel gives you two ways to do the same job, and which you see depends on your host.
+
+00:01:26.951 --> 00:01:36.323
+Either the MySQL Databases page, where you create the database, then a user, then add that user to the database with ALL PRIVILEGES.
+
+00:01:36.323 --> 00:01:42.358
+Or the MySQL Database Wizard, which walks the same three stages one screen at a time.
+
+00:01:42.358 --> 00:01:46.902
+Either way you finish holding the three things step three needs:
+
+00:01:46.902 --> 00:01:50.026
+a database name, a username, and a password.
+
+00:01:51.426 --> 00:01:54.714
+And here is the one thing nearly everyone misses.
+
+00:01:54.714 --> 00:01:59.881
+cPanel puts your account name on the front of both the database and the user.
+
+00:01:59.881 --> 00:02:04.646
+Type pagemotor, and it is saved as something like theaccount_pagemotor.
+
+00:02:04.646 --> 00:02:10.015
+So copy the full names exactly as cPanel shows them at the end, prefix included.
+
+00:02:10.015 --> 00:02:15.853
+Getting this wrong is the single most common reason the install fails at the last step.
+
+00:02:17.253 --> 00:02:18.112
+Step three.
+
+00:02:18.112 --> 00:02:24.515
+Find config-sample.php next to pagemotor.php, and rename it to exactly config.php.
+
+00:02:24.515 --> 00:02:28.497
+That rename is the step that switches PageMotor on.
+
+00:02:28.497 --> 00:02:31.621
+On current releases there is a shortcut:
+
+00:02:31.621 --> 00:02:40.210
+go straight to your site /admin/, and the install wizard asks for the three values and writes the file itself.
+
+00:02:40.210 --> 00:02:45.129
+If you get a blank white page there instead, nothing is broken.
+
+00:02:45.129 --> 00:02:50.829
+Your download simply predates the wizard, so carry on with the hand edit.
+
+00:02:52.229 --> 00:02:57.392
+Editing it by hand means changing three values and nothing else:
+
+00:02:57.392 --> 00:03:02.556
+DB_NAME, DB_USER and DB_PASSWORD, using the full prefixed names.
+
+00:03:02.556 --> 00:03:07.235
+Leave DB_HOST as localhost, which is right on these hosts.
+
+00:03:07.235 --> 00:03:08.929
+And check two things:
+
+00:03:08.929 --> 00:03:15.867
+the file is named exactly config.php, and it sits in the same folder as pagemotor.php.
+
+00:03:17.267 --> 00:03:22.083
+Step four. Go to your site /admin/ first, before anything else.
+
+00:03:22.083 --> 00:03:28.888
+On that first visit PageMotor sets itself up and walks you into creating your admin user.
+
+00:03:28.888 --> 00:03:33.475
+Then visit the front of your site. That is the install done.
+
+00:03:34.875 --> 00:03:37.976
+Two things to recognise if it does not work.
+
+00:03:37.976 --> 00:03:42.486
+A 500 error, or a blank white page, is almost always config.php:
+
+00:03:42.486 --> 00:03:45.517
+wrong name, wrong folder, or never renamed.
+
+00:03:45.517 --> 00:03:55.877
+And if the log says MySQLi Connection Error, that is actually good news, because it means config.php is working and PageMotor reached the database.
+
+00:03:55.877 --> 00:04:04.828
+It just could not log in, so re-check the prefixed names, the password, and that the user really was added with ALL PRIVILEGES.
+
+00:04:06.228 --> 00:04:09.246
+Your host's own guide has the bits that differ:
+
+00:04:09.246 --> 00:04:13.741
+how to reach cPanel, where your site folder lives, and its own quirks.
+
+00:04:13.741 --> 00:04:18.814
+And once you are in, the same page shows you how to connect Claude to the site.
