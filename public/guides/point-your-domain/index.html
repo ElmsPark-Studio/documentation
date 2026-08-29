@@ -148,6 +148,28 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <strong>On ElmsPark hosting instead of your own server?</strong> This guide is for developers running their own box. If we host your site, the version written for you is <a href="/guides/use-your-own-web-address/">Use your own web address</a>: two records, and we handle the certificate and everything else.
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="point-your-domain-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="point-your-domain.mp4" type="video/mp4">
+      <track kind="captions" src="point-your-domain.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="point-your-domain.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; All five steps and both traps in 3 minutes 12 seconds, narrated, with captions. The exact commands are below.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+        <p style="margin:0 0 10px"><strong>Step one.</strong> Ask the server for its own address rather than trusting a hosting panel that might show an internal or floating one: <code>curl -4 icanhazip.com</code>. Whatever it prints is the address every record points at.</p>
+        <p style="margin:0 0 10px"><strong>Step two.</strong> In the DNS panel, add two A records. One named <code>@</code> for the bare domain, one named <code>www</code>, both pointing at that address. If A records already exist, edit them rather than adding a second, because two A records with different addresses on the same name splits your visitors between two servers at random. Leave MX and TXT alone.</p>
+        <p style="margin:0 0 10px"><strong>Step three, the one that catches people.</strong> Look for <code>AAAA</code> records on <code>@</code> and <code>www</code> and delete them unless your server genuinely serves IPv6. A browser seeing both an AAAA and an A record usually tries IPv6 first, so a stale one sends visitors to the old host while your own IPv4 tests look perfect. Let&rsquo;s Encrypt prefers IPv6 too, so a stale AAAA can fail issuance even when your A record is correct.</p>
+        <p style="margin:0 0 10px"><strong>Step four, only if Cloudflare is in the chain.</strong> Set both records to the grey cloud, DNS only, before requesting a certificate. The challenge fetches a file from your domain over plain HTTP, and with the proxy on that request lands on Cloudflare&rsquo;s edge instead of your server. Then issue the certificate for both names.</p>
+        <p style="margin:0 0 10px"><strong>Step five, optional.</strong> Once the certificate is installed you can flip both records back to the orange cloud. SSL/TLS mode must be <strong>Full (strict)</strong>. Flexible makes Cloudflare talk to your server over plain HTTP, your server redirects to HTTPS, and the browser dies with <code>ERR_TOO_MANY_REDIRECTS</code>. That is the most reported symptom of this whole process.</p>
+        <p style="margin:0 0 10px"><strong>Checking it.</strong> From your own machine, not the server: dig the A records for both names, dig the AAAA and expect nothing back, then curl the site and look for a clean 200 rather than a certificate error or a chain of redirects.</p>
+        <p style="margin:0"><strong>Two footnotes.</strong> A domain bought through Cloudflare Registrar cannot change its nameservers, by design, and the only route out is a transfer that ICANN blocks for 60 days. And a 403 at this stage is usually correct: it means the domain reaches your server and the document root is simply still empty.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>The five steps</p>
     <ol>

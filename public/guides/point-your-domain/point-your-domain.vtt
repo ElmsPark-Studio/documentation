@@ -1,0 +1,103 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.906
+Pointing your own domain at your own PageMotor server.
+
+00:00:03.906 --> 00:00:11.413
+The records to add, the stale ones to delete, and the order that keeps Let's Encrypt happy when Cloudflare is in front.
+
+00:00:12.813 --> 00:00:13.529
+Step one.
+
+00:00:13.529 --> 00:00:23.155
+Ask the server for its own address, rather than trusting a hosting panel that might show you an internal or floating one.
+
+00:00:23.155 --> 00:00:24.905
+curl -4 icanhazip.com.
+
+00:00:24.905 --> 00:00:29.439
+Whatever it prints is the address every record points at.
+
+00:00:30.839 --> 00:00:35.675
+Step two. In the DNS panel for the domain, add two A records.
+
+00:00:35.675 --> 00:00:39.798
+One named @, for the bare domain, and one named www.
+
+00:00:39.798 --> 00:00:41.939
+Both point at that address.
+
+00:00:41.939 --> 00:00:56.368
+If A records already exist, edit them rather than adding a second, because two A records with different addresses on the same name splits your visitors between two servers at random.
+
+00:00:56.368 --> 00:00:58.192
+Leave MX and TXT alone.
+
+00:00:59.592 --> 00:01:03.006
+Step three is the one that catches people.
+
+00:01:03.006 --> 00:01:10.567
+Look for AAAA records on @ and www, and delete them unless your server genuinely serves IPv6.
+
+00:01:10.567 --> 00:01:24.957
+A browser that sees both an AAAA and an A record usually tries the IPv6 address first, so a stale one sends visitors to the old host while your own tests over IPv4 look perfect.
+
+00:01:24.957 --> 00:01:33.168
+Let's Encrypt prefers IPv6 too, so a stale AAAA can fail issuance even when your A record is correct.
+
+00:01:34.568 --> 00:01:38.301
+Step four, and only if Cloudflare is in your DNS chain.
+
+00:01:38.301 --> 00:01:43.663
+Set both records to the grey cloud, DNS only, before you request a certificate.
+
+00:01:43.663 --> 00:01:53.776
+The challenge fetches a file from your domain over plain HTTP, and with the proxy on, that request lands on Cloudflare's edge instead of your server.
+
+00:01:53.776 --> 00:01:56.627
+Then issue the certificate for both names.
+
+00:01:58.027 --> 00:01:59.701
+Step five is optional.
+
+00:01:59.701 --> 00:02:06.166
+Once the certificate is installed you can flip both records back to the orange cloud.
+
+00:02:06.166 --> 00:02:09.818
+One setting decides whether that works or loops.
+
+00:02:09.818 --> 00:02:12.480
+SSL/TLS mode must be Full (strict).
+
+00:02:12.480 --> 00:02:23.130
+Flexible makes Cloudflare talk to your server over plain HTTP, your server redirects to HTTPS, and the browser dies with too many redirects.
+
+00:02:23.130 --> 00:02:27.238
+It is the most reported symptom of this whole process.
+
+00:02:28.638 --> 00:02:31.747
+Check it from your own machine, not the server.
+
+00:02:31.747 --> 00:02:36.445
+Dig the A records for both names. Dig the AAAA and expect nothing back.
+
+00:02:36.445 --> 00:02:43.127
+Then curl the site and look for a clean 200, rather than a certificate error or a chain of redirects.
+
+00:02:44.527 --> 00:02:45.448
+Two footnotes.
+
+00:02:45.448 --> 00:02:50.381
+A domain bought through Cloudflare Registrar cannot change its nameservers.
+
+00:02:50.381 --> 00:02:56.170
+That is by design, and the only route out is a transfer, which ICANN blocks for 60 days.
+
+00:02:56.170 --> 00:02:58.998
+And a 403 at this stage is usually correct:
+
+00:02:58.998 --> 00:03:04.589
+it means the domain reaches your server, and the document root is simply still empty.
+
+00:03:05.989 --> 00:03:10.633
+The full guide has every command, and a troubleshooting section for each of those symptoms.
