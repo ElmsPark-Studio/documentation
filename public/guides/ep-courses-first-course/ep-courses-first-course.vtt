@@ -1,0 +1,121 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:02.836
+Your first course with EP Courses.
+
+00:00:02.836 --> 00:00:07.987
+From an empty PageMotor site to a course a student can enrol in and finish.
+
+00:00:07.987 --> 00:00:10.392
+You create two pages, and only two.
+
+00:00:11.792 --> 00:00:15.659
+Start with the one idea that makes everything else obvious.
+
+00:00:15.659 --> 00:00:17.101
+Courses are not pages.
+
+00:00:17.101 --> 00:00:22.345
+They live in a catalogue inside the plugin, the way products live inside a shop.
+
+00:00:22.345 --> 00:00:27.326
+The viewer page you make is a television set, and every course is a channel.
+
+00:00:27.326 --> 00:00:31.784
+One page, and the link someone clicks decides which course it shows.
+
+00:00:31.784 --> 00:00:35.848
+So you never make a page per course, and never one per lesson.
+
+00:00:37.248 --> 00:00:38.221
+So, two pages.
+
+00:00:38.221 --> 00:00:43.366
+One with the slug course-viewer, holding the shortcode [ep-course-viewer].
+
+00:00:43.366 --> 00:00:51.780
+That is the single page where every course is watched, and every Enrol and Continue button the plugin draws points at it.
+
+00:00:51.780 --> 00:00:58.872
+The other has the slug courses and holds [ep-courses], which renders every published course as a card.
+
+00:00:58.872 --> 00:01:02.279
+The plugin writes every link between them itself.
+
+00:01:03.679 --> 00:01:07.440
+Before you feed it your own material, drive the sample.
+
+00:01:07.440 --> 00:01:15.101
+EP Courses planted a course called Getting Started the first time it ran, and it exists for exactly this moment.
+
+00:01:15.101 --> 00:01:20.025
+Enrol, click through all three lessons, and watch the progress bar fill.
+
+00:01:20.025 --> 00:01:21.735
+Then leave and come back:
+
+00:01:21.735 --> 00:01:27.549
+the button now reads Continue Learning, and drops you at your next unfinished lesson.
+
+00:01:28.949 --> 00:01:33.214
+Now your own course. Two fields decide more than all the rest.
+
+00:01:33.214 --> 00:01:44.704
+Category is free text you invent, lowercase with hyphens, and it must be spelt identically on every course in that area, because the filtering later is an exact match.
+
+00:01:44.704 --> 00:01:54.955
+Access is the free-versus-paid switch, and you keep everything Free while you build, because a Premium course reads Coming Soon and nobody can enrol.
+
+00:01:56.355 --> 00:02:00.647
+Lessons are plain HTML, and four tags cover an entire course:
+
+00:02:00.647 --> 00:02:03.532
+a paragraph, a heading, a list, and bold.
+
+00:02:03.532 --> 00:02:06.628
+Students only ever see the formatted result.
+
+00:02:06.628 --> 00:02:14.931
+Writing the material is the work, wrapping it in tags is not, so hand your notes to Claude and ask it to do that part.
+
+00:02:16.331 --> 00:02:18.656
+Video is just a type and a URL:
+
+00:02:18.656 --> 00:02:23.531
+YouTube, Vimeo, or an MP4 anywhere, including your own S3 bucket.
+
+00:02:23.531 --> 00:02:28.856
+But if you are selling the course, protect the file, not just the page.
+
+00:02:28.856 --> 00:02:37.181
+Enrolment gates the lesson, while the video link behind it can be copied, shared, and it keeps working forever.
+
+00:02:37.181 --> 00:02:45.356
+EP Media Storage serves each one through a link that expires, so a copied one is dead by the time it travels.
+
+00:02:46.756 --> 00:02:53.459
+Once your site has areas, give each one its own list page with a filtered copy of the same shortcode.
+
+00:02:53.459 --> 00:02:58.237
+One category per page, and the spelling has to match the course exactly.
+
+00:02:58.237 --> 00:03:02.550
+One typing note: the quote marks must be the plain straight kind.
+
+00:03:02.550 --> 00:03:10.115
+Word processors curl them into something the shortcode cannot read, and then it renders as plain text on the page.
+
+00:03:11.515 --> 00:03:21.122
+Before real students arrive, remember that watching a lesson needs a login even on a free course, because progress is tracked per student.
+
+00:03:21.122 --> 00:03:27.038
+That is EP Membership's department, and the register page has to exist by launch day.
+
+00:03:27.038 --> 00:03:30.101
+Two of its switches deserve a warning label.
+
+00:03:30.101 --> 00:03:44.163
+Welcome Email and Require Email Verification both send through your site's own email plumbing, so leave them off until that is actually working, or new members sit waiting for a link that never arrives.
+
+00:03:45.563 --> 00:03:51.228
+The guide has every field, the troubleshooting for each thing that goes wrong, and where to go next.

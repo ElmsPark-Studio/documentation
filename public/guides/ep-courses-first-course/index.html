@@ -54,6 +54,10 @@ nav.toc a:hover{text-decoration:underline}
 ol.sub,ul.sub{padding-left:22px; margin:10px 0}
 ol.sub li,ul.sub li{margin:8px 0}
 code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82em; background:#efe9da; padding:2px 6px; border-radius:5px; color:#473f2c}
+/* pre had no rule at all, so a long code block pushed the whole page wide on
+   narrow screens instead of scrolling inside itself. */
+pre{max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; background:#efe9da; border-radius:8px; padding:12px 14px; margin:14px 0}
+pre code{background:none; padding:0; display:block; white-space:pre}
 /* Screenshots */
 .screenshot{margin:20px 0; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#e9e4d8}
 .screenshot img{display:block; width:100%; height:auto; border-radius:10px 10px 0 0}
@@ -197,6 +201,29 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <p style="margin:0 0 10px"><strong>The one idea that makes everything else obvious: courses are not pages.</strong> Courses live in a catalogue inside the plugin, the way products live inside a shop.</p>
     <p style="margin:0 0 10px">The viewer page you create in Step 2 is a television set. Every course is a channel: one page, and the link someone clicks decides which course it shows.</p>
     <p style="margin:0">So you never create a page per course, or per lesson. You create list pages and one viewer page, and the plugin writes every link between them itself.</p>
+  </div>
+
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="ep-courses-first-course-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="ep-courses-first-course.mp4" type="video/mp4">
+      <track kind="captions" src="ep-courses-first-course.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="ep-courses-first-course.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The shape of the whole job in 3 minutes 52 seconds, narrated, with captions. The nine steps below have every field.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+        <p style="margin:0 0 10px"><strong>Courses are not pages.</strong> They live in a catalogue inside the plugin, the way products live inside a shop. The viewer page you make is a television set and every course is a channel: one page, and the link someone clicks decides which course it shows. So you never make a page per course, and never one per lesson.</p>
+        <p style="margin:0 0 10px"><strong>Two pages.</strong> One with the slug <code>course-viewer</code> holding <code>[ep-course-viewer]</code>, where every course is watched and every Enrol and Continue button points. One with the slug <code>courses</code> holding <code>[ep-courses]</code>, which renders every published course as a card. The plugin writes every link between them itself.</p>
+        <p style="margin:0 0 10px"><strong>Drive the sample first.</strong> EP Courses planted a course called Getting Started the first time it ran. Enrol, click through all three lessons, watch the progress bar fill, then leave and come back: the button now reads Continue Learning and drops you at your next unfinished lesson.</p>
+        <p style="margin:0 0 10px"><strong>Two fields decide more than the rest.</strong> Category is free text you invent, lowercase with hyphens, spelt identically on every course in that area, because the filtering later is an exact match. Access is the free-versus-paid switch, and everything stays Free while you build, because a Premium course reads Coming Soon and nobody can enrol.</p>
+        <p style="margin:0 0 10px"><strong>Lessons are plain HTML,</strong> and four tags cover an entire course: a paragraph, a heading, a list, and bold. Writing the material is the work; wrapping it in tags is not, so hand your notes to Claude for that part.</p>
+        <p style="margin:0 0 10px"><strong>Protect the file, not just the page.</strong> Enrolment gates the lesson, while the video link behind it can be copied, shared, and keeps working forever. EP Media Storage serves each one through a link that expires.</p>
+        <p style="margin:0 0 10px"><strong>One category per list page,</strong> spelt to match the course exactly. The quote marks must be the plain straight kind, or the shortcode renders as text.</p>
+        <p style="margin:0"><strong>Before real students arrive,</strong> watching a lesson needs a login even on a free course. That is EP Membership&rsquo;s department. Leave Welcome Email and Require Email Verification off until email delivery actually works, or new members wait for a link that never arrives.</p>
+      </div>
+    </details>
   </div>
 
   <nav class="toc">
