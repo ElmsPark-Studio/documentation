@@ -1,0 +1,130 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:05.547
+Building your first PageMotor plugin. One folder, one PHP file.
+
+2
+00:00:05.547 --> 00:00:17.200
+You declare a class, opt into the capabilities you need, activate it, and PageMotor does the rest. This takes you from an empty folder to a working shortcode.
+
+3
+00:00:17.900 --> 00:00:23.362
+The whole mental model first, because once you have it the rest is mechanical.
+
+4
+00:00:23.362 --> 00:00:34.215
+A plugin is a folder under user hyphen content, plugins, with a plugin dot p h p inside it. That file declares a PHP class extending P M underscore Plugin.
+
+5
+00:00:34.215 --> 00:00:45.278
+And you add capabilities by implementing valet methods: named methods that PageMotor calls at specific moments. Implement shortcodes, and you have shortcodes.
+
+6
+00:00:45.278 --> 00:00:54.031
+Implement nothing at all, and you have a perfectly valid plugin that simply does nothing. You opt in, rather than hooking in.
+
+7
+00:00:54.731 --> 00:01:03.746
+Step one, the folder and the header. Make your folder under user hyphen content, plugins, and create plugin dot p h p inside it.
+
+8
+00:01:03.746 --> 00:01:14.381
+Name the folder in kebab case, and start it with a prefix unique to you or your organisation, so it cannot collide with anything else in the ecosystem.
+
+9
+00:01:14.381 --> 00:01:26.496
+Then open that file and add the header comment. PageMotor reads that comment to identify the plugin, so it must sit at the very top of the file, before any PHP code at all.
+
+10
+00:01:27.196 --> 00:01:37.770
+Here is the first thing that catches people, and it is an odd one. PageMotor scans only the opening five hundred bytes of plugin dot p h p looking for the Version header.
+
+11
+00:01:37.770 --> 00:01:47.225
+Push that line below a long description block, and the version badge simply never appears. Nothing errors, nothing warns you, it is just quietly absent.
+
+12
+00:01:47.225 --> 00:01:51.019
+So keep the header short, and put Version near the top of it.
+
+13
+00:01:51.719 --> 00:02:00.003
+Step two, the class. Directly below the header comment, declare a class that extends P M underscore Plugin. That is it.
+
+14
+00:02:00.003 --> 00:02:07.590
+Those two lines are a complete, valid plugin. It does nothing yet, but PageMotor can load it and activate it.
+
+15
+00:02:07.590 --> 00:02:22.695
+One thing to be careful about: the class name must match the Class field in the header exactly. PageMotor instantiates the class by reading that header, so a typo in either place means the plugin simply will not load.
+
+16
+00:02:23.395 --> 00:02:28.540
+The base class gives you two override slots for your own start-up code.
+
+17
+00:02:28.540 --> 00:02:38.324
+Construct runs early, before any valets are evaluated: use it for database setup, includes, anything that has to exist before the rest.
+
+18
+00:02:38.324 --> 00:02:48.180
+And init runs after all the valets have been registered: use that for work which depends on settings or options already being available.
+
+19
+00:02:48.180 --> 00:02:58.689
+There are also two you must leave alone. Double underscore construct, and underscore init, are framework-owned. Those two are not yours to touch.
+
+20
+00:02:59.389 --> 00:03:13.530
+Step three, adding an actual capability. To register a shortcode, implement the shortcodes valet. It returns an array mapping shortcode names to method names on your own class.
+
+21
+00:03:13.530 --> 00:03:21.002
+Then write the handler. It receives any attributes as an args array, and it returns its HTML.
+
+22
+00:03:21.002 --> 00:03:32.733
+Note that word: returns. It does not echo. Get that the wrong way round and your output will appear in a strange place on the page, or not at all.
+
+23
+00:03:33.433 --> 00:03:46.584
+Now the second thing that catches people, and it is worth knowing before it costs you an afternoon. If your shortcode needs its own CSS, register it with c s s underscore sitewide, not plain c s s.
+
+24
+00:03:46.584 --> 00:03:56.664
+The plain one only loads when an instance of the plugin has been placed in the current page template, which is exactly right for Blocks and Containers.
+
+25
+00:03:56.664 --> 00:04:06.544
+But a shortcode can appear on any page at all. So its styles have to be sitewide, or they will be missing precisely where you did not think to test.
+
+26
+00:04:07.244 --> 00:04:15.078
+Steps four and five. In the admin, go to Plugins. Yours appears in the list under the Name from your header.
+
+27
+00:04:15.078 --> 00:04:29.005
+Click Install, which registers it in the database, then click Activate, which instantiates the class and evaluates its valets on every page load. Uploading the folder on its own is not enough.
+
+28
+00:04:29.005 --> 00:04:33.575
+Then edit any page, drop the shortcode into the body, and save.
+
+29
+00:04:33.575 --> 00:04:47.647
+One caveat worth knowing: shortcodes only run in page content, not in a page served as verbatim HTML. If your output does not appear, check the page type before you go looking through your code.
+
+30
+00:04:48.347 --> 00:04:55.631
+And one last thing, which is the reason to keep early plugins simple. PageMotor includes your plugin file directly.
+
+31
+00:04:55.631 --> 00:05:04.498
+So a PHP parse error, or an uncaught fatal, will stop every page on the site from loading until that file is fixed or the plugin is removed.
+
+32
+00:05:04.498 --> 00:05:13.239
+Work with a safety copy, test each change as you make it, and if something breaks, fix the file on the server before you do anything else.
+

@@ -194,6 +194,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/first-pagemotor-plugin-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole build in 5 minutes 14 seconds, narrated, with captions &mdash; including the 500-byte header limit, the CSS valet that silently loads nowhere, and the one mistake that takes the site down.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> One folder, one PHP file. Declare a class, opt into the capabilities you need, activate it, and PageMotor does the rest &mdash; from an empty folder to a working shortcode.</p>
+          <p style="margin:0 0 10px"><strong>Opt in, don't hook in.</strong> A plugin is a folder under <code>user-content/plugins/</code> with a <code>plugin.php</code> inside, declaring a class that extends <code>PM_Plugin</code>. Capabilities come from <strong>valet methods</strong> &mdash; named methods PageMotor calls at specific moments. Implement <code>shortcodes()</code> and you have shortcodes. Implement nothing and you still have a valid plugin that does nothing.</p>
+          <p style="margin:0 0 10px"><strong>The folder and the header.</strong> Kebab-case, prefixed with something unique to you so it cannot collide with anything else in the ecosystem. The header comment identifies the plugin, so it goes at the very top of the file, before any PHP code.</p>
+          <p style="margin:0 0 10px"><strong>Only the first 500 bytes are read.</strong> PageMotor scans just the opening 500 bytes looking for <code>Version:</code>. Push it below a long description block and the version badge never appears &mdash; nothing errors, nothing warns, it is simply absent. Keep the header short and put <code>Version:</code> near the top of it.</p>
+          <p style="margin:0 0 10px"><strong>The class, and the name that must match.</strong> A class extending <code>PM_Plugin</code> is already a complete, valid plugin. The class name must match the <code>Class:</code> header <em>exactly</em>: PageMotor instantiates by reading that header, so a typo in either place means it will not load.</p>
+          <p style="margin:0 0 10px"><strong>construct, then init.</strong> <code>construct()</code> runs early, before valets &mdash; database setup, includes, anything that must exist first. <code>init()</code> runs after all valets, for work that depends on settings or options being available. The underscored pair, <code>__construct()</code> and <code>_init()</code>, are framework-owned and not yours to touch.</p>
+          <p style="margin:0 0 10px"><strong>Add a capability.</strong> <code>shortcodes()</code> returns an array mapping shortcode names to methods on your class. The handler receives attributes as <code>$args</code> and <strong>returns</strong> its HTML &mdash; it does not echo. Get that the wrong way round and your output lands somewhere odd, or nowhere.</p>
+          <p style="margin:0 0 10px"><strong>Shortcodes need <code>css_sitewide()</code>.</strong> Plain <code>css()</code> only loads when an <em>instance</em> of the plugin is placed in the current template, which is right for Blocks and Containers. A shortcode can appear on any page, so its styles must be sitewide or they will be missing exactly where you did not think to test.</p>
+          <p style="margin:0 0 10px"><strong>Install, activate, then use it.</strong> Install registers it in the database; Activate instantiates the class and evaluates its valets on every page load. Uploading the folder is not enough on its own. Then drop the shortcode into a page body and save &mdash; noting that shortcodes fire only in page content, never in a page served as verbatim HTML. Check the page type before you go hunting through your code.</p>
+          <p style="margin:0"><strong>Why to keep early plugins simple.</strong> PageMotor includes <code>plugin.php</code> directly, so a parse error or uncaught fatal stops every page on the site until the file is fixed or the plugin removed. Work with a safety copy, test each change, and fix the file on the server before anything else.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>
