@@ -219,6 +219,7 @@
       <tr><td><code>spec</code></td><td class="req">required</td><td>Always <code>pm-field-report/1</code>. Lets a reader reject shapes it does not understand.</td></tr>
       <tr><td><code>event</code></td><td class="opt">optional</td><td>One of <code>sighting</code> (default), <code>confirmation</code> or <code>resolution</code>. This decides whether the report counts, re-dates or retires. See <a href="#" data-goto="p-read">Reading them</a>. Omit it and you have filed a sighting, which is almost always what you mean.</td></tr>
       <tr><td><code>fixed_in</code></td><td class="opt">optional</td><td>Required on a <code>resolution</code>, meaningless otherwise. The version the fault was fixed in, so a reader can check the claim rather than take it.</td></tr>
+      <tr><td><code>fixed_in_component</code></td><td class="opt">optional</td><td>What was fixed, when it was not core: a plugin slug such as <code>ep-sitemap</code>, paired with that plugin's version in <code>fixed_in</code>. Leave it out and <code>fixed_in</code> means a PageMotor version, which is what it has always meant. Without this, <code>"fixed_in": "1.2.2"</code> sits next to <code>pm_core</code> and reads as PageMotor 1.2.2.</td></tr>
       <tr><td><code>category</code></td><td class="req">required</td><td>One of <code>bug</code>, <code>docs-gap</code>, <code>environment</code>, <code>idea</code>. A fixed list, so filtering means something.</td></tr>
       <tr><td><code>severity</code></td><td class="req">required</td><td>One of <code>blocker</code>, <code>major</code>, <code>minor</code>, <code>note</code>. Resist inflation: a report that cries blocker for a cosmetic nit costs you credibility on every future filing.</td></tr>
       <tr><td><code>title</code></td><td class="req">required</td><td>One line that <strong>names the mechanism, not the symptom</strong>. The title drives deduplication, so two people describing the same fault need to converge on the same words. &ldquo;Options set to zero are dropped on save&rdquo; is findable next year. &ldquo;Settings broke after upgrade&rdquo; names your Tuesday.</td></tr>
@@ -226,7 +227,7 @@
       <tr><td><code>php</code></td><td class="opt">optional</td><td>PHP version, e.g. from <code>php -v</code>.</td></tr>
       <tr><td><code>plugins</code></td><td class="opt">optional</td><td>An object of the plugins that matter to the finding: <code>{"slug": "version"}</code>. Not your whole install, just the cast of this story.</td></tr>
       <tr><td><code>environment</code></td><td class="opt">optional</td><td>One line: web server, database engine, OS. This is what turns a second sighting into information, same bug on a different stack.</td></tr>
-      <tr><td><code>repro</code></td><td class="req">required*</td><td>An array of steps, not a paragraph. If a finding has no repro it is a hunch, and hunches are what silt a channel up. (*Required for <code>bug</code>; for an <code>idea</code> it may be empty.)</td></tr>
+      <tr><td><code>repro</code></td><td class="req">required*</td><td>An array of steps, not a paragraph. If a finding has no repro it is a hunch, and hunches are what silt a channel up. (*Required on a <code>bug</code> <strong>sighting</strong> only. A <code>confirmation</code> or <code>resolution</code> attaches to a finding that already carries repro, so omit it there or the filing is rejected; for an <code>idea</code> it may be empty.)</td></tr>
       <tr><td><code>expected</code></td><td class="opt">optional</td><td>What should have happened.</td></tr>
       <tr><td><code>observed</code></td><td class="req">required</td><td>What did happen. The one field that must always carry weight.</td></tr>
       <tr><td><code>evidence</code></td><td class="opt">optional</td><td>The two to five lines that prove it. Not the log. The excerpt that would convince a sceptical colleague.</td></tr>
@@ -354,6 +355,10 @@
   </div>
 
   <p>A confirmation dated after a resolution means the fault came back. That reads as <strong>reopened</strong>, which is not a special case so much as the consequence of believing the most recent observation.</p>
+
+  <h3>Severity belongs to the observation</h3>
+  <p>Severity is a property of what someone saw, not of the finding for all time, so the <strong>most recent observation wins</strong>. It is the same rule as <code>reopened</code>: believe what was seen last.</p>
+  <p>A fault first filed <code>minor</code> and later confirmed <code>major</code> by someone who found a worse interaction is now <code>major</code>. The board shows that it moved and who moved it, so the change reads as a decision someone made rather than a value that quietly got overwritten by whoever filed last.</p>
 
   <h3>Reading a sightings count responsibly</h3>
   <p>A count of one means little on its own: one environment, one config, one possible local quirk. The signal starts at two, because two independent machines rarely share the same local accident. And a difference between sightings is often worth more than the count itself. One sighting on MySQL and one on MariaDB tells you the database engine is not the variable. That elimination is free; nobody had to run the experiment on purpose.</p>
