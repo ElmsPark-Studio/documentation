@@ -611,13 +611,9 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <li><strong>Copy the key the moment it appears.</strong> Mailgun shows it exactly once. If you miss it, you have to delete the key and create a new one.</li>
     </ol>
 
-    <figure class="screenshot" aria-label="New sending key revealed with copy button">
-      <div class="screenshot-placeholder">
-        <div class="sp-label">Screenshot: New key revealed</div>
-        <div class="sp-desc">The key value is shown only once. Copy it now and save it in your password manager.</div>
-      </div>
-      <figcaption>Copy the key now &mdash; Mailgun will never show it again</figcaption>
-    </figure>
+    <div class="note warn">
+      <strong>There is deliberately no screenshot of this screen.</strong> The one thing it shows is a live credential, so it is not something to capture or publish. Copy the key straight into your password manager instead.
+    </div>
 
     <div class="note warn">
       <strong>Gravity SMTP on WordPress uses a different key type.</strong> If you are setting this up for WordPress with Gravity SMTP, you need the account-level Private API key (from Settings &rarr; API Security), not this domain-scoped sending key. Gravity SMTP&rsquo;s documentation says explicitly it does not support domain-scoped keys.
