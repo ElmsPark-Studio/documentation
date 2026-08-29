@@ -1,0 +1,122 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:06.219
+PageMotor on Hostinger with Claude Code. Hostinger has a native MCP server.
+
+2
+00:00:06.219 --> 00:00:17.851
+Give it access to your account once, then tell it what you want: it provisions the VPS, sets the DNS record, and deploys PageMotor, without you leaving your editor.
+
+3
+00:00:18.551 --> 00:00:28.754
+If this is your first time on a VPS, one thing trips up nearly everyone, so it is worth thirty seconds. Three things do three different jobs.
+
+4
+00:00:28.754 --> 00:00:34.037
+Claude Desktop, the chat app, cannot reach your server at all on its own.
+
+5
+00:00:34.037 --> 00:00:42.721
+CloudPanel is your control panel: a web page for sites, databases and SSL, point and click, not where you type commands.
+
+6
+00:00:42.721 --> 00:00:50.753
+And a terminal is a plain text window connected to the server itself, which is where any command actually runs.
+
+7
+00:00:50.753 --> 00:00:57.049
+Claude Code can reach the server once connected, and that is exactly what this sets up.
+
+8
+00:00:57.749 --> 00:01:06.839
+Start in hPanel. Click API in the left sidebar, under Dev tools: that is a page Hostinger built specifically for AI coding tools.
+
+9
+00:01:06.839 --> 00:01:15.576
+Click the Claude Code tab, then tick the tool categories you want. For provisioning a PageMotor VPS you need two at minimum:
+
+10
+00:01:15.576 --> 00:01:25.229
+VPS hosting, which creates and manages your servers, and Domains and DNS, which sets the A record pointing your domain at the new server.
+
+11
+00:01:25.229 --> 00:01:30.443
+The others are useful but optional, and fewer tools means a leaner config.
+
+12
+00:01:31.143 --> 00:01:39.051
+Then generate the token, and give it a name you will recognise. The important part: the token appears once.
+
+13
+00:01:39.051 --> 00:01:45.186
+Copy it before the page refreshes, because Hostinger will not show it to you again.
+
+14
+00:01:45.186 --> 00:01:52.134
+If you do miss it, delete the old one and generate another. Tokens are cheap; security is not.
+
+15
+00:01:52.834 --> 00:02:02.141
+The same page shows a ready-made JSON block for the tools you picked. Replace every placeholder with the token you just copied,
+
+16
+00:02:02.141 --> 00:02:11.596
+then put that mcpServers block into your Claude Code config file, at ~/.claude/config.json. Create the file if it does not exist.
+
+17
+00:02:12.296 --> 00:02:22.872
+After that, you just ask. One brief covers the whole job: the plan, the CloudPanel template, the region, a hostname, and your SSH public key.
+
+18
+00:02:22.872 --> 00:02:32.773
+Then, once the VPS is running, read the IP address back from the Hostinger API and create a DNS A record pointing your domain at it.
+
+19
+00:02:32.773 --> 00:02:38.023
+Regions work by name or by ID, and the guide lists the confirmed ones.
+
+20
+00:02:38.723 --> 00:02:51.088
+Now the trap on this page, and it is a good one. Hostinger ships a separate image called Ubuntu 24.04 with Claude Code, and it sounds like exactly what you want here. It is not.
+
+21
+00:02:51.088 --> 00:02:59.890
+That image has no control panel on it, so every panel step afterwards breaks: site creation, the database and the certificate.
+
+22
+00:02:59.890 --> 00:03:07.993
+Take the CloudPanel template instead, and install the Claude Code CLI on the server afterwards if you want it there.
+
+23
+00:03:07.993 --> 00:03:19.869
+And do not trust the ID number either, because template IDs change. Ask it to list the available templates and pick the CloudPanel one by name before it creates anything.
+
+24
+00:03:20.569 --> 00:03:31.702
+For the technically curious, your plain-English brief becomes a single API call carrying a template id, a data centre id, the hostname and your public key.
+
+25
+00:03:31.702 --> 00:03:38.669
+One detail worth knowing: the item id in that call is a billing price ID, not just the plan name,
+
+26
+00:03:38.669 --> 00:03:47.504
+and the suffix on it picks the billing period. Monthly, annual or two-year, and the longer commitments cost less per month.
+
+27
+00:03:48.204 --> 00:03:58.570
+Provisioning gets you a running server, but that is only half the job. The on-box setup comes next: the site, the database, the certificate and PageMotor itself.
+
+28
+00:03:58.570 --> 00:04:05.201
+The guide has that script, and Claude Code can run it for you over the connection you have just set up.
+
+29
+00:04:05.901 --> 00:04:12.070
+And the last step is the one that proves it worked. Install EP Host Check and read its report.
+
+30
+00:04:12.070 --> 00:04:21.784
+It inspects the finished box and tells you what it can and cannot do, each with a plain fix, rather than you assuming the provisioning went through.
+

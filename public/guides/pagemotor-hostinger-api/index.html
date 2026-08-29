@@ -160,6 +160,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <strong>What this is:</strong> the Hostinger API is behind an official MCP (Model Context Protocol) server that Claude Code can talk to directly. You connect it once by pasting a JSON block into your CC config. After that, Claude Code can call the Hostinger API, read your server list, create VPSs, manage DNS records &mdash; without a browser, without copy-pasting credentials. The <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger/">picture-by-picture manual guide</a> shows every click if you prefer to do it yourself. This guide hands the whole thing to Claude Code.
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole route in 4 minutes 23 seconds, narrated, with captions &mdash; including the template whose name makes it look right and which quietly breaks everything afterwards.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Hostinger has a native MCP server. Give it access once, then tell it what you want: it provisions the VPS, sets the DNS record and deploys PageMotor, without you leaving your editor.</p>
+          <p style="margin:0 0 10px"><strong>First time on a VPS?</strong> Three things do three different jobs. Claude Desktop, the chat app, cannot reach your server at all. CloudPanel is your control panel &mdash; a web page for sites, databases and SSL, point and click, not where you type commands. And a terminal is a text window connected to the server itself, which is where any command actually runs. Claude <em>Code</em> can reach the server once connected.</p>
+          <p style="margin:0 0 10px"><strong>hPanel &rsaquo; API.</strong> In the left sidebar under Dev tools &mdash; a page Hostinger built for AI coding tools. Click the Claude Code tab and tick the categories you need: <strong>VPS hosting</strong> creates and manages servers, <strong>Domains and DNS</strong> sets the A record. The rest are optional, and fewer tools means a leaner config.</p>
+          <p style="margin:0 0 10px"><strong>The token appears once.</strong> Generate it, name it something recognisable, and copy it before the page refreshes &mdash; Hostinger will not show it again. Missed it? Delete the old one and generate another. Tokens are cheap; security is not.</p>
+          <p style="margin:0 0 10px"><strong>Paste the config.</strong> The page shows a ready-made JSON block for the tools you picked. Replace every placeholder with your token, then put the <code>mcpServers</code> block into <code>~/.claude/config.json</code>, creating the file if it does not exist.</p>
+          <p style="margin:0 0 10px"><strong>Then you just ask.</strong> One brief covers the whole job: the plan, the CloudPanel template, the region, a hostname and your SSH public key. Then read the IP back from the API and create the DNS A record pointing your domain at it. Regions work by name or by ID.</p>
+          <p style="margin:0 0 10px"><strong>The trap on this page.</strong> Hostinger ships a separate image named for Claude Code, and it sounds like exactly what you want. It has <em>no control panel on it</em>, so site creation, the database and the certificate all break afterwards. Take the CloudPanel template and add the CLI later if you want it. And do not trust the ID number &mdash; template IDs change, so have it list the templates and pick by <em>name</em> first.</p>
+          <p style="margin:0 0 10px"><strong>What it actually sends.</strong> Your brief becomes one API call carrying a template id, a data centre id, the hostname and your public key. The <code>item_id</code> in it is a billing price ID rather than just the plan name, and its suffix picks the billing period &mdash; monthly, annual or two-year, the longer ones cheaper per month.</p>
+          <p style="margin:0 0 10px"><strong>Let it finish on the box.</strong> Provisioning gets you a running server; the on-box setup &mdash; site, database, certificate and PageMotor itself &mdash; is the second half, and the guide has the script.</p>
+          <p style="margin:0"><strong>Then prove it.</strong> Install EP Host Check and read its report. It inspects the finished box and tells you what it can and cannot do, each with a plain fix, rather than you assuming the provisioning worked.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>Steps</p>
     <ol>
