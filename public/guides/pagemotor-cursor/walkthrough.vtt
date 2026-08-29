@@ -1,0 +1,98 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:08.961
+PageMotor on Hostinger with Cursor. Hostinger have a native MCP server, and Cursor is one of the supported editors.
+
+2
+00:00:08.961 --> 00:00:19.615
+Connect it once through Cursor's settings, then use Composer to provision a PageMotor VPS, set DNS and deploy, without a browser or a separate terminal.
+
+3
+00:00:20.315 --> 00:00:33.504
+If you already know the Claude Code version of this guide, there are only two differences. Everything else is the same: the same Hostinger MCP, the same prompt templates, the same on-box setup script.
+
+4
+00:00:33.504 --> 00:00:43.396
+What changes is where the config goes, which is Cursor's own settings rather than a Claude Code config file, and that you run the prompts in Composer.
+
+5
+00:00:44.096 --> 00:00:52.188
+If this is your first time on a VPS, three things do three different jobs, and mixing them up trips up nearly everyone.
+
+6
+00:00:52.188 --> 00:01:02.728
+Cursor can run server commands through Composer once the MCP is connected, which is what this sets up: a chat window on its own does not touch your server.
+
+7
+00:01:02.728 --> 00:01:08.916
+CloudPanel is your control panel, a web page for sites, databases and SSL, point and click.
+
+8
+00:01:08.916 --> 00:01:16.465
+And a terminal is a plain text window connected to the server itself, which is where any command actually runs.
+
+9
+00:01:17.165 --> 00:01:26.900
+In hPanel, click API in the left sidebar under Dev tools. The page opens with the Cursor tab already highlighted, and it offers two paths.
+
+10
+00:01:26.900 --> 00:01:33.813
+The Hostinger Connector extension handles the connection through a UI with no JSON editing at all.
+
+11
+00:01:33.813 --> 00:01:43.124
+Or configure manually, which gives you more control over exactly which tools load into Composer. That is the route this guide walks.
+
+12
+00:01:43.824 --> 00:01:56.167
+Tick two tools and untick the rest: Domains and DNS, which sets the A record pointing your domain at the new server, and VPS hosting, which creates and manages the servers.
+
+13
+00:01:56.167 --> 00:02:07.648
+Hostinger's own page puts it well: enable only the products you use, for faster and more focused responses. Fewer tools means a cleaner Composer context window.
+
+14
+00:02:08.348 --> 00:02:21.499
+Generating the token opens a modal with a name field and an expiration dropdown. Give it a name you will recognise, and Never expires is the practical choice for a dev-tool token on your own machine.
+
+15
+00:02:21.499 --> 00:02:33.658
+Then the token shows once, with a copy warning: refreshing or leaving the page hides it permanently. And if you do have to regenerate, note that it invalidates the old one immediately.
+
+16
+00:02:34.358 --> 00:02:48.658
+The JSON Hostinger generates is tailored to the tools you ticked. Add your token as an environment variable in each server entry, and save the file to tilde slash dot cursor slash m c p dot json.
+
+17
+00:02:48.658 --> 00:02:54.745
+Then restart Cursor. The restart is what actually loads it, and it is easy to skip.
+
+18
+00:02:55.445 --> 00:03:06.361
+Then open Composer and ask. One brief covers the whole job: the plan, the CloudPanel template, the region, a hostname and your SSH public key.
+
+19
+00:03:06.361 --> 00:03:20.197
+Then, once the VPS is running, read the IP address back and create a DNS A record pointing your domain at it. Regions work by name or by ID, and the guide lists the confirmed ones.
+
+20
+00:03:20.897 --> 00:03:30.629
+And the same trap applies here as on the Claude Code route. Hostinger ships a separate image whose name mentions Claude Code, and it sounds like the obvious pick.
+
+21
+00:03:30.629 --> 00:03:38.619
+It has no control panel on it, so site creation, the database and the certificate all break afterwards. Take the CloudPanel template.
+
+22
+00:03:38.619 --> 00:03:47.090
+And because template IDs change, have Composer list the available templates and choose the CloudPanel one by name before it creates anything.
+
+23
+00:03:47.790 --> 00:03:53.269
+And finish with the step that proves it worked. Install EP Host Check and read its report.
+
+24
+00:03:53.269 --> 00:04:02.279
+It inspects the finished box and tells you what it can and cannot do, each with a plain fix, rather than you assuming the provisioning went through.
+

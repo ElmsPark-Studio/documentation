@@ -162,6 +162,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <strong>Cursor vs Claude Code:</strong> the flow is almost identical &mdash; the same Hostinger MCP, the same prompt templates, the same on-box setup script. The only difference is where the MCP config goes (Cursor&rsquo;s own settings panel, not a CC config file) and that you run the prompts in Cursor Composer (<kbd>Cmd I</kbd>) rather than in a Claude Code chat. The <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger-api/">Claude Code version of this guide</a> has the same content if you prefer that tool.
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole route in 4 minutes 3 seconds, narrated, with captions &mdash; the two things that differ from the Claude Code route, and the template whose name makes it look right while quietly breaking everything after it.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Hostinger have a native MCP server, and Cursor is a supported editor. Connect it once through Cursor's settings, then use Composer to provision a VPS, set DNS and deploy &mdash; without a browser or a separate terminal.</p>
+          <p style="margin:0 0 10px"><strong>If you know the Claude Code version.</strong> There are only two differences. Same Hostinger MCP, same prompt templates, same on-box setup script. What changes is where the config goes &mdash; Cursor's own settings rather than a Claude Code config file &mdash; and that you run the prompts in Composer.</p>
+          <p style="margin:0 0 10px"><strong>First time on a VPS?</strong> Three things do three different jobs. Cursor can run server commands through Composer once the MCP is connected, which is what this sets up; a chat window on its own does not touch your server. CloudPanel is your control panel &mdash; sites, databases and SSL, point and click. A terminal is a text window connected to the server itself, where any command actually runs.</p>
+          <p style="margin:0 0 10px"><strong>Two ways in.</strong> In hPanel, click API in the left sidebar under Dev tools; the page opens with the Cursor tab highlighted. The Hostinger Connector extension handles the connection through a UI with no JSON editing. Or configure manually, for more control over exactly which tools load into Composer &mdash; the route this guide walks.</p>
+          <p style="margin:0 0 10px"><strong>Tick two tools, untick the rest.</strong> <strong>Domains and DNS</strong> sets the A record pointing your domain at the new server; <strong>VPS hosting</strong> creates and manages the servers. Hostinger's own page puts it well: enable only the products you use, for faster and more focused responses. Fewer tools means a cleaner Composer context window.</p>
+          <p style="margin:0 0 10px"><strong>Name it, then copy it immediately.</strong> Generating opens a modal with a name field and an expiry dropdown; <em>Never expires</em> is the practical choice for a dev-tool token on your own machine. The token then shows once &mdash; refreshing or leaving hides it permanently, and Regenerate invalidates the old one immediately.</p>
+          <p style="margin:0 0 10px"><strong>Save it, then restart Cursor.</strong> The generated JSON is tailored to the tools you ticked. Add your token as an environment variable in each server entry, save to <code>~/.cursor/mcp.json</code>, and restart. The restart is what actually loads it, and it is easy to skip.</p>
+          <p style="margin:0 0 10px"><strong>Open Composer and ask.</strong> One brief covers the whole job: the plan, the CloudPanel template, the region, a hostname and your SSH public key. Then read the IP back and create the DNS A record pointing your domain at it. Regions work by name or by ID.</p>
+          <p style="margin:0 0 10px"><strong>The same trap as the Claude Code route.</strong> Hostinger ships a separate image whose name mentions Claude Code, and it sounds like the obvious pick. It has <em>no control panel on it</em>, so site creation, the database and the certificate all break afterwards. Take the CloudPanel template &mdash; and because template IDs change, have Composer list the templates and choose by <em>name</em> first.</p>
+          <p style="margin:0"><strong>Then prove it.</strong> Install EP Host Check and read its report. It inspects the finished box and tells you what it can and cannot do, each with a plain fix, rather than you assuming the provisioning worked.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>Steps</p>
     <ol>
