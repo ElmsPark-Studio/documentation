@@ -1,0 +1,110 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:12.036
+Replacing Google Fonts with Bunny Fonts. Loading fonts straight from Google can put your visitors' IP addresses on Google's servers without their consent.
+
+2
+00:00:12.036 --> 00:00:21.148
+Bunny Fonts is the drop-in fix: the same fonts, the same URL shape, nothing sent to Google. About ten minutes, and it is free.
+
+3
+00:00:21.848 --> 00:00:30.521
+Here is what it actually fixes. When a browser loads a Google-hosted font, it quietly sends the visitor's IP address to Google,
+
+4
+00:00:30.521 --> 00:00:34.687
+and it does that before any cookie banner can ask permission.
+
+5
+00:00:34.687 --> 00:00:42.746
+An IP address is personal data under the GDPR, so that transfer needs a lawful basis you almost certainly do not have.
+
+6
+00:00:43.446 --> 00:00:50.569
+Step one is to find every place Google Fonts loads, because missing one leaves the leak open.
+
+7
+00:00:50.569 --> 00:01:01.828
+Search your whole project for two domains, not one: fonts.googleapis.com serves the stylesheet, and fonts.gstatic.com serves the actual font files.
+
+8
+00:01:01.828 --> 00:01:05.505
+Both are Google, and both leak the visitor's IP.
+
+9
+00:01:06.205 --> 00:01:14.374
+They turn up in four predictable places. A link tag in your head. An @import at the top of a CSS or SCSS file.
+
+10
+00:01:14.374 --> 00:01:20.092
+A theme or page-builder setting, because many bundle Google Fonts by default.
+
+11
+00:01:20.092 --> 00:01:24.177
+And an npm package that fetches from Google at runtime.
+
+12
+00:01:24.877 --> 00:01:31.862
+Step two is the swap itself, and the URL is almost the same shape. Change the domain to fonts.bunny.net,
+
+13
+00:01:31.862 --> 00:01:41.868
+put the family name in lower case with hyphens, list the weights after a colon rather than the Google syntax, and join multiple families with a pipe.
+
+14
+00:01:41.868 --> 00:01:51.069
+display=swap stays exactly as it is. Bunny mirrors the whole Google catalogue, so the families and weights you already use are all there.
+
+15
+00:01:51.769 --> 00:01:59.647
+Step three is one small line: a preconnect to Bunny, just above the stylesheet link, so the fonts arrive a little faster.
+
+16
+00:01:59.647 --> 00:02:05.441
+And while you are there, delete any leftover preconnect pointing at a Google font domain.
+
+17
+00:02:05.441 --> 00:02:18.983
+This is the bit people forget: a preconnect opens a connection to that host on its own, even if nothing else loads from it, so a stray one keeps the line to Google open after you have swapped everything else.
+
+18
+00:02:19.683 --> 00:02:24.573
+Step four is checking it has really gone, and this is the step people skip.
+
+19
+00:02:24.573 --> 00:02:32.918
+Run the same search again. It should come back completely empty, because a single missed reference means the leak is still open.
+
+20
+00:02:33.618 --> 00:02:45.763
+But do not trust a clean code search on its own. Themes, plugins and embedded widgets can inject a Google Fonts tag at runtime that never appears in your source at all.
+
+21
+00:02:45.763 --> 00:02:54.221
+The Network tab is the ground truth. Open the page, open developer tools, go to Network, filter for font, and reload.
+
+22
+00:02:54.221 --> 00:03:03.618
+Every request should go to Bunny, and not one to a Google domain. If one does, trace it back to the theme or plugin that added it.
+
+23
+00:03:04.318 --> 00:03:10.766
+It is worth understanding why this matters, so you can explain it to a client or a colleague.
+
+24
+00:03:10.766 --> 00:03:22.967
+In January 2022 a regional court in Munich ruled against a website operator over exactly this: fonts loaded from Google, and a visitor's IP address transferred without consent.
+
+25
+00:03:22.967 --> 00:03:28.374
+The guide sets out the detail in a form you can hand straight to someone else.
+
+26
+00:03:29.074 --> 00:03:40.440
+And visually, nothing changes at all. Bunny serves the very same font files from a privacy-first, cookie-free European service that logs no personal data.
+
+27
+00:03:40.440 --> 00:03:46.861
+Same families, same weights, same rendering. You change one domain, and the leak stops.
+

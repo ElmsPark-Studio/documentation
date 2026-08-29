@@ -190,6 +190,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/google-fonts-to-bunny-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole swap in 3 minutes 48 seconds, narrated, with captions &mdash; including the two domains to search for, the stray preconnect that keeps the line to Google open, and why a clean code search is not proof.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Loading fonts straight from Google can put your visitors' IP addresses on Google's servers without their consent. Bunny Fonts is the drop-in fix: the same fonts, the same URL shape, nothing sent to Google. About ten minutes, and it is free.</p>
+          <p style="margin:0 0 10px"><strong>What it actually fixes.</strong> When a browser loads a Google-hosted font it quietly sends the visitor's IP to Google &mdash; <em>before any cookie banner can ask permission</em>. An IP address is personal data under the GDPR, so that transfer needs a lawful basis you almost certainly do not have.</p>
+          <p style="margin:0 0 10px"><strong>Step one: find every place it loads.</strong> Search the whole project for <em>two</em> domains, not one &mdash; <code>fonts.googleapis.com</code> serves the stylesheet and <code>fonts.gstatic.com</code> serves the font files. Both are Google, both leak the IP, and missing one leaves the leak open.</p>
+          <p style="margin:0 0 10px"><strong>Four predictable places:</strong> a <code>&lt;link&gt;</code> tag in your <code>&lt;head&gt;</code>; an <code>@import</code> at the top of a CSS or SCSS file; a theme or page-builder setting, since many bundle Google Fonts by default; and an npm package that fetches from Google at runtime.</p>
+          <p style="margin:0 0 10px"><strong>Step two: the swap.</strong> Change the domain to <code>fonts.bunny.net</code>, put the family in lower case with hyphens, list weights after a colon rather than Google's syntax, and join families with a pipe. <code>display=swap</code> stays as it is. Bunny mirrors the whole catalogue, so your families and weights are all there.</p>
+          <p style="margin:0 0 10px"><strong>Step three, and the bit people forget.</strong> Add a preconnect to Bunny above the stylesheet link &mdash; then delete any leftover preconnect pointing at a Google font domain. A preconnect opens a connection to that host <em>on its own</em>, even when nothing else loads from it, so a stray one keeps the line to Google open after you have swapped everything else.</p>
+          <p style="margin:0 0 10px"><strong>Step four: check it has really gone.</strong> Run the same search again; it should come back completely empty. This is the step people skip, and it is the one that matters, because a single missed reference means the leak is still open.</p>
+          <p style="margin:0 0 10px"><strong>A clean search is not proof.</strong> Themes, plugins and embedded widgets can inject a Google Fonts tag <em>at runtime</em> that never appears in your source. The Network tab is the ground truth: open dev tools, filter for <strong>font</strong>, reload, and confirm every request goes to Bunny and none to a Google domain.</p>
+          <p style="margin:0 0 10px"><strong>Why it is worth ten minutes.</strong> In January 2022 a regional court in Munich ruled against a website operator over exactly this &mdash; fonts loaded from Google, and a visitor's IP transferred without consent. The guide sets out the detail in a form you can hand to a client or a colleague.</p>
+          <p style="margin:0"><strong>And visually, nothing changes.</strong> Bunny serves the very same font files from a privacy-first, cookie-free European service that logs no personal data. Same families, same weights, same rendering. You change one domain, and the leak stops.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>
