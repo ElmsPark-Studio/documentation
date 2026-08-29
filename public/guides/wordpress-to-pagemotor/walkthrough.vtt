@@ -1,0 +1,114 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:12.554
+Migrating a WordPress site to PageMotor. This is the honest end-to-end walkthrough: what carries over cleanly, what needs rebuilding, and the surprises to plan for.
+
+2
+00:00:12.554 --> 00:00:17.386
+Two to four hours in total, and most of that is transferring images.
+
+3
+00:00:18.086 --> 00:00:26.925
+First, check it is the right guide for your site. It covers Thesis and Focus WordPress sites moving into an existing PageMotor installation.
+
+4
+00:00:26.925 --> 00:00:38.984
+It will not work for Divi, for Gutenberg block-based sites, or for WooCommerce shops: those have different export shapes and different importers, and the guide points them at the right tools.
+
+5
+00:00:39.684 --> 00:00:48.080
+Get three downloads before you begin. The EP WP Exporter, a WordPress plugin that exports your content and theme data.
+
+6
+00:00:48.080 --> 00:00:55.123
+The PageMotor Migrator, a command-line translator that converts the export into PageMotor's format.
+
+7
+00:00:55.123 --> 00:01:03.306
+And the Focus Bridge Theme, which bridges your Focus CSS classes so your existing styles work without modification.
+
+8
+00:01:03.306 --> 00:01:09.638
+You will also want SFTP access, and PHP 7 or newer on the machine running the translator.
+
+9
+00:01:10.338 --> 00:01:16.340
+Now three surprises that catch nearly everyone. The first is that the images are on you.
+
+10
+00:01:16.340 --> 00:01:24.662
+The translator rewrites every image path to point at the new location in PageMotor, but it does not move the actual files.
+
+11
+00:01:24.662 --> 00:01:34.347
+You will need your SFTP credentials and ten to thirty minutes. Most migrations feel roughly on track until this step, and then slow down here.
+
+12
+00:01:35.047 --> 00:01:42.655
+The second surprise: after importing your theme data the site has no CSS and looks completely broken.
+
+13
+00:01:42.655 --> 00:01:49.962
+That is normal and expected, but only if you know about it in advance. The fix is a single click.
+
+14
+00:01:49.962 --> 00:01:59.228
+Open Admin, Theme Settings, Design Options, and click Save. That triggers a full CSS recompile from your imported settings.
+
+15
+00:01:59.228 --> 00:02:03.747
+Do not skip it, and do not be alarmed when you first see it.
+
+16
+00:02:04.447 --> 00:02:14.049
+The third surprise: payment forms look right but do not work. Plain contact forms migrate cleanly and work fine once EP Email is installed.
+
+17
+00:02:14.049 --> 00:02:23.651
+But anything with a payment back-end, PDF generation, file upload or conditional logic will appear in the right place and render correctly,
+
+18
+00:02:23.651 --> 00:02:34.772
+while the processing that made it charge a card does not come with it. If your site has order forms, read that troubleshooting entry before you start, not after.
+
+19
+00:02:35.472 --> 00:02:47.217
+The good news is how much migrates on its own. Pages at every level of nesting, with the hierarchy preserved. Posts under a paginated blog with thumbnails.
+
+20
+00:02:47.217 --> 00:02:55.930
+Top-level menus and footer widgets. Your Focus skin CSS, custom CSS and design options, so the site looks the same.
+
+21
+00:02:55.930 --> 00:03:04.265
+Featured images, YouTube embeds converted to lazy loading, and internal links rewritten to hierarchical paths.
+
+22
+00:03:04.965 --> 00:03:14.470
+And here is what you rebuild by hand. Dropdown and multi-level menus. Dynamic sidebar widgets, so archives, categories and tag clouds.
+
+23
+00:03:14.470 --> 00:03:19.932
+Extra user accounts, though author attributions are preserved in the content.
+
+24
+00:03:19.932 --> 00:03:32.133
+Gutenberg block content, WooCommerce products and orders, and newsletter lists all need a separate path, and multilingual content has to be migrated one language at a time.
+
+25
+00:03:32.833 --> 00:03:38.621
+The job runs in four stages. Export from WordPress. Translate the export.
+
+26
+00:03:38.621 --> 00:03:50.991
+Import into PageMotor, backing up the database first, installing the bridge theme, recompiling the CSS and transferring the images. Then configure and test.
+
+27
+00:03:51.691 --> 00:04:00.754
+The guide has every step in order, the page map to review before importing, the payment-form troubleshooting to read before you start,
+
+28
+00:04:00.754 --> 00:04:04.879
+and where to go if you are on Divi, Gutenberg or WooCommerce.
+

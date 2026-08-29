@@ -500,6 +500,31 @@
     <!-- ── Lead ── -->
     <p class="lead"><strong>What you'll need before you start:</strong> WordPress admin access to install the exporter; a PageMotor installation running version 0.8.3b or later; PHP 7.0+ on the computer you'll run the translator from (run <code>php -v</code> in Terminal to check); an SFTP client such as <a href="https://cyberduck.io">Cyberduck</a> (free) or <a href="https://panic.com/transmit/">Transmit</a> (Mac); and the three downloads below. Get all three before you begin.</p>
 
+    <div style="margin:22px 0 6px">
+      <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+             style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+        <source src="walkthrough.mp4" type="video/mp4">
+        <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+        Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+      </video>
+      <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole migration in 4 minutes 6 seconds, narrated, with captions &mdash; including the three surprises that catch nearly everyone, and the one click that turns an apparently broken site back into your design.</p>
+      <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+        <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+        <div style="margin-top:10px;color:#5d574c">
+            <p style="margin:0 0 10px"><strong>The shape of it.</strong> The honest end-to-end walkthrough: what carries over cleanly, what needs rebuilding, and the surprises to plan for. Two to four hours in total, and most of that is transferring images.</p>
+            <p style="margin:0 0 10px"><strong>Is this the right guide?</strong> It covers Thesis / Focus WordPress sites moving into an existing PageMotor installation. It will <em>not</em> work for Divi, Gutenberg block-based sites, or WooCommerce shops &mdash; different export shapes, different importers. The guide's last section points those at the right tools.</p>
+            <p style="margin:0 0 10px"><strong>Three downloads, up front.</strong> The EP WP Exporter (a WordPress plugin, for your content and theme data), the PageMotor Migrator (a command-line translator into PageMotor's format), and the Focus Bridge Theme (which bridges your Focus CSS classes so existing styles work unmodified). You will also want SFTP access and PHP 7 or newer on the machine running the translator.</p>
+            <p style="margin:0 0 10px"><strong>Surprise one: the images are on you.</strong> The translator rewrites every image path to point at its new location, but it does not move the actual files. Budget ten to thirty minutes and an SFTP client. Most migrations feel on track right up to this step, then slow down here.</p>
+            <p style="margin:0 0 10px"><strong>Surprise two: it will look completely broken.</strong> After importing your theme data the site has no CSS at all. Normal and expected &mdash; but only if you know in advance. The fix is one click: Admin &rsaquo; Theme Settings &rsaquo; Design Options &rsaquo; Save, which triggers a full CSS recompile from your imported settings.</p>
+            <p style="margin:0 0 10px"><strong>Surprise three: payment forms look right but do not work.</strong> Plain contact forms migrate cleanly and work once EP Email is installed. Anything with a payment back-end, PDF generation, file upload or conditional logic renders in the right place and looks correct, while the processing that charged a card does not come with it. If your site has order forms, read that troubleshooting entry <em>before</em> you start.</p>
+            <p style="margin:0 0 10px"><strong>What migrates on its own.</strong> Pages at every nesting level with the hierarchy preserved, posts under a paginated blog with thumbnails, top-level menus and footer widgets. Your Focus skin CSS, custom CSS and design options, so the site looks the same. Featured images, YouTube embeds converted to lazy loading, and internal links rewritten to hierarchical paths.</p>
+            <p style="margin:0 0 10px"><strong>What you rebuild by hand.</strong> Dropdown and multi-level menus. Dynamic sidebar widgets &mdash; archives, categories, tag clouds. Extra user accounts, though author attributions are preserved. Gutenberg block content, WooCommerce products and orders, and newsletter lists need a separate path, and multilingual content goes one language at a time.</p>
+            <p style="margin:0 0 10px"><strong>Four stages.</strong> Export from WordPress. Translate the export. Import into PageMotor &mdash; back up the database first, install the bridge theme, recompile the CSS, transfer the images. Then configure and test.</p>
+            <p style="margin:0"><strong>The guide</strong> has every step in order, the page map to review before importing, the payment-form troubleshooting to read before you start, and where to go for Divi, Gutenberg and WooCommerce.</p>
+        </div>
+      </details>
+    </div>
+
     <!-- ── Downloads ── -->
     <div class="downloads">
       <a href="https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/download/latest/ep-wp-exporter-1.4.0.zip" class="download-item">
