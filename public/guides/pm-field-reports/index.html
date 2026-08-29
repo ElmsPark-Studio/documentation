@@ -188,13 +188,15 @@
 <!-- ================================================== SHAPE -->
 <section class="panel" id="p-shape" role="tabpanel" aria-labelledby="t-shape">
   <h2>The report shape</h2>
-  <p class="lede">One report is one finding, expressed as one JSON object. The spec name is <code>pm-field-report/1</code>. Eleven fields, three of which do the heavy lifting.</p>
+  <p class="lede">One report is one observation about one finding, expressed as one JSON object. The spec name is <code>pm-field-report/1</code>. Twelve fields, four of which do the heavy lifting.</p>
 
   <div class="scrollx">
   <table>
     <thead><tr><th>Field</th><th></th><th>What goes in it</th></tr></thead>
     <tbody>
       <tr><td><code>spec</code></td><td class="req">required</td><td>Always <code>pm-field-report/1</code>. Lets a reader reject shapes it does not understand.</td></tr>
+      <tr><td><code>event</code></td><td class="opt">optional</td><td>One of <code>sighting</code> (default), <code>confirmation</code> or <code>resolution</code>. This decides whether the report counts, re-dates or retires. See <a href="#" data-goto="p-read">Reading them</a>. Omit it and you have filed a sighting, which is almost always what you mean.</td></tr>
+      <tr><td><code>fixed_in</code></td><td class="opt">optional</td><td>Required on a <code>resolution</code>, meaningless otherwise. The version the fault was fixed in, so a reader can check the claim rather than take it.</td></tr>
       <tr><td><code>category</code></td><td class="req">required</td><td>One of <code>bug</code>, <code>docs-gap</code>, <code>environment</code>, <code>idea</code>. A fixed list, so filtering means something.</td></tr>
       <tr><td><code>severity</code></td><td class="req">required</td><td>One of <code>blocker</code>, <code>major</code>, <code>minor</code>, <code>note</code>. Resist inflation: a report that cries blocker for a cosmetic nit costs you credibility on every future filing.</td></tr>
       <tr><td><code>title</code></td><td class="req">required</td><td>One line that <strong>names the mechanism, not the symptom</strong>. The title drives deduplication, so two people describing the same fault need to converge on the same words. &ldquo;Options set to zero are dropped on save&rdquo; is findable next year. &ldquo;Settings broke after upgrade&rdquo; names your Tuesday.</td></tr>
@@ -213,6 +215,7 @@
   <h3>A complete example</h3>
 <pre><code>{
   <span class="k">"spec"</span>:     <span class="s">"pm-field-report/1"</span>,
+  <span class="k">"event"</span>:    <span class="s">"sighting"</span>,      <span class="c">// or confirmation / resolution</span>
   <span class="k">"category"</span>: <span class="s">"bug"</span>,
   <span class="k">"severity"</span>: <span class="s">"minor"</span>,
   <span class="k">"title"</span>:    <span class="s">"Options set to zero are silently dropped on save"</span>,
@@ -251,8 +254,9 @@
       <p>A report describes something reproduced, not suspected. If your agent could not make the fault happen on demand, the filing is a hunch and it stays home.</p></li>
     <li><strong>Scrub it</strong>
       <p>Everything below happens on your machine, before anything is sent anywhere. Hostnames become roles (&ldquo;customer site&rdquo;, &ldquo;test rig&rdquo;). Absolute paths become tails relative to the docroot. Keys, tokens, passwords, auth headers and credentials in URLs come out. Email addresses that are not yours come out. Evidence is cut to the few lines that prove the point.</p></li>
-    <li><strong>Check for a twin</strong>
-      <p>Search wherever reports live before filing. Finding a twin is not a reason to stop: an independent sighting is the most valuable thing you can file. But it should be a choice, and your title should match the existing finding word for word so the two group.</p></li>
+    <li><strong>Check for a twin, then decide which event this is</strong>
+      <p>Search wherever reports live before filing. If there is no twin, you are filing a sighting. If there is one and you are a different install, an independent sighting is the most valuable thing you can file. If there is one and you are the same install re-testing it, that is a <em>confirmation</em> rather than a second sighting, and filing it as a sighting would inflate the count.</p>
+      <p>Either way your title must match the existing finding word for word, because that is what attaches your report to it rather than starting a new one.</p></li>
     <li><strong>The human gate</strong>
       <p>Your agent shows you the exact, final payload and asks one question: send this, yes or no. A general &ldquo;yes, debug this&rdquo; from an hour ago does not count. No answer, no send. What the world learns about your server is your decision, never your agent&rsquo;s.</p></li>
     <li><strong>File it</strong>
@@ -269,6 +273,12 @@
   <p>A transport-neutral instruction block you can drop into any agent&rsquo;s custom instructions or skill file. It encodes the whole contract above:</p>
 <pre id="agentBlock"><code>When I ask you to file a PM field report:
 
+0. Decide which of three things this is. A SIGHTING is a new occurrence
+   on an install that has not reported it. A CONFIRMATION is "I re-tested
+   an existing finding and it is still present" - same machine is fine,
+   it re-dates without counting. A RESOLUTION is "fixed in version X".
+   Only a sighting moves the count, so filing a re-test as a sighting
+   corrupts the one number triage runs on.
 1. Build a JSON object with spec "pm-field-report/1" and fields:
    category (bug|docs-gap|environment|idea), severity
    (blocker|major|minor|note), title, pm_core, php, plugins,
@@ -298,7 +308,30 @@
     <div class="card"><h3>&ldquo;What is the new core doing to people?&rdquo;</h3><p>Every report is anchored to a core version, so release week reads as a filter, not a trawl. Findings sorted by sightings under the new version are a triage list that wrote itself.</p></div>
     <div class="card"><h3>&ldquo;Which docs gaps keep recurring?&rdquo;</h3><p>The <code>docs-gap</code> category is quietly the highest-value one. Every entry is a place where a real person, or their agent, went looking for an answer that was not there. That is a documentation to-do list ranked by evidence.</p></div>
     <div class="card"><h3>&ldquo;Same bug, or new bug?&rdquo;</h3><p>Two reports, one fingerprint: same finding, more evidence. Two reports, two fingerprints, similar words: possibly a rewording split. Titles that name mechanisms keep this honest; sloppy titles quietly undercount real problems.</p></div>
+    <div class="card"><h3>&ldquo;Is this still broken?&rdquo;</h3><p>The question an ageing pool cannot answer unless confirmations exist. A finding last seen on an old version might be fixed or might simply be unvisited. Check whether anyone has re-tested it, and if you just did, record that rather than staying silent.</p></div>
   </div>
+
+  <h3>Three events, and only one of them counts</h3>
+  <p>A finding accumulates observations over time, and they are not all the same kind of thing. Collapsing them into one number is the mistake that makes a pool lie to you.</p>
+
+  <div class="scrollx">
+  <table>
+    <thead><tr><th>Event</th><th>Means</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>sighting</code></td><td>A different install hit this.</td><td><strong>Moves the count.</strong> This is the number triage sorts on.</td></tr>
+      <tr><td><code>confirmation</code></td><td>Re-tested at version X, still present.</td><td>Re-dates the finding. Counts nothing.</td></tr>
+      <tr><td><code>resolution</code></td><td>Fixed in version X.</td><td>Retires it. Requires <code>fixed_in</code>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The middle one is the one people leave out, and its absence is worse than it sounds. Without it, re-testing an old finding and discovering it is <em>still broken</em> has nowhere to go. Filing it again would be wrong, because it is not an independent occurrence and would inflate the count. So the correct action becomes doing nothing, and silence is indistinguishable from the fault having quietly gone away.</p>
+
+  <div class="note bad">
+    <p><strong>The failure that produces.</strong> An old finding becomes ambiguous in a way no reader can resolve. It might be fixed, it might be unchecked since, or it might have been re-confirmed as live last week by someone who had no way to say so. All three look identical, and age reads as "probably stale", which is exactly backwards for the ones still biting.</p>
+  </div>
+
+  <p>A confirmation dated after a resolution means the fault came back. That reads as <strong>reopened</strong>, which is not a special case so much as the consequence of believing the most recent observation.</p>
 
   <h3>Reading a sightings count responsibly</h3>
   <p>A count of one means little on its own: one environment, one config, one possible local quirk. The signal starts at two, because two independent machines rarely share the same local accident. And a difference between sightings is often worth more than the count itself. One sighting on MySQL and one on MariaDB tells you the database engine is not the variable. That elimination is free; nobody had to run the experiment on purpose.</p>
@@ -323,6 +356,12 @@
     <p style="color:var(--muted);font-size:14.5px">Fill the fields; the payload and its fingerprint assemble live. Then press <em>Reword the title</em> and watch the fingerprint abandon the grouping, which is the one weakness worth understanding before you file anything.</p>
     <div class="jsonly">
       <div class="fieldrow">
+        <div><label for="b-event">event</label>
+          <select id="b-event"><option value="sighting">sighting (counts)</option><option value="confirmation">confirmation (re-dates)</option><option value="resolution">resolution (retires)</option></select>
+          <p class="hint">Only a sighting moves the count.</p></div>
+        <div id="fixed-wrap" style="display:none"><label for="b-fixed">fixed_in</label>
+          <input type="text" id="b-fixed" value="0.11.3" autocomplete="off">
+          <p class="hint">Required on a resolution.</p></div>
         <div><label for="b-cat">category</label>
           <select id="b-cat"><option>bug</option><option>docs-gap</option><option>environment</option><option>idea</option></select></div>
         <div><label for="b-sev">severity</label>
@@ -440,7 +479,8 @@ request to https://clientsite.example/admin/?token=a1b2c3d4e5f6 failed</textarea
 
   /* ----- Report builder ----- */
   var $=function(id){return document.getElementById(id)};
-  var bCat=$('b-cat'),bSev=$('b-sev'),bCore=$('b-core'),bTitle=$('b-title'),
+  var bEvent=$('b-event'),bFixed=$('b-fixed'),
+      bCat=$('b-cat'),bSev=$('b-sev'),bCore=$('b-core'),bTitle=$('b-title'),
       bObs=$('b-obs'),bRepro=$('b-repro'),bJson=$('b-json'),bFp=$('b-fp'),
       bValid=$('b-valid'),fpVerdict=$('fp-verdict'),rewordBtn=$('rewordBtn');
   if(bCat&&window.crypto&&crypto.subtle){
@@ -454,10 +494,15 @@ request to https://clientsite.example/admin/?token=a1b2c3d4e5f6 failed</textarea
       });
     }
     function payload(){
-      return {spec:'pm-field-report/1',category:bCat.value,severity:bSev.value,
+      var p = {spec:'pm-field-report/1',event:bEvent.value,category:bCat.value,severity:bSev.value,
         title:bTitle.value.trim(),pm_core:bCore.value.trim(),
         repro:bRepro.value.split('\n').map(function(s){return s.trim()}).filter(Boolean),
         observed:bObs.value.trim()};
+      // repro belongs to the original sighting; a confirmation or resolution
+      // attaches to a finding that already carries one.
+      if (p.event !== 'sighting') { delete p.repro; }
+      if (p.event === 'resolution') { p.fixed_in = bFixed.value.trim(); }
+      return p;
     }
     function render(){
       var p=payload();
@@ -478,7 +523,13 @@ request to https://clientsite.example/admin/?token=a1b2c3d4e5f6 failed</textarea
           : '<span class="pill no">separate</span> <span style="font-weight:400;color:var(--muted);font-size:13px">files as a brand-new finding; nothing warns you it is the same bug</span>';
       });
     }
-    [bCat,bSev,bCore,bTitle,bObs,bRepro].forEach(function(el){el.addEventListener('input',render)});
+    [bCat,bSev,bCore,bTitle,bObs,bRepro,bFixed].forEach(function(el){el.addEventListener('input',render)});
+    bEvent.addEventListener('change',function(){
+      // fixed_in only means anything on a resolution
+      document.getElementById('fixed-wrap').style.display =
+        (bEvent.value === 'resolution') ? '' : 'none';
+      render();
+    });
     rewordBtn.addEventListener('click',function(){
       var rewording=bTitle.value===ORIGINAL;
       bTitle.value=rewording?REWORDED:ORIGINAL;
