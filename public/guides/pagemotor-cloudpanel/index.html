@@ -153,6 +153,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </ol>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole route in 4 minutes 46 seconds, narrated, with captions &mdash; including the timezone you must fix <em>before</em> any site exists, and why the <code>/.well-known/</code> fix on CloudPanel is different from every other host.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+        <p style="margin:0 0 10px"><strong>The shape of it.</strong> One paste in the terminal to install the panel, and after that everything is clicks. About twenty minutes, and the panel is free.</p>
+        <p style="margin:0 0 10px"><strong>Why bother.</strong> The most common PageMotor bug is a design that will not apply: you save it, nothing changes, no error at all. Nine times out of ten that is a host refusing to let PHP write the compiled stylesheet to disk. On a CloudPanel VPS the problem is gone by construction: a real server, a writable filesystem, and site files owned by the same user PHP runs as.</p>
+        <p style="margin:0 0 10px"><strong>Two traps before you have even ordered.</strong> If your provider offers CloudPanel as a template, pick it inside the order wizard, under the Control panel tab, rather than a plain operating system. And when you create the site, choose PHP 8.3. The form may offer you something newer; 8.3 is the safe choice.</p>
+        <p style="margin:0 0 10px"><strong>Before any site exists.</strong> CloudPanel images set the PHP timezone to <code>Europe/Berlin</code> in every PHP version they ship, whatever region the box is in, and PageMotor's browser sign-in fails on any timezone ahead of UTC. Set <code>date.timezone</code> to <code>UTC</code> in the PHP 8.3 FPM ini file and restart the pool first, because CloudPanel bakes the value into each site at the moment it is created. Forgot? It is editable per site, under Settings &rsaquo; PHP Settings.</p>
+        <p style="margin:0 0 10px"><strong>Installing the panel</strong> is three lines over SSH, and it is the only time you touch the command line. Five to ten minutes later, open your server's IP on port 8443, expect a certificate warning on a raw IP, and create your admin account.</p>
+        <p style="margin:0 0 10px"><strong>The site and the database,</strong> both in the panel. Sites, Add Site, Create a PHP Site: generic PHP, version 8.3, your domain, and a site user whose password you write down. That site user is the user PHP runs as, which matters in a moment. Then Databases, Add Database. One rule: no underscores in the name or the user. CloudPanel simply rejects them. Use hyphens.</p>
+        <p style="margin:0 0 10px"><strong>Upload as the site user.</strong> File Manager, or SFTP with the site-user login, and copy <code>config-sample.php</code> to <code>config.php</code> with your three database values. On current releases you can skip that and let the install wizard write the file. Either way, make <code>/admin/</code> the first page you open. And the trap: extract the zip over SSH as root instead, and everything lands owned by root, PHP cannot save a thing, and it looks exactly like a PageMotor fault.</p>
+        <p style="margin:0 0 10px"><strong>The one tweak.</strong> PageMotor routes every request through <code>index.php</code>, so the vhost needs the front-controller rewrite. Current CloudPanel renders two server blocks per site: a front one on 80 and 443 that terminates TLS and proxies to a PHP backend on port 8080. The rewrite already ships in that backend block, so open the site's Vhost tab and check it is there. That one line is the difference between clean URLs and a wall of 404s.</p>
+        <p style="margin:0 0 10px"><strong>Connecting Claude.</strong> CloudPanel's stock vhost lets <code>/.well-known/</code> fall through to the filesystem for Let's Encrypt, which swallows the sign-in routes Claude follows. And because that block sits in the front server, where there is no PHP at all, the fix here is different from every other host: you must <code>proxy_pass</code> the rest of <code>/.well-known/</code> to the site's 8080 backend, rather than <code>try_files</code> it. Apply it through the site's Vhost tab, so certificate renewal cannot revert it.</p>
+        <p style="margin:0"><strong>Who looks after it.</strong> Every mainstream VPS is sold self-managed, so from Ubuntu upwards it is yours: security patches, the panel, PHP, the database, the certificate. Budget about fifteen minutes a month.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>On this page</p>
     <ol>
