@@ -154,6 +154,15 @@
   .reflink{background:var(--vultr-soft);border:1px solid #cfe0d4;border-radius:var(--radius);padding:14px 18px;margin:16px 0;font-size:14.5px}
 
   @media(max-width:560px){ h1{font-size:28px} .calc .out{gap:14px} }
+  /* Narrow screens: the reference tables are wider than the column, and the
+     table's own overflow:hidden CLIPS the last cell rather than scrolling it
+     (the Price column simply vanished on a phone). Make each table its own
+     horizontal scroller instead of losing data. */
+  @media(max-width:620px){
+    table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;font-size:13.5px}
+    table thead,table tbody{display:table;width:100%;min-width:max-content}
+    table th,table td{white-space:normal}
+  }
 
   /* Screenshots */
   figure.screenshot{margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:var(--card)}
