@@ -207,6 +207,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/stripe-claude-code-payments-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole three-part path in 5 minutes 39 seconds, narrated, with captions &mdash; the key prefixes, the flag that no longer exists, and the third secret that is not an API key.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Set Stripe up properly, let Claude Code do the wiring from your terminal, and turn a PageMotor site into one that actually takes money. Test mode first, a real card only at the very end.</p>
+          <p style="margin:0 0 10px"><strong>Three parts, three jobs.</strong> <strong>Stripe</strong> is the payment processor and dashboard &mdash; products, prices, customers, payouts, keys and webhook endpoints. <strong>Claude Code</strong> operates Stripe from the terminal through Stripe's MCP server. <strong>PageMotor</strong>, via EP Ecommerce Stripe, renders the checkout, verifies the webhook signature and records the order. That last one is the part that takes the money on your pages.</p>
+          <p style="margin:0 0 10px"><strong>The country is load-bearing.</strong> Sign-up asks where your business is <em>legally registered</em>. That sets your currency and payout rules, it is tied to your legal entity, and you cannot freely switch it later. Availability follows where the business is established, not where the customers are; Ireland and the UK are both fully supported.</p>
+          <p style="margin:0 0 10px"><strong>Read the prefix, know the key.</strong> <code>pk_</code> publishable is safe in the browser. <code>sk_</code> secret is server-only with unrestricted account access &mdash; never in front-end code, never in git. <code>rk_</code> restricted carries only the permissions you grant, per resource, and is what you hand to a tool or an agent. Each also carries <em>test</em> or <em>live</em> in the middle, which is how you catch a live key in a test script at a glance.</p>
+          <p style="margin:0 0 10px"><strong>One line wires it up.</strong> Stripe hosts an official MCP server and Claude Code connects over HTTP. Add it, then <code>/mcp</code> inside Claude Code to authenticate. On your own machine, pick OAuth in the browser: you approve on a Stripe consent screen and no key is stored in your config.</p>
+          <p style="margin:0 0 10px"><strong>Stale guidance to discard.</strong> Plenty of pages still show a <code>--tools</code> flag on the local <code>@stripe/mcp</code> package. It does not exist any more. What controls the tools now is the permissions on the restricted key you pass &mdash; scope the key and you have scoped the agent. A page still showing that flag is out of date, and probably wrong about other things too.</p>
+          <p style="margin:0 0 10px"><strong>Read first, then write.</strong> Start read-only: &ldquo;list my Stripe products and prices&rdquo;. Real data coming back proves the connection is live. Then a small reversible write: &ldquo;create a test product called Sample Download, then show me how to delete it&rdquo;. Claude tells you what it is about to do before it touches anything &mdash; read the plan, then approve, and keep that confirmation on for every write.</p>
+          <p style="margin:0 0 10px"><strong>Switch it on in PageMotor.</strong> Two plugins active: EP Ecommerce (the store engine) and EP Ecommerce Stripe (the payment provider that extends it). In Settings &rsaquo; EP Ecommerce Stripe, tick Enable Stripe Payments, set Mode to Test, and paste the test keys. The plugin picks the active key by mode at runtime, so your live keys sit unused until you mean it.</p>
+          <p style="margin:0 0 10px"><strong>The webhook, and its own secret.</strong> Stripe notifies your site server-to-server rather than your site trusting a message from the customer's browser &mdash; that is the authoritative confirmation. The plugin shows the exact endpoint URL to register, built from your own site address, and listens for three events. The signing secret is a <em>third</em> distinct secret: not an API key, and every endpoint has its own. Paste the one matching the endpoint and mode you are actually using, or verification fails and orders never complete.</p>
+          <p style="margin:0"><strong>The round-trip is the proof.</strong> Pay with <code>4242 4242 4242 4242</code>, any future expiry, any three-digit CVC. Then read the order back in <em>both</em> places: the PageMotor admin and the Stripe dashboard. If both show it, the webhook fired and the loop is closed. Anything short of that is just a setting you have saved.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>

@@ -1,0 +1,138 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:04.632
+Take payments on PageMotor with Stripe and Claude Code.
+
+2
+00:00:04.632 --> 00:00:17.525
+Set Stripe up properly, let Claude Code do the wiring from your terminal, and turn a PageMotor site into one that actually takes money. Test mode first, and a real card only at the very end.
+
+3
+00:00:18.225 --> 00:00:25.984
+Three parts do three different jobs here, and it is worth knowing which is which before anything goes wrong.
+
+4
+00:00:25.984 --> 00:00:37.191
+Stripe is the payment processor and dashboard: it holds your products, prices, customers and payouts, and it is where you create keys and register webhooks.
+
+5
+00:00:37.191 --> 00:00:43.442
+Claude Code operates Stripe for you from the terminal, through Stripe's own MCP server.
+
+6
+00:00:43.442 --> 00:00:57.235
+And PageMotor, through the EP Ecommerce Stripe plugin, renders the checkout, verifies the webhook signature and records the order. That is the part that actually takes the money on your pages.
+
+7
+00:00:57.935 --> 00:01:04.735
+Step one is creating the account, and there is one question in it that carries more weight than the rest.
+
+8
+00:01:04.735 --> 00:01:16.458
+Sign-up asks where your business is legally registered. That choice sets your currency and your payout rules, it is tied to your legal entity, and you cannot freely switch it later.
+
+9
+00:01:16.458 --> 00:01:26.821
+Note too that availability depends on where your business is established, not where your customers are. Ireland and the United Kingdom are both fully supported.
+
+10
+00:01:27.521 --> 00:01:33.846
+Step two, the keys. There are three kinds, and the prefix on each one tells you what it is.
+
+11
+00:01:33.846 --> 00:01:41.979
+A publishable key, p k underscore, is safe in the browser: it is how Stripe's own JavaScript identifies your account.
+
+12
+00:01:41.979 --> 00:01:53.032
+A secret key, s k underscore, is server-side only and has unrestricted access to your entire account, so it never goes in front-end code and never goes in git.
+
+13
+00:01:53.032 --> 00:02:02.902
+And a restricted key, r k underscore, carries only the permissions you grant it, per resource. That is the one you hand to a tool or an agent.
+
+14
+00:02:02.902 --> 00:02:11.313
+Every one of them also carries test or live in the middle, which is how you spot a live key in a test script at a glance.
+
+15
+00:02:12.013 --> 00:02:23.087
+Step three is the one that actually wires it up, and it is a single line. Stripe hosts an official MCP server, and Claude Code connects to it over HTTP.
+
+16
+00:02:23.087 --> 00:02:28.551
+Add it, then run slash m c p inside Claude Code to complete authentication.
+
+17
+00:02:28.551 --> 00:02:42.757
+There are two ways to authenticate, and on your own machine the first is the one to pick: OAuth in the browser. You approve on a Stripe consent screen, and no key is stored in your config at all.
+
+18
+00:02:43.457 --> 00:02:57.892
+A short warning about something you will very likely read elsewhere. Plenty of pages still show a tools flag on the local Stripe MCP package, telling you to list which tools the agent gets. That flag does not exist any more.
+
+19
+00:02:57.892 --> 00:03:06.333
+What controls the tools now is the set of permissions on the restricted key you pass. Scope the key, and you have scoped the agent.
+
+20
+00:03:06.333 --> 00:03:14.711
+Nothing else decides it, so if a page is still showing you that flag, it is out of date and probably wrong about other things too.
+
+21
+00:03:15.411 --> 00:03:26.823
+Step four, and the order here matters. Ask for something read-only first: list my Stripe products and prices. Real data coming back is what proves the connection is live.
+
+22
+00:03:26.823 --> 00:03:34.341
+Then try a small, reversible write: create a test product called Sample Download, then show me how to delete it.
+
+23
+00:03:34.341 --> 00:03:51.123
+Claude will tell you what it is about to do before it touches anything. Read that plan, and then approve. Keep that confirmation switched on for every write action, because it is your safety net while you learn what the connection can actually reach.
+
+24
+00:03:51.823 --> 00:04:05.483
+Step five is the payoff, on the PageMotor side. Two plugins need to be active: EP Ecommerce, which is the store engine, and EP Ecommerce Stripe, the payment provider that extends it.
+
+25
+00:04:05.483 --> 00:04:14.189
+Then open Settings, EP Ecommerce Stripe. Tick Enable Stripe Payments, set Mode to Test, and paste your test keys in.
+
+26
+00:04:14.189 --> 00:04:23.495
+The plugin selects the active key by mode at runtime, so your live keys sit there unused until you deliberately switch over.
+
+27
+00:04:24.195 --> 00:04:30.966
+Now the webhook, which is the thing that makes a payment real on your site rather than just in the browser.
+
+28
+00:04:30.966 --> 00:04:42.168
+When a payment succeeds, Stripe notifies your site server to server, instead of your site trusting a message from the customer's browser. That is the authoritative confirmation.
+
+29
+00:04:42.168 --> 00:04:49.952
+The plugin shows you the exact endpoint URL to register, built from your own site address, and it listens for three events.
+
+30
+00:04:49.952 --> 00:05:07.291
+And here is the part that catches people: the signing secret is a third distinct secret. It is not an API key, and every endpoint has its own. Paste the one matching the endpoint and the mode you are actually using, or signature verification fails and orders never complete.
+
+31
+00:05:07.991 --> 00:05:13.636
+And finally, the step that proves the whole chain is real rather than merely configured.
+
+32
+00:05:13.636 --> 00:05:21.014
+Pay with Stripe's test card, four two four two, repeated, with any future expiry and any three digit security code.
+
+33
+00:05:21.014 --> 00:05:32.882
+Then read the order back in both places: the order recorded in your PageMotor admin, and the payment in your Stripe dashboard. If both show it, the webhook fired and the loop is closed.
+
+34
+00:05:32.882 --> 00:05:38.270
+That round trip is the proof. Anything short of it is just a setting you have saved.
+
