@@ -681,13 +681,13 @@ disk. Search it instead of asking Claude to go looking.</p>
     <input class="tk-search" id="tk-q" type="search" hidden
            aria-label="Search commands and skills"
            placeholder="Search commands and skills, e.g. ship, audit, video">
-    <ul class="tk-pills" id="tk-pills" hidden><li><button type="button" class="tk-pill" data-filter="" aria-pressed="true">All</button></li><li><button type="button" class="tk-pill" data-filter="pm" aria-pressed="false">PageMotor &amp; sites</button></li><li><button type="button" class="tk-pill" data-filter="ep" aria-pressed="false">EP plugins &amp; shipping</button></li><li><button type="button" class="tk-pill" data-filter="review" aria-pressed="false">Review &amp; QA</button></li><li><button type="button" class="tk-pill" data-filter="media" aria-pressed="false">Media &amp; AI generation</button></li><li><button type="button" class="tk-pill" data-filter="infra" aria-pressed="false">Infra &amp; ops</button></li><li><button type="button" class="tk-pill" data-filter="session" aria-pressed="false">Session &amp; workflow</button></li><li><button type="button" class="tk-pill" data-filter="design" aria-pressed="false">Web design technique</button></li></ul>
+    <ul class="tk-pills" id="tk-pills" hidden><li><button type="button" class="tk-pill" data-filter="" aria-pressed="true">All</button></li><li><button type="button" class="tk-pill" data-filter="pm" aria-pressed="false">PageMotor &amp; sites</button></li><li><button type="button" class="tk-pill" data-filter="ep" aria-pressed="false">EP plugins &amp; shipping</button></li><li><button type="button" class="tk-pill" data-filter="review" aria-pressed="false">Review &amp; QA</button></li><li><button type="button" class="tk-pill" data-filter="media" aria-pressed="false">Media &amp; AI generation</button></li><li><button type="button" class="tk-pill" data-filter="infra" aria-pressed="false">Infra &amp; ops</button></li><li><button type="button" class="tk-pill" data-filter="session" aria-pressed="false">Session &amp; workflow</button></li><li><button type="button" class="tk-pill" data-filter="design" aria-pressed="false">Web design technique</button></li><li><button type="button" class="tk-pill" data-filter="other" aria-pressed="false">Everything else</button></li></ul>
     <span class="tk-count" id="tk-count" hidden></span>
   </div>
 </div>
 
 <section class="tk-sec" id="commands">
-  <h2>Slash commands <span class="tk-count">16</span></h2>
+  <h2>Slash commands <span class="tk-count">17</span></h2>
   <p class="es-hint">Type these at the Claude Code prompt. Source lives in
   <code>cc-commands/</code> in the iCloud workspace and is symlinked into
   <code>~/.claude/commands/</code> on each Mac.</p>
@@ -728,6 +728,13 @@ disk. Search it instead of asking Claude to go looking.</p>
 <p class="tk-sum">EP Security expert persona for the session: senior application security engineer for the EP Security plugin (threat modelling, design, implementation, customer docs).</p>
 <div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
 <code class="tk-src">cc-commands/EPS.md</code>
+</article>
+<article class="tk-card" data-cat="other" data-search="/explain explain explain a file, folder, or topic as a self-contained adhd-friendly interactive html guide, saved locally and opened in the browser  everything else" style="--es-cat:var(--es-cat-hosting)">
+<h3 class="tk-name">/explain</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Everything else</span><span class="tk-tag">args: &lt;path or topic&gt;</span></div>
+<p class="tk-sum">Explain a file, folder, or topic as a self-contained ADHD-friendly interactive HTML guide, saved locally and opened in the browser</p>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-no">Mini</span><span class="tk-mac-no">M1 MBP</span></div>
+<code class="tk-src">cc-commands/explain.md</code>
 </article>
 <article class="tk-card" data-cat="session" data-search="/h h print a live cheat sheet of kenn&#x27;s custom slash commands, generated from ~/.claude/commands at run time so it can never go stale.  session &amp; workflow" style="--es-cat:var(--es-cat-privacy)">
 <h3 class="tk-name">/h</h3>
@@ -815,7 +822,7 @@ disk. Search it instead of asking Claude to go looking.</p>
 </section>
 
 <section class="tk-sec" id="skills">
-  <h2>Skills <span class="tk-count">26</span></h2>
+  <h2>Skills <span class="tk-count">27</span></h2>
   <p class="es-hint">Claude loads these itself when the work matches, or you can
   name one. Source lives in <code>cc-skills/</code> and is symlinked into
   <code>~/.claude/skills/</code>. Edit the skill there, nowhere else.</p>
@@ -987,6 +994,14 @@ disk. Search it instead of asking Claude to go looking.</p>
 <div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-no">Mini</span><span class="tk-mac-no">M1 MBP</span></div>
 <code class="tk-src">cc-skills/repo-deep-dive/SKILL.md</code>
 </article>
+<article class="tk-card" data-cat="other" data-search="report-pm-finding report-pm-finding file a structured pm field report by publishing a signed event into the buzz field-reports channel, indexed at reports.elmspark.com. use when a session has confirmed a reproducible pagemotor core finding — a bug, docs gap, environment quirk, or idea — worth sharing beyond this machine. trigger phrases: &quot;file a field report&quot;, &quot;report this to field reports&quot;, &quot;log this pm finding&quot;. never auto-fires: a report leaves the machine only after kenn approves the exact payload. everything else" style="--es-cat:var(--es-cat-hosting)">
+<h3 class="tk-name">report-pm-finding</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Everything else</span></div>
+<p class="tk-sum">File a structured PM field report by publishing a signed event into the Buzz field-reports channel, indexed at reports.elmspark.com.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use when a session has confirmed a reproducible PageMotor core finding — a bug, docs gap, environment quirk, or idea — worth sharing beyond this machine. Trigger phrases: &quot;file a field report&quot;, &quot;report this to field reports&quot;, &quot;log this PM finding&quot;. NEVER auto-fires: a report leaves the machine only after Kenn approves the exact payload.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-no">Mini</span><span class="tk-mac-no">M1 MBP</span></div>
+<code class="tk-src">cc-skills/report-pm-finding/SKILL.md</code>
+</article>
 <article class="tk-card" data-cat="session" data-search="route route &gt;- name the right elmspark command or skill for a task before starting it. use at the start of any ep plugin, pagemotor site, site-design, review, media, discovery ai, or comms task when the correct entrypoint is not obvious, when a task might span several skills, or when kenn asks &quot;which skill/command for x&quot; or types /route. reads the task, names one primary entrypoint with a one-line reason, resolves the known overlaps (qa-site vs pm-verify-before-done, ds vs da vs design-conversion, rp vs rc vs rs vs ultra), lists any compose chain, and points to /h and the toolkit guide for the live inventory. it routes; it does not do the work. it hands off to the entrypoint it names. session &amp; workflow" style="--es-cat:var(--es-cat-privacy)">
 <h3 class="tk-name">route</h3>
 <div class="tk-meta"><span class="tk-tag tk-tag-cat">Session &amp; workflow</span></div>
@@ -995,11 +1010,11 @@ disk. Search it instead of asking Claude to go looking.</p>
 <div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
 <code class="tk-src">cc-skills/route/SKILL.md</code>
 </article>
-<article class="tk-card" data-cat="ep" data-search="ship-ep-plugin ship-ep-plugin ship an ep plugin update end-to-end with a verification gate. rebuilds the zip from current source first (so the uploaded bytes can never be a stale leftover), then bundles the four real ship steps (upload zip to ep-suite-downloads release, run ingest.php on updates.elmspark.com, run a customer-shape post probe against the live update endpoint, download the zip via the customer path and confirm its sha256 matches the manifest&#x27;s announced checksum). refuses to declare &quot;shipped&quot; until all six gate booleans pass. use this for every ep plugin release, every time. replaces ad-hoc `gh release upload` invocations because uploading the zip alone is invisible to customers without the manifest refresh; a successful upload + manifest refresh is still not proof until the post probe is read; and even the post probe is not proof until the customer download path is fetched and its bytes hashed (the manifest&#x27;s checksum is computed against the vps copy, not the github release the customer actually downloads from — they can silently diverge). ep plugins &amp; shipping" style="--es-cat:var(--es-cat-email)">
+<article class="tk-card" data-cat="ep" data-search="ship-ep-plugin ship-ep-plugin ship an ep plugin update end-to-end with a verification gate. rebuilds the zip from current source first (so the uploaded bytes can never be a stale leftover), then bundles the four real ship steps (upload zip to ep-suite-downloads release, run ingest.php on updates.elmspark.com, run a customer-shape post probe against the live update endpoint, download the zip via the customer path and confirm its sha256 matches the manifest&#x27;s announced checksum). refuses to declare &quot;shipped&quot; until all seven gate booleans pass. use this for every ep plugin release, every time. replaces ad-hoc `gh release upload` invocations because uploading the zip alone is invisible to customers without the manifest refresh; a successful upload + manifest refresh is still not proof until the post probe is read; and even the post probe is not proof until the customer download path is fetched and its bytes hashed (the manifest&#x27;s checksum is computed against the vps copy, not the github release the customer actually downloads from — they can silently diverge). ep plugins &amp; shipping" style="--es-cat:var(--es-cat-email)">
 <h3 class="tk-name">ship-ep-plugin</h3>
 <div class="tk-meta"><span class="tk-tag tk-tag-cat">EP plugins &amp; shipping</span></div>
 <p class="tk-sum">Ship an EP plugin update end-to-end with a verification gate. Rebuilds the zip from current source first (so the uploaded bytes can never be a stale leftover), then bundles the four real ship steps (upload zip to ep-suite-downloads release, run ingest.php on updates.elmspark.com, run a customer-shape POST probe against the live update endpoint, download the zip via the customer path and confirm its SHA256 matches the manifest&#x27;s announced checksum).</p>
-<details><summary>When it fires, and the caveats</summary><p>Refuses to declare &quot;shipped&quot; until all six gate booleans pass. Use this for EVERY EP plugin release, every time. Replaces ad-hoc `gh release upload` invocations because uploading the zip alone is invisible to customers without the manifest refresh; a successful upload + manifest refresh is still not proof until the POST probe is read; and even the POST probe is not proof until the customer download path is fetched and its bytes hashed (the manifest&#x27;s checksum is computed against the VPS copy, not the GitHub release the customer actually downloads from — they can silently diverge).</p></details>
+<details><summary>When it fires, and the caveats</summary><p>Refuses to declare &quot;shipped&quot; until all seven gate booleans pass. Use this for EVERY EP plugin release, every time. Replaces ad-hoc `gh release upload` invocations because uploading the zip alone is invisible to customers without the manifest refresh; a successful upload + manifest refresh is still not proof until the POST probe is read; and even the POST probe is not proof until the customer download path is fetched and its bytes hashed (the manifest&#x27;s checksum is computed against the VPS copy, not the GitHub release the customer actually downloads from — they can silently diverge).</p></details>
 <div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-yes">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
 <code class="tk-src">cc-skills/ship-ep-plugin/SKILL.md</code>
 </article>
@@ -1157,7 +1172,7 @@ disk. Search it instead of asking Claude to go looking.</p>
   symlink.</p>
   <div class="tk-scroll"><table class="tk-table">
     <thead><tr><th>Mac</th><th>Host</th><th>State at generation</th></tr></thead>
-    <tbody><tr><td><strong>M5 MacBook Pro</strong></td><td>local</td><td>53 skills, 18 commands</td></tr><tr><td><strong>M1 Mac Mini</strong></td><td>mini-ts</td><td>39 skills, 17 commands</td></tr><tr><td><strong>M1 MacBook Pro</strong></td><td>mbp-ts</td><td>39 skills, 17 commands</td></tr></tbody>
+    <tbody><tr><td><strong>M5 MacBook Pro</strong></td><td>local</td><td>54 skills, 19 commands</td></tr><tr><td><strong>M1 Mac Mini</strong></td><td>mini-ts</td><td>39 skills, 17 commands</td></tr><tr><td><strong>M1 MacBook Pro</strong></td><td>mbp-ts</td><td>39 skills, 17 commands</td></tr></tbody>
   </table></div>
   <p class="es-hint">Install one:</p>
   <pre><code>ln -sf "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/cc-skills/&lt;name&gt;" "$HOME/.claude/skills/&lt;name&gt;"</code></pre>
@@ -1187,8 +1202,8 @@ disk. Search it instead of asking Claude to go looking.</p>
   page at all, <code>/h</code> prints one from disk on Haiku.</p>
 </section>
 
-<p class="es-hint">Generated 18 August 2026 at 23:05 on KNJ-M5-MBP from
-16 command files and 40 skill folders.</p>
+<p class="es-hint">Generated 29 August 2026 at 11:09 on KNJ-M5-MBP from
+17 command files and 41 skill folders.</p>
 
 </main>
 
