@@ -147,6 +147,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <strong>The short version:</strong> the whole network side of the suite, AI, payments, bookings, print-on-demand and licence activation, runs on budget shared hosting. Only outbound email is blocked, and the fix is to use the server's own mail system. Everything here was measured on a live GoDaddy cPanel box (PHP&nbsp;8.3, LiteSpeed) in June&nbsp;2026, not assumed.
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole picture in 3 minutes 53 seconds, narrated, with captions &mdash; what we measured on a real budget box, the one thing that is genuinely blocked, and the two-part fix.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The short version.</strong> It works. We tested the suite on real GoDaddy shared hosting, the cheapest tier, and almost everything runs exactly as it does on a VPS. There is one genuine limit, and it has a simple fix.</p>
+          <p style="margin:0 0 10px"><strong>The headline is the reverse of the fear.</strong> The worry is that a shared host firewalls everything and breaks any plugin talking to an outside service. On the box we tested, only SMTP was blocked. Outbound HTTPS was wide open to every service the suite uses, each reachable in well under a tenth of a second.</p>
+          <p style="margin:0 0 10px"><strong>The one real limit</strong> is outbound SMTP, blocked as a matter of policy. Point a plugin at Mailgun, SendGrid or Brevo and it simply times out, on every port. It trips up nearly everyone, because the usual advice — just use SMTP through Mailgun — is written for VPS hosting and quietly fails here.</p>
+          <p style="margin:0 0 10px"><strong>The fix has two halves.</strong> Send through the server's own mail system: host <code>localhost</code>, port 25, no encryption, no authentication — or the <code>PHP mail()</code> transport, which uses the same local system with nothing to configure. Then add SPF and DKIM records, because without them Gmail and Outlook silently drop the mail. It does not bounce; it disappears.</p>
+          <p style="margin:0 0 10px"><strong>What actually works</strong> is most of it. The AI features reach their providers. Stripe checkout, memberships, class passes and bookings all run. Zoom and Printify work. Fonts, SEO, analytics and breadcrumbs work. And licence activation and plugin updates reach ElmsPark, so a plugin you bought activates normally. You are not locked out.</p>
+          <p style="margin:0 0 10px"><strong>The real constraints are resources, not the network.</strong> Upload size capped at 32&nbsp;MB and memory at 128&nbsp;MB on the box we tested, a 1,000-field form cap, and usually no object cache, so a busy site is a little slower than the same site on a tuned VPS.</p>
+          <p style="margin:0 0 10px"><strong>A normal site will never notice.</strong> Business sites, portfolios, small shops, courses, memberships and booking sites. The EP Suite runs on shared hosting, AI and payments included, for the price of a coffee a month.</p>
+          <p style="margin:0 0 10px"><strong>Test your own host rather than guess.</strong> Quickest signal: set EP Email to SMTP through an outside service and run Test Connection — a timeout on every port means your host blocks it. Fuller picture: EP Host Check shows SMTP, outbound connections, upload and memory limits and the MCP checks, each with a plain fix.</p>
+          <p style="margin:0 0 10px"><strong>When a VPS earns its place:</strong> external email through Mailgun with the best deliverability, heavy bulk operations or large media, traffic high enough that the resource caps bite, or simply wanting full control. When that day comes, everything you built carries straight over.</p>
+          <p style="margin:0"><strong>Nothing here is assumed.</strong> The email limit, the open HTTPS and the resource caps were all measured on a live GoDaddy cPanel box, not inferred from documentation.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>On this page</p>
     <ol>

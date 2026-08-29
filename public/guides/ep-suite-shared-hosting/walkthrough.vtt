@@ -1,0 +1,114 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:06.489
+Running the EP Suite on shared hosting. The short version is that it works.
+
+2
+00:00:06.489 --> 00:00:15.879
+We tested the suite on real GoDaddy shared hosting, the cheapest tier, and almost everything runs exactly as it does on a VPS.
+
+3
+00:00:15.879 --> 00:00:19.755
+There is one genuine limit, and it has a simple fix.
+
+4
+00:00:20.455 --> 00:00:31.821
+The headline is the reverse of what people fear. The worry is that a shared host firewalls everything and breaks any plugin that talks to an outside service.
+
+5
+00:00:31.821 --> 00:00:36.382
+On the box we tested, that was not true. Only SMTP was blocked.
+
+6
+00:00:36.382 --> 00:00:44.418
+Outbound HTTPS was wide open to every service the suite uses, each reachable in well under a tenth of a second.
+
+7
+00:00:45.118 --> 00:00:50.761
+That one limit is outbound SMTP, and it is blocked as a matter of policy.
+
+8
+00:00:50.761 --> 00:00:58.877
+Point a plugin at Mailgun, SendGrid or Brevo on a shared host and it will simply time out, on every port.
+
+9
+00:00:58.877 --> 00:01:09.545
+It trips up nearly everyone, because the usual advice — just use SMTP through Mailgun — is written for VPS hosting and quietly fails here.
+
+10
+00:01:10.245 --> 00:01:20.434
+The fix has two halves. First, send through the server's own mail system: host localhost, port 25, no encryption, no authentication.
+
+11
+00:01:20.434 --> 00:01:27.227
+Or the PHP mail() transport, which uses the same local system with nothing to configure.
+
+12
+00:01:27.227 --> 00:01:38.573
+Second, add SPF and DKIM records for your domain, because without them Gmail and Outlook silently drop the mail. It does not bounce. It disappears.
+
+13
+00:01:39.273 --> 00:01:44.483
+What actually works is most of it. The AI features reach their providers.
+
+14
+00:01:44.483 --> 00:01:53.331
+Payments work, so Stripe checkout, memberships, class passes and bookings all run. Zoom bookings and Printify checkout work.
+
+15
+00:01:53.331 --> 00:02:05.605
+Fonts, SEO, analytics and breadcrumbs work. And licence activation and plugin updates reach ElmsPark, so a plugin you bought will activate normally. You are not locked out.
+
+16
+00:02:06.305 --> 00:02:12.310
+The real constraints on shared hosting are not the network, they are resources.
+
+17
+00:02:12.310 --> 00:02:17.860
+Upload size is capped, 32 MB on the box we tested. Memory is modest, 128.
+
+18
+00:02:17.860 --> 00:02:29.339
+There is a cap on form fields, and usually no object cache, no Redis or Memcached, so a busy site is a little slower than the same site on a tuned VPS.
+
+19
+00:02:30.039 --> 00:02:41.423
+None of that stops the suite working. If your site is a normal business site, a portfolio, a small shop, a course or a membership, none of it will get in your way.
+
+20
+00:02:41.423 --> 00:02:48.197
+The EP Suite runs on shared hosting, AI and payments included, for the price of a coffee a month.
+
+21
+00:02:48.897 --> 00:03:00.257
+Hosts differ, so test yours rather than guess. The quickest signal: set EP Email to SMTP through an outside service and run Test Connection.
+
+22
+00:03:00.257 --> 00:03:05.288
+If it times out on every port, your host blocks external SMTP.
+
+23
+00:03:05.288 --> 00:03:19.083
+The fuller picture is one plugin away: EP Host Check shows you SMTP, outbound connections, upload and memory limits, and the MCP connection checks, each with a plain fix.
+
+24
+00:03:19.783 --> 00:03:28.569
+A VPS earns its place when you want external email through Mailgun with the best deliverability, when you run heavy bulk operations or large media,
+
+25
+00:03:28.569 --> 00:03:35.501
+when traffic is high enough that the resource limits start to bite, or when you simply want full control of the box.
+
+26
+00:03:35.501 --> 00:03:40.402
+When that day comes, everything you built on shared hosting carries straight over.
+
+27
+00:03:41.102 --> 00:03:43.305
+And nothing on that page is assumed.
+
+28
+00:03:43.305 --> 00:03:51.505
+The email limit, the open HTTPS and the resource caps were all measured on a live GoDaddy cPanel box, not inferred from documentation.
+
