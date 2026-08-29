@@ -424,6 +424,15 @@
       "entries": [
         {
           "slugs": [
+            "ep-3d-viewer"
+          ],
+          "titles": [
+            "EP 3D Viewer"
+          ],
+          "blurb": "Interactive 3D models with labels pinned to the surface, served entirely from your own domain."
+        },
+        {
+          "slugs": [
             "ep-attribution"
           ],
           "titles": [

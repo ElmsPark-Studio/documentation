@@ -1,4 +1,8 @@
 {
+  "ep-3d-viewer": {
+    "tier": "professional",
+    "version": "0.1.2"
+  },
   "ep-affiliate": {
     "tier": "professional",
     "version": "0.1.13"
@@ -65,7 +69,7 @@
   },
   "ep-class-passes": {
     "tier": "professional",
-    "version": "1.2.8"
+    "version": "1.2.9"
   },
   "ep-comments": {
     "tier": "business",
@@ -145,7 +149,7 @@
   },
   "ep-email": {
     "tier": "foundation",
-    "version": "1.10.44"
+    "version": "1.10.45"
   },
   "ep-email-advanced-forms": {
     "tier": "professional",
@@ -373,7 +377,7 @@
   },
   "ep-waivers": {
     "tier": "professional",
-    "version": "1.2.6"
+    "version": "1.2.7"
   },
   "ep-whatsapp": {
     "tier": "professional",
@@ -393,7 +397,7 @@
   },
   "tibaai-discovery": {
     "tier": "private",
-    "version": "1.11.19-wiredforms"
+    "version": "1.11.27-enquirycsrf"
   },
   "tibaai-editor": {
     "tier": "private",

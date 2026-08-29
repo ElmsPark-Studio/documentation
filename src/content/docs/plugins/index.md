@@ -73,6 +73,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 
 ### Content and UX
 
+- **[EP 3D Viewer](/plugins/ep-3d-viewer/)**. Interactive 3D models with labels pinned to the surface, served entirely from your own domain.
 - **[EP Attribution](/plugins/ep-attribution/)**. A small "Built on PageMotor. Designed by ElmsPark." credit line in your site footer. One toggle, theme-agnostic.
 - **[EP Blog](/plugins/ep-blog/)**. A blog for PageMotor: Post content type, chronological index with excerpts and pagination, categories, tags, bylines, and previous/next navigation.
 - **[EP Breadcrumbs](/plugins/ep-breadcrumbs/)**. Breadcrumb navigation with Schema.org structured data.
