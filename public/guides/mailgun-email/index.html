@@ -58,9 +58,28 @@ code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:.82e
 .screenshot{margin:20px 0; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#e9e4d8}
 .screenshot img{display:block; width:100%; height:auto; border-radius:10px 10px 0 0}
 .screenshot figcaption{font-family:system-ui,sans-serif; font-size:13px; color:var(--soft); padding:8px 14px; background:#f0ece2; border-top:1px solid var(--line)}
-.screenshot-placeholder{min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:repeating-linear-gradient(45deg,#f0ede4,#f0ede4 10px,#e8e3d6 10px,#e8e3d6 20px); padding:30px 20px; border-radius:10px}
-.screenshot-placeholder .sp-label{font-family:system-ui,sans-serif; font-size:13px; color:#8a7d65; font-weight:600; text-align:center; letter-spacing:.02em; text-transform:uppercase}
-.screenshot-placeholder .sp-desc{font-family:system-ui,sans-serif; font-size:13px; color:#a39785; text-align:center; max-width:400px; line-height:1.5}
+/* Illustrative diagrams (added Aug 2026). Explicitly NOT screenshots: these
+   show states that were never captured, drawn in house style and labelled. */
+.diagram{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:0; overflow:hidden; margin:16px 0}
+.diagram .dg-head{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#f4f0e6; border-bottom:1px solid var(--line); padding:9px 14px; font-family:system-ui,sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--soft)}
+.diagram .dg-tag{font-weight:600; text-transform:none; letter-spacing:0; color:#a39785; font-size:11.5px}
+.diagram .dg-body{padding:14px 16px}
+.dg-row{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #ede7d6; font-family:system-ui,sans-serif; font-size:14px}
+.dg-row:last-child{border-bottom:0}
+.dg-row .t{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; background:#f4f0e6; border:1px solid var(--line); border-radius:5px; padding:1px 7px; white-space:nowrap}
+.dg-row .n{flex:1; min-width:0; overflow-wrap:anywhere; color:var(--ink)}
+.dg-cloud{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; white-space:nowrap}
+.dg-cloud i{width:13px; height:13px; border-radius:50%; display:inline-block}
+.dg-cloud.grey i{background:#b8b2a4} .dg-cloud.grey{color:var(--soft)}
+.dg-cloud.orange i{background:#e8862c} .dg-cloud.orange{color:#8a4a12}
+.dg-tick{color:#2f7a54; font-weight:700}
+.dg-banner{background:#fdf6e3; border:1px solid #e6d9a8; border-left:4px solid #d9ab2c; border-radius:8px; padding:10px 13px; font-family:system-ui,sans-serif; font-size:13.5px; color:#6b5618; margin-bottom:12px}
+.dg-nav{font-family:system-ui,sans-serif; font-size:14px}
+.dg-nav ul{list-style:none; margin:0; padding:0}
+.dg-nav li{padding:6px 0 6px 0}
+.dg-nav .lvl2{padding-left:20px} .dg-nav .lvl3{padding-left:40px}
+.dg-nav .on{background:#edf7f2; border-left:3px solid #2f7a54; padding-left:37px; font-weight:600; color:#1e5238; border-radius:0 6px 6px 0}
+.dg-btn{display:inline-block; background:#2f5d4a; color:#fff; font-family:system-ui,sans-serif; font-size:13px; font-weight:600; border-radius:6px; padding:7px 14px}
 /* Field table for the Add Domain form */
 .field-table{width:100%; border-collapse:collapse; margin:16px 0; font-size:16px}
 .field-table th{text-align:left; font-family:system-ui,sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--soft); padding:8px 12px; border-bottom:2px solid var(--line); background:#f4f0e6}
@@ -248,18 +267,19 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   <section class="step" id="s1">
     <h2><span class="num">1</span><span class="t">Create your Mailgun account</span></h2>
 
-    <p>Sign up at <a href="https://www.mailgun.com">mailgun.com</a>. The free plan needs no credit card. You&rsquo;ll be asked to verify your email address before you can do anything else &mdash; do that before continuing.</p>
-
-    <figure class="screenshot" aria-label="Mailgun sign-up form">
-      <div class="screenshot-placeholder">
-        <div class="sp-label">Screenshot: Mailgun sign-up page</div>
-        <div class="sp-desc">The sign-up form at mailgun.com. Enter your name, email and choose a password.</div>
-      </div>
-      <figcaption>mailgun.com &rarr; Sign up free</figcaption>
-    </figure>
+    <p>Sign up at <a href="https://www.mailgun.com">mailgun.com</a>. Three fields, and you will be asked to verify your email address before you can do anything else &mdash; do that before continuing.</p>
 
     <div class="note warn">
-      <strong>The most important choice on the sign-up form: pick your Region.</strong> Choose <strong>EU</strong> if your site visitors are mainly in the UK or Europe. Choose <strong>US</strong> for North American audiences. This is locked per domain for life. You cannot move a domain between regions later, so get this right now.
+      <strong>Untick &ldquo;Add a credit card to remove the limit!&rdquo; before you submit.</strong> It arrives <em>ticked</em>, and leaving it ticked opens a full payment form and signs you up to a 30-day trial of the Foundation 50k plan, which bills at $35 a month afterwards. Untick it and the form collapses back to three fields, with Mailgun stating plainly that free accounts without a credit card are limited to 100 messages a day. That is the plan this guide assumes, and it is plenty for most sites.
+    </div>
+
+    <figure class="screenshot" aria-label="Mailgun sign-up form with the credit card option unticked">
+      <img src="screenshots/01-signup.png" alt="The Mailgun sign-up form showing Full Name, Company and Work Email fields, an information box reading free accounts without a credit card are limited to 100 messages per day, and the Add a credit card checkbox unticked" width="1168" height="1490" loading="lazy">
+      <figcaption>mailgun.com &rarr; Sign up free, with the credit-card box unticked</figcaption>
+    </figure>
+
+    <div class="note">
+      <strong>No region is chosen here any more.</strong> Mailgun&rsquo;s sign-up form carries no region field: you pick EU or US when you add the domain in Step 2, and it is locked to that domain for life. The choice still matters enormously, it just happens one step later than it used to.
     </div>
   </section>
 
@@ -270,13 +290,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
     <p>Once logged in, you land on the dashboard. Navigate to <strong>Send &rarr; Sending &rarr; Domains</strong> in the left sidebar. Your account starts with a sandbox domain &mdash; ignore that. You want to add your own domain.</p>
 
-    <figure class="screenshot" aria-label="Mailgun left sidebar showing Send menu">
-      <div class="screenshot-placeholder">
-        <div class="sp-label">Screenshot: Mailgun dashboard</div>
-        <div class="sp-desc">The left sidebar. Click <strong>Send</strong> to expand it, then click <strong>Sending</strong>, then <strong>Domains</strong>.</div>
-      </div>
-      <figcaption>Mailgun dashboard &mdash; left sidebar navigation</figcaption>
-    </figure>
 
     <p>On the Domains page, click <strong>Add new domain</strong>.</p>
 
@@ -314,7 +327,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
           <td class="fval">
             <span class="pick correct"><span class="pick-icon">&#x2713;</span> EU &mdash; if you or your audience are in the UK or Europe</span><br>
             <span class="pick correct"><span class="pick-icon">&#x2713;</span> US &mdash; if your audience is in North America</span>
-            <p style="font-size:15px;margin:8px 0 0;color:var(--soft)">This must match the region you chose when you signed up. It is locked per domain for life.</p>
+            <p style="font-size:15px;margin:8px 0 0;color:var(--soft)">This is where the region is chosen. It is locked per domain for life, so pick the one your audience is in.</p>
           </td>
         </tr>
         <tr>
@@ -474,12 +487,12 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
         <li>For CNAME records: paste the full value Mailgun gives you including the trailing dot if one appears.</li>
       </ol>
 
-      <figure class="screenshot" aria-label="Cloudflare DNS panel with records added">
-        <div class="screenshot-placeholder">
-          <div class="sp-label">Screenshot: Cloudflare DNS panel</div>
-          <div class="sp-desc">All 7 Mailgun records added, each showing a grey cloud (DNS only) icon.</div>
+      <figure class="screenshot">
+        <div class="diagram">
+          <div class="dg-head"><span>Cloudflare &rsaquo; DNS &rsaquo; Records</span><span class="dg-tag">Illustration, not a screenshot</span></div>
+          <div class="dg-body"><div class="dg-row"><span class="t">TXT</span><span class="n">mg.yourdomain.com</span><span class="dg-cloud grey"><i></i>DNS only</span></div><div class="dg-row"><span class="t">CNAME</span><span class="n">pdk1._domainkey.mg</span><span class="dg-cloud grey"><i></i>DNS only</span></div><div class="dg-row"><span class="t">CNAME</span><span class="n">pdk2._domainkey.mg</span><span class="dg-cloud grey"><i></i>DNS only</span></div><div class="dg-row"><span class="t">CNAME</span><span class="n">email.mg</span><span class="dg-cloud grey"><i></i>DNS only</span></div><div class="dg-row"><span class="t">MX</span><span class="n">mg.yourdomain.com</span><span class="dg-cloud grey"><i></i>DNS only</span></div><div class="dg-row"><span class="t">MX</span><span class="n">mg.yourdomain.com</span><span class="dg-cloud grey"><i></i>DNS only</span></div><div class="dg-row" style="opacity:.55"><span class="t">CNAME</span><span class="n">any record still showing this</span><span class="dg-cloud orange"><i></i>Proxied &mdash; wrong</span></div></div>
         </div>
-        <figcaption>Cloudflare DNS &rarr; Records &mdash; every record must show the grey cloud, not orange</figcaption>
+        <figcaption>Every Mailgun record on the grey cloud. A single orange one breaks authentication.</figcaption>
       </figure>
     </details>
 
@@ -523,13 +536,6 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
     <p>Once all records are added at your DNS provider, return to Mailgun and click <strong>Check Status</strong> (or <strong>Verify DNS Settings</strong>) on the DNS records page. Each record should change from a red cross to a green tick.</p>
 
-    <figure class="screenshot" aria-label="DNS records screen with all records verified and green">
-      <div class="screenshot-placeholder">
-        <div class="sp-label">Screenshot: verified DNS records</div>
-        <div class="sp-desc">Every record showing a green tick. The domain status will change from &ldquo;Unverified&rdquo; to &ldquo;Active&rdquo;.</div>
-      </div>
-      <figcaption>All records verified &mdash; every row should be green before you continue</figcaption>
-    </figure>
 
     <div class="note">
       <strong>Records not turning green?</strong> DNS changes can take a few minutes (Cloudflare is usually under 60 seconds; IONOS can take up to 30 minutes). Wait a couple of minutes and click Check Status again. If a specific record stays red, compare the value in Mailgun to what you entered in your DNS panel character by character.
@@ -545,12 +551,12 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
     <p>On the domain settings page, you may see a yellow warning like &ldquo;Unverified domain settings&rdquo; even though all records are green. That warning clears automatically once DKIM is fully active. Refresh the page every few minutes until the warning disappears.</p>
 
-    <figure class="screenshot" aria-label="Mailgun domain page showing DKIM activation warning">
-      <div class="screenshot-placeholder">
-        <div class="sp-label">Screenshot: DKIM activation in progress</div>
-        <div class="sp-desc">All DNS records are green but a yellow banner still shows &ldquo;Unverified domain settings&rdquo;. This is normal. Refresh until it clears.</div>
+    <figure class="screenshot">
+      <div class="diagram">
+        <div class="dg-head"><span>Domain settings, during DKIM activation</span><span class="dg-tag">Illustration, not a screenshot</span></div>
+        <div class="dg-body"><div class="dg-banner">&#9888;&nbsp; Unverified domain settings</div><div class="dg-row"><span class="dg-tick">&#10003;</span><span class="t">TXT</span><span class="n">SPF</span></div><div class="dg-row"><span class="dg-tick">&#10003;</span><span class="t">CNAME</span><span class="n">DKIM pdk1</span></div><div class="dg-row"><span class="dg-tick">&#10003;</span><span class="t">CNAME</span><span class="n">DKIM pdk2</span></div><div class="dg-row"><span class="dg-tick">&#10003;</span><span class="t">MX</span><span class="n">Bounce handling</span></div></div>
       </div>
-      <figcaption>This yellow warning clears automatically once DKIM is active &mdash; usually within a few minutes</figcaption>
+      <figcaption>Every row ticked, and a yellow banner anyway. That combination is normal, and it clears itself.</figcaption>
     </figure>
 
     <div class="note calm">
@@ -567,12 +573,12 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
 
     <p>In your Mailgun domain settings, scroll to the <strong>Authentication records</strong> section near the bottom and click <strong>Enable DMARC</strong>. Mailgun generates a TXT record value for you.</p>
 
-    <figure class="screenshot" aria-label="Mailgun DMARC section with Enable button">
-      <div class="screenshot-placeholder">
-        <div class="sp-label">Screenshot: Authentication records section</div>
-        <div class="sp-desc">The Enable DMARC button in the domain settings page. Click it and Mailgun generates a TXT record value.</div>
+    <figure class="screenshot">
+      <div class="diagram">
+        <div class="dg-head"><span>Domain settings, bottom of the page</span><span class="dg-tag">Illustration, not a screenshot</span></div>
+        <div class="dg-body"><div class="dg-nav"><ul><li>Domain settings</li><li class="lvl2">Sending records</li><li class="lvl2">Receiving records</li><li class="lvl2">Tracking records</li><li class="lvl2 on">Authentication records &nbsp;&larr;&nbsp; scroll to the bottom</li></ul><div style="margin-top:12px"><span class="dg-btn">Enable DMARC</span></div></div></div>
       </div>
-      <figcaption>Domain settings &rarr; Authentication records &rarr; Enable DMARC</figcaption>
+      <figcaption>Authentication records sits below the record tables. Enable DMARC generates the TXT value for you.</figcaption>
     </figure>
 
     <p>Copy the TXT record value Mailgun gives you. It will look something like:</p>
@@ -636,7 +642,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
           <ul>
             <li><strong>Sending Key</strong> &mdash; the key you copied in Step 8</li>
             <li><strong>Sending Domain</strong> &mdash; <code>mg.yourdomain.com</code></li>
-            <li><strong>Region</strong> &mdash; EU or US, matching what you chose in Step 1</li>
+            <li><strong>Region</strong> &mdash; EU or US, matching what you chose for the domain in Step 2</li>
           </ul>
         </li>
         <li>Click <strong>Test Connection</strong>. It should turn green.</li>
