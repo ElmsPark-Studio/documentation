@@ -1,0 +1,73 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.532
+Claude's custom connector screen changed in August 2026.
+
+00:00:04.532 --> 00:00:12.379
+If you connect a PageMotor site to Claude, two things are different, and one of them can stop you getting in.
+
+00:00:12.379 --> 00:00:15.547
+Here is the whole change, in ninety seconds.
+
+00:00:16.847 --> 00:00:19.510
+Adding a connector is now two steps.
+
+00:00:19.510 --> 00:00:28.608
+First you give it a name, and the address of your site's connector: your site's web address, followed by slash, mcp, slash.
+
+00:00:28.608 --> 00:00:31.863
+All lower case, and keep the trailing slash.
+
+00:00:31.863 --> 00:00:37.559
+Then Claude goes away and reads your site, before it shows you anything else.
+
+00:00:38.859 --> 00:00:43.296
+What comes back is a panel with the answers already filled in.
+
+00:00:43.296 --> 00:00:48.519
+On screen, Authentication is set to Always required, and marked Detected.
+
+00:00:48.519 --> 00:00:55.389
+Below it, OAuth client is set to No client ID, register one automatically, also marked Detected.
+
+00:00:55.389 --> 00:00:59.397
+For a healthy PageMotor site, both of those are correct.
+
+00:00:59.397 --> 00:01:03.333
+The right thing to do is change nothing, and press Add.
+
+00:01:04.633 --> 00:01:09.473
+There is one trap. The first OAuth option is labelled Recommended.
+
+00:01:09.473 --> 00:01:18.860
+It uses client details hosted by Anthropic, and PageMotor has no code for it, so sign-in stops on a page reading Unknown client.
+
+00:01:18.860 --> 00:01:22.381
+The label to trust is Detected, not Recommended.
+
+00:01:22.381 --> 00:01:29.641
+The third option, use your own OAuth client, fails differently, on a page reading Invalid resource.
+
+00:01:29.641 --> 00:01:31.475
+Leave both of them alone.
+
+00:01:32.775 --> 00:01:36.462
+After you sign in there is a new screen worth a look.
+
+00:01:36.462 --> 00:01:43.420
+Every tool your site offers is listed, and each one can be set to always allow, ask first, or never.
+
+00:01:43.420 --> 00:01:47.386
+A studio connector is read only, so always allow is safe.
+
+00:01:47.386 --> 00:01:52.047
+If you would rather watch it work for a week, set the group to ask.
+
+00:01:53.347 --> 00:01:59.479
+Both guides are updated. The step by step is Ask your studio with Claude.
+
+00:01:59.479 --> 00:02:08.299
+The full list of everything that can go wrong, now including this one, is PageMotor plus Claude Code MCP.
+
+00:02:08.299 --> 00:02:12.666
+Both are at documentation.elmspark.com slash guides.

@@ -213,6 +213,26 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <strong>Claude&rsquo;s connector dialog changed in August 2026.</strong> Adding a custom connector is now a two-step flow: you give a name and a URL, then Claude fetches your site&rsquo;s discovery documents and pre-answers the rest, marking what it worked out as <strong>Detected</strong>. For a healthy PageMotor site that means <em>Authentication: always required</em> and <em>OAuth client: no client ID</em>, and the correct action is to change nothing. The dialog also exposes settings that never had a home before, and one of them is a new way to fail: see <a href="#client">trap seven</a>. Traps one to six below are unchanged, and every one of them still bites.
     </div>
 
+    <div style="margin:1.75rem 0">
+      <video controls preload="metadata" poster="../ask-your-studio-with-claude/mcp-connector-change-poster.webp" width="1920" height="1080"
+             style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+        <source src="../ask-your-studio-with-claude/mcp-connector-change.mp4" type="video/mp4">
+        <track kind="captions" src="../ask-your-studio-with-claude/mcp-connector-change.vtt" srclang="en" label="English" default>
+        Your browser cannot play this video. <a href="../ask-your-studio-with-claude/mcp-connector-change.mp4">Download it instead</a>.
+      </video>
+      <p style="font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The change in two minutes and thirteen seconds, including trap seven. Narrated, with captions.</p>
+      <details style="margin-top:10px;font-size:.9rem">
+        <summary style="cursor:pointer;color:#2f5d4a">Read the transcript instead</summary>
+        <div style="margin-top:12px;padding-left:2px;color:#5d574c;line-height:1.65">
+        <p style="margin:0 0 12px"><strong>The change.</strong> Claude&rsquo;s custom connector screen changed in August 2026. If you connect a PageMotor site to Claude, two things are different, and one of them can stop you getting in.</p>
+        <p style="margin:0 0 12px"><strong>Step one.</strong> Adding a connector is now two steps. First you give it a name, and the address of your site&rsquo;s connector: your site&rsquo;s web address followed by <code>/mcp/</code>, all lower case, keeping the trailing slash. Then Claude reads your site before it shows you anything else.</p>
+        <p style="margin:0 0 12px"><strong>Step two.</strong> What comes back is a panel with the answers already filled in. Authentication is set to <strong>Always required</strong>, marked Detected. OAuth client is set to <strong>No client ID, register one automatically</strong>, also marked Detected. For a healthy PageMotor site both are correct, so change nothing and press Add.</p>
+        <p style="margin:0 0 12px"><strong>The trap.</strong> The first OAuth option is labelled Recommended. It uses client details hosted by Anthropic, and PageMotor has no code for it, so sign-in stops on a page reading <strong>Unknown client</strong>. The label to trust is Detected, not Recommended. The third option, use your own OAuth client, fails differently, on a page reading <strong>Invalid resource</strong>. Leave both alone.</p>
+        <p style="margin:0 0 12px"><strong>After sign-in.</strong> Every tool your site offers is listed, and each can be set to always allow, ask first, or never. A studio connector is read-only, so always allow is safe. If you would rather watch it work for a week, set the group to ask.</p>
+        </div>
+      </details>
+    </div>
+
     <h3>Trap one: the missing <code>--transport http</code></h3>
     <p><code>claude mcp add</code> defaults to <strong>stdio</strong> transport. Run it without the flag and Claude Code stores your URL as a <em>local command to execute</em>. No HTTP request ever reaches your site, and the error is indistinguishable from a server fault. The known-good form:</p>
     <div class="codewrap">
