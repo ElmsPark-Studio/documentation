@@ -82,13 +82,13 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
 <div class="toolbar">
   <div class="wrap">
     <div class="search">
-      <input id="q" type="search" placeholder="Search 306 assets… (name, what, where, access)" autocomplete="off" autofocus>
-      <span class="meta" id="meta">306 assets · 6 categories</span>
+      <input id="q" type="search" placeholder="Search 307 assets… (name, what, where, access)" autocomplete="off" autofocus>
+      <span class="meta" id="meta">307 assets · 6 categories</span>
     </div>
     <div class="chips">
-      <button class="chip active" data-cat="__all">All <span class="n">306</span></button>
+      <button class="chip active" data-cat="__all">All <span class="n">307</span></button>
 <button class="chip" data-cat="sites-dashboards">Sites &amp; Dashboards <span class="n">68</span></button>
-<button class="chip" data-cat="docs-guides">Docs &amp; Guides <span class="n">88</span></button>
+<button class="chip" data-cat="docs-guides">Docs &amp; Guides <span class="n">89</span></button>
 <button class="chip" data-cat="tools-commands-skills">Tools (commands &amp; skills) <span class="n">58</span></button>
 <button class="chip" data-cat="credentials-access">Credentials &amp; Access <span class="n">13</span></button>
 <button class="chip" data-cat="code-infra">Code &amp; Infra <span class="n">56</span></button>
@@ -513,7 +513,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
         </div>
       </section>
       <section class="cat" id="cat-docs-guides" data-cat="docs-guides">
-        <h2>Docs &amp; Guides <span class="count">88</span></h2>
+        <h2>Docs &amp; Guides <span class="count">89</span></h2>
         <div class="grid">
         <article class="card" data-search="just ask page: the brand book the complete brand for the discovery interview&#x27;s customer-facing character, page (the naming idea was chris and olga’s; helen coined page; kenn found the ask + domain; 9 aug 2026): the five-meanings name case, six protection rules (spelled page never paige; never initials), website-interview positioning, character + voice with a worked transcript, the four-beat interview (doorstep / interview / reveal / handover), the marginalia look (paper/ink/pen-red, literata + inter via bunny, talking-page mark), a paste-ready copy kit, and a rollout section with three decision chips for kenn (pronoun, accent, front doors vs buildtheweb.site). namespace checked clear 9 aug (the &quot;paige&quot; ai field is crowded; the e-spelling + three-word mark are the ownable assets). justaskpage.com is live (the interview take, 9 aug late: le cert, www 301, working capture to /var/www/page-interview-data/leads.jsonl on ionos-ts, noindex until the launch call). this is the customer-facing brand for the engine internally called discovery ai, which stays private per the distribution rule. https://guides.elmspark.com/just-ask-page-brand/ · source `guides-elmspark-com/site/just-ask-page-brand/` guides otp gate (kennwebmail@gmail.com or info@elmspark.com)">
           <h3>Just Ask Page: the brand book</h3>
@@ -597,6 +597,12 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
           <h3>Claude MCP connector guides (public pair) + narrated video</h3>
           <p class="what">The two guides covering connecting a PageMotor site to Claude, both updated 2026-08-29 for Anthropic&#x27;s rebuilt **Add custom connector** dialog. <code>ask-your-studio-with-claude</code> is the beginner how-to (two-step flow, the Detected settings, the new per-tool permissions screen); <code>pagemotor-mcp-troubleshooting</code> is the full failure catalogue, which gained **trap seven**: the OAuth client option Anthropic marks *Recommended* is CIMD, and PageMotor core carries no <code>client_id_metadata</code> support at any version, so choosing it dies on <code>400 Unknown client</code> — distinct from the <code>400 Invalid resource</code> of traps five and six. All three outcomes wire-verified against live 0.11.2 (dev11b) by driving each option to <code>/oauth/authorize</code>. Both pages carry a recreation of the dialog rather than real screenshots, because Kenn&#x27;s own captures show client names and the whole private connector list. **Media** (2m13s narrated MP4 + WebVTT captions + poster + on-page transcript) lives in the studio guide&#x27;s folder; the troubleshooting guide references it with <code>../</code>. Narration: ElevenLabs, voice &quot;James - British Technical Narrator&quot;, flow <code>XC7rawqAIMjQGZUhiNXk</code>. NB adding the <code>text/vtt</code> type went in <code>/etc/nginx/mime.types</code> globally, NOT a vhost <code>types{}</code> block (that replaces the whole map and made HTML download — see memory).</p>
           <p class="where"><span class="lbl">Where</span> <a href="https://documentation.elmspark.com/guides/ask-your-studio-with-claude/" target="_blank" rel="noopener">https://documentation.elmspark.com/guides/ask-your-studio-with-claude/</a> · <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/" target="_blank" rel="noopener">https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/</a> · source <code>~/Developer/elmspark/documentation/public/guides/&lt;slug&gt;/index.html</code>, commits 3a9ebc2 + ea87f0c (local, unpushed)</p>
+          <p class="access"><span class="lbl">Access</span> Public (link-only, noindex)</p>
+        </article>
+        <article class="card" data-search="pagemotor on hostinger (public) + narrated walkthrough the picture-by-picture install guide, 34 steps across nine parts, plus `walkthrough.mp4`. **the video shipped silent:** it carried an aac track flat at -91 db, so from june to 2026-08-29 it had no narration and no captions and was unusable to anyone who could not watch it closely. now narrated (elevenlabs, voice `q4wqcbsnrqjoq9zzbbec` &quot;james - british technical narrator&quot;, flow `tcgtanqpw2i5dgliah88`, ten blocks timed to the deck&#x27;s own nine parts against a measured 4.4s slide cadence), with `walkthrough.vtt` (28 cues) and an on-page transcript. the picture was not re-encoded: video stream copied, md5 identical to the original; audio mono 96k, 8.1mb total. the pre-narration silent original is preserved in git history at commit `ca27784^`. **house pattern for any future guide voice-over:** same voice, blocks timed to the visual beats, vtt plus a `details` transcript, `-c:v copy` so the picture never degrades. https://documentation.elmspark.com/guides/pagemotor-hostinger/ · source `~/developer/elmspark/documentation/public/guides/pagemotor-hostinger/` · commit `ca27784` public (link-only, noindex)">
+          <h3>PageMotor on Hostinger (public) + narrated walkthrough</h3>
+          <p class="what">The picture-by-picture install guide, 34 steps across nine parts, plus <code>walkthrough.mp4</code>. **The video shipped silent:** it carried an AAC track flat at -91 dB, so from June to 2026-08-29 it had no narration and no captions and was unusable to anyone who could not watch it closely. Now narrated (ElevenLabs, voice <code>q4WQcBsnrQJOQ9ZzbbEC</code> &quot;James - British Technical Narrator&quot;, flow <code>tCgtanqpw2I5dGliah88</code>, ten blocks timed to the deck&#x27;s own nine parts against a measured 4.4s slide cadence), with <code>walkthrough.vtt</code> (28 cues) and an on-page transcript. The picture was NOT re-encoded: video stream copied, md5 identical to the original; audio mono 96k, 8.1MB total. The pre-narration silent original is preserved in git history at commit <code>ca27784^</code>. **House pattern for any future guide voice-over:** same voice, blocks timed to the visual beats, VTT plus a <code>details</code> transcript, <code>-c:v copy</code> so the picture never degrades.</p>
+          <p class="where"><span class="lbl">Where</span> <a href="https://documentation.elmspark.com/guides/pagemotor-hostinger/" target="_blank" rel="noopener">https://documentation.elmspark.com/guides/pagemotor-hostinger/</a> · source <code>~/Developer/elmspark/documentation/public/guides/pagemotor-hostinger/</code> · commit <code>ca27784</code></p>
           <p class="access"><span class="lbl">Access</span> Public (link-only, noindex)</p>
         </article>
         <article class="card" data-search="pagemotor-bluehost-install.html community guide: install pagemotor on bluehost/any cpanel host in ~10 min (4 steps, db-prefix trap, white-screen troubleshooting, copy-paste config.php verified against pm 0.9.4b config-sample.php). live 2026-06-10, cross-links the mailgun guide /users/kennjordan/library/mobile documents/com~apple~clouddocs/claude workspace/pagemotor-bluehost-install.html (source; deployed copy in the documentation repo public/guides/) public (link-only, noindex) at https://documentation.elmspark.com/guides/pagemotor-bluehost/">
@@ -1971,7 +1977,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
 
 <div class="wrap">
   <footer>
-    Generated 2026-08-29 from <code>ELMSPARK-HQ.md</code> · 306 assets · private, noindex, Basic-Auth gated · Bunny Fonts, no Google Fonts.
+    Generated 2026-08-29 from <code>ELMSPARK-HQ.md</code> · 307 assets · private, noindex, Basic-Auth gated · Bunny Fonts, no Google Fonts.
   </footer>
 </div>
 
@@ -1982,7 +1988,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
       cards=[].slice.call(document.querySelectorAll('.card')),
       cats=[].slice.call(document.querySelectorAll('.cat')),
       chips=[].slice.call(document.querySelectorAll('.chip')),
-      total=306, activeCat='__all';
+      total=307, activeCat='__all';
   function apply(){
     var term=q.value.trim().toLowerCase(), shown=0;
     cards.forEach(function(c){
