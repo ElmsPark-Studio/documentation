@@ -92,6 +92,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   .es-sub{display:none}
   .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap}
 }
+/* ── Connector dialog recreation (added Aug 2026) ── */
+.ui-fig{margin:1.5rem 0}
+.ui-dialog{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px 20px;box-shadow:0 2px 10px rgba(35,33,28,.07);max-width:600px;min-width:0}
+.ui-dialog h4{font-size:1.05rem;font-weight:700;margin:0 0 12px;color:var(--ink)}
+.ui-group{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}
+.ui-group:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.ui-legend{font-size:.95rem;font-weight:700;margin-bottom:10px;color:var(--ink)}
+.ui-opt{display:flex;gap:10px;align-items:flex-start;margin:0 0 12px}
+.ui-opt:last-child{margin-bottom:0}
+.ui-radio{flex:0 0 auto;width:15px;height:15px;border-radius:50%;border:1.5px solid var(--soft);margin-top:4px}
+.ui-opt.is-on .ui-radio{border-color:var(--pine);border-width:5px}
+.ui-opt-body{min-width:0}
+.ui-opt-label{display:block;font-size:.93rem;font-weight:600;color:var(--ink)}
+.ui-opt.is-off .ui-opt-label{font-weight:500;color:var(--soft)}
+.ui-opt-desc{display:block;font-size:.85rem;color:var(--soft);line-height:1.55;margin-top:1px}
+.ui-pill{display:inline-block;font-size:.7rem;font-weight:600;border:1px solid var(--line);border-radius:5px;padding:1px 6px;margin-left:6px;color:var(--soft);background:var(--paper);white-space:nowrap;vertical-align:2px}
+.ui-pill.is-rec{color:var(--ink);font-weight:700;border-color:var(--soft)}
+.ui-verdict{display:inline-block;font-size:.72rem;font-weight:700;border-radius:5px;padding:2px 7px;margin-left:6px;white-space:nowrap;vertical-align:1px}
+.ui-verdict.ok{background:#e7efe9;color:var(--pine-deep)}
+.ui-verdict.bad{background:#f6e6df;color:var(--warn)}
+.ui-cap{font-size:.85rem;color:var(--soft);margin-top:10px;max-width:600px}
+@media (max-width:560px){.ui-dialog{padding:15px 14px 16px}}
+
+.diag-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.diag-scroll .diag{min-width:520px;margin:0}
 </style>
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ElmsPark Guides">
@@ -137,7 +162,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 
   <div class="note calm">
-    <strong>How this guide was made.</strong> Kenn pointed Claude (Fable&nbsp;5, running in Claude Code) at the PageMotor 0.10.2b source and the connection reports, and it ran the whole investigation in a single session: it read the MCP, OAuth and routing code end to end, ran live wire probes against a working 0.10.2 install and a live 0.9.4 install, fanned the work out across 55 parallel sub-agents, then adversarially re-verified every finding against source and the wire. Of 49 candidate causes, 14 were refuted outright; the survivors are grouped into the failure families below, and the most common dead ends are listed at the end so you can stop chasing them. Re-checked against the 0.10.3b release (2 July 2026): its MCP, OAuth and routing code is byte-identical to 0.10.2b, so everything here applies unchanged. Field addendum (14 August 2026): trap six, the ModSecurity note in 6a and the directory-protection note in 6e come from a real client-site migration to Apache shared hosting, each verified on the wire as it happened.
+    <strong>How this guide was made.</strong> Kenn pointed Claude (Fable&nbsp;5, running in Claude Code) at the PageMotor 0.10.2b source and the connection reports, and it ran the whole investigation in a single session: it read the MCP, OAuth and routing code end to end, ran live wire probes against a working 0.10.2 install and a live 0.9.4 install, fanned the work out across 55 parallel sub-agents, then adversarially re-verified every finding against source and the wire. Of 49 candidate causes, 14 were refuted outright; the survivors are grouped into the failure families below, and the most common dead ends are listed at the end so you can stop chasing them. Re-checked against the 0.10.3b release (2 July 2026): its MCP, OAuth and routing code is byte-identical to 0.10.2b, so everything here applies unchanged. Field addendum (14 August 2026): trap six, the ModSecurity note in 6a and the directory-protection note in 6e come from a real client-site migration to Apache shared hosting, each verified on the wire as it happened. Second addendum (29 August 2026): Anthropic rebuilt the Add custom connector dialog, so section 2 gained trap seven and trap six was re-pointed at the field&rsquo;s new name. Both were re-verified against a live 0.11.2 install by driving each OAuth client option to its authorisation request and reading the response back.
   </div>
 
   <nav class="toc" aria-label="Contents">
@@ -178,11 +203,15 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
       <tr><td>500 or an HTML error page</td><td>A plugin is fataling inside the request path. Check the error log and see <a href="#plugins">section 5</a>.</td></tr>
       <tr><td>200 with a JSON <code>initialize</code> result</td><td>The server side is healthy. Your problem is client-side configuration: see <a href="#client">section 2</a>, or <a href="#access">section 4</a> if Claude connects but denies access.</td></tr>
     </table>
-    <p>If you are connecting in a browser rather than Claude Code and sign-in dies on <code>Invalid resource. The resource does not match this server. Received: ""</code>, go straight to <a href="#client">trap five in section 2</a>. That empty <code>Received</code> means the client never reached a real MCP endpoint, and the curl above will pass happily while it happens.</p>
+    <p>If you are connecting in a browser rather than Claude Code and sign-in dies on <code>Unknown client</code>, go straight to <a href="#client">trap seven in section 2</a>: the OAuth client option is wrong, and no amount of server-side work will help. If it dies on <code>Invalid resource. The resource does not match this server. Received: ""</code>, go to <a href="#client">trap five</a> instead. That empty <code>Received</code> means the client never reached a real MCP endpoint, and the curl above will pass happily while it happens.</p>
   </section>
 
   <section class="step" id="client">
     <h2><span class="num">2</span><span class="t">Client-side traps that look like server faults</span></h2>
+
+    <div class="note calm">
+      <strong>Claude&rsquo;s connector dialog changed in August 2026.</strong> Adding a custom connector is now a two-step flow: you give a name and a URL, then Claude fetches your site&rsquo;s discovery documents and pre-answers the rest, marking what it worked out as <strong>Detected</strong>. For a healthy PageMotor site that means <em>Authentication: always required</em> and <em>OAuth client: no client ID</em>, and the correct action is to change nothing. The dialog also exposes settings that never had a home before, and one of them is a new way to fail: see <a href="#client">trap seven</a>. Traps one to six below are unchanged, and every one of them still bites.
+    </div>
 
     <h3>Trap one: the missing <code>--transport http</code></h3>
     <p><code>claude mcp add</code> defaults to <strong>stdio</strong> transport. Run it without the flag and Claude Code stores your URL as a <em>local command to execute</em>. No HTTP request ever reaches your site, and the error is indistinguishable from a server fault. The known-good form:</p>
@@ -209,7 +238,7 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <h3>Trap five: claude.ai keeps the old URL and ignores the one you typed</h3>
     <p>This is the nastiest of the set, because the site is perfectly healthy and every instruction has been followed. You paste <code>https://your-site.com/mcp/</code>, save, and the connector tile shows a <em>different</em> URL: usually an older one you tried months ago, often with a capital <code>/MCP</code> or no trailing slash. Sign-in then fails on a PageMotor error page reading <code>Invalid resource. The resource does not match this server. Received: ""</code>.</p>
     <div class="note">
-      <strong>The tell is the empty <code>Received</code>.</strong> A blank <code>Received</code> means the client sent no <code>resource</code> value at all, and that has exactly two causes: the client never reached a real MCP endpoint (the stored-URL problem this trap describes), or it reached the correct endpoint while carrying a manually entered OAuth Client ID, which makes claude.ai skip the resource entirely (trap six below). Check the connector tile’s URL first; if it is character-perfect, go straight to trap six. If <code>Received</code> holds an actual address that simply differs from <code>expected</code>, you have a genuine host or slug mismatch instead, and section 3 is your fix.
+      <strong>The tell is the empty <code>Received</code>.</strong> A blank <code>Received</code> means the client sent no <code>resource</code> value at all, and that has exactly two causes: the client never reached a real MCP endpoint (the stored-URL problem this trap describes), or it reached the correct endpoint while carrying an OAuth Client ID of your own, which makes claude.ai skip the resource entirely (trap six below). Check the connector tile’s URL first; if it is character-perfect, go straight to trap six. If <code>Received</code> holds an actual address that simply differs from <code>expected</code>, you have a genuine host or slug mismatch instead, and section 3 is your fix.
     </div>
     <p>Two separate things combine:</p>
     <ul class="sub">
@@ -221,10 +250,60 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <p>Before anything else, read the connector tile's URL character by character against the error page's <code>expected</code> string, case first. One capital letter accounted for an entire multi-week support thread.</p>
     <p><strong>And a bounding data point:</strong> this trap needs prior connector history for the domain to exist at all. A first-ever connection on a fresh hostname went through claude.ai in one attempt, correct URL shown at every step, on a clean box in August 2026. If this is the first connector your organisation has ever pointed at the domain and sign-in still fails, the stored-URL mechanism is not your problem; look at trap six and section 3 instead.</p>
 
-    <h3>Trap six: a manually entered OAuth Client ID silently drops the resource</h3>
-    <p>claude.ai&rsquo;s connector settings offer an advanced field for an OAuth Client ID, and its sign-in failure message actively suggests using it (&ldquo;or add an OAuth Client ID in the connector settings&rdquo;). Do not, not with PageMotor. With that field filled, claude.ai switches to a flow that omits the <code>resource</code> parameter from the authorisation request entirely, and PageMotor requires it. The result is the same <code>Invalid resource &hellip; Received: ""</code> page as trap five, on a connector whose URL is character-perfect and whose endpoint answers every probe in this guide.</p>
+    <h3>Trap six: your own OAuth Client ID silently drops the resource</h3>
+    <p>claude.ai lets you supply an OAuth Client ID of your own, and its sign-in failure message actively suggests doing so (&ldquo;or add an OAuth Client ID in the connector settings&rdquo;). Since August 2026 this is the third option under the <strong>OAuth client</strong> heading, <em>&ldquo;Use your own OAuth client&rdquo;</em>; before that it was an unlabelled advanced field. Same field, same outcome. Do not use it, not with PageMotor. With that field filled, claude.ai switches to a flow that omits the <code>resource</code> parameter from the authorisation request entirely, and PageMotor requires it. The result is the same <code>Invalid resource &hellip; Received: ""</code> page as trap five, on a connector whose URL is character-perfect and whose endpoint answers every probe in this guide.</p>
     <p>The proof is in the browser&rsquo;s address bar at the moment of failure: the <code>/oauth/authorize</code> URL carries <code>client_id</code>, <code>redirect_uri</code>, <code>code_challenge</code> and <code>state</code>, and no <code>resource=</code> anywhere. Wire-verified on a live 0.10.3 install in August 2026: the identical request with <code>resource</code> added by hand proceeds straight to the sign-in page.</p>
     <p>The fix is to stop using the field. Make a fresh connector entry and leave every OAuth field empty, so claude.ai registers itself and includes the resource on its own. And if you only reached for the Client ID because self-registration kept failing, the registration failure is the thing to fix &mdash; it is almost always the hosting layer of <a href="#hosting">section 6a</a>, not PageMotor.</p>
+    <h3>Trap seven: the OAuth client option marked &ldquo;Recommended&rdquo; is the one PageMotor cannot use</h3>
+    <p>Claude&rsquo;s <strong>Add custom connector</strong> dialog was rebuilt in August 2026. Where there was once a single obscure Client ID box, there is now an explicit <strong>OAuth client</strong> question with three answers, and <em>the first one is labelled Recommended</em>. It is the right recommendation in general and the wrong one for PageMotor, which supports exactly one of the three.</p>
+
+    <figure class="ui-fig">
+      <div class="ui-dialog">
+        <h4>OAuth client</h4>
+        <div class="ui-group">
+          <div class="ui-opt is-off">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">Use Anthropic&rsquo;s hosted client metadata <span class="ui-pill is-rec">Recommended</span><span class="ui-verdict bad">Unknown client</span></span>
+              <span class="ui-opt-desc">Claude&rsquo;s client is identified by a URL Anthropic hosts (CIMD). PageMotor has no code for this: it only accepts a client ID it signed itself, so a URL is rejected outright.</span>
+            </span>
+          </div>
+          <div class="ui-opt is-on">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">No client ID &mdash; register one automatically <span class="ui-pill">Detected</span><span class="ui-verdict ok">The one to use</span></span>
+              <span class="ui-opt-desc">Dynamic client registration. Claude posts to your site&rsquo;s <code>/oauth/register</code>, PageMotor mints a signed client ID on the spot, and the sign-in carries the <code>resource</code> value PageMotor requires.</span>
+            </span>
+          </div>
+          <div class="ui-opt is-off">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">Use your own OAuth client <span class="ui-verdict bad">Invalid resource</span></span>
+              <span class="ui-opt-desc">The old Client ID box under a clearer name. Filling it makes claude.ai drop the <code>resource</code> parameter. This is trap six.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <figcaption class="ui-cap">One of three works. Claude marks it <strong>Detected</strong>, which is the label to trust, not <strong>Recommended</strong>.</figcaption>
+    </figure>
+
+    <p><strong>Why it fails, in one line.</strong> PageMotor&rsquo;s client IDs are stateless: the ID <em>is</em> the record, a base64 payload and an HMAC signature joined by a single dot, verified against the site&rsquo;s own secret. A hosted-metadata client ID is an <code>https://</code> URL. It has more than one dot and no signature, so verification rejects it before anything else is even looked at.</p>
+
+    <p><strong>Wire-verified on a live 0.11.2 install, August 2026.</strong> Each option was driven to its authorisation request and the response read back:</p>
+
+    <div class="diag-scroll">
+    <table class="diag">
+      <tr><th>OAuth client option</th><th>What reaches <code>/oauth/authorize</code></th><th>What you get</th></tr>
+      <tr><td>Use Anthropic&rsquo;s hosted client metadata <em>(Recommended)</em></td><td><code>client_id</code> is an <code>https://</code> URL</td><td><strong>400 Unknown client.</strong> &ldquo;The client_id is missing or invalid.&rdquo;</td></tr>
+      <tr><td>No client ID &mdash; register one automatically <em>(Detected)</em></td><td>A PageMotor-signed ID, plus <code>resource</code></td><td>The sign-in page. This is the working path.</td></tr>
+      <tr><td>Use your own OAuth client</td><td>A valid ID, but no <code>resource</code></td><td><strong>400 Invalid resource</strong>, <code>Received: ""</code></td></tr>
+    </table>
+    </div>
+
+    <p><strong>The tell that separates this from traps five and six</strong> is the heading on the error page. <code>Unknown client</code> means the client ID itself was rejected, so you are here: change the OAuth client option. <code>Invalid resource</code> with an empty <code>Received</code> means the ID was fine and the resource was missing, so you are in trap five (wrong address) or trap six (your own client ID). Read the heading before changing anything.</p>
+
+    <p><strong>The fix is to select the middle option and add the connector again.</strong> Leave the client ID box empty and let your site issue one. Nothing needs configuring on the PageMotor side; dynamic registration has been on by default since 0.10b and is what the site advertises in its own discovery document. Support for hosted client metadata would be a core change, so on every PageMotor release to date the answer is the same.</p>
+
   </section>
 
   <section class="step" id="slash">

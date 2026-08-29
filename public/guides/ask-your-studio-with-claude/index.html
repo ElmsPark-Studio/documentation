@@ -334,6 +334,7 @@
       border: 1px solid var(--border);
       padding: 1px 5px;
       border-radius: 3px;
+      overflow-wrap: anywhere;
     }
     pre {
       background: #1e1e1e;
@@ -436,6 +437,111 @@
     .es-nav .es-cta{color:#181411;border:1px solid #181411;padding:0.5rem 1rem;border-radius:1.75rem;transition:background-color .2s,color .2s}
     .es-nav .es-cta:hover,.es-nav .es-cta:focus-visible{background:#181411;color:#f6f2ea;border-bottom-color:transparent}
     @media(max-width:640px){ .es-header .es-inner{padding:1rem 18px;gap:.75rem} .es-sub{display:none} .es-nav{font-size:.875rem;gap:.75rem;flex-wrap:wrap} }
+
+    /* ── Connector dialog recreation (added Aug 2026) ── */
+    .ui-fig { margin: 1.75rem 0; }
+    .ui-dialog {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 22px 22px;
+      box-shadow: 0 2px 10px rgba(35,33,28,.07);
+      font-family: var(--font-sans);
+      max-width: 640px;
+    }
+    .ui-dialog h4 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 0 0 2px;
+      color: var(--text);
+    }
+    .ui-dialog .ui-url {
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      color: var(--faint);
+      word-break: break-all;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .ui-dialog .ui-name { font-size: .95rem; font-weight: 600; margin-top: 14px; }
+    .ui-group { border-top: 1px solid var(--border); margin-top: 16px; padding-top: 14px; }
+    .ui-group > .ui-legend {
+      font-size: .95rem; font-weight: 600; margin-bottom: 10px; color: var(--text);
+    }
+    .ui-opt { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 12px; }
+    .ui-opt:last-child { margin-bottom: 0; }
+    .ui-radio {
+      flex: 0 0 auto; width: 15px; height: 15px; border-radius: 50%;
+      border: 1.5px solid var(--faint); margin-top: 4px; background: transparent;
+    }
+    .ui-opt.is-on .ui-radio {
+      border-color: var(--accent); border-width: 5px; background: var(--bg-subtle);
+    }
+    .ui-opt-body { min-width: 0; }
+    .ui-opt-label { display: block; font-size: .93rem; font-weight: 600; color: var(--text); }
+    .ui-opt.is-off .ui-opt-label { font-weight: 500; color: var(--muted); }
+    .ui-opt-desc { display: block; font-size: .85rem; color: var(--muted); line-height: 1.55; margin-top: 1px; }
+    .ui-pill {
+      display: inline-block; font-size: .7rem; font-weight: 600; letter-spacing: .02em;
+      border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px;
+      margin-left: 6px; color: var(--muted); background: var(--bg); white-space: nowrap;
+      vertical-align: 2px; font-family: var(--font-sans);
+    }
+    .ui-pill.is-rec { color: var(--text); font-weight: 700; border-color: var(--faint); }
+    .ui-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 19px; height: 19px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-size: .72rem; font-weight: 700; font-family: var(--font-sans);
+      margin-left: 7px; vertical-align: 1px; flex: 0 0 auto;
+    }
+    .ui-mark.is-stop { background: var(--caution); }
+    .ui-note { font-size: .85rem; color: var(--muted); margin-top: 4px; }
+    .ui-btnrow { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+    .ui-btn {
+      font-family: var(--font-sans); font-size: .85rem; font-weight: 600;
+      border-radius: 8px; padding: 7px 16px; border: 1px solid var(--border);
+      background: var(--bg-subtle); color: var(--muted);
+    }
+    .ui-btn.is-primary { background: var(--text); color: var(--bg-subtle); border-color: var(--text); }
+    .ui-key {
+      list-style: none; margin: 14px 0 0; padding: 0;
+      display: grid; gap: 9px; max-width: 640px;
+    }
+    .ui-key li { display: flex; gap: 10px; align-items: flex-start; font-size: .95rem; line-height: 1.6; }
+    .ui-key .ui-mark { margin-left: 0; margin-top: 3px; }
+    .ui-cap {
+      font-size: .85rem; color: var(--faint); margin-top: 10px; max-width: 640px;
+    }
+    @media (max-width: 560px) {
+      .ui-dialog { padding: 16px 15px 18px; border-radius: 12px; }
+      .ui-opt-desc { font-size: .82rem; }
+    }
+    .ui-perm-head {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .92rem; font-weight: 600; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ui-perm { list-style: none; margin: 0; padding: 0; }
+    .ui-perm li {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; font-size: .9rem; color: var(--muted);
+      padding: 9px 0; border-bottom: 1px solid var(--border);
+    }
+    .ui-perm li > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+    .ui-dialog, .ui-fig, .ui-key, .ui-key li { min-width: 0; }
+    .ui-key li span { min-width: 0; overflow-wrap: anywhere; }
+    .ui-perm li:last-child { border-bottom: 0; }
+    .ui-perm-set { display: inline-flex; gap: 5px; flex: 0 0 auto; }
+    .ui-perm-set b, .ui-perm-set i {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 22px; border-radius: 6px; font-style: normal;
+      border: 1px solid var(--border); font-size: .8rem;
+    }
+    .ui-perm-set b { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+    .ui-perm-set i { color: var(--faint); background: var(--bg); }
+
   </style>
 </head>
 <body>
@@ -473,7 +579,7 @@
       <span>&#128179; Uses your <strong>own Claude plan, Free included</strong></span>
       <span>&#128274; <strong>Read-only</strong></span>
       <span>&#129513; Works in <strong>claude.ai, Desktop, Cowork</strong></span>
-      <span>June 2026</span>
+      <span>June 2026 &middot; updated August 2026</span>
     </div>
 
     <p class="lead">Your PageMotor site can answer questions about your business in plain English, using your own Claude account. It works because your site already speaks Claude&rsquo;s connector language. You point Claude at your site once, sign in as the studio admin, and then you just ask.</p>
@@ -489,18 +595,129 @@
     </p>
 
     <h2>Connect it (claude.ai, in a browser)</h2>
+
+    <p style="background:var(--accent-light);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;box-shadow:0 1px 3px rgba(35,33,28,.06);margin:0 0 1.5rem">
+      <strong>Claude&rsquo;s connector screen changed in August 2026.</strong> There are new choices about how Claude signs in, and one of them is labelled <em>Recommended</em> but does not work with PageMotor. The good news is that Claude now inspects your site and picks the right settings for you, so the job is mostly to check its work and leave it alone. The steps below are the current ones.
+    </p>
+
     <ol>
       <li>Open <strong>claude.ai</strong> and go to <strong>Customize &rarr; Connectors</strong> (straight there: <a href="https://claude.ai/customize/connectors">claude.ai/customize/connectors</a>).</li>
-      <li>Click <strong>+</strong>, then choose <strong>Add custom connector</strong>.</li>
-      <li>Give it a name like <strong>My Studio</strong>, and for the URL enter your site&rsquo;s connector address: <code>https://YOUR-SITE/mcp/</code>, all lower case, trailing slash included. For the demo site that is <code>https://sundial.solasyogastudio.com/mcp/</code>.</li>
-      <li><strong>Look at the saved tile before you go further.</strong> It should show exactly the address you typed. If it shows a different one, see the box below.</li>
-      <li>Save. Claude sends you to a <strong>sign-in</strong> page. Log in with your PageMotor <strong>admin</strong> account and approve access. That is what lets Claude read your studio data on your behalf.</li>
+      <li>Click <strong>Add</strong>, then choose <strong>Add custom connector</strong>. Give it a name like <strong>My Studio</strong>, and for the address enter your site&rsquo;s connector URL: <code>https://YOUR-SITE/mcp/</code>, all lower case, trailing slash included. For the demo site that is <code>https://sundial.solasyogastudio.com/mcp/</code>.</li>
+      <li><strong>Read the address back before you go further.</strong> It should be character for character what you typed, capital letters included. If it is not, see the box below.</li>
+      <li>Claude now reads your site and fills the rest of the dialog in by itself. It should look like this.</li>
+    </ol>
+
+    <figure class="ui-fig">
+      <div class="ui-dialog">
+        <h4>Add custom connector</h4>
+        <div class="ui-name">My Studio</div>
+        <span class="ui-url">https://sundial.solasyogastudio.com/mcp/</span>
+
+        <div class="ui-group">
+          <div class="ui-legend">Authentication</div>
+          <div class="ui-opt is-on">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">Always required <span class="ui-pill">Detected</span><span class="ui-mark">1</span></span>
+              <span class="ui-opt-desc">Each user signs in through the server&rsquo;s OAuth flow before they can use any tools or resources.</span>
+            </span>
+          </div>
+          <div class="ui-opt is-off">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">Required when the server asks</span>
+            </span>
+          </div>
+          <div class="ui-opt is-off">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">None</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="ui-group">
+          <div class="ui-legend">OAuth client</div>
+          <div class="ui-opt is-off">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">Use Anthropic&rsquo;s hosted client metadata <span class="ui-pill is-rec">Recommended</span><span class="ui-mark is-stop">!</span></span>
+              <span class="ui-opt-desc">The server reads Claude&rsquo;s client details from a URL Anthropic hosts (CIMD). Nothing to set up, but the server must support it.</span>
+            </span>
+          </div>
+          <div class="ui-opt is-on">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">No client ID &mdash; register one automatically <span class="ui-pill">Detected</span><span class="ui-mark">2</span></span>
+              <span class="ui-opt-desc">Claude registers OAuth clients with the server as users connect (DCR).</span>
+            </span>
+          </div>
+          <div class="ui-opt is-off">
+            <span class="ui-radio"></span>
+            <span class="ui-opt-body">
+              <span class="ui-opt-label">Use your own OAuth client <span class="ui-mark is-stop">!</span></span>
+              <span class="ui-opt-desc">Enter a client ID you registered with the server yourself.</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="ui-group">
+          <div class="ui-legend">Additional request headers <span class="ui-mark">3</span></div>
+          <div class="ui-note">Leave empty. PageMotor needs none.</div>
+        </div>
+
+        <div class="ui-group">
+          <div class="ui-legend">Advanced &rsaquo; Transport <span class="ui-mark">3</span></div>
+          <div class="ui-note">Leave on <strong>Streamable HTTP</strong>. PageMotor has no SSE endpoint.</div>
+        </div>
+
+        <div class="ui-btnrow">
+          <span class="ui-btn">Back</span>
+          <span class="ui-btn is-primary">Add</span>
+        </div>
+      </div>
+
+      <ul class="ui-key">
+        <li><span class="ui-mark">1</span><span><strong>Always required</strong> is right for PageMotor 0.10 and later. Claude works this out from your site, which is itself a good sign: it means the discovery documents answered.</span></li>
+        <li><span class="ui-mark">2</span><span><strong>No client ID</strong> is right for PageMotor. Your site mints Claude a client of its own on the spot.</span></li>
+        <li><span class="ui-mark is-stop">!</span><span>Do not touch either of the other two OAuth options, <em>including</em> the one marked Recommended. PageMotor supports neither, and both fail after you have already signed in. See <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#client">the OAuth client traps</a>.</span></li>
+        <li><span class="ui-mark">3</span><span>Nothing else needs changing. Headers stay empty, transport stays as it is.</span></li>
+      </ul>
+      <figcaption class="ui-cap">The dialog as Claude fills it in for a healthy PageMotor site. If yours looks like this, press Add.</figcaption>
+    </figure>
+
+    <ol start="5">
+      <li>Press <strong>Add</strong>. Claude sends you to a <strong>sign-in</strong> page. Log in with your PageMotor <strong>admin</strong> account and approve access. That is what lets Claude read your studio data on your behalf.</li>
+      <li><strong>Decide what it may do.</strong> The connector&rsquo;s settings page now lists every tool your site offers, each set to always allow, ask first, or never. Your studio connector is read-only, so leaving them all on <strong>Always allow</strong> is safe and saves you a click per question. If you would rather see what it is doing at first, set the group to <strong>ask</strong> for a week.</li>
+    </ol>
+
+    <figure class="ui-fig">
+      <div class="ui-dialog">
+        <h4>My Studio</h4>
+        <span class="ui-url">https://sundial.solasyogastudio.com/mcp/</span>
+        <div class="ui-group">
+          <div class="ui-legend">Tool permissions</div>
+          <div class="ui-note" style="margin-bottom:12px">Choose when Claude is allowed to use these tools.</div>
+          <div class="ui-perm-head"><span>Other tools</span><span class="ui-pill">Always allow</span></div>
+          <ul class="ui-perm">
+            <li><span>studio overview</span><span class="ui-perm-set"><b>&#10003;</b><i>&#9995;</i><i>&#8856;</i></span></li>
+            <li><span>upcoming schedule</span><span class="ui-perm-set"><b>&#10003;</b><i>&#9995;</i><i>&#8856;</i></span></li>
+            <li><span>members at risk</span><span class="ui-perm-set"><b>&#10003;</b><i>&#9995;</i><i>&#8856;</i></span></li>
+            <li><span>waiver gaps</span><span class="ui-perm-set"><b>&#10003;</b><i>&#9995;</i><i>&#8856;</i></span></li>
+          </ul>
+        </div>
+      </div>
+      <figcaption class="ui-cap">Every tool your site offers, each set to <strong>always allow</strong> (tick), <strong>ask first</strong> (hand) or <strong>never</strong> (crossed circle). The dropdown at the top of a group sets them all at once.</figcaption>
+    </figure>
+
+    <ol start="7">
       <li>Start a new chat, click the <strong>+</strong> at the lower left of the message box, hover <strong>Connectors</strong>, and switch <strong>My Studio</strong> <strong>on</strong> for that chat. Then ask away.</li>
     </ol>
+
     <p>It is the same in <strong>Claude Desktop</strong> and <strong>Cowork</strong> (Customize &rarr; Connectors &rarr; add custom connector), and in <strong>Claude Code</strong> you add it as an MCP server instead. Use whichever Claude you already use, with one plan note: claude.ai, Desktop and Cowork all work on the free plan, but <strong>Claude Code needs a paid plan</strong> (Pro, Max, a Team or Enterprise premium seat, or a Console account).</p>
 
     <p style="background:var(--bg-warn);border-left:4px solid var(--warn);border-radius:10px;padding:14px 18px;box-shadow:0 1px 3px rgba(35,33,28,.06);margin:1.5rem 0">
-      <strong>If sign-in fails, it is almost always the URL, not your site.</strong> claude.ai remembers a connector address per domain and can quietly substitute an older one for the address you just typed, often with a capital <code>/MCP</code>. PageMotor treats that as a different, non-existent page, and sign-in dies on an <em>&ldquo;Invalid resource&rdquo;</em> page whose <code>Received</code> value is empty. The quickest fix is to connect on the <strong>www</strong> form of your address instead, <code>https://www.YOUR-SITE/mcp/</code>, which the stale entry cannot attach to. Full explanation and the options for sites with no <code>www</code>: <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#client">why it will not connect, trap five</a>.
+      <strong>If sign-in fails, the message on the page tells you which of two things went wrong.</strong> A page reading <em>&ldquo;Unknown client&rdquo;</em> means the wrong <strong>OAuth client</strong> option is selected: go back and choose <strong>No client ID</strong>, whatever the Recommended label says. A page reading <em>&ldquo;Invalid resource&rdquo;</em> with an empty <code>Received</code> value is the address: claude.ai remembers a connector address per domain and can quietly substitute an older one for the address you just typed, often with a capital <code>/MCP</code>. The quickest fix there is to connect on the <strong>www</strong> form instead, <code>https://www.YOUR-SITE/mcp/</code>, which the stale entry cannot attach to. Full explanation of both, and the options for sites with no <code>www</code>: <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/#client">why it will not connect</a>.
     </p>
 
     <h2>What you can ask</h2>
