@@ -237,6 +237,31 @@
   </div>
 </div>
 
+<div style="max-width:1080px;margin:22px auto 6px;padding:0 20px">
+  <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+         style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+    <source src="walkthrough.mp4" type="video/mp4">
+    <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+    Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+  </video>
+  <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; An orientation to the whole route in 4 minutes 21 seconds, narrated, with captions. Deliberately quotes no prices &mdash; the plan picker below is the live source &mdash; but it does carry the traps, including the Ubuntu image to avoid.</p>
+  <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+    <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+    <div style="margin-top:10px;color:#5d574c">
+      <p style="margin:0 0 10px"><strong>The shape of it.</strong> About thirty minutes from an empty box to a live site with SSL. There is a by-hand build, and there is a version where you hand the whole thing to Claude Code.</p>
+      <p style="margin:0 0 10px"><strong>Why a VPS at all.</strong> Two things shared hosting tends to take away. PageMotor needs to write its compiled stylesheet to disk, which a locked-down host will refuse, and that is the design-will-not-save problem. And shared hosts often block the outbound mail ports, so a proper email service cannot connect. On your own box, neither is true.</p>
+      <p style="margin:0 0 10px"><strong>Picking a plan.</strong> The shape of the decision is simple: one or two sites want a small High Performance box, and an agency box only starts paying off past roughly five sites. The video deliberately quotes no prices, because Vultr changes plans regularly. The plan picker and cost calculator below are re-verified against Vultr's own public plans API, so read the numbers there.</p>
+      <p style="margin:0 0 10px"><strong>A trap in the plan list.</strong> The agency tier comes in two shapes at each size. The cheaper listing ships almost no local disk and expects you to attach Block Storage separately. The one you want for a box full of PageMotor sites is the local-storage variant. It is also offered in about a dozen regions rather than all of them, so check availability before you settle on a location.</p>
+      <p style="margin:0 0 10px"><strong>Picking a region.</strong> Pick the data centre closest to your visitors, not to yourself. Vultr charges the same price in every region with one exception: S&atilde;o Paulo carries a 50 per cent surcharge on Cloud Compute plans. Everywhere else is flat-priced, so latency is genuinely the only thing that changes.</p>
+      <p style="margin:0 0 10px"><strong>The trap on the signup screen.</strong> Choose Ubuntu 24.04 LTS, not the newest image offered. Vultr now offers 26.04, and it ships PHP 8.5 rather than 8.3. Every <code>php8.3-*</code> install command in this guide fails on it, because those packages are not in 26.04's repositories, and PageMotor is not yet verified against 8.5. 24.04 is supported until 2029. And while you are on that screen, paste your SSH public key into the SSH Keys field before you deploy.</p>
+      <p style="margin:0 0 10px"><strong>Two routes, one stack:</strong> Nginx, PHP 8.3 FPM, MariaDB and Certbot. You can follow the by-hand build, every command listed and explained. Or you can copy the prompt from the guide, edit three lines, and let Claude Code SSH in and do all of it, showing you each command before it runs and stopping on errors.</p>
+      <p style="margin:0 0 10px"><strong>Four things stay yours,</strong> even on the automated route: creating the Vultr account, clicking through to provision the box, pointing your domain's A record at the new IP, and registering your own admin user. Those four cross a human-authorisation line &mdash; money, identity, DNS ownership and admin rights. Everything after them is fair game to automate.</p>
+      <p style="margin:0 0 10px"><strong>Two details this guide is firm about.</strong> The timeouts must match: PHP's <code>max_execution_time</code> at 300 seconds, and Nginx's <code>fastcgi_read_timeout</code> at 600. And email: because the SMTP ports are open on your own box, Mailgun simply works here, with proper SPF and DKIM and real inbox placement. That is the thing shared hosting takes away.</p>
+      <p style="margin:0"><strong>Two last things.</strong> This server is yours to look after: every mainstream VPS is sold self-managed, so from Ubuntu upwards the patches, the stack and the certificate are your job. Budget about fifteen minutes a month. And if you take the free signup credit, the unused portion expires 30 days after signup, so provision the plan you actually intend to run, not a bigger one to try.</p>
+    </div>
+  </details>
+</div>
+
 <nav class="tabs"><div class="tabrow" role="tablist">
   <button class="tab" id="tab-why" role="tab" aria-selected="true" aria-controls="p-why" tabindex="0" data-panel="p-why">Why Vultr</button>
   <button class="tab" id="tab-plan" role="tab" aria-selected="false" aria-controls="p-plan" tabindex="-1" data-panel="p-plan">Pick your plan</button>

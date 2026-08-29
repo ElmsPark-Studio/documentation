@@ -1,0 +1,126 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:06.608
+Installing PageMotor on GoDaddy. The install itself is standard cPanel, about ten minutes.
+
+2
+00:00:06.608 --> 00:00:11.808
+But GoDaddy differs from other hosts in three ways worth knowing before you start,
+
+3
+00:00:11.808 --> 00:00:15.296
+and one of them decides whether you can install at all.
+
+4
+00:00:15.996 --> 00:00:25.398
+That one is the product. PageMotor needs GoDaddy's Linux Web Hosting plan, the one whose dashboard shows a cPanel Admin button.
+
+5
+00:00:25.398 --> 00:00:34.429
+Two popular GoDaddy products cannot run PageMotor at all: Websites + Marketing, their site builder, and Managed WordPress.
+
+6
+00:00:34.429 --> 00:00:43.164
+Neither gives you cPanel or file access, so there is nowhere to put the files. Check that first, before anything else.
+
+7
+00:00:43.864 --> 00:00:55.464
+Then the ordinary part. Run the preflight check, then open cPanel, File Manager, and the folder for your site, which for your main domain is public_html.
+
+8
+00:00:55.464 --> 00:01:00.013
+Upload the PageMotor zip, right-click it and choose Extract.
+
+9
+00:01:00.013 --> 00:01:09.870
+If Extract stalls partway, just run it again: GoDaddy's shared servers sometimes pause big jobs, and a retry normally finishes it.
+
+10
+00:01:10.570 --> 00:01:16.672
+The database uses cPanel's MySQL Database Wizard, which does the whole job in one pass.
+
+11
+00:01:16.672 --> 00:01:24.108
+Name it, create the user, let the generator make the password, and on the last screen tick ALL PRIVILEGES.
+
+12
+00:01:24.108 --> 00:01:33.577
+Here is the GoDaddy difference: unlike most cPanel hosts, GoDaddy usually shows the name exactly as you typed it, with no prefix added.
+
+13
+00:01:33.577 --> 00:01:41.713
+But the name has to be unique across GoDaddy's whole system, so something plain like pagemotor may already be taken.
+
+14
+00:01:41.713 --> 00:01:47.676
+Use something distinctive, and copy the final names exactly as the wizard shows them.
+
+15
+00:01:48.376 --> 00:02:01.048
+Then rename config-sample.php to exactly config.php, which is the step that switches PageMotor on, and put your three values in. DB_HOST stays localhost.
+
+16
+00:02:01.048 --> 00:02:12.478
+Ignore any older tutorial telling you to hunt for a special GoDaddy MySQL host name: that advice is for their long-retired legacy hosting.
+
+17
+00:02:13.178 --> 00:02:21.510
+Then go straight to /admin/. On that first visit PageMotor sets itself up and walks you into creating your admin user.
+
+18
+00:02:21.510 --> 00:02:25.252
+Open the admin before you open the front of the site.
+
+19
+00:02:25.952 --> 00:02:31.287
+Now the part where GoDaddy genuinely differs, and it is worth two minutes.
+
+20
+00:02:31.287 --> 00:02:38.064
+GoDaddy's shared hosting blocks outbound SMTP to outside mail services, as a matter of policy.
+
+21
+00:02:38.064 --> 00:02:49.526
+Mailgun, SendGrid, Brevo and the rest will simply time out, on every port. So the advice you see everywhere else, just point it at Mailgun, does not work here.
+
+22
+00:02:49.526 --> 00:03:01.061
+And the giveaway is the shape of the failure: a timeout, rather than a rejected password. The connection never reaches the provider, so it is not your settings.
+
+23
+00:03:01.761 --> 00:03:11.807
+What does work is GoDaddy's own mail system. In your mail plugin, set the host to localhost, port 25, no encryption and no authentication,
+
+24
+00:03:11.807 --> 00:03:21.635
+because the server trusts mail sent from itself. Or pick the PHP mail() transport, which uses the same thing with nothing to configure.
+
+25
+00:03:21.635 --> 00:03:29.207
+And skip the old relay hostname you will find quoted online; it is deprecated, and it tends to time out.
+
+26
+00:03:29.907 --> 00:03:35.828
+One more thing, because it catches people out. “Sent” is not the same as “delivered”.
+
+27
+00:03:35.828 --> 00:03:45.929
+Your GoDaddy box will happily report the mail as sent, and Gmail and Outlook will quietly bin it, because the domain has no SPF and DKIM records.
+
+28
+00:03:45.929 --> 00:03:53.870
+It does not bounce. It just disappears. Add those two DNS records for your domain and real inboxes will accept it.
+
+29
+00:03:54.570 --> 00:04:05.370
+And if something does break: on GoDaddy an error_log file does not appear in your site folder by itself, so look under cPanel, Metrics, Errors instead.
+
+30
+00:04:05.370 --> 00:04:12.093
+A 500 or a blank page is almost always config.php: wrong name, wrong folder, or never renamed.
+
+31
+00:04:12.093 --> 00:04:20.390
+“MySQLi Connection Error” is better news, because it means config.php is working and PageMotor reached the database.
+

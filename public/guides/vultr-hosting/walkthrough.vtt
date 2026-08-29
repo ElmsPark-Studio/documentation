@@ -1,0 +1,130 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:06.921
+Hosting PageMotor on Vultr. About thirty minutes from an empty box to a live site with SSL.
+
+2
+00:00:06.921 --> 00:00:13.207
+There is a by-hand build, and there is a version where you hand the whole thing to Claude Code.
+
+3
+00:00:13.907 --> 00:00:18.414
+Why a VPS at all. Two things shared hosting tends to take away.
+
+4
+00:00:18.414 --> 00:00:28.501
+PageMotor needs to write its compiled stylesheet to disk, which a locked-down host will refuse, and that is the design-will-not-save problem.
+
+5
+00:00:28.501 --> 00:00:37.730
+And shared hosts often block the outbound mail ports, so a proper email service cannot connect. On your own box, neither is true.
+
+6
+00:00:38.430 --> 00:00:45.675
+Picking a plan. The shape of the decision is simple: one or two sites want a small High Performance box,
+
+7
+00:00:45.675 --> 00:00:50.203
+and an agency box only starts paying off past roughly five sites.
+
+8
+00:00:50.203 --> 00:00:55.845
+I am deliberately not quoting prices here, because Vultr changes plans regularly.
+
+9
+00:00:55.845 --> 00:01:06.434
+The guide has a live plan picker and a cost calculator, re-verified against Vultr's own public plans API, so read the numbers there rather than from me.
+
+10
+00:01:07.134 --> 00:01:12.767
+One trap in the plan list worth knowing. The agency tier comes in two shapes at each size.
+
+11
+00:01:12.767 --> 00:01:18.901
+The cheaper listing ships almost no local disk and expects you to attach Block Storage separately.
+
+12
+00:01:18.901 --> 00:01:23.908
+The one you want for a box full of PageMotor sites is the local-storage variant.
+
+13
+00:01:23.908 --> 00:01:31.607
+It is also offered in about a dozen regions rather than all of them, so check availability before you settle on a location.
+
+14
+00:01:32.307 --> 00:01:37.943
+Picking a region. Pick the data centre closest to your visitors, not to yourself.
+
+15
+00:01:37.943 --> 00:01:46.989
+Vultr charges the same price in every region with one exception: São Paulo carries a 50 per cent surcharge on Cloud Compute plans.
+
+16
+00:01:46.989 --> 00:01:52.834
+Everywhere else is flat-priced, so latency is genuinely the only thing that changes.
+
+17
+00:01:53.534 --> 00:02:03.204
+Now the trap on the signup screen, and it is new. Choose Ubuntu 24.04 LTS, not the newest image offered.
+
+18
+00:02:03.204 --> 00:02:08.876
+Vultr now offers 26.04, and it ships PHP 8.5 rather than 8.3.
+
+19
+00:02:08.876 --> 00:02:23.474
+Every php8.3 install command in the guide fails on it, because those packages are not in 26.04's repositories, and PageMotor is not yet verified against 8.5.
+
+20
+00:02:23.474 --> 00:02:35.841
+24.04 is supported until 2029. And while you are on that screen, paste your SSH public key into the SSH Keys field before you deploy.
+
+21
+00:02:36.541 --> 00:02:42.717
+From there, two routes to the same stack: Nginx, PHP 8.3 FPM, MariaDB and Certbot.
+
+22
+00:02:42.717 --> 00:02:47.914
+You can follow the by-hand build, every command listed and explained.
+
+23
+00:02:47.914 --> 00:03:00.643
+Or you can copy the prompt from the guide, edit three lines, and let Claude Code SSH in and do all of it, showing you each command before it runs and stopping on errors.
+
+24
+00:03:01.343 --> 00:03:06.093
+Even on the Claude Code route, some things stay yours, deliberately.
+
+25
+00:03:06.093 --> 00:03:16.571
+Creating the Vultr account, clicking through to provision the box, pointing your domain's A record at the new IP, and registering your own admin user.
+
+26
+00:03:16.571 --> 00:03:26.420
+Those four cross a human-authorisation line: money, identity, DNS ownership and admin rights. Everything after them is fair game to automate.
+
+27
+00:03:27.120 --> 00:03:39.480
+Two details the guide is firm about. The timeouts must match: PHP's max_execution_time at 300 seconds, and Nginx's fastcgi_read_timeout at 600.
+
+28
+00:03:39.480 --> 00:03:51.321
+And email: because the SMTP ports are open on your own box, Mailgun simply works here, with proper SPF and DKIM and real inbox placement.
+
+29
+00:03:51.321 --> 00:03:55.124
+That is the thing shared hosting takes away.
+
+30
+00:03:55.824 --> 00:04:01.906
+Two last things. This server is yours to look after: every mainstream VPS is sold self-managed,
+
+31
+00:04:01.906 --> 00:04:09.397
+so from Ubuntu upwards the patches, the stack and the certificate are your job. Budget about fifteen minutes a month.
+
+32
+00:04:09.397 --> 00:04:19.833
+And if you take the free signup credit, the unused portion expires 30 days after signup, so provision the plan you actually intend to run, not a bigger one to try.
+

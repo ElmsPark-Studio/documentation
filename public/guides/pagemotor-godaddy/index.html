@@ -164,6 +164,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     </a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole install in 4 minutes 22 seconds, narrated, with captions &mdash; including the product check to do before anything else, and the outbound SMTP block that is unique to GoDaddy.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+        <p style="margin:0 0 10px"><strong>The shape of it.</strong> The install itself is standard cPanel, about ten minutes. But GoDaddy differs from other hosts in three ways worth knowing before you start, and one of them decides whether you can install at all.</p>
+        <p style="margin:0 0 10px"><strong>The product.</strong> PageMotor needs GoDaddy's Linux Web Hosting plan, the one whose dashboard shows a <strong>cPanel Admin</strong> button. Two popular GoDaddy products cannot run PageMotor at all: Websites + Marketing, their site builder, and Managed WordPress. Neither gives you cPanel or file access, so there is nowhere to put the files. Check that first, before anything else.</p>
+        <p style="margin:0 0 10px"><strong>Upload and extract.</strong> Run the preflight check, then open cPanel &rsaquo; File Manager and the folder for your site, which for your main domain is <code>public_html</code>. Upload the PageMotor zip, right-click it and choose Extract. If Extract stalls partway, just run it again: GoDaddy's shared servers sometimes pause big jobs, and a retry normally finishes it.</p>
+        <p style="margin:0 0 10px"><strong>The database.</strong> Use cPanel's MySQL Database Wizard, which does the whole job in one pass: name it, create the user, let the generator make the password, and on the last screen tick ALL PRIVILEGES. Here is the GoDaddy difference: unlike most cPanel hosts, GoDaddy usually shows the name exactly as you typed it, with no prefix added. But the name has to be unique across GoDaddy's whole system, so something plain like <code>pagemotor</code> may already be taken. Use something distinctive, and copy the final names exactly as the wizard shows them.</p>
+        <p style="margin:0 0 10px"><strong>The rename.</strong> <code>config-sample.php</code> becomes exactly <code>config.php</code>, which is the step that switches PageMotor on, and you put your three values in. <code>DB_HOST</code> stays <code>localhost</code>. Ignore any older tutorial telling you to hunt for a special GoDaddy MySQL host name: that advice is for their long-retired legacy hosting.</p>
+        <p style="margin:0 0 10px"><strong>Finish.</strong> Go straight to <code>/admin/</code>. On that first visit PageMotor sets itself up and walks you into creating your admin user. Open the admin before you open the front of the site.</p>
+        <p style="margin:0 0 10px"><strong>Email is where GoDaddy differs.</strong> Its shared hosting blocks outbound SMTP to outside mail services, as a matter of policy. Mailgun, SendGrid, Brevo and the rest will simply time out, on every port, so the advice you see everywhere else &mdash; just point it at Mailgun &mdash; does not work here. The giveaway is the shape of the failure: a timeout, rather than a rejected password. The connection never reaches the provider, so it is not your settings.</p>
+        <p style="margin:0 0 10px"><strong>What does work</strong> is GoDaddy's own mail system. In your mail plugin, set the host to <code>localhost</code>, port 25, no encryption and no authentication, because the server trusts mail sent from itself. Or pick the <code>PHP mail()</code> transport, which uses the same thing with nothing to configure. And skip the old relay hostname you will find quoted online; it is deprecated, and it tends to time out.</p>
+        <p style="margin:0 0 10px"><strong>&ldquo;Sent&rdquo; is not &ldquo;delivered&rdquo;.</strong> Your GoDaddy box will happily report the mail as sent, and Gmail and Outlook will quietly bin it, because the domain has no SPF and DKIM records. It does not bounce. It just disappears. Add those two DNS records for your domain and real inboxes will accept it.</p>
+        <p style="margin:0"><strong>If something breaks.</strong> On GoDaddy an <code>error_log</code> file does not appear in your site folder by itself, so look under cPanel &rsaquo; Metrics &rsaquo; Errors instead. A 500 or a blank page is almost always <code>config.php</code>: wrong name, wrong folder, or never renamed. &ldquo;MySQLi Connection Error&rdquo; is better news, because it means <code>config.php</code> is working and PageMotor reached the database.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>The four steps</p>
     <ol>
