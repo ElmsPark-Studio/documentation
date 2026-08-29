@@ -211,6 +211,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/website-email-spam-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole picture in 4 minutes 37 seconds, narrated, with captions &mdash; why a &ldquo;sent&rdquo; log tells you nothing, how to read the verdict in the headers, and the two silent ways SPF breaks.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Your form fires, the log says &ldquo;sent&rdquo;, and the message lands in a spam folder. Three DNS records &mdash; SPF, DKIM and DMARC &mdash; are almost always the missing piece.</p>
+          <p style="margin:0 0 10px"><strong>Why you never find out.</strong> Your log says sent because the message <em>left your server</em>. That is all it records. The receiving provider then checks whether your server was authorised to send for your domain; if it cannot verify that, the message looks forged and is junked or dropped quietly. Nothing reports back.</p>
+          <p style="margin:0 0 10px"><strong>Two completely different failures.</strong> A transport failure means the message never left, or was rejected outright &mdash; &ldquo;connection refused&rdquo;, &ldquo;authentication failed&rdquo;. No DNS record fixes that. An authentication failure means it sent successfully and landed in spam. Establish which one you have first.</p>
+          <p style="margin:0 0 10px"><strong>The one-minute diagnosis.</strong> Send yourself a test at Gmail, open it, choose Show original, and read SPF, DKIM and DMARC. Any FAIL tells you which record needs attention. All three PASS and still in spam means content or sender reputation, not authentication.</p>
+          <p style="margin:0 0 10px"><strong>SPF</strong> is a TXT record listing the servers permitted to send for your domain. <code>-all</code> is a hard fail &mdash; reject anything else. <code>~all</code> is softer: treat other senders with suspicion.</p>
+          <p style="margin:0 0 10px"><strong>Two ways SPF breaks, both silent.</strong> A domain must have exactly one SPF record; add a second and both are ignored, so SPF fails for everything. And the ten-lookup limit: each <code>include:</code> can pull in more, and past ten DNS lookups SPF returns a permerror.</p>
+          <p style="margin:0 0 10px"><strong>DKIM</strong> is a signature rather than a list. Your provider keeps a private key and signs every outgoing message; you publish the public half at a selector subdomain. The receiver verifies it, which also proves the message was not altered in transit.</p>
+          <p style="margin:0 0 10px"><strong>DMARC</strong> is the policy and the reporting. Start at <code>p=none</code> &mdash; monitor only &mdash; watch the aggregate reports for a week or two, confirm your own legitimate mail is passing, then move to quarantine and eventually reject. Those reports often reveal third-party services sending as you that you had forgotten about.</p>
+          <p style="margin:0 0 10px"><strong>Alignment</strong> is why one record is often not enough. For DMARC to pass, either SPF passes <em>and</em> its envelope-sender domain aligns with your visible From header, or DKIM passes <em>and</em> its <code>d=</code> domain aligns with it. A provider's shared SPF record proves the mail came from <em>their</em> servers, not from your domain.</p>
+          <p style="margin:0"><strong>What counts as done.</strong> A &ldquo;sent&rdquo; log is not verification, and neither is your DNS panel showing the records exist &mdash; a record can be present and still fail on a wrong value, a mismatched selector or a syntax error. The only ground truth is a received message whose headers show all three passing.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>

@@ -1,0 +1,118 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:12.648
+Why your website's email lands in spam. Your contact form fires, the log says sent, and the message lands in the recipient's spam folder.
+
+2
+00:00:12.648 --> 00:00:19.337
+Three DNS records — SPF, DKIM and DMARC — are almost always the missing piece.
+
+3
+00:00:20.037 --> 00:00:27.576
+Here is why you never find out. Your log says sent because the message left your server. That is all it records.
+
+4
+00:00:27.576 --> 00:00:35.114
+The receiving provider then checks whether your server was actually authorised to send on behalf of your domain.
+
+5
+00:00:35.114 --> 00:00:44.000
+If it cannot verify that, the message looks potentially forged, so it is junked or dropped quietly, and nothing reports back to you.
+
+6
+00:00:44.700 --> 00:00:52.975
+Before adding any records, work out which problem you actually have, because there are two completely different failures.
+
+7
+00:00:52.975 --> 00:01:04.054
+A transport failure means the message never left your server, or was rejected immediately: connection refused, authentication failed. No DNS record will fix that.
+
+8
+00:01:04.054 --> 00:01:12.192
+An authentication failure means the message sent successfully and landed in spam. That is the one this guide addresses.
+
+9
+00:01:12.892 --> 00:01:21.793
+The one-minute diagnosis is to read the headers. Send yourself a test at Gmail, open it, and choose Show original.
+
+10
+00:01:21.793 --> 00:01:31.866
+Near the top you will see SPF, DKIM and DMARC, each marked pass or fail. Any fail tells you exactly which record needs attention.
+
+11
+00:01:31.866 --> 00:01:41.313
+And if all three pass and the mail is still going to spam, the issue is content or sender reputation, not authentication.
+
+12
+00:01:42.013 --> 00:01:49.285
+SPF is the first record: a TXT entry listing the servers permitted to send email for your domain.
+
+13
+00:01:49.285 --> 00:01:56.632
+When a message arrives, the receiver looks it up and checks whether the sending IP is on the list.
+
+14
+00:01:56.632 --> 00:02:08.252
+Ending it with -all is a hard fail, meaning reject anything else. ~all is a soft fail: treat other senders with suspicion rather than reject them outright.
+
+15
+00:02:08.952 --> 00:02:16.341
+Two things break SPF, and both fail silently. First, a domain must have exactly one SPF record.
+
+16
+00:02:16.341 --> 00:02:27.307
+Add a second and both are ignored, so SPF fails for every message you send. If you use more than one provider, merge them into a single line.
+
+17
+00:02:27.307 --> 00:02:40.995
+Second, the ten-lookup limit: each include can pull in more includes, and SPF only permits ten DNS lookups across the whole chain. Go past it and SPF returns a permanent error.
+
+18
+00:02:41.695 --> 00:02:50.431
+DKIM works differently. Rather than listing who may send, it proves a specific message was signed by the holder of your domain.
+
+19
+00:02:50.431 --> 00:02:59.786
+Your provider keeps a private key and signs every outgoing message; you publish the public half as a DNS record at a selector subdomain.
+
+20
+00:02:59.786 --> 00:03:07.284
+The receiver fetches it and verifies the signature, which also proves the message was not altered in transit.
+
+21
+00:03:07.984 --> 00:03:19.616
+DMARC ties the two together. It is a record at the _dmarc subdomain that tells receiving servers what to do when a message fails, and where to send reports.
+
+22
+00:03:19.616 --> 00:03:29.010
+Policy none means monitor only, and that is the right place to start. Quarantine sends failures to spam; reject discards them.
+
+23
+00:03:29.010 --> 00:03:40.120
+Start at none, watch the aggregate reports for a week or two — they often reveal services sending as you that you had forgotten about — then tighten.
+
+24
+00:03:40.820 --> 00:03:48.017
+And there is a concept called alignment, which is why having just one of these is often still not enough.
+
+25
+00:03:48.017 --> 00:03:59.807
+For DMARC to pass, either SPF passes and the domain it checked lines up with the domain in your visible From header, or DKIM passes and its signing domain lines up with it.
+
+26
+00:03:59.807 --> 00:04:09.334
+This matters because a provider's shared SPF record proves the message came from their servers. It does not prove it came from your domain.
+
+27
+00:04:10.034 --> 00:04:15.446
+And one last thing about what counts as done. A sent log is not verification.
+
+28
+00:04:15.446 --> 00:04:26.410
+Neither is your DNS panel showing that the records exist: a record can be present and still fail on a wrong value, a mismatched selector, or a syntax error.
+
+29
+00:04:26.410 --> 00:04:36.180
+The only ground truth is a received message whose headers show all three checks passing. Run the test, read the headers, then call it done.
+
