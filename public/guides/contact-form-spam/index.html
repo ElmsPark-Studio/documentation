@@ -194,6 +194,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/contact-form-spam-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; All five layers in 4 minutes 15 seconds, narrated, with captions &mdash; what each one catches that the others miss, and why the honeypot must be hidden with CSS rather than JavaScript.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Five server-side layers, each invisible to a real person, that catch bots before the message reaches your inbox. No puzzle, no friction, no third-party widget.</p>
+          <p style="margin:0 0 10px"><strong>Why not just add a CAPTCHA?</strong> It taxes everyone to stop a few: friction for every genuine visitor, worse accessibility, slower conversions, and visitor data leaked to the CAPTCHA provider. Meanwhile modern bots and commercial solving services get past them in seconds.</p>
+          <p style="margin:0 0 10px"><strong>Layer one, the honeypot.</strong> A text input with an innocuous name &mdash; <code>website</code>, <code>url</code> &mdash; hidden from people but present in the raw HTML. Real visitors never see it, so they never fill it. Bots fill every field they find. On the server, reject any submission where it is not empty.</p>
+          <p style="margin:0 0 10px"><strong>Hide it with CSS, not JavaScript.</strong> CSS needs no script to run: every human browser renders it and never shows the field, while the input stays in the HTML for a bot to find. JavaScript hiding depends on the script executing, can briefly flash the field on screen, and a visitor with JS off would see it. And not the <code>hidden</code> attribute either &mdash; some bots ignore it.</p>
+          <p style="margin:0 0 10px"><strong>Layer two, the time trap.</strong> Record when the form loaded and compare it with the server clock on submit. Reject anything faster than a person could plausibly type; three seconds is a sensible start. This catches a different class of bot: scripted submitters that understand hidden fields and leave them empty, but still submit faster than any human.</p>
+          <p style="margin:0 0 10px"><strong>Layer three, rate limiting by IP.</strong> Track submissions per address in a rolling window &mdash; five minutes is a reasonable default. It stops the bots that retry and the ones running slow to evade the timing check. Offices, schools and some mobile networks share one address, so allow two per window if you serve a known shared network.</p>
+          <p style="margin:0 0 10px"><strong>Layer four, when the giveaway is the content.</strong> Cap the links: link-building spam almost always carries several, a real enquiry rarely more than one or two. And keep a short keyword blocklist, tuned to the spam you actually get. Run both <em>after</em> the honeypot and time trap, because scanning text costs more than checking a hidden field.</p>
+          <p style="margin:0 0 10px"><strong>Layer five, optional: a shared blocklist.</strong> The first four only learn from your own traffic. A shared list adds a network dimension &mdash; when one site catches an address, every site using the list benefits at once, and a bot that hit a dozen other sites gets rejected before it reaches the honeypot.</p>
+          <p style="margin:0 0 10px"><strong>Minimum severity is the dial that matters.</strong> Severity 1 blocks any address reported once, anywhere: aggressive, and it risks false positives. Two or three requires corroboration from independent installs, which is safer for most sites, at the cost of being slightly slower against newly active addresses.</p>
+          <p style="margin:0"><strong>The guide</strong> has the order to run the layers in, how to tune each threshold, the optional AI triage capstone, and how it is wired into EP Email's Spam Protection.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>

@@ -1,0 +1,114 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:12.133
+Stopping contact-form spam without CAPTCHA. Five server-side layers, each invisible to a real person, that catch bots before the message ever reaches your inbox.
+
+2
+00:00:12.133 --> 00:00:15.343
+No puzzle, no friction, no third-party widget.
+
+3
+00:00:16.043 --> 00:00:21.012
+So why not just add a CAPTCHA? Because it taxes everyone to stop a few.
+
+4
+00:00:21.012 --> 00:00:30.599
+It adds friction for every real visitor, it hurts accessibility, it slows conversions, and it leaks visitor data to the CAPTCHA provider.
+
+5
+00:00:30.599 --> 00:00:36.198
+And modern bots and commercial solving services get past them in seconds anyway.
+
+6
+00:00:36.898 --> 00:00:48.577
+Layer one is the honeypot. Add a text input with an innocuous name, something like website or url, and hide it from people while leaving it in the raw HTML.
+
+7
+00:00:48.577 --> 00:00:55.241
+Real visitors never see it, so they never fill it in. Bots fill in every field they find.
+
+8
+00:00:55.241 --> 00:01:00.257
+On the server, reject any submission where that field is not empty.
+
+9
+00:01:00.957 --> 00:01:14.128
+Hide it with CSS, not with JavaScript. CSS needs no script to run: every human browser renders it and never shows the field, while the input stays in the HTML for a bot to find.
+
+10
+00:01:14.128 --> 00:01:27.596
+JavaScript hiding depends on the script executing, it can briefly flash the field on screen, and a visitor with JavaScript switched off would see it and might fill it in by mistake.
+
+11
+00:01:27.596 --> 00:01:32.954
+And do not use the hidden attribute either, because some bots ignore it.
+
+12
+00:01:33.654 --> 00:01:41.365
+Layer two is the time trap. Record the moment the form loads, and on submit compare it with the server clock.
+
+13
+00:01:41.365 --> 00:01:51.623
+Reject anything that arrives faster than a person could plausibly read the labels and type a message. Three seconds is a sensible starting point.
+
+14
+00:01:51.623 --> 00:02:03.933
+This catches a different class of bot from the honeypot: scripted submitters that understand hidden fields and leave them empty, but still submit faster than any human could.
+
+15
+00:02:04.633 --> 00:02:15.855
+Layer three is rate limiting by IP. Track how many submissions arrive from each address in a rolling window, and reject repeats. Five minutes is a reasonable default.
+
+16
+00:02:15.855 --> 00:02:22.548
+This stops the bots that retry, and the ones running deliberately slowly to evade the timing check.
+
+17
+00:02:22.548 --> 00:02:35.190
+One caveat: offices, schools and some mobile networks route many people through a single address, so if you serve a known shared network, allow two submissions per window rather than one.
+
+18
+00:02:35.890 --> 00:02:46.356
+Some spam gets past all of that: it arrives at human speed, from a fresh address, with the honeypot untouched. Then the giveaway is the content.
+
+19
+00:02:46.356 --> 00:02:56.168
+Cap the number of links, because link-building spam almost always carries several while a real enquiry rarely has more than one or two.
+
+20
+00:02:56.168 --> 00:03:02.055
+And keep a short keyword blocklist, tuned to the spam you are actually receiving.
+
+21
+00:03:02.055 --> 00:03:09.977
+Run both after the honeypot and the time trap, because scanning text costs more than checking a hidden field.
+
+22
+00:03:10.677 --> 00:03:18.920
+The fifth layer is optional, and it changes the shape of the problem. The first four only ever learn from your own traffic.
+
+23
+00:03:18.920 --> 00:03:28.904
+A shared blocklist adds a network dimension: when one site catches and reports a spam address, every other site using that list benefits immediately.
+
+24
+00:03:28.904 --> 00:03:35.941
+A bot that hit a dozen other sites before reaching yours is rejected before it even gets to the honeypot.
+
+25
+00:03:36.641 --> 00:03:48.369
+The dial that matters there is minimum severity. A severity of one blocks any address that has been reported once, anywhere: aggressive, and it risks false positives.
+
+26
+00:03:48.369 --> 00:03:55.858
+A minimum of two or three requires corroboration from independent installs, which is safer for most sites.
+
+27
+00:03:55.858 --> 00:04:03.065
+The trade is that a higher threshold is slightly slower to protect you against newly active addresses.
+
+28
+00:04:03.765 --> 00:04:13.564
+The guide has the order to run the layers in, how to tune each threshold, the optional AI triage capstone, and how all of it is wired into EP Email's spam protection.
+
