@@ -149,28 +149,29 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 
   <div style="margin:22px 0 6px">
-    <video controls preload="metadata" poster="../pagemotor-bluehost/pagemotor-cpanel-install-poster.webp" width="1920" height="1080"
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
            style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
-      <source src="../pagemotor-bluehost/pagemotor-cpanel-install.mp4" type="video/mp4">
-      <track kind="captions" src="../pagemotor-bluehost/pagemotor-cpanel-install.vtt" srclang="en" label="English" default>
-      Your browser cannot play this video. <a href="../pagemotor-bluehost/pagemotor-cpanel-install.mp4">Download it instead</a>.
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
     </video>
-    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole install in 4 minutes 20 seconds, narrated, with captions. This one video is shared by the Bluehost, HostGator and A2 Hosting guides, because the install is identical standard cPanel on all three. The steps below carry the A2 Hosting specifics, including its Database Wizard flow.</p>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole install in 3 minutes 24 seconds, narrated, with captions &mdash; the A2 route throughout, including its one-pass Database Wizard and the LiteSpeed cache warm-up that reads as a broken install.</p>
     <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
       <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
       <div style="margin-top:10px;color:#5d574c">
-        <p style="margin:0 0 10px"><strong>Preflight.</strong> Upload <code>pm-preflight.php</code> into the folder you are about to install into and open it. It reports the PHP version, missing extensions, whether PHP can write <code>config.php</code> for you, and whether the files landed in the right place. Then delete it.</p>
-        <p style="margin:0 0 10px"><strong>Step one.</strong> cPanel &rsaquo; File Manager &rsaquo; your site folder. Upload the PageMotor zip, right-click it, Extract. You should see <code>pagemotor.php</code>, a <code>lib</code> folder and <code>config-sample.php</code>. If you got a single folder called <code>pagemotor</code> instead, move everything inside it up into the site folder.</p>
-        <p style="margin:0 0 10px"><strong>Step two.</strong> cPanel offers two routes to the same job: the <strong>MySQL Databases</strong> page in three stages, or the <strong>MySQL Database Wizard</strong> one screen at a time. Which you see depends on your host. Either way you end up holding a database name, a username and a password.</p>
-        <p style="margin:0 0 10px"><strong>The prefix.</strong> cPanel puts your account name on the front of both the database and the user, so <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>. Copy the full names exactly as cPanel shows them. Getting this wrong is the most common reason the install fails at the last step.</p>
-        <p style="margin:0 0 10px"><strong>Step three.</strong> Rename <code>config-sample.php</code> to exactly <code>config.php</code>: that rename is what switches PageMotor on. On current releases you can instead go straight to <code>/admin/</code> and let the install wizard write the file. A blank white page there is not an error, only a download that predates the wizard.</p>
-        <p style="margin:0 0 10px"><strong>By hand,</strong> change three values and nothing else: <code>DB_NAME</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>, with the prefixed names. <code>DB_HOST</code> stays <code>localhost</code>.</p>
-        <p style="margin:0 0 10px"><strong>Step four.</strong> Open <code>/admin/</code> first, before anything else. PageMotor sets itself up and walks you into creating your admin user.</p>
-        <p style="margin:0"><strong>If it fails.</strong> A 500 or blank page is almost always <code>config.php</code>: wrong name, wrong folder, or never renamed. &ldquo;MySQLi Connection Error&rdquo; is good news, because <code>config.php</code> is working and PageMotor reached the database: re-check the prefixed names, the password and ALL PRIVILEGES.</p>
+        <p style="margin:0 0 10px"><strong>The shape of it.</strong> Standard cPanel, about ten minutes, and you do not need to be technical.</p>
+        <p style="margin:0 0 10px"><strong>Getting to cPanel</strong> takes one extra hop here. Sign in at <code>my.a2hosting.com</code>, go to My Accounts, click Manage next to your hosting package, and then click Login to Control Panel on the hosting dashboard. That opens cPanel, and everything after this is the standard set of screens.</p>
+        <p style="margin:0 0 10px"><strong>Upload and extract.</strong> In cPanel, open File Manager and go to the folder for your site, which for your main domain is <code>public_html</code>. Click Upload, choose the PageMotor zip, and let it finish. Then right-click the zip, choose Extract, and delete the zip afterwards to keep things tidy. You should end up with <code>pagemotor.php</code>, a <code>lib</code> folder, and <code>config-sample.php</code>.</p>
+        <p style="margin:0 0 10px"><strong>The database</strong> is where A2 is a little kinder than most cPanel hosts. Rather than three separate stages on one page, it gives you the MySQL Database Wizard, which walks the whole job in one pass: name the database, create the user with a generated password, and on the last screen tick ALL PRIVILEGES.</p>
+        <p style="margin:0 0 10px"><strong>Watch the prefix.</strong> A2 prefixes the database with your account name automatically, so what you type as <code>pagemotor</code> is saved as something like <code>accountname_pagemotor</code>, and the user the same way. The full name shown at the end of the wizard is the one to copy. Take the username and the password with it.</p>
+        <p style="margin:0 0 10px"><strong>The rename.</strong> <code>config-sample.php</code> becomes exactly <code>config.php</code>, which is what switches PageMotor on. Put your three values in, exactly as the wizard showed them, including the prefix. <code>DB_HOST</code> stays <code>localhost</code>, which is correct for every A2 Hosting cPanel account.</p>
+        <p style="margin:0 0 10px"><strong>Finish.</strong> Go straight to <code>/admin/</code>. On that first visit PageMotor sets itself up and walks you into creating your admin user. Open the admin before you open the front of the site.</p>
+        <p style="margin:0 0 10px"><strong>Looks like a fault, is not one.</strong> If your plan is one of the Turbo tiers, it runs LiteSpeed with heavy caching, and on the very first visits after installation LiteSpeed needs a moment to warm its cache. The site will feel slow. That is normal, and it passes. If it is still slow after the first few minutes, check that the cache is enabled under LiteSpeed Web Cache Manager.</p>
+        <p style="margin:0 0 10px"><strong>If it goes wrong.</strong> A 500 or a blank page is almost always <code>config.php</code>: wrong name, wrong folder, or never renamed. There are two places to read the real reason on A2: cPanel &rsaquo; Metrics &rsaquo; Errors, and an <code>error_log</code> file that A2 writes into <code>public_html</code> itself, which you can open straight from File Manager.</p>
+        <p style="margin:0"><strong>&ldquo;MySQLi Connection Error&rdquo;</strong> is actually good news. It means <code>config.php</code> is working and PageMotor reached the database. Re-check the prefixed names, the password, and that the user has all privileges.</p>
       </div>
     </details>
   </div>
-
   <nav class="toc">
     <p>The four steps</p>
     <ol>

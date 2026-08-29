@@ -1,0 +1,118 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:07.959
+Installing PageMotor on A2 Hosting. It is standard cPanel, about ten minutes, and you do not need to be technical.
+
+2
+00:00:08.659 --> 00:00:15.269
+Getting to cPanel takes one extra hop here. Sign in at my.a2hosting.com, go to My Accounts,
+
+3
+00:00:15.269 --> 00:00:22.968
+click Manage next to your hosting package, and then click Login to Control Panel on the hosting dashboard.
+
+4
+00:00:22.968 --> 00:00:28.489
+That opens cPanel, and everything after this is the standard set of screens.
+
+5
+00:00:29.189 --> 00:00:37.566
+In cPanel, open File Manager and go to the folder for your site, which for your main domain is public_html.
+
+6
+00:00:37.566 --> 00:00:42.106
+Click Upload, choose the PageMotor zip, and let it finish.
+
+7
+00:00:42.106 --> 00:00:49.309
+Then right-click the zip, choose Extract, and delete the zip afterwards to keep things tidy.
+
+8
+00:00:49.309 --> 00:00:55.102
+You should end up with pagemotor.php, a lib folder, and config-sample.php.
+
+9
+00:00:55.802 --> 00:01:00.380
+The database is where A2 is a little kinder than most cPanel hosts.
+
+10
+00:01:00.380 --> 00:01:08.922
+Rather than three separate stages on one page, it gives you the MySQL Database Wizard, which walks the whole job in one pass:
+
+11
+00:01:08.922 --> 00:01:16.096
+name the database, create the user with a generated password, and on the last screen tick ALL PRIVILEGES.
+
+12
+00:01:16.796 --> 00:01:23.390
+One thing to watch as you go through it. A2 prefixes the database with your account name automatically,
+
+13
+00:01:23.390 --> 00:01:30.177
+so what you type as pagemotor is saved as something like accountname_pagemotor, and the user the same way.
+
+14
+00:01:30.177 --> 00:01:37.091
+The full name shown at the end of the wizard is the one to copy. Take the username and the password with it.
+
+15
+00:01:37.791 --> 00:01:46.164
+Then rename config-sample.php to exactly config.php. That rename is what switches PageMotor on.
+
+16
+00:01:46.164 --> 00:01:53.392
+Put your three values in, exactly as the wizard showed them, including the prefix.
+
+17
+00:01:53.392 --> 00:02:00.268
+DB_HOST stays localhost, which is correct for every A2 Hosting cPanel account.
+
+18
+00:02:00.968 --> 00:02:09.716
+Then go straight to /admin/. On that first visit PageMotor sets itself up and walks you into creating your admin user.
+
+19
+00:02:09.716 --> 00:02:13.646
+Open the admin before you open the front of the site.
+
+20
+00:02:14.346 --> 00:02:18.830
+Now something specific to A2 that looks like a fault and is not.
+
+21
+00:02:18.830 --> 00:02:30.670
+If your plan is one of the Turbo tiers, it runs LiteSpeed with heavy caching, and on the very first visits after installation LiteSpeed needs a moment to warm its cache.
+
+22
+00:02:30.670 --> 00:02:34.524
+The site will feel slow. That is normal, and it passes.
+
+23
+00:02:34.524 --> 00:02:42.581
+If it is still slow after the first few minutes, check that the cache is enabled under LiteSpeed Web Cache Manager.
+
+24
+00:02:43.281 --> 00:02:52.092
+If you hit a 500 or a blank page, it is almost always config.php: wrong name, wrong folder, or never renamed.
+
+25
+00:02:52.092 --> 00:02:58.235
+There are two places to read the real reason on A2. cPanel, Metrics, Errors.
+
+26
+00:02:58.235 --> 00:03:06.965
+And an error_log file that A2 writes into public_html itself, which you can open straight from File Manager.
+
+27
+00:03:07.665 --> 00:03:12.898
+And if the log says “MySQLi Connection Error”, that is actually good news.
+
+28
+00:03:12.898 --> 00:03:17.566
+It means config.php is working and PageMotor reached the database.
+
+29
+00:03:17.566 --> 00:03:23.223
+Re-check the prefixed names, the password, and that the user has all privileges.
+

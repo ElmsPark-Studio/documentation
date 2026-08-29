@@ -160,28 +160,29 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
   </div>
 
   <div style="margin:22px 0 6px">
-    <video controls preload="metadata" poster="../pagemotor-bluehost/pagemotor-cpanel-install-poster.webp" width="1920" height="1080"
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
            style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
-      <source src="../pagemotor-bluehost/pagemotor-cpanel-install.mp4" type="video/mp4">
-      <track kind="captions" src="../pagemotor-bluehost/pagemotor-cpanel-install.vtt" srclang="en" label="English" default>
-      Your browser cannot play this video. <a href="../pagemotor-bluehost/pagemotor-cpanel-install.mp4">Download it instead</a>.
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
     </video>
-    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole install in 4 minutes 20 seconds, narrated, with captions. This one video is shared by the Bluehost, HostGator and A2 Hosting guides, because the install is identical standard cPanel on all three. The steps below carry the HostGator specifics, including how to reach cPanel from the Customer Portal.</p>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole install in 3 minutes 26 seconds, narrated, with captions &mdash; the HostGator route throughout, including the plan check to do first and the PHP 7.4 default on older accounts.</p>
     <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
       <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
       <div style="margin-top:10px;color:#5d574c">
-        <p style="margin:0 0 10px"><strong>Preflight.</strong> Upload <code>pm-preflight.php</code> into the folder you are about to install into and open it. It reports the PHP version, missing extensions, whether PHP can write <code>config.php</code> for you, and whether the files landed in the right place. Then delete it.</p>
-        <p style="margin:0 0 10px"><strong>Step one.</strong> cPanel &rsaquo; File Manager &rsaquo; your site folder. Upload the PageMotor zip, right-click it, Extract. You should see <code>pagemotor.php</code>, a <code>lib</code> folder and <code>config-sample.php</code>. If you got a single folder called <code>pagemotor</code> instead, move everything inside it up into the site folder.</p>
-        <p style="margin:0 0 10px"><strong>Step two.</strong> cPanel offers two routes to the same job: the <strong>MySQL Databases</strong> page in three stages, or the <strong>MySQL Database Wizard</strong> one screen at a time. Which you see depends on your host. Either way you end up holding a database name, a username and a password.</p>
-        <p style="margin:0 0 10px"><strong>The prefix.</strong> cPanel puts your account name on the front of both the database and the user, so <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>. Copy the full names exactly as cPanel shows them. Getting this wrong is the most common reason the install fails at the last step.</p>
-        <p style="margin:0 0 10px"><strong>Step three.</strong> Rename <code>config-sample.php</code> to exactly <code>config.php</code>: that rename is what switches PageMotor on. On current releases you can instead go straight to <code>/admin/</code> and let the install wizard write the file. A blank white page there is not an error, only a download that predates the wizard.</p>
-        <p style="margin:0 0 10px"><strong>By hand,</strong> change three values and nothing else: <code>DB_NAME</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>, with the prefixed names. <code>DB_HOST</code> stays <code>localhost</code>.</p>
-        <p style="margin:0 0 10px"><strong>Step four.</strong> Open <code>/admin/</code> first, before anything else. PageMotor sets itself up and walks you into creating your admin user.</p>
-        <p style="margin:0"><strong>If it fails.</strong> A 500 or blank page is almost always <code>config.php</code>: wrong name, wrong folder, or never renamed. &ldquo;MySQLi Connection Error&rdquo; is good news, because <code>config.php</code> is working and PageMotor reached the database: re-check the prefixed names, the password and ALL PRIVILEGES.</p>
+        <p style="margin:0 0 10px"><strong>The shape of it.</strong> Standard cPanel, about ten minutes, and you do not need to be technical. One thing to check before you start, though.</p>
+        <p style="margin:0 0 10px"><strong>The plan.</strong> HostGator's standard hosting plans all include cPanel, which is what PageMotor needs. Their separate Website Builder product does not, and PageMotor cannot run there at all. If your dashboard has no cPanel button, that is the reason.</p>
+        <p style="margin:0 0 10px"><strong>Opening cPanel.</strong> Log in at <code>portal.hostgator.com</code>, choose Hosting in the menu, and click the cPanel button under Quick Links. There is also a shortcut that always works: go to <code>yourdomain.com/cpanel</code> and log in with the cPanel details from your HostGator welcome email.</p>
+        <p style="margin:0 0 10px"><strong>Upload and extract.</strong> In cPanel, open File Manager and go to the folder for your site, usually <code>public_html</code>. Click Upload, choose the PageMotor zip, and let it finish &mdash; File Manager takes files up to 500&nbsp;MB, far larger than anything PageMotor ships. Then right-click the zip and choose Extract. You should end up with <code>pagemotor.php</code>, a <code>lib</code> folder, and <code>config-sample.php</code>.</p>
+        <p style="margin:0 0 10px"><strong>The database</strong> is three quick stages on one page. Open MySQL Databases. Under Create New Database, type a name like <code>pagemotor</code> and create it. Scroll down to MySQL Users, add a new user, let the generator make the password, and write it down. Then scroll to Add User To Database, choose your user and your database, click Add, tick ALL PRIVILEGES, and Make Changes.</p>
+        <p style="margin:0 0 10px"><strong>The one nearly everyone misses.</strong> cPanel puts your account name on the front of both. A database you typed as <code>pagemotor</code> is saved as something like <code>theaccount_pagemotor</code>, and the user the same way. Copy the full names exactly as cPanel shows them. Getting this wrong is the most common reason the install fails at the last step.</p>
+        <p style="margin:0 0 10px"><strong>The rename.</strong> <code>config-sample.php</code> becomes exactly <code>config.php</code>, which is what switches PageMotor on. Put the three values in, using the full prefixed names, and leave everything else alone. <code>DB_HOST</code> stays <code>localhost</code>.</p>
+        <p style="margin:0 0 10px"><strong>Finish.</strong> Go straight to <code>/admin/</code>. On that first visit PageMotor sets itself up and walks you into creating your admin user. Open the admin before you open the front of the site.</p>
+        <p style="margin:0 0 10px"><strong>If it goes wrong.</strong> A 500 or a blank page is almost always <code>config.php</code>: wrong name, wrong folder, or never renamed. HostGator gives you three ways to read the real reason: cPanel &rsaquo; Metrics &rsaquo; Errors; the <code>error_log</code> file in your site folder; or, without opening cPanel at all, the Customer Portal under Websites &rsaquo; Settings &rsaquo; Advanced &rsaquo; Logs.</p>
+        <p style="margin:0"><strong>One HostGator note,</strong> worth acting on once you are in: older accounts can still default to PHP 7.4. PageMotor wants a modern PHP 8. Check cPanel &rsaquo; Software &rsaquo; MultiPHP Manager and pick a PHP 8 version if you are not on one.</p>
       </div>
     </details>
   </div>
-
   <nav class="toc">
     <p>The four steps</p>
     <ol>

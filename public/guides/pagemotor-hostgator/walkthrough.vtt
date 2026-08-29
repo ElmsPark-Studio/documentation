@@ -1,0 +1,106 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:08.387
+Installing PageMotor on HostGator. It is standard cPanel, about ten minutes, and you do not need to be technical.
+
+2
+00:00:08.387 --> 00:00:11.303
+One thing to check before you start, though.
+
+3
+00:00:12.003 --> 00:00:18.428
+The plan. HostGator's standard hosting plans all include cPanel, which is what PageMotor needs.
+
+4
+00:00:18.428 --> 00:00:24.312
+Their separate Website Builder product does not, and PageMotor cannot run there at all.
+
+5
+00:00:24.312 --> 00:00:28.303
+If your dashboard has no cPanel button, that is the reason.
+
+6
+00:00:29.003 --> 00:00:37.426
+To open cPanel, log in at portal.hostgator.com, choose Hosting in the menu, and click the cPanel button under Quick Links.
+
+7
+00:00:37.426 --> 00:00:47.161
+There is also a shortcut that always works: go to yourdomain.com/cpanel and log in with the cPanel details from your HostGator welcome email.
+
+8
+00:00:47.861 --> 00:00:54.835
+In cPanel, open File Manager and go to the folder for your site, usually public_html.
+
+9
+00:00:54.835 --> 00:01:06.240
+Click Upload, choose the PageMotor zip, and let it finish. File Manager takes files up to 500 MB, far larger than anything PageMotor ships.
+
+10
+00:01:06.240 --> 00:01:16.004
+Then right-click the zip and choose Extract. You should end up with pagemotor.php, a lib folder, and config-sample.php.
+
+11
+00:01:16.704 --> 00:01:22.056
+The database is three quick stages on one page. Open MySQL Databases.
+
+12
+00:01:22.056 --> 00:01:27.331
+Under Create New Database, type a name like pagemotor and create it.
+
+13
+00:01:27.331 --> 00:01:35.011
+Scroll down to MySQL Users, add a new user, let the generator make the password, and write it down.
+
+14
+00:01:35.011 --> 00:01:44.475
+Then scroll to Add User To Database, choose your user and your database, click Add, tick ALL PRIVILEGES, and Make Changes.
+
+15
+00:01:45.175 --> 00:01:51.865
+And here is the one thing nearly everyone misses. cPanel puts your account name on the front of both.
+
+16
+00:01:51.865 --> 00:01:59.086
+A database you typed as pagemotor is saved as something like theaccount_pagemotor, and the user the same way.
+
+17
+00:01:59.086 --> 00:02:07.698
+Copy the full names exactly as cPanel shows them. Getting this wrong is the most common reason the install fails at the last step.
+
+18
+00:02:08.398 --> 00:02:16.585
+Then rename config-sample.php to exactly config.php. That rename is what switches PageMotor on.
+
+19
+00:02:16.585 --> 00:02:26.324
+Put the three values in, using the full prefixed names, and leave everything else alone. DB_HOST stays localhost.
+
+20
+00:02:27.024 --> 00:02:35.836
+Then go straight to /admin/. On that first visit PageMotor sets itself up and walks you into creating your admin user.
+
+21
+00:02:35.836 --> 00:02:39.795
+Open the admin before you open the front of the site.
+
+22
+00:02:40.495 --> 00:02:48.921
+If you hit a 500 or a blank page, it is almost always config.php: wrong name, wrong folder, or never renamed.
+
+23
+00:02:48.921 --> 00:02:58.197
+HostGator gives you three ways to read the real reason. cPanel, Metrics, Errors. The error_log file in your site folder.
+
+24
+00:02:58.197 --> 00:03:05.619
+Or, without opening cPanel at all, the Customer Portal under Websites, Settings, Advanced, Logs.
+
+25
+00:03:06.319 --> 00:03:14.577
+And one HostGator note worth acting on once you are in. Older accounts can still default to PHP 7.4.
+
+26
+00:03:14.577 --> 00:03:24.570
+PageMotor wants a modern PHP 8. Check cPanel, Software, MultiPHP Manager, and pick a PHP 8 version if you are not on one.
+
