@@ -80,6 +80,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Cards](/plugins/ep-cards/)**. Native card groups and grids with LLM-driven import. Thesis Focus Cards migration via add-on.
 - **[EP Cards Importer](/plugins/ep-cards-importer/)**. Migration add-on for EP Cards — imports from WordPress Thesis.
 - **[EP Comments](/plugins/ep-comments/)**. Comment system with moderation, threaded replies, WordPress import.
+- **[EP Copyright](/plugins/ep-copyright/)**. A copyright line that keeps its own year right. One shortcode in your footer, correct every January, nothing to remember.
 - **[EP Documents](/plugins/ep-documents/)**. Hierarchical documentation site for PageMotor. Author docs in HTML or Markdown, organise by section, draft / improve / translate with Claude, six EU languages.
 - **[EP Editor](/plugins/ep-editor/)**. Visual inline page editor (work in progress).
 - **[EP FAQ](/plugins/ep-faq/)**. FAQ management with accordion, search, Schema.org markup, voting.
