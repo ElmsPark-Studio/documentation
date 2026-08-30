@@ -194,6 +194,31 @@ header.es-header{background:#f6f2ea;border-bottom:1px solid #e5ddcc}
     <a class="llm-btn" href="https://documentation.elmspark.com/downloads/ai-said-it-was-done-prompt.md">&#x2193;&nbsp; Download as LLM prompt</a>
   </div>
 
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole habit in 6 minutes 18 seconds, narrated, with captions &mdash; why the bias exists, what a real probe looks like, and the four-line gate.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> Every AI coding assistant reports tasks complete on signals that are necessary but not sufficient. The only proof is the probe: run the exact request a real user would make, and read the actual response.</p>
+          <p style="margin:0 0 10px"><strong>Step-success is not verification.</strong> A command that exits zero means the command ran. A test that passes means that test passed. A push that completes means the objects reached the remote. All true, all useful &mdash; and none of them tells you whether a real customer, hitting the system right now, gets what you intended.</p>
+          <p style="margin:0 0 10px"><strong>The gap, row by row.</strong> <em>Exited 0</em> does not tell you the output is correct. <em>Test passed</em> does not tell you the user journey works. <em>Upload returned 200</em> does not tell you customers can retrieve the new version. Every signal is worth knowing; every one leaves the same gap open.</p>
+          <p style="margin:0 0 10px"><strong>Name the probe first.</strong> Before the work starts, one sentence: what is the exact request a real customer would make, and what must the response contain? If you cannot describe it yet, that is the finding &mdash; the success criterion is not clear enough. Clarifying now costs nothing; discovering it after you have announced the work costs more.</p>
+          <p style="margin:0 0 10px"><strong>Specific, live, readable.</strong> Fetch the manifest endpoint a customer's install calls and read the version from the body. Trigger the send, then check the real <em>inbox</em>, not the send log. Query the live database and read the row. And note what does not count: local is not live, staging is not production, and &ldquo;it should work&rdquo; reasoned from the code is not a probe.</p>
+          <p style="margin:0 0 10px"><strong>A multi-step ship is one task.</strong> Upload, manifest refresh, customer probe: one task. Deploy, cache flush, fetch the live URL: one task. Commit, push, CI, check the artefact: one task. The assistant will report each step as it lands, which is useful &mdash; but none of those reports is &ldquo;done&rdquo;.</p>
+          <p style="margin:0 0 10px"><strong>&ldquo;Looks fine&rdquo; is not a probe.</strong> Not from the AI and not from you: a person may be deferring to you to confirm, and an assistant may read confidence as confirmation. It covers code review (&ldquo;the logic looks correct&rdquo;), a glance in the browser (&ldquo;the page looks right&rdquo; &mdash; in <em>your</em> browser, right now), and memory (&ldquo;that endpoint always returns the right thing&rdquo;).</p>
+          <p style="margin:0 0 10px"><strong>Why models do this.</strong> It is a training-side bias, not carelessness. The literature calls it <em>corrupt success</em>; a separate taxonomy of agent failures names the same pattern <em>premature termination with hallucinated verification</em>. The root cause is reward calibration: raters score confident completions above an honest &ldquo;I could not verify this&rdquo;, so the model learns to <em>sound</em> finished. It is not lying about what it observed &mdash; it is drawing the wrong conclusion from true information, which is why the same bias affects its self-check and the gate has to be external.</p>
+          <p style="margin:0 0 10px"><strong>What it costs.</strong> A plugin update announced as shipped: zip uploaded, manifest script ran, server returned 200, announced to a paid developer forum. Then again. Then a third time. Four public declarations in 24 hours. After the fourth, someone fetched the endpoint a real install would call &mdash; the version in it was not the announced one, because the refresh had pulled from a cached copy. The fix took a minute; the probe would have caught it in ten seconds.</p>
+          <p style="margin:0"><strong>The gate.</strong> The probe was named before the work started. It ran against the <em>live</em> system. The raw output is available and contains the expected content. Anything customer-facing quotes that output, not the step signals. Until all four are true, the honest language is step-level: &ldquo;the deploy completed, customer-facing verification pending&rdquo;.</p>
+      </div>
+    </details>
+  </div>
+
   <nav class="toc">
     <p>What&rsquo;s on this page</p>
     <ol>

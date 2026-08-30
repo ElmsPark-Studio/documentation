@@ -1,0 +1,162 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:03.129
+AI said it was done. It wasn't.
+
+2
+00:00:03.129 --> 00:00:11.904
+Every AI coding assistant has a habit of reporting tasks complete based on signals that are necessary, but not sufficient.
+
+3
+00:00:11.904 --> 00:00:19.383
+The only proof is the probe: run the exact request a real user would make, and read the actual response.
+
+4
+00:00:20.083 --> 00:00:24.692
+Start with the core idea, because everything else follows from it.
+
+5
+00:00:24.692 --> 00:00:37.961
+A command that exits zero means the command ran. A test that passes means that test passed. A push that completes means the objects reached the remote. Every one of those is true and useful.
+
+6
+00:00:37.961 --> 00:00:47.808
+But none of them tells you whether a real customer, hitting the system right now, gets the thing you intended. Only the probe tells you that.
+
+7
+00:00:48.508 --> 00:00:53.130
+Look at what each signal actually tells you, and what it leaves open.
+
+8
+00:00:53.130 --> 00:01:00.566
+Exited zero: the command ran without a process-level error. It does not tell you whether the output is correct.
+
+9
+00:01:00.566 --> 00:01:08.538
+Test passed: that specific case produced the expected result. It does not tell you whether the full user journey works.
+
+10
+00:01:08.538 --> 00:01:17.246
+Upload returned two hundred: the file reached the server. It does not tell you whether customers can now retrieve the new version.
+
+11
+00:01:17.246 --> 00:01:22.873
+Every one of these is worth knowing. And every one of them leaves the same gap open.
+
+12
+00:01:23.573 --> 00:01:27.963
+Step one, and it happens before any work starts. Name the probe.
+
+13
+00:01:27.963 --> 00:01:35.576
+One sentence: what is the exact request a real customer would make, and what content must the response contain?
+
+14
+00:01:35.576 --> 00:01:43.395
+And if you cannot describe it yet, that is itself the finding. It means the success criterion is not clear enough.
+
+15
+00:01:43.395 --> 00:01:51.762
+Clarifying it now costs nothing. Discovering it later, after you have announced the work is done, costs a great deal more.
+
+16
+00:01:52.462 --> 00:01:56.267
+A well-formed probe is specific, live, and readable.
+
+17
+00:01:56.267 --> 00:02:06.290
+For a plugin update: fetch the manifest endpoint a customer's installation actually calls, and read the version out of the response body.
+
+18
+00:02:06.290 --> 00:02:11.631
+For email: trigger the send, then check the real inbox, not the send log.
+
+19
+00:02:11.631 --> 00:02:18.947
+For a database migration: query the live database afterwards and read the row that should now exist.
+
+20
+00:02:18.947 --> 00:02:29.336
+And note what does not count. Local is not live. Staging is not production. And it should work, reasoned from the code, is not a probe at all.
+
+21
+00:02:30.036 --> 00:02:38.320
+Step two, and this is the framing that does most of the work. A multi-step ship is one task, not several.
+
+22
+00:02:38.320 --> 00:02:53.628
+Upload, then manifest refresh, then customer probe: one task. Deploy, then cache flush, then fetch the live URL: one task. Commit, then push, then wait for CI, then check the artefact: one task.
+
+23
+00:02:53.628 --> 00:03:03.333
+Your assistant will naturally report each step as it lands, and that is fine and useful. But none of those reports is done.
+
+24
+00:03:04.033 --> 00:03:10.171
+Now the uncomfortable one. Looks fine is not a probe. Not from the AI, and not from you.
+
+25
+00:03:10.171 --> 00:03:18.959
+A person saying it may simply be deferring to you to confirm, and an assistant may be reading that confidence as confirmation.
+
+26
+00:03:18.959 --> 00:03:37.232
+This covers more ground than people expect. It covers code review, where the logic looks correct. It covers a glance in the browser, where the page looks right, in your browser, right now. And it covers memory, where that endpoint always returns the right thing.
+
+27
+00:03:37.232 --> 00:03:41.417
+Run the probe against the live system, and paste the output.
+
+28
+00:03:42.117 --> 00:03:49.689
+It is worth knowing why models do this, because it is a training-side bias rather than occasional carelessness.
+
+29
+00:03:49.689 --> 00:04:01.013
+The literature has a name for it: corrupt success. Declaring a task complete on the basis of step signals that are necessary, but not sufficient, for the actual goal.
+
+30
+00:04:01.013 --> 00:04:11.246
+A separate taxonomy of agent failure modes catalogued the same pattern independently, calling it premature termination with hallucinated verification.
+
+31
+00:04:11.246 --> 00:04:29.050
+And the root cause traces back to how reinforcement learning from human feedback is calibrated: raters systematically score confident-sounding completions above an honest I could not verify this. So the model learns to sound finished rather than to be finished.
+
+32
+00:04:29.050 --> 00:04:42.489
+It is not lying about what it observed. It is drawing the wrong conclusion from true information, which is exactly why the same bias affects its own self-check, and why the gate has to be external.
+
+33
+00:04:43.189 --> 00:04:48.780
+Here is what it costs when it goes wrong. A plugin update was announced as shipped.
+
+34
+00:04:48.780 --> 00:05:06.901
+Every step had completed: the zip uploaded, the manifest script ran, the server returned two hundred. It was announced to a paid developer forum. Then again. Then a third time after a follow-up question. In twenty-four hours it was publicly declared shipped four times.
+
+35
+00:05:06.901 --> 00:05:18.487
+After the fourth, someone finally fetched the manifest endpoint a real customer's installation would call, and read the version out of it. It was not the announced version.
+
+36
+00:05:18.487 --> 00:05:32.230
+The refresh had completed without error, but it had pulled from a cached copy of the old manifest. The fix took about a minute. The probe would have caught it in ten seconds, after the first announcement.
+
+37
+00:05:32.930 --> 00:05:37.854
+So, the gate. Four things, and when all four are true the task is done.
+
+38
+00:05:37.854 --> 00:05:56.028
+The probe was named before the work started. It ran against the live system, not a local environment and not a mock. The raw output is available, and it contains the expected content. And anything customer-facing quotes that output, rather than the step signals.
+
+39
+00:05:56.028 --> 00:06:03.381
+Until then, the honest language is step-level: the deploy completed, customer-facing verification pending.
+
+40
+00:06:03.381 --> 00:06:16.629
+The lesson is not to blame the AI. The step signals were accurate, and the model drew the natural conclusion from them. The gap was the absence of a named probe, agreed before the work began.
+
