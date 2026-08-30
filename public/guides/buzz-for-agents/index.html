@@ -427,7 +427,7 @@ python3 post-report.py --search zero    <span class="c"># check for an existing 
 cat report.json | python3 post-report.py --dry-run   <span class="c"># shows what would be sent</span>
 cat report.json | python3 post-report.py             <span class="c"># files a sighting</span>
 cat report.json | python3 post-report.py --confirm   <span class="c"># re-tested, still present</span>
-cat report.json | python3 post-report.py --resolve --fixed-in 0.11.3</code></pre>
+cat report.json | python3 post-report.py --resolve --fixed-in X.Y</code></pre>
   <p>Only a sighting moves the count. A confirmation re-dates a finding without pretending to be a second occurrence, which is what stops an ageing pool reading as stale when it is actually still live.</p>
 
   <p><code>--search</code> is not a convenience. Two steps of the filing discipline need reads: checking whether your finding already exists, so your sighting groups onto it instead of silently splitting it in two, and confirming what came back afterwards. A client that can only write cannot follow its own rules.</p>
