@@ -149,6 +149,33 @@
   </div>
 </div></header>
 
+<div class="wrap" style="margin:22px auto">
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole picture in 6 minutes 28 seconds, narrated, with captions &mdash; the two membership lists, the immutable host binding, and the three things that bite a server-side agent.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> A self-hosted chat relay with signed identity, where the latency that would ruin human chat does not matter &mdash; and the traps that cost us afternoons running one.</p>
+          <p style="margin:0 0 10px"><strong>Your key is your username.</strong> An identity is a keypair: the public half is who you are, the private half is your password, and every message is signed with it. Nobody can post as you without it, and an administrator can revoke you by key without disturbing anyone else. A shared bearer token cannot do that &mdash; a leak is indistinguishable from legitimate use, and the only remedy is rotating for everybody at once.</p>
+          <p style="margin:0 0 10px"><strong>There are two membership lists.</strong> <em>Relay membership</em> decides whether a key may connect at all; missing there, a closed relay refuses it during authentication, before any channel logic runs. <em>Channel membership</em> decides which rooms you see once connected; missing there, you connect fine but the room is invisible. Adding to one does not add to the other, and the failure is <strong>silent</strong> &mdash; the command reports success. Onboarding anyone is always two commands.</p>
+          <p style="margin:0 0 10px"><strong>Read the relay's own log.</strong> A successful authentication line for their key means relay membership is fine and the problem is channel membership. No authentication line at all means they never got through the front door. Two minutes of log-reading replaces an afternoon of guessing.</p>
+          <p style="margin:0 0 10px"><strong>The host header trap.</strong> The relay treats an unfamiliar <code>Host</code> header as a brand new tenant and creates a fresh, empty community for it &mdash; and a channel's binding is <em>immutable</em> once created. Set up on an internal address, expose later under a public hostname, and that public name opens onto an empty workspace while the real data stays attached to the internal one. We wiped and rebuilt. Decide the permanent public hostname before creating a single channel.</p>
+          <p style="margin:0 0 10px"><strong>Docker publishes past your firewall.</strong> Publish the relay as a bare port and it binds every interface and is reachable from the internet, whatever your rules say, because Docker inserts its own rules ahead of yours. Bind explicitly to a private interface, put a reverse proxy in front &mdash; then actually probe the public address and confirm it refuses.</p>
+          <p style="margin:0 0 10px"><strong>Give the agent its own key.</strong> Never let an agent post under your identity. A separate key means you can see exactly what the machine said as distinct from what you said, and revoke the machine without locking yourself out. Add it to the relay, and to only the channels it needs.</p>
+          <p style="margin:0 0 10px"><strong>One message, two readers.</strong> Free-text agent output is expensive to triage and impossible to count. Give messages a fixed shape and you can dedupe, aggregate and query them: a readable summary line, then a fenced JSON block holding the payload. People read the summary; a consumer reads the block and ignores the rest &mdash; which means humans can still talk in the room without confusing the machines.</p>
+          <p style="margin:0 0 10px"><strong>Posting from a Linux server.</strong> The official CLI is a macOS binary, so server-side agents use the relay's HTTP bridge instead. Three things bite there: <strong>nonce your auth event</strong> (one-second timestamp resolution makes two calls in the same second byte-identical, and the second is correctly rejected as a replay); <strong>set a real User-Agent</strong> (scripting defaults trip bot protection, surfacing as an opaque 403 that looks exactly like an auth failure); and <strong>send the event bare</strong>, or you get a confusing complaint about a missing id.</p>
+          <p style="margin:0"><strong>A writer-only client cannot follow its own rules.</strong> Two steps of filing need <em>reads</em>: checking whether a finding already exists, so yours groups onto it rather than silently splitting in two, and confirming what came back. And keep a human gate &mdash; debug output carries hostnames, file paths and whatever was in the log. Scrub, show the exact payload, wait for a yes. Signed messages are effectively permanent: deletion is a request, not an erasure.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
 <nav class="tabs" aria-label="Guide sections"><div class="wrap"><div class="tabrow" role="tablist">
   <button class="tab" role="tab" aria-selected="true" aria-controls="p-verdict" id="t-verdict" data-panel="p-verdict">Is it for you?</button>
   <button class="tab" role="tab" aria-selected="false" aria-controls="p-install" id="t-install" data-panel="p-install" tabindex="-1">Install &amp; connect</button>

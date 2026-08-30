@@ -1,0 +1,154 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:10.072
+Buzz for AI agents. A self-hosted chat relay with signed identity, where the latency that would ruin human chat simply does not matter.
+
+2
+00:00:10.072 --> 00:00:15.575
+This is what we learned running one, including the traps that cost us afternoons.
+
+3
+00:00:16.275 --> 00:00:21.478
+Start with identity, because it is the thing that makes the rest worth doing.
+
+4
+00:00:21.478 --> 00:00:31.072
+A Buzz identity is a keypair. The public half is who you are, the private half is your password, and every message you send is signed with it.
+
+5
+00:00:31.072 --> 00:00:38.909
+Nobody can post as you without your key, and an administrator can revoke you by key without disturbing anybody else.
+
+6
+00:00:38.909 --> 00:00:51.476
+Compare that with a shared bearer token, where a leak is indistinguishable from legitimate use, and the only remedy is rotating the secret for everyone at once. Here, you delete one key.
+
+7
+00:00:52.176 --> 00:01:00.930
+Now the trap that cost us an afternoon, and it is the first thing to know. There are two entirely independent membership lists.
+
+8
+00:01:00.930 --> 00:01:12.716
+Relay membership controls whether a key may connect to the relay at all: missing there, and a closed relay refuses it during authentication, before any channel logic runs.
+
+9
+00:01:12.716 --> 00:01:24.364
+Channel membership controls which rooms you can see once you are connected: missing there, and you connect perfectly well, but the room you were invited to is invisible.
+
+10
+00:01:24.364 --> 00:01:37.873
+Adding somebody to one does not add them to the other. And worse, the failure is completely silent: the command reports success, and the person simply cannot connect, with no error explaining why.
+
+11
+00:01:37.873 --> 00:01:42.146
+So onboarding anybody, human or agent, is always two commands.
+
+12
+00:01:42.846 --> 00:01:48.869
+Diagnosing which half is missing takes about two minutes, and the relay's own log tells you.
+
+13
+00:01:48.869 --> 00:01:57.380
+If the log shows a successful authentication for their key, then relay membership is fine, and your problem is channel membership.
+
+14
+00:01:57.380 --> 00:02:02.682
+If there is no authentication line at all, they never got through the front door.
+
+15
+00:02:02.682 --> 00:02:11.128
+Two minutes of log-reading replaces an afternoon of guessing, and that is a pattern worth generalising well beyond this one tool.
+
+16
+00:02:11.828 --> 00:02:18.291
+The next one is architectural rather than a misconfiguration, which is why it is worth hearing twice.
+
+17
+00:02:18.291 --> 00:02:32.688
+The relay treats an unfamiliar Host header as a brand new tenant, and creates a fresh, empty community for it. And a channel's binding to a community is immutable once created, so there is no rebinding or aliasing afterwards.
+
+18
+00:02:32.688 --> 00:02:50.924
+The practical consequence: set the relay up on an internal address, expose it later under a public hostname, and that public hostname opens onto an entirely empty workspace, while all your real data stays attached to the internal one. We had to wipe and rebuild our pilot from scratch.
+
+19
+00:02:50.924 --> 00:02:59.243
+So decide your permanent public hostname before you create a single channel, and from then on address the relay only by that name.
+
+20
+00:02:59.943 --> 00:03:05.985
+One more piece of infrastructure that will surprise you, and this one ignores your firewall.
+
+21
+00:03:05.985 --> 00:03:21.025
+Docker port publishing bypasses host firewall rules. Publish the relay as a bare port, and it binds every interface and is reachable from the internet, whatever your rules say, because Docker inserts its own rules ahead of yours.
+
+22
+00:03:21.025 --> 00:03:35.934
+So bind explicitly to a private interface, and put a reverse proxy in front for public access. And then actually probe the public address on that port and confirm it refuses, rather than assuming the binding did what you meant.
+
+23
+00:03:36.634 --> 00:03:40.819
+Now the part Buzz is genuinely for. Give the agent its own key.
+
+24
+00:03:40.819 --> 00:03:55.369
+Resist the temptation to let an agent post under your identity: a separate key means you can see exactly what the machine said as distinct from what you said, and you can revoke the machine without locking yourself out.
+
+25
+00:03:55.369 --> 00:03:59.622
+Add it to the relay, and to only the channels it actually needs.
+
+26
+00:04:00.322 --> 00:04:10.446
+Then structure the payload, rather than just letting the agent chat. A room full of free-text agent output is expensive to triage and impossible to count.
+
+27
+00:04:10.446 --> 00:04:16.100
+Give the messages a fixed shape instead, and you can dedupe, aggregate and query them.
+
+28
+00:04:16.100 --> 00:04:25.699
+The pattern we settled on serves humans and machines from one message: a readable summary line, then a fenced JSON block holding the real payload.
+
+29
+00:04:25.699 --> 00:04:38.913
+Anyone scrolling the channel reads the summary. A consumer reads the fenced block and ignores everything else, which conveniently means humans can still talk in the room without confusing the machines.
+
+30
+00:04:39.613 --> 00:04:54.623
+If your agent runs on a Linux server, as most do, the official command-line client is a macOS binary, so it cannot use it. This caught our first outside tester, whose server-side agent could not post at all.
+
+31
+00:04:54.623 --> 00:05:04.485
+The route that works everywhere is the relay's own HTTP bridge: one endpoint publishes, one reads. And three things will bite you there.
+
+32
+00:05:04.485 --> 00:05:18.552
+First, give your authentication event a nonce: its timestamp has one-second resolution, so two calls in the same second are byte-identical and the relay correctly rejects the second as a replay.
+
+33
+00:05:18.552 --> 00:05:32.402
+Second, set a real user agent string, because the defaults from scripting languages trip bot protection, and that surfaces as an opaque 403 which looks exactly like an authentication failure.
+
+34
+00:05:32.402 --> 00:05:42.771
+And third, send the signed event bare, at the top level. Wrap it in an outer object and you get a confusing complaint about a missing id field.
+
+35
+00:05:43.471 --> 00:05:47.867
+Two last things, and both are about discipline rather than plumbing.
+
+36
+00:05:47.867 --> 00:06:03.511
+A client that can only write cannot follow its own rules. Two steps of filing need reads: checking whether a finding already exists, so your report groups onto it instead of silently splitting in two, and confirming what came back afterwards.
+
+37
+00:06:03.511 --> 00:06:16.699
+And keep a human gate. An agent that can publish unattended into a shared room will eventually publish something you would not have: debug output carries hostnames, file paths and whatever was in the log.
+
+38
+00:06:16.699 --> 00:06:27.171
+Make the agent scrub first, show you the exact payload, and wait for a yes. Signed messages are effectively permanent. Deletion here is a request, not an erasure.
+
