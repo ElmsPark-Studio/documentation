@@ -83,6 +83,10 @@
     "tier": "professional",
     "version": "1.1.1"
   },
+  "ep-copyright": {
+    "tier": "foundation",
+    "version": "1.0.0"
+  },
   "ep-courses": {
     "tier": "add-on",
     "version": "0.4.14"
