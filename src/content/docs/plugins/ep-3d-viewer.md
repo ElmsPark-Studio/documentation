@@ -54,7 +54,8 @@ No account, key, subscription or external service.
 
 | Shortcode | Purpose |
 |---|---|
-| `[ep-3d-viewer model="sample"]` | The bundled sample model. Works with no configuration. |
+| `[ep-3d-viewer model="sample"]` | The bundled hex bolt. Works with no configuration. |
+| `[ep-3d-viewer model="knee"]` | The bundled knee joint, for the clinical case. Bone only, three labels. |
 | `[ep-3d-viewer model="heart"]` | A model from your library, by its reference name. |
 | `[ep-3d-viewer src="/user-content/uploads/content/valve.glb" alt="A globe valve"]` | A one-off model, without a library entry. |
 
@@ -113,6 +114,14 @@ Both of these are deliberate, and both exist because supporting them would mean 
 - **Lottie textures**, a rare glTF extension, would pull a loader from jsDelivr. The location is repointed at the plugin's own directory, so such a model fails to decode rather than reaching out.
 
 ## Changelog
+
+### 0.1.3
+
+Adds a knee joint sample for the medical case, reachable with `[ep-3d-viewer model="knee"]`. Femur, patella, tibia and fibula from one CT scan of a single leg, cropped to the joint, 77 KB, with three labels. It is CC0: sourced from NIH 3D entries 3DPX-000168/169/170, segmented by SquareL (Luc Labey, KU Leuven), and credited in the plugin's `NOTICE.md` as courtesy rather than obligation.
+
+The model is bone only, with no menisci, ligaments or cartilage, and the caption says so. There is deliberately no fibula label: the source delivers the tibia and fibula as a single fused body with no separation, so such a label could only be a guess at which lump it sat on.
+
+Bundled model URLs are now version-stamped, so an updated model is no longer masked by a browser cache. Customer paths are left untouched.
 
 ### 0.1.2
 
