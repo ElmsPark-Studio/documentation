@@ -1,118 +1,126 @@
 WEBVTT
 
 1
-00:00:00.900 --> 00:00:09.833
-Higgsfield credits, decoded. The same generating power is sold four different ways, and the small print decides which one is actually cheap.
+00:00:00.900 --> 00:00:09.607
+Higgsfield credits, decoded. And straight away, an update: as of August twenty twenty-six, we no longer recommend Higgsfield.
 
 2
-00:00:09.833 --> 00:00:15.575
-The figures move, so the numbers stay on the page. This is the shape that does not change.
+00:00:09.607 --> 00:00:22.077
+This walkthrough is kept for anyone who already holds credits or a pass, and for the lesson underneath it, which applies to any platform that sells generating power by the credit.
 
 3
-00:00:16.275 --> 00:00:32.777
-The one-line verdict, up front. If you generate through the API, an MCP server or the command line, which is how any coding agent, automation or scripted pipeline talks to Higgsfield, then one-time top-up credit packs are almost always the cheapest option.
+00:00:22.777 --> 00:00:31.310
+What we use now is fal dot A I, and there are two reasons. It costs less for the same work. And the API is better to build against.
 
 4
-00:00:32.777 --> 00:00:41.027
-And the reason is not that they are good value in the abstract. It is that the Unlimited passes explicitly exclude that traffic.
+00:00:31.310 --> 00:00:46.359
+That second one is the half that bites hardest here, because the traffic this guide is about, generations coming from a script or an agent rather than a person clicking, is precisely the traffic Higgsfield's passes refuse to cover.
 
 5
-00:00:41.727 --> 00:00:50.881
-Here is the clause, quoted from the offer itself. Standard generation modes only. Excludes MCP, Supercomputer, Canvas and CLI.
+00:00:46.359 --> 00:00:55.935
+So start new work on fal dot A I. Everything after this point is the analysis as it stood, which is still accurate about Higgsfield's own products.
 
 6
-00:00:50.881 --> 00:01:01.632
-And standard generation modes means a human, sitting in the web app, clicking Generate. It does not mean the API, an MCP server or the command line.
+00:00:56.635 --> 00:01:05.788
+Here is the clause, quoted from the offer itself. Standard generation modes only. Excludes MCP, Supercomputer, Canvas and CLI.
 
 7
-00:01:01.632 --> 00:01:15.071
-So if your generations come from a script, an agent or an integration rather than a person clicking, none of your usage is covered, and it bills exactly as it would with no pass at all.
+00:01:05.788 --> 00:01:16.539
+And standard generation modes means a human, sitting in the web app, clicking Generate. It does not mean the API, an MCP server or the command line.
 
 8
-00:01:15.771 --> 00:01:22.076
-Now something worth getting straight before any of the maths. The plan does not change the price.
+00:01:16.539 --> 00:01:29.979
+So if your generations come from a script, an agent or an integration rather than a person clicking, none of your usage is covered, and it bills exactly as it would with no pass at all.
 
 9
-00:01:22.076 --> 00:01:33.060
-Every generation costs credits, whatever plan you are on. What the plan changes is how many credits you get and at what rate. It does not change what a generation costs.
+00:01:30.679 --> 00:01:36.983
+Now something worth getting straight before any of the maths. The plan does not change the price.
 
 10
-00:01:33.060 --> 00:01:42.614
-So the question is never which plan, first. It is: how many credits will this project actually burn, and then what is the cheapest way to buy them?
+00:01:36.983 --> 00:01:47.967
+Every generation costs credits, whatever plan you are on. What the plan changes is how many credits you get and at what rate. It does not change what a generation costs.
 
 11
-00:01:43.314 --> 00:01:47.399
-And where does the money actually go? Video, by a wide margin.
+00:01:47.967 --> 00:01:57.521
+So the question is never which plan, first. It is: how many credits will this project actually burn, and then what is the cheapest way to buy them?
 
 12
-00:01:47.399 --> 00:01:58.273
-A single five-second clip at ten-eighty p costs roughly the same as eleven high-quality stills. Voiceover takes are close to a rounding error next to either of them.
+00:01:58.221 --> 00:02:02.307
+And where does the money actually go? Video, by a wide margin.
 
 13
-00:01:58.273 --> 00:02:13.825
-On a real production day, measured end to end from the billing ledger, the video clips alone were about eighty per cent of the spend. So any project that leans on clips rather than stills should be budgeted on that basis from the start.
+00:02:02.307 --> 00:02:13.180
+A single five-second clip at ten-eighty p costs roughly the same as eleven high-quality stills. Voiceover takes are close to a rounding error next to either of them.
 
 14
-00:02:14.525 --> 00:02:28.808
-There is one habit that pays for itself immediately. Higgsfield's own MCP calls and command-line tool both accept a cost flag, which returns the exact credit cost for a generation without submitting it.
+00:02:13.180 --> 00:02:28.732
+On a real production day, measured end to end from the billing ledger, the video clips alone were about eighty per cent of the spend. So any project that leans on clips rather than stills should be budgeted on that basis from the start.
 
 15
-00:02:28.808 --> 00:02:33.616
-Check that before a batch, rather than trusting a rate you remember.
+00:02:29.432 --> 00:02:43.715
+There is one habit that pays for itself immediately. Higgsfield's own MCP calls and command-line tool both accept a cost flag, which returns the exact credit cost for a generation without submitting it.
 
 16
-00:02:33.616 --> 00:02:42.667
-Costs and models both change, and a remembered rate is precisely how a batch runs three times over budget before anyone notices.
+00:02:43.715 --> 00:02:48.524
+Check that before a batch, rather than trusting a rate you remember.
 
 17
-00:02:43.367 --> 00:02:49.699
-Now, suppose for a moment that a pass did cover automated traffic. Does the arithmetic even work?
+00:02:48.524 --> 00:02:57.574
+Costs and models both change, and a remembered rate is precisely how a batch runs three times over budget before anyone notices.
 
 18
-00:02:49.699 --> 00:03:05.103
-The day pass carries its own concurrency cap of one video at a time. So hitting break-even inside twenty-four hours, one clip at a time, each taking several minutes to render, sits very close to the physical ceiling of what is possible.
+00:02:58.274 --> 00:03:04.606
+Now, suppose for a moment that a pass did cover automated traffic. Does the arithmetic even work?
 
 19
-00:03:05.103 --> 00:03:14.110
-Which is worth knowing, because it means the exclusion clause is not the only reason a pass loses on automated work. It would lose anyway.
+00:03:04.606 --> 00:03:20.010
+The day pass carries its own concurrency cap of one video at a time. So hitting break-even inside twenty-four hours, one clip at a time, each taking several minutes to render, sits very close to the physical ceiling of what is possible.
 
 20
-00:03:14.810 --> 00:03:23.544
-To be fair to the passes, there is a case where they genuinely win. A human sitting in the web app, generating at volume by hand.
+00:03:20.010 --> 00:03:29.018
+Which is worth knowing, because it means the exclusion clause is not the only reason a pass loses on automated work. It would lose anyway.
 
 21
-00:03:23.544 --> 00:03:30.111
-Mass product photography. Bulk b-roll. High-volume image work with no automation involved at all.
+00:03:29.718 --> 00:03:38.451
+To be fair to the passes, there is a case where they genuinely win. A human sitting in the web app, generating at volume by hand.
 
 22
-00:03:30.111 --> 00:03:42.907
-The longer passes are priced against sustained daily volume rather than a single burst, and used that way they can be excellent value. The exclusion only bites when the traffic is scripted.
+00:03:38.451 --> 00:03:45.018
+Mass product photography. Bulk b-roll. High-volume image work with no automation involved at all.
 
 23
-00:03:43.607 --> 00:03:54.682
-Then there is the third product, Concurrency Boost Credits. These add parallel generation slots and queue priority, at roughly half the credits-per-pound of a plain top-up.
+00:03:45.018 --> 00:03:57.814
+The longer passes are priced against sustained daily volume rather than a single burst, and used that way they can be excellent value. The exclusion only bites when the traffic is scripted.
 
 24
-00:03:54.682 --> 00:04:01.701
-So the premium is buying concurrency, not a cheaper credit, and that is the thing to keep clear in your head.
+00:03:58.514 --> 00:04:09.589
+Then there is the third product, Concurrency Boost Credits. These add parallel generation slots and queue priority, at roughly half the credits-per-pound of a plain top-up.
 
 25
-00:04:01.701 --> 00:04:11.102
-They earn that premium when the constraint genuinely is the queue: large same-day batches where you need far more parallel jobs to hit a deadline.
+00:04:09.589 --> 00:04:16.608
+So the premium is buying concurrency, not a cheaper credit, and that is the thing to keep clear in your head.
 
 26
-00:04:11.102 --> 00:04:23.916
-They do not help at all when the bottleneck is somewhere else, which for careful production work it usually is: reviewing outputs, retaking rejected frames, writing prompts, assembling the final cut.
+00:04:16.608 --> 00:04:26.009
+They earn that premium when the constraint genuinely is the queue: large same-day batches where you need far more parallel jobs to hit a deadline.
 
 27
-00:04:24.616 --> 00:04:37.414
-And one last trap, which is that these are two separate systems rather than one. Boosting your parallel job limit does not lift the one-video-at-a-time cap that applies while a pass is active.
+00:04:26.009 --> 00:04:38.824
+They do not help at all when the bottleneck is somewhere else, which for careful production work it usually is: reviewing outputs, retaking rejected frames, writing prompts, assembling the final cut.
 
 28
-00:04:37.414 --> 00:04:49.011
-They are different products with different rules, and they do not stack the way the marketing copy might lead you to assume. So read both sets of terms before you buy either.
+00:04:39.524 --> 00:04:49.629
+And one last trap before the close. Boosting your parallel job limit does not lift the one-video-at-a-time cap that applies while a pass is active.
 
 29
-00:04:49.011 --> 00:04:56.010
-That, in the end, is the whole lesson of this page: the pricing is not the hard part. The small print is.
+00:04:49.629 --> 00:04:58.153
+They are different products with different rules, and they do not stack the way the marketing copy might lead you to assume.
+
+30
+00:04:58.153 --> 00:05:12.590
+Which is the whole lesson of this page, and the reason it is worth keeping even now: the pricing was never the hard part. The small print is. Read the exclusion clauses before you buy anything, on any platform.
+
+31
+00:05:12.590 --> 00:05:17.883
+And for new work, we now recommend fal dot A I: lower cost, and a better API.
 
