@@ -164,6 +164,33 @@
   </div>
 </header>
 
+<div class="wrap" style="margin:22px auto">
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole decision in 4 minutes 57 seconds, narrated, with captions &mdash; the exclusion clause, where the money actually goes, and why boost credits are not cheaper credits.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> The same generating power is sold four different ways, and the small print decides which is actually cheap. Figures move, so the numbers stay on the page; this is the part that does not change.</p>
+          <p style="margin:0 0 10px"><strong>&ldquo;Unlimited&rdquo; excludes automation.</strong> If you generate through the API, an MCP server or the CLI &mdash; how <em>any</em> coding agent, automation or scripted pipeline talks to Higgsfield &mdash; one-time top-up packs are almost always cheapest, because the Unlimited passes explicitly exclude that traffic.</p>
+          <p style="margin:0 0 10px"><strong>Quoted from the offer.</strong> &ldquo;Standard generation modes only. Excludes MCP, Supercomputer, Canvas &amp; CLI.&rdquo; Standard generation modes means a human, in the web app, clicking Generate. If your generations come from a script, an agent or an integration, none of your usage is covered &mdash; and it bills exactly as it would with no pass at all.</p>
+          <p style="margin:0 0 10px"><strong>The plan does not change the price.</strong> Every generation costs credits whatever plan you are on; the plan changes how many credits you get and at what rate. So the first question is never which plan &mdash; it is how many credits the project will burn, and then what is the cheapest way to buy them.</p>
+          <p style="margin:0 0 10px"><strong>Video dominates the bill.</strong> A single five-second 1080p clip costs roughly what eleven high-quality stills do; voiceover takes are close to a rounding error beside either. On a real production day measured end to end, clips alone were about <strong>80%</strong> of the spend. Budget any clip-heavy project on that basis.</p>
+          <p style="margin:0 0 10px"><strong>Preflight before you batch.</strong> The MCP calls and the CLI both accept a cost flag returning the exact credit cost <em>without submitting</em>. Check it before a batch rather than trusting a remembered rate &mdash; costs and models both change, and a remembered rate is how a batch runs three times over budget before anyone notices.</p>
+          <p style="margin:0 0 10px"><strong>Even granting coverage, the maths fails.</strong> Suppose a pass did cover automated traffic. The day pass caps you at one video at a time, so reaching break-even in 24 hours, one clip at a time and minutes per render, sits close to the physical ceiling of what is possible. The exclusion clause is not the only reason it loses.</p>
+          <p style="margin:0 0 10px"><strong>When a pass genuinely wins.</strong> A human clicking, at volume: mass product photography, bulk b-roll, high-volume image work with no automation. The longer passes are priced against sustained daily volume rather than a single burst, and there they can be excellent value. The exclusion only bites when the traffic is scripted.</p>
+          <p style="margin:0 0 10px"><strong>Boost buys queue, not price.</strong> Concurrency Boost Credits add parallel slots and queue priority at roughly half the credits-per-pound of a plain top-up &mdash; the premium buys concurrency, not a cheaper credit. They earn it when the constraint genuinely <em>is</em> the queue, and not at all when the bottleneck is reviewing outputs, retaking frames, writing prompts or assembling the cut.</p>
+          <p style="margin:0"><strong>Two systems, not one.</strong> Boosting your parallel-job limit does not lift the one-video-at-a-time cap that applies while a pass is active. Different products, different rules, and they do not stack the way the marketing copy implies. Read both sets of terms before buying either &mdash; the pricing is not the hard part; the small print is.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
 <nav class="tabs"><div class="tabrow" role="tablist">
   <button class="tab" role="tab" aria-selected="true" data-panel="p-tldr">TL;DR</button>
   <button class="tab" role="tab" aria-selected="false" data-panel="p-credits">How credits work</button>
