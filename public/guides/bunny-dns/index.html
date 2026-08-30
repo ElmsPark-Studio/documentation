@@ -211,6 +211,33 @@
   </div>
 </div>
 
+<div class="wrap" style="margin-top:22px">
+  <div style="margin:22px 0 6px">
+    <video controls preload="metadata" poster="walkthrough-poster.webp" width="1920" height="1080"
+           style="width:100%;height:auto;display:block;border:1px solid #e4ddcd;border-radius:12px;box-shadow:0 2px 14px rgba(35,33,28,.12);background:#234a3b">
+      <source src="walkthrough.mp4" type="video/mp4">
+      <track kind="captions" src="walkthrough.vtt" srclang="en" label="English" default>
+      Your browser cannot play this video. <a href="walkthrough.mp4">Download it instead</a>.
+    </video>
+    <p style="font-family:'Inter Tight',system-ui,sans-serif;font-size:.85rem;color:#8a8170;margin:8px 0 0">&#9654; The whole decision and the migration in 6 minutes 52 seconds, narrated, with captions &mdash; including the orange-cloud full stop and the half of DNSSEC only your registrar can do.</p>
+    <details style="margin-top:8px;font-family:'Inter Tight',system-ui,sans-serif;font-size:.9rem;line-height:1.65">
+      <summary style="cursor:pointer;color:#2f5d4a">Read the narration instead</summary>
+      <div style="margin-top:10px;color:#5d574c">
+          <p style="margin:0 0 10px"><strong>The shape of it.</strong> DNS is the address book that turns your domain name into your website. Bunny made theirs free, and it is now our recommendation for plain DNS hosting &mdash; with the losing cases named.</p>
+          <p style="margin:0 0 10px"><strong>Three companies, one domain.</strong> The <strong>registrar</strong> is where you bought it, and it decides one thing here: which nameservers answer. The <strong>DNS host</strong> runs those nameservers and answers the queries &mdash; the only role we are moving. The <strong>web host</strong> is the server your site lives on. All three can differ, and changing your DNS host moves neither your website nor your email.</p>
+          <p style="margin:0 0 10px"><strong>A dozen records, and a clock.</strong> <code>A</code> points a name at a server address, <code>CNAME</code> says &ldquo;same as that other name&rdquo;, <code>MX</code> says where email goes, <code>TXT</code> holds proofs like SPF and DKIM. Every record carries a TTL; the pointer to the nameservers themselves caches for up to 48 hours, which is why changing host is the slow one.</p>
+          <p style="margin:0 0 10px"><strong>Jurisdiction, then features.</strong> Every query reveals who visited what, when and roughly from where &mdash; with Bunny that metadata sits with an EU company under GDPR, the same reasoning that put Bunny Fonts into PageMotor core. The free tier paywalls nothing: failover with health checks, geographic and weighted routing, branded nameservers, raw query logs, DNSSEC. And there is no per-zone record cap.</p>
+          <p style="margin:0 0 10px"><strong>If you use the orange cloud, stop.</strong> Cloudflare's headline feature is not DNS &mdash; it is the <em>proxy</em>, which hides your server's address, absorbs attacks, caches pages and applies a firewall. Bunny DNS is DNS only and points visitors straight at your server. Orange-cloud icons on your records mean moving would expose your origin and drop that shield.</p>
+          <p style="margin:0 0 10px"><strong>Workers, Access, Registrar.</strong> Workers, Access login gates and redirect Rules stop the moment DNS leaves Cloudflare, and Cloudflare Registrar requires Cloudflare nameservers. What we do is both, deliberately: our zones carrying Workers stay put, because that is the honest reading of our own table. Plain DNS is where Bunny is the default.</p>
+          <p style="margin:0 0 10px"><strong>DNSSEC needs your registrar.</strong> Signing is one toggle at the DNS host. The other half is a <strong>DS record</strong> published in the registry <em>above</em> your domain, and only a registrar can do that &mdash; no DNS host can do it for them. One large registrar declined ours in writing, telling us to add it at the external host instead, which is not possible. Ask before you count on it; a signed zone with no DS behaves exactly like an unsigned one.</p>
+          <p style="margin:0 0 10px"><strong>Export, import, then switch.</strong> Export the BIND zone file &mdash; your inventory <em>and</em> your rollback. If DNSSEC is on, turn it off at both ends and wait 24 hours first. Create the zone, import, and eyeball MX and TXT closely, because those are your email. Then switch nameservers at the registrar: one form, and the actual move.</p>
+          <p style="margin:0 0 10px"><strong>Wait, and delete nothing.</strong> The change reaches the whole internet within 48 hours, and both hosts answer identically throughout &mdash; which is precisely why nothing goes down. Downtime comes from deleting the old zone too early. Leave it a week; rollback is then just pointing the nameservers back.</p>
+          <p style="margin:0"><strong>Then prove it.</strong> Load the site. Send yourself an email and reply to it, so both directions are exercised. If you use a mail provider, check its dashboard still shows the domain verified &mdash; SPF and DKIM are TXT records and moved with the import. Two minutes of checking turns a completed step into a finished move.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
 <nav class="tabs" aria-label="On this page"><div class="tabrow">
   <a class="tab" href="#p-dns">DNS in plain English</a>
   <a class="tab" href="#p-what">What Bunny DNS is</a>

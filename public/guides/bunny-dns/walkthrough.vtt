@@ -1,0 +1,162 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:09.096
+Bunny DNS, and why we now recommend it. DNS is the address book that turns your domain name into your website.
+
+2
+00:00:09.096 --> 00:00:21.241
+Bunny made theirs free, and it is now the DNS host we recommend for plain DNS hosting. Here is the case for it, the cases where it loses, and the safe way to move.
+
+3
+00:00:21.941 --> 00:00:28.852
+Three different companies can be involved with one domain, and this is where most of the confusion lives.
+
+4
+00:00:28.852 --> 00:00:37.212
+The registrar is where you bought the domain. It decides exactly one thing that matters here: which nameservers answer for you.
+
+5
+00:00:37.212 --> 00:00:44.913
+The DNS host is who actually runs those nameservers and answers the queries, and that is the only role we are moving.
+
+6
+00:00:44.913 --> 00:00:50.311
+And the web host is the server your site actually lives on. DNS just points at it.
+
+7
+00:00:50.311 --> 00:00:59.000
+All three can be different companies, and that is perfectly normal. Changing your DNS host does not move your website or your email.
+
+8
+00:00:59.700 --> 00:01:08.844
+The records themselves, in one breath. An A record points a name at a server address. A CNAME says, same as that other name.
+
+9
+00:01:08.844 --> 00:01:18.726
+MX records say where your email goes. And TXT records hold proofs: your SPF and DKIM for email, and verification strings for services.
+
+10
+00:01:18.726 --> 00:01:25.436
+A small site rarely has more than a dozen records, and that is ninety-five per cent of DNS.
+
+11
+00:01:25.436 --> 00:01:42.471
+Every record also carries a TTL, which is how long the rest of the internet may cache the answer. The pointer to the nameservers themselves caches for up to forty-eight hours, and that is why changing your DNS host is the slow one.
+
+12
+00:01:43.171 --> 00:01:50.155
+The case for it, in order of weight, and the first reason is jurisdiction rather than features.
+
+13
+00:01:50.155 --> 00:02:06.770
+Every DNS query about your domain reveals who is visiting what, when, and roughly from where. With Bunny, that metadata is handled by an EU company under GDPR. It is the same reasoning that put Bunny Fonts into PageMotor core.
+
+14
+00:02:06.770 --> 00:02:20.886
+Second, the free tier has no missing teeth: failover with health checks, geographic and weighted routing, branded nameservers, raw query logs and DNSSEC are all included rather than paywalled.
+
+15
+00:02:20.886 --> 00:02:32.722
+And third, there is no record cap. Cloudflare's newer free zones cap the number of records, which is fine until subdomains multiply. Bunny has no per-zone limit.
+
+16
+00:02:33.422 --> 00:02:41.949
+Now the losing cases, because an honest recommendation names them. And this first one is a full stop, not a caveat.
+
+17
+00:02:41.949 --> 00:02:56.037
+Cloudflare's headline feature is not DNS at all. It is the proxy: traffic flows through Cloudflare, which hides your server's address, absorbs attacks, caches pages and can apply a firewall.
+
+18
+00:02:56.037 --> 00:03:00.931
+Bunny DNS is DNS only. It points visitors straight at your server.
+
+19
+00:03:00.931 --> 00:03:17.169
+So if your Cloudflare dashboard shows orange cloud icons on your records, you are using the proxy, and moving DNS alone would expose your origin server and drop that shield. Either stay, or price up a replacement first.
+
+20
+00:03:17.869 --> 00:03:27.582
+Three more reasons to stay put. Cloudflare Workers, Access login gates and redirect Rules all stop working the moment DNS leaves Cloudflare.
+
+21
+00:03:27.582 --> 00:03:37.781
+If your domain is registered at Cloudflare Registrar, that requires Cloudflare nameservers, so moving DNS would mean moving the registration first.
+
+22
+00:03:37.781 --> 00:03:44.858
+And if your workflow leans on Cloudflare-specific automation, weigh the porting cost before you start.
+
+23
+00:03:44.858 --> 00:03:58.318
+What we do ourselves is both, deliberately. Our zones that carry Workers stay on Cloudflare, because that is the honest reading of our own table. Plain DNS hosting is where Bunny is the default.
+
+24
+00:03:59.018 --> 00:04:07.095
+One more, and it is the half of DNSSEC that nobody warns you about. Turning DNSSEC on is two separate jobs.
+
+25
+00:04:07.095 --> 00:04:18.493
+Your DNS host signs the zone, which is one toggle. Then your registrar must publish one small record, called the DS, in the registry above your domain.
+
+26
+00:04:18.493 --> 00:04:27.250
+Only a registrar can do that half. No DNS host can do it for them, whether that is Bunny, Cloudflare or anyone else.
+
+27
+00:04:27.250 --> 00:04:45.216
+Some registrars make it a two-minute form. Others make it a support ticket, and a few are simply not up to it: one large registrar declined ours in writing, telling us to add the record at the external host instead, which is not possible.
+
+28
+00:04:45.216 --> 00:04:58.879
+So if DNSSEC matters to you, ask your registrar before you count on it. And if you get stuck there, nothing is broken. A signed zone with no DS behaves exactly like an unsigned one.
+
+29
+00:04:59.579 --> 00:05:06.497
+Now the move itself, which is about twenty minutes of work with zero downtime if you follow the order.
+
+30
+00:05:06.497 --> 00:05:14.839
+First, export your current zone as a BIND zone file. That file is both your inventory and your rollback, so do not skip it.
+
+31
+00:05:14.839 --> 00:05:28.132
+Second, if DNSSEC is currently on, turn it off at both your DNS host and your registrar and wait twenty-four hours before going further. Skipping that can take your domain offline during the move.
+
+32
+00:05:28.132 --> 00:05:39.187
+Third, create the zone at Bunny, import the file, and then eyeball the result, giving particular attention to the MX and TXT records, because those are your email.
+
+33
+00:05:39.187 --> 00:05:45.833
+And fourth, switch the nameservers at your registrar. That is one form, and it is the actual move.
+
+34
+00:05:46.533 --> 00:05:50.172
+Then the step people get wrong, which is the waiting.
+
+35
+00:05:50.172 --> 00:06:03.905
+The nameserver change reaches the whole internet within forty-eight hours, and during that window both the old host and the new one keep answering identically. That is precisely why nothing goes down.
+
+36
+00:06:03.905 --> 00:06:13.243
+Downtime in a DNS move almost never comes from the move. It comes from deleting the old zone too early. So leave it in place for a week.
+
+37
+00:06:13.243 --> 00:06:21.688
+Rollback is then simply pointing the nameservers back at the old host, which is exactly why that old zone is worth keeping.
+
+38
+00:06:22.388 --> 00:06:34.089
+And then prove it, rather than assuming. Load the site. Send an email to yourself, and reply to it, because a send-and-reply test exercises both directions.
+
+39
+00:06:34.089 --> 00:06:45.341
+If you use a mail provider, check its dashboard still shows your domain verified: SPF and DKIM are TXT records, and they moved across with the import.
+
+40
+00:06:45.341 --> 00:06:51.041
+Two minutes of checking is what turns a completed step into a finished move.
+
