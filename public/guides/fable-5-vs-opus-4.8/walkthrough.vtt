@@ -1,0 +1,138 @@
+WEBVTT
+
+1
+00:00:00.900 --> 00:00:07.418
+Claude Fable 5 versus Claude Opus 4.8. Anthropic shipped two flagship models within a fortnight.
+
+2
+00:00:07.418 --> 00:00:19.708
+This covers what Fable actually is, how it differs from Opus, and which one to reach for. Prices and plan availability move, so those live on the page rather than in this narration.
+
+3
+00:00:20.408 --> 00:00:24.466
+The thirty-second version first. Fable 5 is not the next Opus.
+
+4
+00:00:24.466 --> 00:00:34.151
+Anthropic calls it a Mythos-class model, and that is a class which sits above Opus entirely: Fable is simply the first of that class anyone can use.
+
+5
+00:00:34.151 --> 00:00:43.117
+What made it releasable at all is a wrapper of strict safety classifiers, and that wrapper is the whole difference between the two names.
+
+6
+00:00:43.817 --> 00:00:46.638
+Here is how the family fits together now.
+
+7
+00:00:46.638 --> 00:00:57.164
+Mythos class is the new top tier: Fable is the safeguarded public version, and there is an unrestricted sibling that goes only to vetted cyber defenders.
+
+8
+00:00:57.164 --> 00:01:05.902
+Opus class is the everyday flagship, and it is also the safety net, because Fable itself hands over to it on restricted topics.
+
+9
+00:01:05.902 --> 00:01:13.539
+And Sonnet and Haiku are unchanged by either launch: speed with intelligence, and fast cheap work respectively.
+
+10
+00:01:14.239 --> 00:01:21.406
+The naming, briefly, because it confuses people. Fable and its unrestricted sibling are the same underlying model.
+
+11
+00:01:21.406 --> 00:01:29.076
+Fable, from the Latin fabula, meaning that which is told, and akin to the Greek mythos, is the safeguarded public version.
+
+12
+00:01:29.076 --> 00:01:35.740
+The safeguards are the only difference between them. That is the entire reason there are two names at all.
+
+13
+00:01:36.440 --> 00:01:48.826
+What is it notably good at? Long-horizon software engineering: codebase-wide migrations across tens of millions of lines, reported in a day where a team would have taken months.
+
+14
+00:01:48.826 --> 00:01:58.903
+Vision, where it extracts precise numbers from dense scientific figures, and can rebuild a web application's source code from screenshots alone.
+
+15
+00:01:58.903 --> 00:02:05.970
+And memory, staying focused across millions of tokens and improving its own work using its own notes.
+
+16
+00:02:05.970 --> 00:02:17.586
+But the shape that actually matters is this: the longer and more autonomous the task, the wider the gap. On a short question, you will struggle to tell the two apart.
+
+17
+00:02:18.286 --> 00:02:25.006
+Now the bit that makes it Fable rather than the other name. Separate classifier AIs watch every request.
+
+18
+00:02:25.006 --> 00:02:37.865
+When one detects a restricted topic, and those are cyber exploitation, most biology and chemistry, and attempts to distil the model, Opus answers instead of Fable, and you are told when that happens.
+
+19
+00:02:37.865 --> 00:02:51.305
+They are deliberately tuned cautiously, so they will occasionally catch something entirely harmless. In practice they fire in a small minority of sessions, and the overwhelming majority run entirely on Fable.
+
+20
+00:02:52.005 --> 00:03:00.614
+And there is one thing to know before you route client work through it. All Mythos-class traffic carries compulsory thirty-day retention.
+
+21
+00:03:00.614 --> 00:03:05.956
+That applies even to business customers who previously had zero-retention agreements.
+
+22
+00:03:05.956 --> 00:03:15.508
+Anthropic says the data will not train models, and is used only to defend against novel attacks and to reduce false positives, with human access logged.
+
+23
+00:03:15.508 --> 00:03:23.677
+But it is worth knowing before any client-sensitive material goes through it, because it is a real change in what you can promise.
+
+24
+00:03:24.377 --> 00:03:30.268
+Which brings us to the other side of the ledger, because Opus is not the loser here.
+
+25
+00:03:30.268 --> 00:03:42.051
+It is half the price. It has no classifier fallbacks, no mandatory retention policy, and full subscription availability. And it is the model Fable itself hands over to.
+
+26
+00:03:42.051 --> 00:03:55.167
+Its own headline improvement was honesty: markedly less likely than its predecessor to let flaws in its own code pass unremarked. For most day-to-day work it remains the sensible default.
+
+27
+00:03:55.867 --> 00:04:00.738
+So what actually decides it? Reach up deliberately, rather than by default.
+
+28
+00:04:00.738 --> 00:04:10.092
+For something long, autonomous and genuinely hard, a migration, an audit, an architecture call, reach for the top tier and let it earn its keep.
+
+29
+00:04:10.092 --> 00:04:19.706
+For everyday building and shipping, use the everyday flagship, and use it deliberately: it is cheaper, it has no fallbacks, and no retention clause.
+
+30
+00:04:19.706 --> 00:04:26.656
+And for anything client-sensitive, read the retention note first, before the decision rather than after it.
+
+31
+00:04:27.356 --> 00:04:32.417
+One last thing, and it is the reason this narration has been careful.
+
+32
+00:04:32.417 --> 00:04:42.980
+Per-token pricing, which plans include what, and the availability windows have all moved since this guide was written, and they will move again.
+
+33
+00:04:42.980 --> 00:04:51.415
+The page carries the live figures and a cost calculator, so check there rather than trusting anything you remember.
+
+34
+00:04:51.415 --> 00:04:58.750
+The part that does not move is the one thing to take away: this is a tier above, not a version bump.
+
