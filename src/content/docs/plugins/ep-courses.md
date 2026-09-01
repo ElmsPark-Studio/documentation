@@ -1,6 +1,6 @@
 ---
 title: "EP Courses"
-description: "Course and lesson management for PageMotor with enrolment, progress tracking, expiring links for paid video, and 24-language multilingual content support. Work in progress."
+description: "Course and lesson management for PageMotor with enrolment, card payments through Stripe, progress tracking, expiring links for paid video, and 24-language multilingual content support. Work in progress."
 ---
 
 EP Courses is course and lesson management for PageMotor. Courses contain lessons, students enrol, their progress is tracked as they work through the material, and content can be translated into any of 24 languages including Welsh, Irish, and several South African languages.
@@ -9,12 +9,13 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Status
 
-**Work in progress** (version 0.4.13). The core structure is stable but some features are still being built. This guide describes what is currently shipping. Expect changes in subsequent versions.
+**Work in progress** (version 0.5.0). The core structure is stable but some features are still being built. This guide describes what is currently shipping. Expect changes in subsequent versions.
 
 ## What EP Courses does
 
-- **Course catalogue** with title, slug, description, learning outcomes, access, price, status. **Access is the free / premium switch**: the edit form offers **Free** and **Premium**, and only a Free course can be enrolled in today (see below). Before 0.4.13 this field was labelled Level, with Premium labelled Intermediate. Same switch, clearer name.
+- **Course catalogue** with title, slug, description, learning outcomes, access, price, status. **Access is the free / premium switch**: the edit form offers **Free** and **Premium**. A Free course is joined with one click; a Premium course with a price is bought through Stripe (see [Selling courses](#selling-courses)). Before 0.4.13 this field was labelled Level, with Premium labelled Intermediate. Same switch, clearer name.
 - **Lessons** attached to courses, with ordered sequence and translatable content.
+- **Selling courses** from 0.5.0. Set Access to Premium with a price and the catalogue shows a Buy button; the student pays on a Stripe-hosted page and comes back enrolled. Needs [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/).
 - **Enrolment tracking** — which student is in which course.
 - **Progress tracking** — which lessons has the student completed.
 - **Multilingual content** — store title and body as JSON translations per course and per lesson.
@@ -27,9 +28,11 @@ This plugin deliberately has a narrow scope. It does not:
 - **Host videos**. Embed from YouTube, Vimeo, or an MP4 file you host yourself. If that file lives in your own S3-compatible bucket, [EP Media Storage](/plugins/ep-media-storage/) will serve it behind a link that expires.
 - **Issue certificates** — not currently built in.
 - **Run quizzes inside lessons** — not currently built in.
-- **Sell paid courses yet.** Any course whose Access setting isn't Free renders in the catalogue as a **Premium Course** with a disabled "Coming Soon" button, and the enrol handler refuses it with "Paid courses are coming soon". Set it to Free if you want students in a course today.
+- **Sell recurring access.** A course sale is a one-off purchase. For subscription billing, pair with [EP Ecommerce Subscriptions](/plugins/ep-ecommerce-subscriptions/).
+- **Refund or revoke a purchase from the admin.** Refund in Stripe, then remove the enrolment by hand.
+- **Sell to a signed-out visitor.** An enrolment belongs to a user account, so the buyer needs to be registered and signed in before they can pay.
 
-For a full learning management system, combine EP Courses with EP Membership (for login and access control) and EP Ecommerce Subscriptions (for paid course access).
+For a full learning management system, combine EP Courses with EP Membership (for login and access control) and EP Ecommerce Stripe (to take the payment).
 
 ## Requirements
 
@@ -39,7 +42,7 @@ For a full learning management system, combine EP Courses with EP Membership (fo
 Optional but commonly paired:
 
 - **EP Membership** for student accounts and authenticated course access.
-- **EP Ecommerce Subscriptions** for paid enrolment.
+- **[EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) 0.1.21 or later** to sell courses. Required if you want to charge for one.
 - **[EP Media Storage](/plugins/ep-media-storage/)** to serve lesson videos from your own bucket behind expiring links.
 
 ## Installation
@@ -86,8 +89,34 @@ The 24 supported languages are ticked on and off in settings. Welsh, Irish, Scot
 3. (Optional) Tick the languages you need in settings, then fill in each language's fields in the **Translations** accordion on the course and lesson edit forms.
 4. Create a page with the viewer slug, add `[ep-course-viewer]`.
 5. Create a catalogue page, add `[ep-courses]`.
-6. If paid, configure EP Ecommerce Subscriptions to sell access to the course.
+6. If the course is paid, set Access to **Premium** with a price, and make sure EP Ecommerce Stripe is active and holds your Stripe keys.
 7. If gated, configure EP Membership to require login for the viewer page.
+
+## Selling courses
+
+From 0.5.0 a course can be sold. Set **Access** to Premium, give it a price and currency, and the catalogue shows a **Buy** button in place of the old disabled "Coming Soon".
+
+You need [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) 0.1.21 or later, active, with your Stripe keys in it. If it is missing or has no key, no Buy button is shown at all, rather than one that fails when pressed.
+
+The buyer must be signed in first. An enrolment belongs to a user account, so a signed-out visitor sees a link to register instead.
+
+### How access is granted
+
+This is the part worth understanding, because it is deliberately strict.
+
+Pressing Buy records the enrolment as **pending** and sends the student to a Stripe-hosted payment page. A pending enrolment grants nothing: the course stays locked, exactly as if they had never pressed the button. Someone who reaches the payment page and abandons it is in no different a position from someone who never started.
+
+The course unlocks in one place only, when Stripe confirms the payment. Returning to the success page does not by itself grant anything, because anyone can visit a URL. If the confirmation has not arrived yet, that page says the payment went through and the course is being set up.
+
+The price is read from the course record at the moment the payment session is created. The browser only ever says which course, never what it costs.
+
+### Timing
+
+Confirmation is not always instant. Stripe notifies your site, your site records that notification, and the enrolment is completed on the next page view. In practice that is usually seconds. It is normal for a student to land back on the course a moment before it opens, which is what the "setting up your course" message covers.
+
+### What is not covered
+
+Refunds are not wired up. Refund in Stripe as usual, then remove the enrolment by hand. A refund does not revoke access on its own.
 
 ## Protecting paid video
 
@@ -115,7 +144,25 @@ The viewer renders the language stored on the student's **enrolment**, set when 
 
 ### “I want to restrict a course to paid subscribers only”
 
-That's a job for EP Membership plus EP Ecommerce Subscriptions. Gate the viewer page's parent, or specific courses, via EP Membership's access rules.
+Two different things, so pick the one you mean. To sell a course outright, set Access to **Premium** with a price and let EP Ecommerce Stripe take the payment (see [Selling courses](#selling-courses)). To gate a course behind an existing membership rather than a single sale, that is EP Membership's access rules on the viewer page, optionally with EP Ecommerce Subscriptions handling the recurring billing.
+
+### “A Premium course shows Coming Soon instead of a Buy button”
+
+The Buy button only appears where a card could actually be charged. Check that [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) is active and has your keys saved, that the course has a price above zero, and that you are signed in as a student rather than viewing signed out.
+
+### “A student paid but the course has not opened”
+
+Give it a page view. Confirmation is recorded when Stripe notifies your site and applied on the next request, so the enrolment completes moments later rather than instantly.
+
+If it is still closed after that, check the payment actually succeeded in your Stripe dashboard, and that the webhook endpoint in Stripe points at your site with the signing secret saved in EP Ecommerce Stripe. A payment that never produced a webhook cannot complete an enrolment.
+
+### “Previous is missing, and Next goes back to lesson one”
+
+Fixed in 0.4.15. The Sort Order box on each lesson used to arrive pre-filled with `0`, and leaving it alone left every lesson at position 0, so the viewer could not tell them apart. Previous never rendered, Next returned to the first lesson, and every sidebar link went to the same place.
+
+Updating repairs existing courses automatically on the next admin page load. Lessons you had already numbered keep their order and stay in front; only the zeros are renumbered, in the order they were created. A course already numbered properly is left untouched.
+
+New lessons now leave Sort Order blank, meaning "add at the end".
 
 ### “Students can see lessons they haven't completed prerequisites for”
 
