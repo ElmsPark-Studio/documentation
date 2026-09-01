@@ -42,7 +42,7 @@ For a full learning management system, combine EP Courses with EP Membership (fo
 Optional but commonly paired:
 
 - **EP Membership** for student accounts and authenticated course access.
-- **[EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) 0.1.21 or later** to sell courses. Required if you want to charge for one.
+- **[EP Ecommerce](/plugins/ep-ecommerce/) and [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) 0.1.21 or later** to sell courses. Both are required to charge for one; EP Ecommerce Stripe builds on EP Ecommerce and does nothing without it.
 - **[EP Media Storage](/plugins/ep-media-storage/)** to serve lesson videos from your own bucket behind expiring links.
 
 ## Installation
@@ -89,14 +89,16 @@ The 24 supported languages are ticked on and off in settings. Welsh, Irish, Scot
 3. (Optional) Tick the languages you need in settings, then fill in each language's fields in the **Translations** accordion on the course and lesson edit forms.
 4. Create a page with the viewer slug, add `[ep-course-viewer]`.
 5. Create a catalogue page, add `[ep-courses]`.
-6. If the course is paid, set Access to **Premium** with a price, and make sure EP Ecommerce Stripe is active and holds your Stripe keys.
+6. If the course is paid, set Access to **Premium** with a price, and make sure both EP Ecommerce and EP Ecommerce Stripe are active, with your Stripe keys saved in EP Ecommerce Stripe.
 7. If gated, configure EP Membership to require login for the viewer page.
 
 ## Selling courses
 
 From 0.5.0 a course can be sold. Set **Access** to Premium, give it a price and currency, and the catalogue shows a **Buy** button in place of the old disabled "Coming Soon".
 
-You need [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) 0.1.21 or later, active, with your Stripe keys in it. If it is missing or has no key, no Buy button is shown at all, rather than one that fails when pressed.
+You need **both** [EP Ecommerce](/plugins/ep-ecommerce/) and [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) 0.1.21 or later active, with your Stripe keys saved in the latter. EP Ecommerce Stripe does nothing on its own: it builds on EP Ecommerce, and without it the payment confirmation never runs.
+
+If any part of that chain is missing, the catalogue keeps showing the old disabled "Coming Soon" button rather than a Buy button. That is deliberate. A Buy button is only offered where a payment could actually be completed, so nobody can pay into a site that cannot finish the enrolment.
 
 The buyer must be signed in first. An enrolment belongs to a user account, so a signed-out visitor sees a link to register instead.
 
@@ -148,7 +150,7 @@ Two different things, so pick the one you mean. To sell a course outright, set A
 
 ### “A Premium course shows Coming Soon instead of a Buy button”
 
-The Buy button only appears where a card could actually be charged. Check that [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) is active and has your keys saved, that the course has a price above zero, and that you are signed in as a student rather than viewing signed out.
+The Buy button only appears where a payment could actually be completed, which is deliberate. Check all four: [EP Ecommerce](/plugins/ep-ecommerce/) is active, [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/) is active with your keys saved, the course has a price above zero, and you are signed in rather than viewing signed out. Missing EP Ecommerce is the easy one to overlook, because EP Ecommerce Stripe looks installed and configured while the half that completes the sale is absent.
 
 ### “A student paid but the course has not opened”
 
