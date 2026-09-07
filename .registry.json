@@ -45,15 +45,15 @@
   },
   "ep-booking": {
     "tier": "professional",
-    "version": "2.4.21"
+    "version": "2.4.23"
   },
   "ep-booking-zoom": {
     "tier": "professional",
-    "version": "1.0.16"
+    "version": "1.0.17"
   },
   "ep-brain-vault": {
     "tier": "foundation",
-    "version": "0.2.1"
+    "version": "0.2.2"
   },
   "ep-breadcrumbs": {
     "tier": "foundation",
@@ -69,7 +69,7 @@
   },
   "ep-class-passes": {
     "tier": "professional",
-    "version": "1.2.9"
+    "version": "1.2.10"
   },
   "ep-comments": {
     "tier": "business",
@@ -89,7 +89,7 @@
   },
   "ep-courses": {
     "tier": "add-on",
-    "version": "0.4.14"
+    "version": "0.5.1"
   },
   "ep-cron": {
     "tier": "foundation",
@@ -105,19 +105,19 @@
   },
   "ep-documents": {
     "tier": "foundation",
-    "version": "0.3.13"
+    "version": "0.3.14"
   },
   "ep-ecommerce": {
     "tier": "commerce",
-    "version": "0.1.36"
+    "version": "0.1.40"
   },
   "ep-ecommerce-gelato": {
     "tier": "commerce",
-    "version": "1.0.6"
+    "version": "1.0.7"
   },
   "ep-ecommerce-paypal": {
     "tier": "professional",
-    "version": "0.1.12"
+    "version": "0.1.14"
   },
   "ep-ecommerce-pod": {
     "tier": "commerce",
@@ -125,15 +125,15 @@
   },
   "ep-ecommerce-printful": {
     "tier": "commerce",
-    "version": "1.0.6"
+    "version": "1.0.7"
   },
   "ep-ecommerce-printify": {
     "tier": "commerce",
-    "version": "1.1.6"
+    "version": "1.1.7"
   },
   "ep-ecommerce-prodigi": {
     "tier": "commerce",
-    "version": "1.0.6"
+    "version": "1.0.7"
   },
   "ep-ecommerce-products": {
     "tier": "commerce",
@@ -141,11 +141,11 @@
   },
   "ep-ecommerce-stripe": {
     "tier": "commerce",
-    "version": "0.1.17"
+    "version": "0.1.23"
   },
   "ep-ecommerce-subscriptions": {
     "tier": "commerce",
-    "version": "0.2.12"
+    "version": "0.2.15"
   },
   "ep-editor": {
     "tier": "professional",
@@ -153,7 +153,7 @@
   },
   "ep-email": {
     "tier": "foundation",
-    "version": "1.10.45"
+    "version": "1.10.48"
   },
   "ep-email-advanced-forms": {
     "tier": "professional",
@@ -169,11 +169,11 @@
   },
   "ep-email-brevo": {
     "tier": "add-on",
-    "version": "1.0.4"
+    "version": "1.0.5"
   },
   "ep-email-elmspark": {
     "tier": "foundation",
-    "version": "1.0.5"
+    "version": "1.0.6"
   },
   "ep-email-file-uploads": {
     "tier": "professional",
@@ -189,7 +189,7 @@
   },
   "ep-email-mailgun": {
     "tier": "add-on",
-    "version": "1.0.9"
+    "version": "1.0.10"
   },
   "ep-email-quiz": {
     "tier": "professional",
@@ -197,7 +197,7 @@
   },
   "ep-events": {
     "tier": "foundation",
-    "version": "1.0.49"
+    "version": "1.0.51"
   },
   "ep-events-recurring": {
     "tier": "foundation",
@@ -209,11 +209,11 @@
   },
   "ep-finance-invoicing": {
     "tier": "professional",
-    "version": "0.1.9"
+    "version": "0.1.10"
   },
   "ep-flows": {
     "tier": "professional",
-    "version": "0.3.1"
+    "version": "0.3.2"
   },
   "ep-gallery": {
     "tier": "professional",
@@ -237,11 +237,11 @@
   },
   "ep-holiday-bookings": {
     "tier": "professional",
-    "version": "0.3.11"
+    "version": "0.3.12"
   },
   "ep-host-check": {
     "tier": "foundation",
-    "version": "1.3.4"
+    "version": "1.3.5"
   },
   "ep-indexnow": {
     "tier": "foundation",
@@ -249,7 +249,7 @@
   },
   "ep-instructors": {
     "tier": "professional",
-    "version": "1.1.12"
+    "version": "1.1.13"
   },
   "ep-local-business": {
     "tier": "foundation",
@@ -265,11 +265,11 @@
   },
   "ep-media-storage": {
     "tier": "add-on",
-    "version": "0.1.2"
+    "version": "0.1.5"
   },
   "ep-membership": {
     "tier": "add-on",
-    "version": "0.6.2"
+    "version": "0.6.3"
   },
   "ep-membership-pages": {
     "tier": "add-on",
@@ -277,19 +277,19 @@
   },
   "ep-newsletter": {
     "tier": "business",
-    "version": "1.8.1"
+    "version": "1.8.2"
   },
   "ep-newsletter-brevo": {
     "tier": "add-on",
-    "version": "1.0.4"
+    "version": "1.0.5"
   },
   "ep-newsletter-mailgun": {
     "tier": "add-on",
-    "version": "1.0.10"
+    "version": "1.0.11"
   },
   "ep-newsletter-sendgrid": {
     "tier": "professional",
-    "version": "1.0.15"
+    "version": "1.0.16"
   },
   "ep-passkeys": {
     "tier": "add-on",
@@ -301,7 +301,7 @@
   },
   "ep-provisioning": {
     "tier": "foundation",
-    "version": "1.5.10"
+    "version": "1.5.11"
   },
   "ep-redirects": {
     "tier": "foundation",
@@ -313,7 +313,7 @@
   },
   "ep-rss": {
     "tier": "foundation",
-    "version": "1.1.7"
+    "version": "1.1.8"
   },
   "ep-scheduled-content": {
     "tier": "professional",
@@ -321,15 +321,15 @@
   },
   "ep-search": {
     "tier": "business",
-    "version": "1.8.7"
+    "version": "1.8.9"
   },
   "ep-security": {
     "tier": "foundation",
-    "version": "0.0.4"
+    "version": "0.0.5"
   },
   "ep-sendit": {
     "tier": "foundation",
-    "version": "1.0.5"
+    "version": "1.0.6"
   },
   "ep-seo": {
     "tier": "foundation",
@@ -349,19 +349,19 @@
   },
   "ep-stripe-coupons": {
     "tier": "commerce",
-    "version": "0.1.2"
+    "version": "0.1.4"
   },
   "ep-studio-assistant": {
     "tier": "professional",
-    "version": "1.0.5"
+    "version": "1.0.6"
   },
   "ep-studio-dashboard": {
     "tier": "professional",
-    "version": "2.1.6"
+    "version": "2.1.7"
   },
   "ep-support": {
     "tier": "professional",
-    "version": "1.1.23"
+    "version": "1.1.24"
   },
   "ep-testimonials": {
     "tier": "professional",
@@ -377,11 +377,11 @@
   },
   "ep-voice-messages": {
     "tier": "add-on",
-    "version": "1.1.10"
+    "version": "1.1.11"
   },
   "ep-waivers": {
     "tier": "professional",
-    "version": "1.2.7"
+    "version": "1.2.8"
   },
   "ep-whatsapp": {
     "tier": "professional",
@@ -393,18 +393,18 @@
   },
   "tibaai-companion": {
     "tier": "private",
-    "version": "1.0"
+    "version": "1.0.2"
   },
   "tibaai-dashboard": {
     "tier": "private",
-    "version": "0.9.5"
+    "version": "0.10.8"
   },
   "tibaai-discovery": {
     "tier": "private",
-    "version": "1.11.27-enquirycsrf"
+    "version": "1.11.35-httptools"
   },
   "tibaai-editor": {
     "tier": "private",
-    "version": "0.3.1"
+    "version": "0.3.4"
   }
 }
