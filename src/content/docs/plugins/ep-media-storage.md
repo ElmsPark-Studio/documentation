@@ -11,7 +11,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Status
 
-**Version 0.1.0, released 4 August 2026.** The link signing is tested against a live bucket and the plugin has been proven end to end alongside [EP Courses](/plugins/ep-courses/) on a PageMotor site. It is on the same licence tier as EP Courses, so if you have that, this is covered.
+**Current version 0.1.5.** First released 4 August 2026. The link signing is tested against a live bucket and the plugin has been proven end to end alongside [EP Courses](/plugins/ep-courses/) on a PageMotor site. It is on the same licence tier as EP Courses, so if you have that, this is covered.
 
 Because it is new rather than an update, the first copy has to be uploaded by hand: ask at [help.elmspark.com](https://help.elmspark.com) and we will send the zip. After that it updates through your **Updates** screen like everything else.
 
@@ -28,7 +28,7 @@ That is the exact hole this plugin closes. Instead of the plain bucket URL, the 
 ## What it does
 
 - Signs every media link with **AWS Signature Version 4**, the same mechanism your storage provider uses internally.
-- Lets you set how long a link lives, from thirty minutes to twenty-four hours. Two hours is the default.
+- Lets you set how long a link lives, from thirty minutes to seven days. Two hours is the default.
 - Serves protected media through the `[ep-media]` shortcode anywhere on your site.
 - Protects [EP Courses](/plugins/ep-courses/) MP4 lessons automatically, with nothing to configure in EP Courses itself.
 - Leaves anything outside your bucket alone, so YouTube and Vimeo lessons carry on exactly as before.
@@ -71,7 +71,7 @@ Until you tick that box, every link is served exactly as entered, so you can ins
 | Setting | What to put in it |
 |---|---|
 | **Enable protected media** | The master switch. Off means links are served untouched. |
-| **A link stays valid for** | 30 minutes, 1 hour, 2 hours (recommended), 6 hours or 24 hours. |
+| **A link stays valid for** | 30 minutes, 1 hour, 2 hours (recommended), 6 hours, 24 hours, 2 days or 7 days. Seven days is the longest a signed link can live; that ceiling belongs to the signing scheme, not to the plugin. |
 | **Provider** | Amazon S3, Cloudflare R2, Backblaze B2, or Other S3-compatible. This only sets the default link style; the signing is identical everywhere. |
 | **Bucket name** | Just the name, for example `my-course-videos`. |
 | **Region** | For example `us-east-1`, or `eu-central-003` on Backblaze. Cloudflare R2 uses `auto`. |
@@ -175,7 +175,7 @@ Both are admin-tier, so they are available to your AI assistant through the site
 
 **Use a read-only, single-bucket key.** PageMotor core cannot currently render a masked password field, so the secret is present in the source of the settings page. That is a page only your admins can open, but it means the blast radius of a leaked admin screenshot should be "somebody can read files they were already being shown", not "somebody can empty my storage".
 
-**Prefer shorter lifetimes.** Two hours comfortably covers a sitting, and nothing is interrupted when a link expires mid-playback.
+**Prefer shorter lifetimes.** Two hours comfortably covers a sitting, and nothing is interrupted when a link expires mid-playback. The 2-day and 7-day options (0.1.5) suit a link you email out or a download the buyer may come back to; for a lesson embedded in a page they only widen the window a copied link keeps working.
 
 ## Troubleshooting
 
@@ -207,6 +207,14 @@ Not in this version. Links are signed against the bucket endpoint you configure.
 Yes. Use `type="link"` for a download and `type="audio"` for a player. Anything in the bucket can be served this way.
 
 ## Changelog
+
+### 0.1.5
+
+7 September 2026. Link lifetime can be set to 2 days or 7 days.
+
+### 0.1.1 to 0.1.4
+
+August 2026. Compatibility with PageMotor 0.11's session handling, the stored secret moved out of reach of API and MCP connections, and the plugin's actions no longer appear as individual top-level MCP tools.
 
 ### 0.1.0
 

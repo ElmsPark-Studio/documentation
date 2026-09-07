@@ -15,6 +15,7 @@ Published by [ElmsPark Studio](https://elmspark.com).
 - **Confirmation fallback** for cases where the webhook is delayed — prevents a visible "waiting" state for the customer.
 - **Atomic order claiming** so a webhook and a confirmation cannot double-fulfil.
 - **Admin refunds** from the orders list via the Stripe Refunds API.
+- **Refund-driven revocation** (0.1.22): a full refund made in the Stripe dashboard reaches your site as `charge.refunded` and the plugin that fulfilled the sale is asked to take the entitlement back.
 - **Zero-decimal currency handling** (JPY, KRW, etc. — no implicit cents).
 - **Idempotency keys** on every request so network retries never double-charge.
 - **Customisable statement descriptor** with `{product_name}` placeholder for bank statement clarity.
@@ -60,6 +61,7 @@ Stripe pushes payment status to your server via a webhook. Without it, orders ca
 4. Events to send:
    - `payment_intent.succeeded`
    - `payment_intent.payment_failed`
+   - `charge.refunded` (0.1.22, if you want a full refund to withdraw what was sold)
 5. Click **Add endpoint**.
 6. On the endpoint detail page, reveal the **Signing secret** (starts `whsec_`).
 7. Back in the plugin settings, paste it into **Webhook signing secret**.
@@ -85,7 +87,13 @@ From the EP Ecommerce orders list, any paid Stripe order has a **Refund** button
 - **Full refund.** Refunds the entire charge.
 - **Partial refund.** Enter an amount less than or equal to the charge.
 - The order status updates to Refunded / Partially Refunded.
-- Fulfilment reversal (revoking memberships, voiding licenses) is on you, because business rules vary — by default the refund only handles the money.
+- Fulfilment reversal for EP Ecommerce's own products (revoking memberships, voiding licences) is on you, because business rules vary — by default the refund only handles the money.
+
+### Refunds made in Stripe (0.1.22)
+
+A **full** refund issued from the Stripe dashboard arrives as a `charge.refunded` webhook. The plugin matches it to the original sale from its own fulfilment record and hands it to the plugin that sold the item, which can then withdraw what it granted. [EP Courses](/plugins/ep-courses/) does this for course enrolments. A **partial** refund is logged and ignored, since it is usually a goodwill gesture rather than an undoing of the sale. Chargebacks are not acted on, because a dispute can be won.
+
+Add `charge.refunded` to the events your webhook sends if you want this.
 
 ## Statement descriptor
 
@@ -119,9 +127,27 @@ Live-mode keys must be from the same Stripe account as your test keys. Mixing up
 
 The publishable key in the settings doesn't match the mode. If mode is Live but you pasted a test key, Stripe rejects. Check the prefix: `pk_live_` for live, `pk_test_` for test.
 
+### “Two products on one page and the customer was charged for the wrong one”
+
+Fixed in 0.1.22: each checkout form on a page now keeps its own payment state. Update the plugin. If a customer still sees it after the update, their browser is holding the old script; 0.1.23 changed how the script is loaded so that a release replaces the cached copy, and that takes effect with the next release after it.
+
 ### “Customers complain about 3D Secure prompts”
 
 3DS is triggered by Stripe based on risk and issuer rules. The Payment Element handles it automatically. If customers can't complete 3DS, it's usually their issuer or a network issue, not your site.
+
+## Changelog
+
+### 0.1.23
+
+7 September 2026. The checkout script loads only on pages carrying a checkout, not sitewide, and is served with a version stamp so browsers pick up each release instead of a cached copy.
+
+### 0.1.22
+
+2 September 2026. Full refunds made in Stripe can take an entitlement back through the plugin that sold it. Two checkout forms on one page no longer share payment state, which could charge the customer for the wrong product.
+
+### 0.1.19 to 0.1.21
+
+1 September 2026. Stripe Checkout sessions for other EP plugins that sell through this one (EP Courses uses this), with confirmation and webhook fixes, and a fix for two plugins bundling the shared Stripe helper taking the site down on activation.
 
 ## Feedback and corrections
 

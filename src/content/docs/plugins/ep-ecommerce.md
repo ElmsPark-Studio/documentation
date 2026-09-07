@@ -41,6 +41,33 @@ Every purchase creates an order row. Orders track status (Pending / Paid / Faile
 
 Membership products grant access for a fixed period or forever. Access checks are plugin-level so any plugin (like EP Membership) can ask "does this email have active access to membership level X".
 
+The plugin's own gate, `[ep-membership-content]`, is an **exact match** on the level. A buyer of a product whose level is `course-a` passes the `course-a` gate and no other. There is no ranking between levels here; ranking is [EP Membership](/plugins/ep-membership/)'s job, and only its gates use it. That makes one-off products (a single course, a single download bundle with ongoing access) simple: give each product its own level slug and wrap each product's content in its own gate.
+
+Two things happen around a level since 0.1.40:
+
+- **Every active grant is also a permission key** on the buyer's PageMotor account, named `EP_Ecommerce.grant.<level>`, one per product, flat, no ranking. Revoking or expiring the membership removes the key. No gate consumes these keys yet, so nothing changes on a site today; they exist so a page-level exact-match gate can be built without a schema change.
+- **Saving a product warns** when its membership level is not one that EP Membership defines. The save still succeeds, because that level is perfectly valid for the exact-match gate above. The warning tells you that EP Membership's ladder will ignore it.
+
+Memberships past their expiry date are marked expired once a day, from an admin page load. Access already lapsed on the date regardless; this keeps the stored status honest and lets extensions hear about it.
+
+### Buyer accounts (0.1.37)
+
+A membership or subscription is gated on being signed in, so a buyer without a PageMotor account could pay, receive a valid grant, and then be told to log in to an account that never existed. Since 0.1.37 the plugin creates the account itself.
+
+When a membership is granted to an email address that has no account:
+
+1. A PageMotor user is created for it, of the type set in **Buyer Account Type** (default `learner`, which is what EP Membership's own registration form creates, so buyers appear in its member list).
+2. The buyer is emailed a single-use link to the **Set Password** page. The link lives for 7 days.
+3. Setting a password signs them in and sends them to the **After Setup** address, or to the login page if that is blank.
+
+The Set Password page is created for you the first time it is needed, at the path in **Set Password Page** (default `set-password`), carrying the `[ep-set-password]` shortcode. If a page at that path already exists it is left alone.
+
+An email that already owns an account is a no-op: renewals, webhook retries and repeat purchases never create a second account or resend the welcome email. With EP Membership active, the new account is marked email-verified, because the address has already proved itself by paying and by receiving the link.
+
+Downloads and licence keys are unchanged. They are delivered by email and need no login, so no account is created for them.
+
+The switch is **Settings → Membership → Buyer Accounts**: create automatically (the default) or do not create.
+
 ### License keys
 
 Three generation formats:
@@ -62,6 +89,7 @@ For Download products, the customer gets a time-limited tokenised URL in their c
 | `[ep-checkout product=my-product]` | Checkout form for a specific product. |
 | `[ep-membership-content level=premium]...content...[/ep-membership-content]` | Gate content to members of a given level. Non-members see nothing (or a custom message). |
 | `[ep-download product=my-download]` | Download button, checks the current user's purchase history and redirects to a valid secure URL. |
+| `[ep-set-password]` | The form a new buyer lands on from their welcome email (0.1.37). Placed for you on the Set Password page; only needed by hand if you move that page. |
 
 ## Requirements
 
@@ -94,6 +122,19 @@ For Download products, the customer gets a time-limited tokenised URL in their c
 
 The payment buttons render inside the `.ep-ecommerce-payment-slot` div in the checkout. Whichever payment extensions are active fill the slot with their buttons.
 
+## Managing products over the API and MCP (0.1.38)
+
+Products can be listed, created, updated and deleted through PageMotor's API and through an MCP connection, using the same validation as the admin screen. All four actions require admin access.
+
+| Action | What it does |
+|---|---|
+| `list-product` | Every product, with its type-specific fields. |
+| `create-product` | Create one. Same required fields and type rules as the admin form. |
+| `update-product` | Change any fields on an existing product. |
+| `delete-product` | Remove one. |
+
+A slug you supply by hand is normalised the same way the admin screen normalises a typed name, so `My Slug` is stored as `my-slug`. Create and update return the same level warning described under Memberships when a membership level is not one EP Membership defines.
+
 ## Database tables
 
 - `{prefix}ep_ecommerce_products` — product catalogue.
@@ -101,6 +142,7 @@ The payment buttons render inside the `.ep-ecommerce-payment-slot` div in the ch
 - `{prefix}ep_ecommerce_memberships` — active membership records.
 - `{prefix}ep_ecommerce_licenses` — license keys with validation records.
 - `{prefix}ep_ecommerce_downloads` — download tokens.
+- `{prefix}ep_ecommerce_account_tokens` holds the single-use set-password links for new buyer accounts (0.1.37).
 
 ## Extension API
 
@@ -116,6 +158,7 @@ Plugins extend EP Ecommerce by subclassing `EP_Ecommerce_Extension` and register
 | `render_product_admin($product)` | Admin fields for custom types. |
 | `check_access($email, $level)` | Override membership access checks. |
 | `on_membership_granted(...)` | React to membership grants. |
+| `on_membership_revoked($user_email, $product_id, $order_id, $level, $reason)` | React to a grant going away (0.1.40). Fires once per revocation, with `$reason` of `revoked`, `expired`, or whatever the caller passed (a refund passes `refund`). |
 | `filter_license_validation($license, $response)` | Modify license API responses. |
 | `settings_fields()` | Add settings to the EP Ecommerce settings page. |
 
@@ -135,6 +178,14 @@ Check the payment extension's webhook is configured correctly and reaching your 
 
 Configure per-product download token lifetime and max download count in the product's admin. Default is usually 24 hours and 3 downloads, which is deliberately conservative.
 
+### “A buyer paid for a membership but is told to log in”
+
+Before 0.1.37 no account was created for a buyer, so this was every first-time buyer's experience. Update, then check **Settings → Membership → Buyer Accounts** is set to create automatically. For a buyer who paid before the update, create their account from EP Membership's Members panel or ask them to register with the same email address they paid with; the grant is keyed on that address and attaches on login.
+
+### “The welcome email's set-password link gives a 404”
+
+The Set Password page is created on first use since 0.1.39. On a site that installed 0.1.37 or 0.1.38 and never opened the settings, create a page at the path in **Set Password Page** carrying `[ep-set-password]`, or update and let the next purchase create it.
+
 ### “License keys I generate aren't validating”
 
 Validation requires the software to call your site's license API with the key. If the software isn't coded to check, keys are cosmetic. This is about what the customer-facing software expects.
@@ -142,6 +193,24 @@ Validation requires the software to call your site's license API with the key. I
 ### “I want to sell a custom product type that isn't one of the five”
 
 Build a small EP Suite plugin that extends `EP_Ecommerce_Extension` and implements `product_types()` and `render_product_admin()`. Ask on the support forum for the current reference signatures.
+
+## Changelog
+
+### 0.1.40
+
+7 September 2026. Every active grant becomes a flat `EP_Ecommerce.grant.<level>` permission key on the buyer's account. Saving a product warns when its membership level is not one EP Membership defines. Extensions hear about revocations through `on_membership_revoked()`, and expired memberships are now marked expired daily rather than only lapsing.
+
+### 0.1.39
+
+2 September 2026. The Set Password page is created on first use, so the welcome email never points at a missing page. Buyer emails are lowercased at the boundary. A buyer who registered before purchasing and never verified gets the verified flag on purchase.
+
+### 0.1.38
+
+1 September 2026. Products can be managed over the API and MCP, through the same validation as the admin screen. Hand-typed slugs are normalised.
+
+### 0.1.37
+
+1 September 2026. Buyer accounts: a membership or subscription purchase creates a PageMotor account for the buyer and emails a single-use set-password link. Settings under Membership control it.
 
 ## Feedback and corrections
 

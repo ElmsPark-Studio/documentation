@@ -91,6 +91,8 @@ Change a member's level any time from the **Members** panel in settings — ever
 
 With the **Purchase Grants** setting on and EP Ecommerce installed, an active membership purchase lifts the member's effective level automatically. Set the product's `membership_level` to one of your level slugs; EP Ecommerce Subscriptions records the grant on purchase and renewal. Grants are checked live, so an expired or cancelled subscription stops counting immediately — no sync job, no delay.
 
+A product whose level is not in your list is ignored by the ladder. EP Ecommerce 0.1.40 and later warn you when you save such a product. The product still sells, and its buyers still pass EP Ecommerce's own exact-match `[ep-membership-content]` gate; they just gain nothing on this plugin's ladder.
+
 ## Gating content
 
 There are two kinds of gate in this plugin, and the difference matters if you are selling access.
@@ -115,7 +117,7 @@ VIP-only content with a custom prompt.
 [/ep-level-gate]
 ```
 
-A gate naming a level you haven't defined **fails open** (the content shows, with a note in the PHP error log) — a typo degrades to visible, never to a page nobody can see.
+A gate naming a level you haven't defined **fails open** by default (the content shows, with a note in the PHP error log) — a typo degrades to visible, never to a page nobody can see. Since 0.6.3 a site that would rather hide a paid page than leak it can reverse that: **Member Levels → When a Gate Names a Level That Does Not Exist**, set to hide. The breadcrumb is logged either way.
 
 ### By level, per page
 
@@ -161,7 +163,7 @@ With EP Courses installed, the **Access Control** section in EP Membership's set
 - **Login** — login and registration page slugs, after-login and after-logout redirects, Remember Me duration in days, max login attempts, and lockout duration in minutes.
 - **Profile** — profile page on/off and its slug.
 - **Access Control** — the course and lesson login requirements above.
-- **Member Levels** (0.5.0): the level definitions, default level, purchase grants switch, (0.5.1) the sitewide gate with its public-paths list, and (0.6.0) the Members Only Document Level.
+- **Member Levels** (0.5.0): the level definitions, default level, purchase grants switch, (0.5.1) the sitewide gate with its public-paths list, (0.6.0) the Members Only Document Level, and (0.6.3) what a gate does when it names a level that does not exist: show the content (default) or hide it.
 - **Members** (0.5.0) — every learner account with registration date, verification state, and a level selector.
 
 ## Password reset
@@ -208,9 +210,13 @@ Put the document on the **Members Only** content type (0.6.0). That is the gate 
 
 ### “A level gate is showing its content to everyone”
 
-The gate names a level that isn't defined in settings — undefined levels fail open by design. Check the slug in the shortcode against the Member Levels box, and check the PHP error log for the breadcrumb.
+The gate names a level that isn't defined in settings — undefined levels fail open by default. Check the slug in the shortcode against the Member Levels box, and check the PHP error log for the breadcrumb. If you would rather such a gate hide the content, set **Member Levels → When a Gate Names a Level That Does Not Exist** to hide (0.6.3).
 
 ## Changelog
+
+### 0.6.3
+
+7 September 2026. A gate naming an undefined level can now fail closed. Fail-open remains the default; the new setting under Member Levels lets a site choose to hide the content instead. Logged either way.
 
 ### 0.6.2
 

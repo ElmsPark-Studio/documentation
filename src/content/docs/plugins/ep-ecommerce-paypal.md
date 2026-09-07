@@ -44,6 +44,7 @@ Open **Plugin Settings → EP Ecommerce PayPal**.
 - **Mode.** Sandbox for testing, Live for production.
 - **Sandbox credentials.** Client ID and secret.
 - **Live credentials.** Client ID and secret for production.
+- **Hide These Funding Options** (0.1.14). PayPal shows several buttons by default. Tick any of Pay Later, Debit or Credit Card, PayPal Credit and Venmo to keep them off your checkout.
 
 ### Step 3 — Set up the webhook
 
@@ -62,7 +63,7 @@ Open **Plugin Settings → EP Ecommerce PayPal**.
 1. Customer clicks the PayPal button on your site.
 2. Plugin exchanges Client ID + Secret for an OAuth2 access token (cached per request).
 3. Plugin creates a PayPal **Order** with the product amount and purchase details.
-4. PayPal JS SDK renders the button, customer approves in a PayPal popup.
+4. PayPal JS SDK renders the button. The email and name fields are checked before the popup opens (0.1.14); an empty or malformed field shows a message on the page and the popup stays closed. The customer then approves in the PayPal popup.
 5. Frontend receives the approved order ID, sends it to the plugin's capture endpoint.
 6. Plugin calls PayPal's Capture API to finalise the payment.
 7. PayPal fires `PAYMENT.CAPTURE.COMPLETED` to your webhook.
@@ -106,6 +107,10 @@ Check the browser console. Common causes:
 - Mode is set to Live but you're using sandbox credentials, or vice versa.
 - PayPal JS SDK is being blocked by an ad-blocker or CSP header. Loosen CSP if needed.
 
+### “The PayPal popup opens and closes straight away”
+
+Before 0.1.14 the form was validated after PayPal had opened its window, so an empty email or name closed the popup with the message left behind it. Update; validation now runs before the popup opens and the message shows on the page.
+
 ### “Webhook signature verification fails”
 
 The Webhook ID saved in the plugin doesn't match the one in PayPal. Rotate in PayPal, paste the new ID, try again.
@@ -121,6 +126,16 @@ The webhook isn't reaching your site, or is being rejected. Check PayPal Develop
 ### “I get a refund error 'Capture not found'”
 
 The payment was authorised but not captured, or was captured through a different flow (direct Express Checkout instead of Orders API). These cases happen on very old orders. Refund through PayPal directly.
+
+## Changelog
+
+### 0.1.14
+
+7 September 2026. Email and name are validated before the PayPal popup opens instead of after. New Hide These Funding Options setting. One-time orders return the approval URL as subscriptions already did, for custom checkouts. The script loads only on checkout pages and is served with a version stamp so browsers pick up each release.
+
+### 0.1.13
+
+31 August 2026. Stored secrets moved out of reach of API and MCP connections.
 
 ## Feedback and corrections
 
