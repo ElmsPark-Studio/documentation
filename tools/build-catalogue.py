@@ -40,6 +40,11 @@ PAGES = ROOT / "src/content/docs/plugins"
 CATALOGUE = ROOT / "catalogue.json"
 REGISTRY_CACHE = ROOT / ".registry.json"
 
+# scaffold-changelog.py stamps this on every entry it copies out of a plugin's
+# CHANGELOG.md. That prose is written for a developer, so an unreviewed draft
+# must never reach a customer: it fails the build until a human removes it.
+DRAFT_TOKEN = "unreviewed: scaffolded"
+
 PHP = (
     '$r = require "/var/www/updates.elmspark.com/config.php"; '
     '$o = []; foreach ($r as $k => $v) { if (!empty($v["slug"])) '
@@ -81,6 +86,15 @@ def documented_version(slug):
     section = re.split(r"^## ", text.split("## Changelog", 1)[1], flags=re.M)[0]
     heads = re.findall(r"^###\s+v?([0-9][0-9.a-z-]*)\s*$", section, re.M)
     return heads[0] if heads else None
+
+
+def check_drafts():
+    """Fail while any plugin page still holds a scaffolded, unreviewed entry."""
+    held = sorted(p.stem for p in PAGES.glob("*.md")
+                  if DRAFT_TOKEN in p.read_text(encoding="utf-8"))
+    return [f"{slug}: holds a scaffolded changelog entry nobody has reviewed — rewrite it for "
+            f"a customer and delete the marker line "
+            f"(python3 tools/scaffold-changelog.py --list-drafts)" for slug in held]
 
 
 def check_versions(slugs, registry, backlog):
@@ -217,6 +231,7 @@ def main():
     # already an error above, and "pending" plugins have no page by definition.
     version_errors, version_warnings, current, behind = check_versions(
         [s for s in listed if s in ep and (PAGES / f"{s}.md").exists()], registry, backlog)
+    errors += check_drafts()
     errors += version_errors
     warnings += version_warnings
     if behind:
