@@ -113,3 +113,23 @@ That is EP Cron reporting its own health, not a dashboard fault. See [EP Cron](/
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 0.2.5
+
+**Fix — the big numbers on the Command Centre were cut off.** A panel's headline figures share one card between them, and the row was never allowed to wrap, so each figure was squeezed into whatever space was left and then truncated to fit. A traffic count of 173,701 showed as "1…". Checked at six browser widths from a phone to a wide desktop, between four and seven of the sixteen figures were cut at every single one.
+
+Figures now wrap onto a second line rather than crushing each other, they scale to the width of their card, and anything in the hundreds of thousands or above is shortened: 173,701 reads as 173.7k, with the exact number on hover.
+
+**Fix — cards were padded out to match the tallest one beside them.** A short panel could carry up to 149px of empty white below its content. Each card now ends where its content ends.
+
+**Fix — the Background Tasks table always had a horizontal scrollbar.** At three columns the table could never fit the space available, so the scrollbar never went away. All four columns now fit.
+
+**Fix — small print was too faint to meet the accessibility standard.** The colour used for every figure's caption, which is the only thing telling you what the number means, failed the WCAG AA contrast minimum. It is now comfortably above it.
+
+**Fix — your own plugins were missing from the plugin list.** The suite panel showed only EP Suite plugins, so anything bespoke or third-party running on the site was invisible on the very screen that lists what is active. Those now appear under "Also on this site", and the header counts them. PageMotor's own built-in plugins stay out, since they cannot be switched off.
+
+**Fix — the footer named the wrong PageMotor version.** It said 0.10 on every site regardless. It now reads the version you are actually running.
+
+Plugin buttons show each plugin's proper name instead of its internal class name, so "Google Analytics" rather than "PM Google Analytics".

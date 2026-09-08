@@ -478,6 +478,12 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.10.51
+
+**Fix — the email panel on the Command Centre disagreed with itself.** It showed "0 failures (7d)" with a list of five red-flagged failures directly beneath it, under the heading "Recent failures". Both were accurate and they were answering different questions: the count covered the last seven days, the list covered all time, so it showed the five most recent failures on record however old they were. On a healthy site that meant months-old bounces sitting under the word "recent".
+
+The list now covers the same seven days as the count above it, so the panel reads consistently and a red flag on it means something happened this week. Your full failure history is unchanged and still in the EP Email log.
+
 ### 1.10.50
 
 **A tightening of what your site contributes to the Central Blocklist.** It now only
