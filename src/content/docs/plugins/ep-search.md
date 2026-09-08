@@ -57,6 +57,26 @@ When logging is on, every search is recorded: query, timestamp, results count. V
 
 Useful for spotting content gaps.
 
+## Clearing a search
+
+Once results are showing, a “Clear search” link appears next to the result count. Clicking it returns to the unsearched URL, the same page with no `?s=...` parameter, so the form input clears and the results panel disappears.
+
+Refreshing the page does **not** clear results, because the search term is part of the URL. Use the Clear link, or navigate away and back.
+
+## Customising colours
+
+Every colour is driven by a `--eps-*` CSS custom property. Override them in your theme's CSS to recolour the form, button, links, and result divider in one place:
+
+```css
+:root {
+    --eps-button-bg: #1a73e8;
+    --eps-button-bg-hover: #1557b0;
+    --eps-link: #1a73e8;
+}
+```
+
+Available: `--eps-input-border`, `--eps-input-focus`, `--eps-input-bg`, `--eps-input-text`, `--eps-button-bg`, `--eps-button-bg-hover`, `--eps-button-text`, `--eps-link`, `--eps-url`, `--eps-clear-link`, `--eps-clear-link-hover`, `--eps-text-muted`, `--eps-text-subtle`, `--eps-divider`, `--eps-mark-bg`, `--eps-mark-text`.
+
 ## Troubleshooting
 
 ### “Search returns no results for terms I know are in my content”
