@@ -1,36 +1,28 @@
 ---
 title: "EP Maintenance"
-description: "Coming-soon and maintenance-mode overlays for your PageMotor site. Whitelisted admin access, configurable page, email capture for launches."
+description: "Coming-soon and maintenance-mode holding page for your PageMotor site. One-toggle on/off, admin bypass, SEO-safe HTTP 503."
 sidebar:
   order: 36
 ---
 
-EP Maintenance puts a coming-soon or maintenance page in front of your site while keeping the admin and whitelisted users working normally. Useful pre-launch, during a big update, or when something is broken and you need to take the site off the air temporarily.
+EP Maintenance puts a holding page in front of your site while admins keep working normally. Useful pre-launch, during a redesign, or when something is broken and you need to take the site off the air for an hour.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Overview
 
-Two modes:
+One toggle. When on:
 
-- **Coming soon.** For pre-launch sites. Shows a marketing page with optional email capture ("Notify me when you launch"). Good SEO: returns `200 OK` so it can be indexed and shared.
-- **Maintenance mode.** For during-outage cover. Returns `503 Service Unavailable` with a `Retry-After` header so search engines know not to index and to come back later.
+- **Visitors** see the holding page with your heading, message, and chosen colours.
+- **Admins** browse the real site as normal.
+- **The browser** receives `HTTP 503 Service Unavailable` with `Retry-After: 3600` and `noindex, nofollow` meta. Search engines understand the site is temporarily down and will come back later, so your search rankings are safe.
 
-In both modes:
-
-- **Admins bypass.** Logged-in admins see the real site.
-- **Whitelisted IPs bypass.** Add your office IP for the whole team.
-- **Whitelisted paths.** Sometimes you need a specific URL reachable (a webhook endpoint, a status page). Whitelist it.
+When off, the plugin is completely inert.
 
 ## Requirements
 
 - **PageMotor 0.8.2b or later**
-- **EP Suite base class**
-
-Optional:
-
-- **EP Email** if you want to capture emails for the launch notification list.
-- **EP Newsletter** to auto-add captured emails to a list.
+- **EP Suite base class** (bundled)
 
 ## Installation
 
@@ -38,85 +30,74 @@ Optional:
 2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP Maintenance**.
 
+On first install the heading, message, and colours are pre-populated with sensible defaults so the holding page is ready to use immediately.
+
 ## Settings
 
-### Mode
+### Maintenance Mode
 
-- **Off** (default). Plugin is inert, site behaves normally.
-- **Coming Soon.** Pre-launch overlay.
-- **Maintenance.** Short-term outage overlay.
+A single status checkbox. Tick it to enable the holding page. Untick to disable.
 
-### Appearance
+The status card at the top of the settings page reflects the current state in plain language: *Site is Live* (green) or *Maintenance Mode Active* (red).
 
-- **Page title.** Shown in the browser tab.
-- **Heading.** Main heading on the overlay page.
-- **Body.** Text or HTML for the overlay body.
-- **Background.** Colour or image URL.
-- **Logo.** Upload or paste a URL.
+### Page Content
 
-### Access
+- **Heading.** The large title shown to visitors. Plain text. Default: *Coming Soon*.
+- **Message.** The body text below the heading. **HTML is allowed.** Use `<h2>`, `<a href>`, `<strong>`, `<em>`, `<br>`, `<ul>`, and so on. Plain-text line breaks render as line breaks. Default: *We are working on something new. Check back soon.*
 
-- **Whitelisted IPs.** Comma-separated. Supports CIDR. Your own office IP belongs here.
-- **Whitelisted paths.** Comma-separated URL paths that remain reachable. Useful for webhooks, health checks, robots.txt.
+### Design
 
-### Email capture (Coming Soon only)
+- **Background Colour.** Page background.
+- **Text Colour.** Default colour for the heading and the message body.
+- **Heading Colour.** *Optional.* Override colour for the heading only. Leave blank to use the Text Colour. Useful when you want the heading in a brand accent and the body in a neutral text colour.
+- **Accent Colour.** A thin horizontal bar (48 × 3 pixels) above the heading. Pick a brand accent that contrasts the background.
 
-- **Show form.** Toggle.
-- **Placeholder text.** "your@email.com" by default.
-- **Submit label.** "Notify me" by default.
-- **Send captures to newsletter list.** If EP Newsletter is active, pick a list.
+Colours are picked with a colour wheel and stored as hex with optional alpha (`RRGGBB` or `RRGGBBAA`). Values are normalised and validated on render.
 
-## HTTP status codes
+## Who sees the holding page
 
-The two modes return different HTTP status codes deliberately:
+| Visitor type | Sees |
+| --- | --- |
+| Logged-out visitor | Holding page (HTTP 503) |
+| Logged-in subscriber or member | Holding page (HTTP 503) |
+| Logged-in admin | The real site |
+| Search-engine crawler | Holding page (HTTP 503), respects `Retry-After` |
+| Admin AJAX requests | Always pass through |
+| File uploads | Always pass through |
 
-- **Coming Soon returns 200 OK.** Search engines can index the page. Sharing it shows the marketing page.
-- **Maintenance returns 503 Service Unavailable** with a `Retry-After` header. Search engines know not to index and to come back later.
+If you need a non-admin to preview the site while maintenance is on, give them an admin account temporarily. The plugin does not support IP whitelisting or path whitelisting.
 
-This matters for SEO. Returning 503 on a long-lived "coming soon" page can cause search engines to drop you from the index.
+## What it does not do
 
-## Typical workflows
+To set expectations clearly:
 
-### Pre-launch
-
-1. Site is built but not announced. Set mode to Coming Soon.
-2. Share the link for people to sign up for launch notification.
-3. On launch day, set mode to Off.
-4. Export captured emails, import into EP Newsletter, send launch announcement.
-
-### Planned maintenance
-
-1. Before starting work, set mode to Maintenance.
-2. Do your work (update plugins, database migrations, whatever).
-3. Set mode to Off when done.
-
-### Unplanned outage
-
-1. Something broke. Set mode to Maintenance.
-2. Fix the issue, test with your whitelisted admin session.
-3. Set mode to Off when confident.
+- **No countdown timer.** The page is text and colour, no live timer.
+- **No IP whitelist.** Preview access is admin-login only.
+- **No path whitelist.** All non-admin URLs return the holding page.
+- **No email capture.** This is a holding page, not a launch list. If you want email capture, drop a Mailchimp or Bunny Mail embed into the **Message** field as raw HTML.
 
 ## Troubleshooting
 
-### "I set mode to Coming Soon but I still see the real site"
+### "I enabled maintenance mode but visitors still see the site"
 
-You're probably logged in as admin. That's working as intended. Open an incognito window to see what visitors see.
+Two possible causes:
 
-### "My office team sees the overlay despite being whitelisted"
+1. **You're logged in as admin.** Open the site in a private or incognito window to see what visitors see.
+2. **A caching layer is serving stale pages.** Cloudflare, Nginx fastcgi cache, or a customer-side reverse proxy can keep serving the old (live) page. Purge the cache after enabling.
 
-Verify the whitelisted IP is correct. Your apparent IP might be different from what you expect (corporate VPN, mobile hotspot). Check what [ifconfig.me](https://ifconfig.me) says from the affected machine.
+### "The colours I picked are not applying"
 
-### "Webhook endpoint returns 503 even though I whitelisted the path"
+Fixed in v1.0.5. The 1.0.4 release attempted this fix but missed the alpha-channel format the picker actually uses; 1.0.5 accepts all valid hex shapes. Update via **Plugins → Updates** or download the latest zip.
 
-Path match must be exact. If your webhook is at `/wh/stripe/` and you whitelisted `/webhooks/`, they won't match. Be specific.
+### "My HTML in the Message field is showing as plain text"
 
-### "Search engines keep crawling my site during maintenance"
+Fixed in v1.0.4. HTML in the Message field is rendered, not escaped. Update to 1.0.4 or later.
 
-Make sure mode is set to Maintenance (returns 503), not Coming Soon (returns 200). Also check your robots.txt isn't still indicating "crawl everything".
+### "I want to disable the plugin but the site is also down"
 
-### "Email capture form submissions aren't saving"
+If the site is up: deactivate from **Plugins → Manage Plugins** in the admin.
 
-Check EP Email is installed and configured (for the submission to go through EP Email's processing). Check the newsletter list ID in settings is valid.
+If the site is down and you cannot reach the admin: SFTP in and delete the `user-content/plugins/ep-maintenance/` folder. PageMotor will stop loading the plugin on the next request.
 
 ## Feedback and corrections
 

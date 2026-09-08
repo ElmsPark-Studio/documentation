@@ -30,15 +30,37 @@ What EP Search doesn't do: AI-powered semantic search, fuzzy matching, spelling 
 
 1. Download `ep-search.zip` from the [EP Suite downloads page](https://github.com/ElmsPark-Studio/ep-suite-downloads/releases/latest).
 2. Upload via **Plugins → Manage Plugins**. Activate.
-3. Create a page at `/search/` and add `[ep-search-results]`.
-4. Add `[ep-search-form]` to your header or wherever you want the search box.
+3. Create a page at `/search/`. Drop `[search]` on it. That's the whole setup. The form submits back to the page; results render inline below the form.
 
 ## Shortcodes
 
 | Shortcode | Purpose |
 |---|---|
-| `[ep-search-form]` | Search input with submit button. |
-| `[ep-search-results]` | Renders results of the current search query (`?q=...`). |
+| `[search]` | **Recommended.** Renders the form, then the results when a search is active. Drop one shortcode on a page and you're done. |
+| `[search-form]` | Search input with submit button only. Use when you want the form and results in separate places (e.g. form in the header, results on a dedicated page). |
+| `[search-results]` | Renders results of the current search query (`?s=...`). Use alongside `[search-form]` only when you've split the two across pages or blocks. |
+
+**Why prefer `[search]` over `[search-form]` + `[search-results]` on the same page?** Some themes wrap every block in the page content as a styled panel. With two separate shortcodes that gives you a styled form panel plus an empty styled panel (waiting for results) below it. The combined `[search]` shortcode renders as one block, so you get one panel that grows when results arrive.
+
+## Clearing a search
+
+Once results are showing, a "Clear search" link appears next to the result count. Clicking it returns to the unsearched URL — same page, no `?s=...` parameter — so the form input clears and the results panel disappears.
+
+Refreshing the page does **not** clear results, because the search term is part of the URL. Use the Clear link, or navigate away and back.
+
+## Customising colours
+
+Every colour is driven by a `--eps-*` CSS custom property. Override them in your theme's CSS to recolour the form, button, links, and result divider in one place:
+
+```css
+:root {
+    --eps-button-bg: #1a73e8;
+    --eps-button-bg-hover: #1557b0;
+    --eps-link: #1a73e8;
+}
+```
+
+Available: `--eps-input-border`, `--eps-input-focus`, `--eps-input-bg`, `--eps-input-text`, `--eps-button-bg`, `--eps-button-bg-hover`, `--eps-button-text`, `--eps-link`, `--eps-url`, `--eps-clear-link`, `--eps-clear-link-hover`, `--eps-text-muted`, `--eps-text-subtle`, `--eps-divider`, `--eps-mark-bg`, `--eps-mark-text`.
 
 ## Settings
 

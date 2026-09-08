@@ -1,17 +1,13 @@
 ---
-title: ElmsPark Documentation
-description: Practical guides for PageMotor hosting and EP Suite plugins.
+title: EP Suite Documentation
+description: User guides for every EP Suite plugin. Setup, configuration, troubleshooting, real-world examples.
 template: splash
 hero:
-  tagline: Practical guides for PageMotor hosting and EP Suite plugins. Plain language, real commands, nothing padded.
+  tagline: User guides for every EP Suite plugin. Setup, configuration, troubleshooting, real-world examples. British English, no fluff.
   actions:
-    - text: Vultr Hosting Guide
-      link: /hosting/vultr/
-      icon: right-arrow
-    - text: EP Suite plugins
+    - text: Browse EP Suite plugins
       link: /plugins/
       icon: right-arrow
-      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
@@ -19,16 +15,20 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 ## What is here
 
 <CardGrid>
-	<Card title="Hosting" icon="rocket">
-		Where to run PageMotor and how to set it up fast. Benchmarked VPS picks, plan sizing by use case, and the exact bootstrap we use.
+	<Card title="Email" icon="email">
+		EP Email, Advanced Forms, AI Reply, File Uploads, Quiz.
 	</Card>
-	<Card title="EP Suite plugins" icon="puzzle">
-		User guides for every EP plugin. Setup, configuration, troubleshooting, and real-world examples.
+	<Card title="Booking & Commerce" icon="rocket">
+		Booking, Zoom integration, Ecommerce, Stripe, PayPal, Subscriptions.
 	</Card>
-	<Card title="Written with Claude Code" icon="pencil">
-		Every guide is written by people who actually run this stack, then reviewed for accuracy before publishing.
+	<Card title="Content & Media" icon="document">
+		Cards, Gallery, Reviews, Testimonials, FAQ, Comments, RSS.
 	</Card>
-	<Card title="British English, no fluff" icon="document">
-		Short paragraphs, concrete commands, honest trade-offs. If something is hard, we say so.
+	<Card title="Utility & Compliance" icon="setting">
+		GDPR, Connect, Support, Diagnostics, Sitemap, Analytics, Bunny Fonts, and more.
 	</Card>
 </CardGrid>
+
+---
+
+**Running your own server?** The [Vultr Hosting Guide](/hosting/vultr/) is the setup I use myself.
