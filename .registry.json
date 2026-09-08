@@ -153,7 +153,7 @@
   },
   "ep-email": {
     "tier": "foundation",
-    "version": "1.10.48"
+    "version": "1.10.50"
   },
   "ep-email-advanced-forms": {
     "tier": "professional",
