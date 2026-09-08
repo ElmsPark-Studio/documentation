@@ -119,6 +119,26 @@ Visual controls so the booking form matches your site's look:
 - **Max width** of the form container.
 - **Card shadow** strength.
 
+### Group classes (capacity > 1)
+
+EP Booking is not only one-to-one appointments. Set a service's **Capacity** above 1 and the slot accepts that many concurrent bookings. Set the **Price label** to something like `per person` and the price displays as `£12 per person`. Use it for yoga classes, group workshops and fitness sessions. Buffer times still apply between the slot and the next.
+
+### Buffer times
+
+Each service has a **buffer before** and a **buffer after**, in minutes. These block the slots immediately adjacent to a booking so staff have time for cleanup or prep. They do **not** block whole days. For days off, use staff exceptions.
+
+### Booking statuses
+
+Bookings move through five states:
+
+| Status | Set by | What happens |
+|---|---|---|
+| **Pending** | A new booking when Auto-confirm is off | No confirmation email yet. Waits for admin approval. |
+| **Confirmed** | Auto-confirm on, or an admin clicking Confirm | Confirmation email sent, reminder ladder armed, Zoom meeting created if EP Booking Zoom is installed. |
+| **Completed** | An admin, after the appointment | Closes the booking. Used for reporting. |
+| **Cancelled** | The customer's cancellation link, or an admin | Cancellation email sent. Stripe refund attempted if Auto-refund is on. |
+| **No-show** | An admin, after a no-show | Closes the booking without a refund. Used for reporting. |
+
 ### Stripe Payments
 
 - **API keys** for test and live modes.
@@ -204,6 +224,40 @@ The ICS URL is a secret: anyone holding it can read that calendar's events. Use 
 - **Services, Staff, Categories.** CRUD interfaces for each.
 - **Import / Export.** JSON and CSV for bulk moves between sites.
 
+## Import / Export
+
+Round-trips your booking structure between sites. Use it to move a sandbox configuration to live, to back up before a big change, or to stand a new site up from a config an AI wrote for you.
+
+### What an export actually contains
+
+Five things, and only these five: **categories, services, staff, staff-service assignments, and weekly availability.**
+
+Worth being precise about what is **not** in an export, because it is easy to assume otherwise:
+
+- **Settings are not exported.** Business details, timezone, booking rules, form design, notification copy and integration toggles all stay on the site. An export is not a settings backup.
+- **Staff exceptions are not exported.** Per-staff holidays, days off and custom hours stay behind too.
+- **Bookings and customer records are not exported.** They live on the site they were made on.
+
+Because no settings leave the site, no Stripe key or webhook secret can leak through an export. The file is safe to share or commit.
+
+### File formats
+
+JSON and CSV both round-trip. JSON is easier to edit by hand or with an LLM. CSV is easier to spot-check in a spreadsheet, and uses a `## Section` header per section.
+
+### Duplicate handling on import
+
+Pick the mode from the **Duplicate Handling** dropdown before importing:
+
+- **Add to existing records** (recommended, the default). Existing entries are left alone and only new ones are inserted.
+- **Replace existing records.** Entries matching on name, or email for staff, are overwritten by the imported version.
+- **Delete all existing records and import fresh.** Wipes categories, services, staff and availability before importing. Bookings and customers are not touched.
+
+### Generate with AI
+
+The Import/Export dashboard has a **Generate with AI** panel containing a copy-pastable prompt. Paste it into Claude, ChatGPT or Gemini, answer the interview questions about your business, and you get back a JSON file to drop into the importer. The prompt covers categories, services with capacity and buffers, staff with availability, exceptions and basic settings.
+
+This is also the one route by which settings can arrive on a site through the importer. An export will never contain them, but a hand-written or AI-generated JSON can, and the importer applies them when they are present.
+
 ## Integrations
 
 - **EP Booking Zoom.** Install alongside. Every confirmed booking auto-creates a Zoom meeting; the link lands in the confirmation email and the calendar invite, and the meeting is recreated when a booking is rescheduled.
@@ -216,6 +270,16 @@ The ICS URL is a secret: anyone holding it can read that calendar's events. Use 
 ## Self-service cancellation
 
 Every confirmation email includes a tokenised cancel link. The customer clicks it, confirms, and the booking is cancelled with a cancellation invite removing the event from their calendar — no login required. The cancellation window setting controls how close to the appointment they can still cancel (or reschedule) themselves.
+
+## How reminders are sent
+
+There are two paths, and which one you get depends on whether EP Cron is installed.
+
+**With [EP Cron](/plugins/ep-cron/) active**, EP Booking registers a task called `ep-booking-reminders` on the five-minute heartbeat. This is the scheduler of record: reminders fire on time whether or not anybody is browsing the site.
+
+**Without EP Cron**, the fallback is a check that runs during ordinary page loads, throttled so it runs at most once every 60 seconds. A busy site is fine. A quiet site is not: if nobody visits for three hours, reminders queued in that window go out late by roughly that much.
+
+If reminder timing matters at all, install EP Cron. That is the supported fix, and it is why the ladder can be trusted on a low-traffic site.
 
 ## Security
 
@@ -272,6 +336,14 @@ Check for CSRF or rate-limiting errors in your browser's network tab. Both retur
 ### “The embedded widget doesn't appear on the other site”
 
 The snippet must be pasted as-is from the settings panel (it carries your site's URL), and **Public Booking Pages** must be enabled: the widget loads the public page in an iframe, so turning public pages off turns the widget off too.
+
+### “I deleted a category but the services still exist”
+
+That is by design and not a bug. Deleting a category clears the category from its services rather than deleting them, so they survive as uncategorised. Reassign them from the Services dashboard, or delete them individually.
+
+### “I imported a JSON but my settings didn't change”
+
+An export never contains settings, so a file produced by the exporter has none to apply. Only a hand-written or AI-generated JSON carries a `settings` block. If you were expecting an exported file to restore your configuration, it will restore your categories, services, staff and availability, and nothing else.
 
 ## Feedback and corrections
 

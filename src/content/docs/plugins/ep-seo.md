@@ -96,6 +96,12 @@ EP SEO 1.5 added full admin UI translations for German (de), Spanish (es), Frenc
 
 Switch UI language from the EP Suite language dropdown in the admin nav.
 
+## Privacy and EP GDPR
+
+EP SEO makes **no third-party calls**. Open Graph tags, Twitter Card tags, favicon links and JSON-LD structured data are all rendered server-side from settings you entered. No external service is contacted, no visitor data is collected, and EP SEO sets no cookies of its own. It is GDPR-neutral and needs no consent gating.
+
+If you install [EP Local Business](/plugins/ep-local-business/) or [EP Locations](/plugins/ep-locations/) alongside it, those plugins handle their own GDPR integration for the third-party services they use: OpenStreetMap Nominatim for geocoding, and MapTiler Cloud for map tiles in the store finder.
+
 ## Troubleshooting
 
 ### “Link preview on Facebook shows old image”
