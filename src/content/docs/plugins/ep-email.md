@@ -475,3 +475,25 @@ The field name in the placeholder must match a field `name` in your form definit
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.10.49
+
+**If you use the Central Blocklist, it was not working, and this release fixes it.**
+
+The shared blocklist service moved to a new address. EP Email carried the old one, and because the plugin treated the redirect as a plain failure, affected sites quietly stopped both halves of the exchange: they never downloaded the shared list of known spam sources, and never contributed the ones their own filters caught. There was no error, no warning and nothing in the settings panel, so there was no way to tell from inside your site. Every site still on the default address had been disconnected since the move.
+
+**You do not need to do anything.** On update, EP Email rewrites the saved address for you. If you self-host your own central server, your address is left exactly as it is.
+
+**Failures are now visible.** If the plugin cannot reach the blocklist, the Central Blocklist panel in EP Email Settings says so in red, with the reason and how long ago, in place of the "Connected" line it used to show from a stale local cache. Where the cause is an out-of-date address, the panel names the address to change it to.
+
+<!-- internal -->
+Root cause: `ep_central_request()` never set `CURLOPT_FOLLOWLOCATION` (PHP defaults false) and discarded any non-2xx as null, so the 301 from updates.elmspark.com/blocklist was a silent total failure. Found in the central DB: all ten external token holders at `last_seen NULL`, `report_count 0`.
+
+Default and code fallback now both `https://blocklist.elmspark.com`, stated once as `CENTRAL_BLOCKLIST_URL`. Migration runs in `construct()` and again in `ep_central_url()`; exact match, so self-hosted URLs are untouched.
+
+Redirects are followed with `CURLOPT_POSTREDIR` (curl downgrades POST to GET across a 301 otherwise: report.php answers 405 without it, 200 with it). Following redirects is NOT the heal path and is not relied on to be: curl strips a hand-set Authorization header across any origin change, host OR scheme, so both hops answer 401 (measured curl 8.7.1). `CURLOPT_UNRESTRICTED_AUTH` would walk the bearer token to whatever origin a redirect names, so it is deliberately not set.
+
+Errors go to error_log and an `ep_email_central_last_error` option row, deliberately not the settings row (which `_get-settings` returns verbatim). Verified end to end on the 0.11.2 rig: stale legacy URL migrated on one page load, gibberish submission landed a row in the production blocklist DB, list cache populated 419 IPs, both panel states confirmed in the real admin page.
+<!-- /internal -->
