@@ -487,13 +487,3 @@ The shared blocklist service moved to a new address. EP Email carried the old on
 **You do not need to do anything.** On update, EP Email rewrites the saved address for you. If you self-host your own central server, your address is left exactly as it is.
 
 **Failures are now visible.** If the plugin cannot reach the blocklist, the Central Blocklist panel in EP Email Settings says so in red, with the reason and how long ago, in place of the "Connected" line it used to show from a stale local cache. Where the cause is an out-of-date address, the panel names the address to change it to.
-
-<!-- internal -->
-Root cause: `ep_central_request()` never set `CURLOPT_FOLLOWLOCATION` (PHP defaults false) and discarded any non-2xx as null, so the 301 from updates.elmspark.com/blocklist was a silent total failure. Found in the central DB: all ten external token holders at `last_seen NULL`, `report_count 0`.
-
-Default and code fallback now both `https://blocklist.elmspark.com`, stated once as `CENTRAL_BLOCKLIST_URL`. Migration runs in `construct()` and again in `ep_central_url()`; exact match, so self-hosted URLs are untouched.
-
-Redirects are followed with `CURLOPT_POSTREDIR` (curl downgrades POST to GET across a 301 otherwise: report.php answers 405 without it, 200 with it). Following redirects is NOT the heal path and is not relied on to be: curl strips a hand-set Authorization header across any origin change, host OR scheme, so both hops answer 401 (measured curl 8.7.1). `CURLOPT_UNRESTRICTED_AUTH` would walk the bearer token to whatever origin a redirect names, so it is deliberately not set.
-
-Errors go to error_log and an `ep_email_central_last_error` option row, deliberately not the settings row (which `_get-settings` returns verbatim). Verified end to end on the 0.11.2 rig: stale legacy URL migrated on one page load, gibberish submission landed a row in the production blocklist DB, list cache populated 419 IPs, both panel states confirmed in the real admin page.
-<!-- /internal -->
