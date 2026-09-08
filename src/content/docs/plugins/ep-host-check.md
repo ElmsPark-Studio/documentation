@@ -118,6 +118,14 @@ That is expected on many shared hosts: they block outbound SMTP. Use the host's 
 
 ## Changelog
 
+### 1.3.5
+
+*Released 1 September 2026.*
+
+- `host-report` no longer appears as an individual top-level tool in connected MCP clients. It carried a flag that promotes an action alongside PageMotor's own dispatch entry points, and core reserves that surface for itself.
+- **Nothing became unreachable.** The action id, method, access tier, arguments and handler are unchanged. `host-report` is still discoverable through `list-actions`, described by `describe-action`, and invoked through `call-action`. Only a caller that invoked the promoted name directly as an MCP `tools/call` is affected; it should dispatch through `call-action` instead.
+
+
 ### 1.3.4
 
 **The plugin could never deliver its own updates. Fixed.** The Updates screen has never offered an EP Host Check update to anyone, 1.3.3 included. The update channel was serving it correctly the whole time; the plugin was the problem.

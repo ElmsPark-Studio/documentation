@@ -80,6 +80,24 @@ Disabling a code stops it being accepted at checkout without deleting anything, 
 
 ## Changelog
 
+### 0.1.4
+
+*Released 1 September 2026.*
+
+- **Fixed: activating this plugin alongside another that also bundles the shared Stripe helper took the whole site down.** Five plugins ship the same `EP_Stripe` class (EP Booking, EP Ecommerce Stripe, EP Ecommerce Subscriptions, EP Holiday Bookings and this one). With any two of them active, the second to load failed with "Cannot declare class EP_Stripe, because the name is already in use" and PageMotor quarantined it, so installing a second Stripe-capable plugin silently cost you the first.
+
+  The file always carried a guard, and that guard could never have worked: an unconditional top-level class is bound when the file is compiled, before any statement in it runs, so the redeclaration failed lines before the guard was reached. The class is now declared inside a `class_exists()` conditional, which is evaluated at runtime and so genuinely guards. Proven by activating two of these plugins together: previously a 500 and a quarantine record, now a clean load with both active and signature verification still working.
+
+### 0.1.3
+
+*Released 31 August 2026.*
+
+- **The two stored secrets are no longer kept where an API or MCP connection can read them.** PageMotor gives every plugin an inherited `_get-settings` action that returns its stored options verbatim, with no redaction of password fields. Any producer token holding `plugins.configure` could therefore read the test and live Stripe secret keys in cleartext. They are now stored as AES-256-GCM ciphertext, with the plaintext column left empty.
+- Existing installs migrate themselves once, on the next load. Nothing to re-enter. A host without `openssl` keeps the old behaviour and logs why, because silently dropping a working key would be worse than the exposure it closes.
+- `_get-settings` now reports a saved secret as `__saved__` and accepts that marker back on write as "unchanged", so a read-modify-write round trip over MCP cannot overwrite a secret with the marker. Blank-submit-means-unchanged still holds in the admin; an explicitly empty value over the API still clears.
+- Reported by MarkieSparky on the PageMotor forum, 31 August 2026. Not a 0.11 regression: the core behaviour is unchanged back to 0.9.1b.
+
+
 ### 0.1.2
 
 Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11, which affected the discount codes panel in admin. The CSRF header was being attached twice — once by the plugin, as PageMotor 0.10 required for raw requests, and once by 0.11's new automatic attachment — and because attaching appends rather than overwrites, the token went out doubled and never matched. The plugin now attaches it only when the core has not already done so.

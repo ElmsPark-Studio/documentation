@@ -280,6 +280,15 @@
 						"EP Stripe — Discount Codes"
 					],
 					"blurb": "Stripe promotion codes from the PageMotor admin: create, cap, time-limit, switch off."
+				},
+				{
+					"slugs": [
+						"ep-finance-invoicing"
+					],
+					"titles": [
+						"EP Finance Invoicing"
+					],
+					"blurb": "Quotes and invoices with gap-free numbering, a branded PDF, a tokenised hosted page and a pay link that reuses your existing payment provider."
 				}
 			]
 		},
@@ -366,6 +375,24 @@
 						"EP Boarding"
 					],
 					"blurb": "Date-range accommodation booking — check-in and check-out on a live availability calendar, per-night rates and half-day capacity. Hotels, B&Bs, holiday lets and pet boarding."
+				},
+				{
+					"slugs": [
+						"ep-boarding-commerce"
+					],
+					"titles": [
+						"EP Boarding — Ecommerce"
+					],
+					"blurb": "Confirms a boarding booking when its payment completes, and emails the customer. Required if you take card payment for stays."
+				},
+				{
+					"slugs": [
+						"ep-boarding-services"
+					],
+					"titles": [
+						"EP Boarding — Services"
+					],
+					"blurb": "Puts EP Booking appointment services, such as a Meet and Greet, in the same booking widget as your overnight stays."
 				}
 			]
 		},
@@ -924,10 +951,7 @@
 		"ep-wp-exporter": "Operations, AI, admin"
 	},
 	"pending": {
-		"ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet",
-		"ep-boarding-commerce": "shipped 1.0.0 alongside EP Boarding, no doc page written yet",
-		"ep-boarding-services": "shipped 1.1.0 alongside EP Boarding, no doc page written yet",
-		"ep-finance-invoicing": "shipped 0.1.9, no doc page written yet"
+		"ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet"
 	},
 	"changelog_backlog": {
 		"ep-affiliate": "none",

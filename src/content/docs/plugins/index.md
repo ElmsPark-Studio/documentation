@@ -48,12 +48,15 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Ecommerce — Printful](/plugins/ep-ecommerce-printful/)**. Printful connector for EP Ecommerce — POD.
 - **[EP Ecommerce — Printify](/plugins/ep-ecommerce-printify/)**. Printify connector for EP Ecommerce — POD.
 - **[EP Ecommerce — Prodigi](/plugins/ep-ecommerce-prodigi/)**. Prodigi connector for EP Ecommerce — POD. Products listed by SKU, as Prodigi has no catalogue API.
+- **[EP Finance Invoicing](/plugins/ep-finance-invoicing/)**. Quotes and invoices with gap-free numbering, a branded PDF, a tokenised hosted page and a pay link that reuses your existing payment provider.
 - **[EP Reviews](/plugins/ep-reviews/)**. Product reviews with star ratings, verified-purchase badges, Schema.org markup.
 - **[EP Stripe — Discount Codes](/plugins/ep-stripe-coupons/)**. Stripe promotion codes from the PageMotor admin: create, cap, time-limit, switch off.
 
 ### Bookings, membership, courses
 
 - **[EP Boarding](/plugins/ep-boarding/)**. Date-range accommodation booking — check-in and check-out on a live availability calendar, per-night rates and half-day capacity. Hotels, B&Bs, holiday lets and pet boarding.
+- **[EP Boarding — Ecommerce](/plugins/ep-boarding-commerce/)**. Confirms a boarding booking when its payment completes, and emails the customer. Required if you take card payment for stays.
+- **[EP Boarding — Services](/plugins/ep-boarding-services/)**. Puts EP Booking appointment services, such as a Meet and Greet, in the same booking widget as your overnight stays.
 - **[EP Booking](/plugins/ep-booking/)**. Appointment scheduling with services, staff, availability, Stripe payments.
 - **[EP Booking Zoom](/plugins/ep-booking-zoom/)**. Auto-created Zoom meetings for confirmed bookings.
 - **[EP Courses](/plugins/ep-courses/)**. Course and lesson management with multilingual content and progress tracking.

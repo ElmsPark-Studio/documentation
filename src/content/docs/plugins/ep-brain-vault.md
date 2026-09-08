@@ -105,6 +105,14 @@ A restore is itself recorded, before it overwrites anything. So restoring to Tue
 
 ## Changelog
 
+### 0.2.2
+
+*Released 1 September 2026.*
+
+- The plugin's API actions no longer appear as individual top-level tools in connected MCP clients. Six actions carried a flag that promotes an action alongside PageMotor's own dispatch entry points, and core reserves that surface for itself.
+- **Nothing became unreachable.** Action ids, methods, access tiers, arguments and behaviour are unchanged. Every action is still discoverable through `list-actions`, described by `describe-action`, and invoked through `call-action`. Only a caller that invoked one of the promoted names directly as an MCP `tools/call` is affected; it should dispatch through `call-action` instead.
+
+
 ### 0.2.1
 
 **Fixes a crash on PageMotor 0.11.2.** If your site is on core 0.11.2, every `vault-write` and every snapshot — including the automatic one on the EP Cron heartbeat — failed with an internal error. 0.11.2 moved one of the calls this plugin uses to write its deny file, and 0.2.0 was still calling it at the old address.
