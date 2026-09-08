@@ -478,6 +478,21 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.10.50
+
+**A tightening of what your site contributes to the Central Blocklist.** It now only
+reports a visitor's address when that address is publicly routable. A loopback or internal
+network address, the sort a site sees when it sits behind a proxy or load balancer that
+does not pass the real visitor address along, identifies nobody outside your own site, so
+sending it would have added noise to a list every other install relies on.
+
+Nothing to configure, and nothing changes for a normally configured site. Your own local
+blocklist is untouched: you can still ban any address you like on your own site.
+
+If your site is behind a proxy and the real visitor address is not reaching it, EP Email
+now says so in your PHP error log instead of quietly contributing nothing. That is worth
+checking if your Central Blocklist dashboard shows you have never reported anything.
+
 ### 1.10.49
 
 **If you use the Central Blocklist, it was not working, and this release fixes it.**
