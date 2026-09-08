@@ -116,6 +116,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP GDPR](/plugins/ep-gdpr/)**. Cookie consent, data subject requests, consent logging across EP Suite.
 - **[EP Passkeys](/plugins/ep-passkeys/)**. Passwordless login via WebAuthn. Sign-in is served from a dedicated page, since the PageMotor login screen takes no plugin markup.
 - **[EP Password Reset](/plugins/ep-password-reset/)**. Email-based password reset for admin accounts. *For PageMotor 0.10 and earlier — 0.11 brings password reset into core, so this plugin retires at that point.*
+- **[EP Private Pages](/plugins/ep-private-pages/)**. Passwordless private documents behind an email and one-time code gate. Allowlist controlled, noindexed, never public.
 
 ### Operations, AI, admin
 

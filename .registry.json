@@ -299,6 +299,10 @@
     "tier": "foundation",
     "version": "1.0.12"
   },
+  "ep-private-pages": {
+    "tier": "professional",
+    "version": "1.0.6"
+  },
   "ep-provisioning": {
     "tier": "foundation",
     "version": "1.5.11"
