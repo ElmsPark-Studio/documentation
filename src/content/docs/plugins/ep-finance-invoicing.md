@@ -99,6 +99,18 @@ Tax is handled through a swappable interface, so a jurisdiction-specific pack ca
 - [EP Ecommerce](/plugins/ep-ecommerce/) and [EP Ecommerce Stripe](/plugins/ep-ecommerce-stripe/), which provide the payment rail for pay links
 - [EP Email](/plugins/ep-email/), which delivers the reminders
 
+## Document stamps
+
+Every invoice and quote PDF carries a stamp in its footer: a number and the first characters of a fingerprint taken over the invoice's own figures.
+
+If a client queries an invoice, or you are looking at one from two years ago, the stamp lets you check whether its figures are exactly what was recorded when it was issued.
+
+**The fingerprint covers the figures, not the file.** Two renders of an unchanged invoice produce the same fingerprint, so reprinting one does not make it look altered. Changing a single line total produces a different one, and so does reordering two lines even when every total stays identical.
+
+**It is not a signature.** It says nothing about who produced the invoice, only whether its figures have changed since. Anyone with access to the database could write a matching record. It protects against accident, drift and quiet edits, not against a determined party with that access.
+
+Requires [EP Finance](/plugins/ep-finance/) 0.6.0 or later for the stamp to be recorded. With anything older the invoice is produced exactly as before, simply without a stamp line.
+
 ## Changelog
 
 ### 0.2.0
