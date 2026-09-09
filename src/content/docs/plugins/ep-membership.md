@@ -60,7 +60,7 @@ Optional:
 |---|---|
 | `[ep-register-form]` | Registration form: full name, email, preferred language, password with confirmation. Includes a honeypot spam trap, and GDPR consent / newsletter opt-in checkboxes when those plugins are active. |
 | `[ep-login-form]` | Login form: email and password, with Remember Me and a forgotten-password flow. |
-| `[ep-logout-link]` | Logout link. |
+| `[ep-logout-link]` | Log out button. Optional `text` for the label and `redirect` for the page to land on afterwards. Shows nothing to a visitor who is not signed in. |
 | `[ep-member-profile]` | Profile editor for the signed-in member (display name, preferred language, password change). Shows the login form to visitors. |
 | `[ep-member-dashboard]` | Signed-in landing page. With EP Courses active it lists the member's active enrolments with progress bars. |
 | `[ep-login-gate]...content...[/ep-login-gate]` | Gate the wrapped content to logged-in members. Visitors see a message and a login link instead. Optional `message="..."` argument overrides the default prompt. |
@@ -213,6 +213,18 @@ Put the document on the **Members Only** content type (0.6.0). That is the gate 
 The gate names a level that isn't defined in settings — undefined levels fail open by default. Check the slug in the shortcode against the Member Levels box, and check the PHP error log for the breadcrumb. If you would rather such a gate hide the content, set **Member Levels → When a Gate Names a Level That Does Not Exist** to hide (0.6.3).
 
 ## Changelog
+
+### 0.6.4
+
+9 September 2026. **The Log out control is now a button, not a link, and you should update.**
+
+Before this release every logout control the plugin rendered was an ordinary link, and simply *loading* its address signed the member out. That is a problem because browsers quietly load links on their own: modern browsers pre-fetch links they expect you to click, and link scanners in email and security software follow them too. A member could therefore be signed out without clicking anything. A link on another site pointing at yours could do it as well.
+
+The Log out control on your profile page, on your login page and anywhere you have used the `[ep-logout-link]` shortcode is now a form with a button, which nothing can trigger by accident. It is styled to look exactly as it did before, so your pages should not change visibly.
+
+**Nothing you have already written breaks.** If you hand-wrote a Log out link in your own page content, it still works. It now opens a short "Are you sure you want to log out?" page with a single button, rather than signing the member out on the spot.
+
+Two smaller fixes in the same release. The shortcode's `redirect` option, for sending a member to a particular page after they sign out, now works, having been silently ignored until now; it and the After Logout Redirect setting both accept pages on your own site only. And `[ep-logout-link]` now shows nothing at all to a visitor who is not signed in, instead of a link that did nothing.
 
 ### 0.6.3
 

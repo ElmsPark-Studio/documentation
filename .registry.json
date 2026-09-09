@@ -209,15 +209,39 @@
   },
   "ep-finance": {
     "tier": "professional",
-    "version": "0.3.5"
+    "version": "0.6.0"
+  },
+  "ep-finance-autopilot": {
+    "tier": "professional",
+    "version": "0.1.7"
+  },
+  "ep-finance-importer": {
+    "tier": "professional",
+    "version": "0.1.5"
   },
   "ep-finance-invoicing": {
     "tier": "professional",
-    "version": "0.1.11"
+    "version": "0.2.0"
+  },
+  "ep-finance-receipts": {
+    "tier": "professional",
+    "version": "0.1.8"
   },
   "ep-finance-sources": {
     "tier": "professional",
     "version": "0.2.0"
+  },
+  "ep-finance-tax-ie": {
+    "tier": "professional",
+    "version": "0.1.4"
+  },
+  "ep-finance-tax-uk": {
+    "tier": "professional",
+    "version": "0.1.6"
+  },
+  "ep-finance-tax-us": {
+    "tier": "professional",
+    "version": "0.1.4"
   },
   "ep-flows": {
     "tier": "professional",
@@ -277,7 +301,7 @@
   },
   "ep-membership": {
     "tier": "add-on",
-    "version": "0.6.3"
+    "version": "0.6.4"
   },
   "ep-membership-pages": {
     "tier": "add-on",
@@ -409,7 +433,7 @@
   },
   "tibaai-dashboard": {
     "tier": "private",
-    "version": "0.10.8"
+    "version": "0.10.9"
   },
   "tibaai-discovery": {
     "tier": "private",
