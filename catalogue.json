@@ -283,12 +283,30 @@
         },
         {
           "slugs": [
+            "ep-finance"
+          ],
+          "titles": [
+            "EP Finance"
+          ],
+          "blurb": "A double-entry ledger for a site that keeps its own books. Integer cents, one write gateway that refuses anything unbalanced, and a nightly audit that proves it adds up."
+        },
+        {
+          "slugs": [
             "ep-finance-invoicing"
           ],
           "titles": [
             "EP Finance Invoicing"
           ],
           "blurb": "Quotes and invoices with gap-free numbering, a branded PDF, a tokenised hosted page and a pay link that reuses your existing payment provider."
+        },
+        {
+          "slugs": [
+            "ep-finance-sources"
+          ],
+          "titles": [
+            "EP Finance Sources"
+          ],
+          "blurb": "Posts orders, subscription renewals, bookings, ticket sales and approved instructor pay into the ledger automatically, with an id that makes a re-run harmless."
         }
       ]
     },
@@ -960,8 +978,7 @@
     "ep-wp-exporter": "Operations, AI, admin"
   },
   "pending": {
-    "ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet",
-    "ep-finance-sources": "shipped 0.2.0 and fully working, but EP Finance itself is not on the update channel yet, so a customer cannot obtain the ledger it posts into; page written and states the dependency plainly, not advertised in a category until EP Finance ships"
+    "ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet"
   },
   "changelog_backlog": {
     "ep-affiliate": "none",
@@ -969,7 +986,6 @@
     "ep-assistant": "none",
     "ep-attribution": "none",
     "ep-audit-log": "none",
-    "ep-blog": "none",
     "ep-boarding": "none",
     "ep-booking": "none",
     "ep-booking-zoom": "none",

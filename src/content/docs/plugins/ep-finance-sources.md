@@ -73,7 +73,9 @@ Orders post the moment they are fulfilled. The other sources are swept, nightly 
 
 ## Changelog
 
-### 0.2.0 — 9 September 2026
+### 0.2.0
+
+*Released 9 September 2026.*
 
 - **Instructor pay now reaches the book on its own.** EP Instructors already worked out what each instructor is owed for every class taught, but that figure only ever left the plugin as a CSV somebody had to retype into the accounts. Approved and paid pay-lines are now posted for you, as a cost against the class they were earned on.
 - **Each posting is dated to the class, not to the day it was processed.** A class taught in August stays an August cost even if the pay-line is approved in September, so a profit and loss report, or a VAT period built on it, covers what actually happened in that period.

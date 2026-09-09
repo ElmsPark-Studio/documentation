@@ -48,7 +48,9 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Ecommerce — Printful](/plugins/ep-ecommerce-printful/)**. Printful connector for EP Ecommerce — POD.
 - **[EP Ecommerce — Printify](/plugins/ep-ecommerce-printify/)**. Printify connector for EP Ecommerce — POD.
 - **[EP Ecommerce — Prodigi](/plugins/ep-ecommerce-prodigi/)**. Prodigi connector for EP Ecommerce — POD. Products listed by SKU, as Prodigi has no catalogue API.
+- **[EP Finance](/plugins/ep-finance/)**. A double-entry ledger for a site that keeps its own books. Integer cents, one write gateway that refuses anything unbalanced, and a nightly audit that proves it adds up.
 - **[EP Finance Invoicing](/plugins/ep-finance-invoicing/)**. Quotes and invoices with gap-free numbering, a branded PDF, a tokenised hosted page and a pay link that reuses your existing payment provider.
+- **[EP Finance Sources](/plugins/ep-finance-sources/)**. Posts orders, subscription renewals, bookings, ticket sales and approved instructor pay into the ledger automatically, with an id that makes a re-run harmless.
 - **[EP Reviews](/plugins/ep-reviews/)**. Product reviews with star ratings, verified-purchase badges, Schema.org markup.
 - **[EP Stripe — Discount Codes](/plugins/ep-stripe-coupons/)**. Stripe promotion codes from the PageMotor admin: create, cap, time-limit, switch off.
 
