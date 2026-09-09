@@ -717,14 +717,14 @@ Minimal header for utility pages (forms, gates, receipts).
 
 <p class="es-kicker">CLAUDE CODE</p>
 <h1>The ElmsPark toolkit</h1>
-<p class="es-lede">Every slash command and skill Kenn has built, read straight off
-disk. Search it instead of asking Claude to go looking.</p>
+<p class="es-lede">Every slash command, skill and helper script Kenn has built, read
+straight off disk. Search it instead of asking Claude to go looking.</p>
 
 <div class="tk-bar">
   <div class="tk-bar-row">
     <input class="tk-search" id="tk-q" type="search" hidden
-           aria-label="Search commands and skills"
-           placeholder="Search commands and skills, e.g. ship, audit, video">
+           aria-label="Search commands, skills and helper scripts"
+           placeholder="Search commands, skills and scripts, e.g. ship, audit, deploy">
     <ul class="tk-pills" id="tk-pills" hidden><li><button type="button" class="tk-pill" data-filter="" aria-pressed="true">All</button></li><li><button type="button" class="tk-pill" data-filter="pm" aria-pressed="false">PageMotor &amp; sites</button></li><li><button type="button" class="tk-pill" data-filter="ep" aria-pressed="false">EP plugins &amp; shipping</button></li><li><button type="button" class="tk-pill" data-filter="review" aria-pressed="false">Review &amp; QA</button></li><li><button type="button" class="tk-pill" data-filter="media" aria-pressed="false">Media &amp; AI generation</button></li><li><button type="button" class="tk-pill" data-filter="infra" aria-pressed="false">Infra &amp; ops</button></li><li><button type="button" class="tk-pill" data-filter="session" aria-pressed="false">Session &amp; workflow</button></li><li><button type="button" class="tk-pill" data-filter="design" aria-pressed="false">Web design technique</button></li></ul>
     <span class="tk-count" id="tk-count" hidden></span>
   </div>
@@ -1214,6 +1214,31 @@ disk. Search it instead of asking Claude to go looking.</p>
 </article></div>
 </section>
 
+<section class="tk-sec" id="scripts">
+  <h2>Helper scripts <span class="tk-count">2</span></h2>
+  <p class="es-hint">Neither a command nor a skill: standalone scripts you or a
+  skill run directly, which nothing else in this catalogue would list. Registered in
+  <code>cc-tools/toolkit-guide/helper-scripts.json</code> and probed live per Mac
+  like everything else. They live outside the iCloud workspace, so they are per-Mac
+  and are not synced.</p>
+  <div class="tk-grid"><article class="tk-card" data-cat="infra" data-search="guides-deploy-now.sh guides-deploy-now.sh publish a guide to guides.elmspark.com and confirm it actually went live: touches the deploy-now marker, then waits for the watcher to clear it and prints deployed or a loud not deployed. use it instead of a bare touch deploy-now, which returns 0 instantly whether or not anything downstream happens. guides-deploy.sh exits at its marker guard before it logs anything, so a spawn that finds no marker leaves no trace, and throttleinterval 60 can defer the real spawn by up to a minute; the two are indistinguishable from outside. marker removal is the deploy script&#x27;s own success signal, set only after rsync, chown, sha256 local-vs-origin and the anonymous gate probe all pass, so waiting on it is an end-to-end verdict rather than step-success. exits 1 on timeout. diagnosed 2026-09-09 after the watcher was wrongly reported dead. infra &amp; ops" style="--es-cat:var(--es-cat-hosting)">
+<h3 class="tk-name">guides-deploy-now.sh</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Infra &amp; ops</span><span class="tk-tag">args: --timeout N | --fallback | --no-wait</span></div>
+<p class="tk-sum">Publish a guide to guides.elmspark.com and confirm it actually went live: touches the DEPLOY-NOW marker, then waits for the watcher to clear it and prints DEPLOYED or a loud NOT DEPLOYED.</p>
+<details><summary>When it fires, and the caveats</summary><p>Use it instead of a bare touch DEPLOY-NOW, which returns 0 instantly whether or not anything downstream happens. guides-deploy.sh exits at its marker guard before it logs anything, so a spawn that finds no marker leaves no trace, and ThrottleInterval 60 can defer the real spawn by up to a minute; the two are indistinguishable from outside. Marker removal is the deploy script&#x27;s own success signal, set only after rsync, chown, sha256 local-vs-origin and the anonymous gate probe all pass, so waiting on it is an end-to-end verdict rather than step-success. Exits 1 on timeout. Diagnosed 2026-09-09 after the watcher was wrongly reported dead.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-no">Mini</span><span class="tk-mac-no">M1 MBP</span></div>
+<code class="tk-src">~/Developer/elmspark/tools/guides-deploy-now.sh</code>
+</article>
+<article class="tk-card" data-cat="infra" data-search="guides-deploy.sh guides-deploy.sh the guides.elmspark.com deploy itself, fired by the com.elmspark.guides-deploy watchpaths launchagent on the m5. a guarded no-op unless the deploy-now marker exists. do not run this by hand as the normal route; use guides-deploy-now.sh, which drives it and verifies the outcome. it backs up the remote index, rsyncs with checksums and no --delete, chowns to www-data, verifies sha256 local against the origin read over ssh, and probes the anonymous gate for zero content leakage before clearing the marker. its run log is best-effort and has been seen to drop a real deploy; deploy-log.md in the guides folder is the authoritative record. infra &amp; ops" style="--es-cat:var(--es-cat-hosting)">
+<h3 class="tk-name">guides-deploy.sh</h3>
+<div class="tk-meta"><span class="tk-tag tk-tag-cat">Infra &amp; ops</span><span class="tk-tag">args: none, marker-driven</span></div>
+<p class="tk-sum">The guides.elmspark.com deploy itself, fired by the com.elmspark.guides-deploy WatchPaths LaunchAgent on the M5. A guarded no-op unless the DEPLOY-NOW marker exists.</p>
+<details><summary>When it fires, and the caveats</summary><p>Do not run this by hand as the normal route; use guides-deploy-now.sh, which drives it and verifies the outcome. It backs up the remote index, rsyncs with checksums and no --delete, chowns to www-data, verifies sha256 local against the origin read over ssh, and probes the anonymous gate for zero content leakage before clearing the marker. Its run log is best-effort and has been seen to drop a real deploy; deploy-log.md in the guides folder is the authoritative record.</p></details>
+<div class="tk-macs"><span class="tk-mac-yes">M5</span><span class="tk-mac-no">Mini</span><span class="tk-mac-yes">M1 MBP</span></div>
+<code class="tk-src">~/Developer/elmspark/tools/guides-deploy.sh</code>
+</article></div>
+</section>
+
 <section class="tk-sec" id="macs">
   <h2>Where things are installed</h2>
   <p class="es-hint">Probed live over ssh when this page was generated. A struck-out
@@ -1221,7 +1246,7 @@ disk. Search it instead of asking Claude to go looking.</p>
   symlink.</p>
   <div class="tk-scroll"><table class="tk-table">
     <thead><tr><th>Mac</th><th>Host</th><th>State at generation</th></tr></thead>
-    <tbody><tr><td><strong>M5 MacBook Pro</strong></td><td>local</td><td>41 skills, 18 commands</td></tr><tr><td><strong>M1 Mac Mini</strong></td><td>mini-ts</td><td>28 skills, 16 commands</td></tr><tr><td><strong>M1 MacBook Pro</strong></td><td>mbp-ts</td><td>28 skills, 16 commands</td></tr></tbody>
+    <tbody><tr><td><strong>M5 MacBook Pro</strong></td><td>local</td><td>41 skills, 18 commands, 2 helper scripts</td></tr><tr><td><strong>M1 Mac Mini</strong></td><td>mini-ts</td><td>28 skills, 16 commands, 0 helper scripts</td></tr><tr><td><strong>M1 MacBook Pro</strong></td><td>mbp-ts</td><td>28 skills, 16 commands, 1 helper scripts</td></tr></tbody>
   </table></div>
   <p class="es-hint">Install one:</p>
   <pre><code>ln -sf "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Claude Workspace/cc-skills/&lt;name&gt;" "$HOME/.claude/skills/&lt;name&gt;"</code></pre>
@@ -1251,8 +1276,9 @@ disk. Search it instead of asking Claude to go looking.</p>
   page at all, <code>/h</code> prints one from disk on Haiku.</p>
 </section>
 
-<p class="es-hint">Generated 8 September 2026 at 09:46 on KNJ-M5-MBP from
-17 command files and 43 skill folders.</p>
+<p class="es-hint">Generated 9 September 2026 at 03:24 on KNJ-M5-MBP from
+17 command files, 43 skill folders and 2 registered
+helper scripts.</p>
 
 </main>
 
