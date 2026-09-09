@@ -70,6 +70,12 @@ Each job carries a monthly budget, and the settings page shows the month's spend
 
 ## Changelog
 
+### 0.1.4
+
+- **Prepares the plugin for PageMotor 0.11.3, which requires every plugin to group its API and MCP actions into named families.** On that release an action declaring no family is refused silently, so without this update the plugin's actions would stop being offered with nothing on screen to say why.
+- Families exist so that an AI working on your site sees the related actions together instead of stopping at the first one it tries.
+- Safe to install on your current PageMotor. No behaviour changed.
+
 ### 0.1.3
 
 Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11, which affected this plugin's admin screens through the shared suite header's language selector and brand-colour picker. Anonymous visitors were never affected.

@@ -208,6 +208,12 @@ Yes. Use `type="link"` for a download and `type="audio"` for a player. Anything 
 
 ## Changelog
 
+### 0.1.6
+
+- **Prepares the plugin for PageMotor 0.11.3, which requires every plugin to group its API and MCP actions into named families.** On that release an action declaring no family is refused silently, so without this update the plugin's actions would stop being offered with nothing on screen to say why.
+- Families exist so that an AI working on your site sees the related actions together instead of stopping at the first one it tries.
+- Safe to install on your current PageMotor. No behaviour changed.
+
 ### 0.1.5
 
 7 September 2026. Link lifetime can be set to 2 days or 7 days.

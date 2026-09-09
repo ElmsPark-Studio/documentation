@@ -105,13 +105,18 @@ A restore is itself recorded, before it overwrites anything. So restoring to Tue
 
 ## Changelog
 
+### 0.2.3
+
+- **Prepares the plugin for PageMotor 0.11.3, which requires every plugin to group its API and MCP actions into named families.** On that release an action declaring no family is refused silently, so without this update the plugin's actions would stop being offered with nothing on screen to say why.
+- Families exist so that an AI working on your site sees the related actions together instead of stopping at the first one it tries.
+- Safe to install on your current PageMotor. No behaviour changed.
+
 ### 0.2.2
 
 *Released 1 September 2026.*
 
 - The plugin's API actions no longer appear as individual top-level tools in connected MCP clients. Six actions carried a flag that promotes an action alongside PageMotor's own dispatch entry points, and core reserves that surface for itself.
 - **Nothing became unreachable.** Action ids, methods, access tiers, arguments and behaviour are unchanged. Every action is still discoverable through `list-actions`, described by `describe-action`, and invoked through `call-action`. Only a caller that invoked one of the promoted names directly as an MCP `tools/call` is affected; it should dispatch through `call-action` instead.
-
 
 ### 0.2.1
 

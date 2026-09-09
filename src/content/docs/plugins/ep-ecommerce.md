@@ -196,6 +196,12 @@ Build a small EP Suite plugin that extends `EP_Ecommerce_Extension` and implemen
 
 ## Changelog
 
+### 0.1.41
+
+- **Prepares the plugin for PageMotor 0.11.3, which requires every plugin to group its API and MCP actions into named families.** On that release an action declaring no family is refused silently, so without this update the plugin's actions would stop being offered with nothing on screen to say why.
+- Families exist so that an AI working on your site sees the related actions together instead of stopping at the first one it tries.
+- Safe to install on your current PageMotor. No behaviour changed.
+
 ### 0.1.40
 
 7 September 2026. Every active grant becomes a flat `EP_Ecommerce.grant.<level>` permission key on the buyer's account. Saving a product warns when its membership level is not one EP Membership defines. Extensions hear about revocations through `on_membership_revoked()`, and expired memberships are now marked expired daily rather than only lapsing.

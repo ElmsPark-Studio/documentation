@@ -49,6 +49,12 @@ For anything bigger, open a ticket at [help.elmspark.com](https://help.elmspark.
 
 ## Changelog
 
+### 1.0.7
+
+- **Prepares the plugin for PageMotor 0.11.3, which requires every plugin to group its API and MCP actions into named families.** On that release an action declaring no family is refused silently, so without this update the plugin's actions would stop being offered with nothing on screen to say why.
+- Families exist so that an AI working on your site sees the related actions together instead of stopping at the first one it tries.
+- Safe to install on your current PageMotor. No behaviour changed.
+
 ### 1.0.6
 
 **This plugin can now be updated.** It had no update header, so every update check your site ran skipped it silently: no error, no warning, just permanently absent from the Updates screen. It has one now, and a row on the ElmsPark update channel, so future releases reach you the same way every other EP plugin does.
