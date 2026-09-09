@@ -5,7 +5,7 @@ description: "A double-entry ledger for a PageMotor site that keeps its own book
 
 EP Finance is the book. It holds your accounts, records every transaction as a balanced double entry, and reports on the result. The rest of the finance family sits on top of it.
 
-This page documents EP Finance **0.5.1**.
+This page documents EP Finance **0.6.0**.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
@@ -107,6 +107,14 @@ It records changes made **through EP Finance**. Somebody with direct database ac
 
 Nothing is deleted automatically. There is no retention period, because you cannot tell a clean history from a pruned one. Trimming old entries is possible and is always your decision.
 
+## Document stamps
+
+EP Finance keeps a fingerprint of every accountant pack and invoice the suite produces, and stamps the document with a pointer back to it. That lets you check later whether a document's contents are exactly what was recorded at the time.
+
+**It is not a signature.** It says nothing about who produced a document, only whether the contents have changed since. Anyone with database access could write a matching record. It protects against accident, drift and quiet edits, not against a determined party, and the documents themselves say so rather than implying more.
+
+Stamps are never overwritten. Regenerating a document adds a new one, so the record shows when the figures moved.
+
 ## The rest of the family
 
 EP Finance holds the book. These add to it, and each needs it:
@@ -119,6 +127,15 @@ EP Finance holds the book. These add to it, and each needs it:
 - **Tax packs** for the UK, Ireland and the United States prepare the figures for your return
 
 ## Changelog
+
+### 0.6.0
+
+*Released 9 September 2026.*
+
+- **Documents can now be checked against what was recorded when they were produced.** EP Finance keeps a fingerprint of every accountant pack and invoice the suite generates, and the document carries a pointer back to it.
+- **It is not a signature**, and says so on the document. It tells you whether contents have changed, not who produced them.
+- **Regenerating a document records a new stamp rather than replacing the old one**, so the history shows when figures moved between generations.
+- This is the shared foundation the tax packs and EP Finance Invoicing use.
 
 ### 0.5.1
 

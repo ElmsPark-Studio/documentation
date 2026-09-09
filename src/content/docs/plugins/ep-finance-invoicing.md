@@ -5,7 +5,7 @@ description: "Quotes and invoices for PageMotor. Gap-free sequential numbering p
 
 EP Finance Invoicing issues quotes and invoices, takes payment for them, and posts the result into your books. It is part of the EP Finance family and sits on top of the EP Finance ledger.
 
-This page documents EP Finance Invoicing **0.1.10**.
+This page documents EP Finance Invoicing **0.2.0**.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
@@ -100,6 +100,15 @@ Tax is handled through a swappable interface, so a jurisdiction-specific pack ca
 - [EP Email](/plugins/ep-email/), which delivers the reminders
 
 ## Changelog
+
+### 0.2.0
+
+*Released 9 September 2026.*
+
+- **Every invoice and quote PDF now carries a document stamp** in its footer: a number and the first characters of a fingerprint taken over the invoice's own figures.
+- **The fingerprint covers the figures, not the file.** Two renders of an unchanged invoice agree; changing one line total, or reordering two lines while every total stays identical, does not.
+- **It is not a signature.** It tells you whether the figures match what was recorded, not who produced the document.
+- Requires EP Finance 0.6.0 or later. With anything older the invoice is produced exactly as before, without a stamp line.
 
 ### 0.1.11
 
