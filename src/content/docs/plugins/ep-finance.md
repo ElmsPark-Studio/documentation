@@ -5,7 +5,7 @@ description: "A double-entry ledger for a PageMotor site that keeps its own book
 
 EP Finance is the book. It holds your accounts, records every transaction as a balanced double entry, and reports on the result. The rest of the finance family sits on top of it.
 
-This page documents EP Finance **0.5.0**.
+This page documents EP Finance **0.5.1**.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
@@ -119,6 +119,13 @@ EP Finance holds the book. These add to it, and each needs it:
 - **Tax packs** for the UK, Ireland and the United States prepare the figures for your return
 
 ## Changelog
+
+### 0.5.1
+
+*Released 9 September 2026.*
+
+- **Fixes the Change history panel, which did not appear in 0.5.0.** Two faults, both in the display only: the panel was skipped on any book where the consistency check had never been run, and its refresh failed with an internal error.
+- **Nothing was lost.** The history recorded correctly throughout 0.5.0. Every change made under it is in the log and visible now.
 
 ### 0.5.0
 
