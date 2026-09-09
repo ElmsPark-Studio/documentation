@@ -5,7 +5,7 @@ description: "A double-entry ledger for a PageMotor site that keeps its own book
 
 EP Finance is the book. It holds your accounts, records every transaction as a balanced double entry, and reports on the result. The rest of the finance family sits on top of it.
 
-This page documents EP Finance **0.3.5**.
+This page documents EP Finance **0.4.0**.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
@@ -55,6 +55,28 @@ A transaction entered in a foreign currency carries the exchange rate you gave i
 
 A rate is never guessed. If you have not supplied one, the plugin asks rather than inventing a number.
 
+## Closing a period
+
+Once you have filed a return, close the book up to that date. Set **Book closed up to and including** on the settings screen and anything dated on or before it is refused: it cannot be posted, edited or deleted. Leave it empty and nothing is locked, which is how a book behaves until you choose otherwise.
+
+The date is inclusive, the way an accountant reads it. Closing at 31 August closes the 31st itself, not just everything before it.
+
+### Why this matters more than it sounds
+
+Before this existed, the only thing the book protected was a transaction reconciled against a closed bank statement. Most postings never go through that path, so a manual journal entry or an invoice posting stayed editable forever, including after a VAT return had been filed on it. The return could be computed today and the figures underneath it changed next month, with no error and no trace.
+
+### The override password
+
+Optional. Set one and somebody who knows it can still post into a closed period when there is a genuine reason to. Leave it unset and the closed period cannot be written to at all, by anyone, until you move the date. Removing it later is one click.
+
+It is stored as a one-way hash, so it cannot be recovered, only replaced, and it is set with its own button rather than a settings box so it never travels through a saved form.
+
+### What it does not do
+
+It does not stop you resetting the whole book, which is a deliberate exclusion: that is a factory reset with its own confirmation, and guarding it would make a book that has ever been closed impossible to reset.
+
+Routine work is unaffected. Anything already posted stays recognised as already posted, so re-running an import or a sweep over a closed month is the same harmless no-op it has always been.
+
 ## The rest of the family
 
 EP Finance holds the book. These add to it, and each needs it:
@@ -67,6 +89,15 @@ EP Finance holds the book. These add to it, and each needs it:
 - **Tax packs** for the UK, Ireland and the United States prepare the figures for your return
 
 ## Changelog
+
+### 0.4.0
+
+*Released 9 September 2026.*
+
+- **You can now close the book at a date, so a filed figure cannot change behind your back.** Anything dated on or before the closing date is refused: it cannot be posted, edited or deleted. Leave the setting empty and nothing is locked.
+- **The date is inclusive**, the way an accountant reads it: closing at 31 August closes the 31st itself.
+- **An optional override password**, if you want one, stored as a one-way hash and set through its own button rather than a settings box. Leave it unset and the closed period cannot be written to at all until you move the date.
+- **Routine re-imports and sweeps are unaffected.** Anything already posted stays recognised as already posted, so re-running an import over a closed month is the same harmless no-op it has always been.
 
 ### 0.3.5
 
