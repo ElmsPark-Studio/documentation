@@ -49,8 +49,14 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Ecommerce — Printify](/plugins/ep-ecommerce-printify/)**. Printify connector for EP Ecommerce — POD.
 - **[EP Ecommerce — Prodigi](/plugins/ep-ecommerce-prodigi/)**. Prodigi connector for EP Ecommerce — POD. Products listed by SKU, as Prodigi has no catalogue API.
 - **[EP Finance](/plugins/ep-finance/)**. A double-entry ledger for a site that keeps its own books. Integer cents, one write gateway that refuses anything unbalanced, and a nightly audit that proves it adds up.
+- **[EP Finance Autopilot](/plugins/ep-finance-autopilot/)**. Suggests a category for anything unmatched, learns from your corrections, and emails a weekly digest with one-tap approval. It never moves money itself.
+- **[EP Finance Importer](/plugins/ep-finance-importer/)**. Bank statement import with mapping profiles for the common banks, a preview that catches sign-flips, and dedup so a re-import can never double-post.
 - **[EP Finance Invoicing](/plugins/ep-finance-invoicing/)**. Quotes and invoices with gap-free numbering, a branded PDF, a tokenised hosted page and a pay link that reuses your existing payment provider.
+- **[EP Finance Receipts](/plugins/ep-finance-receipts/)**. Snap a receipt on your phone and it becomes an expense, then proposes a match to the bank line for you to confirm. Images are never web-servable.
 - **[EP Finance Sources](/plugins/ep-finance-sources/)**. Posts orders, subscription renewals, bookings, ticket sales and approved instructor pay into the ledger automatically, with an id that makes a re-run harmless.
+- **[EP Finance Tax IE](/plugins/ep-finance-tax-ie/)**. The VAT3 boxes per bi-monthly period, the annual RTD, a registration-threshold watch and the ROS deadline calendar.
+- **[EP Finance Tax UK](/plugins/ep-finance-tax-uk/)**. The nine VAT100 boxes from your ledger under standard, cash accounting or Flat Rate, with input VAT split into evidenced and unevidenced.
+- **[EP Finance Tax US](/plugins/ep-finance-tax-us/)**. Schedule C prep, a quarterly estimated-tax worksheet that shows its arithmetic, 1099-NEC contractor tracking and a sales-tax nexus watch.
 - **[EP Reviews](/plugins/ep-reviews/)**. Product reviews with star ratings, verified-purchase badges, Schema.org markup.
 - **[EP Stripe — Discount Codes](/plugins/ep-stripe-coupons/)**. Stripe promotion codes from the PageMotor admin: create, cap, time-limit, switch off.
 

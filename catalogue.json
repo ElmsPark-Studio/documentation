@@ -307,6 +307,60 @@
             "EP Finance Sources"
           ],
           "blurb": "Posts orders, subscription renewals, bookings, ticket sales and approved instructor pay into the ledger automatically, with an id that makes a re-run harmless."
+        },
+        {
+          "slugs": [
+            "ep-finance-importer"
+          ],
+          "titles": [
+            "EP Finance Importer"
+          ],
+          "blurb": "Bank statement import with mapping profiles for the common banks, a preview that catches sign-flips, and dedup so a re-import can never double-post."
+        },
+        {
+          "slugs": [
+            "ep-finance-receipts"
+          ],
+          "titles": [
+            "EP Finance Receipts"
+          ],
+          "blurb": "Snap a receipt on your phone and it becomes an expense, then proposes a match to the bank line for you to confirm. Images are never web-servable."
+        },
+        {
+          "slugs": [
+            "ep-finance-autopilot"
+          ],
+          "titles": [
+            "EP Finance Autopilot"
+          ],
+          "blurb": "Suggests a category for anything unmatched, learns from your corrections, and emails a weekly digest with one-tap approval. It never moves money itself."
+        },
+        {
+          "slugs": [
+            "ep-finance-tax-uk"
+          ],
+          "titles": [
+            "EP Finance Tax UK"
+          ],
+          "blurb": "The nine VAT100 boxes from your ledger under standard, cash accounting or Flat Rate, with input VAT split into evidenced and unevidenced."
+        },
+        {
+          "slugs": [
+            "ep-finance-tax-ie"
+          ],
+          "titles": [
+            "EP Finance Tax IE"
+          ],
+          "blurb": "The VAT3 boxes per bi-monthly period, the annual RTD, a registration-threshold watch and the ROS deadline calendar."
+        },
+        {
+          "slugs": [
+            "ep-finance-tax-us"
+          ],
+          "titles": [
+            "EP Finance Tax US"
+          ],
+          "blurb": "Schedule C prep, a quarterly estimated-tax worksheet that shows its arithmetic, 1099-NEC contractor tracking and a sales-tax nexus watch."
         }
       ]
     },
