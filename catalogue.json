@@ -960,7 +960,8 @@
     "ep-wp-exporter": "Operations, AI, admin"
   },
   "pending": {
-    "ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet"
+    "ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet",
+    "ep-finance-sources": "shipped 0.2.0 and fully working, but EP Finance itself is not on the update channel yet, so a customer cannot obtain the ledger it posts into; page written and states the dependency plainly, not advertised in a category until EP Finance ships"
   },
   "changelog_backlog": {
     "ep-affiliate": "none",
