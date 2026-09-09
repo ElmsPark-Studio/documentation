@@ -280,7 +280,12 @@
             "EP Stripe — Discount Codes"
           ],
           "blurb": "Stripe promotion codes from the PageMotor admin: create, cap, time-limit, switch off."
-        },
+        }
+      ]
+    },
+    {
+      "name": "Finance, bookkeeping, tax",
+      "entries": [
         {
           "slugs": [
             "ep-finance"
@@ -301,15 +306,6 @@
         },
         {
           "slugs": [
-            "ep-finance-sources"
-          ],
-          "titles": [
-            "EP Finance Sources"
-          ],
-          "blurb": "Posts orders, subscription renewals, bookings, ticket sales and approved instructor pay into the ledger automatically, with an id that makes a re-run harmless."
-        },
-        {
-          "slugs": [
             "ep-finance-importer"
           ],
           "titles": [
@@ -325,6 +321,15 @@
             "EP Finance Receipts"
           ],
           "blurb": "Snap a receipt on your phone and it becomes an expense, then proposes a match to the bank line for you to confirm. Images are never web-servable."
+        },
+        {
+          "slugs": [
+            "ep-finance-sources"
+          ],
+          "titles": [
+            "EP Finance Sources"
+          ],
+          "blurb": "Posts orders, subscription renewals, bookings, ticket sales and approved instructor pay into the ledger automatically, with an id that makes a re-run harmless."
         },
         {
           "slugs": [
