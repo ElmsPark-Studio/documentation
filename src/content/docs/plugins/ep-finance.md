@@ -5,7 +5,7 @@ description: "A double-entry ledger for a PageMotor site that keeps its own book
 
 EP Finance is the book. It holds your accounts, records every transaction as a balanced double entry, and reports on the result. The rest of the finance family sits on top of it.
 
-This page documents EP Finance **0.4.0**.
+This page documents EP Finance **0.5.0**.
 
 Published by [ElmsPark Studio](https://elmspark.com).
 
@@ -77,6 +77,36 @@ It does not stop you resetting the whole book, which is a deliberate exclusion: 
 
 Routine work is unaffected. Anything already posted stays recognised as already posted, so re-running an import or a sweep over a closed month is the same harmless no-op it has always been.
 
+## The change history
+
+Every change made to the book through EP Finance is recorded: what changed, who changed it, when, and what the value was before. It appears on the Audit tab, under the consistency check.
+
+### It answers a different question from the audit above it
+
+These two are easy to confuse and they are not the same thing.
+
+The **consistency audit** asks whether the book adds up right now. The **change history** asks how it got to be this way. A book can be perfectly consistent and still have had a figure quietly changed after a return was filed on it, which is exactly the case where the audit tells you nothing useful and the history tells you everything.
+
+### What it catches that a total does not
+
+The obvious ones are amounts. The useful ones are the changes that move a figure without touching an amount at all:
+
+- Moving a transaction to a different category, which shifts money between profit and loss lines
+- Renaming or reclassifying an account
+- Unlocking a bank statement, which makes its reconciled lines editable again
+
+Each of those leaves the arithmetic intact and changes what your reports say.
+
+### Attribution
+
+Every entry names a person, or names **system** where there was no person, for a scheduled job or an automatic posting. It is never left blank, so an entry with no name would itself be a sign something was wrong rather than routine.
+
+### What it does not claim
+
+It records changes made **through EP Finance**. Somebody with direct database access editing a table by hand is outside what any plugin can see, and this does not pretend otherwise. Part of that gap is covered separately: the plugin installs database-level guards that refuse a direct change to a reconciled transaction, where your host permits them.
+
+Nothing is deleted automatically. There is no retention period, because you cannot tell a clean history from a pruned one. Trimming old entries is possible and is always your decision.
+
 ## The rest of the family
 
 EP Finance holds the book. These add to it, and each needs it:
@@ -89,6 +119,17 @@ EP Finance holds the book. These add to it, and each needs it:
 - **Tax packs** for the UK, Ireland and the United States prepare the figures for your return
 
 ## Changelog
+
+### 0.5.0
+
+*Released 9 September 2026.*
+
+- **The book now keeps a change history: who changed what, when, and what it was before.** It appears under the existing consistency check on the Audit tab.
+- **This answers a different question from the nightly audit.** The audit says whether the book adds up now. The history says how it got that way. A book can be consistent and still have had a figure quietly changed after a return was filed on it.
+- **Every change is attributed to a person, or explicitly to "system".** Never blank, so an unattributed entry would itself be a signal.
+- **It catches the changes that move a figure without touching an amount**: recategorising a transaction, reclassifying an account, and unlocking a statement so its reconciled lines become editable again.
+- **A reset of the whole book is recorded, and the history survives it.**
+- Nothing is deleted automatically and there is no retention period, because you cannot tell a clean history from a pruned one.
 
 ### 0.4.0
 
