@@ -31,6 +31,18 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Changelog
 
+### 1.2.11
+
+- **Prevents the plugin failing to load on PageMotor 0.11.3.** Two of its internal methods, which encrypt health declarations at rest, share their names with methods PageMotor adds in 0.11.3. That stops PHP loading the plugin, and PageMotor's safe mode would have disabled it.
+- Nothing about how your data is stored changes, and existing signatures and health declarations are unaffected.
+- Update before you move the site to PageMotor 0.11.3.
+
+### 1.2.10
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 1.2.9.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.
+
 ### 1.2.5
 
 Defensive load guard: if the bundled suite library is missing or truncated, the plugin now degrades to behaving as though it were not installed, with a note in the error log, instead of taking the whole site down with it. The build also verifies the bundled library is really present inside the shipped zip. No change in behaviour when everything is healthy.

@@ -259,3 +259,11 @@ The disposable blocklist working as intended. If you want to allow one specific 
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.8.4
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 1.8.3.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.

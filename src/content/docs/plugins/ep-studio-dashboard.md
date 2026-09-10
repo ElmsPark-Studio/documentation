@@ -39,6 +39,15 @@ The whole dashboard is also exposed as read-only PageMotor API actions and MCP t
 
 ## Changelog
 
+### 2.1.9
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 2.1.8.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.
+
+### Fixed
+
+- **Version badge missing from the admin header.** The plugin never defined its `EP_STUDIO_DASHBOARD` root constant (so `ep_version()` could not locate the plugin file), and the header `Version:` line sat past byte 500 behind a long `Description:` line, beyond the window `ep_version()` reads. The constant is now defined and the header fields are reordered so `Version:` comes first.
 ### 2.1.1
 
 The remaining read-only actions (`studio_revenue`, `studio_waiver_gaps`, `studio_expiring_passes`, `studio_payroll_due`) now surface as native MCP tools, so an LLM connected to the site lists them directly.

@@ -70,6 +70,12 @@ Each job carries a monthly budget, and the settings page shows the month's spend
 
 ## Changelog
 
+### 0.1.5
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 0.1.4.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.
+
 ### 0.1.4
 
 - **Prepares the plugin for PageMotor 0.11.3, which requires every plugin to group its API and MCP actions into named families.** On that release an action declaring no family is refused silently, so without this update the plugin's actions would stop being offered with nothing on screen to say why.

@@ -68,6 +68,12 @@ Add the `[ep-flows-hook]` shortcode to a page to get a tokenless inbound endpoin
 
 ## Changelog
 
+### 0.3.4
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 0.3.3.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.
+
 ### 0.2.0
 
 The hardening pass: signed inbound trigger mode (`X-EP-Signature`, HMAC-SHA256), per-flow rate limiting on the inbound hook, an SSRF guard on `http_request` (with an `allow_internal` opt-out), opt-in single retry for `http_request`, a server-rendered action-trail detail view on the admin runs table, and translations for `de`, `es`, `fr`, `it`, `nl`, `pt`.

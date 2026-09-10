@@ -110,3 +110,18 @@ On a parent category's archive, its child categories appear as a "Narrow to" row
 ## API
 
 `list-posts` (public): returns live posts newest first with URL, date, author, category, tags and excerpt. Optional `category`, `tag` and `limit` arguments.
+
+## Changelog
+
+### 1.1.3
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 1.1.2.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.
+
+### 1.1.2
+
+
+- **Prepares the plugin for PageMotor 0.11.3, which requires every plugin to group its API and MCP actions into named families.** On that release an action declaring no family is refused silently, so without this update the plugin's actions would stop being offered with nothing on screen to say why.
+- Families exist so that an AI working on your site sees the related actions together instead of stopping at the first one it tries.
+- Safe to install on your current PageMotor. No behaviour changed.

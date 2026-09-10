@@ -211,3 +211,11 @@ Deferred to a later release pending Apple cert provisioning. The plugin currentl
 EP Events is in active development. Bug reports, feature requests, and notes on rough edges are welcome via the **Send feedback** link at the bottom of the plugin's settings page, or by emailing ElmsPark.
 
 If your site uses a sibling plugin EP Events does not yet integrate with, let us know. The sibling-plugin valet pattern means most integrations are a single method on each side.
+
+## Changelog
+
+### 1.0.53
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 1.0.52.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.

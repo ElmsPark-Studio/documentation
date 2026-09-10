@@ -118,6 +118,12 @@ That is expected on many shared hosts: they block outbound SMTP. Use the host's 
 
 ## Changelog
 
+### 1.3.7
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 1.3.6.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.
+
 ### 1.3.6
 
 - **Prepares the plugin for PageMotor 0.11.3, which requires every plugin to group its API and MCP actions into named families.** On that release an action declaring no family is refused silently, so without this update the plugin's actions would stop being offered with nothing on screen to say why.

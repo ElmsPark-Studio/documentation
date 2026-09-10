@@ -79,6 +79,18 @@ From that point every delivered submission lands in the ledger and the dashboard
 
 ## Changelog
 
+### 0.1.5
+
+- **Fixes the plugin failing to load on PageMotor 0.11 and later.** One of its internal methods had the same name as a method PageMotor itself added in 0.11, which stops PHP loading the plugin at all. PageMotor's safe mode then disabled it automatically, so on those releases the plugin was switched off with only a line in the error log to say why.
+- If your site is on PageMotor 0.11 or later, re-enable EP Email Leads on the Plugins screen after updating. It will stay on this time.
+- Sites on PageMotor 0.10.3 were never affected.
+
+### 0.1.4
+
+- **Corrects the PageMotor 0.11.3 preparation shipped in 0.1.3.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
+- This version uses the shape 0.11.3 expects, and keeps the earlier shape for sites still on an older PageMotor. One build serves both, so there is no order you have to update things in.
+- Safe to install now. Nothing you can see changes.
+
 ### 0.1.0
 
 Initial release: leads ledger, capture via EP Email's extension hooks, named rotatable read keys, keyed read-only `get-leads-view` endpoint, self-installing gated dashboard page, admin API and MCP actions (`list-leads`, `update-lead`, `delete-lead`, `leads-stats`).
