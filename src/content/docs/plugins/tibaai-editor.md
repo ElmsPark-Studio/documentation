@@ -31,6 +31,38 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Changelog
 
+### 0.3.5
+
+- **Fixes the editor opening with no toolbar on some sites.** The editor covers the whole screen, but a site whose own header claimed a higher stacking order was painted on top of it, so the buttons were there and simply hidden. This was never a fault in the site: the value that header used is an entirely ordinary one. The editor now ranks above it and also lifts itself clear of the theme's own layout, because ranking alone is not enough when a theme wraps the page in certain ways.
+- **New: the editor's own features are now reachable over the API and MCP.** Listing documents, opening one, saving it, reading the save history, the palette and the page details can all be driven by an assistant. The documents themselves were always reachable through PageMotor's own content actions; what was locked to the browser was everything this plugin adds on top, the save history most of all.
+- Uploading a social share image is deliberately not included, because it needs a real file upload.
+
+### 0.3.4
+
+- **The Download button is back.** The 0.3.0 redesign dropped it without meaning to. It was not a deliberate removal: it simply did not survive the new toolbar. It behaves exactly as it did before and now sits next to Open live.
+
+### 0.3.1
+
+- **Fixes the page list losing its highlight after a save.** The list refreshes after every save so it can show when each page was last saved, and rebuilding it cleared the marker showing which page you had open.
+
+### 0.3.0
+
+- **A full design pass on the editor.** The chrome now matches the owner dashboard, and the code sits in a dark well that is the dashboard's own darkest green. The editor claims the whole screen, which makes the toolbar a permanent fixture rather than something that can scroll away.
+- **A better answer when two people save the same page.** Instead of a bare recovery link, you get a calm banner with three choices: see exactly what changed line by line, keep yours, or take theirs. Whichever you choose, both versions survive. Nothing is thrown away by design.
+- **Your unsaved text is protected by the browser.** While you have unsaved changes they are kept locally, so closing the tab by accident no longer costs you the edit. Reopening offers to restore or discard it. Nothing is ever saved to the server on your behalf: publishing stays a deliberate act.
+- **Page details, Colours and History are now drawers** that slide over the preview instead of pushing the page down, one at a time, closed with Escape. History is a proper list with Open, Compare and Restore on each version rather than a dropdown.
+- **Switching pages with unsaved work no longer risks losing it.** You are asked inline whether to save and switch, switch anyway, or stay. Switching anyway keeps your text so you can put it back.
+- Cards and the page list now show when each document was last saved, and the history shows who saved each version, so you can tell your own edits from another session's. Older history entries that predate this simply show the time and size.
+- The syntax-highlighting layer was deliberately held back for a later release. Everything proven in earlier versions is kept underneath unchanged.
+
+### 0.2.8
+
+- **Fixes the stale-save recovery throwing away your edit.** When a save was refused because someone else had changed the page, the offered "load the latest version" link replaced your unsaved text with the server copy and discarded what you had written, on the very path whose own instruction told you to redo your edit. Your text is now banked first, so after the latest version loads you can put your edit straight back and save it.
+
+### 0.2.7
+
+- Merge release: the admin-only script handling from one build and the sticky toolbar from another, brought together.
+
 ### 0.2.6
 
 The editor's own admin JavaScript was being written into the source of themed pages, where a logged-out visitor could read it. It is now sent only to a logged-in administrator. Nothing was exposed and nothing could be done with it: every editor control is checked for admin rights on the server and refuses anonymous calls, and the editor page already showed logged-out visitors a login prompt and no data. Updating removes the code from public view.
