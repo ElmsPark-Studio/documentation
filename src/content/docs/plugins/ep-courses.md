@@ -178,6 +178,11 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 0.5.2
+
+- **A lesson can now contain an exercise, a form, or anything else a plugin provides.** Until this release the lesson body was printed exactly as written, so a shortcode dropped into a lesson appeared on the page as literal text rather than doing anything. There was no error and nothing in any log to explain it: the lesson simply showed the shortcode back to the learner.
+- Lessons that contain no shortcode are completely unaffected. If your course is plain text, images and video, this release changes nothing you can see.
+- If you have a lesson with a shortcode in it that has never worked, it will start working the moment you update. Worth a quick look at your lessons afterwards.
 ### 0.5.1
 
 - **Refunds now take the course back.** Refund a course purchase in Stripe, from the dashboard or anywhere else, and the student's access is withdrawn automatically. Previously the money went back but the course stayed open until someone removed the enrolment by hand. Needs EP Ecommerce Stripe 0.1.22 or later.
