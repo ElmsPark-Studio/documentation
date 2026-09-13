@@ -94,3 +94,9 @@ Add context in the **Extra system prompt** setting: "This site sells made-to-mea
 ## Feedback and corrections
 
 For anything bigger than a quick chat question — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.1.24
+
+- **Carries the suite-wide change to storing API keys encrypted, although this plugin was never exposed.** Its API key field only exists on a developer install, so a normal installation has no such field and there was never anything to read. No change you will notice.

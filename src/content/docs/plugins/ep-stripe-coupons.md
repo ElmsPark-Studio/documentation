@@ -84,19 +84,17 @@ Disabling a code stops it being accepted at checkout without deleting anything, 
 
 *Released 1 September 2026.*
 
-- **Fixed: activating this plugin alongside another that also bundles the shared Stripe helper took the whole site down.** Five plugins ship the same `EP_Stripe` class (EP Booking, EP Ecommerce Stripe, EP Ecommerce Subscriptions, EP Holiday Bookings and this one). With any two of them active, the second to load failed with "Cannot declare class EP_Stripe, because the name is already in use" and PageMotor quarantined it, so installing a second Stripe-capable plugin silently cost you the first.
-
-  The file always carried a guard, and that guard could never have worked: an unconditional top-level class is bound when the file is compiled, before any statement in it runs, so the redeclaration failed lines before the guard was reached. The class is now declared inside a `class_exists()` conditional, which is evaluated at runtime and so genuinely guards. Proven by activating two of these plugins together: previously a 500 and a quarantine record, now a clean load with both active and signature verification still working.
+- **Fixed: installing a second plugin that also takes Stripe payments could take the whole site down.** Five plugins in the suite share the same Stripe helper. With any two of them switched on, the second to load failed outright and PageMotor disabled it to protect the site, so turning on a new Stripe-capable plugin silently cost you the one you already had, with nothing obvious to explain it.
+- The guard meant to prevent that had never been able to work, for reasons of when the code is read rather than when it runs. It is now written so that it does. Verified by switching two of these plugins on together: previously the site returned an error and one plugin was disabled, now both load cleanly and payment signature checking still works.
 
 ### 0.1.3
 
 *Released 31 August 2026.*
 
-- **The two stored secrets are no longer kept where an API or MCP connection can read them.** PageMotor gives every plugin an inherited `_get-settings` action that returns its stored options verbatim, with no redaction of password fields. Any producer token holding `plugins.configure` could therefore read the test and live Stripe secret keys in cleartext. They are now stored as AES-256-GCM ciphertext, with the plaintext column left empty.
-- Existing installs migrate themselves once, on the next load. Nothing to re-enter. A host without `openssl` keeps the old behaviour and logs why, because silently dropping a working key would be worse than the exposure it closes.
-- `_get-settings` now reports a saved secret as `__saved__` and accepts that marker back on write as "unchanged", so a read-modify-write round trip over MCP cannot overwrite a secret with the marker. Blank-submit-means-unchanged still holds in the admin; an explicitly empty value over the API still clears.
-- Reported by MarkieSparky on the PageMotor forum, 31 August 2026. Not a 0.11 regression: the core behaviour is unchanged back to 0.9.1b.
-
+- **Your Stripe test and live secret keys are now stored encrypted.** Until this release they sat in plain text in the plugin's settings, where anyone holding an API or MCP connection to your site with permission to configure plugins could read them straight back out. Your site's visitors were never able to see them.
+- Existing sites convert themselves the next time the plugin loads, once. There is nothing to re-enter and no keys to replace.
+- Reading your settings over the API now returns a placeholder rather than the value, and writing that placeholder back leaves the stored secret untouched. Clearing it by submitting an empty value still works as before.
+- On hosting without encryption support the previous behaviour is kept and the reason is written to the log, because quietly discarding a working key would be worse than the exposure this closes.
 
 ### 0.1.2
 

@@ -350,3 +350,10 @@ An export never contains settings, so a file produced by the exporter has none t
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 2.4.23
+
+- **Fixed: installing a second plugin that also takes Stripe payments could take the whole site down.** Five plugins in the suite share the same Stripe helper. With any two of them switched on, the second to load failed outright and PageMotor disabled it to protect the site, so turning on a new Stripe-capable plugin silently cost you the one you already had, with nothing obvious to explain it.
+- The guard meant to prevent that had never been able to work, for reasons of when the code is read rather than when it runs. It is now written so that it does. Verified by switching two of these plugins on together: previously the site returned an error and one plugin was disabled, now both load cleanly and payment signature checking still works.

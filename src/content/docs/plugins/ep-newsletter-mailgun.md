@@ -185,3 +185,12 @@ For unified sender reputation across newsletters and transactional email, instal
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger such as a bug report, a feature request, or a "how do I..." that needs a real reply, open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.0.11
+
+- **Your Mailgun sending key and webhook signing key are now stored encrypted.** Until this release they sat in plain text in the plugin's settings, where anyone holding an API or MCP connection to your site with permission to configure plugins could read them straight back out. Your site's visitors were never able to see them.
+- Existing sites convert themselves the next time the plugin loads, once. There is nothing to re-enter and no keys to replace.
+- Reading your settings over the API now returns a placeholder rather than the value, and writing that placeholder back leaves the stored secret untouched. Clearing it by submitting an empty value still works as before.
+- On hosting without encryption support the previous behaviour is kept and the reason is written to the log, because quietly discarding a working key would be worse than the exposure this closes.

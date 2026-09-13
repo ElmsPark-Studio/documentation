@@ -149,3 +149,10 @@ Check cookies are being set correctly. If the visitor's browser blocks all cooki
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.1.43
+
+- **Blocks a spam bot that was getting past the form honeypot.** The scraper changed its network address on every single request, so blocking by address never caught it, but it always sent a malformed browser identifier that no real browser sends. Forms now reject anything carrying that signature, with the same silent response a caught bot already got.
+- It was not theoretical. One client site had taken 57 fake signups before this went in, and the same bot had hit 17 sites.

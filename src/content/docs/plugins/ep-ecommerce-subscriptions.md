@@ -149,3 +149,14 @@ EP Affiliate's recurring commission setting must be enabled. If it's off, only f
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 0.2.15
+
+- **Fixed: on a site where this plugin was switched on but its settings page had never been opened, every membership-gated page broke for signed-in visitors only.** Protected pages returned an error to anyone logged in, while visitors who were not signed in saw the normal "members only" prompt. That asymmetry is the dangerous part: the site owner, usually signed in, sees a broken page the public cannot see, or the reverse, depending on who happens to look.
+- The cause was this plugin reading a database table it had not yet created. Worse, it took the whole membership system down with it, not just its own part, because the shared gate asks every subscription plugin before deciding. It now checks the table exists first and simply has no opinion when it does not.
+- **The same fault in a second form on the subscriptions shortcode produced a page that cut off halfway** while still reporting success, so uptime monitoring saw nothing wrong. That is fixed the same way.
+- **Three other reads also depended on a table belonging to a different plugin** purely to show a product name. They no longer do, and the name is simply left out when it is not available.
+- **The plugin now creates what it needs when it needs it**, so a Stripe payment or a front-end checkout can be the first thing it ever does on a site. It no longer depends on someone having opened the settings page first.
+- Verified on a test site with the table deliberately removed: gated pages went from an error to a complete page, the subscriptions shortcode from a truncated page to a complete one, and access decisions stayed correct throughout.

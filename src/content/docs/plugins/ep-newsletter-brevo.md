@@ -113,3 +113,12 @@ In EP Newsletter settings, change Delivery driver from SendGrid to Brevo. New ca
 ## Feedback
 
 For a quick question, **EP Support** inside your admin is the fastest path. For anything bigger, open a ticket at [help.elmspark.com](https://help.elmspark.com).
+
+## Changelog
+
+### 1.0.5
+
+- **Your Brevo API key and webhook secret are now stored encrypted.** Until this release they sat in plain text in the plugin's settings, where anyone holding an API or MCP connection to your site with permission to configure plugins could read them straight back out. Your site's visitors were never able to see them.
+- Existing sites convert themselves the next time the plugin loads, once. There is nothing to re-enter and no keys to replace.
+- Reading your settings over the API now returns a placeholder rather than the value, and writing that placeholder back leaves the stored secret untouched. Clearing it by submitting an empty value still works as before.
+- On hosting without encryption support the previous behaviour is kept and the reason is written to the log, because quietly discarding a working key would be worse than the exposure this closes.

@@ -175,3 +175,13 @@ Prerequisite-based progression isn't built in yet. On the roadmap but not shippe
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 0.5.1
+
+- **Refunds now take the course back.** Refund a course purchase in Stripe, from the dashboard or anywhere else, and the student's access is withdrawn automatically. Previously the money went back but the course stayed open until someone removed the enrolment by hand. Needs EP Ecommerce Stripe 0.1.22 or later.
+- **Only a full refund revokes access.** A partial refund is usually a goodwill gesture or a price adjustment, and locking someone out of something they paid most of would be worse than doing nothing, so partial refunds are recorded and left alone. Chargebacks are deliberately left alone too: a dispute can be won, and acting on the bank's first message would punish a customer whose case later goes their way.
+- **The enrolment and the student's progress are kept, not deleted.** Access stops immediately, but if they buy the course again later they pick up where they left off.
+- A refunded student who opens the course is told so plainly, instead of seeing the generic "you need to enrol first", which reads as though the site has forgotten them.
+- **Fixed before release: on a site already running 0.5.0, the database change this feature needs was never applied**, so the refund failed, retried ten times and the student kept the course. Sites on 0.5.0 pick it up automatically on this version.

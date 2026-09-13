@@ -46,6 +46,20 @@ Nothing here replaces the basics. Keep your PageMotor core current, keep admin a
 
 ## Changelog
 
+### 0.0.5
+
+- **Your Anthropic API key is now stored encrypted.** Until this release it sat in plain text in the plugin's settings, where anyone holding an API or MCP connection to your site with permission to configure plugins could read it straight back out. Your site's visitors were never able to see it.
+- Existing sites convert themselves the next time the plugin loads, once. There is nothing to re-enter and no key to replace.
+- Reading your settings over the API now returns a placeholder rather than the value, and writing that placeholder back leaves the stored secret untouched. Clearing it by submitting an empty value still works as before.
+- On hosting without encryption support the previous behaviour is kept and the reason is written to the log, because quietly discarding a working key would be worse than the exposure this closes.
+
+### 0.0.4
+
+- **Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11.** The message appeared on this plugin's admin screens even though you were signed in perfectly normally, and whatever you were doing failed to save.
+- Nothing was wrong with your session. PageMotor 0.11 started handling part of the security check that this plugin was already handling itself, and the two together made every save look invalid. The plugin now checks whether PageMotor has already done it.
+- Visitors who were not signed in were never affected, on any version.
+- There is nothing to reconfigure, and nothing else changed.
+
 ### 0.0.3
 
 Fixes six settings toggles that never rendered. Each was declared as a checkbox with no `options` array, and PageMotor's form builder silently emits an empty wrapper for a field type it cannot match, so the controls were invisible rather than broken-looking.

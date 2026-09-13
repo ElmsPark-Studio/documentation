@@ -171,3 +171,12 @@ Outbound HTTP from your server is blocked or Bing is throttling. Submit manually
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger, a bug report, a feature request, or a "how do I" that needs a real reply, open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.2.2
+
+- **Fixes content silently missing from your sitemap on PageMotor 0.11. Worth updating if you run any plugin that adds its own content type.**
+- Live, public pages belonging to a plugin-added content type were simply absent from `/sitemap.xml`. The file stayed valid, every exclusion you had set stayed correct, and nothing was written to any log. The rows were just not there.
+- The cause was a change in how PageMotor 0.11 asks a plugin what content types it provides. This plugin was still asking the old way, so any plugin written for 0.11 answered nothing and its content never reached the sitemap. It now asks both ways, so it works whichever version of PageMotor and whichever generation of plugin you are running.
+- Most suite plugins were unaffected, because they answer to both names. The ones this affected were those written for 0.11 alone.

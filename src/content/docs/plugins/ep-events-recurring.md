@@ -84,3 +84,12 @@ Generated occurrences are ordinary EP Events events, so they appear wherever EP 
 ## Feedback
 
 EP Events Recurring is in active development. Bug reports, feature requests, and notes on rough edges are welcome via the **Send feedback** link at the bottom of the plugin's settings page, or by emailing ElmsPark.
+
+## Changelog
+
+### 1.2.5
+
+- **Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11.** The message appeared on this plugin's admin screens even though you were signed in perfectly normally, and whatever you were doing failed to save.
+- Nothing was wrong with your session. PageMotor 0.11 started handling part of the security check that this plugin was already handling itself, and the two together made every save look invalid. The plugin now checks whether PageMotor has already done it.
+- Visitors who were not signed in were never affected, on any version.
+- There is nothing to reconfigure, and nothing else changed.

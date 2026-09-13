@@ -141,3 +141,11 @@ If you have 200+ questions and are rendering all of them, the accordion HTML + J
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.1.9
+
+- **Removed the old `[faq]` shortcode.** PageMotor 0.11 ships its own `[faq]`, and on 0.11 this plugin's copy started taking precedence over it and raising a warning in your admin panel on every site. EP FAQ now registers only its own `[ep-faq]` and `[ep-faqs]`.
+- **If any of your pages use bare `[faq]`, they now render PageMotor's version rather than this plugin's.** If that is not what you want, change those pages to `[ep-faq]`.
+- The FAQ structured data this plugin adds for search engines now follows the same rule: it attaches to `[ep-faq]` and `[ep-faqs]`, not to bare `[faq]`.

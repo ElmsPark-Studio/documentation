@@ -78,3 +78,11 @@ After reset, the admin is logged out of any existing sessions. Close all browser
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.0.12
+
+- **Fixes the Documentation link in the admin panel, which led to a page that did not exist.** It now points at this page.
+- The correct address had been in the source for some time but had never actually reached a release, so every install on 1.0.11 was showing the dead link. Found by comparing the shipped file against the source rather than by anyone reporting it.
+- Nothing else changed.

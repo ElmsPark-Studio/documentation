@@ -74,3 +74,12 @@ Check the image URLs are absolute (include `https://yoursite.com/`). Relative UR
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.1.8
+
+- **Stops protected content appearing in your feed.** Members-only pages were being published to anyone who asked for the feed: the title and excerpt at `/feed`, and the full text where the feed is set to include it. A feed for a single content type served that entire protected type on request. If you use EP Membership or any plugin with protected content, treat anything published before this release as having been public.
+- Every item is now checked against the same permission the page itself uses, as an anonymous reader would see it. A feed address carries no sign-in, so the anonymous view is the only correct one.
+- **Feeds are now produced later in the page cycle**, which is what makes that check possible. Your feed addresses are unchanged.
+- A welcome side effect of that change: content types added by other plugins, such as blog posts, events and locations, now appear in the main `/feed`. They were silently missing before.

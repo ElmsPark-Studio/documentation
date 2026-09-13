@@ -115,3 +115,13 @@ Retention is set to 0, which is the off switch. Set a number of days to start lo
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger — a bug report, a feature request, or a "how do I..." that needs a real reply — open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.3.4
+
+- **Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11.** The message appeared on this plugin's admin screens even though you were signed in perfectly normally, and whatever you were doing failed to save.
+- Nothing was wrong with your session. PageMotor 0.11 started handling part of the security check that this plugin was already handling itself, and the two together made every save look invalid. The plugin now checks whether PageMotor has already done it.
+- Visitors who were not signed in were never affected, on any version.
+- There is nothing to reconfigure, and nothing else changed.
+- **Also fixes the plugin never appearing on your Updates screen.** PageMotor only offers updates for a plugin that tells it where to look, and this one never did, so it has been invisible to the update check since release. That is corrected here, but the fix cannot deliver itself: to get onto this version you need to upload it once by hand. After that, updates arrive normally.
