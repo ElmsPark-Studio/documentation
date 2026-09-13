@@ -779,6 +779,7 @@
     <ul>
       <li><strong>It is your own Claude account doing the work.</strong> No API key and no per-question charge. Questions come out of the usage allowance your plan already gives you, so on the free plan expect to run out sooner on a long session of questions.</li>
       <li><strong>It is your data, your account.</strong> You sign in as your own admin, so Claude only sees what you would see.</li>
+      <li><strong>Self-hosting on your own server?</strong> If Claude says it could not register with your site&rsquo;s sign-in service, your web server is almost certainly serving <code>/.well-known/</code> from disk instead of handing it to PageMotor — the stock Let&rsquo;s Encrypt block does this. <a href="https://documentation.elmspark.com/guides/pagemotor-mcp-troubleshooting/">The MCP troubleshooting guide</a> has the test and the two-line nginx fix (section 6d).</li>
       <li><strong>You stay in control.</strong> Disconnect any time from your site&rsquo;s Settings &rarr; Connected Apps, or from Claude&rsquo;s own connector settings.</li>
     </ul>
 
