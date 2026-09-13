@@ -140,3 +140,11 @@ In **EP Email → SMTP**, change the Transport setting to **SMTP** or **PHP mail
 For a quick question about this plugin, **EP Support** inside your admin is the fastest option. The chat widget sits on every EP plugin settings page and knows which one you're on, with starter questions and links preloaded for that exact screen.
 
 For anything bigger such as a bug report, a feature request, or a "how do I..." that needs a real reply, open a ticket at [help.elmspark.com](https://help.elmspark.com). A real person, helped by AI, writes the reply. Usually within a few hours. Tickets don't disappear into the void.
+
+## Changelog
+
+### 1.0.11
+
+- **Fixes transactional email being silently dropped when another plugin sends it.** Password reset and email verification messages sent by EP Membership were not arriving. The site behaved as though they had: the reset token was created, and the visitor was told to check their email. Nothing was sent, and nothing was logged.
+- The cause was this plugin's own 1.0.10 change. That release moved the sending key into encrypted storage and deliberately blanked the plaintext column. The transport reads the key from the plugin's loaded settings, and falls back to the stored row when those settings are not loaded yet. That fallback still read the blanked plaintext column, so it found an empty key and refused to send. Anything that sends before this plugin has finished loading hit it, which on a membership site is every password reset.
+- If you use EP Membership, assume password reset has not worked since you took 1.0.10 on 31 August. It works again as soon as this update is applied. Nothing needs re-entering and no key needs replacing.
