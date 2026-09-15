@@ -31,6 +31,20 @@ Published by [ElmsPark Studio](https://elmspark.com).
 
 ## Changelog
 
+### 0.3.8
+
+- **Keeps the editor's API and MCP actions registered on PageMotor 0.11.3.** That release changed how a plugin declares its actions: they are now grouped by the kind of thing they act on, which here means a document, the colour palette or the page details. A plugin still using the older flat list registers nothing on that core, with no error and nothing shown in the admin; the actions simply disappear from the registry until the plugin is updated. Older cores want the flat list and reject the grouped one just as silently, so this release detects which shape the running core expects and supplies that one. It checks the registry itself rather than the version number, because the core reports its version slightly differently from the name a release is announced under, and a version comparison would pick the wrong shape.
+
+### 0.3.7
+
+- **You can now see what you have selected in the code pane.** A customer reported that the highlight was too dark when making changes, and measuring it confirmed the complaint: the selection band sat at well under 2:1 against the dark pane, where a band you are meant to see wants about 3:1, so selecting a line barely marked it. There is no syntax colouring to help, since that layer was held back in 0.3.0 and has not shipped. A brighter band alone would not do, because the code text is very light and every band bright enough to be obvious pushed the text below the readable threshold. The selection now sets its own text colour as well, the way editors normally do: a clear mid green band with dark ink on it, both with comfortable headroom rather than scraping a limit.
+
+### 0.3.6
+
+- **Fixes the editor collapsing into a narrow strip with a large empty area beneath it.** A customer reported that the editor screen had gone narrow and could not be made larger. The editor's shell lays out four regions, the toolbar, a banner, the editing area and the footer, and it assumed they always arrived in that order. The banner is hidden most of the time, and a hidden element does not take up a row, so every region below it slid up one: the editing area shrank to the height of its content and the footer stretched to fill the rest of the screen. The empty space was the footer. Each region is now placed in its own row explicitly, so a hidden banner collapses only its own row and nothing else moves.
+- **The small-screen notice now fills the screen properly.** The same fault, found while checking the fix on a handset: the notice shown on a phone sat in the top third of the screen with empty space beneath it. It now spans the whole editor and centres.
+- This was never the site's theme. The editor's outer frame was the right size throughout; only its internal rows were wrong, which is why the problem survived the 0.3.5 stacking fix.
+
 ### 0.3.5
 
 - **Fixes the editor opening with no toolbar on some sites.** The editor covers the whole screen, but a site whose own header claimed a higher stacking order was painted on top of it, so the buttons were there and simply hidden. This was never a fault in the site: the value that header used is an entirely ordinary one. The editor now ranks above it and also lifts itself clear of the theme's own layout, because ranking alone is not enough when a theme wraps the page in certain ways.
