@@ -54,6 +54,11 @@ Regenerating a pack records a new stamp rather than replacing the old one, so th
 
 ## Changelog
 
+### 0.1.5
+
+
+- **Works with PageMotor 0.11.3 and stays compatible with earlier releases.** PageMotor 0.11.3 changed how a plugin declares its API and MCP actions, and a plugin that still uses the old declaration has every one of its actions silently dropped from the registry on that version. This release declares its actions in the shape the running PageMotor expects, so an AI connected over API or MCP keeps every action whether the site is on 0.11.3 or on an earlier release.
+- **Actions are now grouped into families**, so a connected AI that looks up one action is shown its siblings.
 ### 0.1.4
 
 *Released 9 September 2026.*

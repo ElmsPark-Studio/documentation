@@ -48,6 +48,11 @@ The same loop is exposed to any connected AI client, so you can work through the
 
 ## Changelog
 
+### 0.1.8
+
+
+- **Works with PageMotor 0.11.3 and stays compatible with earlier releases.** PageMotor 0.11.3 changed how a plugin declares its API and MCP actions, and a plugin that still uses the old declaration has every one of its actions silently dropped from the registry on that version. This release declares its actions in the shape the running PageMotor expects, so an AI connected over API or MCP keeps every action whether the site is on 0.11.3 or on an earlier release.
+- **Actions are now grouped into families**, so a connected AI that looks up one action is shown its siblings.
 ### 0.1.7
 
 *Released 1 September 2026.*

@@ -128,6 +128,23 @@ EP Finance holds the book. These add to it, and each needs it:
 
 ## Changelog
 
+### 0.7.1
+
+
+- **Works with PageMotor 0.11.3 and stays compatible with earlier releases.** PageMotor 0.11.3 changed how a plugin declares its API and MCP actions, and a plugin that still uses the old declaration has every one of its actions silently dropped from the registry on that version. This release declares its actions in the shape the running PageMotor expects, so an AI connected over API or MCP keeps every action whether the site is on 0.11.3 or on an earlier release.
+- **Actions are now grouped into families**, so a connected AI that looks up one action is shown its siblings.
+
+### 0.7.0
+
+
+- **You can now slice the book a second way, independently of accounts and categories.** A segment is a shop location, a fund, a programme, a project. Tag transactions with one and you can see a profit and loss for just that part of the business.
+- **This is what lets two locations share one chart of accounts.** Without it, telling them apart means duplicating every asset, expense and income account, which then breaks every other report that assumes a single flat chart.
+- **Set it once per transaction, or per line where they differ.** Rent split across two shops is one transaction with a different segment on each line.
+- **Nothing changes for a book that does not use it.** Segments are entirely optional, every existing transaction stays unsegmented, and an unsegmented book's reports are exactly what they were.
+- **A by-segment summary** on the Reports tab shows income, expenses and net for each one, with anything not yet classified listed separately at the bottom. That last row is the honest one: if most of the book sits there, a by-segment view is still a partial picture and you can see that at a glance.
+- **The profit and loss can be filtered** to one segment, or to just the unclassified lines so you can find what still needs tagging.
+- **Segments are deactivated, never deleted.** Historic transactions still refer to them, and removing one would quietly turn a filed segmented report into an unsegmented one.
+- Re-tagging a transaction is recorded in the change history like any other edit, because it moves money between reports without altering a single amount.
 ### 0.6.0
 
 *Released 9 September 2026.*
