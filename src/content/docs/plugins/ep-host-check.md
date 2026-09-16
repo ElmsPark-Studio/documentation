@@ -118,6 +118,14 @@ That is expected on many shared hosts: they block outbound SMTP. Use the host's 
 
 ## Changelog
 
+### 1.3.8
+
+- **The Claude sign-in clock check no longer fails healthy servers.** It used to decide from the server's timezone alone: any host east of Greenwich failed the row, which dragged the whole report to "This host will break PageMotor", even when sign-in demonstrably worked.
+- The problem it warned about was real on PageMotor 0.10, where the sign-in code's expiry was read back in server-local time and a server ahead of UTC treated every code as expired the moment it was issued. PageMotor 0.11 fixed that in core, so on 0.11 the warning was firing on a bug that is no longer there.
+- The row now tests the actual round trip and reports what happened, rather than predicting from the clock. The detail line shows its working, so you can see the measurement instead of taking the verdict on trust.
+- Servers still running PageMotor 0.10 are still failed, because for them the problem is genuine.
+- The suggested fix now leads with updating PageMotor, which removes the dependency on the server clock entirely. Setting `date.timezone = UTC` remains as a fallback, with a warning to check nothing else on the site relies on local time first: some scheduling features do.
+
 ### 1.3.7
 
 - **Corrects the PageMotor 0.11.3 preparation shipped in 1.3.6.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
