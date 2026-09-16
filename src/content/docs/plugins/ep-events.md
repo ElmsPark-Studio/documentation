@@ -214,6 +214,13 @@ If your site uses a sibling plugin EP Events does not yet integrate with, let us
 
 ## Changelog
 
+### 1.0.54
+
+- **Event listings can now show a "from" price.** Add `show_price="true"` to the listing shortcode — `[ep-events view="list" show_price="true"]` — and each event shows the cheapest ticket still on sale, as "From £380".
+- An event with nothing on sale shows no price at all, rather than advertising £0.00. Free tickets read "Free" and donation tickets read "Any amount"; a donation is never used as a "from" price when the event also has a real ticket.
+- Whole amounts drop their decimals in listings, so you get "From £380" rather than "From £380.00".
+- Nothing changes unless you ask for it. Without `show_price` your listings render exactly as before.
+
 ### 1.0.53
 
 - **Corrects the PageMotor 0.11.3 preparation shipped in 1.0.52.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
