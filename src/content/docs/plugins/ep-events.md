@@ -214,6 +214,12 @@ If your site uses a sibling plugin EP Events does not yet integrate with, let us
 
 ## Changelog
 
+### 1.0.55
+
+- **Event listings show their summaries again.** Each card in an `[ep-events]` listing carries a short summary drawn from the event's own body. This has been blank on every site since listings were introduced, so listings that looked deliberately sparse were in fact missing text they were meant to show.
+- **Listing links no longer bounce through a redirect.** Each event link now points straight at the event's real address instead of one the site had to redirect, so clicks land a step sooner and any event filed under a parent page links correctly.
+- Nothing to change on your side. Both fixes apply to existing listings as soon as you update.
+
 ### 1.0.54
 
 - **Event listings can now show a "from" price.** Add `show_price="true"` to the listing shortcode — `[ep-events view="list" show_price="true"]` — and each event shows the cheapest ticket still on sale, as "From £380".
