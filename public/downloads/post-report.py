@@ -14,6 +14,10 @@ build step, nothing to vendor.
     cat report.json | ./post-report.py                    # file a sighting
     cat report.json | ./post-report.py --confirm          # still present, re-dates it
     cat report.json | ./post-report.py --resolve --fixed-in 0.11.3
+    cat report.json | ./post-report.py --resolve --fixed-in 1.2.2 --fixed-in-component ep-sitemap
+    cat report.json | ./post-report.py --withdraw --reason "author input error, not a bug" \
+                                       --superseded-by <64-hex fingerprint of the successor>
+    cat report.json | ./post-report.py --fingerprint   # print the finding's fingerprint, send nothing
     ./post-report.py --check          # verify credentials without posting
     ./post-report.py --dry-run < report.json   # print the envelope, send nothing
 
@@ -26,6 +30,7 @@ import base64
 import hashlib
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -256,7 +261,21 @@ SEVERITIES = ("blocker", "major", "minor", "note")
 # at this version, still present" and re-dates the finding without pretending to
 # be a second occurrence. A resolution retires it. Without the middle one, a
 # re-confirmed finding is indistinguishable from one that quietly went away.
-EVENTS = ("sighting", "confirmation", "resolution")
+# A withdrawal retires a finding that turned out not to be one, WITHOUT a fix.
+# The other three cannot do that honestly: a resolution demands fixed_in, the
+# category is part of the fingerprint so the finding cannot be reclassified in
+# place, and an edit would rewrite what was claimed. It needs a reason, and may
+# name the fingerprint of the finding that carries whatever point survived.
+EVENTS = ("sighting", "confirmation", "resolution", "withdrawal")
+
+
+def fingerprint(category, title):
+    """Mirror of fr_fingerprint() in lib/store.php: sha256(category | normalised
+    title). Kept byte-for-byte in step so a superseded_by computed here resolves
+    on the board."""
+    norm = re.sub(r"[^a-z0-9 ]", "", str(title).lower())
+    norm = re.sub(r"\s+", " ", norm.strip())
+    return hashlib.sha256((str(category) + "|" + norm).encode()).hexdigest()
 
 
 def build_envelope(report):
@@ -276,11 +295,39 @@ def build_envelope(report):
     if event == "resolution" and not str(report.get("fixed_in", "")).strip():
         raise SystemExit("a resolution needs fixed_in (the version it was fixed in)")
 
+    # fixed_in sits beside pm_core, so a bare "1.2.2" reads as PageMotor 1.2.2.
+    # fixed_in_component names what was fixed when it is not core. Empty means
+    # core, so every report filed before this keeps meaning what it meant.
+    component = str(report.get("fixed_in_component", "")).strip()
+    if component:
+        if event != "resolution":
+            raise SystemExit("fixed_in_component only means anything on a resolution")
+        if not re.match(r"^[a-z0-9][a-z0-9-]{1,63}$", component):
+            raise SystemExit("fixed_in_component must be a plugin slug, lowercase with hyphens "
+                             "(e.g. ep-sitemap)")
+
+    # A withdrawal must say why, or a withdrawn finding is indistinguishable
+    # from a suppressed one. superseded_by is a FINGERPRINT (the finding), not
+    # an event id (one observation of it), and cannot be the finding itself.
+    reason = str(report.get("reason", "")).strip()
+    superseded_by = str(report.get("superseded_by", "")).strip()
+    if event == "withdrawal" and not reason:
+        raise SystemExit("a withdrawal needs reason (why the finding is withdrawn)")
+    if reason and event != "withdrawal":
+        raise SystemExit("reason only means anything on a withdrawal")
+    if superseded_by:
+        if event != "withdrawal":
+            raise SystemExit("superseded_by only means anything on a withdrawal")
+        if not re.match(r"^[0-9a-f]{64}$", superseded_by):
+            raise SystemExit("superseded_by must be the successor finding's 64-hex fingerprint")
+        if superseded_by == fingerprint(report["category"], report["title"]):
+            raise SystemExit("superseded_by cannot be the withdrawn finding itself")
+
     # A bug with no reproduction steps is a hunch, and hunches are what silt a
-    # shared pool up. But this applies to SIGHTINGS only: a confirmation or a
-    # resolution attaches to an existing finding that already carries the
-    # repro, and demanding it again would block the very workflow the three
-    # events exist to enable.
+    # shared pool up. But this applies to SIGHTINGS only: a confirmation, a
+    # resolution or a withdrawal attaches to an existing finding that already
+    # carries the repro, and demanding it again would block the very workflow
+    # the events exist to enable.
     repro = report.get("repro")
     if report["category"] == "bug" and event == "sighting":
         if not isinstance(repro, list) or not [s for s in repro if str(s).strip()]:
@@ -298,8 +345,16 @@ def build_envelope(report):
         head = "**[{} / {}]** {}".format(report["category"], report["severity"], report["title"])
     elif event == "confirmation":
         head = "**[CONFIRMED still present on {}]** {}".format(report["pm_core"], report["title"])
+    elif event == "withdrawal":
+        head = "**[WITHDRAWN]** {}".format(report["title"])
     else:
-        head = "**[RESOLVED in {}]** {}".format(report.get("fixed_in", "?"), report["title"])
+        # The headline is what a human skims in the channel, so it has to carry
+        # the component too. "RESOLVED in 1.2.2" reads as PageMotor 1.2.2, which
+        # is the exact ambiguity fixed_in_component exists to remove.
+        _fix = str(report.get("fixed_in", "?"))
+        _comp = str(report.get("fixed_in_component", "")).strip()
+        head = "**[RESOLVED in {}]** {}".format(
+            (_comp + " " + _fix) if _comp else _fix, report["title"])
     body = json.dumps(report, indent=2, ensure_ascii=False)
     return "{}\n\n{}\n\n```json\n{}\n```".format(head, " · ".join(bits), body)
 
@@ -360,17 +415,37 @@ def main():
     except json.JSONDecodeError as e:
         raise SystemExit("stdin is not valid JSON: " + str(e))
 
+    # The fingerprint is what a withdrawal's superseded_by has to name, and what
+    # a confirmation, resolution or withdrawal attaches to. Computing it here,
+    # from the same rule the indexer uses, beats copying it off the board.
+    if "--fingerprint" in sys.argv:
+        for k in ("category", "title"):
+            if not str(report.get(k, "")).strip():
+                raise SystemExit("--fingerprint needs category and title")
+        print(fingerprint(report["category"], report["title"]))
+        return
+
     # Convenience flags. The payload can carry "event" itself; these just save
     # editing the JSON for the two common cases. A confirmation or resolution
     # must repeat the original finding's title verbatim, because that is what
     # attaches it to the finding rather than starting a new one.
     if "--confirm" in sys.argv:
         report["event"] = "confirmation"
+    for i, a in enumerate(sys.argv):
+        if a == "--fixed-in-component" and i + 1 < len(sys.argv):
+            report["fixed_in_component"] = sys.argv[i + 1]
     if "--resolve" in sys.argv:
         report["event"] = "resolution"
         for i, a in enumerate(sys.argv):
             if a == "--fixed-in" and i + 1 < len(sys.argv):
                 report["fixed_in"] = sys.argv[i + 1]
+    if "--withdraw" in sys.argv:
+        report["event"] = "withdrawal"
+    for i, a in enumerate(sys.argv):
+        if a == "--reason" and i + 1 < len(sys.argv):
+            report["reason"] = sys.argv[i + 1]
+        if a == "--superseded-by" and i + 1 < len(sys.argv):
+            report["superseded_by"] = sys.argv[i + 1]
 
     content = build_envelope(report)
 
