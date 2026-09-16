@@ -30,6 +30,13 @@ It integrates with EP Events (the schedule) and EP Events Recurring (cover overr
 
 ## Changelog
 
+### 1.1.16
+
+- **Stops the plugin filling your site's PHP error log.** On a site whose instructor records were imported or seeded rather than typed into the admin form, every visit to the Instructors admin screen wrote a batch of "Deprecated" lines to the error log. One studio's log had reached 163MB. Nothing was broken on screen, and no visitor ever saw it, but the log grows until the disk notices.
+- **A payroll pay-line belonging to a deleted instructor now reads "(removed instructor)"** instead of an empty name cell. The payroll CSV and the Markdown export already said this; the on-screen table did not.
+- Same fix applies to the MCP payroll summary, which grouped those pay-lines under a blank name.
+- Nothing you can see changes otherwise. Worth taking on any site running PHP 8.2 or newer.
+
 ### 1.1.15
 
 - **Corrects the PageMotor 0.11.3 preparation shipped in 1.1.14.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
