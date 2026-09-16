@@ -214,6 +214,15 @@ If your site uses a sibling plugin EP Events does not yet integrate with, let us
 
 ## Changelog
 
+### 1.0.61
+
+- **Tickets stop selling when the event ends.** An event that has already finished no longer shows a registration form with a working checkout button. If you never set a ticket sales close, the event's own end time is now used as one.
+- Sales close at the event's **end**, not its start, so selling on the day is unaffected: late arrivals and walk-ins can still buy while the event is running. Only sales after it has finished are refused.
+- **Nothing changes for a ticket you gave an explicit sales close.** That date still wins, exactly as before, whether it falls before or after the event.
+- **Selling a recording or on-demand access after the event?** Set `sells_after_event` to `true` on that ticket and it keeps selling with no close at all. Like the sales window itself, it is a ticket field set through the API or an AI schema import, not a setting on the admin screen.
+- A finished event's page now reads "No tickets are currently on sale for this event." in place of the form, and the event's Google listing data stops advertising the offer as open.
+- Checkout refuses a closed ticket too, not just the page. A stale tab or a direct post can no longer buy a ticket the page would not show you.
+
 ### 1.0.60
 
 - **A listing never loses its badges to EP Cards again.** The mode, category and sold-out chips on each listing card are handed to EP Cards to draw. EP Cards only gained a badge field in its 1.0.22 release, so on a site still running an older EP Cards the chips had nowhere to go and vanished. The listing now checks first, and falls back to this plugin's own cards — which have always drawn the chips — rather than handing them to a renderer that will drop them.

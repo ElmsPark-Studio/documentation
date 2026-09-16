@@ -61,7 +61,7 @@
   },
   "ep-cards": {
     "tier": "business",
-    "version": "1.0.21"
+    "version": "1.0.22"
   },
   "ep-cards-importer": {
     "tier": "business",
@@ -89,7 +89,7 @@
   },
   "ep-courses": {
     "tier": "add-on",
-    "version": "0.5.1"
+    "version": "0.5.2"
   },
   "ep-cron": {
     "tier": "foundation",
@@ -189,7 +189,7 @@
   },
   "ep-email-mailgun": {
     "tier": "add-on",
-    "version": "1.0.10"
+    "version": "1.0.11"
   },
   "ep-email-quiz": {
     "tier": "professional",
@@ -197,7 +197,7 @@
   },
   "ep-events": {
     "tier": "foundation",
-    "version": "1.0.53"
+    "version": "1.0.61"
   },
   "ep-events-recurring": {
     "tier": "foundation",
@@ -209,11 +209,11 @@
   },
   "ep-finance": {
     "tier": "professional",
-    "version": "0.6.0"
+    "version": "0.7.1"
   },
   "ep-finance-autopilot": {
     "tier": "professional",
-    "version": "0.1.7"
+    "version": "0.1.8"
   },
   "ep-finance-importer": {
     "tier": "professional",
@@ -225,7 +225,7 @@
   },
   "ep-finance-receipts": {
     "tier": "professional",
-    "version": "0.1.8"
+    "version": "0.1.9"
   },
   "ep-finance-sources": {
     "tier": "professional",
@@ -233,15 +233,15 @@
   },
   "ep-finance-tax-ie": {
     "tier": "professional",
-    "version": "0.1.4"
+    "version": "0.1.5"
   },
   "ep-finance-tax-uk": {
     "tier": "professional",
-    "version": "0.1.6"
+    "version": "0.1.7"
   },
   "ep-finance-tax-us": {
     "tier": "professional",
-    "version": "0.1.4"
+    "version": "0.1.5"
   },
   "ep-flows": {
     "tier": "professional",
@@ -433,14 +433,14 @@
   },
   "tibaai-dashboard": {
     "tier": "private",
-    "version": "0.10.9"
+    "version": "0.10.12"
   },
   "tibaai-discovery": {
     "tier": "private",
-    "version": "1.11.35-httptools"
+    "version": "1.11.41-page"
   },
   "tibaai-editor": {
     "tier": "private",
-    "version": "0.3.5"
+    "version": "0.3.8"
   }
 }
