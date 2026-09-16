@@ -214,6 +214,11 @@ If your site uses a sibling plugin EP Events does not yet integrate with, let us
 
 ## Changelog
 
+### 1.0.59
+
+- **You can choose which card markup a listing uses.** `renderer="native"` renders a listing with EP Events' own cards even when EP Cards is installed, so a theme that styles one listing can style all of them. `renderer="cards"` asks for EP Cards explicitly.
+- Without it, nothing changes: listings use EP Cards when it is active, exactly as before. `show_price="true"` still selects the native cards on its own, because EP Cards cannot carry a price.
+
 ### 1.0.58
 
 - **Listings can now show past events.** Add `when="past"` to show the events that have already happened, most recent first, or `when="all"` for everything. `when="upcoming"` is the default and is what every existing listing already does.
