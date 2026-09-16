@@ -214,6 +214,11 @@ If your site uses a sibling plugin EP Events does not yet integrate with, let us
 
 ## Changelog
 
+### 1.0.57
+
+- **Listing summaries end on a whole word.** A summary long enough to be shortened now ends at a word with an ellipsis, instead of stopping mid-word as though the text had been cut off.
+- Completes the listing summary work in 1.0.55 and 1.0.56.
+
 ### 1.0.56
 
 - **Listing summaries now read as prose.** A card takes the event's first real paragraph, so an event whose body opens with breadcrumbs or a date-and-venue line no longer summarises as "Home / Events / …" followed by its own meta row.
