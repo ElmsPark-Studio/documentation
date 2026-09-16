@@ -214,6 +214,12 @@ If your site uses a sibling plugin EP Events does not yet integrate with, let us
 
 ## Changelog
 
+### 1.0.56
+
+- **Listing summaries now read as prose.** A card takes the event's first real paragraph, so an event whose body opens with breadcrumbs or a date-and-venue line no longer summarises as "Home / Events / …" followed by its own meta row.
+- **Punctuation in summaries displays properly.** Characters written as HTML entities in the body, such as a middle dot, appeared literally as `&middot;` on the card. They now render as the character.
+- Follows on from 1.0.55, which restored listing summaries after they had been blank on every site.
+
 ### 1.0.55
 
 - **Event listings show their summaries again.** Each card in an `[ep-events]` listing carries a short summary drawn from the event's own body. This has been blank on every site since listings were introduced, so listings that looked deliberately sparse were in fact missing text they were meant to show.
