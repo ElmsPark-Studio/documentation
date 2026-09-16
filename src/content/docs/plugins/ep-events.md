@@ -214,6 +214,12 @@ If your site uses a sibling plugin EP Events does not yet integrate with, let us
 
 ## Changelog
 
+### 1.0.60
+
+- **A listing never loses its badges to EP Cards again.** The mode, category and sold-out chips on each listing card are handed to EP Cards to draw. EP Cards only gained a badge field in its 1.0.22 release, so on a site still running an older EP Cards the chips had nowhere to go and vanished. The listing now checks first, and falls back to this plugin's own cards — which have always drawn the chips — rather than handing them to a renderer that will drop them.
+- **Update EP Cards to 1.0.22 or later** and your listings go back to EP Cards markup with the chips included, which is the better-looking of the two. Nothing to configure either way.
+- This only affects listings whose events actually have chips to show. A listing with no badges is handed to EP Cards exactly as before, on any version.
+
 ### 1.0.59
 
 - **You can choose which card markup a listing uses.** `renderer="native"` renders a listing with EP Events' own cards even when EP Cards is installed, so a theme that styles one listing can style all of them. `renderer="cards"` asks for EP Cards explicitly.
