@@ -214,6 +214,13 @@ If your site uses a sibling plugin EP Events does not yet integrate with, let us
 
 ## Changelog
 
+### 1.0.58
+
+- **Listings can now show past events.** Add `when="past"` to show the events that have already happened, most recent first, or `when="all"` for everything. `when="upcoming"` is the default and is what every existing listing already does.
+- The window is worked out from the day the page is served, so a past-events section keeps itself right as events go by. There is no date to go back and change.
+- **Listings can be sorted.** `order="start_asc"`, `order="start_desc"` or `order="created_desc"` override the default for that listing.
+- Nothing changes unless you ask for it. A listing with no `when` renders exactly as before.
+
 ### 1.0.57
 
 - **Listing summaries end on a whole word.** A summary long enough to be shortened now ends at a word with an ellipsis, instead of stopping mid-word as though the text had been cut off.
