@@ -247,6 +247,14 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.0.22
+
+- **Cards can now show badges.** Small chips above the card title — "Online", "Sold out", a category name — for the plugins that build cards for you.
+- **Fixes missing "Sold out" and "Online" flags on EP Events listings.** EP Events has always built those chips, but this plugin had no badge field to put them in, so on any site running both, they were dropped before the page was drawn. A sold-out event showed nothing to say it was sold out. Updating EP Cards is all it takes — the chips appear on your existing listings, with no change to EP Events and nothing to switch on.
+- **Cards built by another plugin no longer share one HTML id.** Every such card carried `id="ep-card-0"`, so a listing of twelve events put twelve identical ids on the page. That breaks in-page links and screen-reader labelling. These cards now carry no id rather than a duplicate one.
+- Quieter error logs: a card built by another plugin raised three PHP warnings each time it rendered. Invisible on a live site, but it filled the log on every listing view.
+- Your own cards, and the `[ep_card]` and `[ep_card_group]` shortcodes, render exactly as before. Nothing to change.
+
 ### 1.0.21
 
 - **Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11.** The message appeared on this plugin's settings screen, including its uploads even though you were signed in perfectly normally, and whatever you were doing failed to save.
