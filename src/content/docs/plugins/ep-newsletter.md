@@ -262,6 +262,11 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.8.6
+
+- **Fixes a crash on the newsletter signup form when an older EP plugin is installed on the same site.** Submitting the form returned an internal error and nothing was saved or sent. EP plugins share one common code library, and whichever copy loads first is the one every EP plugin on that site uses, so a single out-of-date plugin could leave this one calling a spam check its copy did not have. The check now carries its own fallback and no longer depends on another plugin being up to date.
+- No change on a site where this never happened: the same spam check runs, and nothing else changed.
+
 ### 1.8.5
 
 - **Makes the API's double opt-in option visible where people actually look for it.** `subscribe` has been able to run the full double opt-in flow since 1.5.3, by passing `double_optin: true`, but PageMotor's action menu shows only the first sentence of an action's description and ours was the four-word "Subscribe a contact." Anyone browsing the API to find a confirmation-email trigger saw nothing, and reasonably concluded there wasn't one. The first sentence now names the option. No behaviour has changed.

@@ -214,6 +214,11 @@ The gate names a level that isn't defined in settings — undefined levels fail 
 
 ## Changelog
 
+### 0.6.5
+
+- **Fixes a crash on the registration and login forms when an older EP plugin is installed on the same site.** Submitting the form returned an internal error and the sign-up or sign-in failed. EP plugins share one common code library, and whichever copy loads first is the one every EP plugin on that site uses, so a single out-of-date plugin could leave this one calling a spam check its copy did not have. The check now carries its own fallback and no longer depends on another plugin being up to date.
+- No change on a site where this never happened: the same spam check runs, and nothing else changed.
+
 ### 0.6.4
 
 9 September 2026. **The Log out control is now a button, not a link, and you should update.**

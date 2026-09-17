@@ -353,6 +353,11 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 2.4.25
+
+- **Fixes a crash on the booking form when an older EP plugin is installed on the same site.** Submitting the form returned an internal error and nothing was saved or sent. EP plugins share one common code library, and whichever copy loads first is the one every EP plugin on that site uses, so a single out-of-date plugin could leave this one calling a spam check its copy did not have. The check now carries its own fallback and no longer depends on another plugin being up to date.
+- No change on a site where this never happened: the same spam check runs, and nothing else changed.
+
 ### 2.4.24
 
 - **Fixes stored keys and passwords reading as empty after a PageMotor 0.11.3 or 0.11.4 update.** After the core update, every secret this plugin had encrypted at rest came back blank, so anything that needed it failed with an authentication error until the value was typed in again. Nothing was deleted: the encrypted value was still in the settings row, but PageMotor 0.11.3 moved the site secret that opens it, and this plugin was still looking in the old place. It now finds the secret in both places, so an existing value opens again without re-entry, and a value that was re-entered in the meantime keeps working and is moved back under the site secret.

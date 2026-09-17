@@ -115,6 +115,11 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.0.25
+
+- **Fixes a crash on the testimonial form when an older EP plugin is installed on the same site.** Submitting the form returned an internal error and nothing was saved or sent. EP plugins share one common code library, and whichever copy loads first is the one every EP plugin on that site uses, so a single out-of-date plugin could leave this one calling a spam check its copy did not have. The check now carries its own fallback and no longer depends on another plugin being up to date.
+- No change on a site where this never happened: the same spam check runs, and nothing else changed.
+
 ### 1.0.24
 
 - **Blocks a spam bot that was getting past the form honeypot.** The scraper changed its network address on every single request, so blocking by address never caught it, but it always sent a malformed browser identifier that no real browser sends. Forms now reject anything carrying that signature, with the same silent response a caught bot already got.
