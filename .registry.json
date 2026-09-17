@@ -99,6 +99,10 @@
     "tier": "foundation",
     "version": "0.2.5"
   },
+  "ep-decision-sync": {
+    "tier": "private",
+    "version": "1.0.2"
+  },
   "ep-diagnostics": {
     "tier": "foundation",
     "version": "1.2.9"
@@ -229,7 +233,7 @@
   },
   "ep-finance-sources": {
     "tier": "professional",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "ep-finance-tax-ie": {
     "tier": "professional",
