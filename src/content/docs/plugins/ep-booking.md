@@ -353,6 +353,11 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 2.4.24
+
+- **Fixes stored keys and passwords reading as empty after a PageMotor 0.11.3 or 0.11.4 update.** After the core update, every secret this plugin had encrypted at rest came back blank, so anything that needed it failed with an authentication error until the value was typed in again. Nothing was deleted: the encrypted value was still in the settings row, but PageMotor 0.11.3 moved the site secret that opens it, and this plugin was still looking in the old place. It now finds the secret in both places, so an existing value opens again without re-entry, and a value that was re-entered in the meantime keeps working and is moved back under the site secret.
+- If you updated PageMotor and then re-entered a key or password, there is nothing to do. If you updated and have not re-entered it, this release restores it on the next page load.
+
 ### 2.4.23
 
 - **Fixed: installing a second plugin that also takes Stripe payments could take the whole site down.** Five plugins in the suite share the same Stripe helper. With any two of them switched on, the second to load failed outright and PageMotor disabled it to protect the site, so turning on a new Stripe-capable plugin silently cost you the one you already had, with nothing obvious to explain it.

@@ -129,6 +129,11 @@ The payment was authorised but not captured, or was captured through a different
 
 ## Changelog
 
+### 0.1.15
+
+- **Fixes stored keys and passwords reading as empty after a PageMotor 0.11.3 or 0.11.4 update.** After the core update, every secret this plugin had encrypted at rest came back blank, so anything that needed it failed with an authentication error until the value was typed in again. Nothing was deleted: the encrypted value was still in the settings row, but PageMotor 0.11.3 moved the site secret that opens it, and this plugin was still looking in the old place. It now finds the secret in both places, so an existing value opens again without re-entry, and a value that was re-entered in the meantime keeps working and is moved back under the site secret.
+- If you updated PageMotor and then re-entered a key or password, there is nothing to do. If you updated and have not re-entered it, this release restores it on the next page load.
+
 ### 0.1.14
 
 7 September 2026. Email and name are validated before the PayPal popup opens instead of after. New Hide These Funding Options setting. One-time orders return the approval URL as subscriptions already did, for custom checkouts. The script loads only on checkout pages and is served with a version stamp so browsers pick up each release.

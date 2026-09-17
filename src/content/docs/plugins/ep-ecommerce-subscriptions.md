@@ -152,6 +152,11 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 0.2.16
+
+- **Fixes stored keys and passwords reading as empty after a PageMotor 0.11.3 or 0.11.4 update.** After the core update, every secret this plugin had encrypted at rest came back blank, so anything that needed it failed with an authentication error until the value was typed in again. Nothing was deleted: the encrypted value was still in the settings row, but PageMotor 0.11.3 moved the site secret that opens it, and this plugin was still looking in the old place. It now finds the secret in both places, so an existing value opens again without re-entry, and a value that was re-entered in the meantime keeps working and is moved back under the site secret.
+- If you updated PageMotor and then re-entered a key or password, there is nothing to do. If you updated and have not re-entered it, this release restores it on the next page load.
+
 ### 0.2.15
 
 - **Fixed: on a site where this plugin was switched on but its settings page had never been opened, every membership-gated page broke for signed-in visitors only.** Protected pages returned an error to anyone logged in, while visitors who were not signed in saw the normal "members only" prompt. That asymmetry is the dangerous part: the site owner, usually signed in, sees a broken page the public cannot see, or the reverse, depending on who happens to look.

@@ -262,6 +262,10 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.8.5
+
+- **Makes the API's double opt-in option visible where people actually look for it.** `subscribe` has been able to run the full double opt-in flow since 1.5.3, by passing `double_optin: true`, but PageMotor's action menu shows only the first sentence of an action's description and ours was the four-word "Subscribe a contact." Anyone browsing the API to find a confirmation-email trigger saw nothing, and reasonably concluded there wasn't one. The first sentence now names the option. No behaviour has changed.
+
 ### 1.8.4
 
 - **Corrects the PageMotor 0.11.3 preparation shipped in 1.8.3.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.

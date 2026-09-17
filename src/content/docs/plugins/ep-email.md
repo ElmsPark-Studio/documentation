@@ -478,6 +478,16 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.10.55
+
+- **A warning now appears in the admin bar when SMTP is selected with authentication but no password is saved.** Until now that state failed silently: every contact form submission was refused by the mail server with an authentication error, and nobody knew until someone tested the form. On PageMotor 0.11 and later the warning sits in the admin notifications flag with a link to the settings page, and it clears itself the moment a password is saved or the transport changes. On every core the Transport status card on the EP Email settings page turns red with the same message.
+- Asked for by MarkieSparky on forum topic 717, after the 0.11.3/0.11.4 secret move (fixed in 1.10.54) left contact forms failing for days with no sign of it in the admin.
+
+### 1.10.54
+
+- **Fixes the SMTP password reading as empty after a PageMotor 0.11.3 or 0.11.4 update.** After the core update every send failed with `535 Incorrect authentication data` and the password field showed blank, until the password was typed in again. Nothing was deleted: the encrypted password was still in the settings row, but PageMotor 0.11.3 moved the site secret that opens it, and this plugin was still looking in the old place. It now finds the secret in both places, so an existing password opens again without re-entry, and a password that was re-entered in the meantime keeps working and is moved back under the site secret.
+- If you updated PageMotor and then re-entered the password, there is nothing to do. If you updated and have not re-entered it, this release restores it on the next page load.
+
 ### 1.10.53
 
 - **Corrects the PageMotor 0.11.3 preparation shipped in 1.10.52.** That release grouped this plugin's API and MCP actions into families, but in a shape PageMotor 0.11.3 does not accept. On 0.11.3 the plugin would have registered none of its actions, and nothing on screen would have said so.
