@@ -164,6 +164,12 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.2.14
+
+- **Stops counting machine traffic as page views.** If your site has an AI connector wired to it, or anything else talking to its API, every one of those calls was being recorded as a visit, showing up in your figures as traffic to `/mcp/` or `/api/`. Only real page views are recorded now. OAuth handshakes and `.well-known` lookups are excluded for the same reason.
+- Views already recorded that way stay in your history. They are visible as page paths beginning `/mcp/`, `/api/` or `/oauth/` and can be deleted by hand if you want the figures clean.
+- Nothing else changed, and a site with no connector wired sees no difference at all.
+
 ### 1.2.13
 
 - **Fixes a crash on the first visit to your site after you activate the plugin.** Nothing had created the plugin's tables yet, and the part that records the visit wrote to them anyway, which ended in a fatal error in your site's error log. The tables are now created on that first visit if they are missing.
