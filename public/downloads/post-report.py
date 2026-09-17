@@ -19,6 +19,7 @@ build step, nothing to vendor.
                                        --superseded-by <64-hex fingerprint of the successor>
     cat report.json | ./post-report.py --fingerprint   # print the finding's fingerprint, send nothing
     ./post-report.py --check          # verify credentials without posting
+    ./post-report.py --version        # print build and version, needs no key
     ./post-report.py --dry-run < report.json   # print the envelope, send nothing
 
 This script does NOT scrub and does NOT ask permission. Both belong to whatever
@@ -35,6 +36,37 @@ import sys
 import time
 import urllib.request
 import urllib.error
+
+# --------------------------------------------------------------------------
+# Version stamp.
+#
+# The published copy of this file is refreshed in place at the same URL, so a
+# consumer who pins it by checksum can tell that the bytes changed but not
+# WHICH build they now hold. Worse, a stale publish and an unshipped feature
+# look identical from outside: both present as "the flag isn't there yet".
+# __version__ answers which build; build_id() is computed from the file itself
+# so the stamp and the bytes it describes cannot drift apart.
+#
+# 1.0.0 to 1.4.0 were assigned retrospectively to the commits that introduced
+# each feature, so comparing against them means something:
+#   1.0.0  initial publish
+#   1.1.0  key verification, repro enforced, --search
+#   1.2.0  confirm and resolve events
+#   1.3.0  severity on the latest observation, --fixed-in-component
+#   1.4.0  --withdraw
+#   1.5.0  this build: --version
+# --------------------------------------------------------------------------
+__version__ = "1.5.0"
+
+
+def build_id():
+    """sha256 of this file, first 12 hex, computed at runtime."""
+    try:
+        with open(os.path.realpath(__file__), "rb") as fh:
+            return hashlib.sha256(fh.read()).hexdigest()[:12]
+    except Exception:
+        return "unknown"
+
 
 # --------------------------------------------------------------------------
 # BIP-340 Schnorr signing over secp256k1. Pure Python, no dependencies.
@@ -360,6 +392,13 @@ def build_envelope(report):
 
 
 def main():
+    # Ahead of the credential checks on purpose: identifying the build must not
+    # require a key, or the check is useless to whoever is deciding whether to
+    # trust the copy they just downloaded.
+    if "--version" in sys.argv:
+        print("post-report.py {} (build {})".format(__version__, build_id()))
+        return
+
     relay = os.environ.get("BUZZ_RELAY_URL", "").strip()
     channel = os.environ.get("BUZZ_CHANNEL", "").strip()
     keyraw = os.environ.get("BUZZ_PRIVATE_KEY", "").strip()
