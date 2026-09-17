@@ -38,10 +38,8 @@ You bring your own API key, billed per message to your own provider account. The
 
 ## Installation
 
-EP Concierge is currently **supplied and updated by ElmsPark directly** — it is not on the ElmsPark update channel yet, so it does not appear in your site's Updates screen. Contact ElmsPark for the zip (see [EP Suite plugins](https://elmspark.com/suite/)); updates arrive the same way.
-
-1. Upload `ep-concierge.zip` via **Plugins → Manage Plugins**.
-2. Activate.
+1. `ep-concierge.zip` comes with an EP Suite licence, and ElmsPark supplies it directly (see [EP Suite plugins](https://elmspark.com/suite/ep-concierge/)); after install it updates through your site's **Updates** screen.
+2. Upload via **Plugins → Manage Plugins**. Activate.
 3. Open **Plugin Settings → EP Concierge**, set the provider and API key, tick **Enable chat assistant**, and fill in the knowledge box.
 
 The chat bubble only appears once the plugin is enabled **and** an API key is saved.
