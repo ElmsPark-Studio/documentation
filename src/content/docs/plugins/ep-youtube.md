@@ -122,6 +122,13 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.0.12
+
+- **Fixes videos showing a blank click-to-load box with no poster image.** YouTube does not generate the standard-definition thumbnail for every upload, and the plugin used it as the default poster with no fallback, so those videos rendered an empty box with only the play button. The poster now steps down one tier at a time when YouTube has no image at that size (maximum, then standard, then high quality, which YouTube generates for every video). Box size and cropping are unchanged.
+- The Self-Host Thumbnails download uses the same fallback, so a video whose standard thumbnail is missing now caches locally instead of failing.
+- The front-end script is now cache-busted on PageMotor 0.11.2 and earlier, so this fix reaches visitors on their next page load rather than after their browser cache expires. On 0.11.3 and later core already does this.
+- The Default Thumbnail Resolution setting labels now say which tier is always available (High Quality) and which can be missing (Standard, Maximum). No settings change or migration required.
+
 ### 1.0.11
 
 - **Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11.** The message appeared on this plugin's admin screens even though you were signed in perfectly normally, and whatever you were doing failed to save.
