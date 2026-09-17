@@ -164,6 +164,13 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.2.13
+
+- **Fixes a crash on the first visit to your site after you activate the plugin.** Nothing had created the plugin's tables yet, and the part that records the visit wrote to them anyway, which ended in a fatal error in your site's error log. The tables are now created on that first visit if they are missing.
+- **A missing or dropped table now repairs itself** instead of failing every time. If a table disappears, the next visit rebuilds it and records the visit.
+- **Recording a visit can no longer take your site down.** The tracking step and the daily tidy-up are now sealed off: if either fails, the failure is written to your error log and the page carries on serving.
+- This also carries the current shared EP Suite code. Older copies of this plugin could stop other EP plugins working on the same site, so updating it is worth doing even if you never saw the crash above.
+
 ### 1.2.12
 
 - **Fixes "Your session has expired. Please reload to ensure your security." on PageMotor 0.11.** The message appeared on this plugin's admin screens even though you were signed in perfectly normally, and whatever you were doing failed to save.

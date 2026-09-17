@@ -77,6 +77,13 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.1.9
+
+- **Stops privately-marked pages appearing in your feed.** The previous release fixed this for whole content types that are marked private. It did not cover a page you protect one at a time, which is how EP Private Access works: your feed could carry that page's title, its opening text and its address, while the page itself still asked the visitor to sign in. If you protect individual pages, treat anything that appeared in your feed before this release as having been public.
+- Every item is now offered to your other plugins before it goes out, so a plugin that protects a page can keep that page out of the feed. Protecting pages one at a time needs EP Private Access 1.0.6 or later.
+- **Turning a protection plugin on or off now takes effect straight away.** Feeds are cached for up to an hour, and the cached copy used to outlive that change. It no longer does.
+- Nothing else changed. A site with no protection plugin produces exactly the feed it did before.
+
 ### 1.1.8
 
 - **Stops protected content appearing in your feed.** Members-only pages were being published to anyone who asked for the feed: the title and excerpt at `/feed`, and the full text where the feed is set to include it. A feed for a single content type served that entire protected type on request. If you use EP Membership or any plugin with protected content, treat anything published before this release as having been public.

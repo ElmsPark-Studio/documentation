@@ -13,7 +13,7 @@
   },
   "ep-analytics": {
     "tier": "foundation",
-    "version": "1.2.12"
+    "version": "1.2.13"
   },
   "ep-ar-preview": {
     "tier": "foundation",
@@ -357,7 +357,7 @@
   },
   "ep-rss": {
     "tier": "foundation",
-    "version": "1.1.8"
+    "version": "1.1.9"
   },
   "ep-scheduled-content": {
     "tier": "professional",
@@ -441,7 +441,7 @@
   },
   "tibaai-dashboard": {
     "tier": "private",
-    "version": "0.10.13"
+    "version": "0.10.15"
   },
   "tibaai-discovery": {
     "tier": "private",
