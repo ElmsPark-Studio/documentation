@@ -64,6 +64,7 @@ Pay-lines still waiting for approval are never posted.
 |---|---|
 | **Source toggles** | Turn any bridge off if you never want it posting to the book |
 | **Account mapping overrides** | Point any of the accounts it uses at one of your own, if you already keep a real chart of accounts |
+| **Stripe feed** | Off by default. A Stripe key (a restricted key with read access to Balance transactions is enough, stored encrypted), the date the first sync reads from, and a bank account for payouts. "Preview: Stripe feed" shows what would be posted without posting; "Sync: Stripe feed" posts |
 
 The plugin creates the accounts and categories it needs the first time you press **Set up default accounts and categories**. Everything is saved with PageMotor's own Save button.
 
@@ -72,6 +73,18 @@ The plugin creates the accounts and categories it needs the first time you press
 Orders post the moment they are fulfilled. The other sources are swept, nightly where EP Cron is available, and on demand from the buttons on the settings screen. There is a button per source and one for all of them.
 
 ## Changelog
+
+### 0.3.0
+
+*Released 17 September 2026.*
+
+- **Money that never went through an EP plugin now reaches the book.** A Stripe invoice paid by a client, a payment link, a charge made from the Stripe Dashboard, and every payout to your bank used to be invisible to EP Finance, because every source here started from an EP plugin's own record. The new Stripe feed reads your Stripe balance and posts each movement as its own entry: payments, refunds, payouts and Stripe's own fees.
+- **Payment fees are split per payment, not swept in bulk.** Each Stripe payment posts the gross to sales, the fee to payment processing and the net to the Stripe balance, from Stripe's own figures for that payment.
+- **Payouts move money from the Stripe balance to a bank account** the plugin creates for you ("Bank account (Stripe payouts)"), or one you already keep, so the Stripe balance in the book tracks the one in your Dashboard.
+- **A preview button shows what would be posted before anything is.** "Preview: Stripe feed" reads the balance and lists every transaction with what the feed would do with it; "Sync: Stripe feed" posts. The nightly sweep includes the feed once it is switched on.
+- **Nothing is counted twice.** A payment that EP Ecommerce already booked is recognised by its Stripe reference and skipped. Re-running a sync, or overlapping the last one, changes nothing.
+- **Nothing is guessed.** A transaction in a currency the book does not keep is skipped and listed for you unless a rate provider can supply that day's rate. Disputes, adjustments and transfers are counted and reported by type for a human to post.
+- **The Stripe key is yours to give, and stored encrypted.** A restricted key with read access to Balance transactions is enough; the feed never writes to Stripe. Off until you switch it on.
 
 ### 0.2.0
 
