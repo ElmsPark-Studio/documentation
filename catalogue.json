@@ -1026,6 +1026,15 @@
             "EP WP Exporter"
           ],
           "blurb": "WordPress companion plugin. Install on a WordPress source site to produce a JSON snapshot for migration to PageMotor. Read-only."
+        },
+        {
+          "slugs": [
+            "ep-decision-sync"
+          ],
+          "titles": [
+            "EP Decision Sync"
+          ],
+          "blurb": "Server-side save and load for interactive plan documents: ticks, notes and calculator settings per document key, attributed and versioned."
         }
       ]
     }

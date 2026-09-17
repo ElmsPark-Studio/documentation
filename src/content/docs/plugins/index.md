@@ -140,6 +140,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Connect](/plugins/ep-connect/)**. Outbound webhooks for Zapier, Make, Slack, or any URL.
 - **[EP Cron](/plugins/ep-cron/)**. One secure, observable background-task scheduler for the whole EP Suite. A single heartbeat drains every due task exactly once.
 - **[EP Dashboard](/plugins/ep-dashboard/)**. A branded Command Centre for the PageMotor admin. Every active EP Suite plugin contributes its own panel.
+- **[EP Decision Sync](/plugins/ep-decision-sync/)**. Server-side save and load for interactive plan documents: ticks, notes and calculator settings per document key, attributed and versioned.
 - **[EP Diagnostics](/plugins/ep-diagnostics/)**. System report for support requests.
 - **[EP Flows](/plugins/ep-flows/)**. The EP Suite automation engine. Trigger, conditions, actions, authored by talking to your site over MCP instead of a drag-and-drop builder.
 - **[EP Helpdesk](/plugins/ep-helpdesk/)**. Support ticket system with AI-drafted replies.
