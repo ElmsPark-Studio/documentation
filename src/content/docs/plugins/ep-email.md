@@ -478,6 +478,11 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.10.56
+
+- **Restores spam protection on sites running an older EP plugin alongside this one.** EP plugins share one common code library and whichever copy loads first is the one they all use, so an out-of-date plugin could leave this one without the check that rejects a particular spam bot. The check was being switched off in that case; it now carries its own copy and keeps working. Contact form submissions were never blocked or lost by this, the spam simply got through.
+- No change on a site where every EP plugin is current.
+
 ### 1.10.55
 
 - **A warning now appears in the admin bar when SMTP is selected with authentication but no password is saved.** Until now that state failed silently: every contact form submission was refused by the mail server with an authentication error, and nobody knew until someone tested the form. On PageMotor 0.11 and later the warning sits in the admin notifications flag with a link to the settings page, and it clears itself the moment a password is saved or the transport changes. On every core the Transport status card on the EP Email settings page turns red with the same message.

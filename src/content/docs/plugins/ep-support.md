@@ -97,6 +97,11 @@ For anything bigger than a quick chat question — a bug report, a feature reque
 
 ## Changelog
 
+### 1.1.26
+
+- **Fixes a crash on the chat form when an older EP plugin is installed on the same site.** Sending a message returned an internal error and the message was lost. EP plugins share one common code library and whichever copy loads first is the one they all use, so a single out-of-date plugin could leave this one calling a spam check its copy did not have.
+- The check now carries its own fallback, so it keeps working rather than being skipped.
+
 ### 1.1.25
 
 - **Fixes stored keys and passwords reading as empty after a PageMotor 0.11.3 or 0.11.4 update.** After the core update, every secret this plugin had encrypted at rest came back blank, so anything that needed it failed with an authentication error until the value was typed in again. Nothing was deleted: the encrypted value was still in the settings row, but PageMotor 0.11.3 moved the site secret that opens it, and this plugin was still looking in the old place. It now finds the secret in both places, so an existing value opens again without re-entry, and a value that was re-entered in the meantime keeps working and is moved back under the site secret.

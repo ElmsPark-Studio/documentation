@@ -161,7 +161,7 @@
   },
   "ep-email": {
     "tier": "foundation",
-    "version": "1.10.55"
+    "version": "1.10.56"
   },
   "ep-email-advanced-forms": {
     "tier": "professional",
@@ -405,7 +405,7 @@
   },
   "ep-support": {
     "tier": "professional",
-    "version": "1.1.25"
+    "version": "1.1.26"
   },
   "ep-testimonials": {
     "tier": "professional",
