@@ -76,6 +76,7 @@ Each guide follows the same shape: what the plugin does, how to install it, how 
 - **[EP Holiday Bookings](/plugins/ep-holiday-bookings/)**. Holiday packages, enquiry-first booking, deposit/balance for independent travel agents.
 - **[EP Membership](/plugins/ep-membership/)**. Public registration, login, member levels, content gating.
 - **[EP Membership Pages](/plugins/ep-membership-pages/)**. Companion to EP Membership: themed, level-protected Members Pages whose refusal is your upgrade prompt, not a 404.
+- **[EP Vaccinations](/plugins/ep-vaccinations/)**. Pet vaccination tracking for boarding sites: clients upload the card, Claude reads it, reminders go out, and a lapsed vaccine blocks new bookings.
 
 ### Studio operations
 

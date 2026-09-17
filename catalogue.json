@@ -470,6 +470,15 @@
             "EP Boarding — Services"
           ],
           "blurb": "Puts EP Booking appointment services, such as a Meet and Greet, in the same booking widget as your overnight stays."
+        },
+        {
+          "slugs": [
+            "ep-vaccinations"
+          ],
+          "titles": [
+            "EP Vaccinations"
+          ],
+          "blurb": "Pet vaccination tracking for boarding sites: clients upload the card, Claude reads it, reminders go out, and a lapsed vaccine blocks new bookings."
         }
       ]
     },
