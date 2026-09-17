@@ -537,6 +537,15 @@
         },
         {
           "slugs": [
+            "ep-ar-preview"
+          ],
+          "titles": [
+            "EP AR Preview"
+          ],
+          "blurb": "A \"See it on your wall\" button: iPhone and iPad visitors see a print or framed artwork on their own wall at true size, no app needed. The AR model is built and served from your own site."
+        },
+        {
+          "slugs": [
             "ep-attribution"
           ],
           "titles": [

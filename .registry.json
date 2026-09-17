@@ -15,6 +15,10 @@
     "tier": "foundation",
     "version": "1.2.12"
   },
+  "ep-ar-preview": {
+    "tier": "foundation",
+    "version": "0.1.0"
+  },
   "ep-assistant": {
     "tier": "foundation",
     "version": "1.0.11"
