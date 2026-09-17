@@ -143,6 +143,12 @@ For anything bigger such as a bug report, a feature request, or a "how do I..." 
 
 ## Changelog
 
+### 1.0.13
+
+- **PageMotor's own email can now go through Mailgun too.** Until now this plugin only carried EP Email's messages. Anything PageMotor itself sends, a password reset or an admin notice, went out through the server's built-in mail, which on most modern hosts is not set up at all and fails silently: the person is told to check their inbox and nothing ever arrives. Choose **Mailgun EU** or **Mailgun US** under Admin, Email and core's own messages leave on the same verified domain as the rest of your mail.
+- Your existing EP Email setup is untouched, and the same sending key and domain serve both.
+- This works whether or not EP Email is installed.
+
 ### 1.0.12
 
 - **Fixes stored keys and passwords reading as empty after a PageMotor 0.11.3 or 0.11.4 update.** After the core update, every secret this plugin had encrypted at rest came back blank, so anything that needed it failed with an authentication error until the value was typed in again. Nothing was deleted: the encrypted value was still in the settings row, but PageMotor 0.11.3 moved the site secret that opens it, and this plugin was still looking in the old place. It now finds the secret in both places, so an existing value opens again without re-entry, and a value that was re-entered in the meantime keeps working and is moved back under the site secret.
