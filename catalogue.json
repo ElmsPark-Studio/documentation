@@ -42,15 +42,6 @@
         },
         {
           "slugs": [
-            "ep-sendit"
-          ],
-          "titles": [
-            "EP SendIt"
-          ],
-          "blurb": "Managed delivery transport driver for EP Email via send.elmspark.com."
-        },
-        {
-          "slugs": [
             "ep-email-file-uploads"
           ],
           "titles": [
@@ -1063,7 +1054,8 @@
   },
   "pending": {
     "ep-security": "shipped 0.0.3; page written and warns clearly, but the release is a scaffold — tables and settings only, nothing wired — so it is not advertised in a category yet",
-    "ep-email-elmspark": "unlisted 2026-09-18 on Kenn's instruction: send.elmspark.com is not available yet, so the plugin is not ready for public release; the page was removed from the site and stays in git history"
+    "ep-email-elmspark": "unlisted 2026-09-18 on Kenn's instruction: send.elmspark.com is not available yet, so the plugin is not ready for public release; the page was removed from the site and stays in git history",
+    "ep-sendit": "unlisted 2026-09-18 on Kenn's instruction, with EP Email ElmsPark: send.elmspark.com is not available yet, so the plugin is not ready for public release; the page was removed from the site and stays in git history"
   },
   "changelog_backlog": {}
 }
