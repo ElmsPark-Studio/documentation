@@ -478,6 +478,13 @@ For anything bigger — a bug report, a feature request, or a "how do I..." that
 
 ## Changelog
 
+### 1.10.57
+
+
+- **Fixes emails sent by other EP plugins going nowhere on sites using Mailgun, Brevo or the ElmsPark relay.** Password-reset and welcome emails from EP Membership, and any other email a plugin sends while the page is still loading, could silently fall back to the server's own mail program instead of the sending service you configured, and on most hosting that mail program does not exist. Whether it happened depended on the order the plugins were activated in, which is why it hit some sites and not others. Emails now reach the configured service regardless of activation order.
+- If the selected sending service still cannot be found, the fallback to the server mail program is now written to the PHP error log instead of happening in silence.
+- The Send Test Email button was never affected, which is why the problem could hide behind a passing test.
+
 ### 1.10.56
 
 - **Restores spam protection on sites running an older EP plugin alongside this one.** EP plugins share one common code library and whichever copy loads first is the one they all use, so an out-of-date plugin could leave this one without the check that rejects a particular spam bot. The check was being switched off in that case; it now carries its own copy and keeps working. Contact form submissions were never blocked or lost by this, the spam simply got through.

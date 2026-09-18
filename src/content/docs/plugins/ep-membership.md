@@ -214,6 +214,12 @@ The gate names a level that isn't defined in settings — undefined levels fail 
 
 ## Changelog
 
+### 0.6.6
+
+
+- **A password-reset, welcome or verification email that fails to send is now recorded in the PHP error log.** Until now the result of the send was thrown away, so a site could show "check your email", write the reset token and log the request while nothing had left the server. Nothing else changed in how the emails are sent.
+- Pair this with EP Email 1.10.57, which fixes the cause on sites using Mailgun, Brevo or the ElmsPark relay: depending on plugin activation order, emails sent while the page was loading could fall back to the server's own mail program instead of the configured service.
+
 ### 0.6.5
 
 - **Fixes a crash on the registration and login forms when an older EP plugin is installed on the same site.** Submitting the form returned an internal error and the sign-up or sign-in failed. EP plugins share one common code library, and whichever copy loads first is the one every EP plugin on that site uses, so a single out-of-date plugin could leave this one calling a spam check its copy did not have. The check now carries its own fallback and no longer depends on another plugin being up to date.
