@@ -79,6 +79,12 @@ For a quick question, **EP Support** inside your admin is the fastest path. For 
 
 ## Changelog
 
+### 1.0.7
+
+
+- **Emails sent by other EP plugins now reach Brevo regardless of the order the plugins were activated in.** EP Email 1.10.57 fixed the case where a plugin that sends while the page is still loading, such as EP Membership's password-reset and welcome emails, could fall back to the server's own mail program because this add-on had not started yet. This release lets EP Email find this add-on by convention, so the fix no longer depends on a list of plugin names inside EP Email. Nothing changes in how Brevo itself sends.
+- Update EP Email to 1.10.57 or later alongside this.
+
 ### 1.0.6
 
 - **Fixes stored keys and passwords reading as empty after a PageMotor 0.11.3 or 0.11.4 update.** After the core update, every secret this plugin had encrypted at rest came back blank, so anything that needed it failed with an authentication error until the value was typed in again. Nothing was deleted: the encrypted value was still in the settings row, but PageMotor 0.11.3 moved the site secret that opens it, and this plugin was still looking in the old place. It now finds the secret in both places, so an existing value opens again without re-entry, and a value that was re-entered in the meantime keeps working and is moved back under the site secret.
